@@ -216,6 +216,18 @@ impl GalacticAddress {
         self.distance_ly(other) <= ly
     }
 
+    /// Distance in light-years from this address to the galactic core (0, 0, 0).
+    ///
+    /// Note: comparing addresses across different galaxies (reality_index)
+    /// is not physically meaningful.
+    pub fn distance_to_core_ly(&self) -> f64 {
+        let (x, y, z) = self.voxel_position();
+        let dx = x as f64;
+        let dy = y as f64;
+        let dz = z as f64;
+        (dx * dx + dy * dy + dz * dz).sqrt() * 400.0
+    }
+
     /// Whether this address points to a black hole system (SSI 0x079).
     pub fn is_black_hole(&self) -> bool {
         self.solar_system_index() == SSI_BLACK_HOLE
@@ -706,5 +718,108 @@ mod tests {
     fn portal_display_is_hex() {
         let pa: PortalAddress = "01717D8A4EA2".parse().unwrap();
         assert_eq!(format!("{pa}"), "01717D8A4EA2");
+    }
+
+    // --- Distance calculator tests (milestone 1.4) ---
+
+    #[test]
+    fn identical_addresses_distance_zero() {
+        let addr = GalacticAddress::new(100, 50, -200, 0x123, 3, 0);
+        assert_eq!(addr.distance_ly(&addr), 0.0);
+    }
+
+    #[test]
+    fn one_voxel_apart_y_axis() {
+        let a = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        let b = GalacticAddress::new(0, 1, 0, 0x100, 0, 0);
+        let dist = a.distance_ly(&b);
+        assert!((dist - 400.0).abs() < 0.001, "expected 400.0, got {}", dist);
+    }
+
+    #[test]
+    fn one_voxel_apart_z_axis() {
+        let a = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        let b = GalacticAddress::new(0, 0, 1, 0x100, 0, 0);
+        let dist = a.distance_ly(&b);
+        assert!((dist - 400.0).abs() < 0.001, "expected 400.0, got {}", dist);
+    }
+
+    #[test]
+    fn diagonal_distance_3_4_5_triangle() {
+        let a = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        let b = GalacticAddress::new(3, 4, 0, 0x100, 0, 0);
+        let dist = a.distance_ly(&b);
+        assert!(
+            (dist - 2000.0).abs() < 0.001,
+            "expected 2000.0, got {}",
+            dist
+        );
+    }
+
+    #[test]
+    fn negative_coordinates_distance() {
+        let a = GalacticAddress::new(-100, -50, -200, 0x100, 0, 0);
+        let b = GalacticAddress::new(100, 50, 200, 0x100, 0, 0);
+        let dist = a.distance_ly(&b);
+        let expected = (210000.0_f64).sqrt() * 400.0;
+        assert!(
+            (dist - expected).abs() < 0.01,
+            "expected {}, got {}",
+            expected,
+            dist
+        );
+    }
+
+    #[test]
+    fn max_distance_across_galaxy() {
+        let a = GalacticAddress::new(-2048, -128, -2048, 0x000, 0, 0);
+        let b = GalacticAddress::new(2047, 127, 2047, 0x000, 0, 0);
+        let dist = a.distance_ly(&b);
+        let expected =
+            ((4095.0_f64).powi(2) + (255.0_f64).powi(2) + (4095.0_f64).powi(2)).sqrt() * 400.0;
+        assert!(
+            (dist - expected).abs() < 1.0,
+            "expected {}, got {}",
+            expected,
+            dist
+        );
+    }
+
+    #[test]
+    fn distance_to_core() {
+        let addr = GalacticAddress::new(3, 4, 0, 0x100, 0, 0);
+        let dist = addr.distance_to_core_ly();
+        assert!(
+            (dist - 2000.0).abs() < 0.001,
+            "expected 2000.0, got {}",
+            dist
+        );
+    }
+
+    #[test]
+    fn distance_to_core_at_origin() {
+        let addr = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        assert_eq!(addr.distance_to_core_ly(), 0.0);
+    }
+
+    #[test]
+    fn different_region() {
+        let a = GalacticAddress::new(100, 50, -200, 0x123, 0, 0);
+        let b = GalacticAddress::new(101, 50, -200, 0x123, 0, 0);
+        assert!(!a.same_region(&b));
+        assert!(!a.same_system(&b));
+    }
+
+    #[test]
+    fn within_zero_distance() {
+        let a = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        assert!(a.within(&a, 0.0));
+    }
+
+    #[test]
+    fn distance_is_symmetric() {
+        let a = GalacticAddress::new(-500, 42, 1000, 0x123, 0, 0);
+        let b = GalacticAddress::new(300, -100, -800, 0x456, 0, 0);
+        assert_eq!(a.distance_ly(&b), b.distance_ly(&a));
     }
 }
