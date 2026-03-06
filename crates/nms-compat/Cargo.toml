@@ -1,0 +1,15 @@
+[package]
+name = "nms-compat"
+description = "Format adapters for No Man's Sky save exports (goatfungus JSON fixer, etc.)"
+keywords = ["nms", "no-mans-sky", "save-file", "json"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[dependencies]
+nms-core = { workspace = true }

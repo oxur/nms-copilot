@@ -1,0 +1,15 @@
+[package]
+name = "nms-graph"
+description = "In-memory galactic model with spatial index and routing for No Man's Sky Copilot"
+keywords = ["nms", "no-mans-sky", "spatial-index", "pathfinding"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[dependencies]
+nms-core = { workspace = true }

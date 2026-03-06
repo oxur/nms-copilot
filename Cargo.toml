@@ -1,0 +1,34 @@
+[workspace]
+members = [
+    "crates/nms-core",
+    "crates/nms-save",
+    "crates/nms-compat",
+    "crates/nms-graph",
+    "crates/nms-query",
+    "crates/nms-watch",
+    "crates/nms-cache",
+    "crates/nms-cli",
+    "crates/nms-copilot",
+    "crates/nms-mcp",
+    "crates/nms",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/oxur/nms-copilot"
+homepage = "https://github.com/oxur/nms-copilot"
+authors = ["oubiwann <oubiwann@gmail.com>"]
+categories = ["games", "command-line-utilities"]
+
+[workspace.dependencies]
+nms-core = { path = "crates/nms-core", version = "0.0.1" }
+nms-save = { path = "crates/nms-save", version = "0.0.1" }
+nms-compat = { path = "crates/nms-compat", version = "0.0.1" }
+nms-graph = { path = "crates/nms-graph", version = "0.0.1" }
+nms-query = { path = "crates/nms-query", version = "0.0.1" }
+nms-watch = { path = "crates/nms-watch", version = "0.0.1" }
+nms-cache = { path = "crates/nms-cache", version = "0.0.1" }

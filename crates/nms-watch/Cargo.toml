@@ -1,0 +1,17 @@
+[package]
+name = "nms-watch"
+description = "File watcher and delta computation for No Man's Sky Copilot live updates"
+keywords = ["nms", "no-mans-sky", "file-watcher", "live-reload"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[dependencies]
+nms-core = { workspace = true }
+nms-save = { workspace = true }
+nms-graph = { workspace = true }

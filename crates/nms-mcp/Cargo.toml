@@ -1,0 +1,22 @@
+[package]
+name = "nms-mcp"
+description = "MCP server for No Man's Sky Copilot — AI integration for real-time co-exploration"
+keywords = ["nms", "no-mans-sky", "mcp", "ai"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[[bin]]
+name = "nms-mcp"
+path = "src/main.rs"
+
+[dependencies]
+nms-core = { workspace = true }
+nms-graph = { workspace = true }
+nms-query = { workspace = true }
+nms-watch = { workspace = true }

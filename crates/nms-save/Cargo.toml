@@ -1,0 +1,15 @@
+[package]
+name = "nms-save"
+description = "Raw binary save file parser for No Man's Sky (LZ4, XXTEA, key deobfuscation)"
+keywords = ["nms", "no-mans-sky", "save-file", "lz4"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[dependencies]
+nms-core = { workspace = true }

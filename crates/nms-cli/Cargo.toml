@@ -1,0 +1,24 @@
+[package]
+name = "nms-cli"
+description = "One-shot CLI for No Man's Sky Copilot — search planets, plan routes, convert glyphs"
+keywords = ["nms", "no-mans-sky", "cli", "portal-glyphs"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+categories.workspace = true
+
+[[bin]]
+name = "nms"
+path = "src/main.rs"
+
+[dependencies]
+nms-core = { workspace = true }
+nms-save = { workspace = true }
+nms-compat = { workspace = true }
+nms-graph = { workspace = true }
+nms-query = { workspace = true }
+nms-cache = { workspace = true }
