@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 
+use crate::glyph::{Glyph, GlyphParseError, parse_next_glyph};
+
 /// Special system index: always contains a black hole.
 pub const SSI_BLACK_HOLE: u16 = 0x079;
 /// Special system index: always contains an Atlas Interface.
@@ -302,6 +304,195 @@ impl fmt::Display for AddressParseError {
 
 impl std::error::Error for AddressParseError {}
 
+// ---------------------------------------------------------------------------
+// PortalAddress
+// ---------------------------------------------------------------------------
+
+/// A 12-glyph portal address encoding a galactic location.
+///
+/// Each glyph is a nibble (0-15), and the 12 glyphs form a 48-bit packed
+/// value in the same layout as [`GalacticAddress`]: `P-SSS-YY-ZZZ-XXX`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct PortalAddress {
+    glyphs: [u8; 12],
+}
+
+/// Error returned when parsing a portal address string fails.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum PortalParseError {
+    WrongLength(usize),
+    InvalidGlyph(GlyphParseError),
+}
+
+impl fmt::Display for PortalParseError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::WrongLength(n) => write!(f, "expected 12 glyphs, got {n}"),
+            Self::InvalidGlyph(e) => write!(f, "{e}"),
+        }
+    }
+}
+
+impl std::error::Error for PortalParseError {}
+
+impl From<GlyphParseError> for PortalParseError {
+    fn from(e: GlyphParseError) -> Self {
+        Self::InvalidGlyph(e)
+    }
+}
+
+impl PortalAddress {
+    /// Create from an array of 12 u8 values (each 0-15).
+    pub fn new(glyphs: [u8; 12]) -> Self {
+        for (i, &g) in glyphs.iter().enumerate() {
+            assert!(g < 16, "glyph[{i}] = {g} is out of range 0-15");
+        }
+        Self { glyphs }
+    }
+
+    /// Get the glyph at position `i` (0-11).
+    pub fn glyph(&self, i: usize) -> Glyph {
+        Glyph::new(self.glyphs[i])
+    }
+
+    /// Get all 12 glyphs.
+    pub fn glyphs(&self) -> [Glyph; 12] {
+        let mut out = [Glyph::new(0); 12];
+        for (i, slot) in out.iter_mut().enumerate() {
+            *slot = Glyph::new(self.glyphs[i]);
+        }
+        out
+    }
+
+    /// Format as 12 hex digits (uppercase): e.g., `01717D8A4EA2`.
+    pub fn to_hex_string(&self) -> String {
+        self.glyphs.iter().map(|g| format!("{g:X}")).collect()
+    }
+
+    /// Format as emoji string.
+    pub fn to_emoji_string(&self) -> String {
+        self.glyphs.iter().map(|&g| Glyph::new(g).emoji()).collect()
+    }
+
+    /// Parse a mixed-format string containing 12 glyphs.
+    ///
+    /// Accepts any combination of hex digits, emoji, and glyph names.
+    pub fn parse_mixed(s: &str) -> Result<Self, PortalParseError> {
+        let mut glyphs = Vec::with_capacity(12);
+        let mut remaining = s.trim();
+
+        while !remaining.is_empty() && glyphs.len() < 12 {
+            let (glyph, rest) = parse_next_glyph(remaining)?;
+            glyphs.push(glyph.index());
+            remaining = rest;
+        }
+
+        if glyphs.len() != 12 {
+            return Err(PortalParseError::WrongLength(glyphs.len()));
+        }
+
+        if !remaining.is_empty() {
+            return Err(PortalParseError::WrongLength(13));
+        }
+
+        let mut arr = [0u8; 12];
+        arr.copy_from_slice(&glyphs);
+        Ok(Self { glyphs: arr })
+    }
+
+    /// Convert to [`GalacticAddress`] (reality_index = 0).
+    pub fn to_galactic_address(&self) -> GalacticAddress {
+        GalacticAddress::from(*self)
+    }
+
+    /// Create from a [`GalacticAddress`].
+    pub fn from_galactic_address(addr: &GalacticAddress) -> Self {
+        PortalAddress::from(*addr)
+    }
+
+    /// Create from a signal booster string by first parsing to [`GalacticAddress`].
+    pub fn from_signal_booster(
+        s: &str,
+        planet_index: u8,
+        reality_index: u8,
+    ) -> Result<Self, AddressParseError> {
+        let addr = GalacticAddress::from_signal_booster(s, planet_index, reality_index)?;
+        Ok(PortalAddress::from(addr))
+    }
+}
+
+/// Default display is hex.
+impl fmt::Display for PortalAddress {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.to_hex_string())
+    }
+}
+
+/// Parse from any supported format (hex, emoji, mixed).
+impl FromStr for PortalAddress {
+    type Err = PortalParseError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::parse_mixed(s)
+    }
+}
+
+impl From<PortalAddress> for GalacticAddress {
+    /// Convert portal address to galactic address.
+    ///
+    /// Portal glyph layout: `P-SSS-YY-ZZZ-XXX`
+    /// (glyph positions 0-indexed: [0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX).
+    /// Reality index defaults to 0.
+    fn from(pa: PortalAddress) -> Self {
+        let g = pa.glyphs;
+
+        let planet_index = g[0];
+        let ssi = ((g[1] as u16) << 8) | ((g[2] as u16) << 4) | (g[3] as u16);
+        let y_raw = (g[4] << 4) | g[5];
+        let z_raw = ((g[6] as u16) << 8) | ((g[7] as u16) << 4) | (g[8] as u16);
+        let x_raw = ((g[9] as u16) << 8) | ((g[10] as u16) << 4) | (g[11] as u16);
+
+        let packed = ((planet_index as u64) << PLANET_SHIFT)
+            | ((ssi as u64) << SSI_SHIFT)
+            | ((y_raw as u64) << VOXEL_Y_SHIFT)
+            | ((z_raw as u64) << VOXEL_Z_SHIFT)
+            | (x_raw as u64);
+
+        GalacticAddress::from_packed(packed, 0)
+    }
+}
+
+impl From<GalacticAddress> for PortalAddress {
+    /// Convert galactic address to portal address.
+    ///
+    /// Extracts each nibble from the packed 48-bit value.
+    fn from(addr: GalacticAddress) -> Self {
+        let p = addr.packed();
+        let mut glyphs = [0u8; 12];
+
+        for (i, slot) in glyphs.iter_mut().enumerate() {
+            *slot = ((p >> (44 - i * 4)) & 0xF) as u8;
+        }
+
+        PortalAddress { glyphs }
+    }
+}
+
+impl GalacticAddress {
+    /// Convert to [`PortalAddress`].
+    pub fn to_portal_address(&self) -> PortalAddress {
+        PortalAddress::from(*self)
+    }
+
+    /// Create from a portal address string (hex, emoji, or mixed).
+    /// Reality index defaults to 0.
+    pub fn from_portal_string(s: &str) -> Result<Self, PortalParseError> {
+        let pa: PortalAddress = s.parse()?;
+        Ok(GalacticAddress::from(pa))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -429,5 +620,91 @@ mod tests {
         let json = serde_json::to_string(&addr).unwrap();
         let addr2: GalacticAddress = serde_json::from_str(&json).unwrap();
         assert_eq!(addr, addr2);
+    }
+
+    // --- Portal address tests ---
+
+    #[test]
+    fn known_address_hex_to_emoji() {
+        let pa: PortalAddress = "01717D8A4EA2".parse().unwrap();
+        let emoji = pa.to_emoji_string();
+        assert_eq!(
+            emoji,
+            "\u{1F305}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}"
+        );
+    }
+
+    #[test]
+    fn known_address_emoji_to_hex() {
+        let emoji_str = "\u{1F305}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}";
+        let pa: PortalAddress = emoji_str.parse().unwrap();
+        assert_eq!(pa.to_hex_string(), "01717D8A4EA2");
+    }
+
+    #[test]
+    fn galactic_address_portal_roundtrip() {
+        let ga = GalacticAddress::from_packed(0x01717D8A4EA2, 0);
+        let pa = PortalAddress::from(ga);
+        assert_eq!(pa.to_hex_string(), "01717D8A4EA2");
+        let ga2 = GalacticAddress::from(pa);
+        assert_eq!(ga.packed(), ga2.packed());
+    }
+
+    #[test]
+    fn hex_string_roundtrip() {
+        let pa: PortalAddress = "01717D8A4EA2".parse().unwrap();
+        let hex = pa.to_hex_string();
+        assert_eq!(hex, "01717D8A4EA2");
+        let pa2: PortalAddress = hex.parse().unwrap();
+        assert_eq!(pa, pa2);
+    }
+
+    #[test]
+    fn full_roundtrip_ga_pa_hex_pa_ga() {
+        let ga1 = GalacticAddress::new(-350, 42, 1000, 0x123, 3, 5);
+        let pa1 = ga1.to_portal_address();
+        let hex = pa1.to_hex_string();
+        let pa2: PortalAddress = hex.parse().unwrap();
+        let ga2 = pa2.to_galactic_address();
+        // reality_index is lost in portal address conversion (defaults to 0)
+        assert_eq!(ga1.packed(), ga2.packed());
+    }
+
+    #[test]
+    fn parse_emoji_with_variation_selectors() {
+        let with_vs = "\u{1F305}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}";
+        let pa_with: PortalAddress = with_vs.parse().unwrap();
+
+        let without_vs = "\u{1F305}\u{1F54A}\u{1F41C}\u{1F54A}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}";
+        let pa_without: PortalAddress = without_vs.parse().unwrap();
+
+        assert_eq!(pa_with, pa_without);
+    }
+
+    #[test]
+    fn parse_mixed_input() {
+        let mixed = "\u{1F305}1\u{1F41C}Bird\u{1F41C}D8A4EA2";
+        let pa: PortalAddress = mixed.parse().unwrap();
+        assert_eq!(pa.to_hex_string(), "01717D8A4EA2");
+    }
+
+    #[test]
+    fn wrong_length_errors() {
+        assert!("0171".parse::<PortalAddress>().is_err());
+        assert!("01717D8A4EA20".parse::<PortalAddress>().is_err());
+    }
+
+    #[test]
+    fn signal_booster_to_portal_address() {
+        let ga = GalacticAddress::new(0, 0, 0, 0x100, 0, 0);
+        let sb = ga.to_signal_booster();
+        let pa = PortalAddress::from_signal_booster(&sb, 0, 0).unwrap();
+        assert_eq!(pa.to_galactic_address().packed(), ga.packed());
+    }
+
+    #[test]
+    fn portal_display_is_hex() {
+        let pa: PortalAddress = "01717D8A4EA2".parse().unwrap();
+        assert_eq!(format!("{pa}"), "01717D8A4EA2");
     }
 }
