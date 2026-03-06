@@ -6,6 +6,7 @@ This index is automatically generated. Do not edit manually.
 
 | Number | Title | State | Updated |
 |--------|-------|-------|----------|
+| 0004 | libNOM Reference Guide for Rust Reimplementation | Final | 2026-03-06 |
 | 0003 | NMS Copilot — Project Summary | Active | 2026-03-05 |
 | 0002 | NMS Copilot — Detailed Project Plan | Active | 2026-03-05 |
 | 0001 | Parsing No Man's Sky save files - Known Resources | Final | 2026-03-05 |
@@ -19,4 +20,5 @@ This index is automatically generated. Do not edit manually.
 
 ### Final
 
+- [0004 - libNOM Reference Guide for Rust Reimplementation](06-final/0004-libnom-reference-guide-for-rust-reimplementation.md)
 - [0001 - Parsing No Man's Sky save files - Known Resources](06-final/0001-parsing-no-mans-sky-save-files-known-resources.md)
