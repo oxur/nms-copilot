@@ -1,0 +1,39 @@
+# Workbench and local tools
+/workbench
+/.claude
+/bin
+/assets/ai/ai-rust
+/assets/images/logo/drafts
+
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+.venv/
+
+# Environment
+.env
+.env.local
+
+# Data
+*.db
+*.db-shm
+*.db-wal
+/artifacts/
+
+# Coverage
+target/llvm-cov/
+*.profraw
+*.profdata
+
+# OS
+.DS_Store
+Thumbs.db
