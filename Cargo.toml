@@ -33,6 +33,9 @@ nms-query = { path = "crates/nms-query", version = "0.2.0" }
 nms-watch = { path = "crates/nms-watch", version = "0.2.0" }
 nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 
+fabryk-mcp = { path = "../ecl/crates/fabryk-mcp" }
+tokio = { version = "1", features = ["full"] }
+
 chrono = { version = "0.4", features = ["serde"] }
 notify = "7"
 notify-debouncer-mini = "0.5"
