@@ -9,6 +9,7 @@ use std::sync::Arc;
 use fabryk_mcp::model::{CallToolResult, Content, ErrorData, Tool};
 use fabryk_mcp::{ToolRegistry, ToolResult, empty_input_schema};
 use serde_json::{Value, json};
+use tokio::sync::RwLock;
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
@@ -23,12 +24,16 @@ use nms_query::show::{ShowQuery, ShowResult, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
 
 /// All NMS tools backed by a shared GalaxyModel.
+///
+/// Uses `RwLock` to support live updates from the file watcher.
+/// Tool handlers acquire a read lock; the watcher takes a write lock
+/// to apply deltas.
 pub struct NmsTools {
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
 }
 
 impl NmsTools {
-    pub fn new(model: Arc<GalaxyModel>) -> Self {
+    pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
         Self { model }
     }
 }
@@ -329,9 +334,10 @@ fn tool_error(msg: &str) -> ErrorData {
 // ── Tool Handlers ───────────────────────────────────────────────
 
 async fn handle_search_planets(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let biome = parse_biome_arg(&args, "biome")?;
 
     let reference = match args.get("from_base").and_then(|v| v.as_str()) {
@@ -390,9 +396,10 @@ async fn handle_search_planets(
 }
 
 async fn handle_plan_route(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let targets_arg = args.get("targets").and_then(|v| v.as_array()).map(|a| {
         a.iter()
             .filter_map(|v| v.as_str().map(String::from))
@@ -486,9 +493,10 @@ async fn handle_plan_route(
 }
 
 async fn handle_where_am_i(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     _args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let addr = model
         .player_position()
         .ok_or_else(|| tool_error("Player position not available"))?;
@@ -518,9 +526,10 @@ async fn handle_where_am_i(
 }
 
 async fn handle_whats_nearby(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let count = args
         .get("count")
         .and_then(|v| v.as_u64())
@@ -560,9 +569,10 @@ async fn handle_whats_nearby(
 }
 
 async fn handle_show_system(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let name = args
         .get("name")
         .and_then(|v| v.as_str())
@@ -605,9 +615,10 @@ async fn handle_show_system(
 }
 
 async fn handle_show_base(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let name = args
         .get("name")
         .and_then(|v| v.as_str())
@@ -632,7 +643,7 @@ async fn handle_show_base(
 }
 
 async fn handle_convert(
-    _model: Arc<GalaxyModel>,
+    _model: Arc<RwLock<GalaxyModel>>,
     args: Value,
 ) -> Result<CallToolResult, ErrorData> {
     let addr = if let Some(glyphs) = args.get("glyphs").and_then(|v| v.as_str()) {
@@ -684,9 +695,10 @@ async fn handle_convert(
 }
 
 async fn handle_galaxy_stats(
-    model: Arc<GalaxyModel>,
+    model: Arc<RwLock<GalaxyModel>>,
     _args: Value,
 ) -> Result<CallToolResult, ErrorData> {
+    let model = model.read().await;
     let result = execute_stats(
         &model,
         &StatsQuery {
@@ -730,8 +742,9 @@ fn parse_biome_arg(args: &Value, key: &str) -> Result<Option<Biome>, ErrorData> 
 mod tests {
     use super::*;
     use nms_graph::GalaxyModel;
+    use tokio::sync::RwLock;
 
-    fn test_model() -> Arc<GalaxyModel> {
+    fn test_model() -> Arc<RwLock<GalaxyModel>> {
         let json = r#"{
             "Version": 4720, "Platform": "Mac|Final", "ActiveContext": "Main",
             "CommonStateData": {"SaveName": "Test", "TotalPlayTime": 100},
@@ -753,11 +766,11 @@ mod tests {
                 {"DD": {"UA": "0x103000001900", "DT": "Planet", "VP": ["0xAB", 0]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
             ]}}}
         }"#;
-        Arc::new(
+        Arc::new(RwLock::new(
             nms_save::parse_save(json.as_bytes())
                 .map(|save| GalaxyModel::from_save(&save))
                 .expect("test model JSON is valid"),
-        )
+        ))
     }
 
     #[test]
@@ -987,6 +1000,93 @@ mod tests {
     async fn test_parse_biome_arg_missing() {
         let args = json!({});
         assert_eq!(parse_biome_arg(&args, "biome").unwrap(), None);
+    }
+
+    #[tokio::test]
+    async fn test_model_updates_after_delta() {
+        let model = test_model();
+        let count_before = model.read().await.system_count();
+
+        let new_sys = nms_core::System::new(
+            GalacticAddress::new(500, 10, -300, 0x999, 0, 0),
+            Some("New System".into()),
+            None,
+            None,
+            vec![],
+        );
+        let delta = nms_core::SaveDelta {
+            new_systems: vec![new_sys],
+            new_planets: vec![],
+            player_moved: None,
+            new_bases: vec![],
+            modified_bases: vec![],
+        };
+
+        {
+            let mut m = model.write().await;
+            m.apply_delta(&delta);
+        }
+
+        assert_eq!(model.read().await.system_count(), count_before + 1);
+    }
+
+    #[tokio::test]
+    async fn test_tools_see_updated_model() {
+        let model = test_model();
+        let tools = NmsTools::new(Arc::clone(&model));
+
+        let result1 = tools
+            .call("galaxy_stats", json!({}))
+            .unwrap()
+            .await
+            .unwrap();
+        let text1 = extract_text(&result1);
+        let v1: Value = serde_json::from_str(&text1).expect("valid JSON");
+        let initial_count = v1["systems"].as_u64().unwrap();
+
+        // Apply delta
+        {
+            let mut m = model.write().await;
+            let new_sys = nms_core::System::new(
+                GalacticAddress::new(600, 20, -400, 0xAAA, 0, 0),
+                Some("Delta System".into()),
+                None,
+                None,
+                vec![],
+            );
+            m.apply_delta(&nms_core::SaveDelta {
+                new_systems: vec![new_sys],
+                new_planets: vec![],
+                player_moved: None,
+                new_bases: vec![],
+                modified_bases: vec![],
+            });
+        }
+
+        // Stats should reflect new system
+        let result2 = tools
+            .call("galaxy_stats", json!({}))
+            .unwrap()
+            .await
+            .unwrap();
+        let text2 = extract_text(&result2);
+        let v2: Value = serde_json::from_str(&text2).expect("valid JSON");
+        assert_eq!(v2["systems"].as_u64().unwrap(), initial_count + 1);
+    }
+
+    #[tokio::test]
+    async fn test_concurrent_read_locks() {
+        let model = test_model();
+        let tools1 = NmsTools::new(Arc::clone(&model));
+        let tools2 = NmsTools::new(Arc::clone(&model));
+
+        // Two concurrent tool calls should not deadlock
+        let (r1, r2) = tokio::join!(
+            tools1.call("where_am_i", json!({})).unwrap(),
+            tools2.call("galaxy_stats", json!({})).unwrap(),
+        );
+        assert!(r1.is_ok());
+        assert!(r2.is_ok());
     }
 
     fn extract_text(ctr: &CallToolResult) -> String {

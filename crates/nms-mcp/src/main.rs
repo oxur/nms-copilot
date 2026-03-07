@@ -2,10 +2,12 @@
 
 use std::path::PathBuf;
 use std::sync::Arc;
+use std::thread;
 
 use fabryk_mcp::{
     CompositeRegistry, DiscoverableRegistry, FabrykMcpServer, HealthTools, ToolMeta, ToolRegistry,
 };
+use tokio::sync::RwLock;
 
 mod tools;
 
@@ -13,9 +15,32 @@ use tools::NmsTools;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    env_logger::init();
+
     let save_path = parse_save_arg();
-    let model = load_model(save_path)?;
-    let model = Arc::new(model);
+    let transport = parse_transport();
+    let model = load_model(save_path.clone())?;
+    let model = Arc::new(RwLock::new(model));
+
+    // Start file watcher if we have a save path
+    if let Some(ref path) = save_path {
+        let watch_config = nms_watch::WatchConfig {
+            save_path: path.clone(),
+            ..Default::default()
+        };
+        match nms_watch::start_watching(watch_config) {
+            Ok(handle) => {
+                log::info!("File watcher started for {}", path.display());
+                let model_for_watcher = Arc::clone(&model);
+                tokio::spawn(async move {
+                    apply_deltas_loop(handle.receiver, model_for_watcher).await;
+                });
+            }
+            Err(e) => {
+                log::warn!("File watcher failed to start: {e}");
+            }
+        }
+    }
 
     let nms_tools = NmsTools::new(Arc::clone(&model));
     let tool_count = nms_tools.tool_count() + 1; // +1 for health
@@ -25,18 +50,82 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let discoverable = build_discoverable(composite);
 
-    FabrykMcpServer::new(discoverable)
+    let server = FabrykMcpServer::new(discoverable)
         .with_name("nms-copilot")
         .with_version(env!("CARGO_PKG_VERSION"))
         .with_description(
             "Galactic copilot for No Man's Sky. Search planets, plan routes, \
              convert portal glyphs, and explore your galaxy with an AI.",
         )
-        .with_discoverable_instructions("nms")
-        .serve_stdio()
-        .await?;
+        .with_discoverable_instructions("nms");
+
+    match transport {
+        Transport::Stdio => {
+            server.serve_stdio().await?;
+        }
+        #[cfg(feature = "http")]
+        Transport::Http(addr) => {
+            eprintln!("NMS Copilot MCP server listening on http://{addr}");
+            server.serve_http(addr).await?;
+        }
+    }
 
     Ok(())
+}
+
+/// Background loop: receive deltas from watcher, apply to model.
+async fn apply_deltas_loop(
+    receiver: std::sync::mpsc::Receiver<nms_core::SaveDelta>,
+    model: Arc<RwLock<nms_graph::GalaxyModel>>,
+) {
+    // Bridge std::sync::mpsc to tokio::sync::mpsc
+    let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel();
+
+    thread::spawn(move || {
+        while let Ok(delta) = receiver.recv() {
+            if tx.send(delta).is_err() {
+                break;
+            }
+        }
+    });
+
+    while let Some(delta) = rx.recv().await {
+        let mut model = model.write().await;
+        model.apply_delta(&delta);
+
+        if !delta.new_systems.is_empty() {
+            log::info!("Live update: {} new system(s)", delta.new_systems.len());
+        }
+        if delta.player_moved.is_some() {
+            log::info!("Live update: player moved");
+        }
+    }
+}
+
+enum Transport {
+    Stdio,
+    #[cfg(feature = "http")]
+    Http(std::net::SocketAddr),
+}
+
+fn parse_transport() -> Transport {
+    let args: Vec<String> = std::env::args().collect();
+    if let Some(pos) = args.iter().position(|a| a == "--http") {
+        let addr: std::net::SocketAddr = args
+            .get(pos + 1)
+            .and_then(|s| s.parse().ok())
+            .unwrap_or_else(|| "127.0.0.1:3000".parse().unwrap());
+        #[cfg(feature = "http")]
+        return Transport::Http(addr);
+        #[cfg(not(feature = "http"))]
+        {
+            eprintln!("HTTP transport requires the 'http' feature. Falling back to stdio.");
+            let _ = addr;
+            Transport::Stdio
+        }
+    } else {
+        Transport::Stdio
+    }
 }
 
 fn build_discoverable(registry: CompositeRegistry) -> DiscoverableRegistry<CompositeRegistry> {
@@ -173,4 +262,15 @@ fn load_model(
     };
     let save = nms_save::parse_save_file(&path)?;
     Ok(nms_graph::GalaxyModel::from_save(&save))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_transport_default_stdio() {
+        // Default (no --http) should be Stdio
+        assert!(matches!(parse_transport(), Transport::Stdio));
+    }
 }
