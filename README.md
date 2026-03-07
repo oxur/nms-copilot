@@ -188,14 +188,14 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — Phase 1 complete, Phase 2 next.
+🚧 **Under active development** — Phases 1-2 complete, Phase 3 next.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
 | Phase | Status | Description |
 |-------|--------|-------------|
 | 1. Foundation | ✅ | Core types, parsers, coordinate converter, CLI |
-| 2. Search | 🔲 | In-memory model, find/show/stats commands |
+| 2. Search & Display | ✅ | In-memory model, find/show/stats commands |
 | 3. REPL & Cache | 🔲 | Interactive copilot, fast startup |
 | 4. Routing | 🔲 | Pathfinding, TSP, warp-range planning |
 | 5. Live Watch | 🔲 | Real-time save file monitoring |
@@ -218,6 +218,19 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 1.9 `nms info` command | ✅ | Save file summary: play time, location, discoveries, bases, currencies |
 | 1.10 `nms convert` command | ✅ | Coordinate converter: portal glyphs, signal booster, galactic address, voxels |
 | — Save file discovery | ✅ | Platform-specific save directory resolution, account/slot/type parsing |
+
+### Phase 2 Progress
+
+| Milestone | Status | Description |
+|-----------|--------|-------------|
+| 2.1 Galaxy model | ✅ | `GalaxyModel` with petgraph, R-tree, HashMap indexes; system/planet extraction from save |
+| 2.2 Spatial indexing | ✅ | Nearest-neighbor and radius queries; `BiomeFilter` composable filtering |
+| 2.3 Graph construction | ✅ | `EdgeStrategy` (KNN/WarpRange); incremental edge building |
+| 2.4 Query engine | ✅ | `FindQuery`, `ShowQuery`, `StatsQuery` — pure stateless functions over `&GalaxyModel` |
+| 2.5 Display layer | ✅ | Table formatters, portal hex-to-emoji, distance K/M suffixes |
+| 2.6 `nms find` command | ✅ | Search by biome, distance, discoverer with emoji glyph output |
+| 2.7 `nms show` command | ✅ | Detail views for systems (by name or hex) and bases |
+| 2.8 `nms stats` command | ✅ | Aggregate statistics with biome distribution table |
 
 ---
 
