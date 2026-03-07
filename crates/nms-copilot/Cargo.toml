@@ -19,6 +19,7 @@ path = "src/main.rs"
 nms-core = { workspace = true }
 nms-save = { workspace = true }
 nms-graph = { workspace = true }
+nms-cache = { workspace = true }
 nms-query = { workspace = true }
 clap = { workspace = true }
 dirs = { workspace = true }

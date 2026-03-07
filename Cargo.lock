@@ -636,6 +636,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "dirs",
+ "nms-cache",
  "nms-core",
  "nms-graph",
  "nms-query",

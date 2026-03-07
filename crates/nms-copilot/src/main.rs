@@ -13,18 +13,24 @@ use nms_graph::GalaxyModel;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let save_path = parse_save_arg(&args);
+    let no_cache = args.iter().any(|a| a == "--no-cache");
 
-    let model = match load_model(save_path) {
-        Ok(m) => m,
+    let (model, was_cached) = match load_model(save_path, no_cache) {
+        Ok(result) => result,
         Err(e) => {
             eprintln!("Error loading save: {e}");
             std::process::exit(1);
         }
     };
 
+    let source = if was_cached {
+        "from cache"
+    } else {
+        "from save file"
+    };
     println!(
         "NMS Copilot v{}\n\
-         Loaded {} systems, {} planets, {} bases\n\
+         Loaded {} systems, {} planets, {} bases ({source})\n\
          Type 'help' for commands, 'exit' to quit.\n",
         env!("CARGO_PKG_VERSION"),
         model.systems.len(),
@@ -111,13 +117,16 @@ fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
         .map(PathBuf::from)
 }
 
-fn load_model(save_path: Option<PathBuf>) -> Result<GalaxyModel, Box<dyn std::error::Error>> {
-    let path = match save_path {
+fn load_model(
+    save_path: Option<PathBuf>,
+    no_cache: bool,
+) -> Result<(GalaxyModel, bool), Box<dyn std::error::Error>> {
+    let save = match save_path {
         Some(p) => p,
         None => nms_save::locate::find_most_recent_save()?
             .path()
             .to_path_buf(),
     };
-    let save = nms_save::parse_save_file(&path)?;
-    Ok(GalaxyModel::from_save(&save))
+    let cache = paths::cache_path();
+    nms_cache::load_or_rebuild(&cache, &save, no_cache)
 }
