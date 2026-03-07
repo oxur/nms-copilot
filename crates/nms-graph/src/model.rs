@@ -116,7 +116,7 @@ impl GalaxyModel {
             }
         }
 
-        Self {
+        let mut model = Self {
             graph,
             spatial,
             systems,
@@ -127,7 +127,10 @@ impl GalaxyModel {
             address_to_id,
             node_map,
             player_state,
-        }
+        };
+
+        model.build_edges(crate::edges::EdgeStrategy::default());
+        model
     }
 
     /// Number of systems in the model.

@@ -7,12 +7,14 @@
 //! - **R-tree** -- geometric layer for nearest-neighbor and radius queries
 //! - **HashMaps** -- associative layer for fast lookup by name, biome, etc.
 
+pub mod edges;
 pub mod error;
 pub mod extract;
 pub mod model;
 pub mod query;
 pub mod spatial;
 
+pub use edges::EdgeStrategy;
 pub use error::GraphError;
 pub use model::GalaxyModel;
 pub use query::BiomeFilter;
