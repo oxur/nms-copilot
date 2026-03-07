@@ -2,6 +2,7 @@
 
 pub mod commands;
 pub mod completer;
+pub mod config;
 pub mod dispatch;
 pub mod paths;
 pub mod prompt;

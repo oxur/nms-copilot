@@ -1,21 +1,31 @@
 //! NMS Copilot -- interactive galactic REPL for No Man's Sky.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use reedline::{FileBackedHistory, Reedline, Signal};
 
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
+use nms_copilot::config::Config;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let save_path = parse_save_arg(&args);
-    let no_cache = args.iter().any(|a| a == "--no-cache");
+    let config = match Config::load() {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("Warning: could not load config: {e}");
+            Config::default()
+        }
+    };
 
-    let (model, was_cached) = match load_model(save_path, no_cache) {
+    let args: Vec<String> = std::env::args().collect();
+    let save_path = parse_save_arg(&args).or_else(|| config.save_path().map(PathBuf::from));
+    let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
+    let cache_path = config.cache_path();
+
+    let (model, was_cached) = match load_model(save_path, &cache_path, no_cache) {
         Ok(result) => result,
         Err(e) => {
             eprintln!("Error loading save: {e}");
@@ -42,6 +52,9 @@ fn main() {
     let completer = Box::new(CopilotCompleter::new(completions));
     let mut editor = build_editor(completer);
     let mut session = SessionState::from_model(&model);
+    if let Some(warp_range) = config.defaults.warp_range {
+        session.set_warp_range(warp_range);
+    }
     let mut prompt = CopilotPrompt::new(PromptState::from_session(&session));
 
     loop {
@@ -119,6 +132,7 @@ fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
 
 fn load_model(
     save_path: Option<PathBuf>,
+    cache_path: &Path,
     no_cache: bool,
 ) -> Result<(GalaxyModel, bool), Box<dyn std::error::Error>> {
     let save = match save_path {
@@ -127,6 +141,5 @@ fn load_model(
             .path()
             .to_path_buf(),
     };
-    let cache = paths::cache_path();
-    nms_cache::load_or_rebuild(&cache, &save, no_cache)
+    nms_cache::load_or_rebuild(cache_path, &save, no_cache)
 }

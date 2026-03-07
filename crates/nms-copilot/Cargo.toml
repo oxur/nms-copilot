@@ -24,6 +24,8 @@ nms-query = { workspace = true }
 clap = { workspace = true }
 dirs = { workspace = true }
 reedline = { workspace = true }
+serde = { workspace = true }
+toml = { workspace = true }
 
 [dev-dependencies]
 nms-save = { workspace = true }
