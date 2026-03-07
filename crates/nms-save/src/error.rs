@@ -41,6 +41,14 @@ pub enum SaveError {
         actual: [u8; 32],
     },
 
+    /// Failed to parse a mapping JSON file.
+    #[error("mapping parse error: {message}")]
+    MappingParseError { message: String },
+
+    /// Failed to parse save JSON.
+    #[error("JSON parse error: {message}")]
+    JsonParseError { message: String },
+
     /// Wrapper for std::io::Error (file I/O).
     #[error("I/O error: {0}")]
     Io(#[from] std::io::Error),

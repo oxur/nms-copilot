@@ -12,9 +12,11 @@
 pub mod decompress;
 pub mod error;
 pub mod locate;
+pub mod mapping;
 pub mod metadata;
 pub mod xxtea;
 
 pub use decompress::{SaveFormat, decompress_save, decompress_save_file, detect_format};
 pub use error::SaveError;
+pub use mapping::{KeyMapping, deobfuscate_json, is_obfuscated};
 pub use metadata::{SaveMetadata, StorageSlot, read_metadata, verify_sha256};
