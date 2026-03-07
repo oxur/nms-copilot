@@ -541,6 +541,8 @@ version = "0.0.1"
 dependencies = [
  "nms-core",
  "nms-graph",
+ "nms-save",
+ "serde_json",
 ]
 
 [[package]]
