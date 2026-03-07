@@ -6,6 +6,7 @@ mod convert;
 mod find;
 mod info;
 mod show;
+mod stats;
 
 #[derive(Parser)]
 #[command(
@@ -71,6 +72,21 @@ enum Commands {
 
         #[command(subcommand)]
         target: ShowTargetCmd,
+    },
+
+    /// Display aggregate galaxy statistics.
+    Stats {
+        /// Path to save file (auto-detects if omitted).
+        #[arg(long)]
+        save: Option<PathBuf>,
+
+        /// Show biome distribution table.
+        #[arg(long)]
+        biomes: bool,
+
+        /// Show discovery counts by type.
+        #[arg(long)]
+        discoveries: bool,
     },
 
     /// Convert between NMS coordinate formats.
@@ -150,6 +166,11 @@ fn main() {
             };
             show::run(save, target)
         }
+        Commands::Stats {
+            save,
+            biomes,
+            discoveries,
+        } => stats::run(save, biomes, discoveries),
         Commands::Convert {
             glyphs,
             coords,
