@@ -10,8 +10,10 @@
 pub mod error;
 pub mod extract;
 pub mod model;
+pub mod query;
 pub mod spatial;
 
 pub use error::GraphError;
 pub use model::GalaxyModel;
+pub use query::BiomeFilter;
 pub use spatial::SystemPoint;
