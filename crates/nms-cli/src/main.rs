@@ -2,6 +2,7 @@ use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::process;
 
+mod convert;
 mod info;
 
 #[derive(Parser)]
@@ -24,6 +25,37 @@ enum Commands {
         #[arg(long)]
         save: Option<PathBuf>,
     },
+
+    /// Convert between NMS coordinate formats.
+    Convert {
+        /// Portal glyphs as 12 hex digits (e.g., 01717D8A4EA2).
+        #[arg(long, group = "input")]
+        glyphs: Option<String>,
+
+        /// Signal booster coordinates (XXXX:YYYY:ZZZZ:SSSS).
+        #[arg(long, group = "input")]
+        coords: Option<String>,
+
+        /// Galactic address as hex (0x01717D8A4EA2).
+        #[arg(long, group = "input")]
+        ga: Option<String>,
+
+        /// Voxel position as X,Y,Z (requires --ssi).
+        #[arg(long, group = "input")]
+        voxel: Option<String>,
+
+        /// Solar system index (required with --voxel).
+        #[arg(long)]
+        ssi: Option<u16>,
+
+        /// Planet index (0-15, defaults to 0).
+        #[arg(long, default_value = "0")]
+        planet: u8,
+
+        /// Galaxy index (0-255) or name (e.g., "Euclid").
+        #[arg(long, default_value = "0")]
+        galaxy: String,
+    },
 }
 
 fn main() {
@@ -31,6 +63,15 @@ fn main() {
 
     let result = match cli.command {
         Commands::Info { save } => info::run(save),
+        Commands::Convert {
+            glyphs,
+            coords,
+            ga,
+            voxel,
+            ssi,
+            planet,
+            galaxy,
+        } => convert::run(glyphs, coords, ga, voxel, ssi, planet, galaxy),
     };
 
     if let Err(e) = result {

@@ -75,10 +75,7 @@ fn parse_minimal_save_and_verify_fields() {
     assert_eq!(records.len(), 3);
 
     let flora_count = records.iter().filter(|r| r.dd.dt == "Flora").count();
-    let system_count = records
-        .iter()
-        .filter(|r| r.dd.dt == "SolarSystem")
-        .count();
+    let system_count = records.iter().filter(|r| r.dd.dt == "SolarSystem").count();
     let planet_count = records.iter().filter(|r| r.dd.dt == "Planet").count();
     assert_eq!(flora_count, 1);
     assert_eq!(system_count, 1);
