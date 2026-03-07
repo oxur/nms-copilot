@@ -2,9 +2,10 @@
 
 use std::path::PathBuf;
 
-use reedline::{DefaultPrompt, DefaultPromptSegment, FileBackedHistory, Reedline, Signal};
+use reedline::{FileBackedHistory, Reedline, Signal};
 
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
+use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
@@ -31,17 +32,14 @@ fn main() {
         model.bases.len(),
     );
 
-    let prompt = DefaultPrompt::new(
-        DefaultPromptSegment::Basic("nms".into()),
-        DefaultPromptSegment::Empty,
-    );
-
     let completions = build_model_completions(&model);
     let completer = Box::new(CopilotCompleter::new(completions));
     let mut editor = build_editor(completer);
     let mut session = SessionState::from_model(&model);
+    let mut prompt = CopilotPrompt::new(PromptState::from_session(&session));
 
     loop {
+        prompt.update(PromptState::from_session(&session));
         match editor.read_line(&prompt) {
             Ok(Signal::Success(line)) => match commands::parse_line(&line) {
                 Ok(Some(action)) => {
