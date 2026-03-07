@@ -48,6 +48,10 @@ const PORTAL_TO_SB_Y: u16 = 0x7F;
 /// The `reality_index` identifies the galaxy (0=Euclid, 1=Hilbert, etc.) and is
 /// stored separately from the packed value.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 pub struct GalacticAddress {
     packed: u64,
     pub reality_index: u8,

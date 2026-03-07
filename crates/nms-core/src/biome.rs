@@ -4,6 +4,10 @@ use std::str::FromStr;
 
 /// Planet biome classification matching GcBiomeType from game data.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub enum Biome {
     Lush,
@@ -85,6 +89,10 @@ impl FromStr for Biome {
 
 /// Planet biome subtype matching GcBiomeSubType from game data (31 variants).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub enum BiomeSubType {
     LushRoomTemp,

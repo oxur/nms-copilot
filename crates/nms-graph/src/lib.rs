@@ -18,4 +18,4 @@ pub use edges::EdgeStrategy;
 pub use error::GraphError;
 pub use model::GalaxyModel;
 pub use query::BiomeFilter;
-pub use spatial::SystemPoint;
+pub use spatial::{SystemId, SystemPoint};

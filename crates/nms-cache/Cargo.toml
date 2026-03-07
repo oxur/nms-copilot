@@ -12,5 +12,12 @@ authors.workspace = true
 categories.workspace = true
 
 [dependencies]
-nms-core = { workspace = true }
+nms-core = { workspace = true, features = ["archive"] }
 nms-graph = { workspace = true }
+chrono = { workspace = true }
+rkyv = { workspace = true }
+
+[dev-dependencies]
+nms-save = { workspace = true }
+serde_json = { workspace = true }
+tempfile = "3"

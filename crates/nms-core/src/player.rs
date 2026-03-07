@@ -6,6 +6,10 @@ use crate::address::GalacticAddress;
 
 /// Maps to PersistentBaseTypes in the save file.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub enum BaseType {
     HomePlanetBase,
@@ -52,6 +56,10 @@ impl FromStr for BaseType {
 ///
 /// The galaxy (reality index) is encoded in the `address` field.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub struct PlayerBase {
     pub name: String,
@@ -88,6 +96,10 @@ impl PlayerBase {
 
 /// Snapshot of the player's current state from the save file.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub struct PlayerState {
     pub current_address: GalacticAddress,

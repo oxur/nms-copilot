@@ -42,6 +42,10 @@ impl System {
 
 /// A planet within a star system.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
 #[non_exhaustive]
 pub struct Planet {
     /// Planet index within the system (0-15).

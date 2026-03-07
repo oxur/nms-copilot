@@ -57,7 +57,29 @@ pub struct GalaxyModel {
     pub player_state: Option<PlayerState>,
 }
 
+impl Default for GalaxyModel {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl GalaxyModel {
+    /// Create an empty `GalaxyModel`.
+    pub fn new() -> Self {
+        Self {
+            graph: StableGraph::default(),
+            spatial: RTree::new(),
+            systems: HashMap::new(),
+            planets: HashMap::new(),
+            bases: HashMap::new(),
+            biome_index: HashMap::new(),
+            name_index: HashMap::new(),
+            address_to_id: HashMap::new(),
+            node_map: HashMap::new(),
+            player_state: None,
+        }
+    }
+
     /// Build a `GalaxyModel` from a parsed save file.
     pub fn from_save(save: &SaveRoot) -> Self {
         let extracted = extract_systems(save);
@@ -207,6 +229,13 @@ impl GalaxyModel {
         }
 
         self.systems.insert(sys_id, system);
+    }
+
+    /// Insert a base into the model.
+    pub fn insert_base(&mut self, base: PlayerBase) {
+        if !base.name.is_empty() {
+            self.bases.insert(base.name.to_lowercase(), base);
+        }
     }
 }
 
