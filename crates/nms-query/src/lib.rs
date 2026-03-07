@@ -5,12 +5,15 @@
 
 pub mod display;
 pub mod find;
+pub mod route;
 pub mod show;
 pub mod stats;
 
 pub use display::{
-    format_distance, format_find_results, format_show_result, format_stats, hex_to_emoji,
+    format_distance, format_find_results, format_route, format_show_result, format_stats,
+    hex_to_emoji,
 };
 pub use find::{FindQuery, FindResult, ReferencePoint};
+pub use route::{RouteFrom, RouteQuery, RouteResult, TargetSelection};
 pub use show::{ShowQuery, ShowResult};
 pub use stats::{StatsQuery, StatsResult};

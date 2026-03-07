@@ -5,6 +5,7 @@ use std::process;
 mod convert;
 mod find;
 mod info;
+mod route;
 mod show;
 mod stats;
 
@@ -89,6 +90,45 @@ enum Commands {
         discoveries: bool,
     },
 
+    /// Plan a route through discovered systems.
+    Route {
+        /// Path to save file (auto-detects if omitted).
+        #[arg(long)]
+        save: Option<PathBuf>,
+
+        /// Filter targets by biome (e.g., Lush, Toxic).
+        #[arg(long)]
+        biome: Option<String>,
+
+        /// Named targets (bases or systems) to visit.
+        #[arg(long = "target", num_args = 1)]
+        targets: Vec<String>,
+
+        /// Start from this base name (default: current position).
+        #[arg(long)]
+        from: Option<String>,
+
+        /// Ship warp range in light-years (for hop constraints).
+        #[arg(long)]
+        warp_range: Option<f64>,
+
+        /// Only consider targets within this radius in light-years.
+        #[arg(long)]
+        within: Option<f64>,
+
+        /// Maximum number of targets to visit.
+        #[arg(long)]
+        max_targets: Option<usize>,
+
+        /// Routing algorithm: nn, nearest-neighbor, 2opt, two-opt.
+        #[arg(long)]
+        algo: Option<String>,
+
+        /// Return to starting system at the end.
+        #[arg(long)]
+        round_trip: bool,
+    },
+
     /// Convert between NMS coordinate formats.
     Convert {
         /// Portal glyphs as 12 hex digits (e.g., 01717D8A4EA2).
@@ -171,6 +211,27 @@ fn main() {
             biomes,
             discoveries,
         } => stats::run(save, biomes, discoveries),
+        Commands::Route {
+            save,
+            biome,
+            targets,
+            from,
+            warp_range,
+            within,
+            max_targets,
+            algo,
+            round_trip,
+        } => route::run(route::RouteArgs {
+            save,
+            biome,
+            targets,
+            from,
+            warp_range,
+            within,
+            max_targets,
+            algo,
+            round_trip,
+        }),
         Commands::Convert {
             glyphs,
             coords,

@@ -31,7 +31,8 @@ impl CopilotCompleter {
 }
 
 const COMMANDS: &[&str] = &[
-    "find", "show", "stats", "convert", "set", "reset", "status", "info", "help", "exit", "quit",
+    "convert", "exit", "find", "help", "info", "quit", "reset", "route", "set", "show", "stats",
+    "status",
 ];
 
 const SHOW_SUBCOMMANDS: &[&str] = &["system", "base"];
@@ -50,6 +51,17 @@ const STATS_FLAGS: &[&str] = &["--biomes", "--discoveries"];
 
 const CONVERT_FLAGS: &[&str] = &[
     "--glyphs", "--coords", "--ga", "--voxel", "--ssi", "--planet", "--galaxy",
+];
+
+const ROUTE_FLAGS: &[&str] = &[
+    "--algo",
+    "--biome",
+    "--from",
+    "--max-targets",
+    "--round-trip",
+    "--target",
+    "--warp-range",
+    "--within",
 ];
 
 const SET_SUBCOMMANDS: &[&str] = &["position", "biome", "warp-range"];
@@ -127,6 +139,10 @@ impl Completer for CopilotCompleter {
                 return self.complete_find_context(line_to_pos, &words, pos);
             }
 
+            [cmd, ..] if *cmd == "route" => {
+                return self.complete_route_context(line_to_pos, &words, pos);
+            }
+
             [cmd, ..] if *cmd == "stats" => {
                 let partial = if trailing_space {
                     ""
@@ -182,6 +198,37 @@ impl CopilotCompleter {
         }
 
         self.filter_suggestions(last, FIND_FLAGS, pos)
+    }
+
+    fn complete_route_context(
+        &self,
+        line_to_pos: &str,
+        words: &[&str],
+        pos: usize,
+    ) -> Vec<Suggestion> {
+        let last = if line_to_pos.ends_with(' ') {
+            ""
+        } else {
+            words.last().copied().unwrap_or("")
+        };
+
+        let prev = if line_to_pos.ends_with(' ') {
+            words.last().copied()
+        } else if words.len() >= 2 {
+            Some(words[words.len() - 2])
+        } else {
+            None
+        };
+
+        if prev == Some("--biome") {
+            return self.filter_suggestions(last, BIOME_NAMES, pos);
+        }
+
+        if prev == Some("--from") {
+            return self.complete_names(last, &self.model_data.base_names, pos);
+        }
+
+        self.filter_suggestions(last, ROUTE_FLAGS, pos)
     }
 
     fn complete_names(&self, partial: &str, names: &[String], pos: usize) -> Vec<Suggestion> {
@@ -364,6 +411,55 @@ mod tests {
         let results = c.complete("Show Base a", 11);
         let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
         assert!(values.iter().any(|v| v.contains("Acadia")));
+    }
+
+    #[test]
+    fn test_complete_route_flags() {
+        let mut c = test_completer();
+        let results = c.complete("route --b", 9);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"--biome"));
+    }
+
+    #[test]
+    fn test_complete_route_biome_after_flag() {
+        let mut c = test_completer();
+        let results = c.complete("route --biome L", 15);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"Lush"));
+        assert!(values.contains(&"Lava"));
+    }
+
+    #[test]
+    fn test_complete_route_from_base_names() {
+        let mut c = test_completer();
+        let results = c.complete("route --from A", 14);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.iter().any(|v| v.contains("Alpha")));
+    }
+
+    #[test]
+    fn test_complete_route_all_flags() {
+        let mut c = test_completer();
+        let results = c.complete("route ", 6);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"--algo"));
+        assert!(values.contains(&"--biome"));
+        assert!(values.contains(&"--from"));
+        assert!(values.contains(&"--target"));
+        assert!(values.contains(&"--warp-range"));
+        assert!(values.contains(&"--within"));
+        assert!(values.contains(&"--round-trip"));
+        assert!(values.contains(&"--max-targets"));
+    }
+
+    #[test]
+    fn test_complete_route_in_command_list() {
+        let mut c = test_completer();
+        let results = c.complete("r", 1);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"route"));
+        assert!(values.contains(&"reset"));
     }
 
     #[test]

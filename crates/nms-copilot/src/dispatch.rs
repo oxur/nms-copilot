@@ -4,8 +4,11 @@ use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::galaxy::Galaxy;
 use nms_graph::GalaxyModel;
-use nms_query::display::{format_find_results, format_show_result, format_stats};
+use nms_graph::query::BiomeFilter;
+use nms_graph::route::RoutingAlgorithm;
+use nms_query::display::{format_find_results, format_route, format_show_result, format_stats};
 use nms_query::find::{FindQuery, ReferencePoint, execute_find};
+use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
 use nms_query::show::{ShowQuery, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
 
@@ -69,6 +72,28 @@ pub fn dispatch(
             Ok(format_stats(&result))
         }
 
+        Action::Route {
+            biome,
+            targets,
+            from,
+            warp_range,
+            within,
+            max_targets,
+            algo,
+            round_trip,
+        } => dispatch_route(
+            model,
+            session,
+            biome,
+            targets,
+            from,
+            warp_range,
+            within,
+            max_targets,
+            algo,
+            round_trip,
+        ),
+
         Action::Set { target } => dispatch_set(model, session, target),
         Action::Reset { target } => Ok(dispatch_reset(model, session, target)),
         Action::Status => Ok(session.format_status()),
@@ -102,6 +127,77 @@ pub fn dispatch(
             galaxy,
         } => dispatch_convert(glyphs, coords, ga, voxel, *ssi, *planet, galaxy),
     }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn dispatch_route(
+    model: &GalaxyModel,
+    session: &SessionState,
+    biome: &Option<String>,
+    targets: &[String],
+    from: &Option<String>,
+    warp_range: &Option<f64>,
+    within: &Option<f64>,
+    max_targets: &Option<usize>,
+    algo: &Option<String>,
+    round_trip: &bool,
+) -> Result<String, String> {
+    // 1. Determine targets: --target > --biome > session biome
+    let target_selection = if !targets.is_empty() {
+        TargetSelection::Named(targets.to_vec())
+    } else {
+        let biome_val = biome
+            .as_ref()
+            .map(|s| s.parse::<Biome>())
+            .transpose()
+            .map_err(|e| format!("Invalid biome: {e}"))?
+            .or(session.biome_filter);
+
+        match biome_val {
+            Some(b) => TargetSelection::Biome(BiomeFilter {
+                biome: Some(b),
+                ..Default::default()
+            }),
+            None => return Err("Specify --target or --biome for route planning".into()),
+        }
+    };
+
+    // 2. Determine from: --from > session position > CurrentPosition
+    let route_from = match from {
+        Some(name) => RouteFrom::Base(name.clone()),
+        None => match &session.position {
+            Some(pos) => RouteFrom::Address(*pos.address()),
+            None => RouteFrom::CurrentPosition,
+        },
+    };
+
+    // 3. Determine warp_range: --warp-range > session warp_range > None
+    let effective_warp_range = (*warp_range).or(session.warp_range);
+
+    // 4. Parse algorithm
+    let algorithm = match algo.as_deref() {
+        Some("nn") | Some("nearest-neighbor") => RoutingAlgorithm::NearestNeighbor,
+        Some("2opt") | Some("two-opt") | None => RoutingAlgorithm::TwoOpt,
+        Some(other) => {
+            return Err(format!(
+                "Unknown algorithm: \"{other}\". Use: nn, nearest-neighbor, 2opt, two-opt"
+            ));
+        }
+    };
+
+    // 5. Build query and execute
+    let query = RouteQuery {
+        targets: target_selection,
+        from: route_from,
+        warp_range: effective_warp_range,
+        within_ly: *within,
+        max_targets: *max_targets,
+        algorithm,
+        return_to_start: *round_trip,
+    };
+
+    let result = execute_route(model, &query).map_err(|e| e.to_string())?;
+    Ok(format_route(&result, model))
 }
 
 fn dispatch_show(model: &GalaxyModel, target: &ShowTarget) -> Result<String, String> {
@@ -279,6 +375,7 @@ NMS Copilot -- Interactive Galaxy Explorer
 
 Commands:
   find       Search planets by biome, distance, name
+  route      Plan a route through discovered systems
   show       Show system or base details
   stats      Display aggregate galaxy statistics
   convert    Convert between coordinate formats
@@ -291,6 +388,8 @@ Commands:
 
 Examples:
   find --biome Lush --nearest 5
+  route --biome Lush --warp-range 2500
+  route --target \"Alpha Base\" --target \"Beta Base\"
   show system 0x050003AB8C07
   show base \"Acadia National Park\"
   stats --biomes

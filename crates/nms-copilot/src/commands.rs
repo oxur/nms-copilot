@@ -102,6 +102,41 @@ pub enum Action {
         galaxy: String,
     },
 
+    /// Plan a route through discovered systems.
+    Route {
+        /// Filter targets by biome (e.g., Lush, Toxic).
+        #[arg(long)]
+        biome: Option<String>,
+
+        /// Named targets (bases or systems) to visit.
+        #[arg(long = "target", num_args = 1)]
+        targets: Vec<String>,
+
+        /// Start from this base name (default: current position).
+        #[arg(long)]
+        from: Option<String>,
+
+        /// Ship warp range in light-years (for hop constraints).
+        #[arg(long)]
+        warp_range: Option<f64>,
+
+        /// Only consider targets within this radius in light-years.
+        #[arg(long)]
+        within: Option<f64>,
+
+        /// Maximum number of targets to visit.
+        #[arg(long)]
+        max_targets: Option<usize>,
+
+        /// Routing algorithm: nn, nearest-neighbor, 2opt, two-opt.
+        #[arg(long)]
+        algo: Option<String>,
+
+        /// Return to starting system at the end.
+        #[arg(long)]
+        round_trip: bool,
+    },
+
     /// Set session context (position, biome filter, warp range).
     Set {
         #[command(subcommand)]
@@ -357,6 +392,50 @@ mod tests {
         match action {
             Action::Reset { target } => assert_eq!(target, "all"),
             _ => panic!("Expected Reset"),
+        }
+    }
+
+    #[test]
+    fn test_parse_route_with_biome_and_warp_range() {
+        let action = parse_line("route --biome Lush --warp-range 2500")
+            .unwrap()
+            .unwrap();
+        match action {
+            Action::Route {
+                biome, warp_range, ..
+            } => {
+                assert_eq!(biome.as_deref(), Some("Lush"));
+                assert_eq!(warp_range, Some(2500.0));
+            }
+            _ => panic!("Expected Route"),
+        }
+    }
+
+    #[test]
+    fn test_parse_route_with_targets() {
+        let action = parse_line("route --target \"Alpha Base\" --target \"Beta Base\"")
+            .unwrap()
+            .unwrap();
+        match action {
+            Action::Route { targets, .. } => {
+                assert_eq!(targets.len(), 2);
+                assert_eq!(targets[0], "Alpha Base");
+                assert_eq!(targets[1], "Beta Base");
+            }
+            _ => panic!("Expected Route"),
+        }
+    }
+
+    #[test]
+    fn test_parse_route_round_trip() {
+        let action = parse_line("route --biome Lush --round-trip")
+            .unwrap()
+            .unwrap();
+        match action {
+            Action::Route { round_trip, .. } => {
+                assert!(round_trip);
+            }
+            _ => panic!("Expected Route"),
         }
     }
 

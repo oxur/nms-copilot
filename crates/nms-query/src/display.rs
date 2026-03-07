@@ -4,6 +4,7 @@
 //! No ANSI color codes yet (added in Phase 7 polish).
 
 use crate::find::FindResult;
+use crate::route::RouteResult;
 use crate::show::{ShowBaseResult, ShowResult, ShowSystemResult};
 use crate::stats::StatsResult;
 
@@ -234,6 +235,96 @@ pub fn format_stats(result: &StatsResult) -> String {
     out
 }
 
+/// Format a route result as an itinerary table.
+///
+/// ```text
+///   Hop  System                Distance    Cumulative   Portal Glyphs
+///     1  System Name              0 ly         0 ly     [emoji]
+///     2  Other System           18K ly       18K ly     [emoji]
+///    *   (waypoint)              2K ly       20K ly     [emoji]
+///     3  Final System             4K ly       24K ly     [emoji]
+///
+///   Route: 3 targets, 24K ly total (10 warp jumps at 2K ly range)
+///   Algorithm: 2-opt
+/// ```
+pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel) -> String {
+    if result.route.hops.is_empty() {
+        return "  No route computed.\n".to_string();
+    }
+
+    let mut out = String::new();
+
+    // Header
+    out.push_str(&format!(
+        "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
+        "Hop", "System", "Distance", "Cumulative", "Portal Glyphs"
+    ));
+
+    let mut hop_number = 0u32;
+    for hop in &result.route.hops {
+        let system_name = model
+            .system(&hop.system_id)
+            .and_then(|s| s.name.as_deref())
+            .unwrap_or("(unnamed)");
+
+        let portal_hex = model
+            .system(&hop.system_id)
+            .map(|s| format!("{:012X}", s.address.packed()))
+            .unwrap_or_else(|| format!("{:012X}", hop.system_id.0));
+        let glyphs = hex_to_emoji(&portal_hex);
+
+        let distance = format_distance(hop.leg_distance_ly);
+        let cumulative = format_distance(hop.cumulative_ly);
+
+        if hop.is_waypoint {
+            let display_name = format!("\u{21B3} {}", truncate(system_name, 19));
+            out.push_str(&format!(
+                "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
+                "*", display_name, distance, cumulative, glyphs,
+            ));
+        } else {
+            hop_number += 1;
+            out.push_str(&format!(
+                "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
+                hop_number,
+                truncate(system_name, 21),
+                distance,
+                cumulative,
+                glyphs,
+            ));
+        }
+    }
+
+    // Summary line
+    out.push('\n');
+    let total = format_distance(result.route.total_distance_ly);
+    match (result.warp_jumps, result.warp_range) {
+        (Some(jumps), Some(range)) => {
+            out.push_str(&format!(
+                "  Route: {} targets, {} total ({} warp jumps at {} range)\n",
+                result.targets_visited,
+                total,
+                jumps,
+                format_distance(range),
+            ));
+        }
+        _ => {
+            out.push_str(&format!(
+                "  Route: {} targets, {} total\n",
+                result.targets_visited, total,
+            ));
+        }
+    }
+
+    let algo_name = match result.algorithm {
+        nms_graph::RoutingAlgorithm::NearestNeighbor => "nearest-neighbor",
+        nms_graph::RoutingAlgorithm::TwoOpt => "2-opt",
+    };
+    out.push_str(&format!("  Algorithm: {algo_name}\n"));
+
+    out
+}
+
 /// Truncate a string to `max_len` characters, appending "..." if truncated.
 fn truncate(s: &str, max_len: usize) -> String {
     if s.len() <= max_len {
@@ -385,5 +476,167 @@ mod tests {
     #[test]
     fn test_truncate_exact_length() {
         assert_eq!(truncate("hello", 5), "hello");
+    }
+
+    fn test_route_model() -> nms_graph::GalaxyModel {
+        let json = r#"{
+            "Version": 4720, "Platform": "Mac|Final", "ActiveContext": "Main",
+            "CommonStateData": {"SaveName": "Test", "TotalPlayTime": 100},
+            "BaseContext": {
+                "GameMode": 1,
+                "PlayerStateData": {
+                    "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 1, "PlanetIndex": 0}},
+                    "Units": 0, "Nanites": 0, "Specials": 0,
+                    "PersistentPlayerBases": []
+                }
+            },
+            "ExpeditionContext": {"GameMode": 6, "PlayerStateData": {"UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0}}, "Units": 0, "Nanites": 0, "Specials": 0, "PersistentPlayerBases": []}},
+            "DiscoveryManagerData": {"DiscoveryData-v1": {"ReserveStore": 0, "ReserveManaged": 0, "Store": {"Record": [
+                {"DD": {"UA": "0x001000000064", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
+            ]}}}
+        }"#;
+        nms_save::parse_save(json.as_bytes())
+            .map(|save| nms_graph::GalaxyModel::from_save(&save))
+            .unwrap()
+    }
+
+    #[test]
+    fn test_format_route_empty() {
+        let model = test_route_model();
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![],
+                total_distance_ly: 0.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            targets_visited: 0,
+        };
+        let output = format_route(&result, &model);
+        assert!(output.contains("No route computed"));
+    }
+
+    #[test]
+    fn test_format_route_header_present() {
+        let model = test_route_model();
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![nms_graph::RouteHop {
+                    system_id: nms_graph::SystemId(0x001000000064),
+                    leg_distance_ly: 0.0,
+                    cumulative_ly: 0.0,
+                    is_waypoint: false,
+                }],
+                total_distance_ly: 0.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            targets_visited: 0,
+        };
+        let output = format_route(&result, &model);
+        assert!(output.contains("Hop"));
+        assert!(output.contains("System"));
+        assert!(output.contains("Distance"));
+        assert!(output.contains("Cumulative"));
+        assert!(output.contains("Portal Glyphs"));
+    }
+
+    #[test]
+    fn test_format_route_algorithm_shown() {
+        let model = test_route_model();
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![nms_graph::RouteHop {
+                    system_id: nms_graph::SystemId(0x001000000064),
+                    leg_distance_ly: 0.0,
+                    cumulative_ly: 0.0,
+                    is_waypoint: false,
+                }],
+                total_distance_ly: 0.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::NearestNeighbor,
+            targets_visited: 0,
+        };
+        let output = format_route(&result, &model);
+        assert!(output.contains("Algorithm: nearest-neighbor"));
+
+        let result_2opt = RouteResult {
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            ..result
+        };
+        let output_2opt = format_route(&result_2opt, &model);
+        assert!(output_2opt.contains("Algorithm: 2-opt"));
+    }
+
+    #[test]
+    fn test_format_route_warp_jumps_shown() {
+        let model = test_route_model();
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![
+                    nms_graph::RouteHop {
+                        system_id: nms_graph::SystemId(0x001000000064),
+                        leg_distance_ly: 0.0,
+                        cumulative_ly: 0.0,
+                        is_waypoint: false,
+                    },
+                    nms_graph::RouteHop {
+                        system_id: nms_graph::SystemId(0x002000000C80),
+                        leg_distance_ly: 5000.0,
+                        cumulative_ly: 5000.0,
+                        is_waypoint: false,
+                    },
+                ],
+                total_distance_ly: 5000.0,
+            },
+            warp_range: Some(2000.0),
+            warp_jumps: Some(3),
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            targets_visited: 1,
+        };
+        let output = format_route(&result, &model);
+        assert!(output.contains("3 warp jumps"));
+        assert!(output.contains("2K ly range"));
+    }
+
+    #[test]
+    fn test_format_route_waypoint_marker() {
+        let model = test_route_model();
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![
+                    nms_graph::RouteHop {
+                        system_id: nms_graph::SystemId(0x001000000064),
+                        leg_distance_ly: 0.0,
+                        cumulative_ly: 0.0,
+                        is_waypoint: false,
+                    },
+                    nms_graph::RouteHop {
+                        system_id: nms_graph::SystemId(0x001000000064),
+                        leg_distance_ly: 1000.0,
+                        cumulative_ly: 1000.0,
+                        is_waypoint: true,
+                    },
+                    nms_graph::RouteHop {
+                        system_id: nms_graph::SystemId(0x001000000064),
+                        leg_distance_ly: 1000.0,
+                        cumulative_ly: 2000.0,
+                        is_waypoint: false,
+                    },
+                ],
+                total_distance_ly: 2000.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            targets_visited: 1,
+        };
+        let output = format_route(&result, &model);
+        assert!(output.contains("*"));
+        assert!(output.contains("\u{21B3}"));
     }
 }
