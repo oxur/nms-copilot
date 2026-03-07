@@ -9,13 +9,18 @@ use fabryk_mcp::{
 };
 use tokio::sync::RwLock;
 
+mod config;
 mod tools;
 
+use config::McpConfig;
 use tools::NmsTools;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::init();
+    let mcp_config = McpConfig::load();
+    if let Err(e) = twyg::setup(mcp_config.logging.to_twyg_opts()) {
+        eprintln!("Warning: Failed to initialize logging: {e}");
+    }
 
     let save_path = parse_save_arg();
     let transport = parse_transport();

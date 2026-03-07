@@ -26,8 +26,10 @@ fabryk-mcp = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-log = "0.4"
-env_logger = "0.11"
+toml = { workspace = true }
+dirs = { workspace = true }
+twyg = { workspace = true }
+log = { workspace = true }
 
 [features]
 default = []

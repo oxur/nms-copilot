@@ -36,6 +36,9 @@ nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 fabryk-mcp = { path = "../ecl/crates/fabryk-mcp" }
 tokio = { version = "1", features = ["full"] }
 
+twyg = "0.6"
+log = "0.4"
+
 chrono = { version = "0.4", features = ["serde"] }
 notify = "7"
 notify-debouncer-mini = "0.5"
