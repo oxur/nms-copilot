@@ -2,12 +2,10 @@
 
 use std::path::PathBuf;
 
-use reedline::{DefaultPrompt, DefaultPromptSegment, Reedline, Signal};
+use reedline::{DefaultPrompt, DefaultPromptSegment, FileBackedHistory, Reedline, Signal};
 
+use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
-
-mod commands;
-mod dispatch;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -36,7 +34,7 @@ fn main() {
         DefaultPromptSegment::Empty,
     );
 
-    let mut editor = Reedline::create();
+    let mut editor = build_editor();
 
     loop {
         match editor.read_line(&prompt) {
@@ -68,6 +66,23 @@ fn main() {
     }
 
     println!("Goodbye!");
+}
+
+fn build_editor() -> Reedline {
+    if let Err(e) = paths::ensure_data_dir() {
+        eprintln!("Warning: could not create data directory: {e}");
+        return Reedline::create();
+    }
+
+    let history = match FileBackedHistory::with_file(1000, paths::history_path()) {
+        Ok(h) => h,
+        Err(e) => {
+            eprintln!("Warning: could not load history: {e}");
+            return Reedline::create();
+        }
+    };
+
+    Reedline::create().with_history(Box::new(history))
 }
 
 fn parse_save_arg(args: &[String]) -> Option<PathBuf> {

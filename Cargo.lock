@@ -581,12 +581,14 @@ name = "nms-copilot"
 version = "0.0.1"
 dependencies = [
  "clap",
+ "dirs",
  "nms-core",
  "nms-graph",
  "nms-query",
  "nms-save",
  "reedline",
  "serde_json",
+ "tempfile",
 ]
 
 [[package]]
