@@ -9,4 +9,9 @@
 //!
 //! Also handles metadata verification (`mf_save.hg`) via XXTEA + SHA-256.
 
+pub mod decompress;
+pub mod error;
 pub mod locate;
+
+pub use decompress::{SaveFormat, decompress_save, decompress_save_file, detect_format};
+pub use error::SaveError;
