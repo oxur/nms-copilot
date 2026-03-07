@@ -17,7 +17,11 @@ For Rust code quality (once code exists):
 3. `assets/ai/CLAUDE-CODE-COVERAGE.md` — Test coverage guide (target: 95%+)
 4. This file — Project-specific conventions
 
-**Note:** `assets/ai/ai-rust` is a symlink to `~/lab/oxur/ai-rust`. If it doesn't resolve, clone it: `git clone https://github.com/oxur/ai-rust assets/ai/ai-rust`
+**Important:** Note that `assets/ai/ai-rust` may be a synlink; check to be sure, before assuming there's no directory if a directory check failes. If a symlink check files and you have confirmed that `assets/ai/ai-rust` does not exist on the file system, ask permission to clone it:
+
+```bash
+git clone https://github.com/oxur/ai-rust assets/ai/ai-rust
+```
 
 ## Design Documents
 
