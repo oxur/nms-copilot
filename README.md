@@ -188,19 +188,34 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — not yet functional.
+🚧 **Under active development** — Phase 1 in progress.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| 1. Foundation | 🔲 | Core types, parsers, coordinate converter |
+| 1. Foundation | 🟡 | Core types, parsers, coordinate converter |
 | 2. Search | 🔲 | In-memory model, find/show/stats commands |
 | 3. REPL & Cache | 🔲 | Interactive copilot, fast startup |
 | 4. Routing | 🔲 | Pathfinding, TSP, warp-range planning |
 | 5. Live Watch | 🔲 | Real-time save file monitoring |
 | 6. MCP Server | 🔲 | AI copilot integration |
 | 7. Polish | 🔲 | Export, docs, crates.io |
+
+### Phase 1 Progress
+
+| Milestone | Status | Description |
+|-----------|--------|-------------|
+| 1.0 Workspace scaffold | ✅ | Cargo workspace with all 11 crates |
+| 1.1 Design documents | ✅ | ODM-managed project plan and resources |
+| 1.2 Core types | ✅ | `GalacticAddress`, `PortalAddress`, `Glyph`, `Biome`, `Galaxy`, `System`, `Planet`, `PlayerState`, `Discovery` |
+| 1.3 Portal glyph converter | ✅ | Full multidirectional conversion: hex, emoji, name, coordinates, signal booster |
+| 1.4 Distance calculator | ✅ | Euclidean voxel distance × 400 ly, special system detection |
+| 1.5 LZ4 decompressor | ✅ | Block-level LZ4 decompression with magic `0xFEEDA1E5` header parsing |
+| 1.6 Save file discovery | ✅ | Platform-specific save directory resolution, slot/type parsing |
+| 1.7 XXTEA metadata decryption | 🟡 | Key derivation and encrypt/decrypt for `mf_save.hg` |
+| 1.8 Key deobfuscation | 🔲 | `mapping.json` key remapping for save JSON |
+| 1.9 Save deserializer | 🔲 | Full typed deserialization into core structs |
 
 ---
 
@@ -216,7 +231,7 @@ cargo install nms-copilot
 
 ## Requirements
 
-- **Rust** 1.75+ (2024 edition)
+- **Rust** 1.85+ (2024 edition)
 - **No Man's Sky** save files (Steam, GOG, or Mac)
 - A terminal with emoji support (most modern terminals)
 
