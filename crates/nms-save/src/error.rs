@@ -22,6 +22,25 @@ pub enum SaveError {
     )]
     ChunkTooLarge { offset: usize, declared: u32 },
 
+    /// Metadata file has an invalid length (not one of the known sizes).
+    #[error("invalid metadata file length: {length} bytes")]
+    InvalidMetaLength { length: usize },
+
+    /// Metadata decryption failed -- magic sentinel not found after trying all slots.
+    #[error("metadata decryption failed: magic sentinel not found")]
+    MetaDecryptionFailed,
+
+    /// Metadata format version is unsupported (e.g., 2000/vanilla).
+    #[error("unsupported metadata format version: {version:#x}")]
+    UnsupportedMetaFormat { version: u32 },
+
+    /// SHA-256 verification failed.
+    #[error("SHA-256 mismatch")]
+    Sha256Mismatch {
+        expected: [u8; 32],
+        actual: [u8; 32],
+    },
+
     /// Wrapper for std::io::Error (file I/O).
     #[error("I/O error: {0}")]
     Io(#[from] std::io::Error),
