@@ -12,10 +12,12 @@ pub mod error;
 pub mod extract;
 pub mod model;
 pub mod query;
+pub mod route;
 pub mod spatial;
 
 pub use edges::EdgeStrategy;
 pub use error::GraphError;
 pub use model::GalaxyModel;
 pub use query::BiomeFilter;
+pub use route::{Route, RouteError, RouteHop, RoutingAlgorithm};
 pub use spatial::{SystemId, SystemPoint};
