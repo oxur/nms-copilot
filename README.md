@@ -188,7 +188,7 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — Phases 1-3 complete, Phase 4 next.
+🚧 **Under active development** — Phases 1-4 complete, Phase 5 next.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
@@ -197,7 +197,7 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 1. Foundation | ✅ | Core types, parsers, coordinate converter, CLI |
 | 2. Search & Display | ✅ | In-memory model, find/show/stats commands |
 | 3. REPL & Cache | ✅ | Interactive copilot, session state, rkyv cache, config file |
-| 4. Routing | 🔲 | Pathfinding, TSP, warp-range planning |
+| 4. Routing | ✅ | Pathfinding, TSP, warp-range planning |
 | 5. Live Watch | 🔲 | Real-time save file monitoring |
 | 6. MCP Server | 🔲 | AI copilot integration |
 | 7. Polish | 🔲 | Export, docs, crates.io |
@@ -244,6 +244,18 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 3.6 rkyv serialization | ✅ | Zero-copy cache format with `CacheData`; serialize/deserialize roundtrip |
 | 3.7 Cache management | ✅ | mtime-based freshness, `load_or_rebuild` startup path, `--no-cache` flag |
 | 3.8 Config file | ✅ | TOML config at `~/.nms-copilot/config.toml` — save path, display, defaults, cache |
+
+### Phase 4 Progress
+
+| Milestone | Status | Description |
+|-----------|--------|-------------|
+| 4.1 Shortest path | ✅ | Dijkstra via `petgraph::algo::astar` with zero heuristic |
+| 4.2 TSP nearest-neighbor | ✅ | Greedy nearest-neighbor tour using Euclidean distances |
+| 4.3 TSP 2-opt | ✅ | Local search improvement over NN initial tour |
+| 4.4 Hop-constrained routing | ✅ | Waypoint insertion via R-tree when legs exceed warp range |
+| 4.5 Route query | ✅ | `RouteQuery` with biome/named/system-id targets, `execute_route()` pipeline |
+| 4.6 Route display | ✅ | Itinerary table with waypoint markers, warp jump counts, algorithm labels |
+| 4.7 `nms route` command | ✅ | CLI and REPL integration with session-aware defaults |
 
 ---
 
