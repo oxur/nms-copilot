@@ -482,6 +482,8 @@ version = "0.0.1"
 dependencies = [
  "clap",
  "nms-core",
+ "nms-graph",
+ "nms-query",
  "nms-save",
 ]
 

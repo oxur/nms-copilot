@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use std::process;
 
 mod convert;
+mod find;
 mod info;
 
 #[derive(Parser)]
@@ -24,6 +25,41 @@ enum Commands {
         /// If omitted, auto-detects the most recent save.
         #[arg(long)]
         save: Option<PathBuf>,
+    },
+
+    /// Search planets by biome, distance, name.
+    Find {
+        /// Path to save file (auto-detects if omitted).
+        #[arg(long)]
+        save: Option<PathBuf>,
+
+        /// Filter by biome (e.g., Lush, Toxic, Scorched).
+        #[arg(long)]
+        biome: Option<String>,
+
+        /// Only show infested planets.
+        #[arg(long)]
+        infested: bool,
+
+        /// Only within this radius in light-years.
+        #[arg(long)]
+        within: Option<f64>,
+
+        /// Show only the N nearest results.
+        #[arg(long)]
+        nearest: Option<usize>,
+
+        /// Only show named planets/systems.
+        #[arg(long)]
+        named: bool,
+
+        /// Filter by discoverer username (substring match).
+        #[arg(long)]
+        discoverer: Option<String>,
+
+        /// Distance from this base name (default: current position).
+        #[arg(long)]
+        from: Option<String>,
     },
 
     /// Convert between NMS coordinate formats.
@@ -63,6 +99,25 @@ fn main() {
 
     let result = match cli.command {
         Commands::Info { save } => info::run(save),
+        Commands::Find {
+            save,
+            biome,
+            infested,
+            within,
+            nearest,
+            named,
+            discoverer,
+            from,
+        } => find::run(find::FindArgs {
+            save,
+            biome,
+            infested,
+            within,
+            nearest,
+            named,
+            discoverer,
+            from,
+        }),
         Commands::Convert {
             glyphs,
             coords,
