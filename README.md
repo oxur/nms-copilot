@@ -188,7 +188,7 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — Phases 1-2 complete, Phase 3 next.
+🚧 **Under active development** — Phases 1-3 complete, Phase 4 next.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
@@ -196,7 +196,7 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 |-------|--------|-------------|
 | 1. Foundation | ✅ | Core types, parsers, coordinate converter, CLI |
 | 2. Search & Display | ✅ | In-memory model, find/show/stats commands |
-| 3. REPL & Cache | 🔲 | Interactive copilot, fast startup |
+| 3. REPL & Cache | ✅ | Interactive copilot, session state, rkyv cache, config file |
 | 4. Routing | 🔲 | Pathfinding, TSP, warp-range planning |
 | 5. Live Watch | 🔲 | Real-time save file monitoring |
 | 6. MCP Server | 🔲 | AI copilot integration |
@@ -231,6 +231,19 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 2.6 `nms find` command | ✅ | Search by biome, distance, discoverer with emoji glyph output |
 | 2.7 `nms show` command | ✅ | Detail views for systems (by name or hex) and bases |
 | 2.8 `nms stats` command | ✅ | Aggregate statistics with biome distribution table |
+
+### Phase 3 Progress
+
+| Milestone | Status | Description |
+|-----------|--------|-------------|
+| 3.1 REPL scaffold | ✅ | reedline REPL loop with command parsing and dispatch |
+| 3.2 History & key bindings | ✅ | File-backed history at `~/.nms-copilot/history.txt` |
+| 3.3 Tab completion | ✅ | Context-aware completion for commands, flags, bases, systems, biomes |
+| 3.4 Session context | ✅ | Persistent position, biome filter, warp range; `set`/`reset`/`status` commands |
+| 3.5 Context-aware prompt | ✅ | Dynamic prompt showing galaxy, biome filter, and planet count |
+| 3.6 rkyv serialization | ✅ | Zero-copy cache format with `CacheData`; serialize/deserialize roundtrip |
+| 3.7 Cache management | ✅ | mtime-based freshness, `load_or_rebuild` startup path, `--no-cache` flag |
+| 3.8 Config file | ✅ | TOML config at `~/.nms-copilot/config.toml` — save path, display, defaults, cache |
 
 ---
 
