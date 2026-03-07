@@ -15,7 +15,7 @@ members = [
 resolver = "3"
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.85"
 license = "MIT OR Apache-2.0"
@@ -25,13 +25,13 @@ authors = ["oubiwann <oubiwann@gmail.com>"]
 categories = ["games", "command-line-utilities"]
 
 [workspace.dependencies]
-nms-core = { path = "crates/nms-core", version = "0.1.0" }
-nms-save = { path = "crates/nms-save", version = "0.1.0" }
-nms-compat = { path = "crates/nms-compat", version = "0.1.0" }
-nms-graph = { path = "crates/nms-graph", version = "0.1.0" }
-nms-query = { path = "crates/nms-query", version = "0.1.0" }
-nms-watch = { path = "crates/nms-watch", version = "0.1.0" }
-nms-cache = { path = "crates/nms-cache", version = "0.1.0" }
+nms-core = { path = "crates/nms-core", version = "0.2.0" }
+nms-save = { path = "crates/nms-save", version = "0.2.0" }
+nms-compat = { path = "crates/nms-compat", version = "0.2.0" }
+nms-graph = { path = "crates/nms-graph", version = "0.2.0" }
+nms-query = { path = "crates/nms-query", version = "0.2.0" }
+nms-watch = { path = "crates/nms-watch", version = "0.2.0" }
+nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 
 chrono = { version = "0.4", features = ["serde"] }
 notify = "7"
