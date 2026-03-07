@@ -9,10 +9,15 @@ use nms_query::find::{FindQuery, ReferencePoint, execute_find};
 use nms_query::show::{ShowQuery, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
 
-use crate::commands::{Action, ShowTarget};
+use crate::commands::{Action, SetTarget, ShowTarget};
+use crate::session::SessionState;
 
 /// Execute a parsed REPL action against the model, returning output text.
-pub fn dispatch(action: &Action, model: &GalaxyModel) -> Result<String, String> {
+pub fn dispatch(
+    action: &Action,
+    model: &GalaxyModel,
+    session: &mut SessionState,
+) -> Result<String, String> {
     match action {
         Action::Find {
             biome,
@@ -27,7 +32,8 @@ pub fn dispatch(action: &Action, model: &GalaxyModel) -> Result<String, String> 
                 .as_ref()
                 .map(|s| s.parse::<Biome>())
                 .transpose()
-                .map_err(|e| format!("Invalid biome: {e}"))?;
+                .map_err(|e| format!("Invalid biome: {e}"))?
+                .or(session.biome_filter);
 
             let reference = match from {
                 Some(name) => ReferencePoint::Base(name.clone()),
@@ -62,6 +68,10 @@ pub fn dispatch(action: &Action, model: &GalaxyModel) -> Result<String, String> 
             let result = execute_stats(model, &query);
             Ok(format_stats(&result))
         }
+
+        Action::Set { target } => dispatch_set(model, session, target),
+        Action::Reset { target } => Ok(dispatch_reset(model, session, target)),
+        Action::Status => Ok(session.format_status()),
 
         Action::Info => {
             let systems = model.systems.len();
@@ -101,6 +111,31 @@ fn dispatch_show(model: &GalaxyModel, target: &ShowTarget) -> Result<String, Str
     };
     let result = execute_show(model, &query).map_err(|e| e.to_string())?;
     Ok(format_show_result(&result))
+}
+
+fn dispatch_set(
+    model: &GalaxyModel,
+    session: &mut SessionState,
+    target: &SetTarget,
+) -> Result<String, String> {
+    match target {
+        SetTarget::Position { name } => session.set_position_base(name, model),
+        SetTarget::Biome { name } => {
+            let biome: Biome = name.parse().map_err(|e| format!("Invalid biome: {e}"))?;
+            Ok(session.set_biome_filter(biome))
+        }
+        SetTarget::WarpRange { ly } => Ok(session.set_warp_range(*ly)),
+    }
+}
+
+fn dispatch_reset(model: &GalaxyModel, session: &mut SessionState, target: &str) -> String {
+    match target.to_lowercase().as_str() {
+        "position" | "pos" => session.reset_position(model),
+        "biome" => session.clear_biome_filter().into(),
+        "warp-range" | "warp" => session.clear_warp_range().into(),
+        "all" | "" => session.reset_all(model).into(),
+        other => format!("Unknown reset target: {other}. Use: position, biome, warp-range, all"),
+    }
 }
 
 fn dispatch_convert(
@@ -247,6 +282,9 @@ Commands:
   show       Show system or base details
   stats      Display aggregate galaxy statistics
   convert    Convert between coordinate formats
+  set        Set session context (position, biome, warp-range)
+  reset      Reset session state (position, biome, warp-range, all)
+  status     Show current session state
   info       Show loaded model summary
   help       Show this help message
   exit/quit  Exit the REPL
@@ -257,6 +295,11 @@ Examples:
   show base \"Acadia National Park\"
   stats --biomes
   convert --glyphs 01717D8A4EA2
+  set biome Lush
+  set position \"Home Base\"
+  set warp-range 2500
+  reset biome
+  status
 "
     .into()
 }

@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use reedline::{DefaultPrompt, DefaultPromptSegment, FileBackedHistory, Reedline, Signal};
 
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
+use nms_copilot::session::SessionState;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
 
@@ -38,6 +39,7 @@ fn main() {
     let completions = build_model_completions(&model);
     let completer = Box::new(CopilotCompleter::new(completions));
     let mut editor = build_editor(completer);
+    let mut session = SessionState::from_model(&model);
 
     loop {
         match editor.read_line(&prompt) {
@@ -46,7 +48,7 @@ fn main() {
                     if matches!(action, commands::Action::Exit | commands::Action::Quit) {
                         break;
                     }
-                    match dispatch::dispatch(&action, &model) {
+                    match dispatch::dispatch(&action, &model, &mut session) {
                         Ok(output) => {
                             if !output.is_empty() {
                                 print!("{output}");

@@ -102,6 +102,22 @@ pub enum Action {
         galaxy: String,
     },
 
+    /// Set session context (position, biome filter, warp range).
+    Set {
+        #[command(subcommand)]
+        target: SetTarget,
+    },
+
+    /// Reset session state.
+    Reset {
+        /// What to reset (position, biome, warp-range, all).
+        #[arg(default_value = "all")]
+        target: String,
+    },
+
+    /// Show current session state.
+    Status,
+
     /// Display save file summary.
     Info,
 
@@ -113,6 +129,26 @@ pub enum Action {
 
     /// Exit the REPL.
     Quit,
+}
+
+#[derive(Subcommand, Debug)]
+pub enum SetTarget {
+    /// Set reference position to a base name.
+    Position {
+        /// Base name or address.
+        name: String,
+    },
+    /// Set active biome filter.
+    Biome {
+        /// Biome name (e.g., Lush, Toxic).
+        name: String,
+    },
+    /// Set default warp range.
+    #[command(name = "warp-range")]
+    WarpRange {
+        /// Range in light-years.
+        ly: f64,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -274,5 +310,62 @@ mod tests {
     fn test_parse_info() {
         let action = parse_line("info").unwrap().unwrap();
         assert!(matches!(action, Action::Info));
+    }
+
+    #[test]
+    fn test_parse_status() {
+        let action = parse_line("status").unwrap().unwrap();
+        assert!(matches!(action, Action::Status));
+    }
+
+    #[test]
+    fn test_parse_set_biome() {
+        let action = parse_line("set biome Lush").unwrap().unwrap();
+        match action {
+            Action::Set {
+                target: SetTarget::Biome { name },
+            } => assert_eq!(name, "Lush"),
+            _ => panic!("Expected Set Biome"),
+        }
+    }
+
+    #[test]
+    fn test_parse_set_position() {
+        let action = parse_line("set position \"Home Base\"").unwrap().unwrap();
+        match action {
+            Action::Set {
+                target: SetTarget::Position { name },
+            } => assert_eq!(name, "Home Base"),
+            _ => panic!("Expected Set Position"),
+        }
+    }
+
+    #[test]
+    fn test_parse_set_warp_range() {
+        let action = parse_line("set warp-range 2500").unwrap().unwrap();
+        match action {
+            Action::Set {
+                target: SetTarget::WarpRange { ly },
+            } => assert_eq!(ly, 2500.0),
+            _ => panic!("Expected Set WarpRange"),
+        }
+    }
+
+    #[test]
+    fn test_parse_reset_default() {
+        let action = parse_line("reset").unwrap().unwrap();
+        match action {
+            Action::Reset { target } => assert_eq!(target, "all"),
+            _ => panic!("Expected Reset"),
+        }
+    }
+
+    #[test]
+    fn test_parse_reset_biome() {
+        let action = parse_line("reset biome").unwrap().unwrap();
+        match action {
+            Action::Reset { target } => assert_eq!(target, "biome"),
+            _ => panic!("Expected Reset"),
+        }
     }
 }

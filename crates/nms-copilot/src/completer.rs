@@ -31,7 +31,7 @@ impl CopilotCompleter {
 }
 
 const COMMANDS: &[&str] = &[
-    "find", "show", "stats", "convert", "info", "help", "exit", "quit",
+    "find", "show", "stats", "convert", "set", "reset", "status", "info", "help", "exit", "quit",
 ];
 
 const SHOW_SUBCOMMANDS: &[&str] = &["system", "base"];
@@ -51,6 +51,10 @@ const STATS_FLAGS: &[&str] = &["--biomes", "--discoveries"];
 const CONVERT_FLAGS: &[&str] = &[
     "--glyphs", "--coords", "--ga", "--voxel", "--ssi", "--planet", "--galaxy",
 ];
+
+const SET_SUBCOMMANDS: &[&str] = &["position", "biome", "warp-range"];
+
+const RESET_TARGETS: &[&str] = &["position", "biome", "warp-range", "all"];
 
 const BIOME_NAMES: &[&str] = &[
     "Lush",
@@ -98,6 +102,26 @@ impl Completer for CopilotCompleter {
             ["show", "system", _] if !trailing_space => {
                 return self.complete_names(words[2], &self.model_data.system_names, pos);
             }
+
+            ["set"] if trailing_space => ("", SET_SUBCOMMANDS.to_vec()),
+            ["set", _] if !trailing_space => (words[1], SET_SUBCOMMANDS.to_vec()),
+
+            ["set", "biome"] if trailing_space => {
+                return self.filter_suggestions("", BIOME_NAMES, pos);
+            }
+            ["set", "biome", _] if !trailing_space => {
+                return self.filter_suggestions(words[2], BIOME_NAMES, pos);
+            }
+
+            ["set", "position"] if trailing_space => {
+                return self.complete_names("", &self.model_data.base_names, pos);
+            }
+            ["set", "position", _] if !trailing_space => {
+                return self.complete_names(words[2], &self.model_data.base_names, pos);
+            }
+
+            ["reset"] if trailing_space => ("", RESET_TARGETS.to_vec()),
+            ["reset", _] if !trailing_space => (words[1], RESET_TARGETS.to_vec()),
 
             [cmd, ..] if *cmd == "find" => {
                 return self.complete_find_context(line_to_pos, &words, pos);

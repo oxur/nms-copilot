@@ -4,3 +4,4 @@ pub mod commands;
 pub mod completer;
 pub mod dispatch;
 pub mod paths;
+pub mod session;
