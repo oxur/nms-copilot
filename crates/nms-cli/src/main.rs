@@ -5,6 +5,7 @@ use std::process;
 mod convert;
 mod find;
 mod info;
+mod show;
 
 #[derive(Parser)]
 #[command(
@@ -62,6 +63,16 @@ enum Commands {
         from: Option<String>,
     },
 
+    /// Show detailed information about a system or base.
+    Show {
+        /// Path to save file (auto-detects if omitted).
+        #[arg(long)]
+        save: Option<PathBuf>,
+
+        #[command(subcommand)]
+        target: ShowTargetCmd,
+    },
+
     /// Convert between NMS coordinate formats.
     Convert {
         /// Portal glyphs as 12 hex digits (e.g., 01717D8A4EA2).
@@ -94,6 +105,20 @@ enum Commands {
     },
 }
 
+#[derive(Subcommand)]
+enum ShowTargetCmd {
+    /// Show system details.
+    System {
+        /// System name or hex address.
+        name: String,
+    },
+    /// Show base details.
+    Base {
+        /// Base name (case-insensitive).
+        name: String,
+    },
+}
+
 fn main() {
     let cli = Cli::parse();
 
@@ -118,6 +143,13 @@ fn main() {
             discoverer,
             from,
         }),
+        Commands::Show { save, target } => {
+            let target = match target {
+                ShowTargetCmd::System { name } => show::ShowTarget::System { name },
+                ShowTargetCmd::Base { name } => show::ShowTarget::Base { name },
+            };
+            show::run(save, target)
+        }
         Commands::Convert {
             glyphs,
             coords,
