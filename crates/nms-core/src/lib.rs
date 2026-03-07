@@ -2,6 +2,7 @@
 
 pub mod address;
 pub mod biome;
+pub mod delta;
 pub mod discovery;
 pub mod galaxy;
 pub mod glyph;
@@ -10,8 +11,9 @@ pub mod system;
 
 pub use address::{AddressParseError, GalacticAddress, PortalAddress, PortalParseError};
 pub use biome::{Biome, BiomeParseError, BiomeSubType};
+pub use delta::{PlayerMoved, SaveDelta};
 pub use discovery::{Discovery, DiscoveryParseError, DiscoveryRecord};
 pub use galaxy::{Galaxy, GalaxyType, GalaxyTypeParseError};
 pub use glyph::{Glyph, GlyphParseError};
 pub use player::{BaseType, BaseTypeParseError, PlayerBase, PlayerState};
-pub use system::{Planet, System};
+pub use system::{Planet, System, SystemId};

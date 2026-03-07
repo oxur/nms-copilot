@@ -1,21 +1,7 @@
 use rstar::{AABB, PointDistance, RTreeObject};
 
-/// Unique identifier for a star system.
-///
-/// The value is the packed 48-bit galactic address with planet index zeroed out
-/// (i.e., bits 47-44 cleared). Two systems at the same voxel coordinates but
-/// different SSI values get different IDs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct SystemId(pub u64);
-
-impl SystemId {
-    /// Create from a `GalacticAddress` by zeroing the planet index bits.
-    pub fn from_address(addr: &nms_core::address::GalacticAddress) -> Self {
-        // Clear the top 4 bits (planet index) of the 48-bit packed value
-        let packed = addr.packed() & 0x0FFF_FFFF_FFFF;
-        SystemId(packed)
-    }
-}
+// Re-export SystemId from nms-core (canonical definition lives there).
+pub use nms_core::system::SystemId;
 
 /// A system's position in 3D voxel space, stored in the R-tree.
 #[derive(Debug, Clone, Copy, PartialEq)]

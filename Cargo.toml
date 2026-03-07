@@ -34,6 +34,8 @@ nms-watch = { path = "crates/nms-watch", version = "0.1.0" }
 nms-cache = { path = "crates/nms-cache", version = "0.1.0" }
 
 chrono = { version = "0.4", features = ["serde"] }
+notify = "7"
+notify-debouncer-mini = "0.5"
 clap = { version = "4", features = ["derive"] }
 dirs = "6"
 petgraph = "0.8"

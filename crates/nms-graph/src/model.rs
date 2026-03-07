@@ -8,6 +8,7 @@ use rstar::RTree;
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
+use nms_core::delta::SaveDelta;
 use nms_core::player::{PlayerBase, PlayerState};
 use nms_core::system::{Planet, System};
 use nms_save::model::SaveRoot;
@@ -237,6 +238,53 @@ impl GalaxyModel {
             self.bases.insert(base.name.to_lowercase(), base);
         }
     }
+
+    /// Apply a delta from the file watcher to update the model incrementally.
+    ///
+    /// Inserts new systems and planets, updates player position, and
+    /// adds/updates bases. Does NOT rebuild graph edges -- call
+    /// `build_edges()` afterward if needed for routing.
+    pub fn apply_delta(&mut self, delta: &SaveDelta) {
+        // 1. Insert new systems (with their planets)
+        for system in &delta.new_systems {
+            self.insert_system(system.clone());
+        }
+
+        // 2. Insert new planets into existing systems
+        for (sys_id, planet) in &delta.new_planets {
+            let key = (*sys_id, planet.index);
+            if !self.planets.contains_key(&key) {
+                if let Some(biome) = planet.biome {
+                    self.biome_index.entry(biome).or_default().push(key);
+                }
+                self.planets.insert(key, planet.clone());
+
+                // Also add to the system's planet list
+                if let Some(system) = self.systems.get_mut(sys_id) {
+                    if !system.planets.iter().any(|p| p.index == planet.index) {
+                        system.planets.push(planet.clone());
+                    }
+                }
+            }
+        }
+
+        // 3. Update player position
+        if let Some(ref moved) = delta.player_moved {
+            if let Some(ref mut ps) = self.player_state {
+                ps.current_address = moved.to;
+            }
+        }
+
+        // 4. Insert new bases
+        for base in &delta.new_bases {
+            self.insert_base(base.clone());
+        }
+
+        // 5. Update modified bases (insert_base overwrites by name)
+        for base in &delta.modified_bases {
+            self.insert_base(base.clone());
+        }
+    }
 }
 
 #[cfg(test)]
@@ -433,6 +481,106 @@ mod tests {
         for &sys_id in model.systems.keys() {
             assert!(model.node_map.contains_key(&sys_id));
         }
+    }
+
+    #[test]
+    fn test_apply_delta_empty_is_noop() {
+        let save = minimal_save();
+        let mut model = GalaxyModel::from_save(&save);
+        let sys_count = model.system_count();
+        let planet_count = model.planet_count();
+        let base_count = model.base_count();
+
+        model.apply_delta(&nms_core::delta::SaveDelta::empty());
+
+        assert_eq!(model.system_count(), sys_count);
+        assert_eq!(model.planet_count(), planet_count);
+        assert_eq!(model.base_count(), base_count);
+    }
+
+    #[test]
+    fn test_apply_delta_new_system() {
+        let save = minimal_save();
+        let mut model = GalaxyModel::from_save(&save);
+        let count_before = model.system_count();
+
+        let delta = nms_core::delta::SaveDelta {
+            new_systems: vec![System::new(
+                GalacticAddress::new(500, 10, -300, 0x999, 0, 0),
+                Some("Delta System".into()),
+                None,
+                None,
+                vec![Planet::new(0, Some(Biome::Lava), None, false, None, None)],
+            )],
+            ..nms_core::delta::SaveDelta::empty()
+        };
+
+        model.apply_delta(&delta);
+        assert_eq!(model.system_count(), count_before + 1);
+        assert!(model.system_by_name("Delta System").is_some());
+    }
+
+    #[test]
+    fn test_apply_delta_player_moved() {
+        let save = minimal_save();
+        let mut model = GalaxyModel::from_save(&save);
+        let old_pos = *model.player_position().unwrap();
+        let new_addr = GalacticAddress::new(999, 0, 0, 1, 0, 0);
+
+        let delta = nms_core::delta::SaveDelta {
+            player_moved: Some(nms_core::delta::PlayerMoved {
+                from: old_pos,
+                to: new_addr,
+            }),
+            ..nms_core::delta::SaveDelta::empty()
+        };
+
+        model.apply_delta(&delta);
+        assert_eq!(model.player_position().unwrap().voxel_x(), 999);
+    }
+
+    #[test]
+    fn test_apply_delta_new_base() {
+        let save = minimal_save();
+        let mut model = GalaxyModel::from_save(&save);
+        let base_count_before = model.base_count();
+
+        let addr = GalacticAddress::new(100, 50, -200, 42, 0, 0);
+        let base = nms_core::player::PlayerBase::new(
+            "Delta Base".into(),
+            nms_core::player::BaseType::HomePlanetBase,
+            addr,
+            [0.0, 0.0, 0.0],
+            None,
+        );
+
+        let delta = nms_core::delta::SaveDelta {
+            new_bases: vec![base],
+            ..nms_core::delta::SaveDelta::empty()
+        };
+
+        model.apply_delta(&delta);
+        assert_eq!(model.base_count(), base_count_before + 1);
+        assert!(model.base("Delta Base").is_some());
+    }
+
+    #[test]
+    fn test_apply_delta_new_planet_to_existing_system() {
+        let save = minimal_save();
+        let mut model = GalaxyModel::from_save(&save);
+        let planet_count_before = model.planet_count();
+
+        let sys_id = *model.systems.keys().next().unwrap();
+        let planet = Planet::new(7, Some(Biome::Frozen), None, false, None, None);
+
+        let delta = nms_core::delta::SaveDelta {
+            new_planets: vec![(sys_id, planet)],
+            ..nms_core::delta::SaveDelta::empty()
+        };
+
+        model.apply_delta(&delta);
+        assert_eq!(model.planet_count(), planet_count_before + 1);
+        assert_eq!(model.planets_by_biome(Biome::Frozen).len(), 1);
     }
 
     #[test]

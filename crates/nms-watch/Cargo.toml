@@ -15,3 +15,8 @@ categories.workspace = true
 nms-core = { workspace = true }
 nms-save = { workspace = true }
 nms-graph = { workspace = true }
+notify = { workspace = true }
+notify-debouncer-mini = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3"
