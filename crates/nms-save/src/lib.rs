@@ -8,3 +8,5 @@
 //! 4. Deserialize into typed Rust structs via serde
 //!
 //! Also handles metadata verification (`mf_save.hg`) via XXTEA + SHA-256.
+
+pub mod locate;
