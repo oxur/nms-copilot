@@ -188,13 +188,13 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — Phase 1 in progress.
+🚧 **Under active development** — Phase 1 complete, Phase 2 next.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| 1. Foundation | 🟡 | Core types, parsers, coordinate converter |
+| 1. Foundation | ✅ | Core types, parsers, coordinate converter, CLI |
 | 2. Search | 🔲 | In-memory model, find/show/stats commands |
 | 3. REPL & Cache | 🔲 | Interactive copilot, fast startup |
 | 4. Routing | 🔲 | Pathfinding, TSP, warp-range planning |
@@ -212,10 +212,12 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 1.3 Portal glyph converter | ✅ | Full multidirectional conversion: hex, emoji, name, coordinates, signal booster |
 | 1.4 Distance calculator | ✅ | Euclidean voxel distance × 400 ly, special system detection |
 | 1.5 LZ4 decompressor | ✅ | Block-level LZ4 decompression with magic `0xFEEDA1E5` header parsing |
-| 1.6 Save file discovery | ✅ | Platform-specific save directory resolution, slot/type parsing |
-| 1.7 XXTEA metadata decryption | 🟡 | Key derivation and encrypt/decrypt for `mf_save.hg` |
-| 1.8 Key deobfuscation | 🔲 | `mapping.json` key remapping for save JSON |
-| 1.9 Save deserializer | 🔲 | Full typed deserialization into core structs |
+| 1.6 Metadata verifier | ✅ | XXTEA decrypt/encrypt, key derivation, SHA-256 verification for `mf_save.hg` |
+| 1.7 Key deobfuscation | ✅ | `mapping.json` key remapping with bundled MBINCompiler + legacy + savewizard maps |
+| 1.8 Serde deserialization | ✅ | Typed structs for save JSON with conversion to core domain types |
+| 1.9 `nms info` command | ✅ | Save file summary: play time, location, discoveries, bases, currencies |
+| 1.10 `nms convert` command | ✅ | Coordinate converter: portal glyphs, signal booster, galactic address, voxels |
+| — Save file discovery | ✅ | Platform-specific save directory resolution, account/slot/type parsing |
 
 ---
 
