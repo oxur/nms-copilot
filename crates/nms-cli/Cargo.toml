@@ -18,7 +18,4 @@ path = "src/main.rs"
 [dependencies]
 nms-core = { workspace = true }
 nms-save = { workspace = true }
-nms-compat = { workspace = true }
-nms-graph = { workspace = true }
-nms-query = { workspace = true }
-nms-cache = { workspace = true }
+clap = { version = "4", features = ["derive"] }
