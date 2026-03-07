@@ -4,6 +4,7 @@ use std::path::PathBuf;
 
 use reedline::{DefaultPrompt, DefaultPromptSegment, FileBackedHistory, Reedline, Signal};
 
+use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
 
@@ -34,7 +35,9 @@ fn main() {
         DefaultPromptSegment::Empty,
     );
 
-    let mut editor = build_editor();
+    let completions = build_model_completions(&model);
+    let completer = Box::new(CopilotCompleter::new(completions));
+    let mut editor = build_editor(completer);
 
     loop {
         match editor.read_line(&prompt) {
@@ -68,21 +71,37 @@ fn main() {
     println!("Goodbye!");
 }
 
-fn build_editor() -> Reedline {
+fn build_editor(completer: Box<CopilotCompleter>) -> Reedline {
     if let Err(e) = paths::ensure_data_dir() {
         eprintln!("Warning: could not create data directory: {e}");
-        return Reedline::create();
+        return Reedline::create().with_completer(completer);
     }
 
     let history = match FileBackedHistory::with_file(1000, paths::history_path()) {
         Ok(h) => h,
         Err(e) => {
             eprintln!("Warning: could not load history: {e}");
-            return Reedline::create();
+            return Reedline::create().with_completer(completer);
         }
     };
 
-    Reedline::create().with_history(Box::new(history))
+    Reedline::create()
+        .with_history(Box::new(history))
+        .with_completer(completer)
+}
+
+fn build_model_completions(model: &GalaxyModel) -> ModelCompletions {
+    let base_names: Vec<String> = model.bases.values().map(|b| b.name.clone()).collect();
+    let system_names: Vec<String> = model
+        .systems
+        .values()
+        .filter_map(|s| s.name.clone())
+        .collect();
+
+    ModelCompletions {
+        base_names,
+        system_names,
+    }
 }
 
 fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
