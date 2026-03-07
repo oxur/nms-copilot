@@ -8,8 +8,10 @@ use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::config::Config;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
+use nms_copilot::watch::drain_watch_events;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
+use nms_watch::{WatchConfig, WatchHandle, start_watching};
 
 fn main() {
     let config = match Config::load() {
@@ -25,13 +27,14 @@ fn main() {
     let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
     let cache_path = config.cache_path();
 
-    let (model, was_cached) = match load_model(save_path, &cache_path, no_cache) {
-        Ok(result) => result,
-        Err(e) => {
-            eprintln!("Error loading save: {e}");
-            std::process::exit(1);
-        }
-    };
+    let (model, was_cached, save_version) =
+        match load_model(save_path.clone(), &cache_path, no_cache) {
+            Ok(result) => result,
+            Err(e) => {
+                eprintln!("Error loading save: {e}");
+                std::process::exit(1);
+            }
+        };
 
     let source = if was_cached {
         "from cache"
@@ -41,12 +44,36 @@ fn main() {
     println!(
         "NMS Copilot v{}\n\
          Loaded {} systems, {} planets, {} bases ({source})\n\
-         Type 'help' for commands, 'exit' to quit.\n",
+         Type 'help' for commands, 'exit' to quit.",
         env!("CARGO_PKG_VERSION"),
         model.systems.len(),
         model.planets.len(),
         model.bases.len(),
     );
+
+    // Start file watcher (optional -- don't fail startup if watcher can't start)
+    let watch_handle = if config.watch_enabled() {
+        match start_watcher(&config, save_path) {
+            Ok(handle) => {
+                println!("Watching save file for live updates.\n");
+                Some(handle)
+            }
+            Err(e) => {
+                eprintln!("Warning: could not start file watcher: {e}\n");
+                None
+            }
+        }
+    } else {
+        println!();
+        None
+    };
+
+    let cache_for_watcher = if no_cache {
+        None
+    } else {
+        Some(cache_path.as_path())
+    };
+    let mut model = model;
 
     let completions = build_model_completions(&model);
     let completer = Box::new(CopilotCompleter::new(completions));
@@ -58,6 +85,17 @@ fn main() {
     let mut prompt = CopilotPrompt::new(PromptState::from_session(&session));
 
     loop {
+        // Drain any pending watch events before showing prompt
+        if let Some(ref handle) = watch_handle {
+            drain_watch_events(
+                &handle.receiver,
+                &mut model,
+                &mut session,
+                cache_for_watcher,
+                save_version,
+            );
+        }
+
         prompt.update(PromptState::from_session(&session));
         match editor.read_line(&prompt) {
             Ok(Signal::Success(line)) => match commands::parse_line(&line) {
@@ -72,6 +110,17 @@ fn main() {
                             }
                         }
                         Err(e) => eprintln!("Error: {e}"),
+                    }
+
+                    // Also drain after command execution
+                    if let Some(ref handle) = watch_handle {
+                        drain_watch_events(
+                            &handle.receiver,
+                            &mut model,
+                            &mut session,
+                            cache_for_watcher,
+                            save_version,
+                        );
                     }
                 }
                 Ok(None) => {}
@@ -134,12 +183,35 @@ fn load_model(
     save_path: Option<PathBuf>,
     cache_path: &Path,
     no_cache: bool,
-) -> Result<(GalaxyModel, bool), Box<dyn std::error::Error>> {
+) -> Result<(GalaxyModel, bool, u32), Box<dyn std::error::Error>> {
     let save = match save_path {
         Some(p) => p,
         None => nms_save::locate::find_most_recent_save()?
             .path()
             .to_path_buf(),
     };
-    nms_cache::load_or_rebuild(cache_path, &save, no_cache)
+    let result = nms_cache::load_or_rebuild(cache_path, &save, no_cache)?;
+    Ok((result.model, result.was_cached, result.save_version))
+}
+
+fn start_watcher(
+    config: &Config,
+    save_path: Option<PathBuf>,
+) -> Result<WatchHandle, Box<dyn std::error::Error>> {
+    let path = match save_path {
+        Some(p) => p,
+        None => match config.save_path() {
+            Some(p) => PathBuf::from(p),
+            None => nms_save::locate::find_most_recent_save()?
+                .path()
+                .to_path_buf(),
+        },
+    };
+
+    let watch_config = WatchConfig {
+        save_path: path,
+        debounce: config.watch_debounce(),
+    };
+
+    Ok(start_watching(watch_config)?)
 }

@@ -386,6 +386,8 @@ Commands:
   help       Show this help message
   exit/quit  Exit the REPL
 
+Live updates are shown between commands when file watching is enabled.
+
 Examples:
   find --biome Lush --nearest 5
   route --biome Lush --warp-range 2500

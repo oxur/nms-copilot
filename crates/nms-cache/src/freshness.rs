@@ -29,21 +29,35 @@ fn file_mtime(path: &Path) -> Option<SystemTime> {
     fs::metadata(path).ok()?.modified().ok()
 }
 
+/// Result of loading or rebuilding a galaxy model.
+pub struct LoadResult {
+    /// The loaded galaxy model.
+    pub model: nms_graph::GalaxyModel,
+    /// Whether the model was loaded from cache.
+    pub was_cached: bool,
+    /// The save file version (for cache write-through).
+    pub save_version: u32,
+}
+
 /// Load a model from cache if fresh, otherwise parse the save file.
 ///
 /// This is the primary entry point for the startup path.
-/// Returns `(GalaxyModel, was_cached)`.
 pub fn load_or_rebuild(
     cache_path: &Path,
     save_path: &Path,
     no_cache: bool,
-) -> Result<(nms_graph::GalaxyModel, bool), Box<dyn std::error::Error>> {
+) -> Result<LoadResult, Box<dyn std::error::Error>> {
     // Try cache first (unless --no-cache)
     if !no_cache && is_cache_fresh(cache_path, save_path) {
         match crate::read_cache(cache_path) {
             Ok(data) => {
+                let save_version = data.save_version;
                 let model = crate::rebuild_model(&data);
-                return Ok((model, true));
+                return Ok(LoadResult {
+                    model,
+                    was_cached: true,
+                    save_version,
+                });
             }
             Err(e) => {
                 eprintln!("Warning: cache read failed ({e}), rebuilding from save");
@@ -53,17 +67,22 @@ pub fn load_or_rebuild(
 
     // Parse save file
     let save = nms_save::parse_save_file(save_path)?;
+    let save_version = save.version;
     let model = nms_graph::GalaxyModel::from_save(&save);
 
     // Write cache for next time
     if !no_cache {
-        let data = crate::extract_cache_data(&model, save.version);
+        let data = crate::extract_cache_data(&model, save_version);
         if let Err(e) = crate::write_cache(&data, cache_path) {
             eprintln!("Warning: could not write cache ({e})");
         }
     }
 
-    Ok((model, false))
+    Ok(LoadResult {
+        model,
+        was_cached: false,
+        save_version,
+    })
 }
 
 #[cfg(test)]

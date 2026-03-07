@@ -10,5 +10,5 @@ pub mod serialize;
 
 pub use data::CacheData;
 pub use error::CacheError;
-pub use freshness::{is_cache_fresh, load_or_rebuild};
+pub use freshness::{LoadResult, is_cache_fresh, load_or_rebuild};
 pub use serialize::{extract_cache_data, read_cache, rebuild_model, write_cache};

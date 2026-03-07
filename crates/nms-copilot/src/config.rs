@@ -6,6 +6,7 @@
 
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
 use serde::Deserialize;
 
@@ -26,6 +27,9 @@ pub struct Config {
 
     /// Cache settings.
     pub cache: CacheConfig,
+
+    /// File watcher settings.
+    pub watch: WatchConfig,
 }
 
 /// Save file location and format.
@@ -121,6 +125,25 @@ impl Default for CacheConfig {
     }
 }
 
+/// File watcher settings.
+#[derive(Debug, Deserialize)]
+#[serde(default)]
+pub struct WatchConfig {
+    /// Enable file watching (default: true).
+    pub enabled: bool,
+    /// Debounce duration in milliseconds (default: 500).
+    pub debounce_ms: u64,
+}
+
+impl Default for WatchConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            debounce_ms: 500,
+        }
+    }
+}
+
 impl Config {
     /// Load config from the default path (`~/.nms-copilot/config.toml`).
     ///
@@ -154,6 +177,16 @@ impl Config {
     /// Whether caching is enabled.
     pub fn cache_enabled(&self) -> bool {
         self.cache.enabled
+    }
+
+    /// Whether file watching is enabled.
+    pub fn watch_enabled(&self) -> bool {
+        self.watch.enabled
+    }
+
+    /// The configured debounce duration for file watching.
+    pub fn watch_debounce(&self) -> Duration {
+        Duration::from_millis(self.watch.debounce_ms)
     }
 }
 
@@ -297,5 +330,35 @@ mod tests {
         "#;
         let config: Config = toml::from_str(toml).unwrap();
         assert!(config.save.path.is_some());
+    }
+
+    #[test]
+    fn test_watch_config_defaults() {
+        let config = Config::default();
+        assert!(config.watch_enabled());
+        assert_eq!(config.watch_debounce(), Duration::from_millis(500));
+    }
+
+    #[test]
+    fn test_watch_config_from_toml() {
+        let toml = r#"
+            [watch]
+            enabled = false
+            debounce_ms = 1000
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert!(!config.watch_enabled());
+        assert_eq!(config.watch_debounce(), Duration::from_millis(1000));
+    }
+
+    #[test]
+    fn test_watch_config_partial_toml() {
+        let toml = r#"
+            [watch]
+            debounce_ms = 250
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert!(config.watch_enabled());
+        assert_eq!(config.watch_debounce(), Duration::from_millis(250));
     }
 }

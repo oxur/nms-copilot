@@ -21,6 +21,7 @@ nms-save = { workspace = true }
 nms-graph = { workspace = true }
 nms-cache = { workspace = true }
 nms-query = { workspace = true }
+nms-watch = { workspace = true }
 clap = { workspace = true }
 dirs = { workspace = true }
 reedline = { workspace = true }

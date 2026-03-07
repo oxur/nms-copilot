@@ -33,7 +33,8 @@ fn load_or_rebuild_from_save_when_no_cache() {
 
     fs::write(&save_path, test_save_json()).unwrap();
 
-    let (model, was_cached) = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    let result = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    let (model, was_cached) = (result.model, result.was_cached);
     assert!(!was_cached);
     assert!(!model.systems.is_empty());
 
@@ -56,7 +57,8 @@ fn load_or_rebuild_uses_cache_when_fresh() {
     thread::sleep(Duration::from_millis(50));
     write_cache(&data, &cache_path).unwrap();
 
-    let (_, was_cached) = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    let result = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    let was_cached = result.was_cached;
     assert!(was_cached);
 }
 
@@ -69,7 +71,8 @@ fn load_or_rebuild_skips_cache_with_no_cache_flag() {
     fs::write(&save_path, test_save_json()).unwrap();
 
     // Even with no_cache=true, should work
-    let (_, was_cached) = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    let result = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    let was_cached = result.was_cached;
     assert!(!was_cached);
     // And no cache file should be written
     assert!(!cache_path.exists());

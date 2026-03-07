@@ -188,7 +188,7 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ## Status
 
-🚧 **Under active development** — Phases 1-4 complete, Phase 5 next.
+🚧 **Under active development** — Phases 1-5 complete, Phase 6 next.
 
 See [project-plan.md](docs/project-plan.md) for the full roadmap.
 
@@ -198,7 +198,7 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 2. Search & Display | ✅ | In-memory model, find/show/stats commands |
 | 3. REPL & Cache | ✅ | Interactive copilot, session state, rkyv cache, config file |
 | 4. Routing | ✅ | Pathfinding, TSP, warp-range planning |
-| 5. Live Watch | 🔲 | Real-time save file monitoring |
+| 5. Live Watch | ✅ | Real-time save file monitoring, REPL integration, cache write-through |
 | 6. MCP Server | 🔲 | AI copilot integration |
 | 7. Polish | 🔲 | Export, docs, crates.io |
 
@@ -256,6 +256,18 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 4.5 Route query | ✅ | `RouteQuery` with biome/named/system-id targets, `execute_route()` pipeline |
 | 4.6 Route display | ✅ | Itinerary table with waypoint markers, warp jump counts, algorithm labels |
 | 4.7 `nms route` command | ✅ | CLI and REPL integration with session-aware defaults |
+
+### Phase 5 Progress
+
+| Milestone | Status | Description |
+|-----------|--------|-------------|
+| 5.1 Delta types | ✅ | `SaveDelta`, `PlayerMoved` in `nms-core` for cycle-free sharing |
+| 5.2 Snapshot diffing | ✅ | `SaveSnapshot` lightweight extraction; `compute_delta()` comparison |
+| 5.3 File watcher | ✅ | `notify` debounced watcher on save directory; background thread |
+| 5.4 Incremental model update | ✅ | `GalaxyModel::apply_delta()` — systems, planets, bases, player position |
+| 5.5 REPL integration | ✅ | `drain_watch_events()` between prompts; human-readable notifications |
+| 5.6 Cache write-through | ✅ | `LoadResult` struct; cache updated after delta application |
+| 5.7 Robustness | ✅ | File stability checks, consecutive failure counting, graceful recovery |
 
 ---
 

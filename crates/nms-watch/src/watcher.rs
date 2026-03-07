@@ -1,8 +1,10 @@
 //! File system watcher for NMS save files.
 //!
 //! Uses `notify` with debouncing to detect save file modifications.
+//! Includes robustness features: file stability checks, consecutive
+//! failure counting, and graceful error recovery.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
@@ -14,6 +16,12 @@ use nms_core::delta::SaveDelta;
 use crate::delta::compute_delta;
 use crate::error::WatchError;
 use crate::snapshot::SaveSnapshot;
+
+/// After this many consecutive parse failures, log a warning.
+const MAX_CONSECUTIVE_FAILURES: usize = 5;
+
+/// Milliseconds to wait between file size checks for stability.
+const FILE_STABILITY_CHECK_MS: u64 = 100;
 
 /// Handle to a running file watcher.
 ///
@@ -41,6 +49,17 @@ impl Default for WatchConfig {
             debounce: Duration::from_millis(500),
         }
     }
+}
+
+/// Check that a file's size is stable (not being actively written).
+///
+/// Takes two size readings separated by `FILE_STABILITY_CHECK_MS` and
+/// returns `true` only if both readings succeed and match.
+fn is_file_stable(path: &Path) -> bool {
+    let size1 = std::fs::metadata(path).map(|m| m.len()).ok();
+    thread::sleep(Duration::from_millis(FILE_STABILITY_CHECK_MS));
+    let size2 = std::fs::metadata(path).map(|m| m.len()).ok();
+    size1 == size2 && size1.is_some()
 }
 
 /// Start watching a save file for changes.
@@ -84,6 +103,7 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
     let save_path_bg = save_path.clone();
     thread::spawn(move || {
         let mut snapshot = initial_snapshot;
+        let mut consecutive_failures: usize = 0;
 
         for events in notify_rx {
             let events = match events {
@@ -92,30 +112,41 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
             };
 
             // Only react if our save file was modified
-            let dominated_event = events
+            let relevant = events
                 .iter()
                 .any(|e| e.kind == DebouncedEventKind::Any && e.path == save_path_bg);
-            if !dominated_event {
+            if !relevant {
+                continue;
+            }
+
+            // File stability check: ensure file size is stable before parsing
+            if !is_file_stable(&save_path_bg) {
                 continue;
             }
 
             // Re-parse save file
-            let new_snapshot = match SaveSnapshot::from_file(&save_path_bg) {
-                Ok(s) => s,
-                Err(_) => continue, // Partial write or permission error -- skip
-            };
+            match SaveSnapshot::from_file(&save_path_bg) {
+                Ok(new_snapshot) => {
+                    consecutive_failures = 0;
+                    let delta = compute_delta(&snapshot, &new_snapshot);
 
-            // Compute delta
-            let delta = compute_delta(&snapshot, &new_snapshot);
+                    if !delta.is_empty() && delta_tx.send(delta).is_err() {
+                        break;
+                    }
 
-            if !delta.is_empty() {
-                // Send delta; if receiver is dropped, stop
-                if delta_tx.send(delta).is_err() {
-                    break;
+                    snapshot = new_snapshot;
+                }
+                Err(e) => {
+                    consecutive_failures += 1;
+                    if consecutive_failures == MAX_CONSECUTIVE_FAILURES {
+                        eprintln!(
+                            "Warning: {MAX_CONSECUTIVE_FAILURES} consecutive parse failures. \
+                             Save file may be corrupt or format changed: {e}"
+                        );
+                    }
+                    // Keep watching -- the next save might succeed
                 }
             }
-
-            snapshot = new_snapshot;
         }
     });
 
@@ -145,5 +176,31 @@ mod tests {
             start_watching(config),
             Err(WatchError::SaveNotFound(_))
         ));
+    }
+
+    #[test]
+    fn test_is_file_stable_for_static_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("stable.json");
+        std::fs::write(&path, "{}").unwrap();
+        assert!(is_file_stable(&path));
+    }
+
+    #[test]
+    fn test_is_file_stable_nonexistent_returns_false() {
+        assert!(!is_file_stable(Path::new(
+            "/tmp/nonexistent_nms_stable_check_xyz"
+        )));
+    }
+
+    #[test]
+    fn test_max_consecutive_failures_constant() {
+        assert!(MAX_CONSECUTIVE_FAILURES > 0);
+    }
+
+    #[test]
+    fn test_file_stability_check_ms_constant() {
+        assert!(FILE_STABILITY_CHECK_MS > 0);
+        assert!(FILE_STABILITY_CHECK_MS <= 1000);
     }
 }

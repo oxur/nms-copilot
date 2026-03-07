@@ -719,6 +719,7 @@ dependencies = [
  "nms-graph",
  "nms-query",
  "nms-save",
+ "nms-watch",
  "reedline",
  "serde",
  "serde_json",
