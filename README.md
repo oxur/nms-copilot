@@ -177,7 +177,7 @@ NMS Copilot is a Rust workspace of focused crates:
 nms/
 ├─ nms-core       Types, enums, address math, glyph emoji
 ├─ nms-save       Raw binary save parser (LZ4 + XXTEA + key mapping)
-├─ nms-compat     Format adapters (goatfungus JSON fixer, etc.)
+├─ nms-compat     Format adapters (NomNom save format detection)
 ├─ nms-graph      petgraph spatial model, R-tree index, routing
 ├─ nms-query      Shared query engine (find, route, show, stats)
 ├─ nms-watch      File watcher, delta computation, live updates
