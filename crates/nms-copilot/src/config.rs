@@ -65,6 +65,16 @@ pub struct DisplayConfig {
 
     /// Table border style.
     pub table_style: String,
+
+    /// Custom banner text. `None` = use default embedded banner.
+    /// Empty string = disable banner.
+    pub banner: Option<String>,
+
+    /// Whether to show the art banner at startup (default: true).
+    pub show_banner: bool,
+
+    /// Whether to show the system info line after the banner (default: true).
+    pub show_system_banner: bool,
 }
 
 impl Default for DisplayConfig {
@@ -73,6 +83,9 @@ impl Default for DisplayConfig {
             emoji_glyphs: true,
             color: true,
             table_style: "rounded".into(),
+            banner: None,
+            show_banner: true,
+            show_system_banner: true,
         }
     }
 }
@@ -247,6 +260,9 @@ mod tests {
             emoji_glyphs = false
             color = false
             table_style = "ascii"
+            banner = "My Custom Banner"
+            show_banner = false
+            show_system_banner = false
 
             [defaults]
             galaxy = 1
@@ -266,6 +282,9 @@ mod tests {
         assert_eq!(config.save.format, "raw");
         assert!(!config.display.emoji_glyphs);
         assert!(!config.display.color);
+        assert_eq!(config.display.banner.as_deref(), Some("My Custom Banner"));
+        assert!(!config.display.show_banner);
+        assert!(!config.display.show_system_banner);
         assert_eq!(config.defaults.galaxy, 1);
         assert_eq!(config.defaults.warp_range, Some(2500.0));
         assert_eq!(config.defaults.find_limit, Some(10));
@@ -360,5 +379,51 @@ mod tests {
         let config: Config = toml::from_str(toml).unwrap();
         assert!(config.watch_enabled());
         assert_eq!(config.watch_debounce(), Duration::from_millis(250));
+    }
+
+    #[test]
+    fn test_parse_config_banner_custom_text() {
+        let toml = r#"
+            [display]
+            banner = "Welcome to NMS!"
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert_eq!(config.display.banner.as_deref(), Some("Welcome to NMS!"));
+        // show_banner defaults to true when not specified
+        assert!(config.display.show_banner);
+    }
+
+    #[test]
+    fn test_parse_config_banner_empty_disables() {
+        let toml = r#"
+            [display]
+            banner = ""
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert_eq!(config.display.banner.as_deref(), Some(""));
+    }
+
+    #[test]
+    fn test_parse_config_show_banner_false() {
+        let toml = r#"
+            [display]
+            show_banner = false
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert!(!config.display.show_banner);
+        // banner field defaults to None
+        assert!(config.display.banner.is_none());
+    }
+
+    #[test]
+    fn test_parse_config_show_system_banner_false() {
+        let toml = r#"
+            [display]
+            show_system_banner = false
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert!(!config.display.show_system_banner);
+        // show_banner defaults to true independently
+        assert!(config.display.show_banner);
     }
 }

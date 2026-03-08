@@ -4,6 +4,7 @@ use std::path::{Path, PathBuf};
 
 use reedline::{FileBackedHistory, Reedline, Signal};
 
+use nms_copilot::banner;
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::config::Config;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
@@ -41,14 +42,21 @@ fn main() {
     } else {
         "from save file"
     };
-    println!(
-        "NMS Copilot v{}\n\
-         Loaded {} systems, {} planets, {} bases ({source})\n\
-         Type 'help' for commands, 'exit' to quit.",
-        env!("CARGO_PKG_VERSION"),
+
+    // Art banner (ASCII art, configurable)
+    banner::print_banner(
+        config.display.banner.as_deref(),
+        config.display.show_banner,
+        config.display.color,
+    );
+
+    // System banner (model stats + help hint)
+    banner::print_system_banner(
+        config.display.show_system_banner,
         model.systems.len(),
         model.planets.len(),
         model.bases.len(),
+        source,
     );
 
     // Start file watcher (optional -- don't fail startup if watcher can't start)
