@@ -112,6 +112,12 @@ fn main() {
                     if matches!(action, commands::Action::Exit | commands::Action::Quit) {
                         break;
                     }
+                    if matches!(action, commands::Action::Map) {
+                        if let Err(e) = nms_copilot::map::run_map(&model, &session) {
+                            eprintln!("Map error: {e}");
+                        }
+                        continue;
+                    }
                     match dispatch::dispatch(&action, &model, &mut session) {
                         Ok(output) => {
                             if !output.is_empty() {

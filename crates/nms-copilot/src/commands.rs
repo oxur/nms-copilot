@@ -149,6 +149,9 @@ pub enum Action {
         target: String,
     },
 
+    /// Open interactive galaxy map.
+    Map,
+
     /// Show current session state.
     Status,
 

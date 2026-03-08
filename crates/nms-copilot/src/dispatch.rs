@@ -118,7 +118,7 @@ pub fn dispatch(
 
         Action::Help => Ok(help_text()),
 
-        Action::Exit | Action::Quit => Ok(String::new()),
+        Action::Map | Action::Exit | Action::Quit => Ok(String::new()),
 
         Action::Convert {
             glyphs,
@@ -380,6 +380,7 @@ NMS Copilot -- Interactive Galaxy Explorer
 
 Commands:
   find       Search planets by biome, distance, name
+  map        Open interactive galaxy map
   route      Plan a route through discovered systems
   show       Show system or base details
   stats      Display aggregate galaxy statistics

@@ -26,6 +26,8 @@ clap = { workspace = true }
 dialoguer = { workspace = true }
 owo-colors = { workspace = true }
 dirs = { workspace = true }
+crossterm = { workspace = true }
+ratatui = { workspace = true }
 reedline = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }
