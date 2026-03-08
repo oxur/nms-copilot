@@ -149,6 +149,12 @@ pub enum Action {
         target: String,
     },
 
+    /// List reference data or model collections.
+    List {
+        #[command(subcommand)]
+        target: ListTarget,
+    },
+
     /// Open interactive galaxy map.
     Map,
 
@@ -185,6 +191,32 @@ pub enum SetTarget {
     WarpRange {
         /// Range in light-years.
         ly: f64,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum ListTarget {
+    /// List all 256 galaxies.
+    Galaxies {
+        /// Filter by galaxy type (Normal, Lush, Harsh, Empty).
+        #[arg(long = "type")]
+        galaxy_type: Option<String>,
+    },
+    /// List biome types.
+    Biomes {
+        /// Include biome subtypes.
+        #[arg(long)]
+        subtypes: bool,
+    },
+    /// List portal glyphs.
+    Glyphs,
+    /// List player bases.
+    Bases,
+    /// List discovered systems.
+    Systems {
+        /// Maximum number of systems to display (0 for all).
+        #[arg(long, default_value = "50")]
+        limit: usize,
     },
 }
 
@@ -458,6 +490,100 @@ mod tests {
             Action::Reset { target } => assert_eq!(target, "biome"),
             _ => panic!("Expected Reset"),
         }
+    }
+
+    #[test]
+    fn test_parse_list_galaxies() {
+        let action = parse_line("list galaxies").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Galaxies { galaxy_type },
+            } => assert!(galaxy_type.is_none()),
+            _ => panic!("Expected List Galaxies"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_galaxies_with_type() {
+        let action = parse_line("list galaxies --type Lush").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Galaxies { galaxy_type },
+            } => assert_eq!(galaxy_type.as_deref(), Some("Lush")),
+            _ => panic!("Expected List Galaxies"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_biomes() {
+        let action = parse_line("list biomes").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Biomes { subtypes },
+            } => assert!(!subtypes),
+            _ => panic!("Expected List Biomes"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_biomes_with_subtypes() {
+        let action = parse_line("list biomes --subtypes").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Biomes { subtypes },
+            } => assert!(subtypes),
+            _ => panic!("Expected List Biomes"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_glyphs() {
+        let action = parse_line("list glyphs").unwrap().unwrap();
+        assert!(matches!(
+            action,
+            Action::List {
+                target: ListTarget::Glyphs
+            }
+        ));
+    }
+
+    #[test]
+    fn test_parse_list_bases() {
+        let action = parse_line("list bases").unwrap().unwrap();
+        assert!(matches!(
+            action,
+            Action::List {
+                target: ListTarget::Bases
+            }
+        ));
+    }
+
+    #[test]
+    fn test_parse_list_systems() {
+        let action = parse_line("list systems").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Systems { limit },
+            } => assert_eq!(limit, 50),
+            _ => panic!("Expected List Systems"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_systems_with_limit() {
+        let action = parse_line("list systems --limit 10").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Systems { limit },
+            } => assert_eq!(limit, 10),
+            _ => panic!("Expected List Systems"),
+        }
+    }
+
+    #[test]
+    fn test_parse_map() {
+        let action = parse_line("map").unwrap().unwrap();
+        assert!(matches!(action, Action::Map));
     }
 
     #[test]

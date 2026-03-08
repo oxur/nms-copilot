@@ -2,6 +2,60 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 
+/// All 15 biome variants, for iteration.
+pub const ALL_BIOMES: [Biome; 15] = [
+    Biome::Lush,
+    Biome::Toxic,
+    Biome::Scorched,
+    Biome::Radioactive,
+    Biome::Frozen,
+    Biome::Barren,
+    Biome::Dead,
+    Biome::Weird,
+    Biome::Red,
+    Biome::Green,
+    Biome::Blue,
+    Biome::Swamp,
+    Biome::Lava,
+    Biome::Waterworld,
+    Biome::GasGiant,
+];
+
+/// All 31 biome subtype variants, for iteration.
+pub const ALL_BIOME_SUBTYPES: [BiomeSubType; 31] = [
+    BiomeSubType::LushRoomTemp,
+    BiomeSubType::LushHumid,
+    BiomeSubType::LushInactive,
+    BiomeSubType::ToxicTentacles,
+    BiomeSubType::ToxicFungus,
+    BiomeSubType::ToxicEggs,
+    BiomeSubType::ScorchedSinged,
+    BiomeSubType::ScorchedCharred,
+    BiomeSubType::ScorchedBlasted,
+    BiomeSubType::RadioactiveFungal,
+    BiomeSubType::RadioactiveContaminated,
+    BiomeSubType::RadioactiveIrradiated,
+    BiomeSubType::FrozenIce,
+    BiomeSubType::FrozenSnow,
+    BiomeSubType::FrozenGlacial,
+    BiomeSubType::BarrenDusty,
+    BiomeSubType::BarrenRocky,
+    BiomeSubType::BarrenMountainous,
+    BiomeSubType::DeadEmpty,
+    BiomeSubType::DeadCorroded,
+    BiomeSubType::DeadVoid,
+    BiomeSubType::WeirdHexagonal,
+    BiomeSubType::WeirdCabled,
+    BiomeSubType::WeirdBubbling,
+    BiomeSubType::WeirdFractured,
+    BiomeSubType::WeirdShattered,
+    BiomeSubType::WeirdContorted,
+    BiomeSubType::WeirdWireCell,
+    BiomeSubType::SwampMurky,
+    BiomeSubType::LavaVolcanic,
+    BiomeSubType::WaterworldOcean,
+];
+
 /// Planet biome classification matching GcBiomeType from game data.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(
@@ -179,59 +233,9 @@ impl FromStr for BiomeSubType {
 mod tests {
     use super::*;
 
-    const BIOME_SUB_VARIANTS: [BiomeSubType; 31] = [
-        BiomeSubType::LushRoomTemp,
-        BiomeSubType::LushHumid,
-        BiomeSubType::LushInactive,
-        BiomeSubType::ToxicTentacles,
-        BiomeSubType::ToxicFungus,
-        BiomeSubType::ToxicEggs,
-        BiomeSubType::ScorchedSinged,
-        BiomeSubType::ScorchedCharred,
-        BiomeSubType::ScorchedBlasted,
-        BiomeSubType::RadioactiveFungal,
-        BiomeSubType::RadioactiveContaminated,
-        BiomeSubType::RadioactiveIrradiated,
-        BiomeSubType::FrozenIce,
-        BiomeSubType::FrozenSnow,
-        BiomeSubType::FrozenGlacial,
-        BiomeSubType::BarrenDusty,
-        BiomeSubType::BarrenRocky,
-        BiomeSubType::BarrenMountainous,
-        BiomeSubType::DeadEmpty,
-        BiomeSubType::DeadCorroded,
-        BiomeSubType::DeadVoid,
-        BiomeSubType::WeirdHexagonal,
-        BiomeSubType::WeirdCabled,
-        BiomeSubType::WeirdBubbling,
-        BiomeSubType::WeirdFractured,
-        BiomeSubType::WeirdShattered,
-        BiomeSubType::WeirdContorted,
-        BiomeSubType::WeirdWireCell,
-        BiomeSubType::SwampMurky,
-        BiomeSubType::LavaVolcanic,
-        BiomeSubType::WaterworldOcean,
-    ];
-
     #[test]
     fn display_fromstr_roundtrip() {
-        for biome in [
-            Biome::Lush,
-            Biome::Toxic,
-            Biome::Scorched,
-            Biome::Radioactive,
-            Biome::Frozen,
-            Biome::Barren,
-            Biome::Dead,
-            Biome::Weird,
-            Biome::Red,
-            Biome::Green,
-            Biome::Blue,
-            Biome::Swamp,
-            Biome::Lava,
-            Biome::Waterworld,
-            Biome::GasGiant,
-        ] {
+        for biome in ALL_BIOMES {
             let s = biome.to_string();
             let parsed: Biome = s.parse().unwrap();
             assert_eq!(biome, parsed);
@@ -257,7 +261,7 @@ mod tests {
 
     #[test]
     fn subtype_display_fromstr_roundtrip() {
-        for v in BIOME_SUB_VARIANTS {
+        for v in ALL_BIOME_SUBTYPES {
             let s = v.to_string();
             let parsed: BiomeSubType = s.parse().unwrap();
             assert_eq!(v, parsed);

@@ -31,11 +31,13 @@ impl CopilotCompleter {
 }
 
 const COMMANDS: &[&str] = &[
-    "convert", "exit", "find", "help", "info", "quit", "reset", "route", "set", "show", "stats",
-    "status",
+    "convert", "exit", "find", "help", "info", "list", "map", "quit", "reset", "route", "set",
+    "show", "stats", "status",
 ];
 
 const SHOW_SUBCOMMANDS: &[&str] = &["system", "base"];
+
+const LIST_SUBCOMMANDS: &[&str] = &["bases", "biomes", "galaxies", "glyphs", "systems"];
 
 const FIND_FLAGS: &[&str] = &[
     "--biome",
@@ -97,6 +99,9 @@ impl Completer for CopilotCompleter {
         let (partial, candidates) = match lower_refs.as_slice() {
             [] => ("", COMMANDS.to_vec()),
             [_] if !trailing_space => (words[0], COMMANDS.to_vec()),
+
+            ["list"] if trailing_space => ("", LIST_SUBCOMMANDS.to_vec()),
+            ["list", _] if !trailing_space => (words[1], LIST_SUBCOMMANDS.to_vec()),
 
             ["show"] if trailing_space => ("", SHOW_SUBCOMMANDS.to_vec()),
             ["show", _] if !trailing_space => (words[1], SHOW_SUBCOMMANDS.to_vec()),
@@ -460,6 +465,28 @@ mod tests {
         let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
         assert!(values.contains(&"route"));
         assert!(values.contains(&"reset"));
+    }
+
+    #[test]
+    fn test_complete_list_subcommands() {
+        let mut c = test_completer();
+        let results = c.complete("list ", 5);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"galaxies"));
+        assert!(values.contains(&"biomes"));
+        assert!(values.contains(&"glyphs"));
+        assert!(values.contains(&"bases"));
+        assert!(values.contains(&"systems"));
+    }
+
+    #[test]
+    fn test_complete_list_partial() {
+        let mut c = test_completer();
+        let results = c.complete("list g", 6);
+        let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
+        assert!(values.contains(&"galaxies"));
+        assert!(values.contains(&"glyphs"));
+        assert!(!values.contains(&"biomes"));
     }
 
     #[test]

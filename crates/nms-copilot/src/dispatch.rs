@@ -1,8 +1,9 @@
 //! Command dispatch -- executes REPL commands against the loaded GalaxyModel.
 
+use nms_core::BaseType;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
-use nms_core::galaxy::Galaxy;
+use nms_core::galaxy::{Galaxy, GalaxyType};
 use nms_graph::GalaxyModel;
 use nms_graph::query::BiomeFilter;
 use nms_graph::route::RoutingAlgorithm;
@@ -13,7 +14,10 @@ use nms_query::show::{ShowQuery, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
 use nms_query::theme::Theme;
 
-use crate::commands::{Action, SetTarget, ShowTarget};
+use nms_core::biome::{ALL_BIOME_SUBTYPES, ALL_BIOMES};
+use nms_core::glyph::GLYPH_TABLE;
+
+use crate::commands::{Action, ListTarget, SetTarget, ShowTarget};
 use crate::session::SessionState;
 
 /// Execute a parsed REPL action against the model, returning output text.
@@ -59,6 +63,8 @@ pub fn dispatch(
             let theme = Theme::default_dark();
             Ok(format_find_results(&results, &theme))
         }
+
+        Action::List { target } => dispatch_list(model, target),
 
         Action::Show { target } => dispatch_show(model, target),
 
@@ -204,6 +210,148 @@ fn dispatch_route(
     Ok(format_route(&result, model, &theme))
 }
 
+fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, String> {
+    match target {
+        ListTarget::Galaxies { galaxy_type } => {
+            let type_filter = galaxy_type
+                .as_ref()
+                .map(|t| {
+                    t.parse::<GalaxyType>()
+                        .map_err(|e| format!("Invalid galaxy type: {e}"))
+                })
+                .transpose()?;
+
+            let mut lines = vec![format!("  {:<5}  {:<30}  {}", "Index", "Name", "Type")];
+            lines.push(format!("  {:<5}  {:<30}  {}", "-----", "----", "----"));
+
+            for i in 0..=255u8 {
+                let g = Galaxy::by_index(i);
+                if let Some(ref tf) = type_filter {
+                    if g.galaxy_type != *tf {
+                        continue;
+                    }
+                }
+                lines.push(format!(
+                    "  {:<5}  {:<30}  {}",
+                    g.index, g.name, g.galaxy_type
+                ));
+            }
+            lines.push(String::new());
+            Ok(lines.join("\n"))
+        }
+
+        ListTarget::Biomes { subtypes } => {
+            let mut lines = Vec::new();
+            if *subtypes {
+                for biome in ALL_BIOMES {
+                    lines.push(format!("  {biome}"));
+                    for sub in ALL_BIOME_SUBTYPES {
+                        let sub_name = format!("{sub}");
+                        let biome_name = format!("{biome}");
+                        if sub_name.starts_with(&biome_name) {
+                            lines.push(format!("    - {sub}"));
+                        }
+                    }
+                }
+            } else {
+                for biome in ALL_BIOMES {
+                    lines.push(format!("  {biome}"));
+                }
+            }
+            lines.push(String::new());
+            Ok(lines.join("\n"))
+        }
+
+        ListTarget::Glyphs => {
+            let mut lines = vec![format!("  {:<5}  {:<6}  {}", "Hex", "Emoji", "Name")];
+            lines.push(format!("  {:<5}  {:<6}  {}", "---", "-----", "----"));
+            for info in &GLYPH_TABLE {
+                lines.push(format!(
+                    "  {:<5}  {:<6}  {}",
+                    info.hex_char, info.emoji, info.name
+                ));
+            }
+            lines.push(String::new());
+            Ok(lines.join("\n"))
+        }
+
+        ListTarget::Bases => {
+            if model.bases.is_empty() {
+                return Ok("  No bases found.\n".into());
+            }
+            let mut lines = vec![format!(
+                "  {:<30}  {:<10}  {:<12}  {}",
+                "Name", "Type", "Galaxy", "Address"
+            )];
+            lines.push(format!(
+                "  {:<30}  {:<10}  {:<12}  {}",
+                "----", "----", "------", "-------"
+            ));
+            let mut bases: Vec<_> = model.bases.values().collect();
+            bases.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+            for base in bases {
+                let galaxy = Galaxy::by_index(base.address.reality_index);
+                lines.push(format!(
+                    "  {:<30}  {:<10}  {:<12}  0x{:012X}",
+                    base.name,
+                    base_type_label(&base.base_type),
+                    galaxy.name,
+                    base.address.packed()
+                ));
+            }
+            lines.push(String::new());
+            Ok(lines.join("\n"))
+        }
+
+        ListTarget::Systems { limit } => {
+            if model.systems.is_empty() {
+                return Ok("  No systems found.\n".into());
+            }
+            let mut systems: Vec<_> = model.systems.values().collect();
+            // Named first, then unnamed; alphabetical within each group
+            systems.sort_by(|a, b| {
+                let a_name = a.name.as_deref().unwrap_or("");
+                let b_name = b.name.as_deref().unwrap_or("");
+                match (a_name.is_empty(), b_name.is_empty()) {
+                    (true, false) => std::cmp::Ordering::Greater,
+                    (false, true) => std::cmp::Ordering::Less,
+                    _ => a_name.to_lowercase().cmp(&b_name.to_lowercase()),
+                }
+            });
+
+            let total = systems.len();
+            let effective_limit = if *limit == 0 { total } else { *limit };
+            let showing = total.min(effective_limit);
+
+            let mut lines = vec![format!(
+                "  {:<30}  {:<16}  {}",
+                "Name", "Address", "Planets"
+            )];
+            lines.push(format!(
+                "  {:<30}  {:<16}  {}",
+                "----", "-------", "-------"
+            ));
+            for sys in systems.iter().take(effective_limit) {
+                let name = sys.name.as_deref().unwrap_or("(unnamed)");
+                let planet_count = sys.planets.len();
+                lines.push(format!(
+                    "  {:<30}  0x{:012X}  {}",
+                    name,
+                    sys.address.packed(),
+                    planet_count
+                ));
+            }
+            if showing < total {
+                lines.push(format!(
+                    "\n  Showing {showing} of {total} systems (use --limit 0 for all)"
+                ));
+            }
+            lines.push(String::new());
+            Ok(lines.join("\n"))
+        }
+    }
+}
+
 fn dispatch_show(model: &GalaxyModel, target: &ShowTarget) -> Result<String, String> {
     let query = match target {
         ShowTarget::System { name } => ShowQuery::System(name.clone()),
@@ -346,6 +494,15 @@ fn resolve_galaxy(input: &str) -> Result<u8, String> {
     ))
 }
 
+fn base_type_label(bt: &BaseType) -> &'static str {
+    match bt {
+        BaseType::HomePlanetBase => "home",
+        BaseType::FreighterBase => "freighter",
+        BaseType::ExternalPlanetBase => "external",
+        _ => "unknown",
+    }
+}
+
 fn format_all_formats(addr: &GalacticAddress) -> String {
     let galaxy = Galaxy::by_index(addr.reality_index);
 
@@ -380,6 +537,7 @@ NMS Copilot -- Interactive Galaxy Explorer
 
 Commands:
   find       Search planets by biome, distance, name
+  list       List galaxies, biomes, glyphs, bases, systems
   map        Open interactive galaxy map
   route      Plan a route through discovered systems
   show       Show system or base details

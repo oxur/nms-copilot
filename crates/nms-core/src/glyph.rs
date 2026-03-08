@@ -2,14 +2,15 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 
-pub(crate) struct GlyphInfo {
+pub struct GlyphInfo {
     pub index: u8,
     pub hex_char: char,
     pub name: &'static str,
     pub emoji: &'static str,
 }
 
-pub(crate) const GLYPH_TABLE: [GlyphInfo; 16] = [
+/// All 16 portal glyph definitions, indexed by glyph value (0-15).
+pub const GLYPH_TABLE: [GlyphInfo; 16] = [
     GlyphInfo {
         index: 0,
         hex_char: '0',
