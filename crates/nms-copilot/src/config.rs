@@ -245,8 +245,19 @@ impl Config {
     }
 
     /// Resolve the effective cache path.
-    pub fn cache_path(&self) -> PathBuf {
-        self.cache.path.clone().unwrap_or_else(paths::cache_path)
+    ///
+    /// If `cache.path` is explicitly set in config, uses that (single override).
+    /// Otherwise, derives a per-save cache path from the save file path:
+    /// `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
+    /// Falls back to the legacy `~/.nms-copilot/galaxy.rkyv` if no save path given.
+    pub fn cache_path_for(&self, save_path: Option<&std::path::Path>) -> PathBuf {
+        if let Some(p) = &self.cache.path {
+            return p.clone();
+        }
+        match save_path {
+            Some(sp) => paths::cache_path_for_save(sp),
+            None => paths::cache_path(),
+        }
     }
 
     /// Resolve the effective save path (if configured).
@@ -470,10 +481,18 @@ mod tests {
     }
 
     #[test]
-    fn test_cache_path_default() {
+    fn test_cache_path_default_no_save() {
         let config = Config::default();
-        let path = config.cache_path();
+        let path = config.cache_path_for(None);
         assert!(path.ends_with("galaxy.rkyv"));
+    }
+
+    #[test]
+    fn test_cache_path_per_save() {
+        let config = Config::default();
+        let save = Path::new("/nms/st_12345/save3.hg");
+        let path = config.cache_path_for(Some(save));
+        assert!(path.ends_with("st_12345/save3/galaxy.rkyv"));
     }
 
     #[test]
@@ -483,7 +502,10 @@ mod tests {
             path = "/tmp/custom-cache.rkyv"
         "#;
         let config: Config = toml::from_str(toml).unwrap();
-        assert_eq!(config.cache_path(), PathBuf::from("/tmp/custom-cache.rkyv"));
+        assert_eq!(
+            config.cache_path_for(Some(Path::new("/nms/st_99/save.hg"))),
+            PathBuf::from("/tmp/custom-cache.rkyv")
+        );
     }
 
     #[test]

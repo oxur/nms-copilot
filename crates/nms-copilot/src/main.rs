@@ -34,7 +34,7 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
     let save_path = resolve_save_path(&args, &config);
     let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
-    let cache_path = config.cache_path();
+    let cache_path = config.cache_path_for(save_path.as_deref());
 
     let (model, was_cached, save_version) =
         match load_model(save_path.clone(), &cache_path, no_cache) {

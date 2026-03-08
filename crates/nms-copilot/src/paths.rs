@@ -19,9 +19,31 @@ pub fn config_path() -> PathBuf {
     data_dir().join("config.toml")
 }
 
-/// Path to the cache file: `~/.nms-copilot/galaxy.rkyv`.
+/// Default cache path (legacy): `~/.nms-copilot/galaxy.rkyv`.
 pub fn cache_path() -> PathBuf {
     data_dir().join("galaxy.rkyv")
+}
+
+/// Per-save cache path: `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
+///
+/// Derives cache location from the save file path, using the parent directory
+/// name (account) and file stem (no extension) as path components.
+/// For example, `…/st_76561198025707979/save3.hg` becomes
+/// `~/.nms-copilot/st_76561198025707979/save3/galaxy.rkyv`.
+pub fn cache_path_for_save(save_path: &std::path::Path) -> PathBuf {
+    let save_stem = save_path
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("save");
+    let account_dir = save_path
+        .parent()
+        .and_then(|p| p.file_name())
+        .and_then(|s| s.to_str())
+        .unwrap_or("default");
+    data_dir()
+        .join(account_dir)
+        .join(save_stem)
+        .join("galaxy.rkyv")
 }
 
 /// Ensure the data directory exists.
@@ -58,6 +80,21 @@ mod tests {
         let path = cache_path();
         assert!(path.starts_with(data_dir()));
         assert_eq!(path.file_name().unwrap(), "galaxy.rkyv");
+    }
+
+    #[test]
+    fn test_cache_path_for_save_uses_account_and_stem() {
+        let save = std::path::Path::new("/nms/st_76561198025707979/save3.hg");
+        let path = cache_path_for_save(save);
+        assert!(path.starts_with(data_dir()));
+        assert!(path.ends_with("st_76561198025707979/save3/galaxy.rkyv"));
+    }
+
+    #[test]
+    fn test_cache_path_for_save_slot1_manual() {
+        let save = std::path::Path::new("/nms/st_12345/save.hg");
+        let path = cache_path_for_save(save);
+        assert!(path.ends_with("st_12345/save/galaxy.rkyv"));
     }
 
     #[test]
