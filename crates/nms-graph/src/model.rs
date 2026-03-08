@@ -30,8 +30,11 @@ pub struct GalaxyModel {
     /// Graph topology: nodes are systems, edge weights are distance in ly.
     pub graph: StableGraph<SystemId, f64, Undirected>,
 
-    /// 3D spatial index of system positions.
-    pub spatial: RTree<SystemPoint>,
+    /// Per-galaxy 3D spatial indexes of system positions.
+    pub spatial: HashMap<u8, RTree<SystemPoint>>,
+
+    /// Currently active galaxy for spatial queries.
+    pub active_galaxy: u8,
 
     /// System data by ID.
     pub systems: HashMap<SystemId, System>,
@@ -69,7 +72,8 @@ impl GalaxyModel {
     pub fn new() -> Self {
         Self {
             graph: StableGraph::default(),
-            spatial: RTree::new(),
+            spatial: HashMap::new(),
+            active_galaxy: 0,
             systems: HashMap::new(),
             planets: HashMap::new(),
             bases: HashMap::new(),
@@ -86,7 +90,7 @@ impl GalaxyModel {
         let extracted = extract_systems(save);
 
         let mut graph: StableGraph<SystemId, f64, Undirected> = StableGraph::default();
-        let mut spatial_points = Vec::with_capacity(extracted.len());
+        let mut galaxy_points: HashMap<u8, Vec<SystemPoint>> = HashMap::new();
         let mut systems = HashMap::with_capacity(extracted.len());
         let mut planets = HashMap::new();
         let mut biome_index: HashMap<Biome, Vec<PlanetKey>> = HashMap::new();
@@ -99,9 +103,10 @@ impl GalaxyModel {
             let node_idx = graph.add_node(sys_id);
             node_map.insert(sys_id, node_idx);
 
-            // Add to spatial index
+            // Add to per-galaxy spatial point collector
             let point = SystemPoint::from_address(&system.address);
-            spatial_points.push(point);
+            let galaxy = system.address.reality_index;
+            galaxy_points.entry(galaxy).or_default().push(point);
 
             // Add to address lookup
             address_to_id.insert(sys_id.0, sys_id);
@@ -123,11 +128,15 @@ impl GalaxyModel {
             systems.insert(sys_id, system);
         }
 
-        // Build R-tree from collected points
-        let spatial = RTree::bulk_load(spatial_points);
+        // Build per-galaxy R-trees from collected points
+        let spatial: HashMap<u8, RTree<SystemPoint>> = galaxy_points
+            .into_iter()
+            .map(|(galaxy, points)| (galaxy, RTree::bulk_load(points)))
+            .collect();
 
-        // Extract player state
+        // Extract player state and determine active galaxy
         let player_state = Some(save.to_core_player_state());
+        let active_galaxy = save.active_player_state().universe_address.reality_index;
 
         // Extract bases
         let ps = save.active_player_state();
@@ -142,6 +151,7 @@ impl GalaxyModel {
         let mut model = Self {
             graph,
             spatial,
+            active_galaxy,
             systems,
             planets,
             bases,
@@ -193,6 +203,47 @@ impl GalaxyModel {
         self.player_state.as_ref().map(|ps| &ps.current_address)
     }
 
+    /// Get the spatial index for the active galaxy.
+    pub fn active_spatial(&self) -> Option<&RTree<SystemPoint>> {
+        self.spatial.get(&self.active_galaxy)
+    }
+
+    /// Get the spatial index for a specific galaxy.
+    pub fn spatial_for(&self, galaxy: u8) -> Option<&RTree<SystemPoint>> {
+        self.spatial.get(&galaxy)
+    }
+
+    /// Switch the active galaxy.
+    pub fn set_active_galaxy(&mut self, galaxy: u8) {
+        self.active_galaxy = galaxy;
+    }
+
+    /// List galaxies that have at least one discovered system.
+    pub fn discovered_galaxies(&self) -> Vec<u8> {
+        let mut galaxies: Vec<u8> = self.spatial.keys().copied().collect();
+        galaxies.sort();
+        galaxies
+    }
+
+    /// Rebuild all per-galaxy R-trees from the systems HashMap.
+    pub fn rebuild_spatial(&mut self) {
+        let mut galaxy_points: HashMap<u8, Vec<SystemPoint>> = HashMap::new();
+        for system in self.systems.values() {
+            let point = SystemPoint::from_address(&system.address);
+            let galaxy = system.address.reality_index;
+            galaxy_points.entry(galaxy).or_default().push(point);
+        }
+        self.spatial = galaxy_points
+            .into_iter()
+            .map(|(galaxy, points)| (galaxy, RTree::bulk_load(points)))
+            .collect();
+    }
+
+    /// Total number of points across all per-galaxy spatial indexes.
+    pub fn spatial_size(&self) -> usize {
+        self.spatial.values().map(|t| t.size()).sum()
+    }
+
     /// Get all planets with a given biome.
     pub fn planets_by_biome(&self, biome: Biome) -> Vec<&Planet> {
         self.biome_index
@@ -213,7 +264,8 @@ impl GalaxyModel {
         self.node_map.insert(sys_id, node_idx);
 
         let point = SystemPoint::from_address(&system.address);
-        self.spatial.insert(point);
+        let galaxy = system.address.reality_index;
+        self.spatial.entry(galaxy).or_default().insert(point);
 
         self.address_to_id.insert(sys_id.0, sys_id);
 
@@ -379,7 +431,7 @@ mod tests {
     fn test_from_save_spatial_index_populated() {
         let save = minimal_save();
         let model = GalaxyModel::from_save(&save);
-        assert_eq!(model.spatial.size(), 2);
+        assert_eq!(model.spatial_size(), 2);
     }
 
     #[test]
@@ -423,7 +475,7 @@ mod tests {
 
         assert_eq!(model.system_count(), count_before + 1);
         assert!(model.system_by_name("New System").is_some());
-        assert_eq!(model.spatial.size(), count_before + 1);
+        assert_eq!(model.spatial_size(), count_before + 1);
         assert_eq!(model.graph.node_count(), count_before + 1);
         assert_eq!(model.planets_by_biome(Biome::Lava).len(), 1);
     }
@@ -595,5 +647,124 @@ mod tests {
 
         // No new name index entry for unnamed system
         assert_eq!(model.name_index.len(), name_count_before);
+    }
+
+    // -- Multi-galaxy spatial tests (milestone 7.4) --
+
+    #[test]
+    fn test_active_galaxy_defaults_to_zero() {
+        let model = GalaxyModel::new();
+        assert_eq!(model.active_galaxy, 0);
+    }
+
+    #[test]
+    fn test_set_active_galaxy() {
+        let mut model = GalaxyModel::new();
+        model.set_active_galaxy(9);
+        assert_eq!(model.active_galaxy, 9);
+    }
+
+    #[test]
+    fn test_active_spatial_empty_model_returns_none() {
+        let model = GalaxyModel::new();
+        assert!(model.active_spatial().is_none());
+    }
+
+    #[test]
+    fn test_spatial_for_unknown_galaxy_returns_none() {
+        let model = GalaxyModel::new();
+        assert!(model.spatial_for(42).is_none());
+    }
+
+    #[test]
+    fn test_discovered_galaxies_empty() {
+        let model = GalaxyModel::new();
+        assert!(model.discovered_galaxies().is_empty());
+    }
+
+    #[test]
+    fn test_insert_system_separate_galaxies() {
+        let mut model = GalaxyModel::new();
+
+        // Euclid (galaxy 0)
+        let addr0 = GalacticAddress::new(10, 0, 0, 0x100, 0, 0);
+        let sys0 = System::new(addr0, Some("Euclid Sys".into()), None, None, vec![]);
+        model.insert_system(sys0);
+
+        // Eissentam (galaxy 9)
+        let addr9 = GalacticAddress::new(20, 0, 0, 0x200, 0, 9);
+        let sys9 = System::new(addr9, Some("Eissentam Sys".into()), None, None, vec![]);
+        model.insert_system(sys9);
+
+        assert_eq!(model.system_count(), 2);
+        assert_eq!(model.spatial_size(), 2);
+
+        // Galaxy 0 has 1 point
+        let tree0 = model.spatial_for(0).unwrap();
+        assert_eq!(tree0.size(), 1);
+
+        // Galaxy 9 has 1 point
+        let tree9 = model.spatial_for(9).unwrap();
+        assert_eq!(tree9.size(), 1);
+
+        // No galaxy 5
+        assert!(model.spatial_for(5).is_none());
+    }
+
+    #[test]
+    fn test_discovered_galaxies_sorted() {
+        let mut model = GalaxyModel::new();
+
+        let addr9 = GalacticAddress::new(0, 0, 0, 0x100, 0, 9);
+        model.insert_system(System::new(addr9, None, None, None, vec![]));
+
+        let addr0 = GalacticAddress::new(0, 0, 0, 0x200, 0, 0);
+        model.insert_system(System::new(addr0, None, None, None, vec![]));
+
+        let addr2 = GalacticAddress::new(0, 0, 0, 0x300, 0, 2);
+        model.insert_system(System::new(addr2, None, None, None, vec![]));
+
+        let galaxies = model.discovered_galaxies();
+        assert_eq!(galaxies, vec![0, 2, 9]);
+    }
+
+    #[test]
+    fn test_rebuild_spatial() {
+        let mut model = GalaxyModel::new();
+
+        let addr0 = GalacticAddress::new(10, 0, 0, 0x100, 0, 0);
+        model.insert_system(System::new(addr0, None, None, None, vec![]));
+
+        let addr9 = GalacticAddress::new(20, 0, 0, 0x200, 0, 9);
+        model.insert_system(System::new(addr9, None, None, None, vec![]));
+
+        // Clear spatial and rebuild
+        model.spatial.clear();
+        assert_eq!(model.spatial_size(), 0);
+
+        model.rebuild_spatial();
+        assert_eq!(model.spatial_size(), 2);
+        assert_eq!(model.spatial_for(0).unwrap().size(), 1);
+        assert_eq!(model.spatial_for(9).unwrap().size(), 1);
+    }
+
+    #[test]
+    fn test_active_spatial_returns_correct_tree() {
+        let mut model = GalaxyModel::new();
+
+        let addr0 = GalacticAddress::new(10, 0, 0, 0x100, 0, 0);
+        model.insert_system(System::new(addr0, Some("E1".into()), None, None, vec![]));
+
+        let addr9 = GalacticAddress::new(20, 0, 0, 0x200, 0, 9);
+        model.insert_system(System::new(addr9, Some("E2".into()), None, None, vec![]));
+
+        // Default active galaxy is 0
+        assert_eq!(model.active_spatial().unwrap().size(), 1);
+
+        model.set_active_galaxy(9);
+        assert_eq!(model.active_spatial().unwrap().size(), 1);
+
+        model.set_active_galaxy(42);
+        assert!(model.active_spatial().is_none());
     }
 }

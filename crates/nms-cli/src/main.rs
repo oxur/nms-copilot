@@ -6,6 +6,7 @@ mod completions;
 mod convert;
 mod export;
 mod find;
+mod import;
 mod info;
 mod route;
 mod saves;
@@ -206,6 +207,18 @@ enum Commands {
         format: String,
     },
 
+    /// Import community coordinate data.
+    Import {
+        /// Path to CSV file.
+        file: PathBuf,
+        /// Path to save file (auto-detects if omitted).
+        #[arg(long)]
+        save: Option<PathBuf>,
+        /// Source name for imported data (e.g., "NMSCE").
+        #[arg(long, default_value = "community")]
+        source: String,
+    },
+
     /// Generate shell completions.
     Completions {
         /// Shell to generate completions for: bash, zsh, fish, powershell, elvish.
@@ -380,6 +393,7 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
                 format,
             })
         }
+        Commands::Import { file, save, source } => import::run(file, save, source),
         Commands::Completions { shell } => completions::run(shell),
         Commands::Saves => saves::run(),
     }

@@ -46,11 +46,18 @@ impl GalaxyModel {
     /// For each system, queries the R-tree for the k+1 nearest points
     /// (including itself), skips self, and adds undirected edges.
     /// Duplicate edges (A-B when B-A already exists) are avoided.
+    /// Each system is matched against its own galaxy's spatial index.
     fn build_knn_edges(&mut self, k: usize) {
         let system_ids: Vec<SystemId> = self.systems.keys().copied().collect();
 
         for &sys_id in &system_ids {
             let system = match self.systems.get(&sys_id) {
+                Some(s) => s,
+                None => continue,
+            };
+
+            let galaxy = system.address.reality_index;
+            let spatial = match self.spatial.get(&galaxy) {
                 Some(s) => s,
                 None => continue,
             };
@@ -62,8 +69,7 @@ impl GalaxyModel {
             ];
 
             // Get k+1 nearest (first may be self)
-            let neighbors: Vec<_> = self
-                .spatial
+            let neighbors: Vec<_> = spatial
                 .nearest_neighbor_iter(&query_point)
                 .filter(|sp| sp.id != sys_id)
                 .take(k)
@@ -94,13 +100,19 @@ impl GalaxyModel {
 
     /// Connect all pairs of systems within a warp range (in light-years).
     ///
-    /// For each system, queries the R-tree for all neighbors within
+    /// For each system, queries its galaxy's R-tree for all neighbors within
     /// `max_ly / 400.0` voxel units and adds edges.
     fn build_warp_range_edges(&mut self, max_ly: f64) {
         let system_ids: Vec<SystemId> = self.systems.keys().copied().collect();
 
         for &sys_id in &system_ids {
             let system = match self.systems.get(&sys_id) {
+                Some(s) => s,
+                None => continue,
+            };
+
+            let galaxy = system.address.reality_index;
+            let spatial = match self.spatial.get(&galaxy) {
                 Some(s) => s,
                 None => continue,
             };
@@ -114,8 +126,7 @@ impl GalaxyModel {
             let voxel_radius = max_ly / 400.0;
             let voxel_radius_sq = voxel_radius * voxel_radius;
 
-            let neighbors: Vec<_> = self
-                .spatial
+            let neighbors: Vec<_> = spatial
                 .nearest_neighbor_iter(&query_point)
                 .take_while(|sp| sp.distance_2(&query_point) <= voxel_radius_sq)
                 .filter(|sp| sp.id != sys_id)
@@ -147,8 +158,15 @@ impl GalaxyModel {
     ///
     /// Call this after `insert_system()` to connect the new node to
     /// its neighbors without rebuilding the entire graph.
+    /// Looks up the system's galaxy to use the correct spatial index.
     pub fn connect_new_system(&mut self, sys_id: SystemId, k: usize) {
         let system = match self.systems.get(&sys_id) {
+            Some(s) => s,
+            None => return,
+        };
+
+        let galaxy = system.address.reality_index;
+        let spatial = match self.spatial.get(&galaxy) {
             Some(s) => s,
             None => return,
         };
@@ -159,8 +177,7 @@ impl GalaxyModel {
             system.address.voxel_z() as f64,
         ];
 
-        let neighbors: Vec<_> = self
-            .spatial
+        let neighbors: Vec<_> = spatial
             .nearest_neighbor_iter(&query_point)
             .filter(|sp| sp.id != sys_id)
             .take(k)

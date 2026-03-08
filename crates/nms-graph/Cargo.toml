@@ -15,10 +15,14 @@ categories.workspace = true
 nms-core = { workspace = true }
 nms-save = { workspace = true }
 chrono = { workspace = true }
+csv = { workspace = true }
+log = { workspace = true }
 petgraph = { workspace = true }
 rstar = { workspace = true }
+serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
 serde_json = { workspace = true }
+tempfile = { workspace = true }

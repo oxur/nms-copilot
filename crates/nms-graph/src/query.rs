@@ -45,15 +45,22 @@ impl GalaxyModel {
 
     /// Find the N nearest systems to a reference point.
     ///
+    /// Uses the active galaxy's spatial index. Returns empty if the active
+    /// galaxy has no systems.
+    ///
     /// Returns `(SystemId, distance_in_ly)` pairs sorted by distance ascending.
     pub fn nearest_systems(&self, from: &GalacticAddress, n: usize) -> Vec<(SystemId, f64)> {
+        let Some(spatial) = self.active_spatial() else {
+            return Vec::new();
+        };
+
         let query_point = [
             from.voxel_x() as f64,
             from.voxel_y() as f64,
             from.voxel_z() as f64,
         ];
 
-        self.spatial
+        spatial
             .nearest_neighbor_iter(&query_point)
             .take(n)
             .map(|sp| {
@@ -66,12 +73,19 @@ impl GalaxyModel {
 
     /// Find all systems within a radius (in light-years) of a reference point.
     ///
+    /// Uses the active galaxy's spatial index. Returns empty if the active
+    /// galaxy has no systems.
+    ///
     /// Returns `(SystemId, distance_in_ly)` pairs sorted by distance ascending.
     pub fn systems_within_radius(
         &self,
         from: &GalacticAddress,
         radius_ly: f64,
     ) -> Vec<(SystemId, f64)> {
+        let Some(spatial) = self.active_spatial() else {
+            return Vec::new();
+        };
+
         let query_point = [
             from.voxel_x() as f64,
             from.voxel_y() as f64,
@@ -80,8 +94,7 @@ impl GalaxyModel {
         let voxel_radius = radius_ly / 400.0;
         let voxel_radius_sq = voxel_radius * voxel_radius;
 
-        let mut results: Vec<(SystemId, f64)> = self
-            .spatial
+        let mut results: Vec<(SystemId, f64)> = spatial
             .nearest_neighbor_iter(&query_point)
             .map(|sp| {
                 let dist_sq = sp.distance_2(&query_point);
@@ -97,6 +110,9 @@ impl GalaxyModel {
 
     /// Find the N nearest planets to a reference point, with optional filtering.
     ///
+    /// Uses the active galaxy's spatial index. Returns empty if the active
+    /// galaxy has no systems.
+    ///
     /// Iterates systems by proximity, then checks their planets against the filter.
     /// Returns `(PlanetKey, &Planet, system_distance_ly)` tuples.
     pub fn nearest_planets<'a>(
@@ -105,6 +121,10 @@ impl GalaxyModel {
         n: usize,
         filter: &BiomeFilter,
     ) -> Vec<(PlanetKey, &'a Planet, f64)> {
+        let Some(spatial) = self.active_spatial() else {
+            return Vec::new();
+        };
+
         let query_point = [
             from.voxel_x() as f64,
             from.voxel_y() as f64,
@@ -113,7 +133,7 @@ impl GalaxyModel {
 
         let mut results = Vec::with_capacity(n);
 
-        for sp in self.spatial.nearest_neighbor_iter(&query_point) {
+        for sp in spatial.nearest_neighbor_iter(&query_point) {
             if results.len() >= n {
                 break;
             }

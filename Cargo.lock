@@ -1247,6 +1247,9 @@ name = "nms-compat"
 version = "0.2.0"
 dependencies = [
  "nms-core",
+ "nms-save",
+ "serde_json",
+ "thiserror 2.0.18",
 ]
 
 [[package]]
@@ -1283,11 +1286,15 @@ name = "nms-graph"
 version = "0.2.0"
 dependencies = [
  "chrono",
+ "csv",
+ "log",
  "nms-core",
  "nms-save",
  "petgraph",
  "rstar",
+ "serde",
  "serde_json",
+ "tempfile",
  "thiserror 2.0.18",
 ]
 
