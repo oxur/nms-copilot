@@ -21,3 +21,7 @@ nms-save = { workspace = true }
 nms-graph = { workspace = true }
 nms-query = { workspace = true }
 clap = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+csv = { workspace = true }
+clap_complete = { workspace = true }
