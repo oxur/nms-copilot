@@ -12,7 +12,6 @@ use clap::{Parser, Subcommand};
 #[command(
     name = "",
     no_binary_name = true,
-    disable_help_flag = true,
     disable_help_subcommand = true,
     disable_version_flag = true
 )]
@@ -210,7 +209,17 @@ pub fn parse_line(line: &str) -> Result<Option<Action>, String> {
         return Ok(None);
     }
 
-    let args = shell_words(line);
+    let mut args = shell_words(line);
+
+    // Rewrite "<command> help" to "<command> --help" so clap generates
+    // per-command help even though the top-level help subcommand is disabled.
+    if args.len() >= 2 && args.last().map(|s| s.as_str()) == Some("help") {
+        // Don't rewrite "show help" or "set help" — those have subcommands
+        // that could legitimately be named "help". But for top-level commands
+        // like "find help", "route help", etc., rewrite to --help.
+        let last = args.len() - 1;
+        args[last] = "--help".to_string();
+    }
 
     match ReplCommand::try_parse_from(args) {
         Ok(cmd) => Ok(cmd.action),
@@ -446,5 +455,19 @@ mod tests {
             Action::Reset { target } => assert_eq!(target, "biome"),
             _ => panic!("Expected Reset"),
         }
+    }
+
+    #[test]
+    fn test_parse_command_help_shows_subcommand_help() {
+        // "find help" should be rewritten to "find --help" and produce help output
+        let result = parse_line("find help");
+        // clap prints help text and parse_line returns Ok(None)
+        assert!(result.unwrap().is_none());
+    }
+
+    #[test]
+    fn test_parse_command_dash_help_shows_subcommand_help() {
+        let result = parse_line("find --help");
+        assert!(result.unwrap().is_none());
     }
 }

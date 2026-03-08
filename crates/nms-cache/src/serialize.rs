@@ -60,6 +60,11 @@ pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
 pub fn write_cache(data: &CacheData, path: &Path) -> Result<(), CacheError> {
     let bytes = serialize(data)?;
 
+    // Ensure parent directories exist (e.g. per-save cache paths)
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent).map_err(CacheError::Io)?;
+    }
+
     // Write to a temp file first, then rename for atomicity
     let tmp_path = path.with_extension("rkyv.tmp");
     fs::write(&tmp_path, &bytes).map_err(CacheError::Io)?;
