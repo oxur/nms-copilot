@@ -1350,6 +1350,7 @@ dependencies = [
  "nms-query",
  "nms-save",
  "nms-watch",
+ "owo-colors",
  "reedline",
  "serde",
  "serde_json",

@@ -6,11 +6,28 @@
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
 
+use dialoguer::theme::ColorfulTheme;
 use dialoguer::{Confirm, Input, Select};
+use owo_colors::OwoColorize;
 
 use nms_save::locate::{
     self, AccountDir, SaveSlot, group_into_slots, list_accounts, list_saves, nms_save_dir,
 };
+
+/// Build the dialoguer theme with our color scheme.
+///
+/// - Prompt text in cyan
+/// - Active item prefix (`>`) in bright green
+/// - Active items in default (account names are pre-colored in yellow)
+fn wizard_theme() -> ColorfulTheme {
+    use dialoguer::console::{Style, style};
+    ColorfulTheme {
+        prompt_style: Style::new().for_stderr().cyan(),
+        active_item_prefix: style(">".to_string()).for_stderr().green().bright(),
+        active_item_style: Style::new().for_stderr(),
+        ..ColorfulTheme::default()
+    }
+}
 
 /// Errors that can occur during the setup wizard.
 #[derive(Debug, thiserror::Error)]
@@ -42,27 +59,28 @@ pub enum SetupError {
 ///
 /// Returns the resolved path to the selected save file.
 pub fn run_setup_wizard() -> Result<PathBuf, SetupError> {
+    let theme = wizard_theme();
+
     println!();
-    println!("=== NMS Copilot Setup ===");
+    println!("{}", "NMS Copilot Setup".magenta().bold());
     println!();
-    println!("No save file configured and auto-detect could not find one.");
-    println!("Let's find your No Man's Sky save file.");
+    println!("No save file configured. Let's find your No Man's Sky save file.");
     println!();
 
     // Step 1: Find the NMS save directory
-    let save_dir = find_save_directory()?;
+    let save_dir = find_save_directory(&theme)?;
 
     // Step 2: Select an account
-    let account = select_account(&save_dir)?;
+    let account = select_account(&save_dir, &theme)?;
 
     // Step 3: Select a save slot
-    let save_path = select_save_slot(account.path())?;
+    let save_path = select_save_slot(account.path(), &theme)?;
 
     println!();
     println!("Selected: {}", save_path.display());
 
     // Step 4: Offer to save config
-    if Confirm::new()
+    if Confirm::with_theme(&theme)
         .with_prompt("Save these settings to ~/.nms-copilot/config.toml?")
         .default(true)
         .interact()
@@ -79,10 +97,10 @@ pub fn run_setup_wizard() -> Result<PathBuf, SetupError> {
 }
 
 /// Find the NMS save directory, falling back to user input.
-fn find_save_directory() -> Result<PathBuf, SetupError> {
+fn find_save_directory(theme: &ColorfulTheme) -> Result<PathBuf, SetupError> {
     match nms_save_dir() {
         Ok(dir) if dir.exists() => {
-            println!("Found NMS save directory: {}", dir.display());
+            println!("{} {}", "Found NMS save directory:".cyan(), dir.display());
             Ok(dir)
         }
         _ => {
@@ -93,7 +111,7 @@ fn find_save_directory() -> Result<PathBuf, SetupError> {
             println!("  Linux:   ~/.local/share/Steam/steamapps/compatdata/275850/pfx/...");
             println!();
 
-            let input: String = Input::new()
+            let input: String = Input::with_theme(theme)
                 .with_prompt("Enter path to your NMS save directory (or a specific save file)")
                 .interact_text()
                 .map_err(|_| SetupError::Cancelled)?;
@@ -108,14 +126,9 @@ fn find_save_directory() -> Result<PathBuf, SetupError> {
 }
 
 /// Select an account directory. Auto-selects if there is only one.
-fn select_account(save_dir: &Path) -> Result<AccountDir, SetupError> {
+fn select_account(save_dir: &Path, theme: &ColorfulTheme) -> Result<AccountDir, SetupError> {
     // If the user pointed directly to an account dir (contains save*.hg), use it
     if list_saves(save_dir).is_ok() {
-        // The save_dir itself is an account directory
-        // We need to construct a synthetic AccountDir; but since we cannot
-        // construct one directly (fields are private), we treat this path
-        // as a single-account scenario by looking for accounts in the parent.
-        // If the path has save files, try listing accounts from the parent.
         if let Some(parent) = save_dir.parent() {
             if let Ok(accounts) = list_accounts(parent) {
                 let matching: Vec<_> = accounts
@@ -123,7 +136,11 @@ fn select_account(save_dir: &Path) -> Result<AccountDir, SetupError> {
                     .filter(|a| a.path() == save_dir)
                     .collect();
                 if let Some(account) = matching.into_iter().next() {
-                    println!("Using account: {} ({})", account.name(), account.kind());
+                    println!(
+                        "Using account: {} ({})",
+                        account.name().yellow(),
+                        account.kind()
+                    );
                     return Ok(account);
                 }
             }
@@ -134,18 +151,23 @@ fn select_account(save_dir: &Path) -> Result<AccountDir, SetupError> {
 
     if accounts.len() == 1 {
         let account = accounts.into_iter().next().unwrap();
-        println!("Found 1 account: {} ({})", account.name(), account.kind());
+        println!(
+            "{} {} ({})",
+            "Found 1 account:".cyan(),
+            account.name().yellow(),
+            account.kind()
+        );
         return Ok(account);
     }
 
-    println!("Found {} accounts:", accounts.len());
+    println!("{}:", format!("Found {} accounts", accounts.len()).cyan());
 
     let labels: Vec<String> = accounts
         .iter()
-        .map(|a| format!("{} ({})", a.name(), a.kind()))
+        .map(|a| format!("{} ({})", a.name().yellow(), a.kind()))
         .collect();
 
-    let selection = Select::new()
+    let selection = Select::with_theme(theme)
         .with_prompt("Select an account")
         .items(&labels)
         .default(0)
@@ -156,7 +178,7 @@ fn select_account(save_dir: &Path) -> Result<AccountDir, SetupError> {
 }
 
 /// Select a save slot from an account directory. Auto-selects if only one slot.
-fn select_save_slot(account_dir: &Path) -> Result<PathBuf, SetupError> {
+fn select_save_slot(account_dir: &Path, theme: &ColorfulTheme) -> Result<PathBuf, SetupError> {
     let saves = list_saves(account_dir)?;
     let slots = group_into_slots(&saves);
 
@@ -170,7 +192,8 @@ fn select_save_slot(account_dir: &Path) -> Result<PathBuf, SetupError> {
         let slot = &slots[0];
         let save = slot.most_recent().unwrap();
         println!(
-            "Found 1 save slot: Slot {} ({}, {})",
+            "{} Slot {} ({}, {})",
+            "Found 1 save slot:".cyan(),
             slot.slot(),
             save.save_type(),
             format_mtime(save.modified())
@@ -178,11 +201,11 @@ fn select_save_slot(account_dir: &Path) -> Result<PathBuf, SetupError> {
         return Ok(save.path().to_path_buf());
     }
 
-    println!("Found {} save slots:", slots.len());
+    println!("{}", format!("Found {} save slots:", slots.len()).cyan());
 
     let labels: Vec<String> = slots.iter().map(format_slot_label).collect();
 
-    let selection = Select::new()
+    let selection = Select::with_theme(theme)
         .with_prompt("Select a save slot")
         .items(&labels)
         .default(0)
