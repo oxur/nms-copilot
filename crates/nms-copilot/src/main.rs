@@ -24,6 +24,13 @@ fn main() {
         }
     };
 
+    // Art banner first — doesn't need the model
+    banner::print_banner(
+        config.display.banner.as_deref(),
+        config.display.show_banner,
+        config.display.color,
+    );
+
     let args: Vec<String> = std::env::args().collect();
     let save_path = resolve_save_path(&args, &config);
     let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
@@ -44,14 +51,7 @@ fn main() {
         "from save file"
     };
 
-    // Art banner (ASCII art, configurable)
-    banner::print_banner(
-        config.display.banner.as_deref(),
-        config.display.show_banner,
-        config.display.color,
-    );
-
-    // System banner (model stats + help hint)
+    // System banner (model stats + help hint) — after model is loaded
     banner::print_system_banner(
         config.display.show_system_banner,
         model.systems.len(),
@@ -189,19 +189,15 @@ fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
 }
 
 fn resolve_save_path(args: &[String], config: &Config) -> Option<PathBuf> {
-    // 1. CLI arg
+    // 1. CLI arg (explicit, highest priority)
     if let Some(p) = parse_save_arg(args) {
         return Some(p);
     }
-    // 2+3. ENV vars + config (env already applied in Config::load())
+    // 2. ENV vars + config file (user has explicitly configured a save)
     if let Some(p) = config.effective_save_file() {
         return Some(p);
     }
-    // 4. Auto-detect
-    if let Ok(save) = nms_save::locate::find_most_recent_save() {
-        return Some(save.path().to_path_buf());
-    }
-    // 5. Wizard (TTY only)
+    // 3. Interactive wizard (TTY) — let user choose rather than silently auto-detecting
     if std::io::stdin().is_terminal() {
         match nms_copilot::setup::run_setup_wizard() {
             Ok(path) => return Some(path),
@@ -214,6 +210,10 @@ fn resolve_save_path(args: &[String], config: &Config) -> Option<PathBuf> {
                 std::process::exit(1);
             }
         }
+    }
+    // 4. Non-interactive fallback: auto-detect most recent save
+    if let Ok(save) = nms_save::locate::find_most_recent_save() {
+        return Some(save.path().to_path_buf());
     }
     None
 }
