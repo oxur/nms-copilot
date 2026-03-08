@@ -23,9 +23,11 @@ nms-cache = { workspace = true }
 nms-query = { workspace = true }
 nms-watch = { workspace = true }
 clap = { workspace = true }
+dialoguer = { workspace = true }
 dirs = { workspace = true }
 reedline = { workspace = true }
 serde = { workspace = true }
+thiserror = { workspace = true }
 toml = { workspace = true }
 
 [dev-dependencies]

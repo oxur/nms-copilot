@@ -8,4 +8,5 @@ pub mod dispatch;
 pub mod paths;
 pub mod prompt;
 pub mod session;
+pub mod setup;
 pub mod watch;

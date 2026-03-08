@@ -1,5 +1,6 @@
 //! NMS Copilot -- interactive galactic REPL for No Man's Sky.
 
+use std::io::IsTerminal;
 use std::path::{Path, PathBuf};
 
 use reedline::{FileBackedHistory, Reedline, Signal};
@@ -24,7 +25,7 @@ fn main() {
     };
 
     let args: Vec<String> = std::env::args().collect();
-    let save_path = parse_save_arg(&args).or_else(|| config.save_path().map(PathBuf::from));
+    let save_path = resolve_save_path(&args, &config);
     let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
     let cache_path = config.cache_path();
 
@@ -187,17 +188,42 @@ fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
         .map(PathBuf::from)
 }
 
+fn resolve_save_path(args: &[String], config: &Config) -> Option<PathBuf> {
+    // 1. CLI arg
+    if let Some(p) = parse_save_arg(args) {
+        return Some(p);
+    }
+    // 2+3. ENV vars + config (env already applied in Config::load())
+    if let Some(p) = config.effective_save_file() {
+        return Some(p);
+    }
+    // 4. Auto-detect
+    if let Ok(save) = nms_save::locate::find_most_recent_save() {
+        return Some(save.path().to_path_buf());
+    }
+    // 5. Wizard (TTY only)
+    if std::io::stdin().is_terminal() {
+        match nms_copilot::setup::run_setup_wizard() {
+            Ok(path) => return Some(path),
+            Err(e) => {
+                eprintln!("Setup failed: {e}");
+                eprintln!(
+                    "Configure manually in ~/.nms-copilot/config.toml \
+                     or use: nms-copilot --save /path/to/save.hg"
+                );
+                std::process::exit(1);
+            }
+        }
+    }
+    None
+}
+
 fn load_model(
     save_path: Option<PathBuf>,
     cache_path: &Path,
     no_cache: bool,
 ) -> Result<(GalaxyModel, bool, u32), Box<dyn std::error::Error>> {
-    let save = match save_path {
-        Some(p) => p,
-        None => nms_save::locate::find_most_recent_save()?
-            .path()
-            .to_path_buf(),
-    };
+    let save = save_path.ok_or("no save file path resolved")?;
     let result = nms_cache::load_or_rebuild(cache_path, &save, no_cache)?;
     Ok((result.model, result.was_cached, result.save_version))
 }
@@ -209,7 +235,7 @@ fn start_watcher(
     let path = match save_path {
         Some(p) => p,
         None => match config.save_path() {
-            Some(p) => PathBuf::from(p),
+            Some(p) => p,
             None => nms_save::locate::find_most_recent_save()?
                 .path()
                 .to_path_buf(),

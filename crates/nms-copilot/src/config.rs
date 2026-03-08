@@ -36,9 +36,14 @@ pub struct Config {
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct SaveConfig {
-    /// Path to the NMS save directory or specific save file.
-    /// If omitted, auto-detected from platform defaults.
+    /// DEPRECATED: Old combined path. Treated as `file` for backward compat.
     pub path: Option<PathBuf>,
+
+    /// Path to the NMS save directory (account dir containing `save*.hg`).
+    pub dir: Option<PathBuf>,
+
+    /// Path to a specific NMS save file.
+    pub file: Option<PathBuf>,
 
     /// Save format: "auto", "raw", "goatfungus".
     pub format: String,
@@ -48,6 +53,8 @@ impl Default for SaveConfig {
     fn default() -> Self {
         Self {
             path: None,
+            dir: None,
+            file: None,
             format: "auto".into(),
         }
     }
@@ -169,12 +176,72 @@ impl Config {
 
     /// Load config from a specific path.
     pub fn load_from(path: &Path) -> Result<Self, ConfigError> {
-        if !path.exists() {
-            return Ok(Self::default());
+        let mut config = if !path.exists() {
+            Self::default()
+        } else {
+            let content = fs::read_to_string(path).map_err(ConfigError::Io)?;
+            toml::from_str(&content).map_err(ConfigError::Parse)?
+        };
+        config.apply_env_overrides();
+        Ok(config)
+    }
+
+    /// Apply environment variable overrides to the config.
+    ///
+    /// Reads:
+    /// - `NMS_SAVE_DIR` -> `self.save.dir`
+    /// - `NMS_SAVE_FILE` -> `self.save.file`
+    /// - `NMS_SAVE_FORMAT` -> `self.save.format`
+    pub fn apply_env_overrides(&mut self) {
+        if let Ok(val) = std::env::var("NMS_SAVE_DIR") {
+            self.save.dir = Some(PathBuf::from(val));
+        }
+        if let Ok(val) = std::env::var("NMS_SAVE_FILE") {
+            self.save.file = Some(PathBuf::from(val));
+        }
+        if let Ok(val) = std::env::var("NMS_SAVE_FORMAT") {
+            self.save.format = val;
+        }
+    }
+
+    /// Resolve the effective save file path from all configured sources.
+    ///
+    /// Priority:
+    /// 1. `save.file` (explicit file path)
+    /// 2. `save.path` if it points to a file (backward compat)
+    /// 3. `save.dir` — find most recent save in that directory
+    /// 4. `save.path` if it points to a directory (backward compat)
+    /// 5. `None` if nothing is configured or resolvable
+    pub fn effective_save_file(&self) -> Option<PathBuf> {
+        // 1. Explicit file
+        if let Some(ref file) = self.save.file {
+            return Some(file.clone());
         }
 
-        let content = fs::read_to_string(path).map_err(ConfigError::Io)?;
-        toml::from_str(&content).map_err(ConfigError::Parse)
+        // 2. Legacy path as file
+        if let Some(ref path) = self.save.path {
+            if path.is_file() {
+                return Some(path.clone());
+            }
+        }
+
+        // 3. Explicit dir — find most recent save in it
+        if let Some(ref dir) = self.save.dir {
+            if let Ok(save) = nms_save::locate::find_most_recent_save_in(dir) {
+                return Some(save.path().to_path_buf());
+            }
+        }
+
+        // 4. Legacy path as directory
+        if let Some(ref path) = self.save.path {
+            if path.is_dir() {
+                if let Ok(save) = nms_save::locate::find_most_recent_save_in(path) {
+                    return Some(save.path().to_path_buf());
+                }
+            }
+        }
+
+        None
     }
 
     /// Resolve the effective cache path.
@@ -183,8 +250,11 @@ impl Config {
     }
 
     /// Resolve the effective save path (if configured).
-    pub fn save_path(&self) -> Option<&Path> {
-        self.save.path.as_deref()
+    ///
+    /// Delegates to [`effective_save_file`]. For backward compatibility,
+    /// also checks the legacy `save.path` field.
+    pub fn save_path(&self) -> Option<PathBuf> {
+        self.effective_save_file()
     }
 
     /// Whether caching is enabled.
@@ -240,6 +310,8 @@ mod tests {
         assert_eq!(config.defaults.galaxy, 0);
         assert!(config.cache.enabled);
         assert!(config.save.path.is_none());
+        assert!(config.save.dir.is_none());
+        assert!(config.save.file.is_none());
     }
 
     #[test]
@@ -289,6 +361,86 @@ mod tests {
         assert_eq!(config.defaults.warp_range, Some(2500.0));
         assert_eq!(config.defaults.find_limit, Some(10));
         assert!(!config.cache.enabled);
+    }
+
+    #[test]
+    fn test_parse_config_with_new_save_fields() {
+        let toml = r#"
+            [save]
+            dir = "/Users/test/NMS/st_123"
+            file = "/Users/test/NMS/st_123/save.hg"
+            format = "raw"
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert_eq!(
+            config.save.dir.as_deref().unwrap().to_str().unwrap(),
+            "/Users/test/NMS/st_123"
+        );
+        assert_eq!(
+            config.save.file.as_deref().unwrap().to_str().unwrap(),
+            "/Users/test/NMS/st_123/save.hg"
+        );
+        assert_eq!(config.save.format, "raw");
+        // Legacy path should be None
+        assert!(config.save.path.is_none());
+    }
+
+    #[test]
+    fn test_parse_config_backward_compat_path_only() {
+        let toml = r#"
+            [save]
+            path = "/Users/test/NMS/save.hg"
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert!(config.save.path.is_some());
+        assert!(config.save.dir.is_none());
+        assert!(config.save.file.is_none());
+    }
+
+    #[test]
+    fn test_effective_save_file_prefers_file_over_path() {
+        let dir = tempfile::tempdir().unwrap();
+        let save_file = dir.path().join("save.hg");
+        let legacy_file = dir.path().join("legacy.hg");
+        fs::write(&save_file, b"data").unwrap();
+        fs::write(&legacy_file, b"data").unwrap();
+
+        let mut config = Config::default();
+        config.save.file = Some(save_file.clone());
+        config.save.path = Some(legacy_file);
+
+        assert_eq!(config.effective_save_file(), Some(save_file));
+    }
+
+    #[test]
+    fn test_effective_save_file_falls_back_to_path_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let save_file = dir.path().join("save.hg");
+        fs::write(&save_file, b"data").unwrap();
+
+        let mut config = Config::default();
+        config.save.path = Some(save_file.clone());
+
+        assert_eq!(config.effective_save_file(), Some(save_file));
+    }
+
+    #[test]
+    fn test_effective_save_file_dir_with_saves() {
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("save.hg"), b"data").unwrap();
+
+        let mut config = Config::default();
+        config.save.dir = Some(dir.path().to_path_buf());
+
+        let result = config.effective_save_file();
+        assert!(result.is_some());
+        assert!(result.unwrap().ends_with("save.hg"));
+    }
+
+    #[test]
+    fn test_effective_save_file_none_when_empty() {
+        let config = Config::default();
+        assert!(config.effective_save_file().is_none());
     }
 
     #[test]
