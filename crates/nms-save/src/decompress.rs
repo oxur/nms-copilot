@@ -16,7 +16,7 @@ const MAX_CHUNK_SIZE: usize = 0x80000;
 pub enum SaveFormat {
     /// Standard NMS format (2002+): sequential LZ4 blocks with 16-byte headers.
     Lz4Compressed,
-    /// Uncompressed JSON (first two bytes are 0x7B 0x22, i.e. `{"`).
+    /// Uncompressed JSON (first byte is 0x7B, i.e. `{`).
     PlaintextJson,
 }
 
@@ -29,10 +29,11 @@ struct BlockHeader {
 
 /// Detect whether raw save file bytes are LZ4-compressed or plaintext JSON.
 ///
-/// Checks the first two bytes for `{"` (ASCII 0x7B 0x22). If found, returns
-/// [`SaveFormat::PlaintextJson`]. Otherwise returns [`SaveFormat::Lz4Compressed`].
+/// Checks the first byte for `{` (ASCII 0x7B). No valid NMS LZ4 save starts
+/// with `{` — they start with the block magic `0xFEEDA1E5` (first byte `0xE5`).
+/// This handles both compact (`{"Version":...}`) and pretty-printed JSON.
 pub fn detect_format(data: &[u8]) -> SaveFormat {
-    if data.len() >= 2 && data[0] == 0x7B && data[1] == 0x22 {
+    if !data.is_empty() && data[0] == 0x7B {
         SaveFormat::PlaintextJson
     } else {
         SaveFormat::Lz4Compressed
