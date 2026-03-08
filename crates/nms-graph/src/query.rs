@@ -1,7 +1,7 @@
 //! Spatial query methods on the GalaxyModel.
 
 use nms_core::address::GalacticAddress;
-use nms_core::biome::Biome;
+use nms_core::biome::{Biome, BiomeSubType};
 use nms_core::system::Planet;
 use rstar::PointDistance;
 
@@ -13,6 +13,7 @@ use crate::spatial::SystemId;
 #[derive(Debug, Clone, Default)]
 pub struct BiomeFilter {
     pub biome: Option<Biome>,
+    pub biome_subtype: Option<BiomeSubType>,
     pub infested: Option<bool>,
     pub named_only: bool,
 }
@@ -186,6 +187,11 @@ impl GalaxyModel {
 fn matches_filter(planet: &Planet, filter: &BiomeFilter) -> bool {
     if let Some(biome) = filter.biome {
         if planet.biome != Some(biome) {
+            return false;
+        }
+    }
+    if let Some(subtype) = filter.biome_subtype {
+        if planet.biome_subtype != Some(subtype) {
             return false;
         }
     }
@@ -523,6 +529,7 @@ mod tests {
         );
         let filter = BiomeFilter {
             biome: Some(Biome::Scorched),
+            biome_subtype: None,
             infested: Some(true),
             named_only: true,
         };

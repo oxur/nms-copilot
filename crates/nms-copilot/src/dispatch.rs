@@ -51,6 +51,7 @@ pub fn dispatch(
 
             let query = FindQuery {
                 biome,
+                biome_subtype: None,
                 infested: if *infested { Some(true) } else { None },
                 within_ly: *within,
                 nearest: *nearest,
@@ -241,38 +242,37 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 ]);
             }
             builder.push_record(["", "", ""]);
-            Ok(build_table(builder, &theme))
+            Ok(build_table(builder, "Galaxies", &theme))
         }
 
-        ListTarget::Biomes { subtypes } => {
-            if *subtypes {
-                let mut lines = Vec::new();
-                for biome in ALL_BIOMES {
-                    lines.push(format!("  {biome}"));
-                    for sub in ALL_BIOME_SUBTYPES {
-                        let sub_name = format!("{sub}");
-                        let biome_name = format!("{biome}");
-                        if sub_name.starts_with(&biome_name) {
-                            lines.push(format!("    - {sub}"));
-                        }
-                    }
-                }
-                lines.push(String::new());
-                Ok(lines.join("\n"))
-            } else {
-                let mut builder = Builder::default();
-                builder.push_record(["Biome"]);
-                for biome in ALL_BIOMES {
-                    builder.push_record([biome.to_string()]);
-                }
-                builder.push_record([String::new()]);
-                Ok(build_table(builder, &theme))
+        ListTarget::Biomes => {
+            let mut builder = Builder::default();
+            builder.push_record(["Name", "Variants"]);
+            for biome in ALL_BIOMES {
+                let biome_name = biome.to_string();
+                let variants: Vec<String> = ALL_BIOME_SUBTYPES
+                    .iter()
+                    .filter_map(|sub| {
+                        let sub_name = format!("{sub:?}");
+                        sub_name
+                            .strip_prefix(&biome_name)
+                            .map(|suffix| suffix.to_string())
+                    })
+                    .collect();
+                let variants_str = if variants.is_empty() {
+                    "—".to_string()
+                } else {
+                    variants.join(", ")
+                };
+                builder.push_record([biome_name, variants_str]);
             }
+            builder.push_record(["".to_string(), "".to_string()]);
+            Ok(build_table(builder, "Biomes", &theme))
         }
 
         ListTarget::Glyphs => {
             let mut builder = Builder::default();
-            builder.push_record(["Hex", "Emoji", "Name"]);
+            builder.push_record(["Hex", "Symbol", "Name"]);
             for info in &GLYPH_TABLE {
                 builder.push_record([
                     info.hex_char.to_string(),
@@ -281,19 +281,24 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 ]);
             }
             builder.push_record(["", "", ""]);
-            Ok(build_table(builder, &theme))
+            Ok(build_table(builder, "Portal Glyphs", &theme))
         }
 
-        ListTarget::Bases => {
+        ListTarget::Bases { limit, all } => {
             if model.bases.is_empty() {
                 return Ok("  No bases found.\n".into());
             }
+            let mut bases: Vec<_> = model.bases.values().collect();
+            bases.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+
+            let total = bases.len();
+            let effective_limit = if *all || *limit == 0 { total } else { *limit };
+            let showing = total.min(effective_limit);
+
             let mut builder = Builder::default();
             builder.push_record(["Name", "Type", "Galaxy", "Address"]);
 
-            let mut bases: Vec<_> = model.bases.values().collect();
-            bases.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
-            for base in bases {
+            for base in bases.iter().take(effective_limit) {
                 let galaxy = Galaxy::by_index(base.address.reality_index);
                 builder.push_record([
                     base.name.clone(),
@@ -303,10 +308,62 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 ]);
             }
             builder.push_record(["", "", "", ""]);
-            Ok(build_table(builder, &theme))
+
+            let mut out = build_table(builder, "Bases", &theme);
+            if showing < total {
+                out.push_str(&format!(
+                    "\n  Showing {showing} of {total} bases (use --all to show all)"
+                ));
+            }
+            Ok(out)
         }
 
-        ListTarget::Systems { limit } => {
+        ListTarget::TerrainTypes => {
+            let terrain_types: &[(u8, &str, &str)] = &[
+                (0, "None", "No specific terrain type"),
+                (1, "Standard", "Default terrain generation"),
+                (2, "HighQuality", "Enhanced terrain detail"),
+                (3, "Structure", "Structural formations"),
+                (4, "Beam", "Beam-shaped formations"),
+                (5, "Hexagon", "Hexagonal terrain patterns"),
+                (6, "FractCube", "Fractal cube formations"),
+                (7, "Bubble", "Bubble-shaped terrain"),
+                (8, "Shards", "Shard crystal formations"),
+                (9, "Contour", "Contoured terrain features"),
+                (10, "Shell", "Shell-shaped formations"),
+                (11, "BoneSpire", "Bone spire formations"),
+                (12, "WireCell", "Wire cell structures"),
+                (13, "HydroGarden", "Hydroponic garden terrain"),
+                (14, "HugePlant", "Giant plant formations"),
+                (15, "HugeLush", "Giant lush vegetation"),
+                (16, "HugeRing", "Giant ring formations"),
+                (17, "HugeRock", "Giant rock formations"),
+                (18, "HugeScorch", "Giant scorched formations"),
+                (19, "HugeToxic", "Giant toxic formations"),
+                (20, "Variant_A", "Terrain variant A"),
+                (21, "Variant_B", "Terrain variant B"),
+                (22, "Variant_C", "Terrain variant C"),
+                (23, "Variant_D", "Terrain variant D"),
+                (24, "Infested", "Infested terrain generation"),
+                (25, "Swamp", "Swamp terrain generation"),
+                (26, "Lava", "Volcanic lava terrain"),
+                (27, "Worlds", "Worlds terrain generation"),
+                (28, "Remix_A", "Terrain remix A"),
+                (29, "Remix_B", "Terrain remix B"),
+                (30, "Remix_C", "Terrain remix C"),
+                (31, "Remix_D", "Terrain remix D"),
+            ];
+
+            let mut builder = Builder::default();
+            builder.push_record(["Index", "Name", "Description"]);
+            for (idx, name, desc) in terrain_types {
+                builder.push_record([idx.to_string(), name.to_string(), desc.to_string()]);
+            }
+            builder.push_record(["", "", ""]);
+            Ok(build_table(builder, "Terrain Types", &theme))
+        }
+
+        ListTarget::Systems { limit, all } => {
             if model.systems.is_empty() {
                 return Ok("  No systems found.\n".into());
             }
@@ -322,11 +379,11 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             });
 
             let total = systems.len();
-            let effective_limit = if *limit == 0 { total } else { *limit };
+            let effective_limit = if *all || *limit == 0 { total } else { *limit };
             let showing = total.min(effective_limit);
 
             let mut builder = Builder::default();
-            builder.push_record(["Name", "Address", "Planets"]);
+            builder.push_record(["Name", "Address", "Discovered Planets"]);
 
             for sys in systems.iter().take(effective_limit) {
                 let name = sys.name.as_deref().unwrap_or("(unnamed)");
@@ -339,10 +396,10 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             }
             builder.push_record(["", "", ""]);
 
-            let mut out = build_table(builder, &theme);
+            let mut out = build_table(builder, "Systems", &theme);
             if showing < total {
                 out.push_str(&format!(
-                    "\n  Showing {showing} of {total} systems (use --limit 0 for all)"
+                    "\n  Showing {showing} of {total} systems (use --all to show all)"
                 ));
             }
             Ok(out)
@@ -535,7 +592,7 @@ NMS Copilot -- Interactive Galaxy Explorer
 
 Commands:
   find       Search planets by biome, distance, name
-  list       List galaxies, biomes, glyphs, bases, systems
+  list       List galaxies, biomes, glyphs, bases, systems, terrain-types
   map        Open interactive galaxy map
   route      Plan a route through discovered systems
   show       Show system or base details

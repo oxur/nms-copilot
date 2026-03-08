@@ -29,7 +29,7 @@ fn print_summary(save: &SaveRoot) {
     let ga = &ua.galactic_address;
 
     let mut builder = Builder::default();
-    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Property", "Detail"]);
     builder.push_record(["Save Name", &save.common_state_data.save_name]);
     builder.push_record(["Platform", &save.platform]);
     builder.push_record(["Version", &save.version.to_string()]);
@@ -47,8 +47,7 @@ fn print_summary(save: &SaveRoot) {
     builder.push_record(["Planet Index", &ga.planet_index.to_string()]);
     builder.push_record(["", ""]);
 
-    println!("NMS Copilot -- Save File Summary");
-    println!("{}", build_table(builder, &theme));
+    println!("{}", build_table(builder, "Save File Summary", &theme));
     println!();
 
     print_discoveries(save, &theme);
@@ -85,15 +84,12 @@ fn print_discoveries(save: &SaveRoot, theme: &nms_query::table::TableStyleConfig
     }
     builder.push_record(["".to_string(), "".to_string()]);
 
-    println!("  Discoveries:");
-    println!("{}", build_table(builder, theme));
+    println!("{}", build_table(builder, "Discoveries", theme));
     println!();
 }
 
 fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig) {
     let bases = &ps.persistent_player_bases;
-    println!("  Bases: {}", bases.len());
-
     if !bases.is_empty() {
         let mut builder = Builder::default();
         builder.push_record(["Name", "Type", "Address"]);
@@ -110,19 +106,19 @@ fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig)
             ]);
         }
         builder.push_record(["", "", ""]);
-        println!("{}", build_table(builder, theme));
+        println!("{}", build_table(builder, "Bases", theme));
     }
     println!();
 }
 
 fn print_currencies(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig) {
     let mut builder = Builder::default();
-    builder.push_record(["Currency", "Amount"]);
+    builder.push_record(["Name", "Balance"]);
     builder.push_record(["Units".to_string(), format_number(ps.units)]);
     builder.push_record(["Nanites".to_string(), format_number(ps.nanites)]);
     builder.push_record(["Quicksilver".to_string(), format_number(ps.specials)]);
     builder.push_record(["".to_string(), "".to_string()]);
-    println!("{}", build_table(builder, theme));
+    println!("{}", build_table(builder, "Currencies", theme));
 }
 
 /// Format seconds as "Xd Yh Zm" or "Xh Ym" or "Xm Ys".

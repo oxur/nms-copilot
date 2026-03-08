@@ -48,6 +48,7 @@ pub fn run(args: FindArgs) -> Result<(), Box<dyn std::error::Error>> {
 
     let query = FindQuery {
         biome,
+        biome_subtype: None,
         infested: if args.infested { Some(true) } else { None },
         within_ly: args.within,
         nearest: args.nearest,

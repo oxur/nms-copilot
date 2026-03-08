@@ -1,7 +1,7 @@
 //! Planet/system search queries.
 
 use nms_core::address::GalacticAddress;
-use nms_core::biome::Biome;
+use nms_core::biome::{Biome, BiomeSubType};
 use nms_core::system::{Planet, System};
 use nms_graph::query::BiomeFilter;
 use nms_graph::{GalaxyModel, GraphError};
@@ -23,6 +23,8 @@ pub enum ReferencePoint {
 pub struct FindQuery {
     /// Filter by biome type.
     pub biome: Option<Biome>,
+    /// Filter by biome subtype/variant.
+    pub biome_subtype: Option<BiomeSubType>,
     /// Filter by infested flag.
     pub infested: Option<bool>,
     /// Only include results within this radius (light-years).
@@ -71,6 +73,7 @@ pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindRe
 
     let biome_filter = BiomeFilter {
         biome: query.biome,
+        biome_subtype: query.biome_subtype,
         infested: query.infested,
         named_only: query.named_only,
     };

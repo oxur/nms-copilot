@@ -224,6 +224,40 @@ impl FromStr for BiomeSubType {
             "swampmurky" => Ok(Self::SwampMurky),
             "lavavolcanic" => Ok(Self::LavaVolcanic),
             "waterworldocean" => Ok(Self::WaterworldOcean),
+
+            // Suffix-only matches (all suffixes are unique across biome subtypes)
+            "roomtemp" => Ok(Self::LushRoomTemp),
+            "humid" => Ok(Self::LushHumid),
+            "inactive" => Ok(Self::LushInactive),
+            "tentacles" => Ok(Self::ToxicTentacles),
+            "fungus" => Ok(Self::ToxicFungus),
+            "eggs" => Ok(Self::ToxicEggs),
+            "singed" => Ok(Self::ScorchedSinged),
+            "charred" => Ok(Self::ScorchedCharred),
+            "blasted" => Ok(Self::ScorchedBlasted),
+            "fungal" => Ok(Self::RadioactiveFungal),
+            "contaminated" => Ok(Self::RadioactiveContaminated),
+            "irradiated" => Ok(Self::RadioactiveIrradiated),
+            "ice" => Ok(Self::FrozenIce),
+            "snow" => Ok(Self::FrozenSnow),
+            "glacial" => Ok(Self::FrozenGlacial),
+            "dusty" => Ok(Self::BarrenDusty),
+            "rocky" => Ok(Self::BarrenRocky),
+            "mountainous" => Ok(Self::BarrenMountainous),
+            "empty" => Ok(Self::DeadEmpty),
+            "corroded" => Ok(Self::DeadCorroded),
+            "void" => Ok(Self::DeadVoid),
+            "hexagonal" => Ok(Self::WeirdHexagonal),
+            "cabled" => Ok(Self::WeirdCabled),
+            "bubbling" => Ok(Self::WeirdBubbling),
+            "fractured" => Ok(Self::WeirdFractured),
+            "shattered" => Ok(Self::WeirdShattered),
+            "contorted" => Ok(Self::WeirdContorted),
+            "wirecell" => Ok(Self::WeirdWireCell),
+            "murky" => Ok(Self::SwampMurky),
+            "volcanic" => Ok(Self::LavaVolcanic),
+            "ocean" => Ok(Self::WaterworldOcean),
+
             _ => Err(BiomeParseError(s.to_string())),
         }
     }
@@ -266,5 +300,59 @@ mod tests {
             let parsed: BiomeSubType = s.parse().unwrap();
             assert_eq!(v, parsed);
         }
+    }
+
+    #[test]
+    fn test_subtype_suffix_only_parse() {
+        // Every suffix-only name should resolve to the correct variant
+        let cases = [
+            ("rocky", BiomeSubType::BarrenRocky),
+            ("Rocky", BiomeSubType::BarrenRocky),
+            ("ROCKY", BiomeSubType::BarrenRocky),
+            ("roomtemp", BiomeSubType::LushRoomTemp),
+            ("humid", BiomeSubType::LushHumid),
+            ("inactive", BiomeSubType::LushInactive),
+            ("tentacles", BiomeSubType::ToxicTentacles),
+            ("fungus", BiomeSubType::ToxicFungus),
+            ("eggs", BiomeSubType::ToxicEggs),
+            ("singed", BiomeSubType::ScorchedSinged),
+            ("charred", BiomeSubType::ScorchedCharred),
+            ("blasted", BiomeSubType::ScorchedBlasted),
+            ("fungal", BiomeSubType::RadioactiveFungal),
+            ("contaminated", BiomeSubType::RadioactiveContaminated),
+            ("irradiated", BiomeSubType::RadioactiveIrradiated),
+            ("ice", BiomeSubType::FrozenIce),
+            ("snow", BiomeSubType::FrozenSnow),
+            ("glacial", BiomeSubType::FrozenGlacial),
+            ("dusty", BiomeSubType::BarrenDusty),
+            ("mountainous", BiomeSubType::BarrenMountainous),
+            ("empty", BiomeSubType::DeadEmpty),
+            ("corroded", BiomeSubType::DeadCorroded),
+            ("void", BiomeSubType::DeadVoid),
+            ("hexagonal", BiomeSubType::WeirdHexagonal),
+            ("cabled", BiomeSubType::WeirdCabled),
+            ("bubbling", BiomeSubType::WeirdBubbling),
+            ("fractured", BiomeSubType::WeirdFractured),
+            ("shattered", BiomeSubType::WeirdShattered),
+            ("contorted", BiomeSubType::WeirdContorted),
+            ("wirecell", BiomeSubType::WeirdWireCell),
+            ("murky", BiomeSubType::SwampMurky),
+            ("volcanic", BiomeSubType::LavaVolcanic),
+            ("ocean", BiomeSubType::WaterworldOcean),
+        ];
+        for (input, expected) in cases {
+            let parsed: BiomeSubType = input
+                .parse()
+                .unwrap_or_else(|_| panic!("failed to parse suffix '{input}'"));
+            assert_eq!(
+                parsed, expected,
+                "suffix '{input}' should parse to {expected:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn test_subtype_unknown_suffix_error() {
+        assert!("notasubtype".parse::<BiomeSubType>().is_err());
     }
 }

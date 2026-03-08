@@ -72,6 +72,12 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
             .biome
             .map(|b| {
                 let mut s = b.to_string();
+                if let Some(sub) = r.planet.biome_subtype {
+                    let sub_name = format!("{sub:?}");
+                    if let Some(variant) = sub_name.strip_prefix(&s) {
+                        s.push_str(&format!(" ({variant})"));
+                    }
+                }
                 if r.planet.infested {
                     s.push('*');
                 }
@@ -85,7 +91,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
         builder.push_record([
             (i + 1).to_string(),
             truncate(planet_name, 20),
-            truncate(&biome_str, 12),
+            truncate(&biome_str, 22),
             truncate(system_name, 22),
             distance,
             glyphs,
@@ -93,7 +99,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     }
     builder.push_record(["", "", "", "", "", ""]);
 
-    build_table(builder, &table_theme)
+    build_table(builder, "Search Results", &table_theme)
 }
 
 /// Format a system detail view.
@@ -103,7 +109,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     let name = sys.name.as_deref().unwrap_or("(unnamed)");
 
     let mut builder = Builder::default();
-    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Property", "Detail"]);
     builder.push_record(["Name", name]);
     builder.push_record(["Galaxy", &result.galaxy_name]);
     builder.push_record(["Portal Glyphs", &hex_to_emoji(&result.portal_hex)]);
@@ -132,26 +138,38 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str("NMS Copilot -- System Detail\n");
-    out.push_str(&build_table(builder, &table_theme));
+    out.push_str(&build_table(builder, "System Detail", &table_theme));
 
     if sys.planets.is_empty() {
         out.push_str("\n  No planets discovered.\n");
     } else {
-        out.push_str(&format!("\n  Planets ({}):\n", sys.planets.len()));
+        out.push('\n');
         let mut pbuilder = Builder::default();
-        pbuilder.push_record(["Idx", "Name", "Biome", "Flags"]);
+        pbuilder.push_record(["Index", "Name", "Biome", "Flags"]);
         for p in &sys.planets {
             let pname = p.name.as_deref().unwrap_or("(unnamed)");
             let biome_str = p
                 .biome
-                .map(|b| b.to_string())
+                .map(|b| {
+                    let mut s = b.to_string();
+                    if let Some(sub) = p.biome_subtype {
+                        let sub_name = format!("{sub:?}");
+                        if let Some(variant) = sub_name.strip_prefix(&s) {
+                            s.push_str(&format!(" ({variant})"));
+                        }
+                    }
+                    s
+                })
                 .unwrap_or_else(|| "?".to_string());
             let flags = if p.infested { "infested" } else { "" };
             pbuilder.push_record([&p.index.to_string(), pname, &biome_str, flags]);
         }
         pbuilder.push_record(["", "", "", ""]);
-        out.push_str(&build_table(pbuilder, &table_theme));
+        out.push_str(&build_table(
+            pbuilder,
+            &format!("Planets ({})", sys.planets.len()),
+            &table_theme,
+        ));
     }
 
     out
@@ -163,7 +181,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     let base = &result.base;
 
     let mut builder = Builder::default();
-    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Property", "Detail"]);
     builder.push_record(["Name", &base.name]);
     builder.push_record(["Type", &base.base_type.to_string()]);
     builder.push_record(["Galaxy", &result.galaxy_name]);
@@ -179,8 +197,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str("NMS Copilot -- Base Detail\n");
-    out.push_str(&build_table(builder, &table_theme));
+    out.push_str(&build_table(builder, "Base Detail", &table_theme));
     out
 }
 
@@ -197,7 +214,7 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     let table_theme = table_theme_for(theme);
 
     let mut builder = Builder::default();
-    builder.push_record(["Statistic", "Value"]);
+    builder.push_record(["Metric", "Count"]);
     builder.push_record(["Systems", &result.system_count.to_string()]);
     builder.push_record(["Planets", &result.planet_count.to_string()]);
     builder.push_record(["Bases", &result.base_count.to_string()]);
@@ -207,14 +224,13 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str("NMS Copilot -- Galaxy Statistics\n");
-    out.push_str(&build_table(builder, &table_theme));
+    out.push_str(&build_table(builder, "Galaxy Statistics", &table_theme));
 
     // Biome distribution table
     if !result.biome_counts.is_empty() || result.unknown_biome_count > 0 {
-        out.push_str("\n  Biome Distribution:\n");
+        out.push('\n');
         let mut bbuilder = Builder::default();
-        bbuilder.push_record(["Biome", "Count"]);
+        bbuilder.push_record(["Name", "Count"]);
 
         let mut biomes: Vec<_> = result.biome_counts.iter().collect();
         biomes.sort_by(|a, b| b.1.cmp(a.1));
@@ -230,7 +246,7 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
             ]);
         }
         bbuilder.push_record(["".to_string(), "".to_string()]);
-        out.push_str(&build_table(bbuilder, &table_theme));
+        out.push_str(&build_table(bbuilder, "Biome Distribution", &table_theme));
     }
 
     out
@@ -283,7 +299,7 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
     }
     builder.push_record(["", "", "", "", ""]);
 
-    let mut out = build_table(builder, &table_theme);
+    let mut out = build_table(builder, "Route Itinerary", &table_theme);
 
     // Summary line
     out.push('\n');

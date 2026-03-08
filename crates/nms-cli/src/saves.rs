@@ -28,7 +28,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         }
 
         let mut builder = Builder::default();
-        builder.push_record(["Slot", "Manual", "Auto", "Most Recent"]);
+        builder.push_record(["Number", "Manual", "Auto", "Most Recent"]);
         for slot in &slots {
             let manual = if slot.manual().is_some() { "yes" } else { "-" };
             let auto = if slot.auto().is_some() { "yes" } else { "-" };
@@ -44,7 +44,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             ]);
         }
         builder.push_record(["", "", "", ""]);
-        println!("{}", build_table(builder, &theme));
+        println!("{}", build_table(builder, "Save Slots", &theme));
     }
     Ok(())
 }

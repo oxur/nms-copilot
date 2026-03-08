@@ -352,6 +352,7 @@ async fn handle_search_planets(
 
     let query = FindQuery {
         biome,
+        biome_subtype: None,
         infested,
         within_ly: args.get("within_ly").and_then(|v| v.as_f64()),
         nearest: args

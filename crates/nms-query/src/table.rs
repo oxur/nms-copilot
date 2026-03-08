@@ -25,42 +25,43 @@ struct Dummy {
 /// - Row n = footer (caller's last `push_record`, styled by `[footer]`)
 const NMS_THEME: &str = r##"
 [table]
-padding_left = 1
-padding_right = 1
+padding_left = 0
+padding_right = 0
 padding_top = 0
 padding_bottom = 0
 
 [title]
 enabled = true
 bg_color = "#1E3A5F"
-fg_color = "#1E3A5F"
+fg_color = "#E0F0FF"
 justification_char = " "
 vertical_fg_color = "#1E3A5F"
 vertical_bg_color = "#1E3A5F"
 
 [header]
 bg_color = "#2C5F8A"
-fg_color = "#E0F0FF"
+fg_color = "#A0C8E0"
 justification_char = " "
-vertical_char = "|"
+vertical_char = "│"
 vertical_bg_color = "#2C5F8A"
 vertical_fg_color = "#2C5F8A"
 
 [rows]
 colors = [
     { bg = "#0A1929", fg = "#B0D0E8" },
-    { bg = "#0F2236", fg = "#8BBBD0" },
+    { bg = "#0A1929", fg = "#8BBBD0" },
 ]
 justification_char = " "
 
 [style]
 vertical_bg_color = "#0A1929"
-vertical_fg_color = "#1E3A5F"
+vertical_fg_color = "#162D45"
 
 [footer]
 enabled = true
 bg_color = "#1E3A5F"
-fg_color = "#4A9BC7"
+fg_color = "#1E3A5F"
+justification_char = " "
 vertical_bg_color = "#1E3A5F"
 vertical_fg_color = "#1E3A5F"
 "##;
@@ -70,8 +71,8 @@ vertical_fg_color = "#1E3A5F"
 /// Title is enabled but invisible (black on black) so the row layout matches.
 const NMS_THEME_NO_COLOR: &str = r##"
 [table]
-padding_left = 1
-padding_right = 1
+padding_left = 0
+padding_right = 0
 padding_top = 0
 padding_bottom = 0
 
@@ -112,17 +113,42 @@ pub fn nms_theme_no_color() -> TableStyleConfig {
 /// Build a table string from a `Builder` and apply the given theme.
 ///
 /// The caller pushes records in the order: `[header, data..., footer]`.
-/// This function automatically inserts an invisible title row at position 0
-/// so the `oxur-cli` theme styling aligns correctly (title at row 0, header
-/// at row 1, data at rows 2+, footer at last row).
-pub fn build_table(mut builder: Builder, theme: &TableStyleConfig) -> String {
-    let col_count = builder.count_columns();
-    let title_row: Vec<String> = std::iter::repeat_n(String::new(), col_count).collect();
-    builder.insert_record(0, title_row);
+/// This function automatically:
+/// 1. Pads each cell with a leading and trailing space (workaround for
+///    `tabled` cell padding not inheriting row background colors in
+///    header/footer rows).
+/// 2. Inserts a title row at position 0 so the `oxur-cli` theme styling
+///    aligns correctly (title at row 0, header at row 1, data at rows 2+,
+///    footer at last row). If `title` is provided, it appears in the
+///    title row; otherwise the row is invisible.
+pub fn build_table(builder: Builder, title: &str, theme: &TableStyleConfig) -> String {
+    // Rebuild with space-padded cells so padding colors are consistent.
+    let records: Vec<Vec<String>> = builder.into();
+    let mut padded = Builder::default();
+    for row in records {
+        let padded_row: Vec<String> = row
+            .into_iter()
+            .map(|cell| {
+                if cell.is_empty() {
+                    cell
+                } else {
+                    format!(" {cell} ")
+                }
+            })
+            .collect();
+        padded.push_record(padded_row);
+    }
 
-    let mut table = builder.build();
+    let col_count = padded.count_columns();
+    let mut title_row: Vec<String> = std::iter::repeat_n(String::new(), col_count).collect();
+    if !title.is_empty() {
+        title_row[0] = format!(" {title} ");
+    }
+    padded.insert_record(0, title_row);
+
+    let mut table = padded.build();
     theme.apply_to_table::<Dummy>(&mut table);
-    table.to_string()
+    format!("\n{}\n", table)
 }
 
 #[cfg(test)]
@@ -145,7 +171,7 @@ mod tests {
         builder.push_record(["Name", "Value"]);
         builder.push_record(["foo", "bar"]);
         builder.push_record(["", ""]);
-        let output = build_table(builder, &nms_theme());
+        let output = build_table(builder, "", &nms_theme());
         assert!(output.contains("Name"));
         assert!(output.contains("Value"));
         assert!(output.contains("foo"));
@@ -158,7 +184,7 @@ mod tests {
         builder.push_record(["Col"]);
         builder.push_record(["data"]);
         builder.push_record([""]);
-        let output = build_table(builder, &nms_theme_no_color());
+        let output = build_table(builder, "", &nms_theme_no_color());
         assert!(output.contains("Col"));
         assert!(output.contains("data"));
     }
@@ -169,7 +195,7 @@ mod tests {
         builder.push_record(["Header"]);
         builder.push_record(["value"]);
         builder.push_record([""]);
-        let output = build_table(builder, &nms_theme());
+        let output = build_table(builder, "", &nms_theme());
         // NMS theme uses hex colors which produce ANSI escape codes
         assert!(output.contains("\x1b["));
     }
@@ -181,7 +207,7 @@ mod tests {
         builder.push_record(["1", "2", "3"]);
         builder.push_record(["x", "y", "z"]);
         builder.push_record(["", "", ""]);
-        let output = build_table(builder, &nms_theme());
+        let output = build_table(builder, "", &nms_theme());
         for val in ["A", "B", "C", "1", "2", "3", "x", "y", "z"] {
             assert!(output.contains(val), "Missing '{val}' in output");
         }

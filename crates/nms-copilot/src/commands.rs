@@ -202,22 +202,33 @@ pub enum ListTarget {
         #[arg(long = "type")]
         galaxy_type: Option<String>,
     },
-    /// List biome types.
-    Biomes {
-        /// Include biome subtypes.
-        #[arg(long)]
-        subtypes: bool,
-    },
+    /// List biome types and their variants.
+    Biomes,
     /// List portal glyphs.
     Glyphs,
     /// List player bases.
-    Bases,
+    Bases {
+        /// Maximum number of bases to display (0 for all).
+        #[arg(long, default_value = "0")]
+        limit: usize,
+
+        /// Show all bases (equivalent to --limit 0).
+        #[arg(long)]
+        all: bool,
+    },
     /// List discovered systems.
     Systems {
         /// Maximum number of systems to display (0 for all).
         #[arg(long, default_value = "50")]
         limit: usize,
+
+        /// Show all systems (equivalent to --limit 0).
+        #[arg(long)]
+        all: bool,
     },
+    /// List terrain generation types (GcBiomeSubType).
+    #[command(name = "terrain-types")]
+    TerrainTypes,
 }
 
 #[derive(Subcommand, Debug)]
@@ -517,23 +528,12 @@ mod tests {
     #[test]
     fn test_parse_list_biomes() {
         let action = parse_line("list biomes").unwrap().unwrap();
-        match action {
+        assert!(matches!(
+            action,
             Action::List {
-                target: ListTarget::Biomes { subtypes },
-            } => assert!(!subtypes),
-            _ => panic!("Expected List Biomes"),
-        }
-    }
-
-    #[test]
-    fn test_parse_list_biomes_with_subtypes() {
-        let action = parse_line("list biomes --subtypes").unwrap().unwrap();
-        match action {
-            Action::List {
-                target: ListTarget::Biomes { subtypes },
-            } => assert!(subtypes),
-            _ => panic!("Expected List Biomes"),
-        }
+                target: ListTarget::Biomes
+            }
+        ));
     }
 
     #[test]
@@ -553,9 +553,20 @@ mod tests {
         assert!(matches!(
             action,
             Action::List {
-                target: ListTarget::Bases
+                target: ListTarget::Bases { .. }
             }
         ));
+    }
+
+    #[test]
+    fn test_parse_list_bases_with_all() {
+        let action = parse_line("list bases --all").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Bases { all, .. },
+            } => assert!(all),
+            _ => panic!("Expected List Bases"),
+        }
     }
 
     #[test]
@@ -563,8 +574,22 @@ mod tests {
         let action = parse_line("list systems").unwrap().unwrap();
         match action {
             Action::List {
-                target: ListTarget::Systems { limit },
-            } => assert_eq!(limit, 50),
+                target: ListTarget::Systems { limit, all },
+            } => {
+                assert_eq!(limit, 50);
+                assert!(!all);
+            }
+            _ => panic!("Expected List Systems"),
+        }
+    }
+
+    #[test]
+    fn test_parse_list_systems_with_all() {
+        let action = parse_line("list systems --all").unwrap().unwrap();
+        match action {
+            Action::List {
+                target: ListTarget::Systems { all, .. },
+            } => assert!(all),
             _ => panic!("Expected List Systems"),
         }
     }
@@ -574,10 +599,21 @@ mod tests {
         let action = parse_line("list systems --limit 10").unwrap().unwrap();
         match action {
             Action::List {
-                target: ListTarget::Systems { limit },
+                target: ListTarget::Systems { limit, .. },
             } => assert_eq!(limit, 10),
             _ => panic!("Expected List Systems"),
         }
+    }
+
+    #[test]
+    fn test_parse_list_terrain_types() {
+        let action = parse_line("list terrain-types").unwrap().unwrap();
+        assert!(matches!(
+            action,
+            Action::List {
+                target: ListTarget::TerrainTypes
+            }
+        ));
     }
 
     #[test]
