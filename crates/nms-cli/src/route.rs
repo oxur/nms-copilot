@@ -8,6 +8,7 @@ use nms_graph::query::BiomeFilter;
 use nms_graph::route::RoutingAlgorithm;
 use nms_query::display::format_route;
 use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
+use nms_query::theme::{Theme, should_use_colors};
 
 /// Arguments for the route command.
 pub struct RouteArgs {
@@ -79,7 +80,12 @@ pub fn run(args: RouteArgs) -> Result<(), Box<dyn std::error::Error>> {
     };
 
     let result = execute_route(&model, &query)?;
-    print!("{}", format_route(&result, &model));
+    let theme = if should_use_colors(true) {
+        Theme::default_dark()
+    } else {
+        Theme::none()
+    };
+    print!("{}", format_route(&result, &model, &theme));
 
     Ok(())
 }

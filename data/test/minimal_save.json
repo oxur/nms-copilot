@@ -1,0 +1,104 @@
+{
+    "Version": 4720,
+    "Platform": "Mac|Final",
+    "ActiveContext": "Main",
+    "CommonStateData": {
+        "SaveName": "Integration Test Save",
+        "TotalPlayTime": 3661
+    },
+    "BaseContext": {
+        "GameMode": 1,
+        "PlayerStateData": {
+            "UniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": {
+                    "VoxelX": 100,
+                    "VoxelY": 50,
+                    "VoxelZ": -200,
+                    "SolarSystemIndex": 42,
+                    "PlanetIndex": 0
+                }
+            },
+            "PreviousUniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": {
+                    "VoxelX": 80,
+                    "VoxelY": 30,
+                    "VoxelZ": -150,
+                    "SolarSystemIndex": 38,
+                    "PlanetIndex": 0
+                }
+            },
+            "Units": 5000000,
+            "Nanites": 10000,
+            "Specials": 500,
+            "Health": 180,
+            "TimeAlive": 100000,
+            "PersistentPlayerBases": [
+                {
+                    "BaseVersion": 8,
+                    "GalacticAddress": "0x050003AB8C07",
+                    "Position": [100.0, 200.0, 300.0],
+                    "Forward": [1.0, 0.0, 0.0],
+                    "LastUpdateTimestamp": 1700000000,
+                    "Objects": [],
+                    "RID": "",
+                    "Owner": {
+                        "LID": "",
+                        "UID": "76561198025707979",
+                        "USN": "TestUser",
+                        "PTK": "ST",
+                        "TS": 1700000000
+                    },
+                    "Name": "Homestead Alpha",
+                    "BaseType": {
+                        "PersistentBaseTypes": "HomePlanetBase"
+                    },
+                    "LastEditedById": "",
+                    "LastEditedByUsername": ""
+                }
+            ]
+        }
+    },
+    "ExpeditionContext": {
+        "GameMode": 6,
+        "PlayerStateData": {
+            "UniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": {
+                    "VoxelX": 0,
+                    "VoxelY": 0,
+                    "VoxelZ": 0,
+                    "SolarSystemIndex": 0,
+                    "PlanetIndex": 0
+                }
+            },
+            "Units": 0,
+            "Nanites": 0,
+            "Specials": 0,
+            "PersistentPlayerBases": []
+        }
+    },
+    "DiscoveryManagerData": {
+        "DiscoveryData-v1": {
+            "ReserveStore": 100,
+            "ReserveManaged": 100,
+            "Store": {
+                "Record": [
+                    {
+                        "DD": { "UA": "0x050003AB8C07", "DT": "SolarSystem", "VP": ["0xABCD1234"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "76561198025707979", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x150003AB8C07", "DT": "Planet", "VP": ["0xDEAD1234", 0] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "76561198025707979", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
+                        "FL": { "C": 1, "U": 1 }
+                    }
+                ]
+            }
+        }
+    }
+}

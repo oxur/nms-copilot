@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use nms_graph::GalaxyModel;
 use nms_query::display::format_show_result;
 use nms_query::show::{ShowQuery, execute_show};
+use nms_query::theme::{Theme, should_use_colors};
 
 /// What to show -- parsed from CLI subcommand.
 pub enum ShowTarget {
@@ -28,7 +29,12 @@ pub fn run(save: Option<PathBuf>, target: ShowTarget) -> Result<(), Box<dyn std:
     };
 
     let result = execute_show(&model, &query)?;
-    print!("{}", format_show_result(&result));
+    let theme = if should_use_colors(true) {
+        Theme::default_dark()
+    } else {
+        Theme::none()
+    };
+    print!("{}", format_show_result(&result, &theme));
 
     Ok(())
 }

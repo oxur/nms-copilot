@@ -1,6 +1,7 @@
 use nms_graph::GalaxyModel;
 use nms_query::display::format_show_result;
 use nms_query::show::{ShowQuery, ShowResult, execute_show};
+use nms_query::theme::Theme;
 
 fn test_save_json() -> &'static str {
     r#"{
@@ -30,7 +31,7 @@ fn show_base_end_to_end() {
     let model = GalaxyModel::from_save(&save);
 
     let result = execute_show(&model, &ShowQuery::Base("Sealab 2038".into())).unwrap();
-    let output = format_show_result(&result);
+    let output = format_show_result(&result, &Theme::none());
 
     assert!(output.contains("Sealab 2038"));
     assert!(output.contains("HomePlanetBase"));
@@ -58,7 +59,7 @@ fn show_system_with_planets() {
     match result {
         ShowResult::System(s) => {
             assert!(!s.system.planets.is_empty());
-            let output = format_show_result(&ShowResult::System(s));
+            let output = format_show_result(&ShowResult::System(s), &Theme::none());
             assert!(output.contains("System Detail"));
         }
         _ => panic!("Expected system result"),

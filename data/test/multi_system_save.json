@@ -1,0 +1,205 @@
+{
+    "Version": 4720,
+    "Platform": "Mac|Final",
+    "ActiveContext": "Main",
+    "CommonStateData": {
+        "SaveName": "Multi System Test",
+        "TotalPlayTime": 86400
+    },
+    "BaseContext": {
+        "GameMode": 1,
+        "PlayerStateData": {
+            "UniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": {
+                    "VoxelX": 100,
+                    "VoxelY": 50,
+                    "VoxelZ": -200,
+                    "SolarSystemIndex": 42,
+                    "PlanetIndex": 0
+                }
+            },
+            "PreviousUniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": {
+                    "VoxelX": 0,
+                    "VoxelY": 0,
+                    "VoxelZ": 0,
+                    "SolarSystemIndex": 0,
+                    "PlanetIndex": 0
+                }
+            },
+            "Units": 25000000,
+            "Nanites": 50000,
+            "Specials": 1500,
+            "Health": 200,
+            "TimeAlive": 500000,
+            "PersistentPlayerBases": [
+                {
+                    "BaseVersion": 8,
+                    "GalacticAddress": "0x001000000064",
+                    "Position": [100.0, 200.0, 300.0],
+                    "Forward": [1.0, 0.0, 0.0],
+                    "LastUpdateTimestamp": 1700000000,
+                    "Objects": [],
+                    "RID": "",
+                    "Owner": { "LID": "", "UID": "123", "USN": "TestUser", "PTK": "ST", "TS": 1700000000 },
+                    "Name": "Lush Haven",
+                    "BaseType": { "PersistentBaseTypes": "HomePlanetBase" },
+                    "LastEditedById": "",
+                    "LastEditedByUsername": ""
+                },
+                {
+                    "BaseVersion": 8,
+                    "GalacticAddress": "0x003000000190",
+                    "Position": [50.0, 100.0, 150.0],
+                    "Forward": [0.0, 0.0, 1.0],
+                    "LastUpdateTimestamp": 1700100000,
+                    "Objects": [],
+                    "RID": "",
+                    "Owner": { "LID": "", "UID": "123", "USN": "TestUser", "PTK": "ST", "TS": 1700100000 },
+                    "Name": "Frost Outpost",
+                    "BaseType": { "PersistentBaseTypes": "ExternalPlanetBase" },
+                    "LastEditedById": "",
+                    "LastEditedByUsername": ""
+                }
+            ]
+        }
+    },
+    "ExpeditionContext": {
+        "GameMode": 6,
+        "PlayerStateData": {
+            "UniverseAddress": {
+                "RealityIndex": 0,
+                "GalacticAddress": { "VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0 }
+            },
+            "Units": 0,
+            "Nanites": 0,
+            "Specials": 0,
+            "PersistentPlayerBases": []
+        }
+    },
+    "DiscoveryManagerData": {
+        "DiscoveryData-v1": {
+            "ReserveStore": 500,
+            "ReserveManaged": 500,
+            "Store": {
+                "Record": [
+                    {
+                        "DD": { "UA": "0x001000000064", "DT": "SolarSystem", "VP": ["0xA001"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x101000000064", "DT": "Planet", "VP": ["0xB001", 0] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x201000000064", "DT": "Planet", "VP": ["0xB002", 5] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+
+                    {
+                        "DD": { "UA": "0x0020000000C8", "DT": "SolarSystem", "VP": ["0xA002"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x1020000000C8", "DT": "Planet", "VP": ["0xB003", 1] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x2020000000C8", "DT": "Planet", "VP": ["0xB004", 2] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+
+                    {
+                        "DD": { "UA": "0x003000000190", "DT": "SolarSystem", "VP": ["0xA003"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x103000000190", "DT": "Planet", "VP": ["0xB005", 4] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x203000000190", "DT": "Planet", "VP": ["0xB006", 0] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x303000000190", "DT": "Planet", "VP": ["0xB007", 3] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+
+                    {
+                        "DD": { "UA": "0x004000000258", "DT": "SolarSystem", "VP": ["0xA004"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x104000000258", "DT": "Planet", "VP": ["0xB008", 5] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x204000000258", "DT": "Planet", "VP": ["0xB009", 13] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+
+                    {
+                        "DD": { "UA": "0x005000000320", "DT": "SolarSystem", "VP": ["0xA005"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x105000000320", "DT": "Planet", "VP": ["0xB00A", "0x10001"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x205000000320", "DT": "Planet", "VP": ["0xB00B", 7] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+
+                    {
+                        "DD": { "UA": "0x513300F79B1D82", "DT": "Flora", "VP": ["0xD6911E7B1D31085E", "0x6454A508A8EBE022"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700050000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x61C100039060B9", "DT": "Sector", "VP": ["0x8665527833B28EE7", 512] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700060000 },
+                        "FL": { "U": 1 }
+                    }
+                ]
+            }
+        }
+    }
+}

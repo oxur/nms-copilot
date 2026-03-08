@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use nms_graph::GalaxyModel;
 use nms_query::display::format_stats;
 use nms_query::stats::{StatsQuery, execute_stats};
+use nms_query::theme::{Theme, should_use_colors};
 
 pub fn run(
     save: Option<PathBuf>,
@@ -26,7 +27,12 @@ pub fn run(
     };
 
     let result = execute_stats(&model, &query);
-    print!("{}", format_stats(&result));
+    let theme = if should_use_colors(true) {
+        Theme::default_dark()
+    } else {
+        Theme::none()
+    };
+    print!("{}", format_stats(&result, &theme));
 
     Ok(())
 }

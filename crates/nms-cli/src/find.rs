@@ -6,6 +6,7 @@ use nms_core::biome::Biome;
 use nms_graph::GalaxyModel;
 use nms_query::display::format_find_results;
 use nms_query::find::{FindQuery, ReferencePoint, execute_find};
+use nms_query::theme::{Theme, should_use_colors};
 
 /// Arguments for the find command.
 pub struct FindArgs {
@@ -57,7 +58,12 @@ pub fn run(args: FindArgs) -> Result<(), Box<dyn std::error::Error>> {
     };
 
     let results = execute_find(&model, &query)?;
-    print!("{}", format_find_results(&results));
+    let theme = if should_use_colors(true) {
+        Theme::default_dark()
+    } else {
+        Theme::none()
+    };
+    print!("{}", format_find_results(&results, &theme));
 
     Ok(())
 }

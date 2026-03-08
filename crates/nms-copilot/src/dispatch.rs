@@ -11,6 +11,7 @@ use nms_query::find::{FindQuery, ReferencePoint, execute_find};
 use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
 use nms_query::show::{ShowQuery, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
+use nms_query::theme::Theme;
 
 use crate::commands::{Action, SetTarget, ShowTarget};
 use crate::session::SessionState;
@@ -55,7 +56,8 @@ pub fn dispatch(
             };
 
             let results = execute_find(model, &query).map_err(|e| e.to_string())?;
-            Ok(format_find_results(&results))
+            let theme = Theme::default_dark();
+            Ok(format_find_results(&results, &theme))
         }
 
         Action::Show { target } => dispatch_show(model, target),
@@ -69,7 +71,8 @@ pub fn dispatch(
                 discoveries: *discoveries || !*biomes,
             };
             let result = execute_stats(model, &query);
-            Ok(format_stats(&result))
+            let theme = Theme::default_dark();
+            Ok(format_stats(&result, &theme))
         }
 
         Action::Route {
@@ -197,7 +200,8 @@ fn dispatch_route(
     };
 
     let result = execute_route(model, &query).map_err(|e| e.to_string())?;
-    Ok(format_route(&result, model))
+    let theme = Theme::default_dark();
+    Ok(format_route(&result, model, &theme))
 }
 
 fn dispatch_show(model: &GalaxyModel, target: &ShowTarget) -> Result<String, String> {
@@ -206,7 +210,8 @@ fn dispatch_show(model: &GalaxyModel, target: &ShowTarget) -> Result<String, Str
         ShowTarget::Base { name } => ShowQuery::Base(name.clone()),
     };
     let result = execute_show(model, &query).map_err(|e| e.to_string())?;
-    Ok(format_show_result(&result))
+    let theme = Theme::default_dark();
+    Ok(format_show_result(&result, &theme))
 }
 
 fn dispatch_set(

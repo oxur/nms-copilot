@@ -1,6 +1,7 @@
 use nms_graph::GalaxyModel;
 use nms_query::display::format_stats;
 use nms_query::stats::{StatsQuery, execute_stats};
+use nms_query::theme::Theme;
 
 fn test_save_json() -> &'static str {
     r#"{
@@ -38,7 +39,7 @@ fn stats_end_to_end() {
         discoveries: true,
     };
     let result = execute_stats(&model, &query);
-    let output = format_stats(&result);
+    let output = format_stats(&result, &Theme::none());
 
     assert_eq!(result.system_count, 2);
     assert_eq!(result.planet_count, 3);

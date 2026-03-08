@@ -2,6 +2,7 @@ use nms_core::biome::Biome;
 use nms_graph::GalaxyModel;
 use nms_query::display::format_find_results;
 use nms_query::find::{FindQuery, ReferencePoint, execute_find};
+use nms_query::theme::Theme;
 
 fn test_save_json() -> &'static str {
     r#"{
@@ -34,7 +35,7 @@ fn find_pipeline_end_to_end() {
 
     let query = FindQuery::default();
     let results = execute_find(&model, &query).unwrap();
-    let output = format_find_results(&results);
+    let output = format_find_results(&results, &Theme::none());
 
     assert!(!results.is_empty());
     assert!(output.contains("Portal Glyphs"));

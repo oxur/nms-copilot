@@ -1,12 +1,13 @@
 //! Output formatting for query results.
 //!
 //! All formatters return `String` -- the caller prints to stdout.
-//! No ANSI color codes yet (added in Phase 7 polish).
+//! Each formatter accepts a [`Theme`] to apply semantic ANSI styling.
 
 use crate::find::FindResult;
 use crate::route::RouteResult;
 use crate::show::{ShowBaseResult, ShowResult, ShowSystemResult};
 use crate::stats::StatsResult;
+use crate::theme::Theme;
 
 /// Format a distance in light-years for display.
 ///
@@ -43,7 +44,7 @@ pub fn hex_to_emoji(hex: &str) -> String {
 ///   1  Metok-Kalpa       Lush       Gugestor Colony       0 ly    [emoji glyphs]
 ///   2  (unnamed)         Scorched   Esurad               18K ly   [emoji glyphs]
 /// ```
-pub fn format_find_results(results: &[FindResult]) -> String {
+pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     if results.is_empty() {
         return "  No results found.\n".to_string();
     }
@@ -51,14 +52,16 @@ pub fn format_find_results(results: &[FindResult]) -> String {
     let mut out = String::new();
 
     // Header
-    out.push_str(&format!(
-        "  {:<3} {:<18} {:<11} {:<20} {:<11} {}\n",
+    let header_line = format!(
+        "  {:<3} {:<18} {:<11} {:<20} {:<11} {}",
         "#", "Planet", "Biome", "System", "Distance", "Portal Glyphs"
-    ));
+    );
+    out.push_str(&theme.header.paint(&header_line));
+    out.push('\n');
 
     for (i, r) in results.iter().enumerate() {
         let planet_name = r.planet.name.as_deref().unwrap_or("(unnamed)");
-        let biome = r
+        let biome_raw = r
             .planet
             .biome
             .map(|b| {
@@ -73,14 +76,24 @@ pub fn format_find_results(results: &[FindResult]) -> String {
         let distance = format_distance(r.distance_ly);
         let glyphs = hex_to_emoji(&r.portal_hex);
 
+        let styled_planet = theme.planet_name.paint(&truncate(planet_name, 17));
+        let styled_biome = r
+            .planet
+            .biome
+            .map(|b| theme.biome_style(&b).paint(&truncate(&biome_raw, 10)))
+            .unwrap_or_else(|| theme.muted.paint(&truncate(&biome_raw, 10)));
+        let styled_system = theme.system_name.paint(&truncate(system_name, 19));
+        let styled_distance = theme.distance.paint(&distance);
+        let styled_glyphs = theme.glyphs.paint(&glyphs);
+
         out.push_str(&format!(
             "  {:<3} {:<18} {:<11} {:<20} {:>11} {}\n",
             i + 1,
-            truncate(planet_name, 17),
-            truncate(&biome, 10),
-            truncate(system_name, 19),
-            distance,
-            glyphs,
+            styled_planet,
+            styled_biome,
+            styled_system,
+            styled_distance,
+            styled_glyphs,
         ));
     }
 
@@ -88,29 +101,38 @@ pub fn format_find_results(results: &[FindResult]) -> String {
 }
 
 /// Format a system detail view.
-pub fn format_show_system(result: &ShowSystemResult) -> String {
+pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     let mut out = String::new();
     let sys = &result.system;
 
-    out.push_str("NMS Copilot -- System Detail\n");
-    out.push_str("============================\n\n");
+    out.push_str(&theme.header.paint("NMS Copilot -- System Detail"));
+    out.push('\n');
+    out.push_str(&theme.header.paint("============================"));
+    out.push_str("\n\n");
 
+    let name = sys.name.as_deref().unwrap_or("(unnamed)");
     out.push_str(&format!(
         "  Name:            {}\n",
-        sys.name.as_deref().unwrap_or("(unnamed)")
+        theme.system_name.paint(name)
     ));
     out.push_str(&format!("  Galaxy:          {}\n", result.galaxy_name));
     out.push_str(&format!(
         "  Portal Glyphs:   {}\n",
-        hex_to_emoji(&result.portal_hex)
+        theme.glyphs.paint(&hex_to_emoji(&result.portal_hex))
     ));
-    out.push_str(&format!("  Hex Address:     {}\n", result.portal_hex));
+    out.push_str(&format!(
+        "  Hex Address:     {}\n",
+        theme.muted.paint(&result.portal_hex)
+    ));
     out.push_str(&format!(
         "  Discoverer:      {}\n",
         sys.discoverer.as_deref().unwrap_or("unknown")
     ));
     if let Some(dist) = result.distance_from_player {
-        out.push_str(&format!("  Distance:        {}\n", format_distance(dist)));
+        out.push_str(&format!(
+            "  Distance:        {}\n",
+            theme.distance.paint(&format_distance(dist))
+        ));
     }
 
     out.push_str(&format!(
@@ -129,20 +151,26 @@ pub fn format_show_system(result: &ShowSystemResult) -> String {
         out.push_str("\n  No planets discovered.\n");
     } else {
         out.push_str(&format!("\n  Planets ({}):\n", sys.planets.len()));
-        out.push_str(&format!(
-            "  {:<5} {:<18} {:<12} {}\n",
-            "Idx", "Name", "Biome", "Flags"
-        ));
+        let planet_header = format!("  {:<5} {:<18} {:<12} {}", "Idx", "Name", "Biome", "Flags");
+        out.push_str(&theme.header.paint(&planet_header));
+        out.push('\n');
         for p in &sys.planets {
-            let name = p.name.as_deref().unwrap_or("(unnamed)");
-            let biome = p
+            let pname = p.name.as_deref().unwrap_or("(unnamed)");
+            let biome_str = p
                 .biome
                 .map(|b| b.to_string())
                 .unwrap_or_else(|| "?".to_string());
+            let styled_biome = p
+                .biome
+                .map(|b| theme.biome_style(&b).paint(&biome_str))
+                .unwrap_or_else(|| theme.muted.paint(&biome_str));
             let flags = if p.infested { "infested" } else { "" };
             out.push_str(&format!(
                 "  {:<5} {:<18} {:<12} {}\n",
-                p.index, name, biome, flags
+                p.index,
+                theme.planet_name.paint(pname),
+                styled_biome,
+                flags
             ));
         }
     }
@@ -151,29 +179,42 @@ pub fn format_show_system(result: &ShowSystemResult) -> String {
 }
 
 /// Format a base detail view.
-pub fn format_show_base(result: &ShowBaseResult) -> String {
+pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     let mut out = String::new();
     let base = &result.base;
 
-    out.push_str("NMS Copilot -- Base Detail\n");
-    out.push_str("=========================\n\n");
+    out.push_str(&theme.header.paint("NMS Copilot -- Base Detail"));
+    out.push('\n');
+    out.push_str(&theme.header.paint("========================="));
+    out.push_str("\n\n");
 
-    out.push_str(&format!("  Name:            {}\n", base.name));
+    out.push_str(&format!(
+        "  Name:            {}\n",
+        theme.system_name.paint(&base.name)
+    ));
     out.push_str(&format!("  Type:            {}\n", base.base_type));
     out.push_str(&format!("  Galaxy:          {}\n", result.galaxy_name));
     out.push_str(&format!(
         "  Portal Glyphs:   {}\n",
-        hex_to_emoji(&result.portal_hex)
+        theme.glyphs.paint(&hex_to_emoji(&result.portal_hex))
     ));
-    out.push_str(&format!("  Hex Address:     {}\n", result.portal_hex));
+    out.push_str(&format!(
+        "  Hex Address:     {}\n",
+        theme.muted.paint(&result.portal_hex)
+    ));
     if let Some(dist) = result.distance_from_player {
-        out.push_str(&format!("  Distance:        {}\n", format_distance(dist)));
+        out.push_str(&format!(
+            "  Distance:        {}\n",
+            theme.distance.paint(&format_distance(dist))
+        ));
     }
 
     if let Some(ref system) = result.system {
         out.push_str(&format!(
             "  System:          {}\n",
-            system.name.as_deref().unwrap_or("(unnamed)")
+            theme
+                .system_name
+                .paint(system.name.as_deref().unwrap_or("(unnamed)"))
         ));
         out.push_str(&format!("  Planets:         {}\n", system.planets.len()));
     }
@@ -182,19 +223,21 @@ pub fn format_show_base(result: &ShowBaseResult) -> String {
 }
 
 /// Format a show result (dispatches to system or base).
-pub fn format_show_result(result: &ShowResult) -> String {
+pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
     match result {
-        ShowResult::System(s) => format_show_system(s),
-        ShowResult::Base(b) => format_show_base(b),
+        ShowResult::System(s) => format_show_system(s, theme),
+        ShowResult::Base(b) => format_show_base(b, theme),
     }
 }
 
 /// Format statistics output.
-pub fn format_stats(result: &StatsResult) -> String {
+pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     let mut out = String::new();
 
-    out.push_str("NMS Copilot -- Galaxy Statistics\n");
-    out.push_str("================================\n\n");
+    out.push_str(&theme.header.paint("NMS Copilot -- Galaxy Statistics"));
+    out.push('\n');
+    out.push_str(&theme.header.paint("================================"));
+    out.push_str("\n\n");
 
     out.push_str(&format!("  Systems:         {}\n", result.system_count));
     out.push_str(&format!("  Planets:         {}\n", result.planet_count));
@@ -213,7 +256,9 @@ pub fn format_stats(result: &StatsResult) -> String {
     // Biome distribution table
     if !result.biome_counts.is_empty() || result.unknown_biome_count > 0 {
         out.push_str("  Biome Distribution:\n");
-        out.push_str(&format!("  {:<16} {:>6}\n", "Biome", "Count"));
+        let biome_header = format!("  {:<16} {:>6}", "Biome", "Count");
+        out.push_str(&theme.header.paint(&biome_header));
+        out.push('\n');
         out.push_str(&format!("  {:<16} {:>6}\n", "-----", "-----"));
 
         // Sort biomes by count descending
@@ -221,13 +266,15 @@ pub fn format_stats(result: &StatsResult) -> String {
         biomes.sort_by(|a, b| b.1.cmp(a.1));
 
         for (biome, count) in biomes {
-            out.push_str(&format!("  {:<16} {:>6}\n", biome.to_string(), count));
+            let styled_name = theme.biome_style(biome).paint(&biome.to_string());
+            out.push_str(&format!("  {:<16} {:>6}\n", styled_name, count));
         }
 
         if result.unknown_biome_count > 0 {
             out.push_str(&format!(
                 "  {:<16} {:>6}\n",
-                "(unknown)", result.unknown_biome_count
+                theme.muted.paint("(unknown)"),
+                result.unknown_biome_count
             ));
         }
     }
@@ -247,7 +294,7 @@ pub fn format_stats(result: &StatsResult) -> String {
 ///   Route: 3 targets, 24K ly total (10 warp jumps at 2K ly range)
 ///   Algorithm: 2-opt
 /// ```
-pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel) -> String {
+pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme: &Theme) -> String {
     if result.route.hops.is_empty() {
         return "  No route computed.\n".to_string();
     }
@@ -255,10 +302,12 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel) -> Str
     let mut out = String::new();
 
     // Header
-    out.push_str(&format!(
-        "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
+    let header_line = format!(
+        "  {:<4} {:<22} {:>11}  {:>11}   {}",
         "Hop", "System", "Distance", "Cumulative", "Portal Glyphs"
-    ));
+    );
+    out.push_str(&theme.header.paint(&header_line));
+    out.push('\n');
 
     let mut hop_number = 0u32;
     for hop in &result.route.hops {
@@ -277,20 +326,25 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel) -> Str
         let cumulative = format_distance(hop.cumulative_ly);
 
         if hop.is_waypoint {
-            let display_name = format!("\u{21B3} {}", truncate(system_name, 19));
+            let display_name =
+                format!("\u{21B3} {}", theme.muted.paint(&truncate(system_name, 19)));
             out.push_str(&format!(
                 "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
-                "*", display_name, distance, cumulative, glyphs,
+                theme.muted.paint("*"),
+                display_name,
+                theme.distance.paint(&distance),
+                theme.distance.paint(&cumulative),
+                theme.glyphs.paint(&glyphs),
             ));
         } else {
             hop_number += 1;
             out.push_str(&format!(
                 "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
                 hop_number,
-                truncate(system_name, 21),
-                distance,
-                cumulative,
-                glyphs,
+                theme.system_name.paint(&truncate(system_name, 21)),
+                theme.distance.paint(&distance),
+                theme.distance.paint(&cumulative),
+                theme.glyphs.paint(&glyphs),
             ));
         }
     }
@@ -341,6 +395,10 @@ mod tests {
     use nms_core::biome::Biome;
     use nms_core::system::{Planet, System};
 
+    fn plain() -> Theme {
+        Theme::none()
+    }
+
     #[test]
     fn test_format_distance_small() {
         assert_eq!(format_distance(42.0), "42 ly");
@@ -377,7 +435,7 @@ mod tests {
 
     #[test]
     fn test_format_find_results_empty() {
-        let output = format_find_results(&[]);
+        let output = format_find_results(&[], &plain());
         assert!(output.contains("No results found"));
     }
 
@@ -396,7 +454,7 @@ mod tests {
             distance_ly: 42_000.0,
             portal_hex: format!("{:012X}", addr.packed()),
         }];
-        let output = format_find_results(&results);
+        let output = format_find_results(&results, &plain());
         assert!(output.contains("Eden"));
         assert!(output.contains("Lush"));
         assert!(output.contains("Sol"));
@@ -412,8 +470,31 @@ mod tests {
             distance_ly: 0.0,
             portal_hex: "000000000001".into(),
         }];
-        let output = format_find_results(&results);
+        let output = format_find_results(&results, &plain());
         assert!(output.contains("Toxic*"));
+    }
+
+    #[test]
+    fn test_format_find_results_with_dark_theme_contains_ansi() {
+        let addr = GalacticAddress::new(100, 50, -200, 0x123, 0, 0);
+        let results = vec![FindResult {
+            planet: Planet::new(0, Some(Biome::Lush), None, false, Some("Eden".into()), None),
+            system: System::new(
+                addr,
+                Some("Sol".into()),
+                Some("Explorer".into()),
+                None,
+                vec![],
+            ),
+            distance_ly: 42_000.0,
+            portal_hex: format!("{:012X}", addr.packed()),
+        }];
+        let output = format_find_results(&results, &Theme::default_dark());
+        // Should contain ANSI escape sequences
+        assert!(output.contains("\x1b["));
+        // But still contain the data
+        assert!(output.contains("Eden"));
+        assert!(output.contains("Sol"));
     }
 
     #[test]
@@ -431,7 +512,7 @@ mod tests {
             galaxy_name: "Euclid".into(),
             distance_from_player: Some(5000.0),
         };
-        let output = format_show_system(&result);
+        let output = format_show_system(&result, &plain());
         assert!(output.contains("Test System"));
         assert!(output.contains("Euclid"));
         assert!(output.contains("Explorer"));
@@ -455,7 +536,7 @@ mod tests {
             named_system_count: 30,
             infested_count: 2,
         };
-        let output = format_stats(&result);
+        let output = format_stats(&result, &plain());
         assert!(output.contains("50"));
         assert!(output.contains("120"));
         assert!(output.contains("Lush"));
@@ -513,7 +594,7 @@ mod tests {
             algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
             targets_visited: 0,
         };
-        let output = format_route(&result, &model);
+        let output = format_route(&result, &model, &plain());
         assert!(output.contains("No route computed"));
     }
 
@@ -535,7 +616,7 @@ mod tests {
             algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
             targets_visited: 0,
         };
-        let output = format_route(&result, &model);
+        let output = format_route(&result, &model, &plain());
         assert!(output.contains("Hop"));
         assert!(output.contains("System"));
         assert!(output.contains("Distance"));
@@ -561,14 +642,14 @@ mod tests {
             algorithm: nms_graph::RoutingAlgorithm::NearestNeighbor,
             targets_visited: 0,
         };
-        let output = format_route(&result, &model);
+        let output = format_route(&result, &model, &plain());
         assert!(output.contains("Algorithm: nearest-neighbor"));
 
         let result_2opt = RouteResult {
             algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
             ..result
         };
-        let output_2opt = format_route(&result_2opt, &model);
+        let output_2opt = format_route(&result_2opt, &model, &plain());
         assert!(output_2opt.contains("Algorithm: 2-opt"));
     }
 
@@ -598,7 +679,7 @@ mod tests {
             algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
             targets_visited: 1,
         };
-        let output = format_route(&result, &model);
+        let output = format_route(&result, &model, &plain());
         assert!(output.contains("3 warp jumps"));
         assert!(output.contains("2K ly range"));
     }
@@ -635,7 +716,7 @@ mod tests {
             algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
             targets_visited: 1,
         };
-        let output = format_route(&result, &model);
+        let output = format_route(&result, &model, &plain());
         assert!(output.contains("*"));
         assert!(output.contains("\u{21B3}"));
     }
