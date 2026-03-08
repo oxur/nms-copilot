@@ -14,6 +14,9 @@ categories.workspace = true
 [dependencies]
 nms-core = { workspace = true }
 nms-graph = { workspace = true }
+oxur-cli = { workspace = true }
+tabled = { workspace = true }
+toml = { workspace = true }
 
 [dev-dependencies]
 nms-save = { workspace = true }

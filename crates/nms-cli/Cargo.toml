@@ -21,6 +21,8 @@ nms-save = { workspace = true }
 nms-graph = { workspace = true }
 nms-query = { workspace = true }
 clap = { workspace = true }
+oxur-cli = { workspace = true }
+tabled = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 csv = { workspace = true }

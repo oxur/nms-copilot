@@ -36,6 +36,8 @@ nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 fabryk-mcp = { path = "../ecl/crates/fabryk-mcp" }
 tokio = { version = "1", features = ["full"] }
 
+oxur-cli = "0.2"
+tabled = "0.17"
 twyg = "0.6"
 log = "0.4"
 

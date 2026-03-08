@@ -1,12 +1,14 @@
 //! Output formatting for query results.
 //!
 //! All formatters return `String` -- the caller prints to stdout.
-//! Each formatter accepts a [`Theme`] to apply semantic ANSI styling.
+//! Each formatter accepts a [`Theme`] for API compatibility but uses
+//! `nms_theme()` / `nms_theme_no_color()` for table styling internally.
 
 use crate::find::FindResult;
 use crate::route::RouteResult;
 use crate::show::{ShowBaseResult, ShowResult, ShowSystemResult};
 use crate::stats::StatsResult;
+use crate::table::{Builder, build_table, nms_theme, nms_theme_no_color};
 use crate::theme::Theme;
 
 /// Format a distance in light-years for display.
@@ -37,31 +39,35 @@ pub fn hex_to_emoji(hex: &str) -> String {
         .collect()
 }
 
-/// Format find results as a numbered table.
-///
-/// ```text
-///   #  Planet            Biome      System             Distance   Portal Glyphs
-///   1  Metok-Kalpa       Lush       Gugestor Colony       0 ly    [emoji glyphs]
-///   2  (unnamed)         Scorched   Esurad               18K ly   [emoji glyphs]
-/// ```
+/// Select the appropriate table theme based on whether the `Theme` has colors.
+fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
+    if theme.header.fg.is_some() || theme.header.bold {
+        nms_theme()
+    } else {
+        nms_theme_no_color()
+    }
+}
+
+/// Format find results as a themed table.
 pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     if results.is_empty() {
         return "  No results found.\n".to_string();
     }
 
-    let mut out = String::new();
-
-    // Header
-    let header_line = format!(
-        "  {:<3} {:<18} {:<11} {:<20} {:<11} {}",
-        "#", "Planet", "Biome", "System", "Distance", "Portal Glyphs"
-    );
-    out.push_str(&theme.header.paint(&header_line));
-    out.push('\n');
+    let table_theme = table_theme_for(theme);
+    let mut builder = Builder::default();
+    builder.push_record([
+        "#",
+        "Planet",
+        "Biome",
+        "System",
+        "Distance",
+        "Portal Glyphs",
+    ]);
 
     for (i, r) in results.iter().enumerate() {
         let planet_name = r.planet.name.as_deref().unwrap_or("(unnamed)");
-        let biome_raw = r
+        let biome_str = r
             .planet
             .biome
             .map(|b| {
@@ -76,103 +82,76 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
         let distance = format_distance(r.distance_ly);
         let glyphs = hex_to_emoji(&r.portal_hex);
 
-        let styled_planet = theme.planet_name.paint(&truncate(planet_name, 17));
-        let styled_biome = r
-            .planet
-            .biome
-            .map(|b| theme.biome_style(&b).paint(&truncate(&biome_raw, 10)))
-            .unwrap_or_else(|| theme.muted.paint(&truncate(&biome_raw, 10)));
-        let styled_system = theme.system_name.paint(&truncate(system_name, 19));
-        let styled_distance = theme.distance.paint(&distance);
-        let styled_glyphs = theme.glyphs.paint(&glyphs);
-
-        out.push_str(&format!(
-            "  {:<3} {:<18} {:<11} {:<20} {:>11} {}\n",
-            i + 1,
-            styled_planet,
-            styled_biome,
-            styled_system,
-            styled_distance,
-            styled_glyphs,
-        ));
+        builder.push_record([
+            (i + 1).to_string(),
+            truncate(planet_name, 20),
+            truncate(&biome_str, 12),
+            truncate(system_name, 22),
+            distance,
+            glyphs,
+        ]);
     }
+    builder.push_record(["", "", "", "", "", ""]);
 
-    out
+    build_table(builder, &table_theme)
 }
 
 /// Format a system detail view.
 pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
-    let mut out = String::new();
+    let table_theme = table_theme_for(theme);
     let sys = &result.system;
-
-    out.push_str(&theme.header.paint("NMS Copilot -- System Detail"));
-    out.push('\n');
-    out.push_str(&theme.header.paint("============================"));
-    out.push_str("\n\n");
-
     let name = sys.name.as_deref().unwrap_or("(unnamed)");
-    out.push_str(&format!(
-        "  Name:            {}\n",
-        theme.system_name.paint(name)
-    ));
-    out.push_str(&format!("  Galaxy:          {}\n", result.galaxy_name));
-    out.push_str(&format!(
-        "  Portal Glyphs:   {}\n",
-        theme.glyphs.paint(&hex_to_emoji(&result.portal_hex))
-    ));
-    out.push_str(&format!(
-        "  Hex Address:     {}\n",
-        theme.muted.paint(&result.portal_hex)
-    ));
-    out.push_str(&format!(
-        "  Discoverer:      {}\n",
-        sys.discoverer.as_deref().unwrap_or("unknown")
-    ));
-    if let Some(dist) = result.distance_from_player {
-        out.push_str(&format!(
-            "  Distance:        {}\n",
-            theme.distance.paint(&format_distance(dist))
-        ));
-    }
 
-    out.push_str(&format!(
-        "  Voxel Position:  X={}, Y={}, Z={}\n",
-        sys.address.voxel_x(),
-        sys.address.voxel_y(),
-        sys.address.voxel_z(),
-    ));
-    out.push_str(&format!(
-        "  System Index:    {} (0x{:03X})\n",
-        sys.address.solar_system_index(),
-        sys.address.solar_system_index(),
-    ));
+    let mut builder = Builder::default();
+    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Name", name]);
+    builder.push_record(["Galaxy", &result.galaxy_name]);
+    builder.push_record(["Portal Glyphs", &hex_to_emoji(&result.portal_hex)]);
+    builder.push_record(["Hex Address", &result.portal_hex]);
+    builder.push_record(["Discoverer", sys.discoverer.as_deref().unwrap_or("unknown")]);
+    if let Some(dist) = result.distance_from_player {
+        builder.push_record(["Distance", &format_distance(dist)]);
+    }
+    builder.push_record([
+        "Voxel Position",
+        &format!(
+            "X={}, Y={}, Z={}",
+            sys.address.voxel_x(),
+            sys.address.voxel_y(),
+            sys.address.voxel_z()
+        ),
+    ]);
+    builder.push_record([
+        "System Index",
+        &format!(
+            "{} (0x{:03X})",
+            sys.address.solar_system_index(),
+            sys.address.solar_system_index()
+        ),
+    ]);
+    builder.push_record(["", ""]);
+
+    let mut out = String::new();
+    out.push_str("NMS Copilot -- System Detail\n");
+    out.push_str(&build_table(builder, &table_theme));
 
     if sys.planets.is_empty() {
         out.push_str("\n  No planets discovered.\n");
     } else {
         out.push_str(&format!("\n  Planets ({}):\n", sys.planets.len()));
-        let planet_header = format!("  {:<5} {:<18} {:<12} {}", "Idx", "Name", "Biome", "Flags");
-        out.push_str(&theme.header.paint(&planet_header));
-        out.push('\n');
+        let mut pbuilder = Builder::default();
+        pbuilder.push_record(["Idx", "Name", "Biome", "Flags"]);
         for p in &sys.planets {
             let pname = p.name.as_deref().unwrap_or("(unnamed)");
             let biome_str = p
                 .biome
                 .map(|b| b.to_string())
                 .unwrap_or_else(|| "?".to_string());
-            let styled_biome = p
-                .biome
-                .map(|b| theme.biome_style(&b).paint(&biome_str))
-                .unwrap_or_else(|| theme.muted.paint(&biome_str));
             let flags = if p.infested { "infested" } else { "" };
-            out.push_str(&format!(
-                "  {:<5} {:<18} {:<12} {}\n",
-                p.index,
-                theme.planet_name.paint(pname),
-                styled_biome,
-                flags
-            ));
+            pbuilder.push_record([&p.index.to_string(), pname, &biome_str, flags]);
         }
+        pbuilder.push_record(["", "", "", ""]);
+        out.push_str(&build_table(pbuilder, &table_theme));
     }
 
     out
@@ -180,45 +159,28 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
 
 /// Format a base detail view.
 pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
-    let mut out = String::new();
+    let table_theme = table_theme_for(theme);
     let base = &result.base;
 
-    out.push_str(&theme.header.paint("NMS Copilot -- Base Detail"));
-    out.push('\n');
-    out.push_str(&theme.header.paint("========================="));
-    out.push_str("\n\n");
-
-    out.push_str(&format!(
-        "  Name:            {}\n",
-        theme.system_name.paint(&base.name)
-    ));
-    out.push_str(&format!("  Type:            {}\n", base.base_type));
-    out.push_str(&format!("  Galaxy:          {}\n", result.galaxy_name));
-    out.push_str(&format!(
-        "  Portal Glyphs:   {}\n",
-        theme.glyphs.paint(&hex_to_emoji(&result.portal_hex))
-    ));
-    out.push_str(&format!(
-        "  Hex Address:     {}\n",
-        theme.muted.paint(&result.portal_hex)
-    ));
+    let mut builder = Builder::default();
+    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Name", &base.name]);
+    builder.push_record(["Type", &base.base_type.to_string()]);
+    builder.push_record(["Galaxy", &result.galaxy_name]);
+    builder.push_record(["Portal Glyphs", &hex_to_emoji(&result.portal_hex)]);
+    builder.push_record(["Hex Address", &result.portal_hex]);
     if let Some(dist) = result.distance_from_player {
-        out.push_str(&format!(
-            "  Distance:        {}\n",
-            theme.distance.paint(&format_distance(dist))
-        ));
+        builder.push_record(["Distance", &format_distance(dist)]);
     }
-
     if let Some(ref system) = result.system {
-        out.push_str(&format!(
-            "  System:          {}\n",
-            theme
-                .system_name
-                .paint(system.name.as_deref().unwrap_or("(unnamed)"))
-        ));
-        out.push_str(&format!("  Planets:         {}\n", system.planets.len()));
+        builder.push_record(["System", system.name.as_deref().unwrap_or("(unnamed)")]);
+        builder.push_record(["Planets", &system.planets.len().to_string()]);
     }
+    builder.push_record(["", ""]);
 
+    let mut out = String::new();
+    out.push_str("NMS Copilot -- Base Detail\n");
+    out.push_str(&build_table(builder, &table_theme));
     out
 }
 
@@ -232,82 +194,57 @@ pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
 
 /// Format statistics output.
 pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
+    let table_theme = table_theme_for(theme);
+
+    let mut builder = Builder::default();
+    builder.push_record(["Statistic", "Value"]);
+    builder.push_record(["Systems", &result.system_count.to_string()]);
+    builder.push_record(["Planets", &result.planet_count.to_string()]);
+    builder.push_record(["Bases", &result.base_count.to_string()]);
+    builder.push_record(["Named Systems", &result.named_system_count.to_string()]);
+    builder.push_record(["Named Planets", &result.named_planet_count.to_string()]);
+    builder.push_record(["Infested", &result.infested_count.to_string()]);
+    builder.push_record(["", ""]);
+
     let mut out = String::new();
-
-    out.push_str(&theme.header.paint("NMS Copilot -- Galaxy Statistics"));
-    out.push('\n');
-    out.push_str(&theme.header.paint("================================"));
-    out.push_str("\n\n");
-
-    out.push_str(&format!("  Systems:         {}\n", result.system_count));
-    out.push_str(&format!("  Planets:         {}\n", result.planet_count));
-    out.push_str(&format!("  Bases:           {}\n", result.base_count));
-    out.push_str(&format!(
-        "  Named Systems:   {}\n",
-        result.named_system_count
-    ));
-    out.push_str(&format!(
-        "  Named Planets:   {}\n",
-        result.named_planet_count
-    ));
-    out.push_str(&format!("  Infested:        {}\n", result.infested_count));
-    out.push('\n');
+    out.push_str("NMS Copilot -- Galaxy Statistics\n");
+    out.push_str(&build_table(builder, &table_theme));
 
     // Biome distribution table
     if !result.biome_counts.is_empty() || result.unknown_biome_count > 0 {
-        out.push_str("  Biome Distribution:\n");
-        let biome_header = format!("  {:<16} {:>6}", "Biome", "Count");
-        out.push_str(&theme.header.paint(&biome_header));
-        out.push('\n');
-        out.push_str(&format!("  {:<16} {:>6}\n", "-----", "-----"));
+        out.push_str("\n  Biome Distribution:\n");
+        let mut bbuilder = Builder::default();
+        bbuilder.push_record(["Biome", "Count"]);
 
-        // Sort biomes by count descending
         let mut biomes: Vec<_> = result.biome_counts.iter().collect();
         biomes.sort_by(|a, b| b.1.cmp(a.1));
 
         for (biome, count) in biomes {
-            let styled_name = theme.biome_style(biome).paint(&biome.to_string());
-            out.push_str(&format!("  {:<16} {:>6}\n", styled_name, count));
+            bbuilder.push_record([biome.to_string(), count.to_string()]);
         }
 
         if result.unknown_biome_count > 0 {
-            out.push_str(&format!(
-                "  {:<16} {:>6}\n",
-                theme.muted.paint("(unknown)"),
-                result.unknown_biome_count
-            ));
+            bbuilder.push_record([
+                "(unknown)".to_string(),
+                result.unknown_biome_count.to_string(),
+            ]);
         }
+        bbuilder.push_record(["".to_string(), "".to_string()]);
+        out.push_str(&build_table(bbuilder, &table_theme));
     }
 
     out
 }
 
 /// Format a route result as an itinerary table.
-///
-/// ```text
-///   Hop  System                Distance    Cumulative   Portal Glyphs
-///     1  System Name              0 ly         0 ly     [emoji]
-///     2  Other System           18K ly       18K ly     [emoji]
-///    *   (waypoint)              2K ly       20K ly     [emoji]
-///     3  Final System             4K ly       24K ly     [emoji]
-///
-///   Route: 3 targets, 24K ly total (10 warp jumps at 2K ly range)
-///   Algorithm: 2-opt
-/// ```
 pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme: &Theme) -> String {
     if result.route.hops.is_empty() {
         return "  No route computed.\n".to_string();
     }
 
-    let mut out = String::new();
-
-    // Header
-    let header_line = format!(
-        "  {:<4} {:<22} {:>11}  {:>11}   {}",
-        "Hop", "System", "Distance", "Cumulative", "Portal Glyphs"
-    );
-    out.push_str(&theme.header.paint(&header_line));
-    out.push('\n');
+    let table_theme = table_theme_for(theme);
+    let mut builder = Builder::default();
+    builder.push_record(["Hop", "System", "Distance", "Cumulative", "Portal Glyphs"]);
 
     let mut hop_number = 0u32;
     for hop in &result.route.hops {
@@ -326,28 +263,27 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
         let cumulative = format_distance(hop.cumulative_ly);
 
         if hop.is_waypoint {
-            let display_name =
-                format!("\u{21B3} {}", theme.muted.paint(&truncate(system_name, 19)));
-            out.push_str(&format!(
-                "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
-                theme.muted.paint("*"),
-                display_name,
-                theme.distance.paint(&distance),
-                theme.distance.paint(&cumulative),
-                theme.glyphs.paint(&glyphs),
-            ));
+            builder.push_record([
+                "*".to_string(),
+                format!("\u{21B3} {}", truncate(system_name, 19)),
+                distance,
+                cumulative,
+                glyphs,
+            ]);
         } else {
             hop_number += 1;
-            out.push_str(&format!(
-                "  {:<4} {:<22} {:>11}  {:>11}   {}\n",
-                hop_number,
-                theme.system_name.paint(&truncate(system_name, 21)),
-                theme.distance.paint(&distance),
-                theme.distance.paint(&cumulative),
-                theme.glyphs.paint(&glyphs),
-            ));
+            builder.push_record([
+                hop_number.to_string(),
+                truncate(system_name, 21),
+                distance,
+                cumulative,
+                glyphs,
+            ]);
         }
     }
+    builder.push_record(["", "", "", "", ""]);
+
+    let mut out = build_table(builder, &table_theme);
 
     // Summary line
     out.push('\n');
@@ -490,7 +426,7 @@ mod tests {
             portal_hex: format!("{:012X}", addr.packed()),
         }];
         let output = format_find_results(&results, &Theme::default_dark());
-        // Should contain ANSI escape sequences
+        // Should contain ANSI escape sequences (from hex color theme)
         assert!(output.contains("\x1b["));
         // But still contain the data
         assert!(output.contains("Eden"));

@@ -12,6 +12,7 @@ use nms_query::find::{FindQuery, ReferencePoint, execute_find};
 use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
 use nms_query::show::{ShowQuery, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
+use nms_query::table::{Builder, build_table, nms_theme};
 use nms_query::theme::Theme;
 
 use nms_core::biome::{ALL_BIOME_SUBTYPES, ALL_BIOMES};
@@ -211,6 +212,8 @@ fn dispatch_route(
 }
 
 fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, String> {
+    let theme = nms_theme();
+
     match target {
         ListTarget::Galaxies { galaxy_type } => {
             let type_filter = galaxy_type
@@ -221,8 +224,8 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 })
                 .transpose()?;
 
-            let mut lines = vec![format!("  {:<5}  {:<30}  {}", "Index", "Name", "Type")];
-            lines.push(format!("  {:<5}  {:<30}  {}", "-----", "----", "----"));
+            let mut builder = Builder::default();
+            builder.push_record(["Index", "Name", "Type"]);
 
             for i in 0..=255u8 {
                 let g = Galaxy::by_index(i);
@@ -231,18 +234,19 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                         continue;
                     }
                 }
-                lines.push(format!(
-                    "  {:<5}  {:<30}  {}",
-                    g.index, g.name, g.galaxy_type
-                ));
+                builder.push_record([
+                    g.index.to_string(),
+                    g.name.to_string(),
+                    g.galaxy_type.to_string(),
+                ]);
             }
-            lines.push(String::new());
-            Ok(lines.join("\n"))
+            builder.push_record(["", "", ""]);
+            Ok(build_table(builder, &theme))
         }
 
         ListTarget::Biomes { subtypes } => {
-            let mut lines = Vec::new();
             if *subtypes {
+                let mut lines = Vec::new();
                 for biome in ALL_BIOMES {
                     lines.push(format!("  {biome}"));
                     for sub in ALL_BIOME_SUBTYPES {
@@ -253,54 +257,53 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                         }
                     }
                 }
+                lines.push(String::new());
+                Ok(lines.join("\n"))
             } else {
+                let mut builder = Builder::default();
+                builder.push_record(["Biome"]);
                 for biome in ALL_BIOMES {
-                    lines.push(format!("  {biome}"));
+                    builder.push_record([biome.to_string()]);
                 }
+                builder.push_record([String::new()]);
+                Ok(build_table(builder, &theme))
             }
-            lines.push(String::new());
-            Ok(lines.join("\n"))
         }
 
         ListTarget::Glyphs => {
-            let mut lines = vec![format!("  {:<5}  {:<6}  {}", "Hex", "Emoji", "Name")];
-            lines.push(format!("  {:<5}  {:<6}  {}", "---", "-----", "----"));
+            let mut builder = Builder::default();
+            builder.push_record(["Hex", "Emoji", "Name"]);
             for info in &GLYPH_TABLE {
-                lines.push(format!(
-                    "  {:<5}  {:<6}  {}",
-                    info.hex_char, info.emoji, info.name
-                ));
+                builder.push_record([
+                    info.hex_char.to_string(),
+                    info.emoji.to_string(),
+                    info.name.to_string(),
+                ]);
             }
-            lines.push(String::new());
-            Ok(lines.join("\n"))
+            builder.push_record(["", "", ""]);
+            Ok(build_table(builder, &theme))
         }
 
         ListTarget::Bases => {
             if model.bases.is_empty() {
                 return Ok("  No bases found.\n".into());
             }
-            let mut lines = vec![format!(
-                "  {:<30}  {:<10}  {:<12}  {}",
-                "Name", "Type", "Galaxy", "Address"
-            )];
-            lines.push(format!(
-                "  {:<30}  {:<10}  {:<12}  {}",
-                "----", "----", "------", "-------"
-            ));
+            let mut builder = Builder::default();
+            builder.push_record(["Name", "Type", "Galaxy", "Address"]);
+
             let mut bases: Vec<_> = model.bases.values().collect();
             bases.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
             for base in bases {
                 let galaxy = Galaxy::by_index(base.address.reality_index);
-                lines.push(format!(
-                    "  {:<30}  {:<10}  {:<12}  0x{:012X}",
-                    base.name,
-                    base_type_label(&base.base_type),
-                    galaxy.name,
-                    base.address.packed()
-                ));
+                builder.push_record([
+                    base.name.clone(),
+                    base_type_label(&base.base_type).to_string(),
+                    galaxy.name.to_string(),
+                    format!("0x{:012X}", base.address.packed()),
+                ]);
             }
-            lines.push(String::new());
-            Ok(lines.join("\n"))
+            builder.push_record(["", "", "", ""]);
+            Ok(build_table(builder, &theme))
         }
 
         ListTarget::Systems { limit } => {
@@ -308,7 +311,6 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 return Ok("  No systems found.\n".into());
             }
             let mut systems: Vec<_> = model.systems.values().collect();
-            // Named first, then unnamed; alphabetical within each group
             systems.sort_by(|a, b| {
                 let a_name = a.name.as_deref().unwrap_or("");
                 let b_name = b.name.as_deref().unwrap_or("");
@@ -323,31 +325,27 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             let effective_limit = if *limit == 0 { total } else { *limit };
             let showing = total.min(effective_limit);
 
-            let mut lines = vec![format!(
-                "  {:<30}  {:<16}  {}",
-                "Name", "Address", "Planets"
-            )];
-            lines.push(format!(
-                "  {:<30}  {:<16}  {}",
-                "----", "-------", "-------"
-            ));
+            let mut builder = Builder::default();
+            builder.push_record(["Name", "Address", "Planets"]);
+
             for sys in systems.iter().take(effective_limit) {
                 let name = sys.name.as_deref().unwrap_or("(unnamed)");
                 let planet_count = sys.planets.len();
-                lines.push(format!(
-                    "  {:<30}  0x{:012X}  {}",
-                    name,
-                    sys.address.packed(),
-                    planet_count
-                ));
+                builder.push_record([
+                    name.to_string(),
+                    format!("0x{:012X}", sys.address.packed()),
+                    planet_count.to_string(),
+                ]);
             }
+            builder.push_record(["", "", ""]);
+
+            let mut out = build_table(builder, &theme);
             if showing < total {
-                lines.push(format!(
+                out.push_str(&format!(
                     "\n  Showing {showing} of {total} systems (use --limit 0 for all)"
                 ));
             }
-            lines.push(String::new());
-            Ok(lines.join("\n"))
+            Ok(out)
         }
     }
 }

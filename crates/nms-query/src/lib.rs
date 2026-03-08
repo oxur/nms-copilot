@@ -8,6 +8,7 @@ pub mod find;
 pub mod route;
 pub mod show;
 pub mod stats;
+pub mod table;
 pub mod theme;
 
 pub use display::{

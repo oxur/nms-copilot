@@ -2,11 +2,13 @@
 
 use std::time::SystemTime;
 
+use nms_query::table::{Builder, build_table, nms_theme};
 use nms_save::locate::{group_into_slots, list_accounts, list_saves, nms_save_dir_checked};
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let save_dir = nms_save_dir_checked()?;
     let accounts = list_accounts(&save_dir)?;
+    let theme = nms_theme();
 
     for account in &accounts {
         println!("Account: {} ({})", account.name(), account.kind());
@@ -25,10 +27,8 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             continue;
         }
 
-        println!(
-            "  {:<6} {:<10} {:<10} Most Recent",
-            "Slot", "Manual", "Auto"
-        );
+        let mut builder = Builder::default();
+        builder.push_record(["Slot", "Manual", "Auto", "Most Recent"]);
         for slot in &slots {
             let manual = if slot.manual().is_some() { "yes" } else { "-" };
             let auto = if slot.auto().is_some() { "yes" } else { "-" };
@@ -36,15 +36,15 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                 .most_recent()
                 .map(|s| format!("{} ({})", s.save_type(), format_mtime(s.modified())))
                 .unwrap_or_default();
-            println!(
-                "  {:<6} {:<10} {:<10} {}",
-                slot.slot(),
-                manual,
-                auto,
-                recent
-            );
+            builder.push_record([
+                slot.slot().to_string(),
+                manual.to_string(),
+                auto.to_string(),
+                recent,
+            ]);
         }
-        println!();
+        builder.push_record(["", "", "", ""]);
+        println!("{}", build_table(builder, &theme));
     }
     Ok(())
 }

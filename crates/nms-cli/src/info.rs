@@ -1,9 +1,10 @@
-//! `nms info` command — display save file summary.
+//! `nms info` command -- display save file summary.
 
 use std::collections::HashMap;
 use std::path::PathBuf;
 
 use nms_core::galaxy::Galaxy;
+use nms_query::table::{Builder, build_table, nms_theme};
 use nms_save::model::{PlayerStateData, SaveRoot};
 
 pub fn run(save_path: Option<PathBuf>) -> Result<(), Box<dyn std::error::Error>> {
@@ -20,48 +21,55 @@ pub fn run(save_path: Option<PathBuf>) -> Result<(), Box<dyn std::error::Error>>
 }
 
 fn print_summary(save: &SaveRoot) {
-    println!("NMS Copilot -- Save File Summary");
-    println!("================================");
-    println!();
-
-    println!("  Save Name:       {}", save.common_state_data.save_name);
-    println!("  Platform:        {}", save.platform);
-    println!("  Version:         {}", save.version);
-    println!(
-        "  Play Time:       {}",
-        format_play_time(save.common_state_data.total_play_time)
-    );
-    println!(
-        "  Game Mode:       {}",
-        format_game_mode(save.base_context.game_mode)
-    );
-    println!();
+    let theme = nms_theme();
 
     let ps = save.active_player_state();
     let ua = &ps.universe_address;
     let galaxy = Galaxy::by_index(ua.reality_index);
     let ga = &ua.galactic_address;
-    println!("  Galaxy:          {}", galaxy.name);
-    println!(
-        "  Voxel Position:  X={}, Y={}, Z={}",
-        ga.voxel_x, ga.voxel_y, ga.voxel_z
-    );
-    println!("  System Index:    {}", ga.solar_system_index);
-    println!("  Planet Index:    {}", ga.planet_index);
+
+    let mut builder = Builder::default();
+    builder.push_record(["Field", "Value"]);
+    builder.push_record(["Save Name", &save.common_state_data.save_name]);
+    builder.push_record(["Platform", &save.platform]);
+    builder.push_record(["Version", &save.version.to_string()]);
+    builder.push_record([
+        "Play Time",
+        &format_play_time(save.common_state_data.total_play_time),
+    ]);
+    builder.push_record(["Game Mode", &format_game_mode(save.base_context.game_mode)]);
+    builder.push_record(["Galaxy", galaxy.name]);
+    builder.push_record([
+        "Voxel Position",
+        &format!("X={}, Y={}, Z={}", ga.voxel_x, ga.voxel_y, ga.voxel_z),
+    ]);
+    builder.push_record(["System Index", &ga.solar_system_index.to_string()]);
+    builder.push_record(["Planet Index", &ga.planet_index.to_string()]);
+    builder.push_record(["", ""]);
+
+    println!("NMS Copilot -- Save File Summary");
+    println!("{}", build_table(builder, &theme));
     println!();
 
-    print_discoveries(save);
-    print_bases(ps);
-    print_currencies(ps);
+    print_discoveries(save, &theme);
+    print_bases(ps, &theme);
+    print_currencies(ps, &theme);
 }
 
-fn print_discoveries(save: &SaveRoot) {
+fn print_discoveries(save: &SaveRoot, theme: &nms_query::table::TableStyleConfig) {
     let records = &save.discovery_manager_data.discovery_data_v1.store.record;
     let mut counts: HashMap<&str, usize> = HashMap::new();
     for rec in records {
         *counts.entry(rec.dd.dt.as_str()).or_insert(0) += 1;
     }
-    println!("  Discoveries:     {}", format_number(records.len() as i64));
+
+    let mut builder = Builder::default();
+    builder.push_record(["Category", "Count"]);
+    builder.push_record([
+        "Total Discoveries".to_string(),
+        format_number(records.len() as i64),
+    ]);
+
     for (label, key) in [
         ("Solar Systems", "SolarSystem"),
         ("Planets", "Planet"),
@@ -72,32 +80,49 @@ fn print_discoveries(save: &SaveRoot) {
     ] {
         let count = counts.get(key).copied().unwrap_or(0);
         if count > 0 {
-            println!("    {:<15}{}", label, format_number(count as i64));
+            builder.push_record([label.to_string(), format_number(count as i64)]);
         }
     }
+    builder.push_record(["".to_string(), "".to_string()]);
+
+    println!("  Discoveries:");
+    println!("{}", build_table(builder, theme));
     println!();
 }
 
-fn print_bases(ps: &PlayerStateData) {
+fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig) {
     let bases = &ps.persistent_player_bases;
-    println!("  Bases:           {}", bases.len());
-    for base in bases {
-        let name = if base.name.is_empty() {
-            "(unnamed)"
-        } else {
-            &base.name
-        };
-        let btype = &base.base_type.persistent_base_types;
-        let addr = base.galactic_address.0;
-        println!("    {:<24}{:<20}0x{:014X}", name, btype, addr);
+    println!("  Bases: {}", bases.len());
+
+    if !bases.is_empty() {
+        let mut builder = Builder::default();
+        builder.push_record(["Name", "Type", "Address"]);
+        for base in bases {
+            let name = if base.name.is_empty() {
+                "(unnamed)"
+            } else {
+                &base.name
+            };
+            builder.push_record([
+                name.to_string(),
+                base.base_type.persistent_base_types.clone(),
+                format!("0x{:014X}", base.galactic_address.0),
+            ]);
+        }
+        builder.push_record(["", "", ""]);
+        println!("{}", build_table(builder, theme));
     }
     println!();
 }
 
-fn print_currencies(ps: &PlayerStateData) {
-    println!("  Units:           {}", format_number(ps.units));
-    println!("  Nanites:         {}", format_number(ps.nanites));
-    println!("  Quicksilver:     {}", format_number(ps.specials));
+fn print_currencies(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig) {
+    let mut builder = Builder::default();
+    builder.push_record(["Currency", "Amount"]);
+    builder.push_record(["Units".to_string(), format_number(ps.units)]);
+    builder.push_record(["Nanites".to_string(), format_number(ps.nanites)]);
+    builder.push_record(["Quicksilver".to_string(), format_number(ps.specials)]);
+    builder.push_record(["".to_string(), "".to_string()]);
+    println!("{}", build_table(builder, theme));
 }
 
 /// Format seconds as "Xd Yh Zm" or "Xh Ym" or "Xm Ys".
