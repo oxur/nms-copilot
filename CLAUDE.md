@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 NMS Copilot is a real-time galactic copilot for No Man's Sky, built in Rust. It reads NMS save files (raw binary `save.hg` or exported JSON), builds a live in-memory model of discovered systems/planets/bases, and exposes it through three interfaces: a one-shot CLI (`nms`), an interactive REPL (`nms-copilot`), and an MCP server (`nms-mcp`). It is **not** a save editor — it is a queryable atlas.
 
-**Status:** Phases 1-5 complete. Core types (`nms-core`), binary save parser (`nms-save`), galaxy model with routing (`nms-graph`), query engine (`nms-query`), CLI (`nms-cli`) with `info`, `convert`, `find`, `show`, `stats`, and `route` commands, interactive REPL (`nms-copilot`) with session state, tab completion, rkyv cache, TOML config, and live file watching with delta computation are implemented and tested (516 tests).
+**Status:** All 7 phases complete. Core types (`nms-core`), binary save parser (`nms-save`), galaxy model with multi-galaxy routing (`nms-graph`), query engine with color themes (`nms-query`), CLI (`nms-cli`) with `info`, `convert`, `find`, `show`, `stats`, `route`, `export`, `import`, `saves`, and `completions` commands, interactive REPL (`nms-copilot`), MCP server (`nms-mcp`) with stdio and HTTP transports, live file watching, and rkyv cache are implemented and tested (688 tests).
 
 ## Document Hierarchy
 

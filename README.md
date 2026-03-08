@@ -118,6 +118,30 @@ nms info                            # save overview, player location, discovery 
 nms show system 369                 # system details + all planets
 nms show base "Acadia National Park"  # base details with portal glyphs
 nms stats --biomes                  # biome distribution table
+nms saves                           # list all save slots
+```
+
+### Export & Import
+
+```bash
+nms export --format json                          # export all planets as JSON
+nms export --biome Lush --format csv              # export filtered planets as CSV
+nms import community_data.csv --source "NMSCE"    # import community coordinates
+```
+
+### Shell Completions
+
+```bash
+nms completions bash > ~/.bash_completion.d/nms   # bash completions
+nms completions zsh > ~/.zfunc/_nms               # zsh completions
+nms completions fish > ~/.config/fish/completions/nms.fish  # fish completions
+```
+
+### Multi-Save Support
+
+```bash
+nms info --slot 3                   # use save slot 3 instead of most recent
+nms find --slot 5 --biome Lush      # search slot 5's discoveries
 ```
 
 ### Interactive REPL
@@ -184,13 +208,22 @@ NMS saves are **LZ4 block-compressed JSON** (not a proprietary binary format). T
 
 No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is XXTEA on the small metadata file (`mf_save.hg`), used for integrity verification.
 
+### MCP Server
+
+Run alongside Claude or another AI assistant for real-time co-exploration:
+
+```bash
+nms-mcp                           # stdio transport (for Claude Desktop)
+nms-mcp --http 127.0.0.1:3000    # HTTP transport (for remote clients)
+```
+
+The MCP server exposes all query capabilities as tools — your AI copilot can search planets, plan routes, convert coordinates, and track your position as you play.
+
 ---
 
 ## Status
 
-🚧 **Under active development** — Phases 1-5 complete, Phase 6 next.
-
-See [project-plan.md](docs/project-plan.md) for the full roadmap.
+All 7 phases complete.
 
 | Phase | Status | Description |
 |-------|--------|-------------|
@@ -199,84 +232,142 @@ See [project-plan.md](docs/project-plan.md) for the full roadmap.
 | 3. REPL & Cache | ✅ | Interactive copilot, session state, rkyv cache, config file |
 | 4. Routing | ✅ | Pathfinding, TSP, warp-range planning |
 | 5. Live Watch | ✅ | Real-time save file monitoring, REPL integration, cache write-through |
-| 6. MCP Server | 🔲 | AI copilot integration |
-| 7. Polish | 🔲 | Export, docs, crates.io |
+| 6. MCP Server | ✅ | AI copilot integration via stdio and HTTP transports |
+| 7. Polish | ✅ | Export, import, themes, completions, integration tests, CI |
 
-### Phase 1 Progress
+<details>
+<summary>Phase 1 — Foundation</summary>
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| 1.0 Workspace scaffold | ✅ | Cargo workspace with all 11 crates |
-| 1.1 Design documents | ✅ | ODM-managed project plan and resources |
-| 1.2 Core types | ✅ | `GalacticAddress`, `PortalAddress`, `Glyph`, `Biome`, `Galaxy`, `System`, `Planet`, `PlayerState`, `Discovery` |
-| 1.3 Portal glyph converter | ✅ | Full multidirectional conversion: hex, emoji, name, coordinates, signal booster |
-| 1.4 Distance calculator | ✅ | Euclidean voxel distance × 400 ly, special system detection |
-| 1.5 LZ4 decompressor | ✅ | Block-level LZ4 decompression with magic `0xFEEDA1E5` header parsing |
-| 1.6 Metadata verifier | ✅ | XXTEA decrypt/encrypt, key derivation, SHA-256 verification for `mf_save.hg` |
-| 1.7 Key deobfuscation | ✅ | `mapping.json` key remapping with bundled MBINCompiler + legacy + savewizard maps |
-| 1.8 Serde deserialization | ✅ | Typed structs for save JSON with conversion to core domain types |
-| 1.9 `nms info` command | ✅ | Save file summary: play time, location, discoveries, bases, currencies |
-| 1.10 `nms convert` command | ✅ | Coordinate converter: portal glyphs, signal booster, galactic address, voxels |
-| — Save file discovery | ✅ | Platform-specific save directory resolution, account/slot/type parsing |
+| Milestone | Description |
+|-----------|-------------|
+| 1.0 Workspace scaffold | Cargo workspace with all 11 crates |
+| 1.1 Design documents | ODM-managed project plan and resources |
+| 1.2 Core types | `GalacticAddress`, `PortalAddress`, `Glyph`, `Biome`, `Galaxy`, `System`, `Planet`, `PlayerState`, `Discovery` |
+| 1.3 Portal glyph converter | Full multidirectional conversion: hex, emoji, name, coordinates, signal booster |
+| 1.4 Distance calculator | Euclidean voxel distance x 400 ly, special system detection |
+| 1.5 LZ4 decompressor | Block-level LZ4 decompression with magic `0xFEEDA1E5` header parsing |
+| 1.6 Metadata verifier | XXTEA decrypt/encrypt, key derivation, SHA-256 verification for `mf_save.hg` |
+| 1.7 Key deobfuscation | `mapping.json` key remapping with bundled MBINCompiler + legacy + savewizard maps |
+| 1.8 Serde deserialization | Typed structs for save JSON with conversion to core domain types |
+| 1.9 `nms info` command | Save file summary: play time, location, discoveries, bases, currencies |
+| 1.10 `nms convert` command | Coordinate converter: portal glyphs, signal booster, galactic address, voxels |
+| — Save file discovery | Platform-specific save directory resolution, account/slot/type parsing |
 
-### Phase 2 Progress
+</details>
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| 2.1 Galaxy model | ✅ | `GalaxyModel` with petgraph, R-tree, HashMap indexes; system/planet extraction from save |
-| 2.2 Spatial indexing | ✅ | Nearest-neighbor and radius queries; `BiomeFilter` composable filtering |
-| 2.3 Graph construction | ✅ | `EdgeStrategy` (KNN/WarpRange); incremental edge building |
-| 2.4 Query engine | ✅ | `FindQuery`, `ShowQuery`, `StatsQuery` — pure stateless functions over `&GalaxyModel` |
-| 2.5 Display layer | ✅ | Table formatters, portal hex-to-emoji, distance K/M suffixes |
-| 2.6 `nms find` command | ✅ | Search by biome, distance, discoverer with emoji glyph output |
-| 2.7 `nms show` command | ✅ | Detail views for systems (by name or hex) and bases |
-| 2.8 `nms stats` command | ✅ | Aggregate statistics with biome distribution table |
+<details>
+<summary>Phase 2 — Search & Display</summary>
 
-### Phase 3 Progress
+| Milestone | Description |
+|-----------|-------------|
+| 2.1 Galaxy model | `GalaxyModel` with petgraph, R-tree, HashMap indexes; system/planet extraction from save |
+| 2.2 Spatial indexing | Nearest-neighbor and radius queries; `BiomeFilter` composable filtering |
+| 2.3 Graph construction | `EdgeStrategy` (KNN/WarpRange); incremental edge building |
+| 2.4 Query engine | `FindQuery`, `ShowQuery`, `StatsQuery` — pure stateless functions over `&GalaxyModel` |
+| 2.5 Display layer | Table formatters, portal hex-to-emoji, distance K/M suffixes |
+| 2.6 `nms find` command | Search by biome, distance, discoverer with emoji glyph output |
+| 2.7 `nms show` command | Detail views for systems (by name or hex) and bases |
+| 2.8 `nms stats` command | Aggregate statistics with biome distribution table |
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| 3.1 REPL scaffold | ✅ | reedline REPL loop with command parsing and dispatch |
-| 3.2 History & key bindings | ✅ | File-backed history at `~/.nms-copilot/history.txt` |
-| 3.3 Tab completion | ✅ | Context-aware completion for commands, flags, bases, systems, biomes |
-| 3.4 Session context | ✅ | Persistent position, biome filter, warp range; `set`/`reset`/`status` commands |
-| 3.5 Context-aware prompt | ✅ | Dynamic prompt showing galaxy, biome filter, and planet count |
-| 3.6 rkyv serialization | ✅ | Zero-copy cache format with `CacheData`; serialize/deserialize roundtrip |
-| 3.7 Cache management | ✅ | mtime-based freshness, `load_or_rebuild` startup path, `--no-cache` flag |
-| 3.8 Config file | ✅ | TOML config at `~/.nms-copilot/config.toml` — save path, display, defaults, cache |
+</details>
 
-### Phase 4 Progress
+<details>
+<summary>Phase 3 — REPL & Cache</summary>
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| 4.1 Shortest path | ✅ | Dijkstra via `petgraph::algo::astar` with zero heuristic |
-| 4.2 TSP nearest-neighbor | ✅ | Greedy nearest-neighbor tour using Euclidean distances |
-| 4.3 TSP 2-opt | ✅ | Local search improvement over NN initial tour |
-| 4.4 Hop-constrained routing | ✅ | Waypoint insertion via R-tree when legs exceed warp range |
-| 4.5 Route query | ✅ | `RouteQuery` with biome/named/system-id targets, `execute_route()` pipeline |
-| 4.6 Route display | ✅ | Itinerary table with waypoint markers, warp jump counts, algorithm labels |
-| 4.7 `nms route` command | ✅ | CLI and REPL integration with session-aware defaults |
+| Milestone | Description |
+|-----------|-------------|
+| 3.1 REPL scaffold | reedline REPL loop with command parsing and dispatch |
+| 3.2 History & key bindings | File-backed history at `~/.nms-copilot/history.txt` |
+| 3.3 Tab completion | Context-aware completion for commands, flags, bases, systems, biomes |
+| 3.4 Session context | Persistent position, biome filter, warp range; `set`/`reset`/`status` commands |
+| 3.5 Context-aware prompt | Dynamic prompt showing galaxy, biome filter, and planet count |
+| 3.6 rkyv serialization | Zero-copy cache format with `CacheData`; serialize/deserialize roundtrip |
+| 3.7 Cache management | mtime-based freshness, `load_or_rebuild` startup path, `--no-cache` flag |
+| 3.8 Config file | TOML config at `~/.nms-copilot/config.toml` — save path, display, defaults, cache |
 
-### Phase 5 Progress
+</details>
 
-| Milestone | Status | Description |
-|-----------|--------|-------------|
-| 5.1 Delta types | ✅ | `SaveDelta`, `PlayerMoved` in `nms-core` for cycle-free sharing |
-| 5.2 Snapshot diffing | ✅ | `SaveSnapshot` lightweight extraction; `compute_delta()` comparison |
-| 5.3 File watcher | ✅ | `notify` debounced watcher on save directory; background thread |
-| 5.4 Incremental model update | ✅ | `GalaxyModel::apply_delta()` — systems, planets, bases, player position |
-| 5.5 REPL integration | ✅ | `drain_watch_events()` between prompts; human-readable notifications |
-| 5.6 Cache write-through | ✅ | `LoadResult` struct; cache updated after delta application |
-| 5.7 Robustness | ✅ | File stability checks, consecutive failure counting, graceful recovery |
+<details>
+<summary>Phase 4 — Routing</summary>
+
+| Milestone | Description |
+|-----------|-------------|
+| 4.1 Shortest path | Dijkstra via `petgraph::algo::astar` with zero heuristic |
+| 4.2 TSP nearest-neighbor | Greedy nearest-neighbor tour using Euclidean distances |
+| 4.3 TSP 2-opt | Local search improvement over NN initial tour |
+| 4.4 Hop-constrained routing | Waypoint insertion via R-tree when legs exceed warp range |
+| 4.5 Route query | `RouteQuery` with biome/named/system-id targets, `execute_route()` pipeline |
+| 4.6 Route display | Itinerary table with waypoint markers, warp jump counts, algorithm labels |
+| 4.7 `nms route` command | CLI and REPL integration with session-aware defaults |
+
+</details>
+
+<details>
+<summary>Phase 5 — Live Watch</summary>
+
+| Milestone | Description |
+|-----------|-------------|
+| 5.1 Delta types | `SaveDelta`, `PlayerMoved` in `nms-core` for cycle-free sharing |
+| 5.2 Snapshot diffing | `SaveSnapshot` lightweight extraction; `compute_delta()` comparison |
+| 5.3 File watcher | `notify` debounced watcher on save directory; background thread |
+| 5.4 Incremental model update | `GalaxyModel::apply_delta()` — systems, planets, bases, player position |
+| 5.5 REPL integration | `drain_watch_events()` between prompts; human-readable notifications |
+| 5.6 Cache write-through | `LoadResult` struct; cache updated after delta application |
+| 5.7 Robustness | File stability checks, consecutive failure counting, graceful recovery |
+
+</details>
+
+<details>
+<summary>Phase 6 — MCP Server</summary>
+
+| Milestone | Description |
+|-----------|-------------|
+| 6.1 Server scaffold | fabryk-mcp server with stdio transport |
+| 6.2 Info tool | `nms_info` MCP tool — save summary |
+| 6.3 Find tool | `nms_find` MCP tool — planet search with filters |
+| 6.4 Show tool | `nms_show` MCP tool — system/base details |
+| 6.5 Stats tool | `nms_stats` MCP tool — aggregate statistics |
+| 6.6 Route tool | `nms_route` MCP tool — route planning |
+| 6.7 Convert tool | `nms_convert` MCP tool — coordinate conversion |
+| 6.8 Live updates | Watcher integration for real-time model updates |
+| 6.9 HTTP transport | Optional streaming HTTP server |
+
+</details>
+
+<details>
+<summary>Phase 7 — Polish</summary>
+
+| Milestone | Description |
+|-----------|-------------|
+| 7.1 Export command | JSON and CSV export of filtered planet data |
+| 7.2 Shell completions | bash, zsh, fish, powershell, elvish |
+| 7.3 Multi-save support | `--slot N` flag, `nms saves` listing |
+| 7.4 Multi-galaxy indexes | Per-galaxy R-tree spatial indexes |
+| 7.5 NomNom format | Save format detection for NomNom compatibility |
+| 7.6 Community import | CSV import with duplicate detection |
+| 7.7 Integration tests | End-to-end CLI and pipeline tests with fixtures |
+| 7.8 CI workflows | GitHub Actions for check, test, and publish |
+| 7.9 Publishing prep | crates.io metadata verification |
+| 7.10 Color themes | Configurable ANSI color themes for terminal output |
+
+</details>
 
 ---
 
 ## Installation
 
-*Coming soon.* The goal:
+```bash
+cargo install nms-copilot    # interactive REPL
+cargo install nms-cli        # one-shot CLI (the `nms` binary)
+cargo install nms-mcp        # MCP server for AI integration
+```
+
+Or build from source:
 
 ```bash
-cargo install nms-copilot
+git clone https://github.com/oxur/nms-copilot
+cd nms-copilot
+make build
 ```
 
 ---
