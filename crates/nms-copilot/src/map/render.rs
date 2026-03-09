@@ -6,7 +6,7 @@ use ratatui::Frame;
 use ratatui::layout::{Constraint, Layout, Rect};
 use ratatui::style::{Color, Modifier, Style};
 use ratatui::text::{Line, Span};
-use ratatui::widgets::{Block, Borders, Paragraph, Wrap};
+use ratatui::widgets::{Block, Borders, Clear, Paragraph, Wrap};
 
 use nms_graph::GalaxyModel;
 
@@ -175,32 +175,121 @@ fn render_legend(frame: &mut Frame, area: Rect, state: &MapState) {
 }
 
 /// Render a help overlay centered on the screen.
+///
+/// Two-column layout: keybindings on the left, density symbols and
+/// zoom levels on the right.
 fn render_help(frame: &mut Frame, area: Rect) {
+    let bold = Style::default()
+        .fg(Color::White)
+        .add_modifier(Modifier::BOLD);
+    let cyan = Style::default().fg(Color::Cyan);
+    let green = Style::default().fg(Color::Green);
+    let dim = Style::default().fg(Color::DarkGray);
+    let normal = Style::default().fg(Color::White);
+
+    // Column widths: left 36, gap 4, right 28 = 68 total content + 2 border = 70
+    let left_w = 36;
+    let gap = 4;
+
+    /// Pad or truncate a string to exactly `width` characters.
+    fn pad(s: &str, width: usize) -> String {
+        if s.len() >= width {
+            s[..width].to_string()
+        } else {
+            format!("{s:<width$}")
+        }
+    }
+
+    // Build rows as (left_text, right_spans)
     let help_text = vec![
-        Line::from(Span::styled(
-            " Galaxy Map — Key Bindings ",
-            Style::default()
-                .fg(Color::White)
-                .add_modifier(Modifier::BOLD),
-        )),
+        // Title row
+        Line::from(Span::styled(" Galaxy Map ", bold)),
+        // Blank
         Line::from(""),
-        Line::from("  Arrow keys    Move cursor"),
-        Line::from("  Enter / +     Zoom in"),
-        Line::from("  Esc / -       Zoom out (exit at galaxy level)"),
-        Line::from("  c             Center on player"),
-        Line::from("  ?             Toggle this help"),
-        Line::from("  q / Ctrl+C    Exit map"),
+        // Row: keys header | symbols header
+        Line::from(vec![
+            Span::styled(pad("  Keys:", left_w), bold),
+            Span::raw(pad("", gap)),
+            Span::styled("Density:", bold),
+        ]),
+        // Row: arrow keys | · = 1
+        Line::from(vec![
+            Span::styled(pad("  Arrow keys    Move cursor", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("·", cyan),
+            Span::styled("  1 system", normal),
+        ]),
+        // Row: enter | + = 2-3
+        Line::from(vec![
+            Span::styled(pad("  Enter / +     Zoom in", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("+", cyan),
+            Span::styled("  2-3 systems", normal),
+        ]),
+        // Row: esc | * = 4-7
+        Line::from(vec![
+            Span::styled(pad("  Esc / -       Zoom out (exit)", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("*", cyan),
+            Span::styled("  4-7 systems", normal),
+        ]),
+        // Row: c | # = 8+
+        Line::from(vec![
+            Span::styled(pad("  c             Center on player", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("#", cyan),
+            Span::styled("  8+ systems", normal),
+        ]),
+        // Row: ? | blank
+        Line::from(vec![
+            Span::styled(pad("  ?             Toggle this help", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("@", green),
+            Span::styled("  Your position", normal),
+        ]),
+        // Row: q | markers header
+        Line::from(vec![
+            Span::styled(pad("  q / Ctrl+C    Exit map", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("A", Style::default().fg(Color::Yellow)),
+            Span::styled("-", normal),
+            Span::styled("Z", Style::default().fg(Color::Yellow)),
+            Span::styled("  Base locations", normal),
+        ]),
+        // Blank
         Line::from(""),
-        Line::from(Span::styled(
-            "  Symbols: · =1  + =2-3  * =4-7  # =8+  @=You",
-            Style::default().fg(Color::Cyan),
-        )),
+        // Zoom levels header
+        Line::from(vec![
+            Span::styled(pad("", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("Zoom Levels:", bold),
+        ]),
+        // Galaxy
+        Line::from(vec![
+            Span::styled(pad("", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("Galaxy  4096\u{00D7}4096 vox", normal),
+        ]),
+        // Region
+        Line::from(vec![
+            Span::styled(pad("", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("Region   512\u{00D7}512  vox  8\u{00D7}", normal),
+        ]),
+        // Local
+        Line::from(vec![
+            Span::styled(pad("", left_w), normal),
+            Span::raw(pad("", gap)),
+            Span::styled("Local     64\u{00D7}64   vox 64\u{00D7}", normal),
+        ]),
+        // Blank
         Line::from(""),
-        Line::from("  Press any key to close"),
+        // Dismiss
+        Line::from(Span::styled("  Press any key to close", dim)),
     ];
 
     let help_height = help_text.len() as u16 + 2; // +2 for borders
-    let help_width = 50;
+    let help_width = 70;
 
     let x = area.x + area.width.saturating_sub(help_width) / 2;
     let y = area.y + area.height.saturating_sub(help_height) / 2;
@@ -219,11 +308,8 @@ fn render_help(frame: &mut Frame, area: Rect) {
         )
         .style(Style::default().fg(Color::White).bg(Color::Black));
 
-    // Clear the area behind the help
-    frame.render_widget(
-        Block::default().style(Style::default().bg(Color::Black)),
-        help_area,
-    );
+    // Clear the area behind the help (resets all cells to empty)
+    frame.render_widget(Clear, help_area);
     frame.render_widget(help_block, help_area);
 }
 
