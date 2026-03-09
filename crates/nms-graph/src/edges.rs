@@ -6,6 +6,7 @@
 //! - **KNN**: connect each system to its k nearest neighbors
 //! - **Warp range**: connect systems within a maximum warp distance
 
+use nms_core::address::LY_PER_VOXEL;
 use rstar::PointDistance;
 
 use crate::model::GalaxyModel;
@@ -56,26 +57,33 @@ impl GalaxyModel {
                 None => continue,
             };
 
-            let galaxy = system.address.reality_index;
+            let sys_addr = system.address;
+            let galaxy = sys_addr.reality_index;
             let spatial = match self.spatial.get(&galaxy) {
                 Some(s) => s,
                 None => continue,
             };
 
             let query_point = [
-                system.address.voxel_x() as f64,
-                system.address.voxel_y() as f64,
-                system.address.voxel_z() as f64,
+                sys_addr.voxel_x() as f64,
+                sys_addr.voxel_y() as f64,
+                sys_addr.voxel_z() as f64,
             ];
 
-            // Get k+1 nearest (first may be self)
-            let neighbors: Vec<_> = spatial
+            // Collect R-tree neighbor IDs first, then look up distances.
+            let neighbor_ids: Vec<SystemId> = spatial
                 .nearest_neighbor_iter(&query_point)
                 .filter(|sp| sp.id != sys_id)
                 .take(k)
-                .map(|sp| {
-                    let dist_ly = sp.distance_2(&query_point).sqrt() * 400.0;
-                    (sp.id, dist_ly)
+                .map(|sp| sp.id)
+                .collect();
+
+            let neighbors: Vec<_> = neighbor_ids
+                .into_iter()
+                .filter_map(|nid| {
+                    let neighbor_sys = self.systems.get(&nid)?;
+                    let dist_ly = sys_addr.distance_ly(&neighbor_sys.address);
+                    Some((nid, dist_ly))
                 })
                 .collect();
 
@@ -101,7 +109,7 @@ impl GalaxyModel {
     /// Connect all pairs of systems within a warp range (in light-years).
     ///
     /// For each system, queries its galaxy's R-tree for all neighbors within
-    /// `max_ly / 400.0` voxel units and adds edges.
+    /// `max_ly / LY_PER_VOXEL` voxel units and adds edges.
     fn build_warp_range_edges(&mut self, max_ly: f64) {
         let system_ids: Vec<SystemId> = self.systems.keys().copied().collect();
 
@@ -111,28 +119,40 @@ impl GalaxyModel {
                 None => continue,
             };
 
-            let galaxy = system.address.reality_index;
+            let sys_addr = system.address;
+            let galaxy = sys_addr.reality_index;
             let spatial = match self.spatial.get(&galaxy) {
                 Some(s) => s,
                 None => continue,
             };
 
             let query_point = [
-                system.address.voxel_x() as f64,
-                system.address.voxel_y() as f64,
-                system.address.voxel_z() as f64,
+                sys_addr.voxel_x() as f64,
+                sys_addr.voxel_y() as f64,
+                sys_addr.voxel_z() as f64,
             ];
 
-            let voxel_radius = max_ly / 400.0;
+            let voxel_radius = max_ly / LY_PER_VOXEL + 1.0;
             let voxel_radius_sq = voxel_radius * voxel_radius;
 
-            let neighbors: Vec<_> = spatial
+            // Collect R-tree neighbor IDs first, then look up distances.
+            let neighbor_ids: Vec<SystemId> = spatial
                 .nearest_neighbor_iter(&query_point)
                 .take_while(|sp| sp.distance_2(&query_point) <= voxel_radius_sq)
                 .filter(|sp| sp.id != sys_id)
-                .map(|sp| {
-                    let dist_ly = sp.distance_2(&query_point).sqrt() * 400.0;
-                    (sp.id, dist_ly)
+                .map(|sp| sp.id)
+                .collect();
+
+            let neighbors: Vec<_> = neighbor_ids
+                .into_iter()
+                .filter_map(|nid| {
+                    let neighbor_sys = self.systems.get(&nid)?;
+                    let dist_ly = sys_addr.distance_ly(&neighbor_sys.address);
+                    if dist_ly <= max_ly {
+                        Some((nid, dist_ly))
+                    } else {
+                        None
+                    }
                 })
                 .collect();
 
@@ -165,25 +185,33 @@ impl GalaxyModel {
             None => return,
         };
 
-        let galaxy = system.address.reality_index;
+        let sys_addr = system.address;
+        let galaxy = sys_addr.reality_index;
         let spatial = match self.spatial.get(&galaxy) {
             Some(s) => s,
             None => return,
         };
 
         let query_point = [
-            system.address.voxel_x() as f64,
-            system.address.voxel_y() as f64,
-            system.address.voxel_z() as f64,
+            sys_addr.voxel_x() as f64,
+            sys_addr.voxel_y() as f64,
+            sys_addr.voxel_z() as f64,
         ];
 
-        let neighbors: Vec<_> = spatial
+        // Collect R-tree neighbor IDs first, then look up distances.
+        let neighbor_ids: Vec<SystemId> = spatial
             .nearest_neighbor_iter(&query_point)
             .filter(|sp| sp.id != sys_id)
             .take(k)
-            .map(|sp| {
-                let dist_ly = sp.distance_2(&query_point).sqrt() * 400.0;
-                (sp.id, dist_ly)
+            .map(|sp| sp.id)
+            .collect();
+
+        let neighbors: Vec<_> = neighbor_ids
+            .into_iter()
+            .filter_map(|nid| {
+                let neighbor_sys = self.systems.get(&nid)?;
+                let dist_ly = sys_addr.distance_ly(&neighbor_sys.address);
+                Some((nid, dist_ly))
             })
             .collect();
 

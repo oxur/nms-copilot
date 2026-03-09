@@ -1,6 +1,6 @@
 //! Spatial query methods on the GalaxyModel.
 
-use nms_core::address::GalacticAddress;
+use nms_core::address::{GalacticAddress, LY_PER_VOXEL};
 use nms_core::biome::{Biome, BiomeSubType};
 use nms_core::system::Planet;
 use rstar::PointDistance;
@@ -61,15 +61,19 @@ impl GalaxyModel {
             from.voxel_z() as f64,
         ];
 
-        spatial
+        let mut results: Vec<(SystemId, f64)> = spatial
             .nearest_neighbor_iter(&query_point)
-            .take(n)
-            .map(|sp| {
-                let voxel_dist_sq = sp.distance_2(&query_point);
-                let ly = voxel_dist_sq.sqrt() * 400.0;
-                (sp.id, ly)
+            .take(n * 3)
+            .filter_map(|sp| {
+                let system = self.systems.get(&sp.id)?;
+                let ly = from.distance_ly(&system.address);
+                Some((sp.id, ly))
             })
-            .collect()
+            .collect();
+
+        results.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+        results.truncate(n);
+        results
     }
 
     /// Find all systems within a radius (in light-years) of a reference point.
@@ -92,17 +96,23 @@ impl GalaxyModel {
             from.voxel_y() as f64,
             from.voxel_z() as f64,
         ];
-        let voxel_radius = radius_ly / 400.0;
+        // Over-estimate the voxel radius to account for SSI-aware distance
+        // adjustments. Adding 1.0 voxel ensures same-voxel systems are included.
+        let voxel_radius = radius_ly / LY_PER_VOXEL + 1.0;
         let voxel_radius_sq = voxel_radius * voxel_radius;
 
         let mut results: Vec<(SystemId, f64)> = spatial
             .nearest_neighbor_iter(&query_point)
-            .map(|sp| {
-                let dist_sq = sp.distance_2(&query_point);
-                (sp.id, dist_sq)
+            .take_while(|sp| sp.distance_2(&query_point) <= voxel_radius_sq)
+            .filter_map(|sp| {
+                let system = self.systems.get(&sp.id)?;
+                let ly = from.distance_ly(&system.address);
+                if ly <= radius_ly {
+                    Some((sp.id, ly))
+                } else {
+                    None
+                }
             })
-            .take_while(|&(_, dist_sq)| dist_sq <= voxel_radius_sq)
-            .map(|(id, dist_sq)| (id, dist_sq.sqrt() * 400.0))
             .collect();
 
         results.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
@@ -134,17 +144,17 @@ impl GalaxyModel {
 
         let mut results = Vec::with_capacity(n);
 
+        // Over-collect candidates to allow re-sorting by SSI-aware distance.
         for sp in spatial.nearest_neighbor_iter(&query_point) {
-            if results.len() >= n {
+            if results.len() >= n * 3 {
                 break;
             }
 
-            let dist_ly = sp.distance_2(&query_point).sqrt() * 400.0;
-
-            // Get all planets in this system
             if let Some(system) = self.systems.get(&sp.id) {
+                let dist_ly = from.distance_ly(&system.address);
+
                 for planet in &system.planets {
-                    if results.len() >= n {
+                    if results.len() >= n * 3 {
                         break;
                     }
                     if matches_filter(planet, filter) {
@@ -155,6 +165,8 @@ impl GalaxyModel {
             }
         }
 
+        results.sort_by(|a, b| a.2.partial_cmp(&b.2).unwrap());
+        results.truncate(n);
         results
     }
 

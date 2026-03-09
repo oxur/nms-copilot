@@ -13,6 +13,24 @@ pub const SSI_PURPLE_START: u16 = 0x3E8;
 /// Purple system SSI range end (inclusive).
 pub const SSI_PURPLE_END: u16 = 0x429;
 
+/// Light-years per voxel unit in the galactic coordinate system.
+pub const LY_PER_VOXEL: f64 = 400.0;
+/// Robbins' constant: mean distance between two random points in a unit cube.
+pub const ROBBINS_CONSTANT: f64 = 0.661_707_182;
+/// Estimated distance (in ly) for two systems sharing the same voxel
+/// (Robbins' constant × voxel size).
+pub const VOXEL_UNCERTAINTY: f64 = ROBBINS_CONSTANT * LY_PER_VOXEL;
+
+/// Standard deviation (1σ) of distance between two random points in one
+/// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+/// ≈ 0.2494 × 400 ≈ 99.8 ly.
+pub const SAME_VOXEL_SD: f64 = 0.249_4 * LY_PER_VOXEL;
+
+/// Standard deviation (1σ) of distance error for two systems in different
+/// voxels: the combined sub-voxel offset projected onto the line between
+/// them has SD = √(2/12) × 400 ≈ 163.3 ly.
+pub const CROSS_VOXEL_SD: f64 = 0.408_248 * LY_PER_VOXEL;
+
 /// Mask for the 48-bit packed galactic address.
 const PACKED_MASK: u64 = 0xFFFF_FFFF_FFFF;
 
@@ -192,15 +210,22 @@ impl GalacticAddress {
 
     /// Distance in light-years to another address.
     ///
-    /// Uses Euclidean distance in voxel space multiplied by 400.
-    /// Only meaningful for addresses in the same galaxy.
+    /// SSI-aware: returns 0 for same system, [`VOXEL_UNCERTAINTY`] for same
+    /// voxel but different SSI, and Euclidean voxel distance * [`LY_PER_VOXEL`]
+    /// otherwise. Only meaningful for addresses in the same galaxy.
     pub fn distance_ly(&self, other: &GalacticAddress) -> f64 {
-        let (x1, y1, z1) = self.voxel_position();
-        let (x2, y2, z2) = other.voxel_position();
-        let dx = (x1 as f64) - (x2 as f64);
-        let dy = (y1 as f64) - (y2 as f64);
-        let dz = (z1 as f64) - (z2 as f64);
-        (dx * dx + dy * dy + dz * dz).sqrt() * 400.0
+        if self.same_system(other) {
+            0.0
+        } else if self.same_region(other) {
+            VOXEL_UNCERTAINTY
+        } else {
+            let (x1, y1, z1) = self.voxel_position();
+            let (x2, y2, z2) = other.voxel_position();
+            let dx = (x1 as f64) - (x2 as f64);
+            let dy = (y1 as f64) - (y2 as f64);
+            let dz = (z1 as f64) - (z2 as f64);
+            (dx * dx + dy * dy + dz * dz).sqrt() * LY_PER_VOXEL
+        }
     }
 
     /// Whether two addresses are in the same region (same VoxelX/Y/Z).
@@ -229,7 +254,7 @@ impl GalacticAddress {
         let dx = x as f64;
         let dy = y as f64;
         let dz = z as f64;
-        (dx * dx + dy * dy + dz * dz).sqrt() * 400.0
+        (dx * dx + dy * dy + dz * dz).sqrt() * LY_PER_VOXEL
     }
 
     /// Whether this address points to a black hole system (SSI 0x079).
@@ -821,6 +846,18 @@ mod tests {
         let b = GalacticAddress::new(101, 50, -200, 0x123, 0, 0);
         assert!(!a.same_region(&b));
         assert!(!a.same_system(&b));
+    }
+
+    #[test]
+    fn same_region_different_ssi_distance_is_uncertainty() {
+        let a = GalacticAddress::new(100, 50, 200, 0x001, 0, 0);
+        let b = GalacticAddress::new(100, 50, 200, 0x002, 0, 0);
+        assert!(
+            (a.distance_ly(&b) - VOXEL_UNCERTAINTY).abs() < 0.01,
+            "expected ~{}, got {}",
+            VOXEL_UNCERTAINTY,
+            a.distance_ly(&b)
+        );
     }
 
     #[test]

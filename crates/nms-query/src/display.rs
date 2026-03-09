@@ -13,16 +13,40 @@ use crate::theme::Theme;
 
 /// Format a distance in light-years for display.
 ///
-/// - Under 1,000: "42 ly"
-/// - 1,000 to 999,999: "127K ly"
-/// - 1,000,000+: "1.2M ly"
+/// - 0.0 (same system): `"< 1 ly"`
+/// - ~265 ly (same voxel): `"~265 ly (±100)"` — SD from Robbins' variance
+/// - Cross-voxel: `"~800 ly (±163)"` — projection SD, √(2/12) × 400
+/// - Large distances: `"~40.0K ly"` — ± dropped when < 5% of distance
+///
+/// All non-zero distances are prefixed with `~` to indicate approximation.
+/// The `±` uncertainty (1σ) is shown when it represents ≥ 5% of the distance.
 pub fn format_distance(ly: f64) -> String {
-    if ly < 1_000.0 {
+    use nms_core::address::{CROSS_VOXEL_SD, SAME_VOXEL_SD, VOXEL_UNCERTAINTY};
+
+    if ly == 0.0 {
+        return "< 1 ly".to_string();
+    }
+
+    // Same-voxel estimates use their own SD; cross-voxel uses the projection SD.
+    let sd = if (ly - VOXEL_UNCERTAINTY).abs() < 1.0 {
+        SAME_VOXEL_SD
+    } else {
+        CROSS_VOXEL_SD
+    };
+    let show_error = sd / ly >= 0.05; // Drop ± when < 5% of distance
+
+    let dist_str = if ly < 1_000.0 {
         format!("{:.0} ly", ly)
     } else if ly < 1_000_000.0 {
-        format!("{:.0}K ly", ly / 1_000.0)
+        format!("{:.1}K ly", ly / 1_000.0)
     } else {
         format!("{:.1}M ly", ly / 1_000_000.0)
+    };
+
+    if show_error {
+        format!("~{dist_str} (\u{00B1}{:.0})", sd)
+    } else {
+        format!("~{dist_str}")
     }
 }
 
@@ -375,23 +399,42 @@ mod tests {
     }
 
     #[test]
-    fn test_format_distance_small() {
-        assert_eq!(format_distance(42.0), "42 ly");
-        assert_eq!(format_distance(0.0), "0 ly");
-        assert_eq!(format_distance(999.0), "999 ly");
+    fn test_format_distance_zero() {
+        assert_eq!(format_distance(0.0), "< 1 ly");
+    }
+
+    #[test]
+    fn test_format_distance_small_with_uncertainty() {
+        // 42 ly (cross-voxel): SD=163, 163/42 > 5%, ± shown
+        assert_eq!(format_distance(42.0), "~42 ly (\u{00B1}163)");
+        assert_eq!(format_distance(999.0), "~999 ly (\u{00B1}163)");
+    }
+
+    #[test]
+    fn test_format_distance_same_voxel() {
+        // ~265 ly (same-voxel Robbins' estimate): SD=100, ± shown
+        let voxel = nms_core::address::VOXEL_UNCERTAINTY;
+        assert_eq!(format_distance(voxel), "~265 ly (\u{00B1}100)");
     }
 
     #[test]
     fn test_format_distance_thousands() {
-        assert_eq!(format_distance(1000.0), "1K ly");
-        assert_eq!(format_distance(127_000.0), "127K ly");
-        assert_eq!(format_distance(999_999.0), "1000K ly");
+        // 1000 ly (cross-voxel): SD=163, 163/1000 = 16% >= 5%, ± shown
+        assert_eq!(format_distance(1000.0), "~1.0K ly (\u{00B1}163)");
+        // 3000 ly: 163/3000 = 5.4% >= 5%, ± shown
+        assert_eq!(format_distance(3000.0), "~3.0K ly (\u{00B1}163)");
+        // 3200 ly: 163/3200 ≈ 5.1% >= 5%, ± shown
+        assert_eq!(format_distance(3200.0), "~3.2K ly (\u{00B1}163)");
+        // 3300 ly: 163/3300 < 5%, ± dropped
+        assert_eq!(format_distance(3300.0), "~3.3K ly");
+        // Large thousands: no ±
+        assert_eq!(format_distance(40_000.0), "~40.0K ly");
     }
 
     #[test]
     fn test_format_distance_millions() {
-        assert_eq!(format_distance(1_000_000.0), "1.0M ly");
-        assert_eq!(format_distance(1_500_000.0), "1.5M ly");
+        assert_eq!(format_distance(1_000_000.0), "~1.0M ly");
+        assert_eq!(format_distance(1_500_000.0), "~1.5M ly");
     }
 
     #[test]
@@ -433,7 +476,7 @@ mod tests {
         assert!(output.contains("Eden"));
         assert!(output.contains("Lush"));
         assert!(output.contains("Sol"));
-        assert!(output.contains("42K ly"));
+        assert!(output.contains("~42.0K ly"));
     }
 
     #[test]
@@ -491,7 +534,7 @@ mod tests {
         assert!(output.contains("Test System"));
         assert!(output.contains("Euclid"));
         assert!(output.contains("Explorer"));
-        assert!(output.contains("5K ly"));
+        assert!(output.contains("~5.0K ly"));
         assert!(output.contains("Lush"));
     }
 
@@ -656,7 +699,7 @@ mod tests {
         };
         let output = format_route(&result, &model, &plain());
         assert!(output.contains("3 warp jumps"));
-        assert!(output.contains("2K ly range"));
+        assert!(output.contains("~2.0K ly") && output.contains("range"));
     }
 
     #[test]
