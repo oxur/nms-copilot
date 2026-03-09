@@ -102,13 +102,17 @@ impl MapState {
             .map(|(x, z)| (f64::from(x), f64::from(z)))
             .unwrap_or((0.0, 0.0));
 
-        // Build base labels (A-Z)
-        let mut base_labels: Vec<BaseLabel> = model
+        // Build base labels (A-Z), sorted by name for stable letter assignment
+        let mut bases_in_galaxy: Vec<_> = model
             .bases
             .values()
             .filter(|b| b.address.reality_index == galaxy)
-            .enumerate()
+            .collect();
+        bases_in_galaxy.sort_by(|a, b| a.name.cmp(&b.name));
+        let base_labels: Vec<BaseLabel> = bases_in_galaxy
+            .into_iter()
             .take(26)
+            .enumerate()
             .map(|(i, b)| BaseLabel {
                 letter: (b'A' + i as u8) as char,
                 name: b.name.clone(),
@@ -116,7 +120,6 @@ impl MapState {
                 voxel_z: b.address.voxel_z(),
             })
             .collect();
-        base_labels.sort_by_key(|b| b.letter);
 
         // Use session position if available, otherwise player position
         let effective_center = session
@@ -132,7 +135,7 @@ impl MapState {
             zoom: ZoomLevel::Galaxy,
             center: effective_center,
             cursor: (0, 0),
-            grid_size: (80, 24),
+            grid_size: (78, 19),  // 80-2 cols, 24-3-2 rows (borders)
             galaxy,
             galaxy_name,
             base_labels,
@@ -145,9 +148,10 @@ impl MapState {
 
     /// Update grid size (e.g., on terminal resize).
     pub fn resize(&mut self, cols: u16, rows: u16) {
-        // Reserve 3 rows for status + legend
-        let map_rows = rows.saturating_sub(3);
-        self.grid_size = (cols, map_rows);
+        // Reserve 3 rows for status + legend, and 2 cols + 2 rows for map border
+        let inner_cols = cols.saturating_sub(2);
+        let inner_rows = rows.saturating_sub(3).saturating_sub(2);
+        self.grid_size = (inner_cols, inner_rows);
         self.clamp_cursor();
     }
 
@@ -210,13 +214,14 @@ impl MapState {
     pub fn cursor_voxel(&self) -> (f64, f64) {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
-        let cell_size = extent / f64::from(cols.max(1));
+        let cell_size_x = extent / f64::from(cols.max(1));
+        let cell_size_z = extent / f64::from(rows.max(1));
 
         let half_cols = f64::from(cols) / 2.0;
         let half_rows = f64::from(rows) / 2.0;
 
-        let vx = self.center.0 + (f64::from(self.cursor.0) - half_cols) * cell_size;
-        let vz = self.center.1 + (f64::from(self.cursor.1) - half_rows) * cell_size;
+        let vx = self.center.0 + (f64::from(self.cursor.0) - half_cols) * cell_size_x;
+        let vz = self.center.1 + (f64::from(self.cursor.1) - half_rows) * cell_size_z;
         (vx, vz)
     }
 
@@ -225,13 +230,14 @@ impl MapState {
     pub fn voxel_to_grid(&self, vx: f64, vz: f64) -> Option<(u16, u16)> {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
-        let cell_size = extent / f64::from(cols.max(1));
+        let cell_size_x = extent / f64::from(cols.max(1));
+        let cell_size_z = extent / f64::from(rows.max(1));
 
         let half_cols = f64::from(cols) / 2.0;
         let half_rows = f64::from(rows) / 2.0;
 
-        let col = ((vx - self.center.0) / cell_size + half_cols) as i32;
-        let row = ((vz - self.center.1) / cell_size + half_rows) as i32;
+        let col = ((vx - self.center.0) / cell_size_x + half_cols) as i32;
+        let row = ((vz - self.center.1) / cell_size_z + half_rows) as i32;
 
         if col >= 0 && col < cols as i32 && row >= 0 && row < rows as i32 {
             Some((col as u16, row as u16))
@@ -245,10 +251,11 @@ impl MapState {
     pub fn viewport_bounds(&self) -> ((f64, f64), (f64, f64)) {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
-        let cell_size = extent / f64::from(cols.max(1));
+        let cell_size_x = extent / f64::from(cols.max(1));
+        let cell_size_z = extent / f64::from(rows.max(1));
 
-        let half_w = f64::from(cols) / 2.0 * cell_size;
-        let half_h = f64::from(rows) / 2.0 * cell_size;
+        let half_w = f64::from(cols) / 2.0 * cell_size_x;
+        let half_h = f64::from(rows) / 2.0 * cell_size_z;
 
         (
             (self.center.0 - half_w, self.center.1 - half_h),

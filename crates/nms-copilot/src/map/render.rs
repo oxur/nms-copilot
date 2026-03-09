@@ -10,7 +10,7 @@ use ratatui::widgets::{Block, Borders, Clear, Paragraph, Wrap};
 
 use nms_graph::GalaxyModel;
 
-use super::state::{MapState, density_char};
+use super::state::{MapState, ZoomLevel, density_char};
 
 /// Bin systems into grid cells and render the full map frame.
 pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
@@ -51,19 +51,38 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
     // Build a density grid by binning systems into cells
     let grid = bin_systems(state, model, inner.width, inner.height);
 
-    // Overlay base labels and player position
-    let mut overlays: HashMap<(u16, u16), (char, Color)> = HashMap::new();
+    // Overlay base labels and player position.
+    // Each overlay entry maps (col, row) -> (label_string, color).
+    // At Local zoom, base labels include the name; otherwise just the letter.
+    // When multiple bases share the same cell, spread them to adjacent rows.
+    let mut overlays: HashMap<(u16, u16), (String, Color)> = HashMap::new();
 
     // Bases
+    let show_names = state.zoom == ZoomLevel::Local;
     for bl in &state.base_labels {
-        if let Some((col, row)) = voxel_to_cell(
+        if let Some((col, mut row)) = voxel_to_cell(
             f64::from(bl.voxel_x),
             f64::from(bl.voxel_z),
             state,
             inner.width,
             inner.height,
         ) {
-            overlays.insert((col, row), (bl.letter, Color::Yellow));
+            // Spread stacked bases to adjacent rows
+            while overlays.contains_key(&(col, row)) && row + 1 < inner.height {
+                row += 1;
+            }
+            let label = if show_names {
+                let max_len = (inner.width - col) as usize;
+                let full = format!("{} {}", bl.letter, bl.name);
+                if full.len() > max_len {
+                    full[..max_len].to_string()
+                } else {
+                    full
+                }
+            } else {
+                bl.letter.to_string()
+            };
+            overlays.insert((col, row), (label, Color::Yellow));
         }
     }
 
@@ -76,7 +95,7 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
             inner.width,
             inner.height,
         ) {
-            overlays.insert((col, row), ('@', Color::Green));
+            overlays.insert((col, row), ("@".to_string(), Color::Green));
         }
     }
 
@@ -84,32 +103,53 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
     let mut lines: Vec<Line> = Vec::with_capacity(inner.height as usize);
     for row in 0..inner.height {
         let mut spans: Vec<Span> = Vec::with_capacity(inner.width as usize);
+        let mut skip: u16 = 0; // columns to skip (consumed by multi-char label)
         for col in 0..inner.width {
+            if skip > 0 {
+                skip -= 1;
+                continue;
+            }
+
             let is_cursor = col == state.cursor.0 && row == state.cursor.1;
 
-            let (ch, base_style) = if let Some(&(overlay_ch, color)) = overlays.get(&(col, row)) {
-                (
-                    overlay_ch,
-                    Style::default().fg(color).add_modifier(Modifier::BOLD),
-                )
+            if let Some((label, color)) = overlays.get(&(col, row)) {
+                let style = Style::default().fg(*color).add_modifier(Modifier::BOLD);
+                if label.len() > 1 {
+                    // Multi-char label: first char may get cursor highlight
+                    let mut chars = label.chars();
+                    let first = chars.next().unwrap();
+                    let first_style = if is_cursor {
+                        style.add_modifier(Modifier::REVERSED)
+                    } else {
+                        style
+                    };
+                    spans.push(Span::styled(first.to_string(), first_style));
+                    let rest: String = chars.collect();
+                    skip = rest.len() as u16;
+                    spans.push(Span::styled(rest, style));
+                } else {
+                    let style = if is_cursor {
+                        style.add_modifier(Modifier::REVERSED)
+                    } else {
+                        style
+                    };
+                    spans.push(Span::styled(label.clone(), style));
+                }
             } else {
                 let count = grid.get(&(col, row)).copied().unwrap_or(0);
                 let ch = density_char(count);
-                let style = if count > 0 {
+                let base_style = if count > 0 {
                     Style::default().fg(Color::Cyan)
                 } else {
                     Style::default().fg(Color::DarkGray)
                 };
-                (ch, style)
+                let style = if is_cursor {
+                    base_style.add_modifier(Modifier::REVERSED)
+                } else {
+                    base_style
+                };
+                spans.push(Span::styled(ch.to_string(), style));
             };
-
-            let style = if is_cursor {
-                base_style.add_modifier(Modifier::REVERSED)
-            } else {
-                base_style
-            };
-
-            spans.push(Span::styled(ch.to_string(), style));
         }
         lines.push(Line::from(spans));
     }
