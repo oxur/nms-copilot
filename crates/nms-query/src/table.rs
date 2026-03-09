@@ -60,7 +60,7 @@ vertical_fg_color = "#162D45"
 [footer]
 enabled = true
 bg_color = "#1E3A5F"
-fg_color = "#1E3A5F"
+fg_color = "#4A9BC7"
 justification_char = " "
 vertical_bg_color = "#1E3A5F"
 vertical_fg_color = "#1E3A5F"
