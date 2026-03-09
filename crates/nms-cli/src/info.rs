@@ -102,7 +102,7 @@ fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig)
         builder.push_record(["Name", "Type", "Address", "Portal Glyphs"]);
         for base in bases {
             let name = if base.name.is_empty() {
-                "(unnamed)"
+                "-"
             } else {
                 &base.name
             };

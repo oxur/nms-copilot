@@ -377,10 +377,10 @@ async fn handle_search_planets(
         .iter()
         .map(|r| {
             json!({
-                "planet": r.planet.name.as_deref().unwrap_or("(unnamed)"),
+                "planet": r.planet.name.as_deref().unwrap_or("-"),
                 "biome": r.planet.biome.map(|b| b.to_string()),
                 "infested": r.planet.infested,
-                "system": r.system.name.as_deref().unwrap_or("(unnamed)"),
+                "system": r.system.name.as_deref().unwrap_or("-"),
                 "distance": format_distance(r.distance_ly),
                 "distance_ly": r.distance_ly,
                 "portal_glyphs_hex": &r.portal_hex,
@@ -458,7 +458,7 @@ async fn handle_plan_route(
         .enumerate()
         .map(|(i, hop)| {
             let sys = model.system(&hop.system_id);
-            let sys_name = sys.and_then(|s| s.name.as_deref()).unwrap_or("(unnamed)");
+            let sys_name = sys.and_then(|s| s.name.as_deref()).unwrap_or("-");
             let portal_hex = sys
                 .map(|s| format!("{:012X}", s.address.packed()))
                 .unwrap_or_default();
@@ -509,7 +509,7 @@ async fn handle_where_am_i(
     let (system_name, system_planets) = nearest
         .first()
         .and_then(|(id, _)| model.system(id))
-        .map(|s| (s.name.as_deref().unwrap_or("(unnamed)"), s.planets.len()))
+        .map(|s| (s.name.as_deref().unwrap_or("-"), s.planets.len()))
         .unwrap_or(("(unknown)", 0));
 
     text_result(json!({
@@ -552,9 +552,9 @@ async fn handle_whats_nearby(
         .iter()
         .map(|r| {
             json!({
-                "planet": r.planet.name.as_deref().unwrap_or("(unnamed)"),
+                "planet": r.planet.name.as_deref().unwrap_or("-"),
                 "biome": r.planet.biome.map(|b| b.to_string()),
-                "system": r.system.name.as_deref().unwrap_or("(unnamed)"),
+                "system": r.system.name.as_deref().unwrap_or("-"),
                 "distance": format_distance(r.distance_ly),
                 "distance_ly": r.distance_ly,
                 "portal_glyphs_emoji": hex_to_emoji(&r.portal_hex),
@@ -591,7 +591,7 @@ async fn handle_show_system(
                 .map(|p| {
                     json!({
                         "index": p.index,
-                        "name": p.name.as_deref().unwrap_or("(unnamed)"),
+                        "name": p.name.as_deref().unwrap_or("-"),
                         "biome": p.biome.map(|b| b.to_string()),
                         "infested": p.infested,
                     })
@@ -599,7 +599,7 @@ async fn handle_show_system(
                 .collect();
 
             text_result(json!({
-                "name": s.system.name.as_deref().unwrap_or("(unnamed)"),
+                "name": s.system.name.as_deref().unwrap_or("-"),
                 "galaxy": s.galaxy_name,
                 "discoverer": s.system.discoverer.as_deref().unwrap_or("unknown"),
                 "portal_glyphs_hex": s.portal_hex,

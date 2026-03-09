@@ -91,7 +91,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     ]);
 
     for (i, r) in results.iter().enumerate() {
-        let planet_name = r.planet.name.as_deref().unwrap_or("(unnamed)");
+        let planet_name = r.planet.name.as_deref().unwrap_or("-");
         let biome_str = r
             .planet
             .biome
@@ -109,7 +109,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
                 s
             })
             .unwrap_or_else(|| "?".to_string());
-        let system_name = r.system.name.as_deref().unwrap_or("(unnamed)");
+        let system_name = r.system.name.as_deref().unwrap_or("-");
         let distance = format_distance(r.distance_ly);
         let address = r.portal_hex.clone();
         let glyphs = hex_to_emoji(&r.portal_hex);
@@ -133,7 +133,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
 pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     let table_theme = table_theme_for(theme);
     let sys = &result.system;
-    let name = sys.name.as_deref().unwrap_or("(unnamed)");
+    let name = sys.name.as_deref().unwrap_or("-");
 
     let mut builder = Builder::default();
     builder.push_record(["Property", "Detail"]);
@@ -174,7 +174,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
         let mut pbuilder = Builder::default();
         pbuilder.push_record(["Index", "Name", "Biome", "Flags"]);
         for p in &sys.planets {
-            let pname = p.name.as_deref().unwrap_or("(unnamed)");
+            let pname = p.name.as_deref().unwrap_or("-");
             let biome_str = p
                 .biome
                 .map(|b| {
@@ -219,7 +219,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
         builder.push_record(["Distance", &format_distance(dist)]);
     }
     if let Some(ref system) = result.system {
-        builder.push_record(["System", system.name.as_deref().unwrap_or("(unnamed)")]);
+        builder.push_record(["System", system.name.as_deref().unwrap_or("-")]);
         builder.push_record(["Planets", &system.planets.len().to_string()]);
     }
     builder.push_record(["", ""]);
@@ -312,7 +312,7 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
         let system_name = model
             .system(&hop.system_id)
             .and_then(|s| s.name.as_deref())
-            .unwrap_or("(unnamed)");
+            .unwrap_or("-");
 
         let portal_hex = model
             .system(&hop.system_id)

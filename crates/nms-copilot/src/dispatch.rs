@@ -397,7 +397,7 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             builder.push_record(["Name", "Discovered Planets", "Address", "Portal Glyphs"]);
 
             for sys in systems.iter().take(effective_limit) {
-                let name = sys.name.as_deref().unwrap_or("(unnamed)");
+                let name = sys.name.as_deref().unwrap_or("-");
                 let planet_count = sys.planets.len();
                 let hex = format!("{:012X}", sys.address.packed());
                 let glyphs = hex_to_emoji(&hex);

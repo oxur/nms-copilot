@@ -62,7 +62,7 @@ pub fn apply_and_notify(
     }
 
     for system in &delta.new_systems {
-        let name = system.name.as_deref().unwrap_or("(unnamed)");
+        let name = system.name.as_deref().unwrap_or("-");
         let planets = system.planets.len();
         notes.push(format!(
             "  New system: {name} ({planets} planet{})",
@@ -74,12 +74,12 @@ pub fn apply_and_notify(
         let sys_name = model
             .system(sys_id)
             .and_then(|s| s.name.as_deref())
-            .unwrap_or("(unnamed)");
+            .unwrap_or("-");
         let biome = planet
             .biome
             .map(|b| b.to_string())
             .unwrap_or_else(|| "?".into());
-        let planet_name = planet.name.as_deref().unwrap_or("(unnamed)");
+        let planet_name = planet.name.as_deref().unwrap_or("-");
         notes.push(format!(
             "  New scan: \"{planet_name}\" ({biome}) in {sys_name}"
         ));
