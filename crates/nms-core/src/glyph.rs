@@ -23,7 +23,7 @@ pub const GLYPH_TABLE: [GlyphInfo; 16] = [
         index: 1,
         hex_char: '1',
         name: "Bird",
-        emoji: "\u{1F54A}\u{FE0F}",
+        emoji: "\u{1F54A}",
         abbrev: "bird",
     },
     GlyphInfo {
@@ -272,19 +272,10 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
 
     for (_, info) in &by_len {
         if let Some(rest) = input.strip_prefix(info.emoji) {
+            // Consume a trailing VS16 if present (input may include it even
+            // though the table emoji does not).
+            let rest = rest.strip_prefix('\u{FE0F}').unwrap_or(rest);
             return Ok((Glyph(info.index), rest));
-        }
-        // Also try without trailing variation selector
-        let emoji_no_vs = info.emoji.trim_end_matches('\u{FE0F}');
-        if emoji_no_vs != info.emoji {
-            if let Some(rest) = input.strip_prefix(emoji_no_vs) {
-                if rest.starts_with('\u{FE0F}') {
-                    // Consume the variation selector too
-                    let vs_len = '\u{FE0F}'.len_utf8();
-                    return Ok((Glyph(info.index), &rest[vs_len..]));
-                }
-                return Ok((Glyph(info.index), rest));
-            }
         }
     }
 

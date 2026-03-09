@@ -678,9 +678,10 @@ mod tests {
     fn known_address_hex_to_emoji() {
         let pa: PortalAddress = "01717D8A4EA2".parse().unwrap();
         let emoji = pa.to_emoji_string();
+        // Bird glyph (index 1) is U+1F54A without VS16 for consistent terminal width.
         assert_eq!(
             emoji,
-            "\u{1F305}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}"
+            "\u{1F305}\u{1F54A}\u{1F41C}\u{1F54A}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}"
         );
     }
 
