@@ -284,6 +284,22 @@ impl GalaxyModel {
         self.systems.insert(sys_id, system);
     }
 
+    /// Ensure the player's current system exists in the model.
+    ///
+    /// If the player's system has no discovery record, this inserts a
+    /// placeholder system at the player's address so that distance queries
+    /// correctly return 0.0 for in-system results.
+    pub fn ensure_player_system(&mut self) {
+        if let Some(ref ps) = self.player_state {
+            let player_addr = ps.current_address;
+            let player_sys_id = SystemId::from_address(&player_addr);
+            if !self.systems.contains_key(&player_sys_id) {
+                let sentinel = System::new(player_addr, None, None, None, vec![]);
+                self.insert_system(sentinel);
+            }
+        }
+    }
+
     /// Insert a base into the model.
     pub fn insert_base(&mut self, base: PlayerBase) {
         if !base.name.is_empty() {
@@ -381,6 +397,7 @@ mod tests {
                     "ReserveStore": 100, "ReserveManaged": 100,
                     "Store": {
                         "Record": [
+                            {"DD": {"UA": "0x002A32F38064", "DT": "SolarSystem", "VP": ["0xAAAA"]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
                             {"DD": {"UA": "0x050003AB8C07", "DT": "SolarSystem", "VP": ["0xABCD"]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
                             {"DD": {"UA": "0x150003AB8C07", "DT": "Planet", "VP": ["0xDEAD", 0]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
                             {"DD": {"UA": "0x0A0002001234", "DT": "SolarSystem", "VP": ["0x1234"]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
@@ -396,7 +413,8 @@ mod tests {
     fn test_from_save_basic_counts() {
         let save = minimal_save();
         let model = GalaxyModel::from_save(&save);
-        assert_eq!(model.system_count(), 2);
+        // 3 systems: player's system discovery + 2 others
+        assert_eq!(model.system_count(), 3);
         assert_eq!(model.planet_count(), 1);
         assert_eq!(model.base_count(), 1);
     }
@@ -431,14 +449,16 @@ mod tests {
     fn test_from_save_spatial_index_populated() {
         let save = minimal_save();
         let model = GalaxyModel::from_save(&save);
-        assert_eq!(model.spatial_size(), 2);
+        // 2 from discovery + 1 sentinel
+        assert_eq!(model.spatial_size(), 3);
     }
 
     #[test]
     fn test_from_save_graph_nodes() {
         let save = minimal_save();
         let model = GalaxyModel::from_save(&save);
-        assert_eq!(model.graph.node_count(), 2);
+        // 2 from discovery + 1 sentinel
+        assert_eq!(model.graph.node_count(), 3);
     }
 
     #[test]
@@ -766,5 +786,57 @@ mod tests {
 
         model.set_active_galaxy(42);
         assert!(model.active_spatial().is_none());
+    }
+
+    #[test]
+    fn test_player_system_distance_zero() {
+        // Player is at (100, 50, -200, SSI=42); multi_system_save has a
+        // matching SolarSystem discovery record at UA 0x002A32F38064.
+        let json = std::fs::read_to_string("../../data/test/multi_system_save.json").unwrap();
+        let save = nms_save::parse_save(json.as_bytes()).unwrap();
+        let model = GalaxyModel::from_save(&save);
+
+        let player_pos = model.player_position().unwrap();
+        assert_eq!(player_pos.voxel_x(), 100);
+        assert_eq!(player_pos.voxel_y(), 50);
+        assert_eq!(player_pos.voxel_z(), -200);
+        assert_eq!(player_pos.solar_system_index(), 42);
+
+        // The nearest system should be the player's own system at distance 0.
+        let nearest = model.nearest_systems(player_pos, 1);
+        assert!(
+            !nearest.is_empty(),
+            "Expected at least one system near player"
+        );
+        let (_, distance) = &nearest[0];
+        assert_eq!(
+            *distance, 0.0,
+            "Player's own system should be at distance 0.0, got {distance}"
+        );
+    }
+
+    #[test]
+    fn test_ensure_player_system_inserts_sentinel() {
+        // Build a model where the player's system has no discovery record.
+        let json = r#"{
+            "Version": 4720, "Platform": "Mac|Final", "ActiveContext": "Main",
+            "CommonStateData": {"SaveName": "Test", "TotalPlayTime": 100},
+            "BaseContext": {"GameMode": 1, "PlayerStateData": {"UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 999, "VoxelY": 10, "VoxelZ": -500, "SolarSystemIndex": 77, "PlanetIndex": 0}}, "Units": 0, "Nanites": 0, "Specials": 0, "PersistentPlayerBases": []}},
+            "ExpeditionContext": {"GameMode": 6, "PlayerStateData": {"UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0}}, "Units": 0, "Nanites": 0, "Specials": 0, "PersistentPlayerBases": []}},
+            "DiscoveryManagerData": {"DiscoveryData-v1": {"ReserveStore": 0, "ReserveManaged": 0, "Store": {"Record": []}}}
+        }"#;
+        let save = nms_save::parse_save(json.as_bytes()).unwrap();
+        let mut model = GalaxyModel::from_save(&save);
+
+        let player_pos = *model.player_position().unwrap();
+        let player_sys_id = SystemId::from_address(&player_pos);
+        assert!(model.system(&player_sys_id).is_none());
+
+        model.ensure_player_system();
+        assert!(model.system(&player_sys_id).is_some());
+
+        let nearest = model.nearest_systems(&player_pos, 1);
+        assert!(!nearest.is_empty());
+        assert_eq!(nearest[0].1, 0.0);
     }
 }

@@ -34,7 +34,8 @@ pub fn run(args: RouteArgs) -> Result<(), Box<dyn std::error::Error>> {
     let save = nms_save::parse_save_file(&path)?;
 
     // Build model
-    let model = GalaxyModel::from_save(&save);
+    let mut model = GalaxyModel::from_save(&save);
+    model.ensure_player_system();
 
     // Determine targets
     let targets = if !args.targets.is_empty() {

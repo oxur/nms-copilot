@@ -83,6 +83,7 @@ fn main() {
         Some(cache_path.as_path())
     };
     let mut model = model;
+    model.ensure_player_system();
 
     let completions = build_model_completions(&model);
     let completer = Box::new(CopilotCompleter::new(completions));

@@ -86,6 +86,24 @@
             "Store": {
                 "Record": [
                     {
+                        "DD": { "UA": "0x002A32F38064", "DT": "SolarSystem", "VP": ["0xA000"] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x102A32F38064", "DT": "Planet", "VP": ["0xB000", 0] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
+                        "DD": { "UA": "0x202A32F38064", "DT": "Planet", "VP": ["0xB000", 4] },
+                        "DM": {},
+                        "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
+                        "FL": { "C": 1, "U": 1 }
+                    },
+                    {
                         "DD": { "UA": "0x001000000064", "DT": "SolarSystem", "VP": ["0xA001"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },

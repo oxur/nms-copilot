@@ -873,4 +873,82 @@ mod tests {
         let b = GalacticAddress::new(300, -100, -800, 0x456, 0, 0);
         assert_eq!(a.distance_ly(&b), b.distance_ly(&a));
     }
+
+    #[test]
+    fn same_system_new_vs_from_packed_roundtrip() {
+        // Simulate player address created via new() with planet_index=2
+        let player = GalacticAddress::new(100, 50, -200, 42, 2, 0);
+
+        // Simulate discovery address: pack with planet_index=0, then reconstruct
+        // via from_packed (mimicking how discovery records arrive with SSI but
+        // planet_index=0).
+        let discovery_packed = GalacticAddress::new(100, 50, -200, 42, 0, 0).packed();
+        let discovery = GalacticAddress::from_packed(discovery_packed, 0);
+
+        // same_system ignores planet_index -- only checks region + SSI
+        assert!(
+            player.same_system(&discovery),
+            "same_system should be true: player={player} (SSI={}, voxel={:?}), \
+             discovery={discovery} (SSI={}, voxel={:?})",
+            player.solar_system_index(),
+            player.voxel_position(),
+            discovery.solar_system_index(),
+            discovery.voxel_position(),
+        );
+
+        // Same system means distance must be 0.0
+        assert_eq!(
+            player.distance_ly(&discovery),
+            0.0,
+            "distance_ly should be 0.0 for same system"
+        );
+
+        // Verify the underlying fields match as expected
+        assert_eq!(player.voxel_x(), discovery.voxel_x());
+        assert_eq!(player.voxel_y(), discovery.voxel_y());
+        assert_eq!(player.voxel_z(), discovery.voxel_z());
+        assert_eq!(player.solar_system_index(), discovery.solar_system_index());
+        assert_ne!(player.planet_index(), discovery.planet_index());
+    }
+
+    #[test]
+    fn same_system_negative_coords_sign_extension_roundtrip() {
+        // Negative coordinates with large magnitudes to stress sign extension
+        let player = GalacticAddress::new(-527, -50, 1234, 0x3FF, 5, 0);
+
+        // Round-trip through packed representation
+        let packed = GalacticAddress::new(-527, -50, 1234, 0x3FF, 0, 0).packed();
+        let discovery = GalacticAddress::from_packed(packed, 0);
+
+        // Verify sign extension survives the pack/unpack cycle
+        assert_eq!(player.voxel_x(), -527, "voxel_x sign extension failed");
+        assert_eq!(
+            discovery.voxel_x(),
+            -527,
+            "discovery voxel_x sign extension failed"
+        );
+        assert_eq!(player.voxel_y(), -50, "voxel_y sign extension failed");
+        assert_eq!(
+            discovery.voxel_y(),
+            -50,
+            "discovery voxel_y sign extension failed"
+        );
+        assert_eq!(player.voxel_z(), 1234, "voxel_z should remain positive");
+        assert_eq!(
+            discovery.voxel_z(),
+            1234,
+            "discovery voxel_z should remain positive"
+        );
+
+        // Same system check must work with negative coordinates
+        assert!(
+            player.same_system(&discovery),
+            "same_system should be true for negative coords: player={player}, discovery={discovery}"
+        );
+        assert_eq!(
+            player.distance_ly(&discovery),
+            0.0,
+            "distance_ly should be 0.0 for same system with negative coords"
+        );
+    }
 }

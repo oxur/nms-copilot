@@ -77,16 +77,17 @@ fn test_pipeline_parse_multi_system_fixture_file_succeeds() {
 }
 
 #[test]
-fn test_pipeline_multi_system_model_has_five_systems() {
+fn test_pipeline_multi_system_model_has_six_systems() {
     let model = model_from_fixture("multi_system_save.json");
-    assert_eq!(model.system_count(), 5);
+    // 6 systems: player's system + 5 others
+    assert_eq!(model.system_count(), 6);
 }
 
 #[test]
 fn test_pipeline_multi_system_model_has_expected_planet_count() {
     let model = model_from_fixture("multi_system_save.json");
-    // 5 systems with 2, 2, 3, 2, 2 planets = 11
-    assert_eq!(model.planet_count(), 11);
+    // 6 systems with 2, 2, 2, 3, 2, 2 planets = 13
+    assert_eq!(model.planet_count(), 13);
 }
 
 #[test]
@@ -99,8 +100,8 @@ fn test_pipeline_multi_system_model_has_two_bases() {
 fn test_pipeline_multi_system_biome_index_has_lush() {
     let model = model_from_fixture("multi_system_save.json");
     let lush = model.planets_by_biome(Biome::Lush);
-    // System 1 has planet index 0 (Lush), System 3 has planet index 2 (Lush)
-    assert_eq!(lush.len(), 2);
+    // Player's system planet 1 (Lush), System 1 planet 0 (Lush), System 3 planet 2 (Lush)
+    assert_eq!(lush.len(), 3);
 }
 
 #[test]
@@ -116,8 +117,8 @@ fn test_pipeline_multi_system_biome_index_has_toxic() {
 fn test_pipeline_multi_system_biome_index_has_frozen() {
     let model = model_from_fixture("multi_system_save.json");
     let frozen = model.planets_by_biome(Biome::Frozen);
-    // System 3 planet index 1 (biome flag=4=Frozen)
-    assert_eq!(frozen.len(), 1);
+    // Player's system planet 2 (Frozen), System 3 planet 1 (Frozen)
+    assert_eq!(frozen.len(), 2);
 }
 
 #[test]
@@ -153,7 +154,7 @@ fn test_pipeline_find_all_returns_all_planets() {
     let model = model_from_fixture("multi_system_save.json");
     let query = FindQuery::default();
     let results = execute_find(&model, &query).unwrap();
-    assert_eq!(results.len(), 11);
+    assert_eq!(results.len(), 13);
 }
 
 #[test]
@@ -164,7 +165,7 @@ fn test_pipeline_find_lush_biome_filter() {
         ..Default::default()
     };
     let results = execute_find(&model, &query).unwrap();
-    assert_eq!(results.len(), 2);
+    assert_eq!(results.len(), 3);
     for r in &results {
         assert_eq!(r.planet.biome, Some(Biome::Lush));
     }
@@ -239,8 +240,8 @@ fn test_pipeline_stats_counts_match_model() {
         discoveries: true,
     };
     let result = execute_stats(&model, &query);
-    assert_eq!(result.system_count, 5);
-    assert_eq!(result.planet_count, 11);
+    assert_eq!(result.system_count, 6);
+    assert_eq!(result.planet_count, 13);
     assert_eq!(result.base_count, 2);
 }
 

@@ -266,7 +266,9 @@ fn load_model(
             .to_path_buf(),
     };
     let save = nms_save::parse_save_file(&path)?;
-    Ok(nms_graph::GalaxyModel::from_save(&save))
+    let mut model = nms_graph::GalaxyModel::from_save(&save);
+    model.ensure_player_system();
+    Ok(model)
 }
 
 #[cfg(test)]
