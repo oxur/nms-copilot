@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use nms_core::galaxy::Galaxy;
+use nms_query::display::hex_to_emoji;
 use nms_query::table::{Builder, build_table, nms_theme};
 use nms_save::model::{PlayerStateData, SaveRoot};
 
@@ -47,7 +48,10 @@ fn print_summary(save: &SaveRoot) {
     builder.push_record(["Planet Index", &ga.planet_index.to_string()]);
     builder.push_record(["", ""]);
 
-    println!("{}", build_table(builder, "Save File Summary", &theme));
+    println!(
+        "{}",
+        build_table(builder, &["SAVE FILE SUMMARY"], &theme, "")
+    );
     println!();
 
     print_discoveries(save, &theme);
@@ -84,7 +88,10 @@ fn print_discoveries(save: &SaveRoot, theme: &nms_query::table::TableStyleConfig
     }
     builder.push_record(["".to_string(), "".to_string()]);
 
-    println!("{}", build_table(builder, "Discoveries", theme));
+    println!(
+        "{}",
+        build_table(builder, &["DISCOVERIES"], theme, "Categories")
+    );
     println!();
 }
 
@@ -92,21 +99,24 @@ fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig)
     let bases = &ps.persistent_player_bases;
     if !bases.is_empty() {
         let mut builder = Builder::default();
-        builder.push_record(["Name", "Type", "Address"]);
+        builder.push_record(["Name", "Type", "Address", "Portal Glyphs"]);
         for base in bases {
             let name = if base.name.is_empty() {
                 "(unnamed)"
             } else {
                 &base.name
             };
+            let hex = format!("{:012X}", base.galactic_address.0 & 0xFFFF_FFFF_FFFF);
+            let glyphs = hex_to_emoji(&hex);
             builder.push_record([
                 name.to_string(),
                 base.base_type.persistent_base_types.clone(),
-                format!("0x{:014X}", base.galactic_address.0),
+                hex,
+                glyphs,
             ]);
         }
-        builder.push_record(["", "", ""]);
-        println!("{}", build_table(builder, "Bases", theme));
+        builder.push_record(["", "", "", ""]);
+        println!("{}", build_table(builder, &["BASES"], theme, "Bases"));
     }
     println!();
 }
@@ -118,7 +128,10 @@ fn print_currencies(ps: &PlayerStateData, theme: &nms_query::table::TableStyleCo
     builder.push_record(["Nanites".to_string(), format_number(ps.nanites)]);
     builder.push_record(["Quicksilver".to_string(), format_number(ps.specials)]);
     builder.push_record(["".to_string(), "".to_string()]);
-    println!("{}", build_table(builder, "Currencies", theme));
+    println!(
+        "{}",
+        build_table(builder, &["CURRENCIES"], theme, "Currencies")
+    );
 }
 
 /// Format seconds as "Xd Yh Zm" or "Xh Ym" or "Xm Ys".

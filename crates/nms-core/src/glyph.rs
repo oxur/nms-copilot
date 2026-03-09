@@ -7,6 +7,7 @@ pub struct GlyphInfo {
     pub hex_char: char,
     pub name: &'static str,
     pub emoji: &'static str,
+    pub abbrev: &'static str,
 }
 
 /// All 16 portal glyph definitions, indexed by glyph value (0-15).
@@ -16,96 +17,112 @@ pub const GLYPH_TABLE: [GlyphInfo; 16] = [
         hex_char: '0',
         name: "Sunset",
         emoji: "\u{1F305}",
+        abbrev: "sset",
     },
     GlyphInfo {
         index: 1,
         hex_char: '1',
         name: "Bird",
         emoji: "\u{1F54A}\u{FE0F}",
+        abbrev: "bird",
     },
     GlyphInfo {
         index: 2,
         hex_char: '2',
         name: "Face",
         emoji: "\u{1F611}",
+        abbrev: "face",
     },
     GlyphInfo {
         index: 3,
         hex_char: '3',
         name: "Diplo",
         emoji: "\u{1F995}",
+        abbrev: "dipl",
     },
     GlyphInfo {
         index: 4,
         hex_char: '4',
         name: "Eclipse",
         emoji: "\u{1F31C}",
+        abbrev: "eclp",
     },
     GlyphInfo {
         index: 5,
         hex_char: '5',
         name: "Balloon",
         emoji: "\u{1F388}",
+        abbrev: "blln",
     },
     GlyphInfo {
         index: 6,
         hex_char: '6',
         name: "Boat",
         emoji: "\u{26F5}",
+        abbrev: "boat",
     },
     GlyphInfo {
         index: 7,
         hex_char: '7',
         name: "Bug",
         emoji: "\u{1F41C}",
+        abbrev: "abug",
     },
     GlyphInfo {
         index: 8,
         hex_char: '8',
         name: "Dragonfly",
         emoji: "\u{1F98B}",
+        abbrev: "dfly",
     },
     GlyphInfo {
         index: 9,
         hex_char: '9',
         name: "Galaxy",
         emoji: "\u{1F300}",
+        abbrev: "glxy",
     },
     GlyphInfo {
         index: 10,
         hex_char: 'A',
         name: "Voxel",
         emoji: "\u{1F54B}",
+        abbrev: "voxl",
     },
     GlyphInfo {
         index: 11,
         hex_char: 'B',
         name: "Whale",
         emoji: "\u{1F40B}",
+        abbrev: "whle",
     },
     GlyphInfo {
         index: 12,
         hex_char: 'C',
         name: "Tent",
         emoji: "\u{26FA}",
+        abbrev: "tent",
     },
     GlyphInfo {
         index: 13,
         hex_char: 'D',
         name: "Rocket",
         emoji: "\u{1F680}",
+        abbrev: "rckt",
     },
     GlyphInfo {
         index: 14,
         hex_char: 'E',
         name: "Tree",
         emoji: "\u{1F333}",
+        abbrev: "tree",
     },
     GlyphInfo {
         index: 15,
         hex_char: 'F',
         name: "Atlas",
         emoji: "\u{1F53A}",
+        abbrev: "atls",
     },
 ];
 
@@ -156,6 +173,11 @@ impl Glyph {
     /// The emoji string for this glyph.
     pub fn emoji(self) -> &'static str {
         GLYPH_TABLE[self.0 as usize].emoji
+    }
+
+    /// The 4-character abbreviation for this glyph (e.g., "sset", "bird").
+    pub fn abbrev(self) -> &'static str {
+        GLYPH_TABLE[self.0 as usize].abbrev
     }
 }
 
@@ -212,6 +234,13 @@ impl FromStr for Glyph {
             }
         }
 
+        // Try abbreviation match (case-insensitive)
+        for info in &GLYPH_TABLE {
+            if info.abbrev == lower {
+                return Ok(Self(info.index));
+            }
+        }
+
         Err(GlyphParseError(s.to_string()))
     }
 }
@@ -222,10 +251,17 @@ impl FromStr for Glyph {
 /// Attempts in order:
 /// 1. Emoji match (longest match first, to handle multi-codepoint emoji)
 /// 2. Glyph name match (case-insensitive, longest name first)
-/// 3. Single hex digit
+/// 3. Abbreviation match (case-insensitive, 4-char abbreviations)
+/// 4. Single hex digit
 pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     if input.is_empty() {
         return Err(GlyphParseError("empty input".to_string()));
+    }
+
+    // Strip a leading colon separator (used in abbreviated format).
+    let input = input.strip_prefix(':').unwrap_or(input);
+    if input.is_empty() {
+        return Err(GlyphParseError("empty input after separator".to_string()));
     }
 
     // 1. Try emoji match — check each glyph's emoji as a prefix
@@ -264,7 +300,16 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
         }
     }
 
-    // 3. Try single hex digit
+    // 3. Try abbreviation match (case-insensitive, all 4 chars)
+    if input_lower.len() >= 4 {
+        for info in &GLYPH_TABLE {
+            if input_lower.starts_with(info.abbrev) {
+                return Ok((Glyph(info.index), &input[info.abbrev.len()..]));
+            }
+        }
+    }
+
+    // 4. Try single hex digit
     let c = input.chars().next().unwrap();
     if let Some(v) = c.to_digit(16) {
         return Ok((Glyph(v as u8), &input[c.len_utf8()..]));
@@ -375,6 +420,43 @@ mod tests {
         assert_eq!(g.index(), 8); // Dragonfly
         let (g2, rest) = parse_next_glyph(rest).unwrap();
         assert_eq!(g2.index(), 0); // Sunset
+        assert!(rest.is_empty());
+    }
+
+    #[test]
+    fn test_all_16_glyphs_abbrev_roundtrip() {
+        let expected_abbrevs = [
+            "sset", "bird", "face", "dipl", "eclp", "blln", "boat", "abug", "dfly", "glxy", "voxl",
+            "whle", "tent", "rckt", "tree", "atls",
+        ];
+        for (i, expected) in expected_abbrevs.iter().enumerate() {
+            let g = Glyph::new(i as u8);
+            assert_eq!(g.abbrev(), *expected, "abbrev mismatch for index {i}");
+            let parsed: Glyph = expected.parse().unwrap();
+            assert_eq!(
+                parsed.index(),
+                i as u8,
+                "roundtrip failed for abbrev \"{expected}\""
+            );
+        }
+    }
+
+    #[test]
+    fn test_abbrev_case_insensitive() {
+        assert_eq!("sset".parse::<Glyph>().unwrap().index(), 0);
+        assert_eq!("SSET".parse::<Glyph>().unwrap().index(), 0);
+        assert_eq!("Sset".parse::<Glyph>().unwrap().index(), 0);
+    }
+
+    #[test]
+    fn test_parse_next_glyph_abbrev_sequence() {
+        let input = "ssetbirdface";
+        let (g1, rest) = parse_next_glyph(input).unwrap();
+        assert_eq!(g1.index(), 0); // sset = Sunset
+        let (g2, rest) = parse_next_glyph(rest).unwrap();
+        assert_eq!(g2.index(), 1); // bird = Bird
+        let (g3, rest) = parse_next_glyph(rest).unwrap();
+        assert_eq!(g3.index(), 2); // face = Face
         assert!(rest.is_empty());
     }
 }

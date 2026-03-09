@@ -1,13 +1,15 @@
 //! Command dispatch -- executes REPL commands against the loaded GalaxyModel.
 
 use nms_core::BaseType;
-use nms_core::address::GalacticAddress;
+use nms_core::address::{GalacticAddress, PortalAddress};
 use nms_core::biome::Biome;
 use nms_core::galaxy::{Galaxy, GalaxyType};
 use nms_graph::GalaxyModel;
 use nms_graph::query::BiomeFilter;
 use nms_graph::route::RoutingAlgorithm;
-use nms_query::display::{format_find_results, format_route, format_show_result, format_stats};
+use nms_query::display::{
+    format_find_results, format_route, format_show_result, format_stats, hex_to_emoji,
+};
 use nms_query::find::{FindQuery, ReferencePoint, execute_find};
 use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
 use nms_query::show::{ShowQuery, execute_show};
@@ -242,7 +244,7 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 ]);
             }
             builder.push_record(["", "", ""]);
-            Ok(build_table(builder, "Galaxies", &theme))
+            Ok(build_table(builder, &["GALAXIES"], &theme, "Galaxies"))
         }
 
         ListTarget::Biomes => {
@@ -267,21 +269,27 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 builder.push_record([biome_name, variants_str]);
             }
             builder.push_record(["".to_string(), "".to_string()]);
-            Ok(build_table(builder, "Biomes", &theme))
+            Ok(build_table(builder, &["BIOMES"], &theme, "Biomes"))
         }
 
         ListTarget::Glyphs => {
             let mut builder = Builder::default();
-            builder.push_record(["Hex", "Symbol", "Name"]);
+            builder.push_record(["Hex", "Name", "Abbreviation", "Emoji Approximation"]);
             for info in &GLYPH_TABLE {
                 builder.push_record([
                     info.hex_char.to_string(),
-                    info.emoji.to_string(),
                     info.name.to_string(),
+                    info.abbrev.to_string(),
+                    info.emoji.to_string(),
                 ]);
             }
-            builder.push_record(["", "", ""]);
-            Ok(build_table(builder, "Portal Glyphs", &theme))
+            builder.push_record(["", "", "", ""]);
+            Ok(build_table(
+                builder,
+                &["PORTAL", "GLYPHS"],
+                &theme,
+                "Glyphs",
+            ))
         }
 
         ListTarget::Bases { limit, all } => {
@@ -296,20 +304,23 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             let showing = total.min(effective_limit);
 
             let mut builder = Builder::default();
-            builder.push_record(["Name", "Type", "Galaxy", "Address"]);
+            builder.push_record(["Name", "Type", "Galaxy", "Address", "Portal Glyphs"]);
 
             for base in bases.iter().take(effective_limit) {
                 let galaxy = Galaxy::by_index(base.address.reality_index);
+                let hex = format!("{:012X}", base.address.packed());
+                let glyphs = hex_to_emoji(&hex);
                 builder.push_record([
                     base.name.clone(),
                     base_type_label(&base.base_type).to_string(),
                     galaxy.name.to_string(),
-                    format!("0x{:012X}", base.address.packed()),
+                    hex,
+                    glyphs,
                 ]);
             }
-            builder.push_record(["", "", "", ""]);
+            builder.push_record(["", "", "", "", ""]);
 
-            let mut out = build_table(builder, "Bases", &theme);
+            let mut out = build_table(builder, &["BASES"], &theme, "Bases");
             if showing < total {
                 out.push_str(&format!(
                     "\n  Showing {showing} of {total} bases (use --all to show all)"
@@ -360,7 +371,7 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
                 builder.push_record([idx.to_string(), name.to_string(), desc.to_string()]);
             }
             builder.push_record(["", "", ""]);
-            Ok(build_table(builder, "Terrain Types", &theme))
+            Ok(build_table(builder, &["TERRAIN", "TYPES"], &theme, "Types"))
         }
 
         ListTarget::Systems { limit, all } => {
@@ -383,20 +394,18 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
             let showing = total.min(effective_limit);
 
             let mut builder = Builder::default();
-            builder.push_record(["Name", "Address", "Discovered Planets"]);
+            builder.push_record(["Name", "Discovered Planets", "Address", "Portal Glyphs"]);
 
             for sys in systems.iter().take(effective_limit) {
                 let name = sys.name.as_deref().unwrap_or("(unnamed)");
                 let planet_count = sys.planets.len();
-                builder.push_record([
-                    name.to_string(),
-                    format!("0x{:012X}", sys.address.packed()),
-                    planet_count.to_string(),
-                ]);
+                let hex = format!("{:012X}", sys.address.packed());
+                let glyphs = hex_to_emoji(&hex);
+                builder.push_record([name.to_string(), planet_count.to_string(), hex, glyphs]);
             }
-            builder.push_record(["", "", ""]);
+            builder.push_record(["", "", "", ""]);
 
-            let mut out = build_table(builder, "Systems", &theme);
+            let mut out = build_table(builder, &["SYSTEMS"], &theme, "Systems");
             if showing < total {
                 out.push_str(&format!(
                     "\n  Showing {showing} of {total} systems (use --all to show all)"
@@ -471,23 +480,17 @@ fn dispatch_convert(
 }
 
 fn parse_glyphs(input: &str, reality_index: u8) -> Result<GalacticAddress, String> {
-    let hex = input.trim();
-    let hex = hex
+    let trimmed = input.trim();
+    let trimmed = trimmed
         .strip_prefix("0x")
-        .or_else(|| hex.strip_prefix("0X"))
-        .unwrap_or(hex);
+        .or_else(|| trimmed.strip_prefix("0X"))
+        .unwrap_or(trimmed);
 
-    if hex.len() != 12 {
-        return Err(format!(
-            "Portal glyphs must be exactly 12 hex digits, got {} (\"{hex}\")",
-            hex.len(),
-        ));
-    }
+    let portal =
+        PortalAddress::parse_mixed(trimmed).map_err(|e| format!("Invalid portal glyphs: {e}"))?;
 
-    let packed =
-        u64::from_str_radix(hex, 16).map_err(|_| format!("Invalid hex in glyphs: \"{hex}\""))?;
-
-    Ok(GalacticAddress::from_packed(packed, reality_index))
+    let ga = portal.to_galactic_address();
+    Ok(GalacticAddress::from_packed(ga.packed(), reality_index))
 }
 
 fn parse_voxel(
@@ -560,29 +563,45 @@ fn base_type_label(bt: &BaseType) -> &'static str {
 
 fn format_all_formats(addr: &GalacticAddress) -> String {
     let galaxy = Galaxy::by_index(addr.reality_index);
+    let portal = addr.to_portal_address();
+    let theme = nms_theme();
 
-    format!(
-        "NMS Copilot -- Coordinate Conversion\n\
-         =====================================\n\
-         \n\
-         \x20 Portal Glyphs:     {:012X}\n\
-         \x20 Signal Booster:    {}\n\
-         \x20 Galactic Address:  0x{:012X}\n\
-         \x20 Voxel Position:    X={}, Y={}, Z={}\n\
-         \x20 System Index:      {} (0x{:03X})\n\
-         \x20 Planet Index:      {}\n\
-         \x20 Galaxy:            {} ({})\n",
-        addr.packed(),
-        addr.to_signal_booster(),
-        addr.packed(),
-        addr.voxel_x(),
-        addr.voxel_y(),
-        addr.voxel_z(),
-        addr.solar_system_index(),
-        addr.solar_system_index(),
-        addr.planet_index(),
-        galaxy.name,
-        addr.reality_index,
+    let mut builder = Builder::default();
+    builder.push_record(["Format", "Value"]);
+    builder.push_record(["Portal Glyphs", &portal.to_emoji_string()]);
+    builder.push_record(["Hex Glyphs", &format!("{:012X}", addr.packed())]);
+    builder.push_record(["Abbreviated", &portal.to_abbrev_string()]);
+    builder.push_record(["Signal Booster", &addr.to_signal_booster()]);
+    builder.push_record(["Galactic Address", &format!("0x{:012X}", addr.packed())]);
+    builder.push_record([
+        "Voxel Position",
+        &format!(
+            "X={}, Y={}, Z={}",
+            addr.voxel_x(),
+            addr.voxel_y(),
+            addr.voxel_z()
+        ),
+    ]);
+    builder.push_record([
+        "System Index",
+        &format!(
+            "{} (0x{:03X})",
+            addr.solar_system_index(),
+            addr.solar_system_index()
+        ),
+    ]);
+    builder.push_record(["Planet Index", &addr.planet_index().to_string()]);
+    builder.push_record([
+        "Galaxy",
+        &format!("{} ({})", galaxy.name, addr.reality_index),
+    ]);
+    builder.push_record(["", ""]);
+
+    build_table(
+        builder,
+        &["COORDINATE", "CONVERSIONS"],
+        &theme,
+        "Conversions",
     )
 }
 

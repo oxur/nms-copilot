@@ -43,7 +43,7 @@ fn dispatch_stats_returns_output() {
     let (model, mut session) = setup();
     let action = nms_copilot::commands::parse_line("stats").unwrap().unwrap();
     let output = nms_copilot::dispatch::dispatch(&action, &model, &mut session).unwrap();
-    assert!(output.contains("Galaxy Statistics") || output.contains("system"));
+    assert!(output.contains("GALAXY STATISTICS") || output.contains("system"));
 }
 
 #[test]

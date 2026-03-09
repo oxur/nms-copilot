@@ -89,7 +89,8 @@ fn test_nms_convert_voxel_with_ssi_displays_conversion() {
         .stdout(predicate::str::contains("Y=50"))
         .stdout(predicate::str::contains("Z=-200"))
         .stdout(predicate::str::contains("System Index"))
-        .stdout(predicate::str::contains("Planet Index:      2"));
+        .stdout(predicate::str::contains("Planet Index"))
+        .stdout(predicate::str::contains("2"));
 }
 
 #[test]
@@ -109,7 +110,7 @@ fn test_nms_convert_glyphs_invalid_length_fails() {
         .args(["convert", "--glyphs", "0171"])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("12 hex digits"));
+        .stderr(predicate::str::contains("expected 12 glyphs"));
 }
 
 #[test]
@@ -119,7 +120,7 @@ fn test_nms_convert_glyphs_invalid_hex_fails() {
         .args(["convert", "--glyphs", "ZZZZZZZZZZZZ"])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("Invalid hex"));
+        .stderr(predicate::str::contains("invalid glyph"));
 }
 
 #[test]
@@ -248,7 +249,7 @@ fn test_nms_info_with_fixture_shows_summary() {
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
-        .stdout(predicate::str::contains("Save File Summary"))
+        .stdout(predicate::str::contains("SAVE FILE SUMMARY"))
         .stdout(predicate::str::contains("Integration Test Save"))
         .stdout(predicate::str::contains("Normal"))
         .stdout(predicate::str::contains("Euclid"))
@@ -263,7 +264,7 @@ fn test_nms_info_with_multi_system_fixture_shows_discovery_counts() {
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
-        .stdout(predicate::str::contains("Save File Summary"))
+        .stdout(predicate::str::contains("SAVE FILE SUMMARY"))
         .stdout(predicate::str::contains("Multi System Test"))
         .stdout(predicate::str::contains("Solar Systems"))
         .stdout(predicate::str::contains("Planets"));
@@ -363,7 +364,7 @@ fn test_nms_stats_with_fixture_shows_statistics() {
         .args(["stats", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
-        .stdout(predicate::str::contains("Galaxy Statistics"));
+        .stdout(predicate::str::contains("GALAXY STATISTICS"));
 }
 
 #[test]
@@ -374,7 +375,7 @@ fn test_nms_stats_biomes_flag_shows_biome_table() {
         .args(["stats", "--save", fixture.to_str().unwrap(), "--biomes"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("Biome Distribution"));
+        .stdout(predicate::str::contains("BIOME DISTRIBUTION"));
 }
 
 #[test]
@@ -453,12 +454,26 @@ fn test_nms_convert_glyphs_roundtrip_coords_consistent() {
     assert!(output.status.success());
     let stdout = String::from_utf8(output.stdout).unwrap();
 
-    // Extract signal booster coords from output
-    let sb_line = stdout
-        .lines()
-        .find(|l| l.contains("Signal Booster"))
-        .unwrap();
-    let coords = sb_line.split_whitespace().last().unwrap();
+    // Strip ANSI escape codes to extract signal booster coords
+    let plain: String = stdout
+        .chars()
+        .fold((String::new(), false), |(mut s, in_esc), c| {
+            if c == '\x1b' {
+                (s, true)
+            } else if in_esc {
+                (s, c != 'm')
+            } else {
+                s.push(c);
+                (s, false)
+            }
+        })
+        .0;
+
+    // Find the XXXX:XXXX:XXXX:XXXX pattern in the plain text
+    let coords = plain
+        .split_whitespace()
+        .find(|w| w.matches(':').count() == 3 && w.len() >= 19)
+        .expect("Signal booster coords not found in output");
 
     // Feed those coords back in and verify we get the same glyphs
     let output2 = Command::cargo_bin("nms")

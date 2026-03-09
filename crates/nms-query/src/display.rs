@@ -62,6 +62,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
         "Biome",
         "System",
         "Distance",
+        "Address",
         "Portal Glyphs",
     ]);
 
@@ -86,6 +87,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
             .unwrap_or_else(|| "?".to_string());
         let system_name = r.system.name.as_deref().unwrap_or("(unnamed)");
         let distance = format_distance(r.distance_ly);
+        let address = r.portal_hex.clone();
         let glyphs = hex_to_emoji(&r.portal_hex);
 
         builder.push_record([
@@ -94,12 +96,13 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
             truncate(&biome_str, 22),
             truncate(system_name, 22),
             distance,
+            address,
             glyphs,
         ]);
     }
-    builder.push_record(["", "", "", "", "", ""]);
+    builder.push_record(["", "", "", "", "", "", ""]);
 
-    build_table(builder, "Search Results", &table_theme)
+    build_table(builder, &["SEARCH RESULTS"], &table_theme, "Results")
 }
 
 /// Format a system detail view.
@@ -138,7 +141,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str(&build_table(builder, "System Detail", &table_theme));
+    out.push_str(&build_table(builder, &["SYSTEM DETAIL"], &table_theme, ""));
 
     if sys.planets.is_empty() {
         out.push_str("\n  No planets discovered.\n");
@@ -167,8 +170,9 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
         pbuilder.push_record(["", "", "", ""]);
         out.push_str(&build_table(
             pbuilder,
-            &format!("Planets ({})", sys.planets.len()),
+            &[&format!("PLANETS ({})", sys.planets.len())],
             &table_theme,
+            "Planets",
         ));
     }
 
@@ -197,7 +201,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str(&build_table(builder, "Base Detail", &table_theme));
+    out.push_str(&build_table(builder, &["BASE DETAIL"], &table_theme, ""));
     out
 }
 
@@ -224,7 +228,12 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     builder.push_record(["", ""]);
 
     let mut out = String::new();
-    out.push_str(&build_table(builder, "Galaxy Statistics", &table_theme));
+    out.push_str(&build_table(
+        builder,
+        &["GALAXY STATISTICS"],
+        &table_theme,
+        "",
+    ));
 
     // Biome distribution table
     if !result.biome_counts.is_empty() || result.unknown_biome_count > 0 {
@@ -246,7 +255,12 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
             ]);
         }
         bbuilder.push_record(["".to_string(), "".to_string()]);
-        out.push_str(&build_table(bbuilder, "Biome Distribution", &table_theme));
+        out.push_str(&build_table(
+            bbuilder,
+            &["BIOME DISTRIBUTION"],
+            &table_theme,
+            "Biomes",
+        ));
     }
 
     out
@@ -260,7 +274,14 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
 
     let table_theme = table_theme_for(theme);
     let mut builder = Builder::default();
-    builder.push_record(["Hop", "System", "Distance", "Cumulative", "Portal Glyphs"]);
+    builder.push_record([
+        "Hop",
+        "System",
+        "Distance",
+        "Cumulative",
+        "Address",
+        "Portal Glyphs",
+    ]);
 
     let mut hop_number = 0u32;
     for hop in &result.route.hops {
@@ -284,6 +305,7 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
                 format!("\u{21B3} {}", truncate(system_name, 19)),
                 distance,
                 cumulative,
+                portal_hex,
                 glyphs,
             ]);
         } else {
@@ -293,13 +315,14 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
                 truncate(system_name, 21),
                 distance,
                 cumulative,
+                portal_hex,
                 glyphs,
             ]);
         }
     }
-    builder.push_record(["", "", "", "", ""]);
+    builder.push_record(["", "", "", "", "", ""]);
 
-    let mut out = build_table(builder, "Route Itinerary", &table_theme);
+    let mut out = build_table(builder, &["ROUTE ITINERARY"], &table_theme, "Hops");
 
     // Summary line
     out.push('\n');

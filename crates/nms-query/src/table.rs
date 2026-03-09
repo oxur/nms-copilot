@@ -112,18 +112,64 @@ pub fn nms_theme_no_color() -> TableStyleConfig {
 
 /// Build a table string from a `Builder` and apply the given theme.
 ///
-/// The caller pushes records in the order: `[header, data..., footer]`.
+/// The caller pushes records in the order: `[header, data..., empty_footer]`.
 /// This function automatically:
 /// 1. Pads each cell with a leading and trailing space (workaround for
 ///    `tabled` cell padding not inheriting row background colors in
 ///    header/footer rows).
 /// 2. Inserts a title row at position 0 so the `oxur-cli` theme styling
 ///    aligns correctly (title at row 0, header at row 1, data at rows 2+,
-///    footer at last row). If `title` is provided, it appears in the
-///    title row; otherwise the row is invisible.
-pub fn build_table(builder: Builder, title: &str, theme: &TableStyleConfig) -> String {
-    // Rebuild with space-padded cells so padding colors are consistent.
-    let records: Vec<Vec<String>> = builder.into();
+///    footer at last row). Title words can be spread across columns by
+///    passing multiple elements in the `title` slice.
+/// 3. If `count_label` is non-empty, replaces the empty footer with a
+///    "Total: N <label>" summary. If the combined text fits within the
+///    widest column-0 entry, it goes entirely in column 0; otherwise
+///    "Total:" goes in column 0 and "N <label>" in column 1.
+pub fn build_table(
+    builder: Builder,
+    title: &[&str],
+    theme: &TableStyleConfig,
+    count_label: &str,
+) -> String {
+    let mut records: Vec<Vec<String>> = builder.into();
+
+    // The last row is the empty footer placeholder — remove it.
+    // Data rows = total - 1 (header) - 1 (footer) = records.len() - 2.
+    let data_count = if records.len() >= 2 {
+        records.len() - 2
+    } else {
+        0
+    };
+    let col_count = records.first().map(|r| r.len()).unwrap_or(0);
+
+    // Compute max display width of column 0 across data rows (skip header at 0).
+    let max_col0_width = records
+        .iter()
+        .skip(1) // skip header
+        .take(data_count) // only data rows
+        .filter_map(|r| r.first())
+        .map(|s| s.len())
+        .max()
+        .unwrap_or(0);
+
+    // Build footer row.
+    if !count_label.is_empty() && col_count >= 2 {
+        // Remove the empty footer placeholder.
+        if records.last().map(|r| r.iter().all(|c| c.is_empty())) == Some(true) {
+            records.pop();
+        }
+        let combined = format!("Total: {data_count} {count_label}");
+        let mut footer: Vec<String> = std::iter::repeat_n(String::new(), col_count).collect();
+        if combined.len() <= max_col0_width {
+            footer[0] = combined;
+        } else {
+            footer[0] = "Total:".to_string();
+            footer[1] = format!("{data_count} {count_label}");
+        }
+        records.push(footer);
+    }
+
+    // Rebuild with space-padded cells.
     let mut padded = Builder::default();
     for row in records {
         let padded_row: Vec<String> = row
@@ -139,16 +185,18 @@ pub fn build_table(builder: Builder, title: &str, theme: &TableStyleConfig) -> S
         padded.push_record(padded_row);
     }
 
-    let col_count = padded.count_columns();
-    let mut title_row: Vec<String> = std::iter::repeat_n(String::new(), col_count).collect();
-    if !title.is_empty() {
-        title_row[0] = format!(" {title} ");
+    let final_col_count = padded.count_columns();
+    let mut title_row: Vec<String> = std::iter::repeat_n(String::new(), final_col_count).collect();
+    for (i, word) in title.iter().enumerate() {
+        if i < final_col_count && !word.is_empty() {
+            title_row[i] = format!(" {word} ");
+        }
     }
     padded.insert_record(0, title_row);
 
     let mut table = padded.build();
     theme.apply_to_table::<Dummy>(&mut table);
-    format!("\n{}\n", table)
+    format!("\n{}\n\n", table)
 }
 
 #[cfg(test)]
@@ -171,7 +219,7 @@ mod tests {
         builder.push_record(["Name", "Value"]);
         builder.push_record(["foo", "bar"]);
         builder.push_record(["", ""]);
-        let output = build_table(builder, "", &nms_theme());
+        let output = build_table(builder, &[], &nms_theme(), "");
         assert!(output.contains("Name"));
         assert!(output.contains("Value"));
         assert!(output.contains("foo"));
@@ -184,7 +232,7 @@ mod tests {
         builder.push_record(["Col"]);
         builder.push_record(["data"]);
         builder.push_record([""]);
-        let output = build_table(builder, "", &nms_theme_no_color());
+        let output = build_table(builder, &[], &nms_theme_no_color(), "");
         assert!(output.contains("Col"));
         assert!(output.contains("data"));
     }
@@ -195,7 +243,7 @@ mod tests {
         builder.push_record(["Header"]);
         builder.push_record(["value"]);
         builder.push_record([""]);
-        let output = build_table(builder, "", &nms_theme());
+        let output = build_table(builder, &[], &nms_theme(), "");
         // NMS theme uses hex colors which produce ANSI escape codes
         assert!(output.contains("\x1b["));
     }
@@ -207,7 +255,7 @@ mod tests {
         builder.push_record(["1", "2", "3"]);
         builder.push_record(["x", "y", "z"]);
         builder.push_record(["", "", ""]);
-        let output = build_table(builder, "", &nms_theme());
+        let output = build_table(builder, &[], &nms_theme(), "");
         for val in ["A", "B", "C", "1", "2", "3", "x", "y", "z"] {
             assert!(output.contains(val), "Missing '{val}' in output");
         }

@@ -44,8 +44,8 @@ fn stats_end_to_end() {
     assert_eq!(result.system_count, 2);
     assert_eq!(result.planet_count, 3);
     assert_eq!(result.base_count, 2);
-    assert!(output.contains("Galaxy Statistics"));
-    assert!(output.contains("Biome Distribution"));
+    assert!(output.contains("GALAXY STATISTICS"));
+    assert!(output.contains("BIOME DISTRIBUTION"));
 }
 
 #[test]

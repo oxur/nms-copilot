@@ -262,7 +262,7 @@ fn test_pipeline_stats_formatted_output_contains_galaxy_stats() {
     };
     let result = execute_stats(&model, &query);
     let output = format_stats(&result, &Theme::none());
-    assert!(output.contains("Galaxy Statistics"));
+    assert!(output.contains("GALAXY STATISTICS"));
 }
 
 // ---- Cross-crate integration: parse -> graph -> spatial ----

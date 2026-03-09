@@ -391,6 +391,15 @@ impl PortalAddress {
         self.glyphs.iter().map(|&g| Glyph::new(g).emoji()).collect()
     }
 
+    /// Format as colon-separated 4-character abbreviations.
+    pub fn to_abbrev_string(&self) -> String {
+        self.glyphs
+            .iter()
+            .map(|&g| Glyph::new(g).abbrev())
+            .collect::<Vec<_>>()
+            .join(":")
+    }
+
     /// Parse a mixed-format string containing 12 glyphs.
     ///
     /// Accepts any combination of hex digits, emoji, and glyph names.

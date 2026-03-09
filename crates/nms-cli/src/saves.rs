@@ -44,7 +44,10 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             ]);
         }
         builder.push_record(["", "", "", ""]);
-        println!("{}", build_table(builder, "Save Slots", &theme));
+        println!(
+            "{}",
+            build_table(builder, &["SAVE", "SLOTS"], &theme, "Slots")
+        );
     }
     Ok(())
 }

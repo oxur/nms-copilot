@@ -1,6 +1,6 @@
 //! `nms convert` command — coordinate format converter.
 
-use nms_core::address::GalacticAddress;
+use nms_core::address::{GalacticAddress, PortalAddress};
 use nms_core::galaxy::Galaxy;
 
 pub fn run(
@@ -35,25 +35,17 @@ fn parse_glyphs(
     input: &str,
     reality_index: u8,
 ) -> Result<GalacticAddress, Box<dyn std::error::Error>> {
-    let hex = input.trim();
-    let hex = hex
+    let trimmed = input.trim();
+    let trimmed = trimmed
         .strip_prefix("0x")
-        .or_else(|| hex.strip_prefix("0X"))
-        .unwrap_or(hex);
+        .or_else(|| trimmed.strip_prefix("0X"))
+        .unwrap_or(trimmed);
 
-    if hex.len() != 12 {
-        return Err(format!(
-            "Portal glyphs must be exactly 12 hex digits, got {} (\"{}\")",
-            hex.len(),
-            hex
-        )
-        .into());
-    }
+    let portal =
+        PortalAddress::parse_mixed(trimmed).map_err(|e| format!("Invalid portal glyphs: {e}"))?;
 
-    let packed = u64::from_str_radix(hex, 16)
-        .map_err(|_| format!("Invalid hex in portal glyphs: \"{hex}\""))?;
-
-    Ok(GalacticAddress::from_packed(packed, reality_index))
+    let ga = portal.to_galactic_address();
+    Ok(GalacticAddress::from_packed(ga.packed(), reality_index))
 }
 
 fn parse_signal_booster(
@@ -160,29 +152,51 @@ fn resolve_galaxy(input: &str) -> Result<u8, Box<dyn std::error::Error>> {
 }
 
 fn print_all_formats(addr: &GalacticAddress) {
-    let galaxy = Galaxy::by_index(addr.reality_index);
+    use nms_query::table::{Builder, build_table, nms_theme};
 
-    println!("NMS Copilot -- Coordinate Conversion");
-    println!("=====================================");
-    println!();
-    println!("  Portal Glyphs:     {:012X}", addr.packed());
-    println!("  Signal Booster:    {}", addr.to_signal_booster());
-    println!("  Galactic Address:  0x{:012X}", addr.packed());
-    println!(
-        "  Voxel Position:    X={}, Y={}, Z={}",
-        addr.voxel_x(),
-        addr.voxel_y(),
-        addr.voxel_z()
-    );
-    println!(
-        "  System Index:      {} (0x{:03X})",
-        addr.solar_system_index(),
-        addr.solar_system_index()
-    );
-    println!("  Planet Index:      {}", addr.planet_index());
-    println!(
-        "  Galaxy:            {} ({})",
-        galaxy.name, addr.reality_index
+    let galaxy = Galaxy::by_index(addr.reality_index);
+    let portal = addr.to_portal_address();
+    let theme = nms_theme();
+
+    let mut builder = Builder::default();
+    builder.push_record(["Format", "Value"]);
+    builder.push_record(["Portal Glyphs", &portal.to_emoji_string()]);
+    builder.push_record(["Hex Glyphs", &format!("{:012X}", addr.packed())]);
+    builder.push_record(["Abbreviated", &portal.to_abbrev_string()]);
+    builder.push_record(["Signal Booster", &addr.to_signal_booster()]);
+    builder.push_record(["Galactic Address", &format!("0x{:012X}", addr.packed())]);
+    builder.push_record([
+        "Voxel Position",
+        &format!(
+            "X={}, Y={}, Z={}",
+            addr.voxel_x(),
+            addr.voxel_y(),
+            addr.voxel_z()
+        ),
+    ]);
+    builder.push_record([
+        "System Index",
+        &format!(
+            "{} (0x{:03X})",
+            addr.solar_system_index(),
+            addr.solar_system_index()
+        ),
+    ]);
+    builder.push_record(["Planet Index", &addr.planet_index().to_string()]);
+    builder.push_record([
+        "Galaxy",
+        &format!("{} ({})", galaxy.name, addr.reality_index),
+    ]);
+    builder.push_record(["", ""]);
+
+    print!(
+        "{}",
+        build_table(
+            builder,
+            &["COORDINATE", "CONVERSIONS"],
+            &theme,
+            "Conversions"
+        )
     );
 }
 
@@ -217,6 +231,30 @@ mod tests {
     #[test]
     fn parse_glyphs_invalid_hex() {
         assert!(parse_glyphs("01717D8A4EGZ", 0).is_err());
+    }
+
+    #[test]
+    fn parse_glyphs_emoji_input() {
+        // 0=Sunset, 1=Bird, 7=Bug, 1=Bird, 7=Bug, D=Rocket, 8=Dragonfly,
+        // A=Voxel, 4=Eclipse, E=Tree, A=Voxel, 2=Face
+        // Corresponds to hex "01717D8A4EA2"
+        let emoji = "\u{1F305}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F54A}\u{FE0F}\u{1F41C}\u{1F680}\u{1F98B}\u{1F54B}\u{1F31C}\u{1F333}\u{1F54B}\u{1F611}";
+        let addr = parse_glyphs(emoji, 0).unwrap();
+        assert_eq!(addr.packed(), 0x01717D8A4EA2);
+    }
+
+    #[test]
+    fn parse_glyphs_name_input() {
+        let names = "SunsetBirdBugBirdBugRocketDragonflyVoxelEclipseTreeVoxelFace";
+        let addr = parse_glyphs(names, 0).unwrap();
+        assert_eq!(addr.packed(), 0x01717D8A4EA2);
+    }
+
+    #[test]
+    fn parse_glyphs_abbrev_input() {
+        let abbrevs = "sset:bird:abug:bird:abug:rckt:dfly:voxl:eclp:tree:voxl:face";
+        let addr = parse_glyphs(abbrevs, 0).unwrap();
+        assert_eq!(addr.packed(), 0x01717D8A4EA2);
     }
 
     #[test]

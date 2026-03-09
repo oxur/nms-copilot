@@ -60,7 +60,7 @@ fn show_system_with_planets() {
         ShowResult::System(s) => {
             assert!(!s.system.planets.is_empty());
             let output = format_show_result(&ShowResult::System(s), &Theme::none());
-            assert!(output.contains("System Detail"));
+            assert!(output.contains("SYSTEM DETAIL"));
         }
         _ => panic!("Expected system result"),
     }
