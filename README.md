@@ -161,6 +161,21 @@ nms export --biome Lush --format csv              # export filtered planets as C
 nms import community_data.csv --source "NMSCE"    # import community coordinates
 ```
 
+### Listing Data
+
+Browse reference data and model collections:
+
+```bash
+nms list galaxies                      # all 256 galaxies
+nms list galaxies --type Lush          # filter by galaxy type
+nms list biomes                        # biome types and variants
+nms list glyphs                        # portal glyph table
+nms list terrain-types                 # terrain generation types
+nms list bases                         # all player bases
+nms list systems --limit 10            # first 10 discovered systems
+nms list systems --all                 # all discovered systems
+```
+
 ### Shell Completions
 
 ```bash
@@ -211,7 +226,6 @@ REPL-only commands:
 | `set warp-range <ly>` | Set default warp range for route planning |
 | `reset [position\|biome\|warp-range\|all]` | Reset session state |
 | `status` | Show current session state |
-| `list bases\|systems\|galaxies\|biomes\|glyphs\|terrain-types` | Browse reference data and discoveries |
 | `map` | Interactive galaxy map (galaxy/region/local zoom) |
 
 ---

@@ -135,7 +135,7 @@ impl MapState {
             zoom: ZoomLevel::Galaxy,
             center: effective_center,
             cursor: (0, 0),
-            grid_size: (78, 19),  // 80-2 cols, 24-3-2 rows (borders)
+            grid_size: (78, 19), // 80-2 cols, 24-3-2 rows (borders)
             galaxy,
             galaxy_name,
             base_labels,

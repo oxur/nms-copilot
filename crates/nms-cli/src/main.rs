@@ -8,6 +8,7 @@ mod export;
 mod find;
 mod import;
 mod info;
+mod list;
 mod route;
 mod saves;
 mod show;
@@ -137,6 +138,16 @@ enum Commands {
         round_trip: bool,
     },
 
+    /// List reference data or model collections.
+    List {
+        /// Path to save file (required for bases/systems, ignored for reference data).
+        #[arg(long)]
+        save: Option<PathBuf>,
+
+        #[command(subcommand)]
+        target: ListTargetCmd,
+    },
+
     /// Convert between NMS coordinate formats.
     Convert {
         /// Portal glyphs as 12 hex digits (e.g., 01717D8A4EA2).
@@ -242,6 +253,43 @@ enum ShowTargetCmd {
         /// Base name (case-insensitive).
         name: String,
     },
+}
+
+#[derive(Subcommand)]
+pub(crate) enum ListTargetCmd {
+    /// List all 256 galaxies.
+    Galaxies {
+        /// Filter by galaxy type (Normal, Lush, Harsh, Empty).
+        #[arg(long = "type")]
+        galaxy_type: Option<String>,
+    },
+    /// List biome types and their variants.
+    Biomes,
+    /// List portal glyphs.
+    Glyphs,
+    /// List player bases.
+    Bases {
+        /// Maximum number of bases to display (0 for all).
+        #[arg(long, default_value = "0")]
+        limit: usize,
+
+        /// Show all bases (equivalent to --limit 0).
+        #[arg(long)]
+        all: bool,
+    },
+    /// List discovered systems.
+    Systems {
+        /// Maximum number of systems to display (0 for all).
+        #[arg(long, default_value = "50")]
+        limit: usize,
+
+        /// Show all systems (equivalent to --limit 0).
+        #[arg(long)]
+        all: bool,
+    },
+    /// List terrain generation types (GcBiomeSubType).
+    #[command(name = "terrain-types")]
+    TerrainTypes,
 }
 
 /// Resolve a save file path from --save, --slot, or auto-detect.
@@ -360,6 +408,7 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
                 round_trip,
             })
         }
+        Commands::List { save, target } => list::run(target, save, slot),
         Commands::Convert {
             glyphs,
             coords,
