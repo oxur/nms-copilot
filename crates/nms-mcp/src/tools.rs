@@ -3,7 +3,6 @@
 //! Each tool wraps a function from `nms-query`, translating between
 //! JSON tool arguments and typed query structs.
 
-use std::borrow::Cow;
 use std::sync::Arc;
 
 use fabryk_mcp::model::{CallToolResult, Content, ErrorData, Tool};
@@ -78,13 +77,10 @@ fn schema(json: Value) -> Arc<serde_json::Map<String, Value>> {
 }
 
 fn search_planets_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("search_planets"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Search planets by biome, distance, discoverer, or name.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "search_planets",
+        "Search planets by biome, distance, discoverer, or name.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "biome": {
@@ -117,22 +113,14 @@ fn search_planets_tool() -> Tool {
                 }
             }
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn plan_route_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("plan_route"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Plan an optimal route through target systems.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "plan_route",
+        "Plan an optimal route through target systems.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "biome": {
@@ -171,36 +159,22 @@ fn plan_route_tool() -> Tool {
                 }
             }
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn where_am_i_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("where_am_i"),
-        title: None,
-        description: Some(Cow::Borrowed("Get the player's current location.")),
-        input_schema: Arc::new(empty_input_schema()),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    Tool::new(
+        "where_am_i",
+        "Get the player's current location.",
+        Arc::new(empty_input_schema()),
+    )
 }
 
 fn whats_nearby_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("whats_nearby"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Find systems and planets near the player's current position.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "whats_nearby",
+        "Find systems and planets near the player's current position.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "count": {
@@ -213,22 +187,14 @@ fn whats_nearby_tool() -> Tool {
                 }
             }
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn show_system_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("show_system"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Get detailed information about a star system.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "show_system",
+        "Get detailed information about a star system.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "name": {
@@ -238,22 +204,14 @@ fn show_system_tool() -> Tool {
             },
             "required": ["name"]
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn show_base_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("show_base"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Get detailed information about a player base.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "show_base",
+        "Get detailed information about a player base.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "name": {
@@ -263,22 +221,14 @@ fn show_base_tool() -> Tool {
             },
             "required": ["name"]
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn convert_coordinates_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("convert_coordinates"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Convert between portal glyphs, signal booster coordinates, and galactic addresses.",
-        )),
-        input_schema: schema(json!({
+    Tool::new(
+        "convert_coordinates",
+        "Convert between portal glyphs, signal booster coordinates, and galactic addresses.",
+        schema(json!({
             "type": "object",
             "properties": {
                 "glyphs": {
@@ -295,28 +245,15 @@ fn convert_coordinates_tool() -> Tool {
                 }
             }
         })),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    )
 }
 
 fn galaxy_stats_tool() -> Tool {
-    Tool {
-        name: Cow::Borrowed("galaxy_stats"),
-        title: None,
-        description: Some(Cow::Borrowed(
-            "Get aggregate statistics about the explored galaxy.",
-        )),
-        input_schema: Arc::new(empty_input_schema()),
-        output_schema: None,
-        annotations: None,
-        execution: None,
-        icons: None,
-        meta: None,
-    }
+    Tool::new(
+        "galaxy_stats",
+        "Get aggregate statistics about the explored galaxy.",
+        Arc::new(empty_input_schema()),
+    )
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
