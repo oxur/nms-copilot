@@ -11,7 +11,10 @@ pub use oxur_cli::table::Builder;
 pub use oxur_cli::table::TableStyleConfig;
 
 /// Dummy type to satisfy the `Tabled` trait bound on `apply_to_table`.
-#[derive(tabled::Tabled)]
+///
+/// Uses `oxur_cli`'s re-exported `Tabled` to match the version expected by
+/// `TableStyleConfig::apply_to_table`.
+#[derive(oxur_cli::table::Tabled)]
 struct Dummy {
     x: String,
 }

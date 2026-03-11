@@ -20,7 +20,7 @@ BUILD_TIME := $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 RUST_VERSION := $(shell rustc --version 2>/dev/null || echo "unknown")
 
 # List of binaries to build and install
-BINARIES := nms nms-copilot nms-mcp
+BINARIES := nms nms-copilot
 
 # Git remotes to push to
 GIT_REMOTES := macpro github codeberg
@@ -295,7 +295,7 @@ push:
 	done
 
 # Crates in dependency order (leaf crates first, dependent crates later)
-PUBLISH_ORDER := nms-core nms-save nms-compat nms-graph nms-query nms-watch nms-cache nms-cli nms-copilot nms nms-mcp
+PUBLISH_ORDER := nms-core nms-save nms-compat nms-graph nms-query nms-watch nms-cache nms-cli nms-copilot nms
 # crates.io rate limit delay (seconds)
 PUBLISH_DELAY := 372
 .PHONY: publish

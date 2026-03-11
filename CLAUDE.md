@@ -45,8 +45,7 @@ nms/                    Workspace root
 ├─ nms-watch            notify file watcher, delta computation, event stream
 ├─ nms-cache            rkyv zero-copy serialization for fast startup
 ├─ nms-cli              clap one-shot CLI (`nms` binary)
-├─ nms-copilot          reedline interactive REPL (`nms-copilot` binary)
-└─ nms-mcp              MCP server for AI integration
+└─ nms-copilot          reedline interactive REPL + MCP server (`nms-copilot` binary)
 ```
 
 Data flow: `save file → parser → galaxy model → query engine → CLI / REPL / MCP`

@@ -10,5 +10,4 @@
 //! - [`nms-graph`](https://crates.io/crates/nms-graph) — in-memory galactic model and routing
 //! - [`nms-query`](https://crates.io/crates/nms-query) — shared query engine
 //! - [`nms-cli`](https://crates.io/crates/nms-cli) — one-shot CLI (`nms` binary)
-//! - [`nms-copilot`](https://crates.io/crates/nms-copilot) — interactive REPL
-//! - [`nms-mcp`](https://crates.io/crates/nms-mcp) — MCP server for AI integration
+//! - [`nms-copilot`](https://crates.io/crates/nms-copilot) — interactive REPL + MCP server

@@ -29,15 +29,16 @@ Search planets by biome. Plan warp routes through the stars. Convert portal glyp
 
 NMS Copilot reads your No Man's Sky save files — either the raw binary format (`save.hg`) directly or exported JSON — and builds a live, in-memory model of every system, planet, and base you've discovered. It's not a save editor. It's a **queryable atlas** of your personal galaxy.
 
-Three ways to use it:
+Two ways to use it:
 
 | Interface | What it does |
 |-----------|-------------|
 | **CLI** (`nms`) | One-shot commands for quick lookups and scripted pipelines |
-| **REPL** (`nms-copilot`) | Interactive session with persistent state — run it alongside the game |
-| **MCP Server** (`nms-mcp`) | Exposes your galaxy to an AI assistant for real-time co-exploration |
+| **REPL** (`nms-copilot`) | Interactive session with persistent state, built-in MCP server for AI co-exploration |
 
-The copilot watches your save directory for changes. When you warp to a new system, scan a planet, or build a base, it detects the auto-save and updates the model automatically. If you're running the MCP server, your AI copilot knows where you are *right now*.
+The copilot watches your save directory for changes. When you warp to a new system, scan a planet, or build a base, it detects the auto-save and updates the model automatically. The built-in MCP server shares the same live model, so your AI copilot knows where you are *right now*.
+
+Use `--headless` to run just the MCP server without the REPL (e.g., for Claude Desktop integration).
 
 ---
 
@@ -244,8 +245,7 @@ nms/
 ├─ nms-watch      File watcher, delta computation, live updates
 ├─ nms-cache      rkyv zero-copy serialization for fast startup
 ├─ nms-cli        clap one-shot CLI (the `nms` binary)
-├─ nms-copilot    reedline interactive REPL (the `nms-copilot` binary)
-└─ nms-mcp        MCP server for AI integration
+└─ nms-copilot    reedline interactive REPL + MCP server (the `nms-copilot` binary)
 ```
 
 The data flows in one direction:
@@ -271,11 +271,13 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ### MCP Server
 
-Run alongside Claude or another AI assistant for real-time co-exploration:
+The REPL includes a built-in MCP server for AI co-exploration. It starts automatically on `http://127.0.0.1:3000` and shares the same live model as the REPL.
+
+For headless operation (e.g., Claude Desktop integration):
 
 ```bash
-nms-mcp                           # stdio transport (for Claude Desktop)
-nms-mcp --http 127.0.0.1:3000    # HTTP transport (for remote clients)
+nms-copilot --headless                           # stdio transport
+nms-copilot --headless --http 127.0.0.1:3000    # HTTP transport
 ```
 
 The MCP server exposes all query capabilities as tools — your AI copilot can search planets, plan routes, convert coordinates, and track your position as you play.
@@ -285,9 +287,8 @@ The MCP server exposes all query capabilities as tools — your AI copilot can s
 ## Installation
 
 ```bash
-cargo install nms-copilot    # interactive REPL
+cargo install nms-copilot    # interactive REPL + MCP server
 cargo install nms-cli        # one-shot CLI (the `nms` binary)
-cargo install nms-mcp        # MCP server for AI integration
 ```
 
 Or build from source:

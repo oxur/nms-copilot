@@ -250,11 +250,13 @@ impl CopilotCompleter {
                 };
                 Suggestion {
                     value,
+                    display_override: None,
                     description: None,
                     style: None,
                     extra: None,
                     span: Span::new(pos - partial.len(), pos),
                     append_whitespace: true,
+                    match_indices: None,
                 }
             })
             .collect()
@@ -272,11 +274,13 @@ impl CopilotCompleter {
             .filter(|c| c.to_lowercase().starts_with(&lower))
             .map(|c| Suggestion {
                 value: c.to_string(),
+                display_override: None,
                 description: None,
                 style: None,
                 extra: None,
                 span: Span::new(pos - partial.len(), pos),
                 append_whitespace: true,
+                match_indices: None,
             })
             .collect()
     }

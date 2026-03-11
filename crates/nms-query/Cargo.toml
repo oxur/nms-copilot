@@ -15,7 +15,7 @@ categories.workspace = true
 nms-core = { workspace = true }
 nms-graph = { workspace = true }
 oxur-cli = { workspace = true }
-tabled = { workspace = true }
+tabled = "0.17"
 toml = { workspace = true }
 
 [dev-dependencies]

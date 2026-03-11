@@ -1,13 +1,20 @@
 //! NMS Copilot -- interactive galactic REPL for No Man's Sky.
+//!
+//! Modes:
+//! - **Normal** (default): REPL + MCP HTTP server sharing one `GalaxyModel`
+//! - **Headless** (`--headless`): MCP server only, no REPL
 
 use std::io::IsTerminal;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use reedline::{FileBackedHistory, Reedline, Signal};
+use tokio::sync::RwLock;
 
 use nms_copilot::banner;
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::config::Config;
+use nms_copilot::mcp;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
 use nms_copilot::watch::drain_watch_events;
@@ -24,15 +31,27 @@ fn main() {
         }
     };
 
-    // Art banner first — doesn't need the model
-    banner::print_banner(
-        config.display.banner.as_deref(),
-        config.display.show_banner,
-        config.display.color,
-    );
-
     let args: Vec<String> = std::env::args().collect();
-    let save_path = resolve_save_path(&args, &config);
+    let headless = args.iter().any(|a| a == "--headless");
+
+    // In headless mode, initialize logging for the MCP server
+    if headless {
+        let mcp_config = mcp::config::McpConfig::load();
+        if let Err(e) = twyg::setup(mcp_config.logging.to_twyg_opts()) {
+            eprintln!("Warning: Failed to initialize logging: {e}");
+        }
+    }
+
+    // Art banner (skip in headless mode)
+    if !headless {
+        banner::print_banner(
+            config.display.banner.as_deref(),
+            config.display.show_banner,
+            config.display.color,
+        );
+    }
+
+    let save_path = resolve_save_path(&args, &config, headless);
     let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
     let cache_path = config.cache_path_for(save_path.as_deref());
 
@@ -45,13 +64,31 @@ fn main() {
             }
         };
 
+    let mut model = model;
+    model.ensure_player_system();
+
+    // ── Headless mode: MCP server only ──────────────────────────
+    if headless {
+        let transport = parse_mcp_transport(&args);
+        let model = Arc::new(RwLock::new(model));
+        eprintln!(
+            "NMS Copilot MCP server (headless) — {} systems, {} planets, {} bases",
+            model.blocking_read().system_count(),
+            model.blocking_read().planet_count(),
+            model.blocking_read().bases.len(),
+        );
+        mcp::run_headless(model, transport, save_path);
+        return;
+    }
+
+    // ── REPL mode ───────────────────────────────────────────────
+
     let source = if was_cached {
         "from cache"
     } else {
         "from save file"
     };
 
-    // System banner (model stats + help hint) — after model is loaded
     banner::print_system_banner(
         config.display.show_system_banner,
         model.systems.len(),
@@ -60,9 +97,9 @@ fn main() {
         source,
     );
 
-    // Start file watcher (optional -- don't fail startup if watcher can't start)
+    // Start file watcher (optional)
     let watch_handle = if config.watch_enabled() {
-        match start_watcher(&config, save_path) {
+        match start_watcher(&config, save_path.clone()) {
             Ok(handle) => {
                 println!("Watching save file for live updates.\n");
                 Some(handle)
@@ -82,13 +119,24 @@ fn main() {
     } else {
         Some(cache_path.as_path())
     };
-    let mut model = model;
-    model.ensure_player_system();
 
-    let completions = build_model_completions(&model);
+    // Wrap model in Arc<RwLock> for sharing with MCP server
+    let model = Arc::new(RwLock::new(model));
+
+    // Start MCP HTTP server on background thread (shares the model)
+    let mcp_http = parse_mcp_http_addr(&args);
+    let mcp_addr = mcp_http.unwrap_or_else(|| "127.0.0.1:3000".parse().unwrap());
+    mcp::spawn_mcp_background(
+        Arc::clone(&model),
+        mcp::Transport::Http(mcp_addr),
+        save_path,
+    );
+    eprintln!("MCP server listening on http://{mcp_addr}");
+
+    let completions = build_model_completions(&model.blocking_read());
     let completer = Box::new(CopilotCompleter::new(completions));
     let mut editor = build_editor(completer);
-    let mut session = SessionState::from_model(&model);
+    let mut session = SessionState::from_model(&model.blocking_read());
     if let Some(warp_range) = config.defaults.warp_range {
         session.set_warp_range(warp_range);
     }
@@ -97,9 +145,10 @@ fn main() {
     loop {
         // Drain any pending watch events before showing prompt
         if let Some(ref handle) = watch_handle {
+            let mut guard = model.blocking_write();
             drain_watch_events(
                 &handle.receiver,
-                &mut model,
+                &mut guard,
                 &mut session,
                 cache_for_watcher,
                 save_version,
@@ -114,25 +163,30 @@ fn main() {
                         break;
                     }
                     if matches!(action, commands::Action::Map) {
-                        if let Err(e) = nms_copilot::map::run_map(&model, &session) {
+                        let guard = model.blocking_read();
+                        if let Err(e) = nms_copilot::map::run_map(&guard, &session) {
                             eprintln!("Map error: {e}");
                         }
                         continue;
                     }
-                    match dispatch::dispatch(&action, &model, &mut session) {
-                        Ok(output) => {
-                            if !output.is_empty() {
-                                print!("{output}");
+                    {
+                        let guard = model.blocking_read();
+                        match dispatch::dispatch(&action, &guard, &mut session) {
+                            Ok(output) => {
+                                if !output.is_empty() {
+                                    print!("{output}");
+                                }
                             }
+                            Err(e) => eprintln!("Error: {e}"),
                         }
-                        Err(e) => eprintln!("Error: {e}"),
                     }
 
                     // Also drain after command execution
                     if let Some(ref handle) = watch_handle {
+                        let mut guard = model.blocking_write();
                         drain_watch_events(
                             &handle.receiver,
-                            &mut model,
+                            &mut guard,
                             &mut session,
                             cache_for_watcher,
                             save_version,
@@ -195,7 +249,7 @@ fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
         .map(PathBuf::from)
 }
 
-fn resolve_save_path(args: &[String], config: &Config) -> Option<PathBuf> {
+fn resolve_save_path(args: &[String], config: &Config, headless: bool) -> Option<PathBuf> {
     // 1. CLI arg (explicit, highest priority)
     if let Some(p) = parse_save_arg(args) {
         return Some(p);
@@ -204,8 +258,8 @@ fn resolve_save_path(args: &[String], config: &Config) -> Option<PathBuf> {
     if let Some(p) = config.effective_save_file() {
         return Some(p);
     }
-    // 3. Interactive wizard (TTY) — let user choose rather than silently auto-detecting
-    if std::io::stdin().is_terminal() {
+    // 3. Interactive wizard (TTY, not headless)
+    if !headless && std::io::stdin().is_terminal() {
         match nms_copilot::setup::run_setup_wizard() {
             Ok(path) => return Some(path),
             Err(e) => {
@@ -255,4 +309,26 @@ fn start_watcher(
     };
 
     Ok(start_watching(watch_config)?)
+}
+
+/// Parse MCP transport for headless mode.
+///
+/// If `--http <addr>` is specified, uses HTTP. Otherwise defaults to stdio.
+fn parse_mcp_transport(args: &[String]) -> mcp::Transport {
+    if let Some(addr) = parse_mcp_http_addr(args) {
+        mcp::Transport::Http(addr)
+    } else if args.iter().any(|a| a == "--http") {
+        // --http without an address: use default
+        mcp::Transport::Http("127.0.0.1:3000".parse().unwrap())
+    } else {
+        mcp::Transport::Stdio
+    }
+}
+
+/// Parse `--http <addr>` argument, returning the socket address if valid.
+fn parse_mcp_http_addr(args: &[String]) -> Option<std::net::SocketAddr> {
+    args.iter()
+        .position(|a| a == "--http")
+        .and_then(|i| args.get(i + 1))
+        .and_then(|s| s.parse().ok())
 }

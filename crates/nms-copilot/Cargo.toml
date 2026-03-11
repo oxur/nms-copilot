@@ -1,7 +1,7 @@
 [package]
 name = "nms-copilot"
-description = "Interactive galactic copilot for No Man's Sky — REPL with live save file updates"
-keywords = ["nms", "no-mans-sky", "repl", "copilot"]
+description = "Interactive galactic copilot for No Man's Sky — REPL with live save file updates and MCP server"
+keywords = ["nms", "no-mans-sky", "repl", "copilot", "mcp"]
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -32,10 +32,18 @@ crossterm = { workspace = true }
 ratatui = { workspace = true }
 reedline = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
 thiserror = { workspace = true }
 toml = { workspace = true }
+fabryk-mcp = { workspace = true }
+tokio = { workspace = true }
+log = { workspace = true }
+twyg = { workspace = true }
+
+[features]
+default = ["http"]
+http = ["fabryk-mcp/http"]
 
 [dev-dependencies]
 nms-save = { workspace = true }
-serde_json = { workspace = true }
 tempfile = "3"

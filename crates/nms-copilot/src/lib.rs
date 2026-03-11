@@ -1,4 +1,4 @@
-//! NMS Copilot library -- shared modules for the interactive REPL.
+//! NMS Copilot library -- shared modules for the interactive REPL and MCP server.
 
 pub mod banner;
 pub mod commands;
@@ -6,6 +6,7 @@ pub mod completer;
 pub mod config;
 pub mod dispatch;
 pub mod map;
+pub mod mcp;
 pub mod paths;
 pub mod prompt;
 pub mod session;
