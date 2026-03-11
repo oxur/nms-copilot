@@ -1031,7 +1031,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-content"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "fabryk-core",
  "log",
@@ -1043,7 +1043,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-core"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "async-walkdir",
@@ -1061,7 +1061,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-fts"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "async-walkdir",
@@ -1076,7 +1076,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-graph"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "chrono",
@@ -1092,7 +1092,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "fabryk-mcp-auth",
  "fabryk-mcp-content",
@@ -1104,7 +1104,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-auth"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "axum",
  "serde_json",
@@ -1112,7 +1112,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-content"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "fabryk-content",
@@ -1126,7 +1126,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-core"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "axum",
@@ -1141,7 +1141,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-fts"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1155,7 +1155,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-graph"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1170,7 +1170,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-semantic"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1186,7 +1186,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-vector"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "async-trait",
  "async-walkdir",

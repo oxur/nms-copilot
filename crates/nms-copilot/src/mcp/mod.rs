@@ -15,7 +15,7 @@ use std::thread;
 
 use fabryk_mcp::{
     CompositeRegistry, DiscoverableRegistry, FabrykMcpServer, HealthTools, Notifier,
-    ServerGuidance, ToolMeta, ToolRegistry,
+    ServerGuidance, ServiceHandle, ServiceState, ToolMeta, ToolRegistry,
 };
 use tokio::sync::RwLock;
 
@@ -38,21 +38,50 @@ pub enum Transport {
 /// be used in headless mode.
 ///
 /// Optionally starts a file watcher that applies deltas to the shared model.
+///
+/// For HTTP transport, blocks the caller until the server is listening
+/// (TCP bind succeeded) so the REPL doesn't start before the MCP endpoint
+/// is reachable. Uses fabryk-core's `ServiceHandle` for state tracking.
 pub fn spawn_mcp_background(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
     save_path: Option<std::path::PathBuf>,
 ) {
+    let mcp_service = ServiceHandle::new("mcp-http");
+    let (ready_tx, ready_rx) = std::sync::mpsc::sync_channel::<Result<(), String>>(1);
+
+    let service_for_thread = mcp_service.clone();
     thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
         rt.block_on(async {
             let watcher_rx = start_watcher(save_path.as_deref());
 
-            if let Err(e) = run_mcp_server(model, transport, watcher_rx).await {
+            if let Err(e) = run_mcp_server(
+                model,
+                transport,
+                watcher_rx,
+                Some(ready_tx),
+                service_for_thread,
+            )
+            .await
+            {
                 log::error!("MCP server error: {e}");
             }
         });
     });
+
+    // Block until the server signals it is ready (or failed to bind)
+    match ready_rx.recv() {
+        Ok(Ok(())) => {}
+        Ok(Err(e)) => {
+            eprintln!("MCP server failed to start: {e}");
+            std::process::exit(1);
+        }
+        Err(_) => {
+            eprintln!("MCP server thread exited before signalling readiness");
+            std::process::exit(1);
+        }
+    }
 }
 
 /// Run the MCP server in headless mode (blocking, on the current thread).
@@ -63,11 +92,12 @@ pub fn run_headless(
     transport: Transport,
     save_path: Option<std::path::PathBuf>,
 ) {
+    let mcp_service = ServiceHandle::new("mcp");
     let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
     rt.block_on(async {
         let watcher_rx = start_watcher(save_path.as_deref());
 
-        if let Err(e) = run_mcp_server(model, transport, watcher_rx).await {
+        if let Err(e) = run_mcp_server(model, transport, watcher_rx, None, mcp_service).await {
             eprintln!("MCP server error: {e}");
         }
     });
@@ -100,11 +130,19 @@ fn start_watcher(
 ///
 /// If a watcher receiver is provided, starts a background task that applies
 /// deltas to the model and pushes notifications to connected MCP clients.
+///
+/// When `ready_tx` is provided (REPL mode), the sender is signalled once
+/// the HTTP listener is bound so the caller can unblock. The `service_handle`
+/// tracks startup state via fabryk-core's service lifecycle.
 async fn run_mcp_server(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
     watcher_rx: Option<std::sync::mpsc::Receiver<nms_core::SaveDelta>>,
+    ready_tx: Option<std::sync::mpsc::SyncSender<Result<(), String>>>,
+    service_handle: ServiceHandle,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    service_handle.set_state(ServiceState::Starting);
+
     let nms_tools = NmsTools::new(Arc::clone(&model));
     let tool_count = nms_tools.tool_count() + 1; // +1 for health
     let health = HealthTools::new("nms-copilot", env!("CARGO_PKG_VERSION"), tool_count);
@@ -118,7 +156,8 @@ async fn run_mcp_server(
         .with_name("nms-copilot")
         .with_version(env!("CARGO_PKG_VERSION"))
         .with_guidance(&guidance)
-        .with_resources(nms_resources);
+        .with_resources(nms_resources)
+        .with_service(service_handle.clone());
 
     // Extract notifier before serving (serve consumes the server)
     let notifier = server.notifier();
@@ -133,15 +172,45 @@ async fn run_mcp_server(
 
     match transport {
         Transport::Stdio => {
+            service_handle.set_state(ServiceState::Ready);
+            if let Some(tx) = ready_tx {
+                let _ = tx.send(Ok(()));
+            }
             server.serve_stdio().await?;
         }
         #[cfg(feature = "http")]
         Transport::Http(addr) => {
-            eprintln!("NMS Copilot MCP server listening on http://{addr}");
-            server.serve_http(addr).await?;
+            // Build the HTTP service and bind the listener ourselves so we
+            // can signal readiness before entering the serve loop.
+            let service = server.into_http_service();
+            let router = fabryk_mcp::axum::Router::new()
+                .merge(fabryk_mcp::health_router(vec![service_handle.clone()]))
+                .nest_service("/mcp", service);
+
+            let listener = match tokio::net::TcpListener::bind(addr).await {
+                Ok(l) => l,
+                Err(e) => {
+                    let msg = format!("bind {addr} failed: {e}");
+                    service_handle.set_state(ServiceState::Failed(msg.clone()));
+                    if let Some(tx) = ready_tx {
+                        let _ = tx.send(Err(msg.clone()));
+                    }
+                    return Err(msg.into());
+                }
+            };
+
+            // Bind succeeded — mark ready and unblock the caller
+            service_handle.set_state(ServiceState::Ready);
+            if let Some(tx) = ready_tx {
+                let _ = tx.send(Ok(()));
+            }
+
+            log::info!("NMS Copilot MCP server listening on http://{addr}");
+            fabryk_mcp::axum::serve(listener, router).await?;
         }
     }
 
+    service_handle.set_state(ServiceState::Stopped);
     Ok(())
 }
 
