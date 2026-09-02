@@ -2126,6 +2126,7 @@ dependencies = [
 name = "nms-copilot"
 version = "0.2.0"
 dependencies = [
+ "assert_cmd",
  "clap",
  "crossterm 0.29.0",
  "dialoguer",
@@ -2140,6 +2141,7 @@ dependencies = [
  "nms-watch",
  "owo-colors",
  "oxur-cli",
+ "predicates",
  "ratatui",
  "reedline 0.46.0",
  "serde",

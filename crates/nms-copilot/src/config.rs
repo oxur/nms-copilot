@@ -5,6 +5,7 @@
 //! All fields are optional -- sensible defaults are used when not specified.
 
 use std::fs;
+use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
@@ -30,6 +31,9 @@ pub struct Config {
 
     /// File watcher settings.
     pub watch: WatchConfig,
+
+    /// MCP server settings.
+    pub mcp: McpConfig,
 }
 
 /// Save file location and format.
@@ -164,6 +168,26 @@ impl Default for WatchConfig {
     }
 }
 
+/// MCP server settings.
+#[derive(Debug, Deserialize)]
+#[serde(default)]
+pub struct McpConfig {
+    /// Host/IP address for the MCP HTTP server.
+    pub host: IpAddr,
+
+    /// Port for the MCP HTTP server.
+    pub port: u16,
+}
+
+impl Default for McpConfig {
+    fn default() -> Self {
+        Self {
+            host: IpAddr::V4(Ipv4Addr::LOCALHOST),
+            port: 5099,
+        }
+    }
+}
+
 impl Config {
     /// Load config from the default path (`~/.nms-copilot/config.toml`).
     ///
@@ -180,7 +204,7 @@ impl Config {
             Self::default()
         } else {
             let content = fs::read_to_string(path).map_err(ConfigError::Io)?;
-            toml::from_str(&content).map_err(ConfigError::Parse)?
+            parse_config(&content).map_err(ConfigError::Parse)?
         };
         config.apply_env_overrides();
         Ok(config)
@@ -282,6 +306,22 @@ impl Config {
     pub fn watch_debounce(&self) -> Duration {
         Duration::from_millis(self.watch.debounce_ms)
     }
+
+    /// The configured MCP HTTP bind address.
+    pub fn mcp_http_addr(&self) -> SocketAddr {
+        SocketAddr::new(self.mcp.host, self.mcp.port)
+    }
+}
+
+fn parse_config(content: &str) -> Result<Config, toml::de::Error> {
+    match toml::from_str(content) {
+        Ok(config) => Ok(config),
+        Err(document_error) => content
+            .parse::<toml::Value>()
+            .ok()
+            .and_then(|value| value.try_into().ok())
+            .ok_or(document_error),
+    }
 }
 
 /// Config loading errors.
@@ -323,6 +363,7 @@ mod tests {
         assert!(config.save.path.is_none());
         assert!(config.save.dir.is_none());
         assert!(config.save.file.is_none());
+        assert_eq!(config.mcp_http_addr().to_string(), "127.0.0.1:5099");
     }
 
     #[test]
@@ -356,6 +397,10 @@ mod tests {
             [cache]
             enabled = false
             path = "/tmp/nms-cache.rkyv"
+
+            [mcp]
+            host = "127.0.0.1"
+            port = 5055
         "#;
         let config: Config = toml::from_str(toml).unwrap();
         assert_eq!(
@@ -372,6 +417,7 @@ mod tests {
         assert_eq!(config.defaults.warp_range, Some(2500.0));
         assert_eq!(config.defaults.find_limit, Some(10));
         assert!(!config.cache.enabled);
+        assert_eq!(config.mcp_http_addr().to_string(), "127.0.0.1:5055");
     }
 
     #[test]
@@ -394,6 +440,33 @@ mod tests {
         assert_eq!(config.save.format, "raw");
         // Legacy path should be None
         assert!(config.save.path.is_none());
+    }
+
+    #[test]
+    fn test_parse_inline_save_with_mcp_config() {
+        let toml = r#"
+            save = { dir = "/Users/test/NMS/st_123", file = "/Users/test/NMS/st_123/save.hg", format = "auto" }
+
+            [mcp]
+            host = "127.0.0.1"
+            port = 5055
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert_eq!(
+            config.save.file.as_deref().unwrap().to_str().unwrap(),
+            "/Users/test/NMS/st_123/save.hg"
+        );
+        assert_eq!(config.mcp_http_addr().to_string(), "127.0.0.1:5055");
+    }
+
+    #[test]
+    fn test_parse_legacy_inline_value_save_config() {
+        let toml = r#"{ save = { dir = "/Users/test/NMS/st_123", file = "/Users/test/NMS/st_123/save.hg", format = "auto" } }"#;
+        let config = parse_config(toml).unwrap();
+        assert_eq!(
+            config.save.file.as_deref().unwrap().to_str().unwrap(),
+            "/Users/test/NMS/st_123/save.hg"
+        );
     }
 
     #[test]
@@ -553,6 +626,16 @@ mod tests {
         let config: Config = toml::from_str(toml).unwrap();
         assert!(config.watch_enabled());
         assert_eq!(config.watch_debounce(), Duration::from_millis(250));
+    }
+
+    #[test]
+    fn test_mcp_config_partial_toml() {
+        let toml = r#"
+            [mcp]
+            port = 5055
+        "#;
+        let config: Config = toml::from_str(toml).unwrap();
+        assert_eq!(config.mcp_http_addr().to_string(), "127.0.0.1:5055");
     }
 
     #[test]

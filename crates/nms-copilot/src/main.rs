@@ -4,11 +4,18 @@
 //! - **Normal** (default): REPL + MCP HTTP server sharing one `GalaxyModel`
 //! - **Headless** (`--headless`): MCP server only, no REPL
 
-use std::io::IsTerminal;
+use std::collections::BTreeMap;
+use std::fmt;
+use std::io::{Read, Write};
+use std::net::{SocketAddr, TcpStream, ToSocketAddrs};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
+use std::time::Duration;
 
+use clap::{Parser, Subcommand};
 use reedline::{FileBackedHistory, Reedline, Signal};
+use serde::Serialize;
+use serde_json::Value;
 use tokio::sync::RwLock;
 
 use nms_copilot::banner;
@@ -22,7 +29,61 @@ use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
 use nms_watch::{WatchConfig, WatchHandle, start_watching};
 
+const DEFAULT_MCP_HTTP_ADDR: &str = "127.0.0.1:5099";
+
+#[derive(Debug, Parser)]
+#[command(
+    name = "nms-copilot",
+    about = "Interactive NMS galactic copilot REPL with MCP server support",
+    version
+)]
+struct Cli {
+    /// Path to a specific NMS save file.
+    #[arg(long)]
+    save: Option<PathBuf>,
+
+    /// Disable the rkyv cache and rebuild from the save file.
+    #[arg(long)]
+    no_cache: bool,
+
+    /// Run only the MCP server without starting the REPL.
+    #[arg(long)]
+    headless: bool,
+
+    /// Run the interactive setup questionnaire before loading the save file.
+    #[arg(long)]
+    setup: bool,
+
+    /// Use MCP HTTP transport, optionally bound to ADDR.
+    ///
+    /// In normal REPL mode, HTTP is always enabled; this option overrides the
+    /// configured bind address. In headless mode, omitting this option uses
+    /// stdio transport for MCP clients.
+    #[cfg(feature = "http")]
+    #[arg(long, value_name = "ADDR", num_args = 0..=1, default_missing_value = DEFAULT_MCP_HTTP_ADDR)]
+    http: Option<Option<SocketAddr>>,
+
+    #[command(subcommand)]
+    command: Option<CliCommand>,
+}
+
+#[derive(Debug, Subcommand)]
+enum CliCommand {
+    /// Verify an HTTP MCP endpoint with initialize and tools/list.
+    McpSmoke {
+        /// MCP endpoint URL. Defaults to the configured /mcp endpoint.
+        #[arg(long)]
+        url: Option<String>,
+
+        /// Emit machine-readable JSON.
+        #[arg(long)]
+        json: bool,
+    },
+}
+
 fn main() {
+    let cli = Cli::parse();
+
     let config = match Config::load() {
         Ok(c) => c,
         Err(e) => {
@@ -31,11 +92,21 @@ fn main() {
         }
     };
 
-    let args: Vec<String> = std::env::args().collect();
-    let headless = args.iter().any(|a| a == "--headless");
+    if let Some(CliCommand::McpSmoke { url, json }) = &cli.command {
+        let url = url
+            .clone()
+            .unwrap_or_else(|| mcp_http_url(config.mcp_http_addr(), "/mcp"));
+        match run_mcp_smoke(&url, *json) {
+            Ok(()) => return,
+            Err(e) => {
+                eprintln!("MCP smoke failed: {e}");
+                std::process::exit(1);
+            }
+        }
+    }
 
     // In headless mode, initialize logging for the MCP server
-    if headless {
+    if cli.headless {
         let mcp_config = mcp::config::McpConfig::load();
         if let Err(e) = twyg::setup(mcp_config.logging.to_twyg_opts()) {
             eprintln!("Warning: Failed to initialize logging: {e}");
@@ -43,7 +114,7 @@ fn main() {
     }
 
     // Art banner (skip in headless mode)
-    if !headless {
+    if !cli.headless {
         banner::print_banner(
             config.display.banner.as_deref(),
             config.display.show_banner,
@@ -51,8 +122,8 @@ fn main() {
         );
     }
 
-    let save_path = resolve_save_path(&args, &config, headless);
-    let no_cache = args.iter().any(|a| a == "--no-cache") || !config.cache_enabled();
+    let save_path = resolve_save_path(&cli, &config);
+    let no_cache = cli.no_cache || !config.cache_enabled();
     let cache_path = config.cache_path_for(save_path.as_deref());
 
     let (model, was_cached, save_version) =
@@ -68,8 +139,8 @@ fn main() {
     model.ensure_player_system();
 
     // ── Headless mode: MCP server only ──────────────────────────
-    if headless {
-        let transport = parse_mcp_transport(&args);
+    if cli.headless {
+        let transport = parse_mcp_transport(&cli, &config);
         let model = Arc::new(RwLock::new(model));
         eprintln!(
             "NMS Copilot MCP server (headless) — {} systems, {} planets, {} bases",
@@ -124,14 +195,17 @@ fn main() {
     let model = Arc::new(RwLock::new(model));
 
     // Start MCP HTTP server on background thread (shares the model)
-    let mcp_http = parse_mcp_http_addr(&args);
-    let mcp_addr = mcp_http.unwrap_or_else(|| "127.0.0.1:3000".parse().unwrap());
+    let mcp_addr = mcp_http_addr(&cli, &config);
     mcp::spawn_mcp_background(
         Arc::clone(&model),
         mcp::Transport::Http(mcp_addr),
         save_path,
     );
-    eprintln!("MCP server listening on http://{mcp_addr}");
+    let mcp_base = format!("http://{mcp_addr}");
+    eprintln!("MCP server listening on {mcp_base}");
+    eprintln!("MCP endpoint: {mcp_base}/mcp");
+    eprintln!("Health check: {mcp_base}/health");
+    eprintln!("MCP info: {mcp_base}/mcp-info");
 
     let completions = build_model_completions(&model.blocking_read());
     let completer = Box::new(CopilotCompleter::new(completions));
@@ -242,24 +316,14 @@ fn build_model_completions(model: &GalaxyModel) -> ModelCompletions {
     }
 }
 
-fn parse_save_arg(args: &[String]) -> Option<PathBuf> {
-    args.iter()
-        .position(|a| a == "--save")
-        .and_then(|i| args.get(i + 1))
-        .map(PathBuf::from)
-}
-
-fn resolve_save_path(args: &[String], config: &Config, headless: bool) -> Option<PathBuf> {
+fn resolve_save_path(cli: &Cli, config: &Config) -> Option<PathBuf> {
     // 1. CLI arg (explicit, highest priority)
-    if let Some(p) = parse_save_arg(args) {
+    if let Some(p) = cli.save.clone() {
         return Some(p);
     }
-    // 2. ENV vars + config file (user has explicitly configured a save)
-    if let Some(p) = config.effective_save_file() {
-        return Some(p);
-    }
-    // 3. Interactive wizard (TTY, not headless)
-    if !headless && std::io::stdin().is_terminal() {
+
+    // 2. Explicit interactive setup
+    if cli.setup && !cli.headless {
         match nms_copilot::setup::run_setup_wizard() {
             Ok(path) => return Some(path),
             Err(e) => {
@@ -272,6 +336,12 @@ fn resolve_save_path(args: &[String], config: &Config, headless: bool) -> Option
             }
         }
     }
+
+    // 3. ENV vars + config file (user has explicitly configured a save)
+    if let Some(p) = config.effective_save_file() {
+        return Some(p);
+    }
+
     // 4. Non-interactive fallback: auto-detect most recent save
     if let Ok(save) = nms_save::locate::find_most_recent_save() {
         return Some(save.path().to_path_buf());
@@ -314,21 +384,554 @@ fn start_watcher(
 /// Parse MCP transport for headless mode.
 ///
 /// If `--http <addr>` is specified, uses HTTP. Otherwise defaults to stdio.
-fn parse_mcp_transport(args: &[String]) -> mcp::Transport {
-    if let Some(addr) = parse_mcp_http_addr(args) {
-        mcp::Transport::Http(addr)
-    } else if args.iter().any(|a| a == "--http") {
-        // --http without an address: use default
-        mcp::Transport::Http("127.0.0.1:3000".parse().unwrap())
+fn parse_mcp_transport(cli: &Cli, config: &Config) -> mcp::Transport {
+    if cli.http.is_some() {
+        mcp::Transport::Http(mcp_http_addr(cli, config))
     } else {
         mcp::Transport::Stdio
     }
 }
 
-/// Parse `--http <addr>` argument, returning the socket address if valid.
-fn parse_mcp_http_addr(args: &[String]) -> Option<std::net::SocketAddr> {
-    args.iter()
-        .position(|a| a == "--http")
-        .and_then(|i| args.get(i + 1))
-        .and_then(|s| s.parse().ok())
+fn mcp_http_addr(cli: &Cli, config: &Config) -> SocketAddr {
+    match cli.http {
+        Some(Some(addr)) => addr,
+        Some(None) => DEFAULT_MCP_HTTP_ADDR
+            .parse()
+            .expect("default MCP HTTP address is valid"),
+        None => config.mcp_http_addr(),
+    }
+}
+
+fn mcp_http_url(addr: SocketAddr, path: &str) -> String {
+    format!("http://{addr}{path}")
+}
+
+#[derive(Debug, Serialize)]
+struct SmokeReport {
+    url: String,
+    health_url: String,
+    health_status: u16,
+    server_name: String,
+    server_version: String,
+    session_id: String,
+    tool_count: usize,
+    tools: Vec<String>,
+}
+
+fn run_mcp_smoke(url: &str, json: bool) -> Result<(), SmokeError> {
+    let endpoint = HttpEndpoint::parse(url)?;
+    let health_endpoint = endpoint.with_path("/health");
+    let health = http_request(&health_endpoint, HttpMethod::Get, &[], None)?;
+    if health.status != 200 {
+        return Err(SmokeError::UnexpectedStatus {
+            context: "health check",
+            status: health.status,
+            body: health.body_text(),
+        });
+    }
+
+    let init_body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2025-03-26",
+            "capabilities": {},
+            "clientInfo": {
+                "name": "nms-copilot-smoke",
+                "version": env!("CARGO_PKG_VERSION")
+            }
+        }
+    })
+    .to_string();
+    let init = mcp_post(&endpoint, None, &init_body)?;
+    if init.status != 200 {
+        return Err(SmokeError::UnexpectedStatus {
+            context: "initialize",
+            status: init.status,
+            body: init.body_text(),
+        });
+    }
+    let session_id = init
+        .header("mcp-session-id")
+        .ok_or(SmokeError::MissingSessionId)?
+        .to_string();
+    let init_messages = sse_json_messages(&init.body_text())?;
+    let init_result = init_messages
+        .iter()
+        .find(|message| message.get("id").and_then(Value::as_i64) == Some(1))
+        .and_then(|message| message.get("result"))
+        .ok_or(SmokeError::MissingJsonRpcResult("initialize"))?;
+    let server_info = init_result
+        .get("serverInfo")
+        .ok_or(SmokeError::MissingField("serverInfo"))?;
+    let server_name = json_string_field(server_info, "name")?.to_string();
+    let server_version = json_string_field(server_info, "version")?.to_string();
+
+    let initialized_body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "method": "notifications/initialized",
+        "params": {}
+    })
+    .to_string();
+    let initialized = mcp_post(&endpoint, Some(&session_id), &initialized_body)?;
+    if initialized.status != 202 {
+        return Err(SmokeError::UnexpectedStatus {
+            context: "notifications/initialized",
+            status: initialized.status,
+            body: initialized.body_text(),
+        });
+    }
+
+    let tools_body = serde_json::json!({
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/list",
+        "params": {}
+    })
+    .to_string();
+    let tools_response = mcp_post(&endpoint, Some(&session_id), &tools_body)?;
+    if tools_response.status != 200 {
+        return Err(SmokeError::UnexpectedStatus {
+            context: "tools/list",
+            status: tools_response.status,
+            body: tools_response.body_text(),
+        });
+    }
+    let tools_messages = sse_json_messages(&tools_response.body_text())?;
+    let tools_result = tools_messages
+        .iter()
+        .find(|message| message.get("id").and_then(Value::as_i64) == Some(2))
+        .and_then(|message| message.get("result"))
+        .ok_or(SmokeError::MissingJsonRpcResult("tools/list"))?;
+    let tools = tools_result
+        .get("tools")
+        .and_then(Value::as_array)
+        .ok_or(SmokeError::MissingField("tools"))?
+        .iter()
+        .map(|tool| json_string_field(tool, "name").map(str::to_string))
+        .collect::<Result<Vec<_>, _>>()?;
+
+    let report = SmokeReport {
+        url: endpoint.to_url(),
+        health_url: health_endpoint.to_url(),
+        health_status: health.status,
+        server_name,
+        server_version,
+        session_id,
+        tool_count: tools.len(),
+        tools,
+    };
+
+    if json {
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&report).map_err(SmokeError::Json)?
+        );
+    } else {
+        println!(
+            "MCP HTTP smoke passed: {} v{}",
+            report.server_name, report.server_version
+        );
+        println!("Health: {} ({})", report.health_status, report.health_url);
+        println!("Endpoint: {}", report.url);
+        println!("Session: {}", report.session_id);
+        println!("Tools: {}", report.tool_count);
+        for tool in &report.tools {
+            println!("  - {tool}");
+        }
+    }
+
+    Ok(())
+}
+
+fn json_string_field<'a>(value: &'a Value, field: &'static str) -> Result<&'a str, SmokeError> {
+    value
+        .get(field)
+        .and_then(Value::as_str)
+        .ok_or(SmokeError::MissingField(field))
+}
+
+fn mcp_post(
+    endpoint: &HttpEndpoint,
+    session_id: Option<&str>,
+    body: &str,
+) -> Result<HttpResponse, SmokeError> {
+    let mut headers = vec![
+        ("Content-Type", "application/json"),
+        ("Accept", "application/json, text/event-stream"),
+    ];
+    if let Some(session_id) = session_id {
+        headers.push(("Mcp-Session-Id", session_id));
+    }
+    http_request(endpoint, HttpMethod::Post, &headers, Some(body))
+}
+
+#[derive(Debug, Clone, Copy)]
+enum HttpMethod {
+    Get,
+    Post,
+}
+
+impl HttpMethod {
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::Get => "GET",
+            Self::Post => "POST",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct HttpEndpoint {
+    host: String,
+    port: u16,
+    path: String,
+}
+
+impl HttpEndpoint {
+    fn parse(url: &str) -> Result<Self, SmokeError> {
+        let rest = url
+            .strip_prefix("http://")
+            .ok_or_else(|| SmokeError::InvalidUrl(url.to_string()))?;
+        let (authority, path) = rest.split_once('/').unwrap_or((rest, ""));
+        if authority.is_empty() {
+            return Err(SmokeError::InvalidUrl(url.to_string()));
+        }
+        let (host, port) = authority
+            .rsplit_once(':')
+            .map(|(host, port)| {
+                let port = port
+                    .parse::<u16>()
+                    .map_err(|_| SmokeError::InvalidUrl(url.to_string()))?;
+                Ok((host, port))
+            })
+            .unwrap_or_else(|| Ok((authority, 80)))?;
+        if host.is_empty() {
+            return Err(SmokeError::InvalidUrl(url.to_string()));
+        }
+        Ok(Self {
+            host: host.to_string(),
+            port,
+            path: format!("/{path}"),
+        })
+    }
+
+    fn socket_addr(&self) -> Result<SocketAddr, SmokeError> {
+        (self.host.as_str(), self.port)
+            .to_socket_addrs()
+            .map_err(SmokeError::Io)?
+            .next()
+            .ok_or_else(|| SmokeError::InvalidUrl(self.to_url()))
+    }
+
+    fn host_header(&self) -> String {
+        format!("{}:{}", self.host, self.port)
+    }
+
+    fn to_url(&self) -> String {
+        format!("http://{}:{}{}", self.host, self.port, self.path)
+    }
+
+    fn with_path(&self, path: &str) -> Self {
+        Self {
+            host: self.host.clone(),
+            port: self.port,
+            path: path.to_string(),
+        }
+    }
+}
+
+#[derive(Debug)]
+struct HttpResponse {
+    status: u16,
+    headers: BTreeMap<String, String>,
+    body: Vec<u8>,
+}
+
+impl HttpResponse {
+    fn header(&self, name: &str) -> Option<&str> {
+        self.headers
+            .get(&name.to_ascii_lowercase())
+            .map(String::as_str)
+    }
+
+    fn body_text(&self) -> String {
+        String::from_utf8_lossy(&self.body).into_owned()
+    }
+}
+
+fn http_request(
+    endpoint: &HttpEndpoint,
+    method: HttpMethod,
+    headers: &[(&str, &str)],
+    body: Option<&str>,
+) -> Result<HttpResponse, SmokeError> {
+    let mut stream = TcpStream::connect_timeout(&endpoint.socket_addr()?, Duration::from_secs(5))
+        .map_err(SmokeError::Io)?;
+    stream
+        .set_read_timeout(Some(Duration::from_secs(5)))
+        .map_err(SmokeError::Io)?;
+    stream
+        .set_write_timeout(Some(Duration::from_secs(5)))
+        .map_err(SmokeError::Io)?;
+
+    let body = body.unwrap_or("");
+    let mut request = format!(
+        "{} {} HTTP/1.1\r\nHost: {}\r\nConnection: close\r\n",
+        method.as_str(),
+        endpoint.path,
+        endpoint.host_header()
+    );
+    for (name, value) in headers {
+        request.push_str(name);
+        request.push_str(": ");
+        request.push_str(value);
+        request.push_str("\r\n");
+    }
+    if !body.is_empty() {
+        request.push_str(&format!("Content-Length: {}\r\n", body.len()));
+    }
+    request.push_str("\r\n");
+    request.push_str(body);
+
+    stream
+        .write_all(request.as_bytes())
+        .map_err(SmokeError::Io)?;
+    let mut response = Vec::new();
+    stream.read_to_end(&mut response).map_err(SmokeError::Io)?;
+    parse_http_response(&response)
+}
+
+fn parse_http_response(response: &[u8]) -> Result<HttpResponse, SmokeError> {
+    let split = response
+        .windows(4)
+        .position(|window| window == b"\r\n\r\n")
+        .ok_or(SmokeError::InvalidHttpResponse)?;
+    let (head, body) = response.split_at(split + 4);
+    let head = std::str::from_utf8(head).map_err(|_| SmokeError::InvalidHttpResponse)?;
+    let mut lines = head.lines();
+    let status_line = lines.next().ok_or(SmokeError::InvalidHttpResponse)?;
+    let status = status_line
+        .split_whitespace()
+        .nth(1)
+        .ok_or(SmokeError::InvalidHttpResponse)?
+        .parse::<u16>()
+        .map_err(|_| SmokeError::InvalidHttpResponse)?;
+
+    let mut headers = BTreeMap::new();
+    for line in lines {
+        if let Some((name, value)) = line.split_once(':') {
+            headers.insert(name.to_ascii_lowercase(), value.trim().to_string());
+        }
+    }
+
+    let body = if headers
+        .get("transfer-encoding")
+        .is_some_and(|value| value.eq_ignore_ascii_case("chunked"))
+    {
+        decode_chunked(body)?
+    } else {
+        body.to_vec()
+    };
+
+    Ok(HttpResponse {
+        status,
+        headers,
+        body,
+    })
+}
+
+fn decode_chunked(mut body: &[u8]) -> Result<Vec<u8>, SmokeError> {
+    let mut decoded = Vec::new();
+    loop {
+        let line_end = body
+            .windows(2)
+            .position(|window| window == b"\r\n")
+            .ok_or(SmokeError::InvalidChunkedResponse)?;
+        let size_line = std::str::from_utf8(&body[..line_end])
+            .map_err(|_| SmokeError::InvalidChunkedResponse)?;
+        let size_hex = size_line.split(';').next().unwrap_or(size_line);
+        let size = usize::from_str_radix(size_hex.trim(), 16)
+            .map_err(|_| SmokeError::InvalidChunkedResponse)?;
+        body = &body[line_end + 2..];
+        if size == 0 {
+            return Ok(decoded);
+        }
+        if body.len() < size + 2 || &body[size..size + 2] != b"\r\n" {
+            return Err(SmokeError::InvalidChunkedResponse);
+        }
+        decoded.extend_from_slice(&body[..size]);
+        body = &body[size + 2..];
+    }
+}
+
+fn sse_json_messages(body: &str) -> Result<Vec<Value>, SmokeError> {
+    let mut messages = Vec::new();
+    for event in body.split("\n\n") {
+        let mut data = String::new();
+        for line in event.lines() {
+            if let Some(value) = line.strip_prefix("data:") {
+                data.push_str(value.trim_start());
+            }
+        }
+        let trimmed = data.trim();
+        if trimmed.starts_with('{') {
+            messages.push(serde_json::from_str(trimmed).map_err(SmokeError::Json)?);
+        }
+    }
+    Ok(messages)
+}
+
+#[derive(Debug)]
+enum SmokeError {
+    InvalidUrl(String),
+    Io(std::io::Error),
+    InvalidHttpResponse,
+    InvalidChunkedResponse,
+    Json(serde_json::Error),
+    MissingSessionId,
+    MissingJsonRpcResult(&'static str),
+    MissingField(&'static str),
+    UnexpectedStatus {
+        context: &'static str,
+        status: u16,
+        body: String,
+    },
+}
+
+impl fmt::Display for SmokeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidUrl(url) => write!(f, "invalid HTTP URL: {url}"),
+            Self::Io(e) => write!(f, "{e}"),
+            Self::InvalidHttpResponse => write!(f, "invalid HTTP response"),
+            Self::InvalidChunkedResponse => write!(f, "invalid chunked HTTP response"),
+            Self::Json(e) => write!(f, "invalid JSON: {e}"),
+            Self::MissingSessionId => {
+                write!(f, "initialize response did not include Mcp-Session-Id")
+            }
+            Self::MissingJsonRpcResult(method) => {
+                write!(f, "{method} response did not include a JSON-RPC result")
+            }
+            Self::MissingField(field) => write!(f, "response is missing {field}"),
+            Self::UnexpectedStatus {
+                context,
+                status,
+                body,
+            } => {
+                write!(f, "{context} returned HTTP {status}")?;
+                if !body.trim().is_empty() {
+                    write!(f, ": {}", body.trim())?;
+                }
+                Ok(())
+            }
+        }
+    }
+}
+
+impl std::error::Error for SmokeError {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_cli_help_parses_before_startup() {
+        let err = Cli::try_parse_from(["nms-copilot", "--help"]).unwrap_err();
+        assert_eq!(err.kind(), clap::error::ErrorKind::DisplayHelp);
+    }
+
+    #[test]
+    fn test_setup_flag_parses() {
+        let cli = Cli::try_parse_from(["nms-copilot", "--setup"]).unwrap();
+        assert!(cli.setup);
+    }
+
+    #[test]
+    fn test_mcp_smoke_command_parses() {
+        let cli = Cli::try_parse_from([
+            "nms-copilot",
+            "mcp-smoke",
+            "--url",
+            "http://127.0.0.1:5055/mcp",
+            "--json",
+        ])
+        .unwrap();
+
+        assert!(matches!(
+            cli.command,
+            Some(CliCommand::McpSmoke { json: true, .. })
+        ));
+    }
+
+    #[test]
+    fn test_mcp_addr_defaults_to_config() {
+        let cli = Cli::try_parse_from(["nms-copilot"]).unwrap();
+        let mut config = Config::default();
+        config.mcp.port = 5055;
+
+        assert_eq!(mcp_http_addr(&cli, &config).to_string(), "127.0.0.1:5055");
+    }
+
+    #[test]
+    fn test_mcp_addr_http_flag_uses_default() {
+        let cli = Cli::try_parse_from(["nms-copilot", "--http"]).unwrap();
+
+        assert_eq!(
+            mcp_http_addr(&cli, &Config::default()).to_string(),
+            DEFAULT_MCP_HTTP_ADDR
+        );
+    }
+
+    #[test]
+    fn test_mcp_addr_http_arg_overrides_config() {
+        let cli = Cli::try_parse_from(["nms-copilot", "--http", "127.0.0.1:5055"]).unwrap();
+        let config = Config::default();
+
+        assert_eq!(mcp_http_addr(&cli, &config).to_string(), "127.0.0.1:5055");
+    }
+
+    #[test]
+    fn test_mcp_http_url_uses_configured_addr() {
+        let mut config = Config::default();
+        config.mcp.port = 5055;
+
+        assert_eq!(
+            mcp_http_url(config.mcp_http_addr(), "/mcp"),
+            "http://127.0.0.1:5055/mcp"
+        );
+    }
+
+    #[test]
+    fn test_http_endpoint_parse() {
+        let endpoint = HttpEndpoint::parse("http://127.0.0.1:5055/mcp").unwrap();
+
+        assert_eq!(endpoint.host, "127.0.0.1");
+        assert_eq!(endpoint.port, 5055);
+        assert_eq!(endpoint.path, "/mcp");
+        assert_eq!(endpoint.to_url(), "http://127.0.0.1:5055/mcp");
+        assert_eq!(
+            endpoint.with_path("/health").to_url(),
+            "http://127.0.0.1:5055/health"
+        );
+    }
+
+    #[test]
+    fn test_sse_json_messages_extracts_json_rpc_events() {
+        let body = r#"data: 
+id: 0
+retry: 3000
+
+data: {"jsonrpc":"2.0","id":2,"result":{"tools":[{"name":"health"}]}}
+id: 0/0
+
+"#;
+
+        let messages = sse_json_messages(body).unwrap();
+
+        assert_eq!(messages.len(), 1);
+        assert_eq!(messages[0]["id"], 2);
+        assert_eq!(messages[0]["result"]["tools"][0]["name"], "health");
+    }
 }

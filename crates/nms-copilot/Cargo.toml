@@ -45,5 +45,7 @@ default = ["http"]
 http = ["fabryk-mcp/http"]
 
 [dev-dependencies]
+assert_cmd = { workspace = true }
 nms-save = { workspace = true }
+predicates = { workspace = true }
 tempfile = "3"

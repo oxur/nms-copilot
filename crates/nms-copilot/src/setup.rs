@@ -265,18 +265,31 @@ fn save_config_to_file(dir: &Path, file: &Path, format: &str) -> std::io::Result
     let config_path = crate::paths::config_path();
     crate::paths::ensure_data_dir()?;
 
-    // Read existing config as toml::Value to preserve other sections
-    let mut table = if config_path.exists() {
+    let config = if config_path.exists() {
         let content = std::fs::read_to_string(&config_path)?;
-        content
-            .parse::<toml::Value>()
-            .unwrap_or(toml::Value::Table(toml::map::Map::new()))
+        toml::from_str::<toml::Value>(&content).unwrap_or(toml::Value::Table(toml::map::Map::new()))
     } else {
         toml::Value::Table(toml::map::Map::new())
     };
 
-    // Update [save] section
-    let root = table.as_table_mut().unwrap();
+    let config = update_save_config(config, dir, file, format);
+    let serialized = toml::to_string_pretty(&config).map_err(std::io::Error::other)?;
+    std::fs::write(&config_path, serialized)
+}
+
+fn update_save_config(
+    mut config: toml::Value,
+    dir: &Path,
+    file: &Path,
+    format: &str,
+) -> toml::Value {
+    if !config.is_table() {
+        config = toml::Value::Table(toml::map::Map::new());
+    }
+
+    let root = config
+        .as_table_mut()
+        .expect("config value was normalized to a table");
     let mut save_table = toml::map::Map::new();
     save_table.insert(
         "dir".to_string(),
@@ -292,12 +305,13 @@ fn save_config_to_file(dir: &Path, file: &Path, format: &str) -> std::io::Result
     );
     root.insert("save".to_string(), toml::Value::Table(save_table));
 
-    std::fs::write(&config_path, table.to_string())
+    config
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::config::Config;
     use std::time::Duration;
 
     #[test]
@@ -350,6 +364,36 @@ mod tests {
 
         let err = SetupError::NoInstallation;
         assert_eq!(err.to_string(), "no NMS installation found");
+    }
+
+    #[test]
+    fn test_update_save_config_preserves_mcp_section() {
+        let config = toml::from_str::<toml::Value>(
+            r#"
+            [mcp]
+            host = "127.0.0.1"
+            port = 5055
+        "#,
+        )
+        .unwrap();
+
+        let updated = update_save_config(
+            config,
+            Path::new("/Users/test/NMS/st_123"),
+            Path::new("/Users/test/NMS/st_123/save5.hg"),
+            "auto",
+        );
+
+        let serialized = toml::to_string_pretty(&updated).unwrap();
+        assert!(serialized.contains("[save]"));
+        assert!(serialized.contains("[mcp]"));
+
+        let parsed: Config = toml::from_str(&serialized).unwrap();
+        assert_eq!(
+            parsed.save.file.as_deref().unwrap().to_str().unwrap(),
+            "/Users/test/NMS/st_123/save5.hg"
+        );
+        assert_eq!(parsed.mcp_http_addr().to_string(), "127.0.0.1:5055");
     }
 
     /// Helper to build a SaveSlot for testing via the locate module.

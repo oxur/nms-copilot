@@ -184,6 +184,7 @@ async fn run_mcp_server(
             // can signal readiness before entering the serve loop.
             let service = server.into_http_service();
             let router = fabryk_mcp::axum::Router::new()
+                .route("/mcp-info", fabryk_mcp::axum::routing::get(mcp_info))
                 .merge(fabryk_mcp::health_router(vec![service_handle.clone()]))
                 .nest_service("/mcp", service);
 
@@ -212,6 +213,65 @@ async fn run_mcp_server(
 
     service_handle.set_state(ServiceState::Stopped);
     Ok(())
+}
+
+#[cfg(feature = "http")]
+async fn mcp_info() -> fabryk_mcp::axum::Json<serde_json::Value> {
+    fabryk_mcp::axum::Json(mcp_info_json())
+}
+
+#[cfg(feature = "http")]
+pub fn mcp_info_json() -> serde_json::Value {
+    serde_json::json!({
+        "name": "nms-copilot",
+        "version": env!("CARGO_PKG_VERSION"),
+        "transport": "streamable-http",
+        "stateful": true,
+        "endpoints": {
+            "mcp": "/mcp",
+            "health": "/health",
+            "info": "/mcp-info"
+        },
+        "session_header": "Mcp-Session-Id",
+        "required_headers": {
+            "post": {
+                "accept": "application/json, text/event-stream",
+                "content_type": "application/json"
+            },
+            "get": {
+                "accept": "text/event-stream"
+            }
+        },
+        "lifecycle": [
+            "POST initialize without Mcp-Session-Id",
+            "Capture Mcp-Session-Id from the initialize response header",
+            "POST notifications/initialized with Mcp-Session-Id",
+            "POST tools/list or tools/call with Mcp-Session-Id"
+        ],
+        "curl_example": "curl -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' --data '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-03-26\",\"capabilities\":{},\"clientInfo\":{\"name\":\"probe\",\"version\":\"1.0\"}}}' http://127.0.0.1:5055/mcp"
+    })
+}
+
+#[cfg(all(test, feature = "http"))]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_mcp_info_json_documents_streamable_http() {
+        let info = mcp_info_json();
+
+        assert_eq!(info["name"], "nms-copilot");
+        assert_eq!(info["transport"], "streamable-http");
+        assert_eq!(info["stateful"], true);
+        assert_eq!(info["endpoints"]["mcp"], "/mcp");
+        assert_eq!(info["endpoints"]["health"], "/health");
+        assert_eq!(info["endpoints"]["info"], "/mcp-info");
+        assert_eq!(info["session_header"], "Mcp-Session-Id");
+        assert_eq!(
+            info["required_headers"]["post"]["accept"],
+            "application/json, text/event-stream"
+        );
+    }
 }
 
 /// Background loop: receive deltas from watcher, apply to model, notify clients.
