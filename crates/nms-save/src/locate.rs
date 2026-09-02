@@ -86,10 +86,10 @@ fn parse_account_kind(name: &str) -> AccountKind {
     if name == "DefaultUser" {
         return AccountKind::Gog;
     }
-    if let Some(id_str) = name.strip_prefix("st_") {
-        if let Ok(id) = id_str.parse::<u64>() {
-            return AccountKind::Steam(id);
-        }
+    if let Some(id_str) = name.strip_prefix("st_")
+        && let Ok(id) = id_str.parse::<u64>()
+    {
+        return AccountKind::Steam(id);
     }
     AccountKind::Unknown(name.to_string())
 }
@@ -223,7 +223,7 @@ fn parse_save_filename(name: &str) -> Option<(u8, SaveType)> {
 
     // odd index = manual, even = auto
     let slot = file_index.div_ceil(2);
-    let save_type = if file_index % 2 == 0 {
+    let save_type = if file_index.is_multiple_of(2) {
         SaveType::Auto
     } else {
         SaveType::Manual
@@ -393,12 +393,12 @@ pub fn find_most_recent_save() -> Result<SaveFile, LocateError> {
 
     let mut best: Option<SaveFile> = None;
     for account in &accounts {
-        if let Ok(saves) = list_saves(account.path()) {
-            if let Some(newest) = saves.into_iter().next() {
-                let dominated = best.as_ref().is_none_or(|b| newest.modified > b.modified);
-                if dominated {
-                    best = Some(newest);
-                }
+        if let Ok(saves) = list_saves(account.path())
+            && let Some(newest) = saves.into_iter().next()
+        {
+            let dominated = best.as_ref().is_none_or(|b| newest.modified > b.modified);
+            if dominated {
+                best = Some(newest);
             }
         }
     }

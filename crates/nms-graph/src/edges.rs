@@ -276,7 +276,7 @@ mod tests {
     fn test_knn_edges_all_nodes_connected() {
         let mut model = line_model(5, 10);
         model.build_edges(EdgeStrategy::Knn { k: 2 });
-        for (_, &node_idx) in &model.node_map {
+        for &node_idx in model.node_map.values() {
             let degree = model.graph.edges(node_idx).count();
             assert!(degree >= 1, "Node with 0 edges found");
         }

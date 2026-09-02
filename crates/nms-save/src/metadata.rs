@@ -312,8 +312,8 @@ mod tests {
         words[3] = 0x11223344;
         words[4] = 0x55667788;
         words[5] = 0x99AABBCC;
-        for i in 6..14 {
-            words[i] = (i as u32) * 0x01010101;
+        for (i, word) in words.iter_mut().enumerate().take(14).skip(6) {
+            *word = (i as u32) * 0x01010101;
         }
         words[14] = 2_000_000;
         words[15] = 800_000;

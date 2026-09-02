@@ -211,10 +211,10 @@ impl FromStr for Glyph {
         }
 
         // Try single hex character
-        if s.len() == 1 {
-            if let Some(v) = s.chars().next().and_then(|c| c.to_digit(16)) {
-                return Ok(Self(v as u8));
-            }
+        if s.len() == 1
+            && let Some(v) = s.chars().next().and_then(|c| c.to_digit(16))
+        {
+            return Ok(Self(v as u8));
         }
 
         // Try emoji match (strip trailing variation selector U+FE0F for comparison)

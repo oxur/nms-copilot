@@ -128,22 +128,21 @@ fn find_save_directory(theme: &ColorfulTheme) -> Result<PathBuf, SetupError> {
 /// Select an account directory. Auto-selects if there is only one.
 fn select_account(save_dir: &Path, theme: &ColorfulTheme) -> Result<AccountDir, SetupError> {
     // If the user pointed directly to an account dir (contains save*.hg), use it
-    if list_saves(save_dir).is_ok() {
-        if let Some(parent) = save_dir.parent() {
-            if let Ok(accounts) = list_accounts(parent) {
-                let matching: Vec<_> = accounts
-                    .into_iter()
-                    .filter(|a| a.path() == save_dir)
-                    .collect();
-                if let Some(account) = matching.into_iter().next() {
-                    println!(
-                        "Using account: {} ({})",
-                        account.name().yellow(),
-                        account.kind()
-                    );
-                    return Ok(account);
-                }
-            }
+    if list_saves(save_dir).is_ok()
+        && let Some(parent) = save_dir.parent()
+        && let Ok(accounts) = list_accounts(parent)
+    {
+        let matching: Vec<_> = accounts
+            .into_iter()
+            .filter(|a| a.path() == save_dir)
+            .collect();
+        if let Some(account) = matching.into_iter().next() {
+            println!(
+                "Using account: {} ({})",
+                account.name().yellow(),
+                account.kind()
+            );
+            return Ok(account);
         }
     }
 

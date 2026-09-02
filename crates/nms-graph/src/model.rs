@@ -328,19 +328,19 @@ impl GalaxyModel {
                 self.planets.insert(key, planet.clone());
 
                 // Also add to the system's planet list
-                if let Some(system) = self.systems.get_mut(sys_id) {
-                    if !system.planets.iter().any(|p| p.index == planet.index) {
-                        system.planets.push(planet.clone());
-                    }
+                if let Some(system) = self.systems.get_mut(sys_id)
+                    && !system.planets.iter().any(|p| p.index == planet.index)
+                {
+                    system.planets.push(planet.clone());
                 }
             }
         }
 
         // 3. Update player position
-        if let Some(ref moved) = delta.player_moved {
-            if let Some(ref mut ps) = self.player_state {
-                ps.current_address = moved.to;
-            }
+        if let Some(ref moved) = delta.player_moved
+            && let Some(ref mut ps) = self.player_state
+        {
+            ps.current_address = moved.to;
         }
 
         // 4. Insert new bases

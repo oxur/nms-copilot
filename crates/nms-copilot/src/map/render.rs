@@ -87,16 +87,16 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
     }
 
     // Player position
-    if let Some((px, pz)) = state.player_pos {
-        if let Some((col, row)) = voxel_to_cell(
+    if let Some((px, pz)) = state.player_pos
+        && let Some((col, row)) = voxel_to_cell(
             f64::from(px),
             f64::from(pz),
             state,
             inner.width,
             inner.height,
-        ) {
-            overlays.insert((col, row), ("@".to_string(), Color::Green));
-        }
+        )
+    {
+        overlays.insert((col, row), ("@".to_string(), Color::Green));
     }
 
     // Render each row as a Line of Spans

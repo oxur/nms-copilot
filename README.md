@@ -303,7 +303,7 @@ make build
 
 ## Requirements
 
-- **Rust** 1.85+ (2024 edition)
+- **Rust** 1.91+ (2024 edition)
 - **No Man's Sky** save files (Steam, GOG, or Mac)
 - A terminal with emoji support (most modern terminals)
 

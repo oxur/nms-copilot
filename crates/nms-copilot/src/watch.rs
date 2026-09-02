@@ -34,12 +34,10 @@ pub fn drain_watch_events(
     }
 
     // Write updated cache if any deltas were applied
-    if any_delta {
-        if let Some(path) = cache_path {
-            let data = nms_cache::extract_cache_data(model, save_version);
-            if let Err(e) = nms_cache::write_cache(&data, path) {
-                eprintln!("Warning: could not update cache: {e}");
-            }
+    if any_delta && let Some(path) = cache_path {
+        let data = nms_cache::extract_cache_data(model, save_version);
+        if let Err(e) = nms_cache::write_cache(&data, path) {
+            eprintln!("Warning: could not update cache: {e}");
         }
     }
 }

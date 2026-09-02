@@ -232,10 +232,10 @@ fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, Str
 
             for i in 0..=255u8 {
                 let g = Galaxy::by_index(i);
-                if let Some(ref tf) = type_filter {
-                    if g.galaxy_type != *tf {
-                        continue;
-                    }
+                if let Some(ref tf) = type_filter
+                    && g.galaxy_type != *tf
+                {
+                    continue;
                 }
                 builder.push_record([
                     g.index.to_string(),

@@ -197,20 +197,20 @@ impl GalaxyModel {
 
 /// Check if a planet matches the given filter criteria.
 fn matches_filter(planet: &Planet, filter: &BiomeFilter) -> bool {
-    if let Some(biome) = filter.biome {
-        if planet.biome != Some(biome) {
-            return false;
-        }
+    if let Some(biome) = filter.biome
+        && planet.biome != Some(biome)
+    {
+        return false;
     }
-    if let Some(subtype) = filter.biome_subtype {
-        if planet.biome_subtype != Some(subtype) {
-            return false;
-        }
+    if let Some(subtype) = filter.biome_subtype
+        && planet.biome_subtype != Some(subtype)
+    {
+        return false;
     }
-    if let Some(infested) = filter.infested {
-        if planet.infested != infested {
-            return false;
-        }
+    if let Some(infested) = filter.infested
+        && planet.infested != infested
+    {
+        return false;
     }
     if filter.named_only && planet.name.is_none() {
         return false;

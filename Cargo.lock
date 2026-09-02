@@ -1031,21 +1031,23 @@ dependencies = [
 
 [[package]]
 name = "fabryk-content"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fb3ee7c31829f9592523296cf6343840c084a9f0d6633a48f75da25a06e9571c"
 dependencies = [
  "fabryk-core",
  "log",
  "pulldown-cmark",
  "regex",
  "serde",
- "strsim",
- "tokio",
  "yaml_serde",
 ]
 
 [[package]]
 name = "fabryk-core"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "47302235b8fde4da73d8fe859c325613f51c3d5768aec32df8a16f3b034a8717"
 dependencies = [
  "async-trait",
  "async-walkdir",
@@ -1063,12 +1065,13 @@ dependencies = [
 
 [[package]]
 name = "fabryk-fts"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8f859b3bddac652478711c404b547de8ea36c405f23e377e41348078ddef549d"
 dependencies = [
  "async-trait",
  "async-walkdir",
  "chrono",
- "fabryk-content",
  "fabryk-core",
  "futures",
  "log",
@@ -1079,7 +1082,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-graph"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "29dad000bbde2acd20c490da2df95d4e0c94fc00e09451296477bcd9ab87ed2b"
 dependencies = [
  "async-trait",
  "chrono",
@@ -1095,7 +1100,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "80ab8a27882862bf545dd42c43ebe69a4fde572862cd41573ebadd90a113784a"
 dependencies = [
  "fabryk-mcp-auth",
  "fabryk-mcp-content",
@@ -1107,7 +1114,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-auth"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "201a0f364e19654dfc01cbe0aa1f2eb42781c407e90ae1da6676e2d1857d25b5"
 dependencies = [
  "axum",
  "serde_json",
@@ -1115,7 +1124,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-content"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5c5dacf9353e861023a4c0df2b88cfe6749a57ddbb1c65303793a55112f5c541"
 dependencies = [
  "async-trait",
  "fabryk-content",
@@ -1124,18 +1135,18 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
- "strsim",
  "tokio",
 ]
 
 [[package]]
 name = "fabryk-mcp-core"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d5a71d3bf63884495ad90bbde02bee2a4b03d407359b75e4a98608c6a1e33c6"
 dependencies = [
  "async-trait",
  "axum",
  "fabryk-core",
- "fabryk-fts",
  "log",
  "rmcp",
  "schemars",
@@ -1146,7 +1157,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-fts"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5bb297633b10a8855a8b714e7af7c1a5088ebfe31139fe2e9de101b4c25c9da2"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1160,7 +1173,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-graph"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8bd26ca3fe4ecbed6bc549e0b020de48e0809055baae9bbcacfb89ed148b254e"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1175,7 +1190,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-semantic"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fbd0cc96479af9b25925f2859c3303302b199eb5fc3fe9077829d2af51ea00c0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1191,7 +1208,9 @@ dependencies = [
 
 [[package]]
 name = "fabryk-vector"
-version = "0.5.0"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9d840c4969059c15132737cf08feaea10987f95f3e376de0d156a6387e5bb2a1"
 dependencies = [
  "async-trait",
  "async-walkdir",

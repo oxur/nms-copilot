@@ -195,12 +195,12 @@ mod tests {
 
     #[test]
     fn test_max_consecutive_failures_constant() {
-        assert!(MAX_CONSECUTIVE_FAILURES > 0);
+        const { assert!(MAX_CONSECUTIVE_FAILURES > 0) };
     }
 
     #[test]
     fn test_file_stability_check_ms_constant() {
-        assert!(FILE_STABILITY_CHECK_MS > 0);
-        assert!(FILE_STABILITY_CHECK_MS <= 1000);
+        const { assert!(FILE_STABILITY_CHECK_MS > 0) };
+        const { assert!(FILE_STABILITY_CHECK_MS <= 1000) };
     }
 }

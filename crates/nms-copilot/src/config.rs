@@ -243,26 +243,25 @@ impl Config {
         }
 
         // 2. Legacy path as file
-        if let Some(ref path) = self.save.path {
-            if path.is_file() {
-                return Some(path.clone());
-            }
+        if let Some(ref path) = self.save.path
+            && path.is_file()
+        {
+            return Some(path.clone());
         }
 
         // 3. Explicit dir — find most recent save in it
-        if let Some(ref dir) = self.save.dir {
-            if let Ok(save) = nms_save::locate::find_most_recent_save_in(dir) {
-                return Some(save.path().to_path_buf());
-            }
+        if let Some(ref dir) = self.save.dir
+            && let Ok(save) = nms_save::locate::find_most_recent_save_in(dir)
+        {
+            return Some(save.path().to_path_buf());
         }
 
         // 4. Legacy path as directory
-        if let Some(ref path) = self.save.path {
-            if path.is_dir() {
-                if let Ok(save) = nms_save::locate::find_most_recent_save_in(path) {
-                    return Some(save.path().to_path_buf());
-                }
-            }
+        if let Some(ref path) = self.save.path
+            && path.is_dir()
+            && let Ok(save) = nms_save::locate::find_most_recent_save_in(path)
+        {
+            return Some(save.path().to_path_buf());
         }
 
         None

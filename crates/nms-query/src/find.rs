@@ -144,10 +144,10 @@ pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindRe
             }
 
             // Apply within_ly if both nearest and within are specified
-            if let Some(radius) = query.within_ly {
-                if dist > radius {
-                    return None;
-                }
+            if let Some(radius) = query.within_ly
+                && dist > radius
+            {
+                return None;
             }
 
             let portal_hex = format!("{:012X}", system.address.packed());

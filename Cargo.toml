@@ -16,8 +16,9 @@ resolver = "3"
 [workspace.package]
 version = "0.2.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.91"
 license = "MIT OR Apache-2.0"
+readme = "README.md"
 repository = "https://github.com/oxur/nms-copilot"
 homepage = "https://github.com/oxur/nms-copilot"
 authors = ["oubiwann <oubiwann@gmail.com>"]
@@ -32,7 +33,7 @@ nms-query = { path = "crates/nms-query", version = "0.2.0" }
 nms-watch = { path = "crates/nms-watch", version = "0.2.0" }
 nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 
-fabryk-mcp = { path = "../ecl/crates/fabryk-mcp", version = "0.5" }
+fabryk-mcp = "0.4.2"
 tokio = { version = "1", features = ["full"] }
 
 oxur-cli = "0.2"

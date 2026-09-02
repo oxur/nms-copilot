@@ -147,7 +147,7 @@ mod tests {
     #[test]
     fn derive_key_slot_0() {
         let key = derive_key(StorageSlot::UserSettings);
-        let expected_key0 = (0u32 ^ KEY_XOR)
+        let expected_key0 = KEY_XOR
             .rotate_left(KEY_ROTATE)
             .wrapping_mul(KEY_MULTIPLY)
             .wrapping_add(KEY_ADD);
