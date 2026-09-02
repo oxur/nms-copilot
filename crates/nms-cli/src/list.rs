@@ -179,7 +179,7 @@ fn list_bases(
     }
 
     let mut bases: Vec<_> = model.bases.values().collect();
-    bases.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+    bases.sort_by_cached_key(|base| base.name.to_lowercase());
 
     let total = bases.len();
     let effective_limit = if all || limit == 0 { total } else { limit };

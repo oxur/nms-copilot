@@ -314,7 +314,7 @@ pub(crate) fn build_galaxy_stats_json(model: &GalaxyModel) -> serde_json::Value 
 
     let biome_breakdown: Vec<Value> = {
         let mut biomes: Vec<_> = result.biome_counts.iter().collect();
-        biomes.sort_by(|a, b| b.1.cmp(a.1));
+        biomes.sort_by_key(|item| std::cmp::Reverse(*item.1));
         biomes
             .iter()
             .map(|(biome, count)| json!({ "biome": biome.to_string(), "count": count }))

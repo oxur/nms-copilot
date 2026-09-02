@@ -32,7 +32,7 @@ nms-query = { path = "crates/nms-query", version = "0.2.0" }
 nms-watch = { path = "crates/nms-watch", version = "0.2.0" }
 nms-cache = { path = "crates/nms-cache", version = "0.2.0" }
 
-fabryk-mcp = { path = "../ecl/crates/fabryk-mcp", version = "0.3" }
+fabryk-mcp = { path = "../ecl/crates/fabryk-mcp", version = "0.5" }
 tokio = { version = "1", features = ["full"] }
 
 oxur-cli = "0.2"

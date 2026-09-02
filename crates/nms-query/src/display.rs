@@ -266,7 +266,7 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
         bbuilder.push_record(["Name", "Count"]);
 
         let mut biomes: Vec<_> = result.biome_counts.iter().collect();
-        biomes.sort_by(|a, b| b.1.cmp(a.1));
+        biomes.sort_by_key(|item| std::cmp::Reverse(*item.1));
 
         for (biome, count) in biomes {
             bbuilder.push_record([biome.to_string(), count.to_string()]);

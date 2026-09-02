@@ -268,7 +268,7 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     //    Sort by emoji byte length descending to match longest first
     let mut by_len: Vec<(usize, &GlyphInfo)> =
         GLYPH_TABLE.iter().map(|g| (g.emoji.len(), g)).collect();
-    by_len.sort_by(|a, b| b.0.cmp(&a.0));
+    by_len.sort_by_key(|item| std::cmp::Reverse(item.0));
 
     for (_, info) in &by_len {
         if let Some(rest) = input.strip_prefix(info.emoji) {
@@ -281,7 +281,7 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
 
     // 2. Try glyph name match (case-insensitive prefix, longest first)
     let mut names: Vec<&GlyphInfo> = GLYPH_TABLE.iter().collect();
-    names.sort_by(|a, b| b.name.len().cmp(&a.name.len()));
+    names.sort_by_key(|info| std::cmp::Reverse(info.name.len()));
 
     let input_lower = input.to_lowercase();
     for info in &names {

@@ -1031,19 +1031,21 @@ dependencies = [
 
 [[package]]
 name = "fabryk-content"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "fabryk-core",
  "log",
  "pulldown-cmark",
  "regex",
  "serde",
- "serde_yaml",
+ "strsim",
+ "tokio",
+ "yaml_serde",
 ]
 
 [[package]]
 name = "fabryk-core"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "async-walkdir",
@@ -1053,19 +1055,20 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
- "serde_yaml",
  "shellexpand",
  "thiserror 2.0.18",
  "tokio",
+ "yaml_serde",
 ]
 
 [[package]]
 name = "fabryk-fts"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "async-walkdir",
  "chrono",
+ "fabryk-content",
  "fabryk-core",
  "futures",
  "log",
@@ -1076,7 +1079,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-graph"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "chrono",
@@ -1086,13 +1089,13 @@ dependencies = [
  "petgraph",
  "serde",
  "serde_json",
- "serde_yaml",
  "tokio",
+ "yaml_serde",
 ]
 
 [[package]]
 name = "fabryk-mcp"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "fabryk-mcp-auth",
  "fabryk-mcp-content",
@@ -1104,7 +1107,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-auth"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "axum",
  "serde_json",
@@ -1112,7 +1115,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-content"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "fabryk-content",
@@ -1121,16 +1124,18 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
+ "strsim",
  "tokio",
 ]
 
 [[package]]
 name = "fabryk-mcp-core"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "axum",
  "fabryk-core",
+ "fabryk-fts",
  "log",
  "rmcp",
  "schemars",
@@ -1141,7 +1146,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-fts"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1155,7 +1160,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-graph"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1170,7 +1175,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-mcp-semantic"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "fabryk-core",
@@ -1186,7 +1191,7 @@ dependencies = [
 
 [[package]]
 name = "fabryk-vector"
-version = "0.3.0"
+version = "0.5.0"
 dependencies = [
  "async-trait",
  "async-walkdir",
@@ -1198,8 +1203,8 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
- "serde_yaml",
  "tokio",
+ "yaml_serde",
 ]
 
 [[package]]
@@ -1877,6 +1882,12 @@ checksum = "1744e39d1d6a9948f4f388969627434e31128196de472883b39f148769bfe30a"
 dependencies = [
  "libc",
 ]
+
+[[package]]
+name = "libyaml-rs"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2e126dda6f34391ab7b444f9922055facc83c07a910da3eb16f1e4d9c45dc777"
 
 [[package]]
 name = "line-clipping"
@@ -3365,19 +3376,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "serde_yaml"
-version = "0.9.34+deprecated"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6a8b1a1a2ebf674015cc02edccce75287f1a0130d394307b36743c2f5d504b47"
-dependencies = [
- "indexmap",
- "itoa",
- "ryu",
- "serde",
- "unsafe-libyaml",
-]
-
-[[package]]
 name = "sha2"
 version = "0.10.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4118,12 +4116,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ebc1c04c71510c7f702b52b7c350734c9ff1295c464a03335b00bb84fc54f853"
 
 [[package]]
-name = "unsafe-libyaml"
-version = "0.2.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861"
-
-[[package]]
 name = "utf8parse"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4860,6 +4852,19 @@ dependencies = [
  "serde_json",
  "unicode-xid",
  "wasmparser",
+]
+
+[[package]]
+name = "yaml_serde"
+version = "0.10.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "33b729a08a9a6be689bbad3e2bf8015926db54b6622cc89c3a5f7dc174b9e918"
+dependencies = [
+ "indexmap",
+ "itoa",
+ "libyaml-rs",
+ "ryu",
+ "serde",
 ]
 
 [[package]]

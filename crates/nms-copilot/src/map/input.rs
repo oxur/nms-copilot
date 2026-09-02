@@ -52,10 +52,8 @@ fn handle_key(key: KeyEvent, state: &mut MapState) {
 
         // Zoom
         KeyCode::Enter | KeyCode::Char('+') => state.zoom_in(),
-        KeyCode::Esc | KeyCode::Char('-') => {
-            if !state.zoom_out() {
-                state.should_quit = true;
-            }
+        KeyCode::Esc | KeyCode::Char('-') if !state.zoom_out() => {
+            state.should_quit = true;
         }
 
         // Commands

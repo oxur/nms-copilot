@@ -3,7 +3,7 @@
 //! Tests exercise the compiled binary via `assert_cmd`, verifying that
 //! subcommands produce expected output and exit codes.
 
-use assert_cmd::Command;
+use assert_cmd::cargo::cargo_bin_cmd;
 use predicates::prelude::*;
 use std::path::PathBuf;
 
@@ -22,8 +22,7 @@ fn fixture_path(name: &str) -> PathBuf {
 
 #[test]
 fn test_nms_convert_glyphs_roundtrip_displays_all_formats() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "01717D8A4EA2"])
         .assert()
         .success()
@@ -39,8 +38,7 @@ fn test_nms_convert_glyphs_roundtrip_displays_all_formats() {
 
 #[test]
 fn test_nms_convert_glyphs_lowercase_accepted() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "01717d8a4ea2"])
         .assert()
         .success()
@@ -49,8 +47,7 @@ fn test_nms_convert_glyphs_lowercase_accepted() {
 
 #[test]
 fn test_nms_convert_coords_displays_conversion() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--coords", "0EA2:007D:08A4:0171"])
         .assert()
         .success()
@@ -62,8 +59,7 @@ fn test_nms_convert_coords_displays_conversion() {
 
 #[test]
 fn test_nms_convert_ga_displays_conversion() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--ga", "0x01717D8A4EA2"])
         .assert()
         .success()
@@ -72,8 +68,7 @@ fn test_nms_convert_ga_displays_conversion() {
 
 #[test]
 fn test_nms_convert_voxel_with_ssi_displays_conversion() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "convert",
             "--voxel",
@@ -95,8 +90,7 @@ fn test_nms_convert_voxel_with_ssi_displays_conversion() {
 
 #[test]
 fn test_nms_convert_voxel_without_ssi_fails() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--voxel", "100,50,-200"])
         .assert()
         .failure()
@@ -105,8 +99,7 @@ fn test_nms_convert_voxel_without_ssi_fails() {
 
 #[test]
 fn test_nms_convert_glyphs_invalid_length_fails() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "0171"])
         .assert()
         .failure()
@@ -115,8 +108,7 @@ fn test_nms_convert_glyphs_invalid_length_fails() {
 
 #[test]
 fn test_nms_convert_glyphs_invalid_hex_fails() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "ZZZZZZZZZZZZ"])
         .assert()
         .failure()
@@ -125,8 +117,7 @@ fn test_nms_convert_glyphs_invalid_hex_fails() {
 
 #[test]
 fn test_nms_convert_galaxy_name_euclid() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "01717D8A4EA2", "--galaxy", "Euclid"])
         .assert()
         .success()
@@ -135,8 +126,7 @@ fn test_nms_convert_galaxy_name_euclid() {
 
 #[test]
 fn test_nms_convert_galaxy_name_hilbert() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "convert",
             "--glyphs",
@@ -151,19 +141,14 @@ fn test_nms_convert_galaxy_name_hilbert() {
 
 #[test]
 fn test_nms_convert_no_input_fails() {
-    Command::cargo_bin("nms")
-        .unwrap()
-        .args(["convert"])
-        .assert()
-        .failure();
+    cargo_bin_cmd!("nms").args(["convert"]).assert().failure();
 }
 
 // ---- Completions command tests ----
 
 #[test]
 fn test_nms_completions_bash_generates_script() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["completions", "bash"])
         .assert()
         .success()
@@ -172,8 +157,7 @@ fn test_nms_completions_bash_generates_script() {
 
 #[test]
 fn test_nms_completions_zsh_generates_script() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["completions", "zsh"])
         .assert()
         .success()
@@ -182,8 +166,7 @@ fn test_nms_completions_zsh_generates_script() {
 
 #[test]
 fn test_nms_completions_fish_generates_script() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["completions", "fish"])
         .assert()
         .success()
@@ -194,8 +177,7 @@ fn test_nms_completions_fish_generates_script() {
 
 #[test]
 fn test_nms_unknown_command_fails_with_error() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["nonexistent-command"])
         .assert()
         .failure()
@@ -204,8 +186,7 @@ fn test_nms_unknown_command_fails_with_error() {
 
 #[test]
 fn test_nms_help_shows_usage() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["--help"])
         .assert()
         .success()
@@ -222,8 +203,7 @@ fn test_nms_help_shows_usage() {
 
 #[test]
 fn test_nms_version_shows_version() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["--version"])
         .assert()
         .success()
@@ -232,8 +212,7 @@ fn test_nms_version_shows_version() {
 
 #[test]
 fn test_nms_no_args_shows_error() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .assert()
         .failure()
         .stderr(predicate::str::contains("Usage"));
@@ -244,8 +223,7 @@ fn test_nms_no_args_shows_error() {
 #[test]
 fn test_nms_info_with_fixture_shows_summary() {
     let fixture = fixture_path("minimal_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
@@ -259,8 +237,7 @@ fn test_nms_info_with_fixture_shows_summary() {
 #[test]
 fn test_nms_info_with_multi_system_fixture_shows_discovery_counts() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
@@ -272,8 +249,7 @@ fn test_nms_info_with_multi_system_fixture_shows_discovery_counts() {
 
 #[test]
 fn test_nms_info_nonexistent_save_fails() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["info", "--save", "/tmp/nonexistent_save_file.json"])
         .assert()
         .failure()
@@ -283,8 +259,7 @@ fn test_nms_info_nonexistent_save_fails() {
 #[test]
 fn test_nms_find_with_fixture_returns_results() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["find", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
@@ -294,8 +269,7 @@ fn test_nms_find_with_fixture_returns_results() {
 #[test]
 fn test_nms_find_with_biome_filter_lush() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "find",
             "--save",
@@ -310,8 +284,7 @@ fn test_nms_find_with_biome_filter_lush() {
 #[test]
 fn test_nms_find_with_biome_filter_frozen() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "find",
             "--save",
@@ -326,8 +299,7 @@ fn test_nms_find_with_biome_filter_frozen() {
 #[test]
 fn test_nms_find_with_nearest_limit() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "find",
             "--save",
@@ -342,8 +314,7 @@ fn test_nms_find_with_nearest_limit() {
 #[test]
 fn test_nms_find_invalid_biome_fails() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "find",
             "--save",
@@ -359,8 +330,7 @@ fn test_nms_find_invalid_biome_fails() {
 #[test]
 fn test_nms_stats_with_fixture_shows_statistics() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["stats", "--save", fixture.to_str().unwrap()])
         .assert()
         .success()
@@ -370,8 +340,7 @@ fn test_nms_stats_with_fixture_shows_statistics() {
 #[test]
 fn test_nms_stats_biomes_flag_shows_biome_table() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["stats", "--save", fixture.to_str().unwrap(), "--biomes"])
         .assert()
         .success()
@@ -381,8 +350,7 @@ fn test_nms_stats_biomes_flag_shows_biome_table() {
 #[test]
 fn test_nms_export_json_produces_valid_json() {
     let fixture = fixture_path("multi_system_save.json");
-    let output = Command::cargo_bin("nms")
-        .unwrap()
+    let output = cargo_bin_cmd!("nms")
         .args([
             "export",
             "--save",
@@ -403,8 +371,7 @@ fn test_nms_export_json_produces_valid_json() {
 #[test]
 fn test_nms_export_csv_produces_header_row() {
     let fixture = fixture_path("multi_system_save.json");
-    let output = Command::cargo_bin("nms")
-        .unwrap()
+    let output = cargo_bin_cmd!("nms")
         .args([
             "export",
             "--save",
@@ -428,8 +395,7 @@ fn test_nms_export_csv_produces_header_row() {
 #[test]
 fn test_nms_export_invalid_format_fails() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "export",
             "--save",
@@ -445,8 +411,7 @@ fn test_nms_export_invalid_format_fails() {
 #[test]
 fn test_nms_convert_glyphs_roundtrip_coords_consistent() {
     // Convert glyphs, capture output, verify signal booster coords match
-    let output = Command::cargo_bin("nms")
-        .unwrap()
+    let output = cargo_bin_cmd!("nms")
         .args(["convert", "--glyphs", "01717D8A4EA2"])
         .output()
         .unwrap();
@@ -476,8 +441,7 @@ fn test_nms_convert_glyphs_roundtrip_coords_consistent() {
         .expect("Signal booster coords not found in output");
 
     // Feed those coords back in and verify we get the same glyphs
-    let output2 = Command::cargo_bin("nms")
-        .unwrap()
+    let output2 = cargo_bin_cmd!("nms")
         .args(["convert", "--coords", coords])
         .output()
         .unwrap();
@@ -489,8 +453,7 @@ fn test_nms_convert_glyphs_roundtrip_coords_consistent() {
 
 #[test]
 fn test_nms_convert_help_shows_options() {
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args(["convert", "--help"])
         .assert()
         .success()
@@ -504,8 +467,7 @@ fn test_nms_convert_help_shows_options() {
 #[test]
 fn test_nms_find_from_base_reference() {
     let fixture = fixture_path("multi_system_save.json");
-    Command::cargo_bin("nms")
-        .unwrap()
+    cargo_bin_cmd!("nms")
         .args([
             "find",
             "--save",

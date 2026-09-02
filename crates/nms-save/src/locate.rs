@@ -346,7 +346,7 @@ pub fn list_saves(account_dir: &Path) -> Result<Vec<SaveFile>, LocateError> {
     }
 
     // Newest first
-    saves.sort_by(|a, b| b.modified.cmp(&a.modified));
+    saves.sort_by_key(|save| std::cmp::Reverse(save.modified));
     Ok(saves)
 }
 
