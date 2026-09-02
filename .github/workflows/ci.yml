@@ -9,6 +9,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  FABRYK_REF: f19bb3b9bc00295dea8eabb40247b6eb9e6fabdf
 
 jobs:
   check:
@@ -16,6 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout fabryk dependency
+        shell: bash
+        run: |
+          git clone https://github.com/oxur/textrynum ../ecl
+          git -C ../ecl checkout "$FABRYK_REF"
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
@@ -32,6 +38,11 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout fabryk dependency
+        shell: bash
+        run: |
+          git clone https://github.com/oxur/textrynum ../ecl
+          git -C ../ecl checkout "$FABRYK_REF"
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - run: cargo test --workspace
