@@ -469,9 +469,9 @@ checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 
 [[package]]
 name = "chacha20"
-version = "0.10.0"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f8d983286843e49675a4b7a2d174efe136dc93a18d69130dd18198a6c167601"
+checksum = "65c35e4b699c7e15ccbe7ee35c005e4fc0a278d22238a2857e6ce2dadeda1b06"
 dependencies = [
  "cfg-if",
  "cpufeatures 0.3.0",
@@ -1961,9 +1961,9 @@ dependencies = [
 
 [[package]]
 name = "lz4_flex"
-version = "0.11.5"
+version = "0.11.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "08ab2867e3eeeca90e844d1940eab391c9dc5228783db2ed999acbc0a9ed375a"
+checksum = "373f5eceeeab7925e0c1098212f2fbc4d416adec9d35051a6ab251e824c1854a"
 dependencies = [
  "twox-hash",
 ]
@@ -2096,11 +2096,11 @@ dependencies = [
 
 [[package]]
 name = "nms"
-version = "0.2.0"
+version = "0.3.0"
 
 [[package]]
 name = "nms-cache"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "chrono",
  "nms-core",
@@ -2113,7 +2113,7 @@ dependencies = [
 
 [[package]]
 name = "nms-cli"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "assert_cmd",
  "clap",
@@ -2133,7 +2133,7 @@ dependencies = [
 
 [[package]]
 name = "nms-compat"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "nms-core",
  "nms-save",
@@ -2143,7 +2143,7 @@ dependencies = [
 
 [[package]]
 name = "nms-copilot"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "assert_cmd",
  "clap",
@@ -2175,7 +2175,7 @@ dependencies = [
 
 [[package]]
 name = "nms-core"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "chrono",
  "rkyv",
@@ -2185,7 +2185,7 @@ dependencies = [
 
 [[package]]
 name = "nms-graph"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "chrono",
  "csv",
@@ -2202,7 +2202,7 @@ dependencies = [
 
 [[package]]
 name = "nms-query"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "nms-core",
  "nms-graph",
@@ -2215,7 +2215,7 @@ dependencies = [
 
 [[package]]
 name = "nms-save"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "chrono",
  "dirs 6.0.0",
@@ -2230,7 +2230,7 @@ dependencies = [
 
 [[package]]
 name = "nms-watch"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "nms-core",
  "nms-graph",
@@ -3495,9 +3495,9 @@ dependencies = [
 
 [[package]]
 name = "spin"
-version = "0.9.8"
+version = "0.9.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
+checksum = "3763264f6b73151db08c50ff20d7d8a0b8796e021cdea7ceedad07b80155fa0e"
 dependencies = [
  "lock_api",
 ]
