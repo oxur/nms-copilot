@@ -1,5 +1,6 @@
 # Workbench and local tools
 /workbench
+/.worktrees
 /.claude
 /bin
 /assets/ai/ai-rust
