@@ -37,7 +37,7 @@
             "PersistentPlayerBases": [
                 {
                     "BaseVersion": 8,
-                    "GalacticAddress": "0x050003AB8C07",
+                    "GalacticAddress": "0x05000003AB8C07",
                     "Position": [100.0, 200.0, 300.0],
                     "Forward": [1.0, 0.0, 0.0],
                     "LastUpdateTimestamp": 1700000000,
@@ -86,13 +86,13 @@
             "Store": {
                 "Record": [
                     {
-                        "DD": { "UA": "0x050003AB8C07", "DT": "SolarSystem", "VP": ["0xABCD1234"] },
+                        "DD": { "UA": "0x05000003AB8C07", "DT": "SolarSystem", "VP": ["0xABCD1234"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "76561198025707979", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x150003AB8C07", "DT": "Planet", "VP": ["0xDEAD1234", 0] },
+                        "DD": { "UA": "0x15000003AB8C07", "DT": "Planet", "VP": ["0xDEAD1234", 0] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "76561198025707979", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
                         "FL": { "C": 1, "U": 1 }

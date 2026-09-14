@@ -8,7 +8,7 @@ use crate::find::FindResult;
 use crate::route::RouteResult;
 use crate::show::{ShowBaseResult, ShowResult, ShowSystemResult};
 use crate::stats::StatsResult;
-use crate::table::{Builder, build_table, nms_theme, nms_theme_no_color};
+use crate::table::{Builder, build_grouped_table, build_table, nms_theme, nms_theme_no_color};
 use crate::theme::Theme;
 
 /// Format a distance in light-years for display.
@@ -63,6 +63,18 @@ pub fn hex_to_emoji(hex: &str) -> String {
         .collect()
 }
 
+/// Display label for a planet: its name, or `Planet N` from its index when unnamed.
+///
+/// The index is the planet's fixed slot in its system (the first portal glyph), so
+/// the label is stable across players and scans. The save does not record whether a
+/// body is a moon, so moons are labelled the same way.
+pub fn planet_label(planet: &nms_core::system::Planet) -> String {
+    planet
+        .name
+        .clone()
+        .unwrap_or_else(|| format!("Planet {}", planet.index))
+}
+
 /// Select the appropriate table theme based on whether the `Theme` has colors.
 fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
     if theme.header.fg.is_some() || theme.header.bold {
@@ -73,6 +85,13 @@ fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
 }
 
 /// Format find results as a themed table.
+///
+/// Planets are grouped by system: the system label and distance are printed on the
+/// first row of each run of planets sharing a system, and left blank on the rows
+/// that follow, so a block of rows with one label is one system. In the colour
+/// theme alternating groups are shaded as bands. Systems without a name are
+/// labelled with their portal address (planet digit zero). The Address column is
+/// the planet's own portal address, so each row is a usable portal destination.
 pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     if results.is_empty() {
         return "  No results found.\n".to_string();
@@ -90,8 +109,17 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
         "Portal Glyphs",
     ]);
 
+    let mut previous_system: Option<&str> = None;
+    let mut groups: Vec<usize> = Vec::with_capacity(results.len());
+    let mut group = 0usize;
     for (i, r) in results.iter().enumerate() {
-        let planet_name = r.planet.name.as_deref().unwrap_or("-");
+        let first_in_group = previous_system != Some(r.system_hex.as_str());
+        if first_in_group && previous_system.is_some() {
+            group += 1;
+        }
+        groups.push(group);
+        previous_system = Some(r.system_hex.as_str());
+        let planet_name = planet_label(&r.planet);
         let biome_str = r
             .planet
             .biome
@@ -109,16 +137,24 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
                 s
             })
             .unwrap_or_else(|| "?".to_string());
-        let system_name = r.system.name.as_deref().unwrap_or("-");
-        let distance = format_distance(r.distance_ly);
+        let system_label = if first_in_group {
+            r.system.name.as_deref().unwrap_or(&r.system_hex)
+        } else {
+            ""
+        };
+        let distance = if first_in_group {
+            format_distance(r.distance_ly)
+        } else {
+            String::new()
+        };
         let address = r.portal_hex.clone();
         let glyphs = hex_to_emoji(&r.portal_hex);
 
         builder.push_record([
             (i + 1).to_string(),
-            truncate(planet_name, 20),
+            truncate(&planet_name, 20),
             truncate(&biome_str, 22),
-            truncate(system_name, 22),
+            truncate(system_label, 22),
             distance,
             address,
             glyphs,
@@ -126,7 +162,13 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     }
     builder.push_record(["", "", "", "", "", "", ""]);
 
-    build_table(builder, &["SEARCH RESULTS"], &table_theme, "Results")
+    build_grouped_table(
+        builder,
+        &["SEARCH RESULTS"],
+        &table_theme,
+        "Results",
+        &groups,
+    )
 }
 
 /// Format a system detail view.
@@ -174,7 +216,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
         let mut pbuilder = Builder::default();
         pbuilder.push_record(["Index", "Name", "Biome", "Flags"]);
         for p in &sys.planets {
-            let pname = p.name.as_deref().unwrap_or("-");
+            let pname = planet_label(p);
             let biome_str = p
                 .biome
                 .map(|b| {
@@ -189,7 +231,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
                 })
                 .unwrap_or_else(|| "?".to_string());
             let flags = if p.infested { "infested" } else { "" };
-            pbuilder.push_record([&p.index.to_string(), pname, &biome_str, flags]);
+            pbuilder.push_record([&p.index.to_string(), &pname, &biome_str, flags]);
         }
         pbuilder.push_record(["", "", "", ""]);
         out.push_str(&build_table(
@@ -309,15 +351,17 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
 
     let mut hop_number = 0u32;
     for hop in &result.route.hops {
-        let system_name = model
-            .system(&hop.system_id)
-            .and_then(|s| s.name.as_deref())
-            .unwrap_or("-");
-
         let portal_hex = model
             .system(&hop.system_id)
             .map(|s| format!("{:012X}", s.address.packed()))
             .unwrap_or_else(|| format!("{:012X}", hop.system_id.0));
+
+        // Unnamed systems are labelled by address, as in the find table.
+        let system_hex = format!("{:012X}", hop.system_id.0);
+        let system_name = model
+            .system(&hop.system_id)
+            .and_then(|s| s.name.as_deref())
+            .unwrap_or(&system_hex);
         let glyphs = hex_to_emoji(&portal_hex);
 
         let distance = format_distance(hop.leg_distance_ly);
@@ -471,6 +515,7 @@ mod tests {
             ),
             distance_ly: 42_000.0,
             portal_hex: format!("{:012X}", addr.packed()),
+            system_hex: format!("{:012X}", addr.packed()),
         }];
         let output = format_find_results(&results, &plain());
         assert!(output.contains("Eden"));
@@ -487,6 +532,7 @@ mod tests {
             system: System::new(addr, None, None, None, vec![]),
             distance_ly: 0.0,
             portal_hex: "000000000001".into(),
+            system_hex: "000000000001".into(),
         }];
         let output = format_find_results(&results, &plain());
         assert!(output.contains("Toxic*"));
@@ -506,6 +552,7 @@ mod tests {
             ),
             distance_ly: 42_000.0,
             portal_hex: format!("{:012X}", addr.packed()),
+            system_hex: format!("{:012X}", addr.packed()),
         }];
         let output = format_find_results(&results, &Theme::default_dark());
         // Should contain ANSI escape sequences (from hex color theme)
@@ -513,6 +560,123 @@ mod tests {
         // But still contain the data
         assert!(output.contains("Eden"));
         assert!(output.contains("Sol"));
+    }
+
+    #[test]
+    fn test_format_find_results_groups_planets_by_system() {
+        let sol = GalacticAddress::new(100, 50, -200, 0x123, 0, 0);
+        let unnamed = GalacticAddress::new(100, 50, -200, 0x456, 0, 0);
+        let sol_hex = format!("{:012X}", sol.packed());
+        let unnamed_hex = format!("{:012X}", unnamed.packed());
+        let row = |addr: GalacticAddress, name: Option<&str>, index: u8, dist: f64| FindResult {
+            planet: Planet::new(index, Some(Biome::Lush), None, false, None, None),
+            system: System::new(addr, name.map(str::to_string), None, None, vec![]),
+            distance_ly: dist,
+            portal_hex: format!("{:X}{}", index, &format!("{:012X}", addr.packed())[1..]),
+            system_hex: format!("{:012X}", addr.packed()),
+        };
+        let results = vec![
+            row(sol, Some("Sol"), 1, 100.0),
+            row(sol, Some("Sol"), 2, 100.0),
+            row(sol, Some("Sol"), 3, 100.0),
+            row(unnamed, None, 1, 400.0),
+            row(unnamed, None, 2, 400.0),
+        ];
+        let output = format_find_results(&results, &plain());
+
+        // The system name appears once for its block of three planets.
+        assert_eq!(output.matches("Sol").count(), 1, "{output}");
+        // The unnamed system is labelled with its own portal address, once.
+        assert_eq!(output.matches(&unnamed_hex).count(), 1, "{output}");
+        assert!(
+            !output.contains(&sol_hex),
+            "system hex must not replace a real name"
+        );
+        // Distance is printed once per group.
+        assert_eq!(output.matches("~100 ly").count(), 1, "{output}");
+        assert_eq!(output.matches("~400 ly").count(), 1, "{output}");
+        // Each row carries its own planet address.
+        for r in &results {
+            assert!(output.contains(&r.portal_hex), "missing {}", r.portal_hex);
+        }
+        // No row falls back to a dash for the system column.
+        let lines: Vec<&str> = output.lines().collect();
+        assert!(
+            lines
+                .iter()
+                .all(|l| !l.contains(" - ") || l.contains("Lush")),
+            "{output}"
+        );
+    }
+
+    #[test]
+    fn test_format_find_results_shades_alternate_groups() {
+        let a = GalacticAddress::new(1, 1, 1, 0x001, 0, 0);
+        let b = GalacticAddress::new(1, 1, 1, 0x002, 0, 0);
+        let c = GalacticAddress::new(1, 1, 1, 0x003, 0, 0);
+        let row = |addr: GalacticAddress, name: &str, dist: f64| FindResult {
+            planet: Planet::new(1, Some(Biome::Lush), None, false, None, None),
+            system: System::new(addr, Some(name.into()), None, None, vec![]),
+            distance_ly: dist,
+            portal_hex: format!("{:012X}", addr.packed()),
+            system_hex: format!("{:012X}", addr.packed()),
+        };
+        let results = vec![
+            row(a, "Alpha", 100.0),
+            row(a, "Alpha", 100.0),
+            row(b, "Bravo", 200.0),
+            row(c, "Charlie", 300.0),
+        ];
+        let output = format_find_results(&results, &Theme::default_dark());
+        let shaded: Vec<&str> = output
+            .lines()
+            .filter(|l| l.contains("48;2;19;47;77m"))
+            .collect();
+        assert_eq!(shaded.len(), 1, "{output}");
+        assert!(shaded[0].contains("Bravo"));
+        let plain_output = format_find_results(&results, &plain());
+        assert!(!plain_output.contains("48;2;19;47;77m"));
+    }
+
+    #[test]
+    fn test_planet_label_uses_index_when_unnamed() {
+        let named = Planet::new(2, Some(Biome::Lush), None, false, Some("Eden".into()), None);
+        let unnamed = Planet::new(3, Some(Biome::Lush), None, false, None, None);
+        assert_eq!(planet_label(&named), "Eden");
+        assert_eq!(planet_label(&unnamed), "Planet 3");
+    }
+
+    #[test]
+    fn test_format_find_results_labels_unnamed_planets_by_index() {
+        let addr = GalacticAddress::new(1, 1, 1, 0x001, 0, 0);
+        let results = vec![FindResult {
+            planet: Planet::new(3, Some(Biome::Lush), None, false, None, None),
+            system: System::new(addr, Some("Alpha".into()), None, None, vec![]),
+            distance_ly: 100.0,
+            portal_hex: format!("3{}", &format!("{:012X}", addr.packed())[1..]),
+            system_hex: format!("{:012X}", addr.packed()),
+        }];
+        let output = format_find_results(&results, &plain());
+        assert!(output.contains("Planet 3"), "{output}");
+    }
+
+    #[test]
+    fn test_format_show_system_labels_unnamed_planets_by_index() {
+        let addr = GalacticAddress::new(100, 50, -200, 0x123, 0, 0);
+        let planets = vec![
+            Planet::new(1, Some(Biome::Toxic), None, false, None, None),
+            Planet::new(4, Some(Biome::Lush), None, false, Some("Eden".into()), None),
+        ];
+        let result = ShowSystemResult {
+            system: System::new(addr, Some("Test System".into()), None, None, planets),
+            portal_hex: format!("{:012X}", addr.packed()),
+            galaxy_name: "Euclid".into(),
+            distance_from_player: None,
+        };
+        let output = format_show_system(&result, &plain());
+        assert!(output.contains("Planet 1"), "{output}");
+        assert!(output.contains("Eden"), "{output}");
+        assert!(!output.contains("Planet 4"), "{output}");
     }
 
     #[test]
@@ -591,7 +755,7 @@ mod tests {
             },
             "ExpeditionContext": {"GameMode": 6, "PlayerStateData": {"UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0}}, "Units": 0, "Nanites": 0, "Specials": 0, "PersistentPlayerBases": []}},
             "DiscoveryManagerData": {"DiscoveryData-v1": {"ReserveStore": 0, "ReserveManaged": 0, "Store": {"Record": [
-                {"DD": {"UA": "0x001000000064", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
+                {"DD": {"UA": "0x00100000000064", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
             ]}}}
         }"#;
         nms_save::parse_save(json.as_bytes())

@@ -572,7 +572,7 @@ fn format_all_formats(addr: &GalacticAddress) -> String {
     builder.push_record(["Hex Glyphs", &format!("{:012X}", addr.packed())]);
     builder.push_record(["Abbreviated", &portal.to_abbrev_string()]);
     builder.push_record(["Signal Booster", &addr.to_signal_booster()]);
-    builder.push_record(["Galactic Address", &format!("0x{:012X}", addr.packed())]);
+    builder.push_record(["Galactic Address", &format!("0x{:X}", addr.to_save_ua())]);
     builder.push_record([
         "Voxel Position",
         &format!(

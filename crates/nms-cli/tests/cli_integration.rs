@@ -60,10 +60,13 @@ fn test_nms_convert_coords_displays_conversion() {
 #[test]
 fn test_nms_convert_ga_displays_conversion() {
     cargo_bin_cmd!("nms")
-        .args(["convert", "--ga", "0x01717D8A4EA2"])
+        // Save-file layout: system index 46 at voxel (-532, -4, -1706), planet 0.
+        .args(["convert", "--ga", "0x2E00FC956DEC"])
         .assert()
         .success()
-        .stdout(predicate::str::contains("01717D8A4EA2"));
+        .stdout(predicate::str::contains("002EFC956DEC"))
+        .stdout(predicate::str::contains("0x2E00FC956DEC"))
+        .stdout(predicate::str::contains("46"));
 }
 
 #[test]

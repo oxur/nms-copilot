@@ -9,6 +9,14 @@
 
 pub use oxur_cli::table::Builder;
 pub use oxur_cli::table::TableStyleConfig;
+use tabled::settings::Color;
+use tabled::settings::formatting::Justification;
+use tabled::settings::object::Segment;
+use tabled::settings::style::BorderColor;
+
+/// Background for every other group in a grouped table: a step lighter than the
+/// data-row background (`#0A1929`) so alternating groups read as bands.
+const GROUP_SHADE_BG: (u8, u8, u8) = (0x13, 0x2F, 0x4D);
 
 /// Dummy type to satisfy the `Tabled` trait bound on `apply_to_table`.
 ///
@@ -134,6 +142,42 @@ pub fn build_table(
     theme: &TableStyleConfig,
     count_label: &str,
 ) -> String {
+    build_table_inner(builder, title, theme, count_label, None)
+}
+
+/// Like [`build_table`], but shades alternating groups of data rows.
+///
+/// `groups[i]` is the group index of data row `i` (the first record after the
+/// header is row 0). Consecutive rows with the same group index form one band;
+/// bands with an odd group index get a lighter background. Colour is the only
+/// cue, so the no-colour theme renders exactly like [`build_table`].
+pub fn build_grouped_table(
+    builder: Builder,
+    title: &[&str],
+    theme: &TableStyleConfig,
+    count_label: &str,
+    groups: &[usize],
+) -> String {
+    build_table_inner(builder, title, theme, count_label, Some(groups))
+}
+
+/// Parse a `#RRGGBB` colour string.
+fn hex_rgb(s: &str) -> Option<(u8, u8, u8)> {
+    let hex = s.strip_prefix('#')?;
+    if hex.len() != 6 {
+        return None;
+    }
+    let channel = |i: usize| u8::from_str_radix(&hex[i..i + 2], 16).ok();
+    Some((channel(0)?, channel(2)?, channel(4)?))
+}
+
+fn build_table_inner(
+    builder: Builder,
+    title: &[&str],
+    theme: &TableStyleConfig,
+    count_label: &str,
+    groups: Option<&[usize]>,
+) -> String {
     let mut records: Vec<Vec<String>> = builder.into();
 
     // The last row is the empty footer placeholder — remove it.
@@ -199,6 +243,53 @@ pub fn build_table(
 
     let mut table = padded.build();
     theme.apply_to_table::<Dummy>(&mut table);
+
+    // Overlay the group shading. The theme only carries hex colours when it is the
+    // colour theme, so a theme without a parseable row background gets no overlay.
+    if let Some(groups) = groups
+        && let Some(row_fg) = theme.rows.colors.first().and_then(|c| hex_rgb(&c.fg))
+        && theme
+            .rows
+            .colors
+            .first()
+            .and_then(|c| hex_rgb(&c.bg))
+            .is_some()
+    {
+        let (r, g, b) = GROUP_SHADE_BG;
+        let just_char = theme
+            .rows
+            .justification_char
+            .as_deref()
+            .and_then(|s| s.chars().next())
+            .unwrap_or(' ');
+        let border_fg = theme
+            .style
+            .vertical_fg_color
+            .as_deref()
+            .and_then(hex_rgb)
+            .unwrap_or(row_fg);
+        for (i, &group) in groups.iter().enumerate().take(data_count) {
+            if group % 2 == 0 {
+                continue;
+            }
+            // Data rows start at table row 2 (title at 0, header at 1). Address the
+            // cells themselves: the theme sets its colours per cell, and cell-level
+            // settings shadow row-level ones.
+            let row = i + 2;
+            let cell = Color::rgb_fg(row_fg.0, row_fg.1, row_fg.2) | Color::rgb_bg(r, g, b);
+            table.modify(Segment::new(row..row + 1, 0..final_col_count), cell);
+            table.modify(
+                Segment::new(row..row + 1, 0..final_col_count),
+                Justification::new(just_char).color(Color::rgb_bg(r, g, b)),
+            );
+            let border =
+                Color::rgb_fg(border_fg.0, border_fg.1, border_fg.2) | Color::rgb_bg(r, g, b);
+            table.modify(
+                Segment::new(row..row + 1, 0..final_col_count),
+                BorderColor::filled(border),
+            );
+        }
+    }
     format!("\n{}\n\n", table)
 }
 
@@ -262,5 +353,46 @@ mod tests {
         for val in ["A", "B", "C", "1", "2", "3", "x", "y", "z"] {
             assert!(output.contains(val), "Missing '{val}' in output");
         }
+    }
+
+    #[test]
+    fn test_hex_rgb_parses_theme_colours() {
+        assert_eq!(hex_rgb("#0A1929"), Some((0x0A, 0x19, 0x29)));
+        assert_eq!(hex_rgb("black"), None);
+        assert_eq!(hex_rgb("#123"), None);
+    }
+
+    #[test]
+    fn test_build_grouped_table_shades_odd_groups_in_colour_theme() {
+        let mut builder = Builder::default();
+        builder.push_record(["A", "B"]);
+        builder.push_record(["g0-1", "x"]);
+        builder.push_record(["g0-2 is a much longer cell", "x"]);
+        builder.push_record(["g1-1", "x"]);
+        builder.push_record(["g2-1", "x"]);
+        builder.push_record(["", ""]);
+        let output = build_grouped_table(builder, &[], &nms_theme(), "Rows", &[0, 0, 1, 2]);
+        let (r, g, b) = GROUP_SHADE_BG;
+        let shade = format!("48;2;{r};{g};{b}m");
+        let shaded_lines: Vec<&str> = output.lines().filter(|l| l.contains(&shade)).collect();
+        assert_eq!(shaded_lines.len(), 1, "{output}");
+        assert!(shaded_lines[0].contains("g1-1"));
+        // The shade must cover the fill that pads the short cell out to the column
+        // width, not just the text, so it appears more than once on the line.
+        assert!(shaded_lines[0].matches(&shade).count() >= 2, "{output}");
+        assert!(output.contains("Total:"));
+        assert!(output.contains("4 Rows"));
+    }
+
+    #[test]
+    fn test_build_grouped_table_no_colour_theme_has_no_shading() {
+        let mut builder = Builder::default();
+        builder.push_record(["A"]);
+        builder.push_record(["one"]);
+        builder.push_record(["two"]);
+        builder.push_record([""]);
+        let output = build_grouped_table(builder, &[], &nms_theme_no_color(), "", &[0, 1]);
+        assert!(output.contains("one") && output.contains("two"));
+        assert!(!output.contains("48;2;"), "{output}");
     }
 }

@@ -161,6 +161,7 @@ mod tests {
             ),
             distance_ly: 42_000.0,
             portal_hex: format!("{:012X}", addr.packed()),
+            system_hex: format!("{:012X}", addr.packed()),
         }
     }
 
@@ -245,6 +246,7 @@ mod tests {
             system: System::new(addr, None, None, None, vec![]),
             distance_ly: 0.0,
             portal_hex: "000000000001".into(),
+            system_hex: "000000000001".into(),
         };
         let record = ExportRecord::from(&result);
         assert!(record.planet_name.is_empty());

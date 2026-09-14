@@ -36,7 +36,7 @@ impl RawDiscoveryRecord {
             discovery_type,
             self.dd.ua.to_galactic_address(0),
             timestamp,
-            None, // Discovery records in the save don't carry display names
+            self.dm.name(),
             discoverer,
             is_uploaded,
         ))
@@ -120,7 +120,9 @@ mod tests {
                 dt: "Flora".into(),
                 vp: vec![],
             },
-            dm: serde_json::Value::Object(serde_json::Map::new()),
+            dm: DiscoveryMetadata {
+                custom_name: Some("Named Flora".into()),
+            },
             ows: OwnershipData {
                 lid: String::new(),
                 uid: "12345".into(),
@@ -138,6 +140,7 @@ mod tests {
         let core = raw.to_core_record().unwrap();
         assert_eq!(core.discovery_type, nms_core::Discovery::Flora);
         assert_eq!(core.discoverer.as_deref(), Some("TestUser"));
+        assert_eq!(core.name.as_deref(), Some("Named Flora"));
         assert!(core.is_uploaded);
         assert!(core.timestamp.is_some());
     }
@@ -150,7 +153,7 @@ mod tests {
                 dt: "UnknownType".into(),
                 vp: vec![],
             },
-            dm: serde_json::Value::Null,
+            dm: DiscoveryMetadata::default(),
             ows: OwnershipData::default(),
             fl: DiscoveryFlags::default(),
             rid: None,

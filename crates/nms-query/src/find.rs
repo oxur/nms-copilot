@@ -2,7 +2,7 @@
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::{Biome, BiomeSubType};
-use nms_core::system::{Planet, System};
+use nms_core::system::{Planet, System, SystemId};
 use nms_graph::query::BiomeFilter;
 use nms_graph::{GalaxyModel, GraphError};
 
@@ -50,8 +50,13 @@ pub struct FindResult {
     pub system: System,
     /// Distance from the reference point in light-years.
     pub distance_ly: f64,
-    /// Portal glyphs as hex (12 digits). Caller renders as emoji.
+    /// Portal address of the planet as 12 hex digits (planet index in the first digit).
+    /// Caller renders as emoji.
     pub portal_hex: String,
+    /// Portal address of the system as 12 hex digits (planet digit zero). Identical for
+    /// every planet in the same system, so it doubles as the group key and as a label
+    /// for systems without a name.
+    pub system_hex: String,
 }
 
 /// Execute a find query against the galaxy model.
@@ -150,19 +155,37 @@ pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindRe
                 return None;
             }
 
-            let portal_hex = format!("{:012X}", system.address.packed());
+            let sys_addr = &system.address;
+            let planet_addr = GalacticAddress::new(
+                sys_addr.voxel_x(),
+                sys_addr.voxel_y(),
+                sys_addr.voxel_z(),
+                sys_addr.solar_system_index(),
+                planet.index,
+                sys_addr.reality_index,
+            );
+            let portal_hex = format!("{:012X}", planet_addr.packed());
+            let system_hex = format!("{:012X}", SystemId::from_address(sys_addr).0);
 
             Some(FindResult {
                 planet: planet.clone(),
                 system: system.clone(),
                 distance_ly: dist,
                 portal_hex,
+                system_hex,
             })
         })
         .collect();
 
-    // Sort by distance
-    results.sort_by(|a, b| a.distance_ly.partial_cmp(&b.distance_ly).unwrap());
+    // Sort by distance, keeping each system's planets contiguous and in index order
+    // so the display can group them.
+    results.sort_by(|a, b| {
+        a.distance_ly
+            .partial_cmp(&b.distance_ly)
+            .unwrap()
+            .then_with(|| a.system_hex.cmp(&b.system_hex))
+            .then_with(|| a.planet.index.cmp(&b.planet.index))
+    });
 
     // Apply nearest limit
     if let Some(n) = query.nearest {
@@ -185,15 +208,15 @@ mod tests {
                 "PlayerStateData": {
                     "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 1, "PlanetIndex": 0}},
                     "Units": 0, "Nanites": 0, "Specials": 0,
-                    "PersistentPlayerBases": [{"BaseVersion": 8, "GalacticAddress": "0x001000000064", "Position": [0.0,0.0,0.0], "Forward": [1.0,0.0,0.0], "LastUpdateTimestamp": 0, "Objects": [], "RID": "", "Owner": {"LID":"","UID":"1","USN":"","PTK":"ST","TS":0}, "Name": "Alpha Base", "BaseType": {"PersistentBaseTypes": "HomePlanetBase"}, "LastEditedById": "", "LastEditedByUsername": ""}]
+                    "PersistentPlayerBases": [{"BaseVersion": 8, "GalacticAddress": "0x00100000000064", "Position": [0.0,0.0,0.0], "Forward": [1.0,0.0,0.0], "LastUpdateTimestamp": 0, "Objects": [], "RID": "", "Owner": {"LID":"","UID":"1","USN":"","PTK":"ST","TS":0}, "Name": "Alpha Base", "BaseType": {"PersistentBaseTypes": "HomePlanetBase"}, "LastEditedById": "", "LastEditedByUsername": ""}]
                 }
             },
             "ExpeditionContext": {"GameMode": 6, "PlayerStateData": {"UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0}}, "Units": 0, "Nanites": 0, "Specials": 0, "PersistentPlayerBases": []}},
             "DiscoveryManagerData": {"DiscoveryData-v1": {"ReserveStore": 0, "ReserveManaged": 0, "Store": {"Record": [
-                {"DD": {"UA": "0x001000000064", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
-                {"DD": {"UA": "0x101000000064", "DT": "Planet", "VP": ["0xAB", 0]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
-                {"DD": {"UA": "0x002000000C80", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
-                {"DD": {"UA": "0x102000000C80", "DT": "Planet", "VP": ["0xCD", 1]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
+                {"DD": {"UA": "0x00100000000064", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
+                {"DD": {"UA": "0x10100000000064", "DT": "Planet", "VP": ["0xAB", 0]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
+                {"DD": {"UA": "0x00200000000C80", "DT": "SolarSystem", "VP": []}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
+                {"DD": {"UA": "0x10200000000C80", "DT": "Planet", "VP": ["0xCD", 1]}, "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
             ]}}}
         }"#;
         nms_save::parse_save(json.as_bytes())
@@ -271,6 +294,15 @@ mod tests {
         let results = execute_find(&model, &query).unwrap();
         for r in &results {
             assert_eq!(r.portal_hex.len(), 12);
+            assert_eq!(r.system_hex.len(), 12);
+            // The planet address carries the planet index in its first digit; the
+            // system address has a zero there. The rest is identical.
+            assert_eq!(&r.portal_hex[1..], &r.system_hex[1..]);
+            assert_eq!(&r.system_hex[..1], "0");
+            assert_eq!(
+                u8::from_str_radix(&r.portal_hex[..1], 16).unwrap(),
+                r.planet.index
+            );
         }
     }
 
@@ -284,6 +316,44 @@ mod tests {
         let results = execute_find(&model, &query).unwrap();
         for r in &results {
             assert!(r.system.discoverer.as_ref().unwrap().contains("Explorer"));
+        }
+    }
+
+    #[test]
+    fn test_find_results_group_planets_by_system() {
+        let model = test_model();
+        let query = FindQuery {
+            biome: None,
+            biome_subtype: None,
+            infested: None,
+            within_ly: None,
+            nearest: None,
+            name_pattern: None,
+            discoverer: None,
+            named_only: false,
+            from: ReferencePoint::CurrentPosition,
+        };
+        let results = execute_find(&model, &query).unwrap();
+        assert!(results.len() >= 2);
+        // Every system's planets appear contiguously: once a system_hex changes it
+        // must never reappear later in the list.
+        let mut seen: Vec<&str> = Vec::new();
+        for r in &results {
+            match seen.last() {
+                Some(last) if *last == r.system_hex => {}
+                _ => {
+                    assert!(
+                        !seen.contains(&r.system_hex.as_str()),
+                        "system {} appears in two separate runs",
+                        r.system_hex
+                    );
+                    seen.push(&r.system_hex);
+                }
+            }
+        }
+        // Distances never decrease.
+        for w in results.windows(2) {
+            assert!(w[0].distance_ly <= w[1].distance_ly);
         }
     }
 }

@@ -34,6 +34,10 @@ pub const CROSS_VOXEL_SD: f64 = 0.408_248 * LY_PER_VOXEL;
 /// Mask for the 48-bit packed galactic address.
 const PACKED_MASK: u64 = 0xFFFF_FFFF_FFFF;
 
+// Bit-field shifts within the 64-bit save-file universe address (UA).
+const UA_SSI_SHIFT: u32 = 40;
+const UA_PLANET_SHIFT: u32 = 52;
+
 // Bit-field shifts within the 48-bit packed value.
 const PLANET_SHIFT: u32 = 44;
 const SSI_SHIFT: u32 = 32;
@@ -75,6 +79,15 @@ pub struct GalacticAddress {
     pub reality_index: u8,
 }
 
+/// Sign-extend a 12-bit two's complement value.
+fn sign_extend_12(raw: u16) -> i16 {
+    if raw & SIGN_BIT_12 != 0 {
+        (raw | SIGN_EXTEND_12) as i16
+    } else {
+        raw as i16
+    }
+}
+
 impl GalacticAddress {
     /// Create from individual field values (portal coordinate frame).
     pub fn new(
@@ -109,6 +122,46 @@ impl GalacticAddress {
             packed: packed & PACKED_MASK,
             reality_index,
         }
+    }
+
+    /// Decode a universe address as written in save files.
+    ///
+    /// Discovery records (`DD.UA`), persistent bases and teleport endpoints store a
+    /// 64-bit value whose layout differs from the portal-glyph layout used by
+    /// [`from_packed`](Self::from_packed):
+    ///
+    /// | Bits  | Field                         |
+    /// |-------|-------------------------------|
+    /// | 0-11  | VoxelX (12-bit signed)        |
+    /// | 12-23 | VoxelZ (12-bit signed)        |
+    /// | 24-31 | VoxelY (8-bit signed)         |
+    /// | 32-39 | Flag of unknown meaning       |
+    /// | 40-51 | SolarSystemIndex (12-bit)     |
+    /// | 52-55 | PlanetIndex (4-bit)           |
+    ///
+    /// Verified against teleport endpoints, which carry the same address in expanded
+    /// form: a discovery record with `UA = 0x2E00FC956DEC` is the system at voxel
+    /// (-532, -4, -1706) with solar system index 46, not index 0xE00 / planet 2.
+    ///
+    /// Bits 32-39 are observed as both 0 and 1 for records of the same Euclid system in a
+    /// save that never left Euclid, so they do not encode the galaxy and are ignored.
+    /// The galaxy is not part of the value; callers supply `reality_index`.
+    pub fn from_save_ua(ua: u64, reality_index: u8) -> Self {
+        let x = sign_extend_12((ua & MASK_12BIT) as u16);
+        let z = sign_extend_12(((ua >> VOXEL_Z_SHIFT) & MASK_12BIT) as u16);
+        let y = ((ua >> VOXEL_Y_SHIFT) & MASK_8BIT) as u8 as i8;
+        let ssi = ((ua >> UA_SSI_SHIFT) & MASK_12BIT) as u16;
+        let planet = ((ua >> UA_PLANET_SHIFT) & MASK_4BIT) as u8;
+        Self::new(x, y, z, ssi, planet, reality_index)
+    }
+
+    /// Encode this address in the save-file universe address layout (see [`from_save_ua`](Self::from_save_ua)).
+    ///
+    /// Bits 32-39 are written as zero; the galaxy is not part of the value.
+    pub fn to_save_ua(&self) -> u64 {
+        let low = self.packed & 0xFFFF_FFFF; // X, Z, Y are laid out identically in both formats
+        low | ((self.solar_system_index() as u64) << UA_SSI_SHIFT)
+            | ((self.planet_index() as u64) << UA_PLANET_SHIFT)
     }
 
     /// Return the raw 48-bit packed value.
@@ -949,6 +1002,55 @@ mod tests {
             player.distance_ly(&discovery),
             0.0,
             "distance_ly should be 0.0 for same system with negative coords"
+        );
+    }
+
+    #[test]
+    fn from_save_ua_matches_teleport_endpoint_ground_truth() {
+        // Discovery record UA for a system whose teleport endpoint reports
+        // voxel (-532, -4, -1706) and solar system index 46.
+        let a = GalacticAddress::from_save_ua(50581772529132, 0);
+        assert_eq!(a.voxel_x(), -532);
+        assert_eq!(a.voxel_y(), -4);
+        assert_eq!(a.voxel_z(), -1706);
+        assert_eq!(a.solar_system_index(), 46);
+        assert_eq!(a.planet_index(), 0);
+        assert_eq!(a.reality_index, 0);
+
+        // Same voxel, index 47: differs from the previous UA by exactly 1 << 40.
+        let b = GalacticAddress::from_save_ua(51681284156908, 0);
+        assert_eq!(b.solar_system_index(), 47);
+        assert_eq!(b.voxel_position(), a.voxel_position());
+
+        // Planet record: planet index lives in bits 52-55.
+        let p = GalacticAddress::from_save_ua(0x302C00FC956DEC, 0);
+        assert_eq!(p.planet_index(), 3);
+        assert_eq!(p.solar_system_index(), 44);
+        assert_eq!(p.voxel_position(), a.voxel_position());
+
+        // Solar system index wider than 8 bits crosses the old 48-bit mask boundary.
+        let c = GalacticAddress::from_save_ua(606934656187883, 0);
+        assert_eq!(c.solar_system_index(), 552);
+        assert_eq!(c.voxel_position(), (-533, -4, -1705));
+    }
+
+    #[test]
+    fn save_ua_roundtrip() {
+        let addr = GalacticAddress::new(-527, -50, 1234, 0xABC, 7, 3);
+        let ua = addr.to_save_ua();
+        assert_eq!((ua >> 32) & 0xFF, 0, "unknown flag byte is written as zero");
+        assert_eq!((ua >> 40) & 0xFFF, 0xABC);
+        assert_eq!((ua >> 52) & 0xF, 7);
+        assert_eq!(GalacticAddress::from_save_ua(ua, 3), addr);
+
+        // The flag byte in real records (0 or 1) must not affect decoding.
+        let flagged = GalacticAddress::from_save_ua(0x00022801FC957DEB, 0);
+        let plain = GalacticAddress::from_save_ua(0x00022800FC957DEB, 0);
+        assert_eq!(flagged, plain);
+
+        assert_eq!(
+            GalacticAddress::from_save_ua(0x40050003AB8C07, 0).to_save_ua(),
+            0x40050003AB8C07
         );
     }
 }

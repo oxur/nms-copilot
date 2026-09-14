@@ -15,7 +15,9 @@ pub struct SaveRoot {
     pub platform: String,
     pub active_context: String,
     pub common_state_data: CommonStateData,
+    #[serde(default)]
     pub base_context: GameContext,
+    #[serde(default)]
     pub expedition_context: GameContext,
     pub discovery_manager_data: DiscoveryManagerData,
 }
@@ -70,11 +72,105 @@ pub struct PlayerStateData {
     #[serde(default)]
     pub persistent_player_bases: Vec<PersistentPlayerBase>,
 
+    /// Teleporter destinations (space stations, bases, freighter) the player has used.
+    #[serde(default)]
+    pub teleport_endpoints: Vec<TeleportEndpoint>,
+
     #[serde(default)]
     pub health: u32,
 
     #[serde(default)]
     pub time_alive: u64,
+}
+
+/// A teleporter destination recorded when the player docks at a station or visits a base.
+///
+/// Space station names embed the generated name of their system (for example
+/// "Hiuship-Naw Exchange" sits in the Hiuship-Naw system), which is the only
+/// place a procedurally generated system name is ever written to the save.
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "PascalCase")]
+#[non_exhaustive]
+pub struct TeleportEndpoint {
+    #[serde(default)]
+    pub name: String,
+    /// "Spacestation", "Base", "ExternalBase", "Freighter", ...
+    #[serde(default)]
+    pub teleporter_type: String,
+    #[serde(default)]
+    pub universe_address: UniverseAddress,
+}
+
+impl TeleportEndpoint {
+    /// Whether this endpoint is a space station.
+    pub fn is_space_station(&self) -> bool {
+        self.teleporter_type == "Spacestation"
+    }
+
+    /// The generated name of the system this station belongs to, derived from the station name.
+    ///
+    /// Returns `None` for non-station endpoints or when the station name does not end in a recognised class word.
+    pub fn system_name(&self) -> Option<String> {
+        if !self.is_space_station() {
+            return None;
+        }
+        station_system_name(&self.name)
+    }
+}
+
+/// Class words that space station names append to their system's name, longest phrases first.
+const STATION_SUFFIXES: &[&str] = &[
+    "Stellar Observer",
+    "Station Alpha",
+    "Station Beta",
+    "Station Gamma",
+    "Station Delta",
+    "Station Epsilon",
+    "Station Sigma",
+    "Station Omega",
+    "Station Major",
+    "Station Minor",
+    "Station",
+    "Orbital",
+    "Exchange",
+    "Cycler",
+    "Hub",
+    "Terminus",
+    "Prime",
+    "Rendezvous",
+    "Sphere",
+    "Outpost",
+    "Anchorage",
+    "Waystation",
+    "Spaceport",
+    "Nexus",
+    "Relay",
+    "Gateway",
+    "Haven",
+    "Bastion",
+    "Depot",
+    "Junction",
+];
+
+/// Derive a system's generated name from its space station's name.
+///
+/// Strips a leading "The " and exactly one trailing class word (see `STATION_SUFFIXES`).
+/// Only one suffix is removed so that a system genuinely named "Foo Prime" keeps its
+/// "Prime" when its station is "Foo Prime Orbital". Returns `None` when no class word
+/// is recognised, so an unfamiliar station name never produces a wrong system name.
+pub fn station_system_name(station: &str) -> Option<String> {
+    let name = station.trim();
+    let name = name.strip_prefix("The ").unwrap_or(name);
+    for suffix in STATION_SUFFIXES {
+        if let Some(stem) = name.strip_suffix(suffix) {
+            let trimmed = stem.trim_end();
+            // Require whitespace between the stem and the suffix, and a non-empty stem.
+            if !trimmed.is_empty() && trimmed.len() < stem.len() {
+                return Some(trimmed.to_string());
+            }
+        }
+    }
+    None
 }
 
 /// Universe address wrapping a galactic address with reality (galaxy) index.
@@ -159,8 +255,13 @@ impl<'de> Deserialize<'de> for PackedGalacticAddress {
 
 impl PackedGalacticAddress {
     /// Convert to the core `GalacticAddress` type.
+    ///
+    /// The save-file layout places the solar system index and planet index in
+    /// different bit positions from the portal-glyph layout; see
+    /// [`GalacticAddress::from_save_ua`](nms_core::GalacticAddress::from_save_ua).
+    /// The galaxy is not encoded in the value and must be supplied.
     pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {
-        nms_core::GalacticAddress::from_packed(self.0, reality_index)
+        nms_core::GalacticAddress::from_save_ua(self.0, reality_index)
     }
 }
 
@@ -204,9 +305,9 @@ pub struct RawDiscoveryRecord {
     #[serde(rename = "DD")]
     pub dd: DiscoveryData,
 
-    /// Discovery metadata (usually empty object).
+    /// Discovery metadata (empty unless a player renamed the discovery).
     #[serde(rename = "DM", default)]
-    pub dm: serde_json::Value,
+    pub dm: DiscoveryMetadata,
 
     /// Ownership data.
     #[serde(rename = "OWS")]
@@ -219,6 +320,29 @@ pub struct RawDiscoveryRecord {
     /// Record ID (base64 hash).
     #[serde(rename = "RID", default)]
     pub rid: Option<String>,
+}
+
+/// Discovery metadata sub-object.
+///
+/// Procedurally generated names are never written to the save; only a
+/// player-assigned custom name appears here, under the `CN` key.
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
+#[non_exhaustive]
+pub struct DiscoveryMetadata {
+    /// Player-assigned custom name, if the discovery was renamed.
+    #[serde(rename = "CN", default, skip_serializing_if = "Option::is_none")]
+    pub custom_name: Option<String>,
+}
+
+impl DiscoveryMetadata {
+    /// The custom name, if present and non-empty.
+    pub fn name(&self) -> Option<String> {
+        self.custom_name
+            .as_deref()
+            .map(str::trim)
+            .filter(|n| !n.is_empty())
+            .map(str::to_string)
+    }
 }
 
 /// Discovery data sub-object.
@@ -426,6 +550,7 @@ mod tests {
             "FL": {"U": 1}
         }"#;
         let rec: RawDiscoveryRecord = serde_json::from_str(json).unwrap();
+        assert_eq!(rec.dm.name(), None);
         assert_eq!(rec.dd.dt, "Sector");
         assert_eq!(rec.fl.created, None);
         assert_eq!(rec.fl.uploaded, Some(1));
@@ -545,5 +670,137 @@ mod tests {
                 .len(),
             0
         );
+    }
+
+    #[test]
+    fn parse_save_root_without_expedition_context() {
+        let json = r#"{
+            "Version": 4720,
+            "Platform": "Win|Final",
+            "ActiveContext": "Main",
+            "CommonStateData": {"SaveName": "test"},
+            "BaseContext": {
+                "GameMode": 1,
+                "PlayerStateData": {
+                    "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": 0, "VoxelY": 0, "VoxelZ": 0, "SolarSystemIndex": 0, "PlanetIndex": 0}},
+                    "Units": 42,
+                    "PersistentPlayerBases": []
+                }
+            },
+            "DiscoveryManagerData": {
+                "DiscoveryData-v1": {
+                    "ReserveStore": 100,
+                    "ReserveManaged": 100,
+                    "Store": {"Record": []}
+                }
+            }
+        }"#;
+        let save: SaveRoot = serde_json::from_str(json).unwrap();
+        assert_eq!(save.base_context.player_state_data.units, 42);
+        assert_eq!(save.expedition_context.game_mode, 0);
+        assert_eq!(save.active_player_state().units, 42);
+    }
+
+    #[test]
+    fn parse_discovery_record_with_custom_name() {
+        let json = r#"{
+            "DD": {"UA": 606934656187883, "DT": "SolarSystem", "VP": ["0x77C0A655CCBDA20F"]},
+            "DM": {"CN": "Best Rest"},
+            "OWS": {"LID": "", "UID": "76561198092014009", "USN": "Santa", "PTK": "ST", "TS": 1471091917},
+            "FL": {"C": 1},
+            "RID": "f9aFY/ebl2UJPONvPEFppiSSw844ET9+airLOF6EQpo="
+        }"#;
+        let rec: RawDiscoveryRecord = serde_json::from_str(json).unwrap();
+        assert_eq!(rec.dm.name().as_deref(), Some("Best Rest"));
+    }
+
+    #[test]
+    fn parse_discovery_record_without_metadata() {
+        let json = r#"{
+            "DD": {"UA": 606934656187883, "DT": "SolarSystem", "VP": ["0x77C0A655CCBDA20F"]},
+            "OWS": {"UID": "1", "USN": "x", "PTK": "ST", "TS": 1},
+            "FL": {"C": 1}
+        }"#;
+        let rec: RawDiscoveryRecord = serde_json::from_str(json).unwrap();
+        assert_eq!(rec.dm.name(), None);
+    }
+
+    #[test]
+    fn station_system_name_strips_one_class_word() {
+        assert_eq!(
+            station_system_name("Hiuship-Naw Exchange").as_deref(),
+            Some("Hiuship-Naw")
+        );
+        assert_eq!(
+            station_system_name("Kumertovk XVI Orbital").as_deref(),
+            Some("Kumertovk XVI")
+        );
+        assert_eq!(
+            station_system_name("Atlasa Stellar Observer").as_deref(),
+            Some("Atlasa")
+        );
+        assert_eq!(
+            station_system_name("Aobingm Station Beta").as_deref(),
+            Some("Aobingm")
+        );
+        assert_eq!(
+            station_system_name("Zayakhun Station").as_deref(),
+            Some("Zayakhun")
+        );
+        assert_eq!(
+            station_system_name("Itonest Prime").as_deref(),
+            Some("Itonest")
+        );
+        assert_eq!(
+            station_system_name("The Ekretet Sphere").as_deref(),
+            Some("Ekretet")
+        );
+        // Only one suffix is removed.
+        assert_eq!(
+            station_system_name("Caliumus Prime Orbital").as_deref(),
+            Some("Caliumus Prime")
+        );
+    }
+
+    #[test]
+    fn station_system_name_rejects_unknown_shapes() {
+        assert_eq!(station_system_name("Orbital"), None);
+        assert_eq!(station_system_name("Nexhub"), None);
+        assert_eq!(station_system_name("Something Unusual"), None);
+        assert_eq!(station_system_name(""), None);
+    }
+
+    #[test]
+    fn parse_teleport_endpoints() {
+        let json = r#"{
+            "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": -532, "VoxelY": -4, "VoxelZ": -1706, "SolarSystemIndex": 47, "PlanetIndex": 0}},
+            "Units": 0,
+            "TeleportEndpoints": [
+                {"Name": "Hiuship-Naw Exchange", "TeleporterType": "Spacestation", "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": -532, "VoxelY": -4, "VoxelZ": -1706, "SolarSystemIndex": 47, "PlanetIndex": 0}}, "Position": [1.0, 2.0, 3.0], "IsFavourite": false},
+                {"Name": "Radioactive Base", "TeleporterType": "Base", "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {"VoxelX": -532, "VoxelY": -4, "VoxelZ": -1706, "SolarSystemIndex": 46, "PlanetIndex": 2}}}
+            ]
+        }"#;
+        let ps: PlayerStateData = serde_json::from_str(json).unwrap();
+        assert_eq!(ps.teleport_endpoints.len(), 2);
+        assert!(ps.teleport_endpoints[0].is_space_station());
+        assert_eq!(
+            ps.teleport_endpoints[0].system_name().as_deref(),
+            Some("Hiuship-Naw")
+        );
+        assert_eq!(
+            ps.teleport_endpoints[0]
+                .universe_address
+                .galactic_address
+                .solar_system_index,
+            47
+        );
+        assert!(!ps.teleport_endpoints[1].is_space_station());
+        assert_eq!(ps.teleport_endpoints[1].system_name(), None);
+    }
+
+    #[test]
+    fn player_state_without_teleport_endpoints() {
+        let ps: PlayerStateData = serde_json::from_str(r#"{"Units": 5}"#).unwrap();
+        assert!(ps.teleport_endpoints.is_empty());
     }
 }

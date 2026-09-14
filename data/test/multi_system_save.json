@@ -37,7 +37,7 @@
             "PersistentPlayerBases": [
                 {
                     "BaseVersion": 8,
-                    "GalacticAddress": "0x001000000064",
+                    "GalacticAddress": "0x00100000000064",
                     "Position": [100.0, 200.0, 300.0],
                     "Forward": [1.0, 0.0, 0.0],
                     "LastUpdateTimestamp": 1700000000,
@@ -51,7 +51,7 @@
                 },
                 {
                     "BaseVersion": 8,
-                    "GalacticAddress": "0x003000000190",
+                    "GalacticAddress": "0x00300000000190",
                     "Position": [50.0, 100.0, 150.0],
                     "Forward": [0.0, 0.0, 1.0],
                     "LastUpdateTimestamp": 1700100000,
@@ -86,119 +86,119 @@
             "Store": {
                 "Record": [
                     {
-                        "DD": { "UA": "0x002A32F38064", "DT": "SolarSystem", "VP": ["0xA000"] },
+                        "DD": { "UA": "0x002A0032F38064", "DT": "SolarSystem", "VP": ["0xA000"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x102A32F38064", "DT": "Planet", "VP": ["0xB000", 0] },
+                        "DD": { "UA": "0x102A0032F38064", "DT": "Planet", "VP": ["0xB000", 0] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x202A32F38064", "DT": "Planet", "VP": ["0xB000", 4] },
+                        "DD": { "UA": "0x202A0032F38064", "DT": "Planet", "VP": ["0xB000", 4] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1699990000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x001000000064", "DT": "SolarSystem", "VP": ["0xA001"] },
+                        "DD": { "UA": "0x00100000000064", "DT": "SolarSystem", "VP": ["0xA001"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x101000000064", "DT": "Planet", "VP": ["0xB001", 0] },
+                        "DD": { "UA": "0x10100000000064", "DT": "Planet", "VP": ["0xB001", 0] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x201000000064", "DT": "Planet", "VP": ["0xB002", 5] },
+                        "DD": { "UA": "0x20100000000064", "DT": "Planet", "VP": ["0xB002", 5] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000 },
                         "FL": { "C": 1, "U": 1 }
                     },
 
                     {
-                        "DD": { "UA": "0x0020000000C8", "DT": "SolarSystem", "VP": ["0xA002"] },
+                        "DD": { "UA": "0x002000000000C8", "DT": "SolarSystem", "VP": ["0xA002"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x1020000000C8", "DT": "Planet", "VP": ["0xB003", 1] },
+                        "DD": { "UA": "0x102000000000C8", "DT": "Planet", "VP": ["0xB003", 1] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x2020000000C8", "DT": "Planet", "VP": ["0xB004", 2] },
+                        "DD": { "UA": "0x202000000000C8", "DT": "Planet", "VP": ["0xB004", 2] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700010000 },
                         "FL": { "C": 1, "U": 1 }
                     },
 
                     {
-                        "DD": { "UA": "0x003000000190", "DT": "SolarSystem", "VP": ["0xA003"] },
+                        "DD": { "UA": "0x00300000000190", "DT": "SolarSystem", "VP": ["0xA003"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x103000000190", "DT": "Planet", "VP": ["0xB005", 4] },
+                        "DD": { "UA": "0x10300000000190", "DT": "Planet", "VP": ["0xB005", 4] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x203000000190", "DT": "Planet", "VP": ["0xB006", 0] },
+                        "DD": { "UA": "0x20300000000190", "DT": "Planet", "VP": ["0xB006", 0] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x303000000190", "DT": "Planet", "VP": ["0xB007", 3] },
+                        "DD": { "UA": "0x30300000000190", "DT": "Planet", "VP": ["0xB007", 3] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "1", "USN": "Traveler", "PTK": "ST", "TS": 1700020000 },
                         "FL": { "C": 1, "U": 1 }
                     },
 
                     {
-                        "DD": { "UA": "0x004000000258", "DT": "SolarSystem", "VP": ["0xA004"] },
+                        "DD": { "UA": "0x00400000000258", "DT": "SolarSystem", "VP": ["0xA004"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x104000000258", "DT": "Planet", "VP": ["0xB008", 5] },
+                        "DD": { "UA": "0x10400000000258", "DT": "Planet", "VP": ["0xB008", 5] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x204000000258", "DT": "Planet", "VP": ["0xB009", 13] },
+                        "DD": { "UA": "0x20400000000258", "DT": "Planet", "VP": ["0xB009", 13] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700030000 },
                         "FL": { "C": 1, "U": 1 }
                     },
 
                     {
-                        "DD": { "UA": "0x005000000320", "DT": "SolarSystem", "VP": ["0xA005"] },
+                        "DD": { "UA": "0x00500000000320", "DT": "SolarSystem", "VP": ["0xA005"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x105000000320", "DT": "Planet", "VP": ["0xB00A", "0x10001"] },
+                        "DD": { "UA": "0x10500000000320", "DT": "Planet", "VP": ["0xB00A", "0x10001"] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
                         "FL": { "C": 1, "U": 1 }
                     },
                     {
-                        "DD": { "UA": "0x205000000320", "DT": "Planet", "VP": ["0xB00B", 7] },
+                        "DD": { "UA": "0x20500000000320", "DT": "Planet", "VP": ["0xB00B", 7] },
                         "DM": {},
                         "OWS": { "LID": "", "UID": "2", "USN": "Pathfinder", "PTK": "PS", "TS": 1700040000 },
                         "FL": { "C": 1, "U": 1 }

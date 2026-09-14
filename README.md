@@ -150,7 +150,7 @@ nms saves                             # list all save slots
 nms convert --glyphs 01717D8A4EA2                  # hex glyphs to all formats
 nms convert --glyphs "🌅🕊️🐜🕊️🐜🌳🦋🕋🌜🔺🕋😑"  # emoji glyphs to all formats
 nms convert --coords 0EA2:007D:08A4:0171           # signal booster format
-nms convert --ga 0x40050003AB8C07                   # galactic address
+nms convert --ga 0x40050003AB8C07                   # galactic address (save-file format)
 nms convert --voxel 100,50,-200 --ssi 42           # voxel coordinates
 ```
 

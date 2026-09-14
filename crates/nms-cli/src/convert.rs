@@ -67,13 +67,13 @@ fn parse_galactic_address(
         .or_else(|| hex.strip_prefix("0X"))
         .unwrap_or(hex);
 
-    let packed = u64::from_str_radix(hex, 16)
+    let ua = u64::from_str_radix(hex, 16)
         .map_err(|_| format!("Invalid hex in galactic address: \"{hex}\""))?;
 
-    Ok(GalacticAddress::from_packed(
-        packed & 0xFFFF_FFFF_FFFF,
-        reality_index,
-    ))
+    // `--ga` takes the save-file universe address layout (system and planet index in
+    // the upper bits), as found in discovery records and save editors. The galaxy is
+    // not part of the value, so it comes from --galaxy.
+    Ok(GalacticAddress::from_save_ua(ua, reality_index))
 }
 
 fn parse_voxel(
@@ -164,7 +164,7 @@ fn print_all_formats(addr: &GalacticAddress) {
     builder.push_record(["Hex Glyphs", &format!("{:012X}", addr.packed())]);
     builder.push_record(["Abbreviated", &portal.to_abbrev_string()]);
     builder.push_record(["Signal Booster", &addr.to_signal_booster()]);
-    builder.push_record(["Galactic Address", &format!("0x{:012X}", addr.packed())]);
+    builder.push_record(["Galactic Address", &format!("0x{:X}", addr.to_save_ua())]);
     builder.push_record([
         "Voxel Position",
         &format!(
@@ -275,20 +275,31 @@ mod tests {
 
     #[test]
     fn parse_ga_with_prefix() {
-        let addr = parse_galactic_address("0x01717D8A4EA2", 0).unwrap();
-        assert_eq!(addr.packed(), 0x01717D8A4EA2);
+        let addr = parse_galactic_address("0x2E00FC956DEC", 0).unwrap();
+        assert_eq!(addr.voxel_x(), -532);
+        assert_eq!(addr.voxel_y(), -4);
+        assert_eq!(addr.voxel_z(), -1706);
+        assert_eq!(addr.solar_system_index(), 46);
+        assert_eq!(addr.planet_index(), 0);
     }
 
     #[test]
     fn parse_ga_without_prefix() {
-        let addr = parse_galactic_address("01717D8A4EA2", 0).unwrap();
-        assert_eq!(addr.packed(), 0x01717D8A4EA2);
+        let addr = parse_galactic_address("2E00FC956DEC", 0).unwrap();
+        assert_eq!(addr.solar_system_index(), 46);
     }
 
     #[test]
-    fn parse_ga_masks_to_48_bits() {
-        let addr = parse_galactic_address("0xFFFF01717D8A4EA2", 0).unwrap();
-        assert_eq!(addr.packed(), 0x01717D8A4EA2);
+    fn parse_ga_reads_planet_from_upper_bits() {
+        let addr = parse_galactic_address("0x302C00FC956DEC", 0).unwrap();
+        assert_eq!(addr.planet_index(), 3);
+        assert_eq!(addr.solar_system_index(), 44);
+        assert_eq!(addr.reality_index, 0);
+
+        // The galaxy comes from --galaxy; the flag byte in bits 32-39 is ignored.
+        let addr = parse_galactic_address("0x302C01FC956DEC", 9).unwrap();
+        assert_eq!(addr.reality_index, 9);
+        assert_eq!(addr.solar_system_index(), 44);
     }
 
     #[test]
@@ -425,13 +436,15 @@ mod tests {
 
     #[test]
     fn roundtrip_from_actual_save_address() {
-        // 0x40050003AB8C07 is 14 hex digits (56 bits); from_packed masks to 48 bits
-        // Masked: 0x050003AB8C07
+        // 0x40050003AB8C07 is a save-file address: planet 4, system 5, galaxy 0.
         let addr = parse_galactic_address("0x40050003AB8C07", 0).unwrap();
-        assert_eq!(addr.packed(), 0x050003AB8C07);
+        assert_eq!(addr.planet_index(), 4);
+        assert_eq!(addr.solar_system_index(), 5);
+        assert_eq!(addr.to_save_ua(), 0x40050003AB8C07);
 
+        // Portal hex is the 48-bit portal layout: P SSS YY ZZZ XXX.
         let hex = format!("{:012X}", addr.packed());
-        assert_eq!(hex, "050003AB8C07");
+        assert_eq!(hex, "400503AB8C07");
 
         // Round-trip through voxel
         let voxel_str = format!("{},{},{}", addr.voxel_x(), addr.voxel_y(), addr.voxel_z());
