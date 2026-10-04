@@ -31,10 +31,10 @@ The existing CI run passed default-feature tests on Linux, Windows, and macOS at
 ## Active assignment
 
 ```text
-arc06-fit-and-finish/slice03-decoded-location-witnesses/cc-prompt.md
+arc06-fit-and-finish/slice03-decoded-location-witnesses/cc-prompt-iteration01.md
 ```
 
-Current follow-up: Slice02 is [independently accepted](arc06-fit-and-finish/slice02-packed-format-authority/cdc-verification.md), with its encrypted sample limitations preserved. Slice03 is evidence only, prepared for fresh CC and not yet executed. Its [open set](arc06-fit-and-finish/slice03-decoded-location-witnesses/slice-plan.md) examines one successfully decoded known local save and classifies location relationships before a distinct production repair is designed. The original slice01 assignment and iteration are preserved; its eight-row caller investigation is now [independently accepted](arc06-fit-and-finish/slice01-address-encoding-evidence/cdc-verification.md). Neither that acceptance nor the next research prompt selects a generalized decoder or compatibility policy.
+Current follow-up: Slice02 is [independently accepted](arc06-fit-and-finish/slice02-packed-format-authority/cdc-verification.md), with its encrypted sample limitations preserved. Slice03 initial evidence has been independently reviewed: two rows accepted, five open under [R01–R03](arc06-fit-and-finish/slice03-decoded-location-witnesses/cdc-verification.md). Iteration01 is evidence-only correction, prepared for fresh CC and not yet executed. Its [open set](arc06-fit-and-finish/slice03-decoded-location-witnesses/slice-plan.md) examines one successfully decoded known local save and classifies location relationships before a distinct production repair is designed. The original slice01 assignment and iteration are preserved; its eight-row caller investigation is now [independently accepted](arc06-fit-and-finish/slice01-address-encoding-evidence/cdc-verification.md). Neither that acceptance nor the next research prompt selects a generalized decoder or compatibility policy.
 
 ## Gates and authority
 

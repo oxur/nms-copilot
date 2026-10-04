@@ -1,0 +1,6518 @@
+{
+  "CC_commit": "8d982eab696ef68eaccd437f12ed4ed49ed8d377",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "save_sha256": "ee786384b19ae3a7974cb3130cf16b8823f3dc2a930bd55cfa092015a244c89e",
+  "fresh_decode": {
+    "blocks": 20,
+    "bytes": 10278541,
+    "trim": 1,
+    "invalid_utf8_sequences": 137,
+    "duplicate_key_objects": 0,
+    "mapped_collisions": 0
+  },
+  "header_sha256": "26b82efc53d1570f3b54eef02e9c4764c1ad374ff03cac04e2ced5ea4d4c552f",
+  "library_sha256": "3ce8bec34557e6a5c76129cef6588dc59959caa51e1e54321f45ea7c6e528e07",
+  "checks": [
+    {
+      "check": "input stability",
+      "pass": true
+    },
+    {
+      "check": "save bytes",
+      "pass": true
+    },
+    {
+      "check": "save digest",
+      "pass": true
+    },
+    {
+      "check": "native library digest",
+      "pass": true
+    },
+    {
+      "check": "blocks",
+      "pass": true
+    },
+    {
+      "check": "compressed_bytes_consumed",
+      "pass": true
+    },
+    {
+      "check": "decompressed_bytes",
+      "pass": true
+    },
+    {
+      "check": "trailing_nul_bytes_trimmed",
+      "pass": true
+    },
+    {
+      "check": "invalid_utf8_sequences_replaced",
+      "pass": true
+    },
+    {
+      "check": "JSON duplicate objects",
+      "pass": true
+    },
+    {
+      "check": "JSON duplicate occurrences",
+      "pass": true
+    },
+    {
+      "check": "mapping provenance",
+      "pass": true
+    },
+    {
+      "check": "map count",
+      "pass": true
+    },
+    {
+      "check": "mapped collision objects",
+      "pass": true
+    },
+    {
+      "check": "mapped collision occurrences",
+      "pass": true
+    },
+    {
+      "check": "records",
+      "pass": true
+    },
+    {
+      "check": "discovery DT counts",
+      "pass": true
+    },
+    {
+      "check": "eligible bases",
+      "pass": true
+    },
+    {
+      "check": "eligible endpoints",
+      "pass": true
+    },
+    {
+      "check": "raw edge count",
+      "pass": true
+    },
+    {
+      "check": "accepted pairs",
+      "pass": true
+    },
+    {
+      "check": "all paired ordinals",
+      "pass": true
+    },
+    {
+      "check": "unmatched bases",
+      "pass": true
+    },
+    {
+      "check": "unmatched endpoints",
+      "pass": true
+    },
+    {
+      "check": "incompatible bases",
+      "pass": true
+    },
+    {
+      "check": "incompatible endpoints",
+      "pass": true
+    },
+    {
+      "check": "unique witness IDs",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-000-039 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-001-142 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-003-047 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-004-050 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-005-004 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-007-055 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-008-057 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-009-056 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-010-059 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-011-066 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-012-017 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-014-070 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-015-162 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-016-165 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-017-034 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-018-073 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-019-072 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-021-092 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-022-090 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-023-091 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-024-089 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-025-088 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-026-087 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-027-084 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-028-037 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-029-036 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-030-086 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-031-083 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-033-167 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-034-197 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-035-160 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-036-184 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-037-189 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-038-199 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-039-187 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-040-175 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-041-201 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-042-198 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-046-185 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-047-200 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-048-190 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-050-202 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-052-203 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 literal",
+      "pass": false
+    },
+    {
+      "check": "W-BASE-053-206 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "SYN-DUPLICATE-ENDPOINT",
+      "pass": true
+    },
+    {
+      "check": "SYN-CHANGED-POSITION",
+      "pass": true
+    },
+    {
+      "check": "SYN-CHANGED-NAME",
+      "pass": true
+    },
+    {
+      "check": "nonzero endpoint oracle",
+      "pass": true
+    },
+    {
+      "check": "nonzero endpoint explicit reality",
+      "pass": true
+    },
+    {
+      "check": "VP shapes",
+      "pass": true
+    },
+    {
+      "check": "candidate discovery reality",
+      "pass": true
+    },
+    {
+      "check": "all scalar correlations",
+      "pass": true
+    },
+    {
+      "check": "BaseContext player keys",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/player/PreviousUniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases count",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases collection state",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases item kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases types",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress widths",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress numeric min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/GalacticAddress numeric max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes widths",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes numeric min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/BaseType.PersistentBaseTypes numeric max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/Position states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/Position kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases position lengths",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases finite triples",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/Name states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases/Name kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/PersistentPlayerBases replacement character",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints count",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints collection state",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints item kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints types",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType widths",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType numeric min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/TeleporterType numeric max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/Position states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/Position kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints position lengths",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints finite triples",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/Name states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/Name kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints replacement character",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "BaseContext explicit reality distribution",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext player keys",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/player/PreviousUniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases count",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases collection state",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases item kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases types",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress widths",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress numeric min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/GalacticAddress numeric max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes widths",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes numeric min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/BaseType.PersistentBaseTypes numeric max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/Position states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/Position kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases position lengths",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases finite triples",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/Name states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases/Name kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/PersistentPlayerBases replacement character",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints count",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints collection state",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints item kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints types",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType widths",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType numeric min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/TeleporterType numeric max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/Position states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/Position kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints position lengths",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints finite triples",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/Name states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/Name kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints replacement character",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniverseAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress wrapper states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress wrapper kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/GalacticAddress denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex states",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex kinds",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex denominator",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex min",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex max",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/RealityIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelX ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelY ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/VoxelZ ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/SolarSystemIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext/TeleportEndpoints/separate/UniversalAddress/PlanetIndex ranges",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext explicit reality distribution",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA states",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA kinds",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA denominator",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA widths",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA numeric min",
+      "pass": true
+    },
+    {
+      "check": "discovery DD.UA numeric max",
+      "pass": true
+    },
+    {
+      "check": "discovery integer precision",
+      "pass": true
+    },
+    {
+      "check": "DD keys",
+      "pass": true
+    },
+    {
+      "check": "VP item kinds",
+      "pass": true
+    },
+    {
+      "check": "full record duplicate groups",
+      "pass": true
+    },
+    {
+      "check": "duplicate DT+UA groups",
+      "pass": true
+    },
+    {
+      "check": "duplicate DT+UA repeated occurrences",
+      "pass": true
+    },
+    {
+      "check": "root legacy wrapper",
+      "pass": true
+    },
+    {
+      "check": "BaseContext legacy discovery absence",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext legacy discovery absence",
+      "pass": true
+    },
+    {
+      "check": "BaseContext endpoint fields",
+      "pass": true
+    },
+    {
+      "check": "ExpeditionContext endpoint fields",
+      "pass": true
+    }
+  ],
+  "findings": [
+    {
+      "check": "W-BASE-000-039 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1017,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -1352,
+        "intermediate_adjusted_x": 1030,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 695,
+        "portal": "400503AB8C07",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "005",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1015,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -1350,
+        "intermediate_adjusted_x": 1032,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 697,
+        "portal": "400505ABAC09",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "005",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-001-142 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1017,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -1352,
+        "intermediate_adjusted_x": 1030,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 695,
+        "portal": "400503AB8C07",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "005",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1015,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -1350,
+        "intermediate_adjusted_x": 1032,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 697,
+        "portal": "400505ABAC09",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "005",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-003-047 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 589,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1487,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 870,
+        "intermediate_adjusted_x": 560,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2917,
+        "portal": "224D00366A31",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "24D",
+          "00",
+          "00",
+          "366",
+          "A31"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 589,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1485,
+        "source_adjusted_voxel_y": 2,
+        "source_adjusted_voxel_z": 872,
+        "intermediate_adjusted_x": 562,
+        "intermediate_adjusted_y": 129,
+        "intermediate_adjusted_z": 2919,
+        "portal": "224D02368A33",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "24D",
+          "00",
+          "00",
+          "366",
+          "A31"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-004-050 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 3,
+        "solar_system_index": 193,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1267,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -1225,
+        "intermediate_adjusted_x": 3314,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 822,
+        "portal": "30C106B374F3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x3",
+          "0C1",
+          "00",
+          "06",
+          "B37",
+          "4F3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 3,
+        "solar_system_index": 193,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1269,
+        "source_adjusted_voxel_y": 8,
+        "source_adjusted_voxel_z": -1223,
+        "intermediate_adjusted_x": 3316,
+        "intermediate_adjusted_y": 135,
+        "intermediate_adjusted_z": 824,
+        "portal": "30C108B394F5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x3",
+          "0C1",
+          "00",
+          "06",
+          "B37",
+          "4F3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-005-004 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 469,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1017,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -1352,
+        "intermediate_adjusted_x": 1030,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 695,
+        "portal": "41D503AB8C07",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "1D5",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 469,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1015,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -1350,
+        "intermediate_adjusted_x": 1032,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 697,
+        "portal": "41D505ABAC09",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "1D5",
+          "00",
+          "03",
+          "AB8",
+          "C07"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-007-055 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1613,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -724,
+        "intermediate_adjusted_x": 434,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1323,
+        "portal": "407403D2C9B3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1611,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -722,
+        "intermediate_adjusted_x": 436,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1325,
+        "portal": "407405D2E9B5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-008-057 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1613,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -724,
+        "intermediate_adjusted_x": 434,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1323,
+        "portal": "407403D2C9B3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1611,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -722,
+        "intermediate_adjusted_x": 436,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1325,
+        "portal": "407405D2E9B5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-009-056 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1613,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -724,
+        "intermediate_adjusted_x": 434,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1323,
+        "portal": "407403D2C9B3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1611,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -722,
+        "intermediate_adjusted_x": 436,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1325,
+        "portal": "407405D2E9B5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "074",
+          "00",
+          "03",
+          "D2C",
+          "9B3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-010-059 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 115,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1602,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -713,
+        "intermediate_adjusted_x": 445,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1334,
+        "portal": "107303D379BE",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "073",
+          "00",
+          "03",
+          "D37",
+          "9BE"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 115,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1600,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -711,
+        "intermediate_adjusted_x": 447,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1336,
+        "portal": "107305D399C0",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "073",
+          "00",
+          "03",
+          "D37",
+          "9BE"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-011-066 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 53,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1374,
+        "portal": "203503D5F9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "035",
+          "00",
+          "03",
+          "D5F",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 53,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -671,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1376,
+        "portal": "203505D619EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "035",
+          "00",
+          "03",
+          "D5F",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-012-017 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 20,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1356,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": 1177,
+        "intermediate_adjusted_x": 3403,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 3224,
+        "portal": "40140349954C",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "014",
+          "00",
+          "03",
+          "499",
+          "54C"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 20,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1358,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": 1179,
+        "intermediate_adjusted_x": 3405,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 3226,
+        "portal": "40140549B54E",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "014",
+          "00",
+          "03",
+          "499",
+          "54C"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-014-070 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 233,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -708,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -1637,
+        "intermediate_adjusted_x": 1339,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 410,
+        "portal": "20E90399BD3C",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0E9",
+          "00",
+          "03",
+          "99B",
+          "D3C"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 233,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -706,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -1635,
+        "intermediate_adjusted_x": 1341,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 412,
+        "portal": "20E90599DD3E",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0E9",
+          "00",
+          "03",
+          "99B",
+          "D3C"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-015-162 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 397,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1554,
+        "source_adjusted_voxel_y": -3,
+        "source_adjusted_voxel_z": -706,
+        "intermediate_adjusted_x": 493,
+        "intermediate_adjusted_y": 124,
+        "intermediate_adjusted_z": 1341,
+        "portal": "118DFDD3E9EE",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "18D",
+          "00",
+          "FD",
+          "D3E",
+          "9EE"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 397,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1552,
+        "source_adjusted_voxel_y": -1,
+        "source_adjusted_voxel_z": -704,
+        "intermediate_adjusted_x": 495,
+        "intermediate_adjusted_y": 126,
+        "intermediate_adjusted_z": 1343,
+        "portal": "118DFFD409F0",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "18D",
+          "00",
+          "FD",
+          "D3E",
+          "9EE"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-016-165 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 214,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1560,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 487,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1374,
+        "portal": "20D603D5F9E8",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0D6",
+          "00",
+          "03",
+          "D5F",
+          "9E8"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 214,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1558,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -671,
+        "intermediate_adjusted_x": 489,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1376,
+        "portal": "20D605D619EA",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0D6",
+          "00",
+          "03",
+          "D5F",
+          "9E8"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-017-034 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 197,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1560,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 487,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 1374,
+        "portal": "10C503D5F9E8",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0C5",
+          "00",
+          "03",
+          "D5F",
+          "9E8"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 197,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1558,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -671,
+        "intermediate_adjusted_x": 489,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1376,
+        "portal": "10C505D619EA",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0C5",
+          "00",
+          "03",
+          "D5F",
+          "9E8"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-018-073 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 858,
+        "source_adjusted_voxel_y": -8,
+        "source_adjusted_voxel_z": 1501,
+        "intermediate_adjusted_x": 2905,
+        "intermediate_adjusted_y": 119,
+        "intermediate_adjusted_z": 3548,
+        "portal": "4033F85DD35A",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "033",
+          "00",
+          "F8",
+          "5DD",
+          "35A"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 860,
+        "source_adjusted_voxel_y": -6,
+        "source_adjusted_voxel_z": 1503,
+        "intermediate_adjusted_x": 2907,
+        "intermediate_adjusted_y": 121,
+        "intermediate_adjusted_z": 3550,
+        "portal": "4033FA5DF35C",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "033",
+          "00",
+          "F8",
+          "5DD",
+          "35A"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-019-072 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 858,
+        "source_adjusted_voxel_y": -8,
+        "source_adjusted_voxel_z": 1501,
+        "intermediate_adjusted_x": 2905,
+        "intermediate_adjusted_y": 119,
+        "intermediate_adjusted_z": 3548,
+        "portal": "4033F85DD35A",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "033",
+          "00",
+          "F8",
+          "5DD",
+          "35A"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 860,
+        "source_adjusted_voxel_y": -6,
+        "source_adjusted_voxel_z": 1503,
+        "intermediate_adjusted_x": 2907,
+        "intermediate_adjusted_y": 121,
+        "intermediate_adjusted_z": 3550,
+        "portal": "4033FA5DF35C",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "033",
+          "00",
+          "F8",
+          "5DD",
+          "35A"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-021-092 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1046,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 5,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 132,
+        "intermediate_adjusted_z": 1374,
+        "portal": "141605D5F9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "416",
+          "00",
+          "05",
+          "D5F",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1046,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 7,
+        "source_adjusted_voxel_z": -671,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 134,
+        "intermediate_adjusted_z": 1376,
+        "portal": "141607D619EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "416",
+          "00",
+          "05",
+          "D5F",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-022-090 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -675,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1372,
+        "portal": "541C04D5D9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x5",
+          "41C",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1374,
+        "portal": "541C06D5F9EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x5",
+          "41C",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-023-091 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -675,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1372,
+        "portal": "541C04D5D9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x5",
+          "41C",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1374,
+        "portal": "541C06D5F9EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x5",
+          "41C",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-024-089 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 1004,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "23EC04D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "3EC",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 1004,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "23EC06D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "3EC",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-025-088 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 3,
+        "solar_system_index": 1047,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -675,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1372,
+        "portal": "341704D5D9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x3",
+          "417",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 3,
+        "solar_system_index": 1047,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1374,
+        "portal": "341706D5F9EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x3",
+          "417",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-026-087 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 6,
+        "solar_system_index": 1049,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -675,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1372,
+        "portal": "641904D5D9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x6",
+          "419",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 6,
+        "solar_system_index": 1049,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -673,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1374,
+        "portal": "641906D5F9EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x6",
+          "419",
+          "00",
+          "04",
+          "D5D",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-027-084 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "141804D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "141806D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-028-037 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "141804D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "141806D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-029-036 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "141804D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "141806D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-030-086 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "141804D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "141806D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-031-083 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1559,
+        "source_adjusted_voxel_y": 4,
+        "source_adjusted_voxel_z": -674,
+        "intermediate_adjusted_x": 488,
+        "intermediate_adjusted_y": 131,
+        "intermediate_adjusted_z": 1373,
+        "portal": "141804D5E9E9",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": -1557,
+        "source_adjusted_voxel_y": 6,
+        "source_adjusted_voxel_z": -672,
+        "intermediate_adjusted_x": 490,
+        "intermediate_adjusted_y": 133,
+        "intermediate_adjusted_z": 1375,
+        "portal": "141806D609EB",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "418",
+          "00",
+          "04",
+          "D5E",
+          "9E9"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-033-167 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1053,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "141DFE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "41D",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 1053,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "141D000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "41D",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-034-197 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-035-160 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 210,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 688,
+        "source_adjusted_voxel_y": 1,
+        "source_adjusted_voxel_z": 420,
+        "intermediate_adjusted_x": 2735,
+        "intermediate_adjusted_y": 128,
+        "intermediate_adjusted_z": 2467,
+        "portal": "40D2011A42B0",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "0D2",
+          "00",
+          "01",
+          "1A4",
+          "2B0"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 210,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 690,
+        "source_adjusted_voxel_y": 3,
+        "source_adjusted_voxel_z": 422,
+        "intermediate_adjusted_x": 2737,
+        "intermediate_adjusted_y": 130,
+        "intermediate_adjusted_z": 2469,
+        "portal": "40D2031A62B2",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "0D2",
+          "00",
+          "01",
+          "1A4",
+          "2B0"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-036-184 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 237,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "40EDFE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "0ED",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 237,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "40ED000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "0ED",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-037-189 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "10C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "10C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-038-199 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-039-187 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-040-175 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 82,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1770,
+        "source_adjusted_voxel_y": 43,
+        "source_adjusted_voxel_z": -1317,
+        "intermediate_adjusted_x": 3817,
+        "intermediate_adjusted_y": 170,
+        "intermediate_adjusted_z": 730,
+        "portal": "40522BADB6EA",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "052",
+          "00",
+          "2B",
+          "ADB",
+          "6EA"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 82,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1772,
+        "source_adjusted_voxel_y": 45,
+        "source_adjusted_voxel_z": -1315,
+        "intermediate_adjusted_x": 3819,
+        "intermediate_adjusted_y": 172,
+        "intermediate_adjusted_z": 732,
+        "portal": "40522DADD6EC",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "052",
+          "00",
+          "2B",
+          "ADB",
+          "6EA"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-041-201 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-042-198 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-046-185 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 235,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "10EBFE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0EB",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 235,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "10EB000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "0EB",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-047-200 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-048-190 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "20C2FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "20C2000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x2",
+          "0C2",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-050-202 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "4153FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "153",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "4153000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "153",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-052-203 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "4153FE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "153",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "4153000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x4",
+          "153",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    },
+    {
+      "check": "W-BASE-053-206 literal",
+      "actual": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 363,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1699,
+        "source_adjusted_voxel_y": -2,
+        "source_adjusted_voxel_z": 165,
+        "intermediate_adjusted_x": 3746,
+        "intermediate_adjusted_y": 125,
+        "intermediate_adjusted_z": 2212,
+        "portal": "116BFE0A56A3",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "16B",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      },
+      "expected": {
+        "status": "literal_transcription",
+        "planet_index": 1,
+        "solar_system_index": 363,
+        "reality_index": 0,
+        "source_adjusted_voxel_x": 1701,
+        "source_adjusted_voxel_y": 0,
+        "source_adjusted_voxel_z": 167,
+        "intermediate_adjusted_x": 3748,
+        "intermediate_adjusted_y": 127,
+        "intermediate_adjusted_z": 2214,
+        "portal": "116B000A76A5",
+        "portal_length": 12,
+        "split_hex": [
+          "0x1",
+          "16B",
+          "00",
+          "FE",
+          "0A5",
+          "6A3"
+        ]
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "base_ordinal": 0,
+      "endpoint_ordinal": 39,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 1,
+      "endpoint_ordinal": 142,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 3,
+      "endpoint_ordinal": 47,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 4,
+      "endpoint_ordinal": 50,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 5,
+      "endpoint_ordinal": 4,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 7,
+      "endpoint_ordinal": 55,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 8,
+      "endpoint_ordinal": 57,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 9,
+      "endpoint_ordinal": 56,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 10,
+      "endpoint_ordinal": 59,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 11,
+      "endpoint_ordinal": 66,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 12,
+      "endpoint_ordinal": 17,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 14,
+      "endpoint_ordinal": 70,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 15,
+      "endpoint_ordinal": 162,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 16,
+      "endpoint_ordinal": 165,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 17,
+      "endpoint_ordinal": 34,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 18,
+      "endpoint_ordinal": 73,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 19,
+      "endpoint_ordinal": 72,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 21,
+      "endpoint_ordinal": 92,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 22,
+      "endpoint_ordinal": 90,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 23,
+      "endpoint_ordinal": 91,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 24,
+      "endpoint_ordinal": 89,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 25,
+      "endpoint_ordinal": 88,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 26,
+      "endpoint_ordinal": 87,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 27,
+      "endpoint_ordinal": 84,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 28,
+      "endpoint_ordinal": 37,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 29,
+      "endpoint_ordinal": 36,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 30,
+      "endpoint_ordinal": 86,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 31,
+      "endpoint_ordinal": 83,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 33,
+      "endpoint_ordinal": 167,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 34,
+      "endpoint_ordinal": 197,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 35,
+      "endpoint_ordinal": 160,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 36,
+      "endpoint_ordinal": 184,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 37,
+      "endpoint_ordinal": 189,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 38,
+      "endpoint_ordinal": 199,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 39,
+      "endpoint_ordinal": 187,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 40,
+      "endpoint_ordinal": 175,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 41,
+      "endpoint_ordinal": 201,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 42,
+      "endpoint_ordinal": 198,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 46,
+      "endpoint_ordinal": 185,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 47,
+      "endpoint_ordinal": 200,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 48,
+      "endpoint_ordinal": 190,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 50,
+      "endpoint_ordinal": 202,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 52,
+      "endpoint_ordinal": 203,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 53,
+      "endpoint_ordinal": 206,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    }
+  ],
+  "limits": [
+    "One pinned save; raw-corroborated associations are not shared-ID or game-confirmed pairs.",
+    "Source transcriptions, not original external runtime execution.",
+    "No production or generalized field/galaxy policy."
+  ],
+  "review_failures": [
+    "Large structured prints truncated; subsequently use complete programmatic projections and bounded source sections.",
+    "Temporary directory inventory encountered an unrelated inaccessible launchd directory; no access retry or private search.",
+    "Initial replay compared normalized displayed hexadecimal scalar text directly with original integer representation; corrected to compare numeric identity and original json_kind separately, all pass.",
+    "A helper replay overwrote the extended temporary receipt with its narrower core receipt; reran the population projection and merged structural/source/comparison receipts before writing durable review evidence."
+  ],
+  "population_projection": "Entire declared context/player/base/endpoint address state/kind/range/min/max projections, collection/item/type/Name/Position, DD.UA width/state/kind/numeric/precision, DD.DT/VP, duplicate groups, full joins/correlations/candidate distributions; no sampling.",
+  "header_documented_digest_matches": false,
+  "prose_spelling_contradiction": {
+    "actual_UniversalAddress_wrappers": "absent in both player contexts and all endpoints",
+    "submitted_execution_report": "claims present malformed string wrappers"
+  },
+  "source_comparison_counts": {
+    "literal_component_and_reality_matches": 44,
+    "literal_portal_matches": 44,
+    "companion_matches": 44
+  },
+  "structural": {
+    "scope_exact_six_paths": true,
+    "trailers_once": true,
+    "seven_original_criteria_unchanged": true,
+    "unique_witnesses": 218,
+    "source_planning_reference_intake_clean": true,
+    "json_links_whitespace": true,
+    "private_identity_values_scan_passed": true
+  },
+  "source_hashes": {
+    "/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-save/src/mapping.rs": "555e111d0b8f4d8245d088cd674d059631d55aa9f6658f4814460590b922812c",
+    "/private/tmp/nms-cdc-slice02-saveParser.ts": "0ddc5ccc82e5deaaeadcc2097b6d10ca2012fd6470723a62661b00aa1df6a92b",
+    "/private/tmp/nms-coordinates-Coordinates.cs": "7bb2e8a0ca407947770e01e37f306f92b4321630b1b762aa129ee5e65d48fdf3",
+    "/private/tmp/nms-coordinates-CoordCalculations.cs": "388f61f63097247eb4ce6e803cdd413456e3e5c51558b363a420d1d627bf94b4"
+  },
+  "author_transcription_control": {
+    "witness": "W-BASE-000-039",
+    "correct_intermediates_xyz": [
+      1030,
+      130,
+      695
+    ],
+    "wrong_first_stage_constants_intermediates_xyz": [
+      1032,
+      132,
+      697
+    ],
+    "correct_portal": "400503AB8C07",
+    "wrong_first_stage_portal": "400505ABAC09",
+    "same_oracle_predicate_rejects_wrong_constants": true
+  }
+}

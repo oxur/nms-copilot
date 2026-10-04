@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.4, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.5, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -44,6 +44,8 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 - 1.4 (2026-10-03): Slice02 final review accepted the provenance correction; open Slice03 within the same evidence-before-repair route using a successfully decoded known local input. Original scope/acceptance, architecture and production gate unchanged.
 
+- Version 1.5 (2026-10-04): Slice03 initial review reproduces 44 raw associations but rejects the literal source transcription and two provenance/prose claims; routine correction stays inside the same slice. Original scope, acceptance and dependent production hold unchanged.
+
 ## Current corrective preparation
 
 [Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is current for one usable, pinned local save population and location-witness assessment. Generalized format/base/galaxy gates remain unresolved before a repair can be designed. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
@@ -56,7 +58,7 @@ CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-enc
 
 1. Slice01 — current caller/format inventory: closed, eight independently accepted investigation rows. Does not establish a general save decoder.
 2. Slice02 — primary packed-format authority: closed after independent correction review; seven investigation rows done. Discovery source lead strengthened, encrypted public sample failures preserved; wider field semantics remain unresolved.
-3. Slice03 — decoded local location witnesses: active for CC handoff, not executed. One pinned known workbench save; complete scoped field population and classified raw associations. No production policy selected.
+3. Slice03 — decoded local location witnesses: initial CDC review accepted two rows; five remain open under source-transcription/provenance/narrative corrections. Iteration01 is current. One pinned known workbench save; no production policy selected.
 4. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
 
 Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.
