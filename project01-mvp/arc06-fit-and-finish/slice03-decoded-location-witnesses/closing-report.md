@@ -91,3 +91,30 @@ The five changed paths are `artifacts/location-witnesses.json`, `artifacts/field
 ### Structural and privacy validation before commit
 
 The exact witness delta is 44 corrected derived objects plus 88 literal comparison flags (396 changed leaves); all other witness values are structurally identical to initial CC commit `8d982eab696ef68eaccd437f12ed4ed49ed8d377`. The corrected objects match the fresh replay and both literal flags are true for all 44. Population JSON is byte-identical to the initial artifact (SHA-256 `e6e2fef7038d271225a5df8f85684632fb7ecad6ef0c13a014358fedf4195b18`); both JSON files parse. Execution and closing report retain their complete initial bytes as prefixes. The strict privacy scan found no exact saved Name, Position array or string identity values in artifacts; the only saved-name substring match was already present before this iteration. Seven criteria and statuses match reviewer intake; DW-01 and DW-04 lines remain identical, and the other five rows remain open. The pre-commit worktree contains exactly the five authorized paths. No broad build/test/lint/coverage was run. Commit trailers and clean-tree status will be verified after commit and returned with its SHA.
+
+
+## Iteration02 CC correction record — R04 / DW-07 (2026-10-04)
+
+This pass corrects one evidence-narrative sentence under `cc-prompt-iteration02.md`; the immediately preceding report, execution, witness, and CDC receipt history remains intact. On reviewer intake, candidate `13409d1e32a86f0d16cae8163c696f1e37693c5c` was at planning HEAD `92c08c3dda1369da0da215f471669beb92c672d5`; source main remains clean at `a800950ef3558fcf463517696c3c140061e7353d`. The unchanged input is `local-save-A`, 2,918,235 bytes, SHA-256 `ee786384b19ae3a7974cb3130cf16b8823f3dc2a930bd55cfa092015a244c89e`. This pass did not decode the save or recalculate candidates.
+
+The stable-ID, full-object comparison recorded in the appended execution section resolves the direction unambiguously: current corrected literals equal the initial CDC `actual` objects 44/44 and the CDC `expected` objects 0/44; the initial witness literals equal `expected` 44/44 and `actual` 0/44. The `actual` objects are the faithful source transcription; `expected` preserves the initial incorrect witness values. The Iteration01 CDC receipt independently records the same direction and all 44 negative controls; this CC pass used the current and initial immutable objects to reproduce the equality counts.
+
+The sentence beginning “All 44 fresh NMSCoordinates results equal the CDC receipt's faithful `actual` objects and the original witness objects' CDC-marked incorrect `expected` objects” in the preserved Iteration01 execution prefix is superseded by the correction in the following section. It incorrectly attributes both equalities to the corrected values. The closing report's earlier replacement wording remains a correct control and has not been rewritten.
+
+### Row walk and retained evidence
+
+| Row | CC disposition | Evidence / applicability |
+|---|---|---|
+| DW-01 | done, retained | CDC Iteration01 independently reproduced the source/input fence and readback. Source, input, and criteria remain unchanged; retain its original 2026-10-04 evidence date. |
+| DW-02 | done, retained | CDC Iteration01 reproduced raw decode, mapping, sanitation, precision caveats, and separate header/library identities. No decode or dependency changed in this narrative pass. |
+| DW-03 | done, retained | CDC Iteration01 independently reproduced complete population projections and alternate-wrapper absence; population and current spelling interpretation are unchanged. |
+| DW-04 | done, retained | CDC Iteration01 reproduced the complete raw association set, eligibility, exclusions, and controls; association inputs and predicate are unchanged. |
+| DW-05 | done, retained | CDC Iteration01 reproduced all 44 corrected source comparisons and rejected all 44 wrong-offset controls. This pass confirms receipt direction against current and initial objects; no numerical evidence changed. |
+| DW-06 | done, retained | CDC Iteration01 accepted the corrected source applicability assessment and held policy limits. The assessment and scope are unchanged. |
+| DW-07 | open, CC correction proposed | Current/initial/receipt full-object direction counts reproduce; the prior execution sentence is explicitly superseded below. CDC must review this three-file delta before acceptance. |
+
+DW-01 through DW-06 retain the independent CDC Iteration01 decision and evidence date; this CC pass did not relabel them as fresh acceptance. DW-07 remains open. The seven criteria, acceptance scope, and production/API/compatibility/galaxy/cache gates are unchanged. Slice03, Arc06, and Project01 remain open pending independent CDC review and their existing higher-scale gates.
+
+### Files, checks, and limits
+
+The only modified paths are `artifacts/execution.md`, `closing-report.md`, and `ledger.md`; in the ledger only DW-07 Evidence and Notes changed. The complete pre-iteration execution and closing-report bytes are preserved as prefixes, including the incorrect sentence. All 218 witness IDs/classes remain unchanged; the comparison used all 44 raw-corroborated records, not a sample. Population and location-witness JSON, field assessment, CDC receipts, six accepted ledger rows, seven criteria, plans, prompts, source and save remain unchanged. The current report has no new raw identity values or decoded records. This was a focused standard-library JSON equality check and text/ledger validation only; no build, test, lint, coverage, decoder, external runtime, policy work, or external message was run.
