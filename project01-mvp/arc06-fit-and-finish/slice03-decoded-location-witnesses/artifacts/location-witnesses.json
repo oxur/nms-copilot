@@ -50,13 +50,13 @@
           "planet_index": 4,
           "solar_system_index": 5,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1015,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -1350,
-          "intermediate_adjusted_x": 1032,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 697,
-          "portal": "400505ABAC09",
+          "source_adjusted_voxel_x": -1017,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -1352,
+          "intermediate_adjusted_x": 1030,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 695,
+          "portal": "400503AB8C07",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -71,8 +71,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -125,13 +125,13 @@
           "planet_index": 4,
           "solar_system_index": 5,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1015,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -1350,
-          "intermediate_adjusted_x": 1032,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 697,
-          "portal": "400505ABAC09",
+          "source_adjusted_voxel_x": -1017,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -1352,
+          "intermediate_adjusted_x": 1030,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 695,
+          "portal": "400503AB8C07",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -146,8 +146,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -200,13 +200,13 @@
           "planet_index": 2,
           "solar_system_index": 589,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1485,
-          "source_adjusted_voxel_y": 2,
-          "source_adjusted_voxel_z": 872,
-          "intermediate_adjusted_x": 562,
-          "intermediate_adjusted_y": 129,
-          "intermediate_adjusted_z": 2919,
-          "portal": "224D02368A33",
+          "source_adjusted_voxel_x": -1487,
+          "source_adjusted_voxel_y": 0,
+          "source_adjusted_voxel_z": 870,
+          "intermediate_adjusted_x": 560,
+          "intermediate_adjusted_y": 127,
+          "intermediate_adjusted_z": 2917,
+          "portal": "224D00366A31",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -221,8 +221,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -275,13 +275,13 @@
           "planet_index": 3,
           "solar_system_index": 193,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1269,
-          "source_adjusted_voxel_y": 8,
-          "source_adjusted_voxel_z": -1223,
-          "intermediate_adjusted_x": 3316,
-          "intermediate_adjusted_y": 135,
-          "intermediate_adjusted_z": 824,
-          "portal": "30C108B394F5",
+          "source_adjusted_voxel_x": 1267,
+          "source_adjusted_voxel_y": 6,
+          "source_adjusted_voxel_z": -1225,
+          "intermediate_adjusted_x": 3314,
+          "intermediate_adjusted_y": 133,
+          "intermediate_adjusted_z": 822,
+          "portal": "30C106B374F3",
           "portal_length": 12,
           "split_hex": [
             "0x3",
@@ -296,8 +296,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -350,13 +350,13 @@
           "planet_index": 4,
           "solar_system_index": 469,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1015,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -1350,
-          "intermediate_adjusted_x": 1032,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 697,
-          "portal": "41D505ABAC09",
+          "source_adjusted_voxel_x": -1017,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -1352,
+          "intermediate_adjusted_x": 1030,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 695,
+          "portal": "41D503AB8C07",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -371,8 +371,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -425,13 +425,13 @@
           "planet_index": 4,
           "solar_system_index": 116,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1611,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -722,
-          "intermediate_adjusted_x": 436,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1325,
-          "portal": "407405D2E9B5",
+          "source_adjusted_voxel_x": -1613,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -724,
+          "intermediate_adjusted_x": 434,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1323,
+          "portal": "407403D2C9B3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -446,8 +446,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -500,13 +500,13 @@
           "planet_index": 4,
           "solar_system_index": 116,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1611,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -722,
-          "intermediate_adjusted_x": 436,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1325,
-          "portal": "407405D2E9B5",
+          "source_adjusted_voxel_x": -1613,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -724,
+          "intermediate_adjusted_x": 434,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1323,
+          "portal": "407403D2C9B3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -521,8 +521,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -575,13 +575,13 @@
           "planet_index": 4,
           "solar_system_index": 116,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1611,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -722,
-          "intermediate_adjusted_x": 436,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1325,
-          "portal": "407405D2E9B5",
+          "source_adjusted_voxel_x": -1613,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -724,
+          "intermediate_adjusted_x": 434,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1323,
+          "portal": "407403D2C9B3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -596,8 +596,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -650,13 +650,13 @@
           "planet_index": 1,
           "solar_system_index": 115,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1600,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -711,
-          "intermediate_adjusted_x": 447,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1336,
-          "portal": "107305D399C0",
+          "source_adjusted_voxel_x": -1602,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -713,
+          "intermediate_adjusted_x": 445,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1334,
+          "portal": "107303D379BE",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -671,8 +671,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -725,13 +725,13 @@
           "planet_index": 2,
           "solar_system_index": 53,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -671,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1376,
-          "portal": "203505D619EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -673,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1374,
+          "portal": "203503D5F9E9",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -746,8 +746,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -800,13 +800,13 @@
           "planet_index": 4,
           "solar_system_index": 20,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1358,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": 1179,
-          "intermediate_adjusted_x": 3405,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 3226,
-          "portal": "40140549B54E",
+          "source_adjusted_voxel_x": 1356,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": 1177,
+          "intermediate_adjusted_x": 3403,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 3224,
+          "portal": "40140349954C",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -821,8 +821,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -875,13 +875,13 @@
           "planet_index": 2,
           "solar_system_index": 233,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -706,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -1635,
-          "intermediate_adjusted_x": 1341,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 412,
-          "portal": "20E90599DD3E",
+          "source_adjusted_voxel_x": -708,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -1637,
+          "intermediate_adjusted_x": 1339,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 410,
+          "portal": "20E90399BD3C",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -896,8 +896,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -950,13 +950,13 @@
           "planet_index": 1,
           "solar_system_index": 397,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1552,
-          "source_adjusted_voxel_y": -1,
-          "source_adjusted_voxel_z": -704,
-          "intermediate_adjusted_x": 495,
-          "intermediate_adjusted_y": 126,
-          "intermediate_adjusted_z": 1343,
-          "portal": "118DFFD409F0",
+          "source_adjusted_voxel_x": -1554,
+          "source_adjusted_voxel_y": -3,
+          "source_adjusted_voxel_z": -706,
+          "intermediate_adjusted_x": 493,
+          "intermediate_adjusted_y": 124,
+          "intermediate_adjusted_z": 1341,
+          "portal": "118DFDD3E9EE",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -971,8 +971,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1025,13 +1025,13 @@
           "planet_index": 2,
           "solar_system_index": 214,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1558,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -671,
-          "intermediate_adjusted_x": 489,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1376,
-          "portal": "20D605D619EA",
+          "source_adjusted_voxel_x": -1560,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -673,
+          "intermediate_adjusted_x": 487,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1374,
+          "portal": "20D603D5F9E8",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -1046,8 +1046,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1100,13 +1100,13 @@
           "planet_index": 1,
           "solar_system_index": 197,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1558,
-          "source_adjusted_voxel_y": 5,
-          "source_adjusted_voxel_z": -671,
-          "intermediate_adjusted_x": 489,
-          "intermediate_adjusted_y": 132,
-          "intermediate_adjusted_z": 1376,
-          "portal": "10C505D619EA",
+          "source_adjusted_voxel_x": -1560,
+          "source_adjusted_voxel_y": 3,
+          "source_adjusted_voxel_z": -673,
+          "intermediate_adjusted_x": 487,
+          "intermediate_adjusted_y": 130,
+          "intermediate_adjusted_z": 1374,
+          "portal": "10C503D5F9E8",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -1121,8 +1121,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1175,13 +1175,13 @@
           "planet_index": 4,
           "solar_system_index": 51,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 860,
-          "source_adjusted_voxel_y": -6,
-          "source_adjusted_voxel_z": 1503,
-          "intermediate_adjusted_x": 2907,
-          "intermediate_adjusted_y": 121,
-          "intermediate_adjusted_z": 3550,
-          "portal": "4033FA5DF35C",
+          "source_adjusted_voxel_x": 858,
+          "source_adjusted_voxel_y": -8,
+          "source_adjusted_voxel_z": 1501,
+          "intermediate_adjusted_x": 2905,
+          "intermediate_adjusted_y": 119,
+          "intermediate_adjusted_z": 3548,
+          "portal": "4033F85DD35A",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -1196,8 +1196,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1250,13 +1250,13 @@
           "planet_index": 4,
           "solar_system_index": 51,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 860,
-          "source_adjusted_voxel_y": -6,
-          "source_adjusted_voxel_z": 1503,
-          "intermediate_adjusted_x": 2907,
-          "intermediate_adjusted_y": 121,
-          "intermediate_adjusted_z": 3550,
-          "portal": "4033FA5DF35C",
+          "source_adjusted_voxel_x": 858,
+          "source_adjusted_voxel_y": -8,
+          "source_adjusted_voxel_z": 1501,
+          "intermediate_adjusted_x": 2905,
+          "intermediate_adjusted_y": 119,
+          "intermediate_adjusted_z": 3548,
+          "portal": "4033F85DD35A",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -1271,8 +1271,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1325,13 +1325,13 @@
           "planet_index": 1,
           "solar_system_index": 1046,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 7,
-          "source_adjusted_voxel_z": -671,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 134,
-          "intermediate_adjusted_z": 1376,
-          "portal": "141607D619EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 5,
+          "source_adjusted_voxel_z": -673,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 132,
+          "intermediate_adjusted_z": 1374,
+          "portal": "141605D5F9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -1346,8 +1346,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1400,13 +1400,13 @@
           "planet_index": 5,
           "solar_system_index": 1052,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -673,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1374,
-          "portal": "541C06D5F9EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -675,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1372,
+          "portal": "541C04D5D9E9",
           "portal_length": 12,
           "split_hex": [
             "0x5",
@@ -1421,8 +1421,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1475,13 +1475,13 @@
           "planet_index": 5,
           "solar_system_index": 1052,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -673,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1374,
-          "portal": "541C06D5F9EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -675,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1372,
+          "portal": "541C04D5D9E9",
           "portal_length": 12,
           "split_hex": [
             "0x5",
@@ -1496,8 +1496,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1550,13 +1550,13 @@
           "planet_index": 2,
           "solar_system_index": 1004,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "23EC06D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "23EC04D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -1571,8 +1571,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1625,13 +1625,13 @@
           "planet_index": 3,
           "solar_system_index": 1047,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -673,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1374,
-          "portal": "341706D5F9EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -675,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1372,
+          "portal": "341704D5D9E9",
           "portal_length": 12,
           "split_hex": [
             "0x3",
@@ -1646,8 +1646,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1700,13 +1700,13 @@
           "planet_index": 6,
           "solar_system_index": 1049,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -673,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1374,
-          "portal": "641906D5F9EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -675,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1372,
+          "portal": "641904D5D9E9",
           "portal_length": 12,
           "split_hex": [
             "0x6",
@@ -1721,8 +1721,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1775,13 +1775,13 @@
           "planet_index": 1,
           "solar_system_index": 1048,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "141806D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "141804D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -1796,8 +1796,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1850,13 +1850,13 @@
           "planet_index": 1,
           "solar_system_index": 1048,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "141806D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "141804D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -1871,8 +1871,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -1925,13 +1925,13 @@
           "planet_index": 1,
           "solar_system_index": 1048,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "141806D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "141804D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -1946,8 +1946,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2000,13 +2000,13 @@
           "planet_index": 1,
           "solar_system_index": 1048,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "141806D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "141804D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -2021,8 +2021,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2075,13 +2075,13 @@
           "planet_index": 1,
           "solar_system_index": 1048,
           "reality_index": 0,
-          "source_adjusted_voxel_x": -1557,
-          "source_adjusted_voxel_y": 6,
-          "source_adjusted_voxel_z": -672,
-          "intermediate_adjusted_x": 490,
-          "intermediate_adjusted_y": 133,
-          "intermediate_adjusted_z": 1375,
-          "portal": "141806D609EB",
+          "source_adjusted_voxel_x": -1559,
+          "source_adjusted_voxel_y": 4,
+          "source_adjusted_voxel_z": -674,
+          "intermediate_adjusted_x": 488,
+          "intermediate_adjusted_y": 131,
+          "intermediate_adjusted_z": 1373,
+          "portal": "141804D5E9E9",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -2096,8 +2096,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2150,13 +2150,13 @@
           "planet_index": 1,
           "solar_system_index": 1053,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "141D000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "141DFE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -2171,8 +2171,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2225,13 +2225,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2246,8 +2246,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2300,13 +2300,13 @@
           "planet_index": 4,
           "solar_system_index": 210,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 690,
-          "source_adjusted_voxel_y": 3,
-          "source_adjusted_voxel_z": 422,
-          "intermediate_adjusted_x": 2737,
-          "intermediate_adjusted_y": 130,
-          "intermediate_adjusted_z": 2469,
-          "portal": "40D2031A62B2",
+          "source_adjusted_voxel_x": 688,
+          "source_adjusted_voxel_y": 1,
+          "source_adjusted_voxel_z": 420,
+          "intermediate_adjusted_x": 2735,
+          "intermediate_adjusted_y": 128,
+          "intermediate_adjusted_z": 2467,
+          "portal": "40D2011A42B0",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -2321,8 +2321,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2375,13 +2375,13 @@
           "planet_index": 4,
           "solar_system_index": 237,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "40ED000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "40EDFE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -2396,8 +2396,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2450,13 +2450,13 @@
           "planet_index": 1,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "10C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "10C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -2471,8 +2471,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2525,13 +2525,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2546,8 +2546,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2600,13 +2600,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2621,8 +2621,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2675,13 +2675,13 @@
           "planet_index": 4,
           "solar_system_index": 82,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1772,
-          "source_adjusted_voxel_y": 45,
-          "source_adjusted_voxel_z": -1315,
-          "intermediate_adjusted_x": 3819,
-          "intermediate_adjusted_y": 172,
-          "intermediate_adjusted_z": 732,
-          "portal": "40522DADD6EC",
+          "source_adjusted_voxel_x": 1770,
+          "source_adjusted_voxel_y": 43,
+          "source_adjusted_voxel_z": -1317,
+          "intermediate_adjusted_x": 3817,
+          "intermediate_adjusted_y": 170,
+          "intermediate_adjusted_z": 730,
+          "portal": "40522BADB6EA",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -2696,8 +2696,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2750,13 +2750,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2771,8 +2771,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2825,13 +2825,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2846,8 +2846,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2900,13 +2900,13 @@
           "planet_index": 1,
           "solar_system_index": 235,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "10EB000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "10EBFE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -2921,8 +2921,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -2975,13 +2975,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -2996,8 +2996,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -3050,13 +3050,13 @@
           "planet_index": 2,
           "solar_system_index": 194,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "20C2000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "20C2FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x2",
@@ -3071,8 +3071,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -3125,13 +3125,13 @@
           "planet_index": 4,
           "solar_system_index": 339,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "4153000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "4153FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -3146,8 +3146,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -3200,13 +3200,13 @@
           "planet_index": 4,
           "solar_system_index": 339,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "4153000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "4153FE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x4",
@@ -3221,8 +3221,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
@@ -3275,13 +3275,13 @@
           "planet_index": 1,
           "solar_system_index": 363,
           "reality_index": 0,
-          "source_adjusted_voxel_x": 1701,
-          "source_adjusted_voxel_y": 0,
-          "source_adjusted_voxel_z": 167,
-          "intermediate_adjusted_x": 3748,
-          "intermediate_adjusted_y": 127,
-          "intermediate_adjusted_z": 2214,
-          "portal": "116B000A76A5",
+          "source_adjusted_voxel_x": 1699,
+          "source_adjusted_voxel_y": -2,
+          "source_adjusted_voxel_z": 165,
+          "intermediate_adjusted_x": 3746,
+          "intermediate_adjusted_y": 125,
+          "intermediate_adjusted_z": 2212,
+          "portal": "116BFE0A56A3",
           "portal_length": 12,
           "split_hex": [
             "0x1",
@@ -3296,8 +3296,8 @@
       "comparisons": {
         "companion_matches_expanded_components_and_reality": true,
         "companion_portal_matches_expanded_portal": true,
-        "nmscoordinates_literal_components_match_expanded": false,
-        "nmscoordinates_literal_portal_matches_expanded": false
+        "nmscoordinates_literal_components_match_expanded": true,
+        "nmscoordinates_literal_portal_matches_expanded": true
       },
       "limits": [
         "Raw name-plus-position association is not a shared native ID or game-confirmed pair.",
