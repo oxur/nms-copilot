@@ -81,3 +81,73 @@ The two fixture projections cover four discovery UA entries (two per fixture), f
 - `closing-report.md` — CC's per-row proposed disposition and bubble-up.
 
 No owner/account identifiers or private snapshots were copied. No source, dependency, config, test fixture, or game-save file changed. CDC verification is not produced or implied by this record.
+
+## Iteration 01 — complete address-input caller evidence (2026-10-03)
+
+**Assignment identity:** Project01 / arc06 / slice01, `arc06-fit-and-finish/slice01-address-encoding-evidence/cc-prompt-iteration01.md`; predecessor `cc-prompt.md`; initial packet `8a5352bc5a9da3b15a51835879b9742c7d4f96f9`. Returned to CDC as proposed-done. This section supplements the initial attempt above; it does not erase its incomplete caller/read-coverage claim or its recorded query failures.
+
+### Current fences and required-input coverage
+
+- Source: `/Users/oubiwann/lab/oxur/nms-copilot`, branch `main`, `a800950ef3558fcf463517696c3c140061e7353d`, clean at intake and after the build/probes.
+- Planning: `.worktrees/planning`, branch `planning`, `8f56eba1ebf0c340f98e162d57af2081909c8c6e`, clean before these edits. This is the active slice correction; the initial CC packet at `8a5352b` and CDC review at `8f56eba` are retained.
+- Read completely for this assignment: iteration01 prompt; slice plan; all eight ledger rows; CDC verification including R01 and all row dispositions; CDC JSON receipts including all prior source-hit lists and five probe records; original CC prompt §§ “Binding boundaries and applied guidance” and “Validation and return”; arc plan §§ “Workflow” and “Current corrective preparation”; prior `caller-map.csv`, `format-contract.md`, and `execution.md`; initial closing report as committed at `8a5352b`.
+- Read the complete required source spans: `nms-cli/src/convert.rs:6-168`; `nms-copilot/src/dispatch.rs:454-535`; `nms-core/src/address.rs:34-209,278-328,352-544`; and `nms-save/src/model.rs:80-165`. Also read complete reached `resolve_galaxy`, display/formatting, `From`/`FromStr` conversion bodies, and relevant input call bodies in those spans. Bounded output was re-read in smaller calls where terminal output was truncated; no truncated excerpt is treated as complete.
+- Read Rust API-37 (SHOULD) in `rust-guidelines/guides/02-api-design.md:1154-1181`, AP-33 (AVOID) in `rust-guidelines/guides/11-anti-patterns.md:1036-1062`, and `work-verification/guides/05-independent-verification.md` § “Evidence During Correction Review”. API-37 keeps distinct input/encoding roles visible; AP-33 keeps parse/range failure distinct from successful zero; correction review permits retained evidence only when source, criterion, inputs, method, and applicability remain unchanged.
+
+### Source-cited contract readback before evidence edits
+
+The CLI `run` requires `--ssi` and calls `parse_voxel`; that complete parser reads X/Z as `i16`, Y as `i8`, rejects X/Z outside `-2048..=2047`, rejects SSI above `0xFFE`, and then calls `GalacticAddress::new` (`crates/nms-cli/src/convert.rs:6-31,79-128`). The REPL `dispatch_convert` also requires `--ssi` and calls its complete `parse_voxel`, which reads X/Z as `i16`, Y as `i8`, then calls the same constructor without those CLI X/Z/SSI checks (`crates/nms-copilot/src/dispatch.rs:454-533`). The differing parser behavior is an observed fact, not policy approval or an instruction to normalize the paths.
+
+`GalacticAddress::new` masks X/Z and SSI to 12 bits, Y to 8 bits, and planet to 4 bits; `from_packed` masks to 48 bits (`crates/nms-core/src/address.rs:34-117`). Core `GalacticAddress` still defines `P-SSS-YY-ZZZ-XXX` with separate `reality_index` (`address.rs:34-76`); `PortalAddress` and `From`/`FromStr` implementations convert only that portal-shaped core representation (`address.rs:278-328,352-544`). Allowed evidence writes are the existing caller map, format contract, execution record, closing report, and supported ledger notes only. No production behavior, save-packed DD.UA decoding, base layout, invalid-input policy, or galaxy sourcing decision is authorized; generalized packed DD.UA/base/galaxy semantics remain unresolved and block dependent repair.
+
+### Expanded source search and reconciliation
+
+Search population: all Rust files under `crates/`, with external `**/tests/**` directories excluded. The exact case-insensitive-free expressions queried were:
+
+```text
+rg -n 'GalacticAddress::new[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'parse_voxel[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'from_signal_booster[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'from_portal_string[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'from_galactic_address[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'to_portal_address[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'parse_galactic_address[[:space:]]*\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'impl FromStr for GalacticAddress|impl FromStr for PortalAddress|impl From<u64> for GalacticAddress|impl From<PortalAddress> for GalacticAddress|impl From<GalacticAddress> for PortalAddress|impl From<GalacticAddress> for u64' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n 'GalacticAddress::from\(|PortalAddress::from\(' crates --glob '*.rs' --glob '!**/tests/**'
+rg -n '(GalacticAddress|PortalAddress).*parse|parse.*(GalacticAddress|PortalAddress)|\.parse::<(GalacticAddress|PortalAddress)>' crates --glob '*.rs' --glob '!**/tests/**'
+```
+
+The raw matched-line populations, which include in-file test-module calls and definitions and therefore are not production-call totals, were: `GalacticAddress::new` 115; `parse_voxel` 14; `from_signal_booster` 8; `from_portal_string` 1; `from_galactic_address` 1; `to_portal_address` 5; `parse_galactic_address` 7; each of the two `FromStr` impl patterns 1; each of the four `From` impl patterns 1; combined `GalacticAddress::from`/`PortalAddress::from` usages 8; typed parse search 17. The prior CDC-reconciled search remains 10 production `from_packed` expressions (plus its definition) and six direct production `to_galactic_address` expressions (plus two definitions), as itemized in `artifacts/cdc-review-receipts.json`.
+
+Manual source-boundary classification found three production `GalacticAddress::new` call expressions: the CLI voxel parser, REPL voxel parser, and expanded save-object conversion (`crates/nms-save/src/model.rs:110-120`). `parse_voxel` has two production call expressions and two definitions, both now mapped; its remaining matches are in-file tests. `parse_galactic_address` has one production call and a definition in CLI; its other match is a test. `from_signal_booster` production routes are CLI, REPL, and MCP, plus the two core definitions/internal conversion route; its remaining hits are in-file tests. `from_portal_string` and `from_galactic_address` are definition-only in the production source. `to_portal_address` production uses are CLI/REPL formatters plus the core method/`From` conversion; test hits remain separate. Both `FromStr` implementations and the four address-related `From` implementations are fully read; the only production typed parse reached by the string helper is `PortalAddress` inside `GalacticAddress::from_portal_string`. Of eight explicit `GalacticAddress::from`/`PortalAddress::from` matches, the production conversions are within core conversion methods; the remaining occurrences are in-file tests. No typed production parse or external `From` call site for save-packed `GalacticAddress` was found. Methods, definitions, in-file test calls, and downstream formatting are classified separately in the updated CSV rather than counted as independent decoding operations.
+
+Every matched production conversion/input function in these families was read completely before classification. The two new voxel rows record declared primitive widths, validation behavior, constructor narrowing, separate galaxy and planet inputs, and the absence of a live REPL receipt. The rest of the map retains the ten packed and six direct wrapper routes plus portal, expanded save, MCP, import, and downstream format/cache consumers. No external test directory, fixture, or generated data was used to inflate production caller counts.
+
+### Repeated public CLI probes
+
+Rebuilt first from the pinned source with `CARGO_NET_OFFLINE=true cargo build --workspace --all-features --locked`: exit 0 in 0.98 s. Cargo emitted the existing future-incompatibility warning for `proc-macro-error2 v2.0.1`; no tests were run. Then ran the three required commands against `target/debug/nms` from the source root:
+
+| Command | Exit | Actual observed result |
+|---|---:|---|
+| `target/debug/nms convert --voxel 1130,4,-1244 --ssi 299 --planet 2` | 0 | Output table reports hex/galactic address `212B04B2446A`, coordinates `(1130, 4, -1244)`, SSI 299, planet 2, Euclid (0). |
+| `target/debug/nms convert --voxel 3000,0,0 --ssi 0 --planet 2` | 1 | `Error: Voxel X out of range: 3000 (must be -2048..2047)` on stderr; stdout empty. |
+| `target/debug/nms convert --voxel 0,0,0 --ssi 4095 --planet 2` | 1 | `Error: System index out of range: 4095 (must be 0..4094)` on stderr; stdout empty. |
+
+The first result confirms the expected exact portal output. The latter two confirm the CLI X and SSI guards. Complete REPL source inspection establishes that corresponding `3000` and `4095` values fit its `i16`/`u16` parses and flow to the masking constructor, but no live-terminal REPL test or result is claimed. These observations do not decide whether the two public interfaces should converge.
+
+### Row dispositions and retained evidence applicability
+
+- **AE-01 open:** completed prompt/source/query coverage and the pre-edit source-cited readback are now recorded above; CDC must review the corrected intake evidence.
+- **AE-02 open:** the caller map now includes both voxel input paths and their reached constructor behavior; the expanded raw hit populations and production/test/definition distinctions are recorded above for CDC reconciliation.
+- **AE-03 retained done — reproduced:** CDC `cdc-verification.md` identifies its checked source fence, claim, method, and results. This iteration changes no format witnesses, fixtures, reference code, or unresolved family conclusions; its accepted criterion remains limited to applicable pinned witnesses or explicitly unresolved status. No changed input or source affects that evidence.
+- **AE-04 retained done — reproduced:** CDC’s exact discovery/control CLI outputs and input fixture digests are in `cdc-verification.md` and `cdc-review-receipts.json`. This iteration changes no export code or fixture and does not replace those claims; the separate voxel CLI probes are recorded fresh above. The exact failure/control evidence remains applicable.
+- **AE-05 open:** the corrected contract now records CLI/REPL primitive widths, explicit checks, constructor masks, zero, signed coordinates, planet narrowing, galaxy separation, and malformed/overflow outcomes. Policy remains unresolved.
+- **AE-06 retained done — reproduced:** CDC names its inspected fixture/test and graph/watch/query/cache source population in `cdc-verification.md`. This iteration changes none of those inputs, implementations, or criteria and introduces no downstream production dependency; the independently reproduced impact observations remain applicable.
+- **AE-07 open:** the recommendation now explicitly holds any CLI/REPL validation harmonization for owner review and keeps save, base, galaxy, zero/sentinel, `--ga`, query identity, and cache gates unresolved. CDC review is still required against the complete caller map.
+- **AE-08 retained done — reproduced:** CDC’s source/commit fence, exact initial CC scope, and identifier scan result are recorded in `cdc-verification.md`. This iteration changes only allowlisted planning evidence and makes no source, fixture, dependency, or private-data change; current scope and sanitation are rechecked below. The earlier accepted check is retained for its recorded scope; the current five-file scope is also checked before commit.
+
+Retention is not relabelled as a fresh CDC run. Each retained row's source fence, inputs, criterion, method, and result are explicitly identified in the CDC record; this iteration affects only caller/input evidence for the four open rows. If CDC finds a changed dependency or an undermined retained method, that row must be reopened and freshly checked.
+
+### Current inventory and checks
+
+The only edited paths for this iteration are the five prompt-allowlisted existing paths: `artifacts/caller-map.csv`, `artifacts/format-contract.md`, `artifacts/execution.md`, `closing-report.md`, and `ledger.md`. No new probe files or source/test/config/fixture/game data were created. The prior supporting artifact inventory remains unchanged. A live identifier scan and final diff/path checks are recorded after the edits below; source tests, no-default-feature build, strict documentation checks, and REPL execution were not rerun by this evidence-only correction. Their existing recorded failures/limits remain unresolved.

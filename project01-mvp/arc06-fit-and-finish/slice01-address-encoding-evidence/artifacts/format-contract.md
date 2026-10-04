@@ -40,3 +40,32 @@ The rkyv `CacheData` serializes decoded `GalacticAddress` values and carries `sa
 5. **Owner decisions before implementation:** raw `--ga` meaning and compatibility policy; signed negative integer policy; zero/sentinel and missing-expanded-field policy; out-of-width reject/truncate policy; source of galaxy for each packed field; query glyph behavior when system and planet indexes differ; and cache format invalidation/versioning. Do not turn absence or parse failure into a successful default address.
 
 Source-confirmed defects include the reproduced low-48 DD.UA output and forced galaxy zero in current discovery/base conversions; unresolved hypotheses include the full packed formats, base/discovery equivalence, and generalized galaxy layout. This slice makes no production or fixture changes.
+
+## Iteration01 correction — public voxel and constructor input contract (2026-10-03)
+
+This dated correction supplements the initial contract above and supersedes its incomplete CLI/REPL input coverage. The original `closing-report.md` and first `execution.md` attempt remain preserved as historical evidence; the earlier caller-map completeness claim did not include the complete voxel routes.
+
+### Source-cited contract readback before the correction
+
+The CLI `run` selects the voxel path only after glyph, signal-booster, and raw `--ga` branches, requires `--ssi`, then calls `parse_voxel` (`crates/nms-cli/src/convert.rs:6-31`). That complete parser reads X/Z as `i16`, Y as `i8`, rejects X and Z outside `-2048..=2047`, rejects SSI above `0xFFE`, then calls `GalacticAddress::new` (`convert.rs:79-128`). The REPL `dispatch_convert` likewise requires `--ssi` and reaches its own complete `parse_voxel`, but that parser reads X/Z as `i16`, Y as `i8`, and calls the same constructor without the CLI's explicit X/Z or SSI range checks (`crates/nms-copilot/src/dispatch.rs:454-533`). Both paths pass the selected galaxy separately and pass the `u8` planet argument to the constructor.
+
+`GalacticAddress::new` masks X/Z and SSI to 12 bits, Y to 8 bits, and planet to 4 bits; `from_packed` masks to 48 bits (`crates/nms-core/src/address.rs:34-117`). The core contract remains `P-SSS-YY-ZZZ-XXX`, with reality index separate (`address.rs:34-76`). `PortalAddress` converts to/from that same 48-bit layout; `GalacticAddress::from_str` requires exactly 12 hex digits and defaults reality to zero, while `From<u64>` masks to 48 bits and also defaults reality to zero (`address.rs:278-328,352-544`). `from_portal_string` parses `PortalAddress`; the corresponding conversion implementations do not decode the save scalar families (`address.rs:483-544`). API-37 (SHOULD) supports keeping differently encoded inputs distinct in a future API; AP-33 (AVOID) supports retaining parse/range failures and zero/missing distinctions explicitly. Neither selects a new semantic or compatibility policy.
+
+Allowed updates for this iteration are limited to the existing caller map, format contract, execution record, closing report, and evidence notes for open ledger rows. No source behavior, invalid-input policy, save-packed interpretation, base interpretation, or galaxy source is changed or approved. The reproduced Chili witness and portal-shaped control remain bounded to their supplied synthetic inputs; generalized packed DD.UA, base layout, and galaxy sourcing remain unresolved and continue to block dependent repair.
+
+### Public input widths and observed narrowing
+
+| Input | CLI observation | REPL observation | Limit |
+|---|---|---|---|
+| X/Z | Parse as `i16`, then reject values outside `-2048..=2047` | Parse as `i16`; no explicit portal-field bound before the constructor | REPL values within `i16` but outside 12-bit signed range are masked by `new`; no live REPL run was made |
+| Y | Parse as `i8` (`-128..=127` representable) | Parse as `i8` (`-128..=127` representable) | Primitive parse failure occurs outside that width; constructor preserves the low 8 bits |
+| SSI | CLI flag is `u16`; reject values above `4094` | REPL field is `u16`; no explicit `0..=4094` check | `new` masks to 12 bits; `4095` is accepted by the REPL route and is the all-ones SSI field, while the CLI rejects it |
+| Planet | CLI flag is `u8`; no explicit `0..=15` check in `parse_voxel` | REPL field is `u8`; no explicit `0..=15` check in `parse_voxel` | `new` masks to the low 4 bits on both routes |
+| Galaxy | CLI/REPL resolver parses a numeric index through `u16`, rejects values above 255, or resolves a name | Same resolver behavior | Stored separately as `reality_index`; voxel constructor does not encode it in the 48-bit value |
+| Zero/negative/malformed | Zero passes these numeric range checks; signed X/Y/Z parse; wrong voxel part count, primitive overflow, X/Z range, and SSI range return errors | Zero reaches constructor; signed X/Y/Z parse; malformed part count and primitive-width overflow return errors, but there are no explicit X/Z or SSI encoding-range checks | These are current code observations only. Validity, sentinel meaning, wrap/reject policy, and CLI/REPL compatibility remain unresolved owner decisions |
+
+The valid public CLI probe `--voxel 1130,4,-1244 --ssi 299 --planet 2` emitted `212B04B2446A`. CLI probes with X=`3000` and SSI=`4095` each exited 1 with the source-coded range error. These probes confirm those CLI branches, not REPL runtime behavior, generalized save decoding, or an intended shared validation policy. Full source inspection establishes the REPL route and its differing checks; no terminal receipt is claimed.
+
+### Revised bounded recommendation
+
+Keep the current core portal-frame contract stable. Any later voxel-input harmonization must first receive owner review because the CLI and REPL currently differ: do not make them converge as part of save-address decoding or infer a policy from the existing masking constructor. Preserve the CLI/REPL distinction in regression planning and name explicit oracles for X/Z, SSI `4095`, planet values above `15`, signed-coordinate primitive limits, and galaxy propagation if an authorized behavior change is later scoped. Continue to hold every broader decision in the initial recommendation: DD.UA and base layouts, packed-field galaxy source, zero/sentinel and missing-field meaning, raw `--ga` compatibility, query glyph identity, and cache invalidation. The public voxel path is now represented in the source map; this does not establish a save decoder or authorize a production repair.
