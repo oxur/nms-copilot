@@ -1,0 +1,1465 @@
+{
+  "schema": "slice04-behavior-probes-v1",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "baseline_sha256": "0c3d0208a79f23cd8ff44ea101ad5d4909b2c0921aef4435d8291b3d11e30bdf",
+  "build": {
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "nms-cli"
+    ],
+    "exit_code": 0,
+    "stdout": "Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.51s\n",
+    "stderr": "warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the full report, run `cargo report future-incompatibilities --id 1`\n",
+    "scope": "root source worktree; no source edits"
+  },
+  "method": {
+    "fixture_root": "/private/tmp/nms-slice04-2ya6hhmp",
+    "fixture_basis": "independent deep copy of synthetic_save for every case; packed values from author-baseline; exact JSON kinds preserved",
+    "save_argv": "nms info --save <temporary fixture>",
+    "parse_run_count": 45,
+    "integration_run_count": 6,
+    "run_count": 51,
+    "observation": "stdout_projection is the relevant output projection; stdout_sha256 fingerprints complete original stdout; stderr is complete; failure status retained. No full save output or game-save values."
+  },
+  "results": [
+    {
+      "id": "discovery-int-zero",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 0
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-int-zero.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-int-zero",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 0
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-int-zero.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 000000000000 │ 🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅"
+      ],
+      "stdout_sha256": "ccb5cb130139e9d3b260954cc2cea5df771388091f59487f4e61402bd419bf55",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-hex-zero",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x0"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-hex-zero.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-hex-zero",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x0"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-hex-zero.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 000000000000 │ 🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅"
+      ],
+      "stdout_sha256": "ccb5cb130139e9d3b260954cc2cea5df771388091f59487f4e61402bd419bf55",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-hex14",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x212B0004B2446A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-hex14.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-hex14",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x212B0004B2446A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-hex14.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 2B0004B2446A │ 😑🐋🌅🌅🌅🌜🐋😑🌜🌜⛵🕋"
+      ],
+      "stdout_sha256": "b4f2246a6175a87bdc9674eaec5a5fc6c741e4437dbc59ba2dc9496b671d3e3b",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-uppercase-prefix",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0X212B0004B2446A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-uppercase-prefix.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-uppercase-prefix",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0X212B0004B2446A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-uppercase-prefix.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 2B0004B2446A │ 😑🐋🌅🌅🌅🌜🐋😑🌜🌜⛵🕋"
+      ],
+      "stdout_sha256": "b4f2246a6175a87bdc9674eaec5a5fc6c741e4437dbc59ba2dc9496b671d3e3b",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-bare-short-hex",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-bare-short-hex.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-bare-short-hex",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "A"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-bare-short-hex.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 00000000000A │ 🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🕋"
+      ],
+      "stdout_sha256": "8e9186dd93825cfd4b24bec8a987a1a58854942aed5a5493bfb42b983754d242",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-numeric-string",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "10"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-numeric-string.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-numeric-string",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "10"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-numeric-string.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 000000000010 │ 🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🕊🌅"
+      ],
+      "stdout_sha256": "6681297aa76c34849297851bbcc92ae54f76ca3c536e58e14d7e869f1ff84642",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-signed-negative",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": -1
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-signed-negative.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-signed-negative",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": -1
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-signed-negative.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ FFFFFFFFFFFF │ 🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺"
+      ],
+      "stdout_sha256": "a04efb74d0e9335bf586aa95a628d0216dece065621c94837d131286cb2d8d53",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-fraction",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "number",
+        "value": 1.5
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-fraction.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: floating point `1.5`, expected a hex string like \"0x...\" or an integer at line 1 column 309\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-fraction",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "number",
+        "value": 1.5
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-fraction.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: floating point `1.5`, expected a hex string like \"0x...\" or an integer at line 1 column 219\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-boolean",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "boolean",
+        "value": true
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-boolean.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: boolean `true`, expected a hex string like \"0x...\" or an integer at line 1 column 310\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-boolean",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "boolean",
+        "value": true
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-boolean.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: boolean `true`, expected a hex string like \"0x...\" or an integer at line 1 column 220\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-null",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "null",
+        "value": null
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-null.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: null, expected a hex string like \"0x...\" or an integer at line 1 column 310\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-null",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "null",
+        "value": null
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-null.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: null, expected a hex string like \"0x...\" or an integer at line 1 column 220\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-missing",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "remove"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-missing.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: missing field `UA` at line 1 column 323\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-missing",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "remove"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-missing.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: missing field `GalacticAddress` at line 1 column 274\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-empty",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": ""
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-empty.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid hex galactic address:  at line 1 column 308\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-empty",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": ""
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-empty.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid hex galactic address:  at line 1 column 218\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-bad-hex",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0xGG"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-bad-hex.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid hex galactic address: 0xGG at line 1 column 312\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-bad-hex",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0xGG"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-bad-hex.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid hex galactic address: 0xGG at line 1 column 222\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-over56",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x100000000000000"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-over56.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-over56",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "string",
+        "value": "0x100000000000000"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-over56.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ 000000000000 │ 🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅🌅"
+      ],
+      "stdout_sha256": "ccb5cb130139e9d3b260954cc2cea5df771388091f59487f4e61402bd419bf55",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-over-u64",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 18446744073709551616
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-over-u64.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: floating point `1.8446744073709552e+19`, expected a hex string like \"0x...\" or an integer at line 1 column 326\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-over-u64",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 18446744073709551616
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-over-u64.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: floating point `1.8446744073709552e+19`, expected a hex string like \"0x...\" or an integer at line 1 column 236\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "discovery-max56",
+      "family": "discovery",
+      "injection": {
+        "path": "DiscoveryManagerData.DiscoveryData-v1.Store.Record.0.DD.UA",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 72057594037927935
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/discovery-max56.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 1",
+        " Planets           │ 1"
+      ],
+      "stdout_sha256": "6fae7be63d576a06af92f64965cabbef06df6768898666fc0e0569129bcc44cf",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "base-max56",
+      "family": "base",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.PersistentPlayerBases.0.GalacticAddress",
+        "operation": "set",
+        "json_kind": "integer",
+        "value": 72057594037927935
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/base-max56.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0",
+        " BASES          │                │              │",
+        " Name           │ Type           │ Address      │ Portal Glyphs",
+        " Synthetic base │ HomePlanetBase │ FFFFFFFFFFFF │ 🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺"
+      ],
+      "stdout_sha256": "a04efb74d0e9335bf586aa95a628d0216dece065621c94837d131286cb2d8d53",
+      "interpretation": "Parser characterization only; info projection does not expose every downstream core conversion."
+    },
+    {
+      "id": "expanded-valid",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "set-wrapper",
+        "json_kind": "object",
+        "value": {
+          "RealityIndex": 0,
+          "GalacticAddress": {
+            "VoxelX": 1130,
+            "VoxelY": 4,
+            "VoxelZ": -1244,
+            "SolarSystemIndex": 299,
+            "PlanetIndex": 2
+          }
+        }
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-valid.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=1130, Y=4, Z=-1244",
+        " System Index      │ 299",
+        " Planet Index      │ 2",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "aa77fbdd0c6770f05415e0d673240195f861faddf18f1792928da6d31850f422",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-missing-wrapper",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "remove-wrapper"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-missing-wrapper.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "f16521e2d0260c30588d7304ddc9bf8157264ff7322abac3806fbcd068b08ca5",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-null-wrapper",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "set-wrapper",
+        "json_kind": "null",
+        "value": null
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-null-wrapper.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid type: null, expected struct UniverseAddress at line 1 column 194\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-empty-wrapper",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "set-wrapper",
+        "json_kind": "object",
+        "value": {}
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-empty-wrapper.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "f16521e2d0260c30588d7304ddc9bf8157264ff7322abac3806fbcd068b08ca5",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-zero-object",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "set-wrapper",
+        "json_kind": "object",
+        "value": {
+          "RealityIndex": 0,
+          "GalacticAddress": {
+            "VoxelX": 0,
+            "VoxelY": 0,
+            "VoxelZ": 0,
+            "SolarSystemIndex": 0,
+            "PlanetIndex": 0
+          }
+        }
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-zero-object.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=0, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "f16521e2d0260c30588d7304ddc9bf8157264ff7322abac3806fbcd068b08ca5",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-partial-object",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "set-wrapper",
+        "json_kind": "object",
+        "value": {
+          "GalacticAddress": {
+            "VoxelX": 1
+          }
+        }
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-partial-object.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=1, Y=0, Z=0",
+        " System Index      │ 0",
+        " Planet Index      │ 0",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "2082f9889721ff5af42a2340ceaa6db811fc6b5c0d58d03e4341c8fe7370dd5c",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-x2048",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 2048,
+        "member": "VoxelX"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-x2048.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=2048, Y=4, Z=-1244",
+        " System Index      │ 299",
+        " Planet Index      │ 2",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "fb4a8ffadd510bc8cf3980ba80491a2d85804db21edb6d44fe98359ba9f085f3",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-y128",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 128,
+        "member": "VoxelY"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-y128.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid value: integer `128`, expected i8 at line 1 column 253\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-ssi4095",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 4095,
+        "member": "SolarSystemIndex"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-ssi4095.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=1130, Y=4, Z=-1244",
+        " System Index      │ 4095",
+        " Planet Index      │ 2",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "8fd9034e3b06cadb314b352cdf3d0e9ab2e3959b3c086b4cf8284130750d9c9d",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-planet16",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 16,
+        "member": "PlanetIndex"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-planet16.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=1130, Y=4, Z=-1244",
+        " System Index      │ 299",
+        " Planet Index      │ 16",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "b7fe0b9c1543069475efa4955d36216a090d6f31ecdfce52e6676f1e9cc7bf70",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-ssi4096",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 4096,
+        "member": "SolarSystemIndex"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-ssi4096.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Save Name         │ Synthetic address probe",
+        " Platform          │ Synthetic|Probe",
+        " Version           │ 4720",
+        " Game Mode         │ Normal (1)",
+        " Galaxy            │ Euclid",
+        " Voxel Position    │ X=1130, Y=4, Z=-1244",
+        " System Index      │ 4096",
+        " Planet Index      │ 2",
+        " Total Discoveries │ 0"
+      ],
+      "stdout_sha256": "28260124b081db0031f680a22c763f11c94de47a92ccfc56b9a5c5981ae56dd4",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-planet256",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-member",
+        "json_kind": "integer",
+        "value": 256,
+        "member": "PlanetIndex"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-planet256.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid value: integer `256`, expected u8 at line 1 column 307\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "expanded-reality256",
+      "family": "expanded",
+      "injection": {
+        "path": "BaseContext.PlayerStateData.UniverseAddress",
+        "operation": "replace-reality",
+        "json_kind": "integer",
+        "value": 256
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "info",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/expanded-reality256.json"
+      ],
+      "exit_code": 1,
+      "stderr": "Error: JSON parse error: invalid value: integer `256`, expected u8 at line 1 column 209\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "info prints raw expanded fields; core-constructor masking is source-derived, not measured here."
+    },
+    {
+      "id": "convert-raw-ga",
+      "family": "integration",
+      "injection": null,
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "convert",
+        "--ga",
+        "0x212B0004B2446A"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Portal Glyphs    │ 😑🐋🌅🌅🌅🌜🐋😑🌜🌜⛵🕋",
+        " Hex Glyphs       │ 2B0004B2446A",
+        " Voxel Position   │ X=1130, Y=4, Z=-1244",
+        " System Index     │ 2816 (0xB00)",
+        " Planet Index     │ 2",
+        " Galaxy           │ Euclid (0)"
+      ],
+      "stdout_sha256": "09101df4611287e8429f38a533e8629c31ba0a459ffc99bc9759e97763dd46f2",
+      "interpretation": "Current --ga truncation compatibility control; not a save decoder."
+    },
+    {
+      "id": "convert-portal-glyphs",
+      "family": "integration",
+      "injection": null,
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "convert",
+        "--glyphs",
+        "212B04B2446A"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Portal Glyphs    │ 😑🕊😑🐋🌅🌜🐋😑🌜🌜⛵🕋",
+        " Hex Glyphs       │ 212B04B2446A",
+        " Voxel Position   │ X=1130, Y=4, Z=-1244",
+        " System Index     │ 299 (0x12B)",
+        " Planet Index     │ 2",
+        " Galaxy           │ Euclid (0)"
+      ],
+      "stdout_sha256": "3244b6b805521d0d6659ed8aca251e720313653d071688411123c84b8d783ae0",
+      "interpretation": "Portal text path control."
+    },
+    {
+      "id": "convert-portal-shaped-ga",
+      "family": "integration",
+      "injection": null,
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "convert",
+        "--ga",
+        "212B04B2446A"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_projection": [
+        " Portal Glyphs    │ 😑🕊😑🐋🌅🌜🐋😑🌜🌜⛵🕋",
+        " Hex Glyphs       │ 212B04B2446A",
+        " Voxel Position   │ X=1130, Y=4, Z=-1244",
+        " System Index     │ 299 (0x12B)",
+        " Planet Index     │ 2",
+        " Galaxy           │ Euclid (0)"
+      ],
+      "stdout_sha256": "3244b6b805521d0d6659ed8aca251e720313653d071688411123c84b8d783ae0",
+      "interpretation": "Portal-shaped 48-bit input control."
+    },
+    {
+      "id": "import-collision",
+      "family": "integration",
+      "injection": {
+        "csv_rows": [
+          "System Name,Portal Glyphs,Galaxy",
+          "Synthetic zero,212B04B2446A,0",
+          "Synthetic nine,212B04B2446A,9"
+        ],
+        "save": "fresh deep copy of synthetic_save"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "import",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-collision.csv",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-collision-save.json",
+        "--source",
+        "synthetic"
+      ],
+      "exit_code": 0,
+      "stderr": "Imported 1 systems (1 duplicates, 0 skipped)\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "ImportStats does not expose the retained duplicate row; winner statement, if any, is source-flow inference only."
+    },
+    {
+      "id": "import-collision-reversed",
+      "family": "integration",
+      "injection": {
+        "csv_rows": [
+          "System Name,Portal Glyphs,Galaxy",
+          "Synthetic nine,212B04B2446A,9",
+          "Synthetic zero,212B04B2446A,0"
+        ],
+        "save": "fresh deep copy of synthetic_save"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "import",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-collision-reversed.csv",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-collision-reversed-save.json",
+        "--source",
+        "synthetic"
+      ],
+      "exit_code": 0,
+      "stderr": "Imported 1 systems (1 duplicates, 0 skipped)\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "ImportStats does not expose the retained duplicate row; winner statement, if any, is source-flow inference only."
+    },
+    {
+      "id": "import-distinct-ssi-same-galaxy",
+      "family": "integration",
+      "injection": {
+        "csv_rows": [
+          "System Name,Portal Glyphs,Galaxy",
+          "Synthetic system 299,212B04B2446A,0",
+          "Synthetic system 300,212C04B2446A,0"
+        ],
+        "save": "fresh deep copy of synthetic_save"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "import",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-distinct-ssi.csv",
+        "--save",
+        "/private/tmp/nms-slice04-2ya6hhmp/import-distinct-ssi-save.json",
+        "--source",
+        "synthetic"
+      ],
+      "exit_code": 0,
+      "stderr": "Imported 2 systems (0 duplicates, 0 skipped)\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Same galaxy, distinct portal system nibble/SSI; invocation-local model only."
+    }
+  ],
+  "summary": {
+    "parse_runs": 45,
+    "integration_runs": 6,
+    "accepted": 27,
+    "rejected": 18,
+    "parse_by_family": {
+      "discovery": 16,
+      "base": 16,
+      "expanded": 13
+    },
+    "exit_counts": {
+      "0": 33,
+      "1": 18
+    }
+  }
+}
