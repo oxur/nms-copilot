@@ -1,0 +1,58 @@
+{
+  "reviewed_utc": "2026-10-04T03:27:23.433483+00:00",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "CC_commit": "150216e72a8cb51bf4a05b7e6c2761a68d4a7083",
+  "json_delta": "Exactly one ciphertext fingerprint and three spellings of the same source commit; entire reverse-normalized object equals prior candidate.",
+  "selected_attempts": [
+    {
+      "alias": "save-A",
+      "zero_based_zip_ordinal": 9,
+      "advertised_uncompressed_bytes": 308511,
+      "encrypted_stored_bytes": 229877,
+      "encrypted_stored_bytes_sha256": "fce94ae978e0f698309ee3ed8e05811cbec6668244c0babb0c7f62df5cf1da9c",
+      "read_result": "RuntimeError: encrypted member needs unavailable password; internal member name omitted"
+    },
+    {
+      "alias": "save-B",
+      "zero_based_zip_ordinal": 10,
+      "advertised_uncompressed_bytes": 307526,
+      "encrypted_stored_bytes": 229053,
+      "encrypted_stored_bytes_sha256": "01fdfb956a2cde624ebbbab501e6df6ad73d73455a749bd786029b5348a3373f",
+      "read_result": "RuntimeError: encrypted member needs unavailable password; internal member name omitted"
+    }
+  ],
+  "archive_counts": {
+    "member_count": 119,
+    "file_count": 110,
+    "directory_count": 9,
+    "classes": {
+      "metadata_mf_hg": 51,
+      "eligible_save_slot_hg": 46,
+      "accountdata_hg": 5,
+      "other_files": 8,
+      "json": 0
+    }
+  },
+  "retention": "PA-01/02/03/04/06: source/references/criteria/semantic values and applicability unchanged; initial independent receipt retained with original date; no fresh source/game/runtime computation claimed.",
+  "source_status": "",
+  "planning_intake_status": "",
+  "reference_states": {
+    "libNom.io": {
+      "HEAD": "652aabb0147888776a088909cdb13bccbd3d9588",
+      "status": ""
+    },
+    "MBINCompiler": {
+      "HEAD": "04a76be59439911fd9db1ea588e03ac604112e71",
+      "status": ""
+    }
+  },
+  "allowed_changed_paths": [
+    "project01-mvp/arc06-fit-and-finish/slice02-packed-format-authority/artifacts/witnesses.json",
+    "project01-mvp/arc06-fit-and-finish/slice02-packed-format-authority/artifacts/execution.md",
+    "project01-mvp/arc06-fit-and-finish/slice02-packed-format-authority/closing-report.md",
+    "project01-mvp/arc06-fit-and-finish/slice02-packed-format-authority/ledger.md"
+  ],
+  "trailers_once": true,
+  "historical_prefixes_preserved": true,
+  "limits": "No build/test/runtime/source re-search; fresh sample provenance checks and corrected evidence scope only."
+}

@@ -1,0 +1,90 @@
+{
+  "input_alias": "local-save-A",
+  "raw_bytes": 2918235,
+  "raw_sha256": "ee786384b19ae3a7974cb3130cf16b8823f3dc2a930bd55cfa092015a244c89e",
+  "chunks": 20,
+  "decoded_bytes": 10278541,
+  "trailing_nuls": 1,
+  "utf8_valid": false,
+  "mapping_sha256": {
+    "mapping_mbincompiler.json": "b6735e5191ee7e01d638c6f0443f2404127f683393e08293f0552cb034c741cf",
+    "mapping_legacy.json": "8716b278534baa031692e316a2bf0e5a0b22677e62ff6d33e2f588f3905e638b",
+    "mapping_savewizard.json": "508317fc5dc2c6cbca5b17fa772a3853f503a775aa4c13170b7c3e9d2c2643ea"
+  },
+  "collision_count": 0,
+  "lz4_library": "/opt/homebrew/Cellar/lz4/1.10.0/lib/liblz4.1.10.0.dylib",
+  "lz4_library_sha256": "3ce8bec34557e6a5c76129cef6588dc59959caa51e1e54321f45ea7c6e528e07",
+  "contexts": {
+    "BaseContext": {
+      "player_keys": 254,
+      "location_fields": {
+        "UniverseAddress": "dict",
+        "PreviousUniverseAddress": "dict"
+      },
+      "base_count": 54,
+      "teleport_count": 207,
+      "base_keys": [
+        "AutoPowerSetting",
+        "BaseType",
+        "BaseVersion",
+        "Difficulty",
+        "Forward",
+        "GalacticAddress",
+        "GameMode",
+        "IsFeatured",
+        "IsReported",
+        "LastEditedById",
+        "LastEditedByUsername",
+        "LastUpdateTimestamp",
+        "Name",
+        "Objects",
+        "OriginalBaseVersion",
+        "Owner",
+        "PlatformToken",
+        "Position",
+        "RID",
+        "ScreenshotAt",
+        "ScreenshotPos",
+        "UserData"
+      ],
+      "endpoint_keys": [
+        "CalcWarpOffset",
+        "Facing",
+        "IsFavourite",
+        "IsFeatured",
+        "Name",
+        "Position",
+        "TeleporterType",
+        "UniverseAddress"
+      ],
+      "endpoint_location_fields": [
+        "UniverseAddress"
+      ]
+    },
+    "ExpeditionContext": {
+      "player_keys": 254,
+      "location_fields": {
+        "UniverseAddress": "dict",
+        "PreviousUniverseAddress": "dict"
+      },
+      "base_count": 0,
+      "teleport_count": 17,
+      "base_keys": [],
+      "endpoint_keys": [
+        "CalcWarpOffset",
+        "Facing",
+        "IsFavourite",
+        "IsFeatured",
+        "Name",
+        "Position",
+        "TeleporterType",
+        "UniverseAddress"
+      ],
+      "endpoint_location_fields": [
+        "UniverseAddress"
+      ]
+    }
+  },
+  "discovery_records": 3243,
+  "evidence_role": "Author readiness reconnaissance only; not independently accepted future CC evidence"
+}
