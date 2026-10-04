@@ -1,6 +1,6 @@
 # Slice02 — Packed-format authority and witnesses
 
-Version: 1.0, prepared 2026-10-03. Status: open for CC handoff, not executed. Two-Contributor Workflow; Expedited Mode. Depends on independently accepted slice01. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
+Version: 1.1, prepared 2026-10-03. Status: initial CDC review requires bounded correction; slice open. Two-Contributor Workflow; Expedited Mode. Depends on independently accepted slice01. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
 
 ## Outcome and boundary
 
@@ -16,7 +16,7 @@ All seven ledger rows need evidence or explicit unresolved outcomes permitted by
 
 ## Assignment, exit and authority
 
-Current assignment `cc-prompt.md`, issued 2026-10-03 for Operator relay; not yet executed. CC performs evidence work; CDC reviews independently. No success close-set is pre-created. General source encoding, negative/zero/missing policies, width/compatibility, query/galaxy identity and cache design remain CDC-owned consequential decisions; do not implement from a partial result. Arc/project closeout and original validation targets remain pending.
+Current assignment `cc-prompt-iteration01.md`, issued 2026-10-03 for Operator relay; active, not yet executed. Initial cc-prompt.md was executed in 65a3dcd/0734535/0d1a6b4 and reviewed; five rows accepted, PA-05/PA-07 remain open under R02. CC performs evidence work; CDC reviews independently. No success close-set is pre-created. General source encoding, negative/zero/missing policies, width/compatibility, query/galaxy identity and cache design remain CDC-owned consequential decisions; do not implement from a partial result. Arc/project closeout and original validation targets remain pending.
 
 ## Author readiness
 
@@ -25,3 +25,12 @@ Inspected accepted source/caller inventory and unresolved families, pinned publi
 ## Version history
 
 - 1.0 (2026-10-03): opened after slice01 acceptance to pursue its explicitly unresolved primary field authority; original project scope and implementation gate unchanged.
+
+- 1.1 (2026-10-03): initial CDC review recorded R02; issued preserved iteration01 for two unresolved provenance/consistency rows, retaining five independent rows. Seven original criteria and downstream production gates unchanged.
+
+## Assignment history and iteration01 readiness
+
+- Initial `cc-prompt.md`, issued 2026-10-03, executed by CC with final HEAD 0d1a6b4; CDC reviewed all seven rows, independently accepting five and returning two for a selected-member digest error. Original prompt and failed packet remain preserved.
+- Current `cc-prompt-iteration01.md`, issued 2026-10-03, predecessor cc-prompt.md, active for fresh CC handoff, not executed. Rehash the same two encrypted selections, correct save-B provenance and full source-pin spelling, reconcile evidence without new decoding/research or production edits. Executed refinement passes: 0.
+
+Author inspected ZIP header offsets and independently rehashed/replayed the existing sample before issuing. A correct digest must come from bytes, not copied expectation; same-population/save-A controls and exact diff checks reject the old incorrect record. AP-33 preserves the failure state, and API-37 keeps ciphertext fingerprints distinct from decrypted payload identity. All semantic/API policies stay held. Concrete five-path-minus-unchanged-field-packet allowlist, bounded extraction recipe, fresh outcomes and retained-evidence rules fit a small pass. Author self-check establishes correction readiness, not acceptance of CC's future result.
