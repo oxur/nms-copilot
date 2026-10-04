@@ -1,0 +1,279 @@
+{
+  "reviewed_utc": "2026-10-04T01:51:59.568912+00:00",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "CC_commit": "c94a2080d907e4d904066ddf0ff614513544837d",
+  "paths": [
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/caller-map.csv",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/execution.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/format-contract.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/closing-report.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/ledger.md"
+  ],
+  "CSV_rows": 20,
+  "probes": [
+    {
+      "command": [
+        "target/debug/nms",
+        "convert",
+        "--voxel",
+        "1130,4,-1244",
+        "--ssi",
+        "299",
+        "--planet",
+        "2"
+      ],
+      "exit": 0,
+      "stdout": "\n\u001b[48;2;30;58;95m\u001b[38;2;224;240;255m COORDINATE \u001b[49m\u001b[39m\u001b[48;2;30;58;95m      \u001b[49m\u001b[48;2;30;58;95m\u001b[38;2;30;58;95m\u2502\u001b[49m\u001b[39m\u001b[48;2;30;58;95m\u001b[38;2;224;240;255m CONVERSIONS \u001b[49m\u001b[39m\u001b[48;2;30;58;95m                                                \u001b[49m\n\u001b[48;2;44;95;138m\u001b[38;2;160;200;224m Format \u001b[49m\u001b[39m\u001b[48;2;44;95;138m          \u001b[49m\u001b[48;2;44;95;138m\u001b[38;2;44;95;138m\u2502\u001b[49m\u001b[39m\u001b[48;2;44;95;138m\u001b[38;2;160;200;224m Value \u001b[49m\u001b[39m\u001b[48;2;44;95;138m                                                      \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Portal Glyphs \u001b[49m\u001b[39m\u001b[48;2;10;25;41m   \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m \ud83d\ude11\ud83d\udd4a\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                    \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Hex Glyphs \u001b[49m\u001b[39m\u001b[48;2;10;25;41m      \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 212B04B2446A \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                               \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Abbreviated \u001b[49m\u001b[39m\u001b[48;2;10;25;41m     \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m face:bird:face:whle:sset:eclp:whle:face:eclp:eclp:boat:voxl \u001b[49m\u001b[39m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Signal Booster \u001b[49m\u001b[39m\u001b[48;2;10;25;41m  \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 0C69:0083:0323:012B \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                        \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Galactic Address \u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m 0x212B04B2446A \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                             \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Voxel Position \u001b[49m\u001b[39m\u001b[48;2;10;25;41m  \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m X=1130, Y=4, Z=-1244 \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                       \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m System Index \u001b[49m\u001b[39m\u001b[48;2;10;25;41m    \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m 299 (0x12B) \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Planet Index \u001b[49m\u001b[39m\u001b[48;2;10;25;41m    \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 2 \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                          \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Galaxy \u001b[49m\u001b[39m\u001b[48;2;10;25;41m          \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Euclid (0) \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                 \u001b[49m\n\u001b[48;2;30;58;95m\u001b[38;2;74;155;199m Total: \u001b[49m\u001b[39m\u001b[48;2;30;58;95m          \u001b[49m\u001b[48;2;30;58;95m\u001b[38;2;30;58;95m\u2502\u001b[49m\u001b[39m\u001b[48;2;30;58;95m\u001b[38;2;74;155;199m 9 Conversions \u001b[49m\u001b[39m\u001b[48;2;30;58;95m                                              \u001b[49m\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "target/debug/nms",
+        "convert",
+        "--voxel",
+        "3000,0,0",
+        "--ssi",
+        "0",
+        "--planet",
+        "2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Error: Voxel X out of range: 3000 (must be -2048..2047)\n"
+    },
+    {
+      "command": [
+        "target/debug/nms",
+        "convert",
+        "--voxel",
+        "0,0,0",
+        "--ssi",
+        "4095",
+        "--planet",
+        "2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Error: System index out of range: 4095 (must be 0..4094)\n"
+    }
+  ],
+  "searches": [
+    {
+      "command": [
+        "rg",
+        "-n",
+        "GalacticAddress::new[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 115,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:120:    Ok(GalacticAddress::new(",
+        "crates/nms-save/src/model.rs:111:        nms_core::GalacticAddress::new(",
+        "crates/nms-copilot/src/dispatch.rs:522:    Ok(GalacticAddress::new("
+      ],
+      "in_file_test_matches": 112
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "parse_voxel[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 14,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:25:        parse_voxel(&v, solar_system_index, planet, reality_index)?",
+        "crates/nms-cli/src/convert.rs:79:fn parse_voxel(",
+        "crates/nms-copilot/src/dispatch.rs:474:        parse_voxel(v, solar_system_index, planet, reality_index)?",
+        "crates/nms-copilot/src/dispatch.rs:496:fn parse_voxel("
+      ],
+      "in_file_test_matches": 10
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "from_signal_booster[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 8,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:56:    GalacticAddress::from_signal_booster(input.trim(), planet, reality_index)",
+        "crates/nms-core/src/address.rs:164:    pub fn from_signal_booster(",
+        "crates/nms-core/src/address.rs:465:    pub fn from_signal_booster(",
+        "crates/nms-core/src/address.rs:470:        let addr = GalacticAddress::from_signal_booster(s, planet_index, reality_index)?;",
+        "crates/nms-copilot/src/dispatch.rs:468:        GalacticAddress::from_signal_booster(c.trim(), planet, reality_index)",
+        "crates/nms-copilot/src/mcp/tools.rs:665:        GalacticAddress::from_signal_booster(coords, 0, 0)"
+      ],
+      "in_file_test_matches": 2
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "from_portal_string[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 1,
+      "production_and_definitions": [
+        "crates/nms-core/src/address.rs:540:    pub fn from_portal_string(s: &str) -> Result<Self, PortalParseError> {"
+      ],
+      "in_file_test_matches": 0
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "from_galactic_address[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 1,
+      "production_and_definitions": [
+        "crates/nms-core/src/address.rs:460:    pub fn from_galactic_address(addr: &GalacticAddress) -> Self {"
+      ],
+      "in_file_test_matches": 0
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "to_portal_address[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 5,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:158:    let portal = addr.to_portal_address();",
+        "crates/nms-core/src/address.rs:534:    pub fn to_portal_address(&self) -> PortalAddress {",
+        "crates/nms-copilot/src/dispatch.rs:566:    let portal = addr.to_portal_address();"
+      ],
+      "in_file_test_matches": 2
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "parse_galactic_address[[:space:]]*\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 7,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:22:        parse_galactic_address(&a, reality_index)?",
+        "crates/nms-cli/src/convert.rs:60:fn parse_galactic_address("
+      ],
+      "in_file_test_matches": 5
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "impl FromStr for GalacticAddress|impl FromStr for PortalAddress|impl From<u64> for GalacticAddress|impl From<PortalAddress> for GalacticAddress|impl From<GalacticAddress> for PortalAddress|impl From<GalacticAddress> for u64",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 6,
+      "production_and_definitions": [
+        "crates/nms-core/src/address.rs:286:impl FromStr for GalacticAddress {",
+        "crates/nms-core/src/address.rs:311:impl From<u64> for GalacticAddress {",
+        "crates/nms-core/src/address.rs:321:impl From<GalacticAddress> for u64 {",
+        "crates/nms-core/src/address.rs:483:impl FromStr for PortalAddress {",
+        "crates/nms-core/src/address.rs:491:impl From<PortalAddress> for GalacticAddress {",
+        "crates/nms-core/src/address.rs:516:impl From<GalacticAddress> for PortalAddress {"
+      ],
+      "in_file_test_matches": 0
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "GalacticAddress::from\\(|PortalAddress::from\\(",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 8,
+      "production_and_definitions": [
+        "crates/nms-core/src/address.rs:456:        GalacticAddress::from(*self)",
+        "crates/nms-core/src/address.rs:461:        PortalAddress::from(*addr)",
+        "crates/nms-core/src/address.rs:471:        Ok(PortalAddress::from(addr))",
+        "crates/nms-core/src/address.rs:535:        PortalAddress::from(*self)",
+        "crates/nms-core/src/address.rs:542:        Ok(GalacticAddress::from(pa))"
+      ],
+      "in_file_test_matches": 3
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "(GalacticAddress|PortalAddress).*parse|parse.*(GalacticAddress|PortalAddress)|\\.parse::<(GalacticAddress|PortalAddress)>",
+        "crates",
+        "--glob",
+        "*.rs",
+        "--glob",
+        "!**/tests/**"
+      ],
+      "exit": 0,
+      "matched_lines": 17,
+      "production_and_definitions": [
+        "crates/nms-cli/src/convert.rs:45:        PortalAddress::parse_mixed(trimmed).map_err(|e| format!(\"Invalid portal glyphs: {e}\"))?;",
+        "crates/nms-core/src/address.rs:541:        let pa: PortalAddress = s.parse()?;",
+        "crates/nms-copilot/src/dispatch.rs:482:fn parse_glyphs(input: &str, reality_index: u8) -> Result<GalacticAddress, String> {",
+        "crates/nms-copilot/src/dispatch.rs:490:        PortalAddress::parse_mixed(trimmed).map_err(|e| format!(\"Invalid portal glyphs: {e}\"))?;"
+      ],
+      "in_file_test_matches": 13
+    }
+  ],
+  "retained_unchanged_paths": [
+    "artifacts/address-export.stdout.json",
+    "artifacts/address-export.stderr.log",
+    "artifacts/portal-control-export.stdout.json",
+    "artifacts/portal-control-export.stderr.log",
+    "artifacts/cdc-review-receipts.json",
+    "cdc-verification.md",
+    "cc-prompt.md",
+    "cc-prompt-iteration01.md"
+  ],
+  "source_status": "",
+  "limits": "Fresh source/CLI review. No build, suite, coverage or live REPL rerun. Prior build and discovery/control evidence retained with applicability review."
+}

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.1, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.2, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -38,10 +38,20 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 - 1.1 (2026-10-03): slice01 initial review and bounded correction recorded; the review surfaced incomplete public-input coverage. Routine progress update only; original review units, sequencing, scope, and acceptance remain unchanged.
 
+- 1.2 (2026-10-03): slice01 final review closed the investigation; opened slice02 within the existing evidence-before-repair route because generalized field authority remains unresolved. No architecture, milestone scope or acceptance change.
+
 ## Current corrective preparation
 
-First bounded assignment: [slice01-address-encoding-evidence](slice01-address-encoding-evidence/slice-plan.md), evidence only. Its accepted format-contract findings will ground a later address repair assignment. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
+[Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is the next evidence-only assignment to seek primary packed-field authority and exact witnesses before an address repair can be designed. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
 
 ## Initial slice01 review progress
 
-CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-encoding-evidence/cdc-verification.md) accepts four investigation rows and returns four for omitted voxel input/caller evidence. [Iteration01](slice01-address-encoding-evidence/cc-prompt-iteration01.md) is the active correction inside the same slice. No structural arc change: preserve the original evidence-before-repair sequence. General discovery/base encoding and galaxy source remain unresolved, and no dependent production repair is authorized.
+CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-encoding-evidence/cdc-verification.md) accepts four investigation rows and returns four for omitted voxel input/caller evidence. [Iteration01](slice01-address-encoding-evidence/cc-prompt-iteration01.md) was the correction inside the same slice; it is now accepted by the final review, with the initial failure retained. No structural arc change: preserve the original evidence-before-repair sequence. General discovery/base encoding and galaxy source remain unresolved, and no dependent production repair is authorized.
+
+## Current bounded closeout sequence
+
+1. Slice01 — current caller/format inventory: closed, eight independently accepted investigation rows. Does not establish a general save decoder.
+2. Slice02 — primary packed-format authority: active for CC handoff, not executed. Locate applicable decoder callers and location witnesses; discovery, persistent-base and galaxy claims remain separate. The output may explicitly retain unresolved semantics with a precise re-entry condition.
+3. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
+
+Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.

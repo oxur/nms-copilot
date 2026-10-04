@@ -1,6 +1,6 @@
 # Slice01 — Address encoding evidence
 
-Version: 1.1. Status: initial CDC review requires correction; slice open. (Was: prepared, not executed.) Workflow: Two-Contributor; Expedited Mode active. Source baseline: main `a800950ef3558fcf463517696c3c140061e7353d`.
+Version: 1.2. Status: closed after independent iteration01 review. (Was: initial CDC review required correction; original preparation and failed review preserved.) Workflow: Two-Contributor; Expedited Mode active. Source baseline: main `a800950ef3558fcf463517696c3c140061e7353d`.
 
 ## Outcome and scope
 
@@ -31,10 +31,12 @@ Source-grounded: inspected raw/core conversions, graph extraction, all `from_pac
 ## Assignment history
 
 - Initial assignment: `cc-prompt.md`, prepared 2026-10-03, subsequently executed by CC and returned at commit `8a5352bc5a9da3b15a51835879b9742c7d4f96f9`. Initial CDC review: four rows accepted, four unresolved under R01; initial attempt preserved.
-- Current assignment: `cc-prompt-iteration01.md`, issued 2026-10-03; predecessor `cc-prompt.md`; active for Operator handoff, not yet executed. Correct omitted voxel/constructor input evidence inside the same slice. No source fix or structural scope change. Executed refinement passes: 0 (this is the first issued refinement).
+- Final accepted assignment: `cc-prompt-iteration01.md`, issued 2026-10-03; predecessor `cc-prompt.md`; executed by CC in `c94a2080d907e4d904066ddf0ff614513544837d`, independently accepted by CDC in the current final review. One executed refinement pass; all eight rows done. No source fix or structural scope change.
 
 ## Iteration01 author readiness and version history
 
 Read and inspected complete CLI/REPL voxel functions and reached core conversion boundaries at pinned main. The correction is source-grounded and design-complete for evidence only: map and describe the existing validation difference, without choosing a new policy. API-37/AP-33 preserve family distinctions and narrowing/error evidence. It is executable using bounded queries, complete source bodies, and three existing CLI probes independently exercised by CDC. Counterexamples expose the omitted paths; no new harness or runtime configuration is needed. The manifest is bounded to current evidence and reached functions, with room for corrections and retained-evidence review. Author self-check, not independent acceptance of CC’s next work.
 
 - 1.1 (2026-10-03): initial CDC review recorded R01; updated assignment history and issued preserved iteration01 to complete the original intake/caller/assumption contract. Original eight rows and downstream production gates unchanged.
+
+- 1.2 (2026-10-03): independently accepted iteration01 and closed all eight investigation rows; generalized packed-field semantics remain held for slice02.

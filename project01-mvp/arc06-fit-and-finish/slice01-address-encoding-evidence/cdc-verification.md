@@ -1,5 +1,7 @@
 # CDC verification — address encoding evidence
 
+**Current verdict: accepted after iteration01; all eight rows done.** The initial failed review below remains historical; the final review section governs the current candidate.
+
 ## Initial review, 2026-10-03
 
 **Verdict: changes required; slice remains open.** Reviewer: CDC / Sofie, the planning/review context, separate from the CC author of commit `8a5352bc5a9da3b15a51835879b9742c7d4f96f9`. Two-Contributor Workflow; Expedited Mode remains active. Reviewed assignment: `cc-prompt.md`, against the original eight AE rows. Source: main `a800950ef3558fcf463517696c3c140061e7353d`, clean before/after. Planning: CC packet `8a5352b`, inspected directly against `3fcf3ce`.
@@ -56,3 +58,40 @@ The public-path failure plus portal-shaped control exposes a defect concealed by
 ## Return and evidence retention
 
 Execute the current numbered correction before returning for CDC review. Preserve this initial failed-review section. For AE-03/04/06/08, retain the evidence only while their source, inputs, criteria and applicability remain unchanged; document that assessment on return. Corrections to a shared Markdown file do not by themselves require rerunning every unaffected probe. Any altered claim or newly implicated dependency needs fresh evidence. Production fixes, arc/project closure, and new compatibility policy remain outside this assignment.
+
+## Iteration01 independent review and final close — 2026-10-03
+
+Reviewed CC commit `c94a2080d907e4d904066ddf0ff614513544837d` against current assignment `cc-prompt-iteration01.md`, its slice plan and eight original rows. Same CDC reviewer, separate from CC author; source main remains clean at `a800950ef3558fcf463517696c3c140061e7353d`. Exact five-file correction inspected against `8f56eba`; both commit trailers verified once. Initial issued prompt, numbered prompt and prior independent receipts unchanged. Supporting inventory expands only by the reviewer’s [iteration01 receipts](artifacts/cdc-iteration01-receipts.json).
+
+### Fresh checks and retained evidence
+
+Read the complete correction delta, complete voxel parsers and resolvers, reached core constructor/From/FromStr/portal helpers and expanded save conversion. Re-ran all expanded search expressions and classified production bodies versus test/definition hits. CSV has 20 data rows. Three production `GalacticAddress::new` calls and two voxel entry calls are accounted for. Definition-only core helper routes are classified in execution.md, rather than invented runtime callers. The 10 packed calls and six direct wrapper calls remain accounted for. Raw matched-line counts are in the new receipt and match the expanded queries.
+
+One nonblocking counting correction: execution.md says the six direct `to_galactic_address` calls accompany two definitions; the actual population contains **three definitions** (expanded save object, packed save wrapper, and core PortalAddress), nine raw matches total. The six call expressions and their classification are correct. This reviewer record supplies the exact reconciliation; no production route is missing and no criterion is weakened.
+
+Independently repeated the three CLI probes: Chili voxel input exits 0 with `212B04B2446A`; X=3000 exits 1 with X-range error; SSI=4095 exits 1 with system-index-range error. Complete stdout/stderr/exits retained. REPL primitive parse followed by masking is source-confirmed; no live REPL result claimed. No production test suite, broad coverage or build rerun was required by this unchanged-source evidence correction; No new build is claimed; the earlier independent build retains its original date.
+
+Prior evidence for AE-03/04/06/08 remains applicable: exact source revision, criteria and relevant fixture/reference/implementation inputs unchanged; the correction adds public voxel classification and does not alter game-format witnesses, export behavior, downstream identity/cache code or accepted limits. Compared old exact-value outputs and reviewer receipts directly with `8f56eba`. Checked the new five-file scope and current sanitation afresh for AE-08; the old scan is not presented as covering later edits. No new finding invalidates the prior method; no gate requires a fresh unchanged discovery/control replay here. Earlier evidence remains dated as initial review.
+
+### Final row walk
+
+| Row | Final status | Independent basis |
+|---|---|---|
+| AE-01 | done | Complete bounded intake and pre-edit readback now include both voxel bodies; checked against actual source and current assignment. |
+| AE-02 | done | Reconciled expanded searches, 20 CSV rows, constructor/parser definitions and complete reached production input routes. R01 resolved; definition-count correction explicitly recorded above. |
+| AE-03 | done | Retained initial independently checked witness/unresolved-family evidence; applicability assessed above. |
+| AE-04 | done | Retained initial exact CLI failure/control, input digests and oracle provenance; no claim of a fresh game observation. |
+| AE-05 | done | Verified primitive limits, CLI range checks, REPL/core masks, planet narrowing and separate galaxy propagation; new counterexamples checked. Unsupported game/sentinel meanings remain explicit. |
+| AE-06 | done | Retained checked fixtures and graph/query/watch/cache effects; unaffected source/inputs and method. |
+| AE-07 | done | Revised bounded recommendation includes voxel routes and holds harmonization and other unresolved policies; checked against completed map. |
+| AE-08 | done | Fresh correction diff/source status, CSV/identifier checks and inventories; preserved previous outputs/prompt history and accepted historical scope. |
+
+Eight opening rows, eight final done rows; no removal, deferral or no-op. Evidence reaches reproduced through current or explicitly retained independent checks. This closes the investigation, **not the address defects** or any general format/policy decision.
+
+### Bubble-up and next work
+
+The slice delivered its assigned current format/caller inventory and exact failure/control, with unknown generalized DD.UA/base/galaxy interpretation allowed by its original criteria. No silent drop: production fixes, nonzero live witness, base/discovery equivalence and policy decisions were never represented as delivered. The earlier failure and correction remain visible.
+
+Update the arc before advancing: record slice01 accepted and scope slice02 to primary decoder/field-family evidence and bounded location witnesses under the already authorized evidence-before-repair route. This is continuation of investigation, not an architectural split or scope amendment. No production repair is opened while its semantic prerequisites remain unresolved. Original milestone and composition rows, independent higher-scale gate, coverage target and Operator project acceptance stay open.
+
+What worked: concrete voxel counterexamples fixed the completeness gap without rebuilding unrelated evidence. Exact unchanged-input comparisons support proportionate retention. A pinned persistent-base reference lead supplies a concrete route for the remaining research, rather than treating a missing witness as a desired semantic answer.

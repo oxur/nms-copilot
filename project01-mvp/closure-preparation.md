@@ -31,10 +31,10 @@ The existing CI run passed default-feature tests on Linux, Windows, and macOS at
 ## Active assignment
 
 ```text
-arc06-fit-and-finish/slice01-address-encoding-evidence/cc-prompt.md
+arc06-fit-and-finish/slice02-packed-format-authority/cc-prompt.md
 ```
 
-This evidence-only assignment is prepared for a fresh CC; it has not been dispatched or executed. The open set is [slice plan](arc06-fit-and-finish/slice01-address-encoding-evidence/slice-plan.md), [ledger](arc06-fit-and-finish/slice01-address-encoding-evidence/ledger.md), and [prompt](arc06-fit-and-finish/slice01-address-encoding-evidence/cc-prompt.md). After independent acceptance, issue a distinct implementation assignment grounded in its format contract. Do not implement from the tempting blanket “shift every address” shortcut.
+Current follow-up: slice02 is evidence only, prepared for a fresh CC and not yet executed. Its [open set](arc06-fit-and-finish/slice02-packed-format-authority/slice-plan.md) investigates remaining packed-field authority before a distinct production repair is designed. The original slice01 assignment and iteration are preserved; its eight-row caller investigation is now [independently accepted](arc06-fit-and-finish/slice01-address-encoding-evidence/cdc-verification.md). Neither that acceptance nor the next research prompt selects a generalized decoder or compatibility policy.
 
 ## Gates and authority
 

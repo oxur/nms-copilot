@@ -19,3 +19,12 @@ Created 2026-10-03 during closeout preparation. Original milestone documents rem
 | D0042 | Interactive ASCII Galaxy Map (with ratatui): reconcile the complete original document with current source and any recorded amendments | Read [0042-interactive-ascii-galaxy-map-with-ratatui.md](0042-interactive-ascii-galaxy-map-with-ratatui.md); inspect its source witnesses and reproduce its promised behavior | correctness-grade | Historical document D0042 | open | — | A heading/inventory read is not semantic acceptance |
 | D0043 | Adopt oxur-cli tables for all tabular output: reconcile the complete original document with current source and any recorded amendments | Read [0043-adopt-oxur-cli-tables-for-all-tabular-output.md](0043-adopt-oxur-cli-tables-for-all-tabular-output.md); inspect its source witnesses and reproduce its promised behavior | correctness-grade | Historical document D0043 | open | — | A heading/inventory read is not semantic acceptance |
 | C-06 | Exports, slot/galaxy support, format adapters/imports, documentation, distribution, and later UI refinements meet their original contracts. | End-to-end arc demonstration; walk every row and all original document requirements, including non-table requirements | correctness-grade | Project plan and historical leaf documents | open | — | Requires independent composition evidence |
+
+## Corrective investigation child rows
+
+These add to, rather than replace, the 15 original recovered arc rows above. Closing investigation children does not close the original capabilities.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S01 | Current address caller/format investigation independently accepted | Eight-row slice ledger and CDC final review | correctness-grade | Closeout F01/F10 | done | [final review](slice01-address-encoding-evidence/cdc-verification.md) — reproduced | Investigation closed; production defects and semantics still open |
+| R06-S02 | Primary packed-field authority and bounded witness investigation independently accepted | Slice02 ledger, source applicability and independent exact-value checks | correctness-grade | Slice01 unresolved DD.UA/base/galaxy findings | open | [plan](slice02-packed-format-authority/slice-plan.md) | No implementation authority inferred from a source lead |
