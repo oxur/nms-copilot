@@ -31,10 +31,12 @@ The existing CI run passed default-feature tests on Linux, Windows, and macOS at
 ## Active assignment
 
 ```text
-arc06-fit-and-finish/slice03-decoded-location-witnesses/cc-prompt-iteration02.md
+arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt.md
 ```
 
-Current follow-up: Slice02 is [independently accepted](arc06-fit-and-finish/slice02-packed-format-authority/cdc-verification.md), with its encrypted sample limitations preserved. Slice03 iteration01 has been independently reviewed: six rows accepted, DW-07 open under [R04](arc06-fit-and-finish/slice03-decoded-location-witnesses/cdc-verification.md). Iteration02 is a narrative-only correction, prepared for fresh CC and not yet executed. Its [open set](arc06-fit-and-finish/slice03-decoded-location-witnesses/slice-plan.md) examines one successfully decoded known local save and classifies location relationships before a distinct production repair is designed. The original slice01 assignment and iteration are preserved; its eight-row caller investigation is now [independently accepted](arc06-fit-and-finish/slice01-address-encoding-evidence/cdc-verification.md). Neither that acceptance nor the next research prompt selects a generalized decoder or compatibility policy.
+Current follow-up: Slice03 is [independently accepted](arc06-fit-and-finish/slice03-decoded-location-witnesses/cdc-verification.md) after iteration02; seven bounded investigation rows done, with all prior failures preserved. Slice04's [open set](arc06-fit-and-finish/slice04-address-repair-contract/slice-plan.md) prepares the concrete repair decision packet: synthetic invalid/default behavior, caller/galaxy identity consequences and API/cache/watch compatibility choices. This is the existing address-contract prerequisite, not production approval. Slice01/Slice02 remain independently closed investigations with their documented limits; original arc/project capabilities remain open.
+
+Progress2026-10-04:44 corrected literals match faithful actual44/44, initial-bad expected0/44; initial witnesses match expected44/44, actual0/44. CDC retained unaffected evidence and freshly accepted the clarification. Source-level/synthetic author reconnaissance for Slice04 exposes same-coordinate cross-galaxy SystemId collision and unchanged-cache decoding risks; those are addressed by a decision packet before implementation.
 
 ## Gates and authority
 

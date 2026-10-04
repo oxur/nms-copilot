@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.6, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.7, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -48,9 +48,11 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 - Version 1.6 (2026-10-04): Slice03 iteration01 corrections independently pass; six rows accepted and one remains open for narrative consistency. Routine iteration02 stays inside the same slice; original scope/acceptance and dependent repair hold unchanged.
 
+- Version1.7 (2026-10-04): Slice03 iteration02 independently closes the seventh row. Detail the existing unresolved repair-contract prerequisite as Slice04 decision packet; source inspection also identifies same-coordinate cross-galaxy ID collision and cache compatibility consequences. No original scope/acceptance, architecture or public compatibility amendment is approved; dependent implementation still held.
+
 ## Current corrective preparation
 
-[Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is current for one usable, pinned local save population and location-witness assessment. Generalized format/base/galaxy gates remain unresolved before a repair can be designed. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
+[Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is independently closed after iteration02; all seven bounded investigation rows accepted. [Slice04](slice04-address-repair-contract/slice-plan.md) is current for a source-grounded address repair decision packet. Generalized field/policy/identity/cache and compatibility decisions remain held before production repair. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
 
 ## Initial slice01 review progress
 
@@ -60,7 +62,8 @@ CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-enc
 
 1. Slice01 — current caller/format inventory: closed, eight independently accepted investigation rows. Does not establish a general save decoder.
 2. Slice02 — primary packed-format authority: closed after independent correction review; seven investigation rows done. Discovery source lead strengthened, encrypted public sample failures preserved; wider field semantics remain unresolved.
-3. Slice03 — decoded local location witnesses: iteration01 resolves source math/provenance/field-state findings; six rows accepted, DW-07 remains open for one receipt-direction sentence. Iteration02 is current. One pinned known workbench save; no production policy selected.
-4. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
+3. Slice03 — decoded local location witnesses: independently closed after iteration02; seven investigation rows accepted. One pinned known workbench save,44 raw-corroborated base associations; no production policy selected.
+4. Slice04 — address repair contract decision packet: current bounded preparation within the existing contract-before-repair route. Characterize synthetic current input behavior; map galaxy identity, API/query/watch/cache consequences; recommend concrete policies with owners and held approval gates. No production changes.
+5. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
 
 Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.

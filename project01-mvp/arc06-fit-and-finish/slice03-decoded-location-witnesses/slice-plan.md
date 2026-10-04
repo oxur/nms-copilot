@@ -1,6 +1,6 @@
 # Slice03 — Decoded local location witnesses
 
-Version: 1.2, prepared 2026-10-03. Status: iteration01 reviewed; six rows accepted, DW-07 clarification open. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice02. Source main a800950ef3558fcf463517696c3c140061e7353d.
+Version: 1.3, prepared 2026-10-03, closed 2026-10-04. Status: all seven rows independently accepted; closed. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice02. Source main a800950ef3558fcf463517696c3c140061e7353d.
 
 ## Outcome and scope
 
@@ -12,7 +12,7 @@ Committed CC outputs only: artifacts/population.json, artifacts/location-witness
 
 Seven rows in ledger.md. Query the entire one-input field population, all contexts and discovery records, with missing/null/empty/malformed/populated distinctions, exclusions and actual spelling variants. Decode raw JSON without typed SaveRoot round-tripping away unknown endpoints. Construct expected components/portal from explicit expanded fields; compare candidate results only after raw relationships are classified. Unambiguous exact name+position/type joins are corroboration, not shared-ID/game proof. Retain ambiguous/unmatched and contradictory results with denominators. A precise unresolved outcome is permitted where relation/producer evidence is absent, never an invented pair or a waiver of downstream implementation gates.
 
-Current assignment `cc-prompt-iteration02.md`, issued 2026-10-04 for Operator relay; active, not yet executed. Iteration01 executed at 13409d1 and independently reviewed; six rows accepted, DW-07 open for R04. Initial cc-prompt.md was executed at 8d982eab and reviewed: DW-01/DW-04 accepted, five rows open under R01–R03. Fresh CC performs bounded evidence work and commits named paths; CDC independently reviews. No close-set success is pre-created. Source/input drift stops dependent comparisons; new inputs, scope/API/policy/acceptance changes go to CDC before affected work. Production repair and original arc/project/higher-scale gates remain pending.
+Final accepted assignment `cc-prompt-iteration02.md`, issued 2026-10-04, executed at 6d627991 and independently accepted; no active CC assignment in this closed slice. Iteration01 executed at 13409d1 and independently reviewed; six rows accepted, DW-07 open for R04. Initial cc-prompt.md was executed at 8d982eab and reviewed: DW-01/DW-04 accepted, five rows open under R01–R03. Fresh CC performs bounded evidence work and commits named paths; CDC independently reviews. No close-set success is pre-created. Source/input drift stops dependent comparisons; new inputs, scope/API/policy/acceptance changes go to CDC before affected work. Production repair and original arc/project/higher-scale gates remain pending.
 
 ## Author readiness
 
@@ -26,6 +26,8 @@ Named local input existence, digest, stability and decode route directly checked
 
 - Version 1.2 (2026-10-04): iteration01 independently resolves R01–R03; six rows accepted. Open R04 narrative-only clarification in iteration02 without changing any source/data/criterion or production gate.
 
+- Version 1.3 (2026-10-04): iteration02 independently resolves R04; all seven rows accepted and Slice03 closed. Original scope/criteria and held production policy preserved.
+
 ## Author packet validation
 
 Checked exact 13-path reviewer/open-set scope, preserved original criteria and review history, seven closed predecessor rows, seven open new rows, all 22 original project rows still open, JSON syntax/local links/whitespace, pinned clean source and unchanged input hash. A conservative private-string scan initially flagged the already published workspace-owner spelling in the required absolute source/skill paths; inspected the redacted context, excluded only those exact known path prefixes and reran. No raw game identity strings were added. This packet check validates preparation, not future semantic evidence. No production test/build suite was run.
@@ -34,10 +36,14 @@ Checked exact 13-path reviewer/open-set scope, preserved original criteria and r
 
 - Initial `cc-prompt.md`, issued 2026-10-03, executed at `8d982eab696ef68eaccd437f12ed4ed49ed8d377`, returned and independently reviewed on 2026-10-04. Two rows accepted; five need source transcription/provenance/narrative correction. Original assignment and CC packet retained.
 - `cc-prompt-iteration01.md`, issued 2026-10-04; predecessor cc-prompt.md, executed at 13409d1 and independently reviewed. R01–R03 resolved; six rows accepted, DW-07 remains open under R04.
-- Current `cc-prompt-iteration02.md`, issued 2026-10-04; predecessor cc-prompt-iteration01.md, active for fresh CC execution and CDC return. Executed refinement passes: 1.
+- Final `cc-prompt-iteration02.md`, issued 2026-10-04; predecessor cc-prompt-iteration01.md, executed at 6d627991155fe5bd946864f4d1c5ee47d2d9f0c1 and independently accepted. Executed refinement passes: 2.
 
 Author inspected pinned HexToAll/GalacticToPortal full bodies and constants, recomputed all 44 literal outputs against raw expanded fields and reproduced the entire association/population projection. Correct first-stage 0x7FF/0x7F and second-stage 0x801/0x81 cancel for portal fields; swapped first-stage constants must fail the example and complete comparisons. Independently hashed header/library separately and verified all alternate wrappers absent. API-37 (SHOULD) informs distinct identity/representation roles; AP-33 (AVOID) preserves false/unknown/failure evidence, applied to evidence boundaries rather than a new Rust API. Five-file CC allowlist excludes unchanged population JSON; corrected derived witness observations and assessment are authorized replacements, original associations/oracles/identities are preserved. Required scoped reading, executable source recipe and discriminating controls leave recovery headroom. No unresolved public decision delegated. Author readiness is not acceptance of future CC correction.
 
 ## Iteration02 author readiness
 
 Inspected the exact contradictory sentence and both immutable44-object datasets. Fresh independent replay proves current literals match faithful `actual`44/44 and initial-bad `expected`0/44; initial witnesses match the latter44/44. The three-file append-only clarification recipe preserves all history and six accepted rows; precise equality counts reject reversed labels. No Rust/API/decoder policy or new source/runtime decision is involved. Required reading and structured comparisons fit a small pass; accepted save/population/math evidence is retained after unchanged-input applicability checks. Author preparation is not future CC execution or independent acceptance of its text.
+
+## Final disposition
+
+Version 1.3 (2026-10-04): iteration02 independently resolves R04; seven of seven investigation rows done, no deferrals/no-ops/drops. Initial/iteration01 partial status text above is dated history, superseded by the final review. Production policy remains held. Bubble-up is recorded in [CDC final review](cdc-verification.md); next bounded prerequisite is Slice04 repair decision packet within the unchanged closeout route.

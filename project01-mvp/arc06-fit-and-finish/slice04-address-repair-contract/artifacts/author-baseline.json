@@ -1,0 +1,343 @@
+{
+  "schema": "address-contract-author-baseline-v1",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "date_local": "2026-10-04",
+  "evidence_strength": "author-attested preparation; fresh CC must derive outcomes",
+  "synthetic_save": {
+    "Version": 4720,
+    "Platform": "Synthetic|Probe",
+    "ActiveContext": "Main",
+    "CommonStateData": {
+      "SaveName": "Synthetic address probe"
+    },
+    "BaseContext": {
+      "GameMode": 1,
+      "PlayerStateData": {}
+    },
+    "ExpeditionContext": {
+      "GameMode": 6,
+      "PlayerStateData": {}
+    },
+    "DiscoveryManagerData": {
+      "DiscoveryData-v1": {
+        "Store": {
+          "Record": []
+        }
+      }
+    }
+  },
+  "synthetic_discovery_template": {
+    "DD": {
+      "UA": "0x212B0004B2446A",
+      "DT": "Planet",
+      "VP": []
+    },
+    "OWS": {}
+  },
+  "synthetic_base_template": {
+    "GalacticAddress": "0x40050003AB8C07",
+    "Name": "Synthetic base",
+    "BaseType": {
+      "PersistentBaseTypes": "HomePlanetBase"
+    }
+  },
+  "expanded_valid_wrapper": {
+    "RealityIndex": 0,
+    "GalacticAddress": {
+      "VoxelX": 1130,
+      "VoxelY": 4,
+      "VoxelZ": -1244,
+      "SolarSystemIndex": 299,
+      "PlanetIndex": 2
+    }
+  },
+  "packed_cases": [
+    {
+      "id": "int-zero",
+      "operation": "set",
+      "value": 0
+    },
+    {
+      "id": "hex-zero",
+      "operation": "set",
+      "value": "0x0"
+    },
+    {
+      "id": "hex14",
+      "operation": "set",
+      "value": "0x212B0004B2446A"
+    },
+    {
+      "id": "uppercase-prefix",
+      "operation": "set",
+      "value": "0X212B0004B2446A"
+    },
+    {
+      "id": "bare-short-hex",
+      "operation": "set",
+      "value": "A"
+    },
+    {
+      "id": "numeric-string",
+      "operation": "set",
+      "value": "10"
+    },
+    {
+      "id": "signed-negative",
+      "operation": "set",
+      "value": -1
+    },
+    {
+      "id": "fraction",
+      "operation": "set",
+      "value": 1.5
+    },
+    {
+      "id": "boolean",
+      "operation": "set",
+      "value": true
+    },
+    {
+      "id": "null",
+      "operation": "set",
+      "value": null
+    },
+    {
+      "id": "missing",
+      "operation": "remove"
+    },
+    {
+      "id": "empty",
+      "operation": "set",
+      "value": ""
+    },
+    {
+      "id": "bad-hex",
+      "operation": "set",
+      "value": "0xGG"
+    },
+    {
+      "id": "over56",
+      "operation": "set",
+      "value": "0x100000000000000"
+    },
+    {
+      "id": "over-u64",
+      "operation": "set",
+      "value": 18446744073709551616
+    },
+    {
+      "id": "max56",
+      "operation": "set",
+      "value": 72057594037927935
+    }
+  ],
+  "expanded_cases": [
+    {
+      "id": "valid",
+      "operation": "set-wrapper",
+      "value": {
+        "RealityIndex": 0,
+        "GalacticAddress": {
+          "VoxelX": 1130,
+          "VoxelY": 4,
+          "VoxelZ": -1244,
+          "SolarSystemIndex": 299,
+          "PlanetIndex": 2
+        }
+      }
+    },
+    {
+      "id": "missing-wrapper",
+      "operation": "remove-wrapper"
+    },
+    {
+      "id": "null-wrapper",
+      "operation": "set-wrapper",
+      "value": null
+    },
+    {
+      "id": "empty-wrapper",
+      "operation": "set-wrapper",
+      "value": {}
+    },
+    {
+      "id": "zero-object",
+      "operation": "set-wrapper",
+      "value": {
+        "RealityIndex": 0,
+        "GalacticAddress": {
+          "VoxelX": 0,
+          "VoxelY": 0,
+          "VoxelZ": 0,
+          "SolarSystemIndex": 0,
+          "PlanetIndex": 0
+        }
+      }
+    },
+    {
+      "id": "partial-object",
+      "operation": "set-wrapper",
+      "value": {
+        "GalacticAddress": {
+          "VoxelX": 1
+        }
+      }
+    },
+    {
+      "id": "x2048",
+      "operation": "replace-member",
+      "key": "VoxelX",
+      "value": 2048
+    },
+    {
+      "id": "y128",
+      "operation": "replace-member",
+      "key": "VoxelY",
+      "value": 128
+    },
+    {
+      "id": "ssi4095",
+      "operation": "replace-member",
+      "key": "SolarSystemIndex",
+      "value": 4095
+    },
+    {
+      "id": "planet16",
+      "operation": "replace-member",
+      "key": "PlanetIndex",
+      "value": 16
+    },
+    {
+      "id": "ssi4096",
+      "operation": "replace-member",
+      "key": "SolarSystemIndex",
+      "value": 4096
+    },
+    {
+      "id": "planet256",
+      "operation": "replace-member",
+      "key": "PlanetIndex",
+      "value": 256
+    },
+    {
+      "id": "reality256",
+      "operation": "replace-reality",
+      "value": 256
+    }
+  ],
+  "case_counts": {
+    "packed_values": 16,
+    "families": 2,
+    "packed_parse_runs": 32,
+    "expanded_parse_runs": 13,
+    "total_parse_runs": 45
+  },
+  "integration_controls": {
+    "portal": "212B04B2446A",
+    "raw_save_witness": "0x212B0004B2446A",
+    "collision_csv": "System Name,Portal Glyphs,Galaxy\nSynthetic zero,212B04B2446A,0\nSynthetic nine,212B04B2446A,9\n",
+    "distinct_csv": "System Name,Portal Glyphs,Galaxy\nSynthetic zero,212B04B2446A,0\nSynthetic nine,212C04B2446A,9\n"
+  },
+  "author_commands": [
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "nms-cli"
+      ],
+      "exit": 0,
+      "result": "succeeded; existing proc-macro-error2 future incompatibility warning retained"
+    }
+  ],
+  "author_observations": [
+    {
+      "args": [
+        "convert",
+        "--ga",
+        "0x212B0004B2446A"
+      ],
+      "exit": 0,
+      "stdout_projection": [
+        "Hex Glyphs       \u2502 2B0004B2446A",
+        "System Index     \u2502 2816 (0xB00)",
+        "Planet Index     \u2502 2",
+        "Galaxy           \u2502 Euclid (0)"
+      ],
+      "stderr": ""
+    },
+    {
+      "args": [
+        "convert",
+        "--glyphs",
+        "212B04B2446A"
+      ],
+      "exit": 0,
+      "stdout_projection": [
+        "Hex Glyphs       \u2502 212B04B2446A",
+        "System Index     \u2502 299 (0x12B)",
+        "Planet Index     \u2502 2",
+        "Galaxy           \u2502 Euclid (0)"
+      ],
+      "stderr": ""
+    },
+    {
+      "args": [
+        "import",
+        "/private/tmp/nms-slice04-author-galaxies.csv",
+        "--save",
+        "/private/tmp/nms-slice04-author-save.json"
+      ],
+      "exit": 0,
+      "stdout_projection": [],
+      "stderr": "Imported 1 systems (1 duplicates, 0 skipped)\n"
+    }
+  ],
+  "limits": [
+    "synthetic values are parser probes, not game-format or nonzero packed witnesses",
+    "import only changes the invocation-local in-memory model; no persistence claim",
+    "no production change, broad tests or new private save reads"
+  ],
+  "author_failures": [
+    "Initial source lookup guessed nonexistent builder.rs/header.rs/apply.rs/cli.rs; actual files recovered from inventory before the recipe.",
+    "Oversized combined guide/source outputs truncated; required prompt-authoring and planning sections recovered with bounded reads."
+  ],
+  "author_recipe_preflight": {
+    "method": "deep-copy synthetic templates and execute explicit-save nms info for every manifest case; existing freshly built CLI for six controls",
+    "parse_runs": 45,
+    "accepted": 27,
+    "rejected": 18,
+    "family_counts": {
+      "discovery": 16,
+      "base": 16,
+      "expanded": 13
+    },
+    "remaining_three_controls": [
+      {
+        "id": "ga48",
+        "exit": 0,
+        "stdout_projection": [
+          "Hex Glyphs       \u2502 212B04B2446A"
+        ],
+        "stderr": ""
+      },
+      {
+        "id": "reverse",
+        "exit": 0,
+        "stdout": "",
+        "stderr": "Imported 1 systems (1 duplicates, 0 skipped)\n"
+      },
+      {
+        "id": "distinct",
+        "exit": 0,
+        "stdout": "",
+        "stderr": "Imported 2 systems (0 duplicates, 0 skipped)\n"
+      }
+    ],
+    "evidence_strength": "author-attested readiness, not future CC execution or independent packet acceptance",
+    "limits": "info summary/base rows do not observe every core conversion; no semantics follow from parse acceptance"
+  }
+}

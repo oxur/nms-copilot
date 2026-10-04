@@ -1,6 +1,6 @@
 # CDC verification — decoded local location witnesses
 
-**Current verdict after iteration01: six rows accepted; DW-07 remains open for R04 narrative clarification.** Historical initial review below remains preserved.
+**Current verdict after iteration02: all seven rows accepted; Slice03 closed.** Historical failed and partial reviews below remain preserved.
 
 ## Initial independent review — 2026-10-04
 
@@ -79,3 +79,36 @@ Append an explicit dated correction identifying that sentence as superseded. Pre
 Seven opening rows, six accepted, one open; none omitted/deferred/no-op. Initial failed source/provenance/prose findings remain visible. The slice, arc and project remain open. Routine partial progress only: no architecture/scope/acceptance or original sequencing amendment. Issue `cc-prompt-iteration02.md` inside this slice, narrowing to R04; do not reopen accepted numerical evidence or advance dependent repair design until the slice closes.
 
 What worked: exact source stages and full independent comparisons distinguish a resolved numerical correction from a remaining sentence-level inconsistency. A small immutable-data equality check can settle it without repeating unaffected save/population/source work.
+
+
+## Iteration02 final independent review — 2026-10-04
+
+**Verdict: accepted; all seven rows done; Slice03 closed.** CDC / Sofie reviewed CC `6d627991155fe5bd946864f4d1c5ee47d2d9f0c1` against preserved `cc-prompt-iteration02.md`, parent reviewer intake `92c08c3dda1369da0da215f471669beb92c672d5`, and the original seven criteria. This reviewer did not author the CC correction. The canonical clarification is execution.md's **Iteration02 R04 correction and check results** section. Its explicit supersession resolves R04 while retaining the erroneous sentence as dated history; the report's equality counts and replacement explanation agree.
+
+### Fresh checks and retained evidence
+
+[Fresh receipts](artifacts/cdc-iteration02-receipts.json) contain 214 passing checks and all44 stable-ID direction records. Read complete current/initial literal objects from committed Git revisions, joined to initial CDC findings by removing the exact ` literal` suffix. All44 corrected objects equal faithful `actual`; zero equal initial-incorrect `expected`. All44 initial objects equal `expected`; zero equal `actual`. These are full structured-object comparisons, not portal-only comparisons or a new decoder run. All218 unique ID/class pairs preserved. Fresh comparison rejects the superseded statement that corrected objects equal both sets.
+
+Direct three-path diff inspection confirms only execution/report appendices and DW-07 Evidence/Notes changed in CC's commit. Both full prior documents are exact byte prefixes; DW-01–06 lines and all seven criteria/statuses remained unchanged during CC execution. JSON, whitespace and both trailers exactly once pass. Input remains 2,918,235 bytes/SHA256 ee786384b19ae3a7974cb3130cf16b8823f3dc2a930bd55cfa092015a244c89e; population digest unchanged. Main remains clean at a800950ef3558fcf463517696c3c140061e7353d. Separately rehashed LZ4 header/library, all three mappings and retained source bodies; reference clones remain pinned and clean. Immutable witness/assessment/receipts/plans/prompts are unchanged by the exact diff. No new raw identity values, Position arrays or decoded data in this text-only delta; historical failures and unrun operations remain disclosed.
+
+Retain initial and Iteration01 independent evidence at its original **2026-10-04** date/revisions, linked above and in cdc-review-receipts.json / cdc-iteration01-receipts.json. These accessible records identify methods, claims, inputs, source states, controls and results. The correction changes none of their raw bytes, mappings, native dependencies, relation predicates, oracle/candidate objects, criteria or source. No new finding undermines those methods; no binding gate demands another decode for this sentence-only delta. Thus DW-01–06 retain valid prior acceptance; they are not relabeled fresh executions. The only affected claim, R04/DW-07 narrative consistency, is checked afresh here. No save decode, candidate recomputation, broad test/build/lint/coverage or external reference runtime was run for this review.
+
+| Row | Final status | Independent basis |
+|---|---|---|
+| DW-01 | done | Prior source/input/intake/readback evidence retained; current live fences rechecked. |
+| DW-02 | done | Prior raw decode/mapping/sanitation/precision evidence retained; separate dependency identities rechecked. |
+| DW-03 | done | Prior complete population and absence-state checks retained; immutable data and assessment confirmed. |
+| DW-04 | done | Prior complete raw associations, eligibility, exclusions and synthetic controls retained under unchanged predicate/input. |
+| DW-05 | done | Prior correct source math/oracles and44 failing wrong-offset controls retained; full receipt direction freshly confirms44/0/44/0. |
+| DW-06 | done | Prior bounded applicability/readiness assessment retained; all consequential policy limits preserved. |
+| DW-07 | done | Fresh exact scope/prefix/criteria/fence/receipt checks and explicit supersession resolve R04; complete row walk and failures retained. |
+
+Seven opening rows and seven done at close; zero deferred/no-op/deleted. All three issued prompts and initial/iteration reports, failure findings and receipts remain available. Supporting artifact inventory: author-input.md, author-probe-summary.json, population.json, location-witnesses.json, field-assessment.md, execution.md, cdc-review-receipts.json, cdc-iteration01-receipts.json, and this review's cdc-iteration02-receipts.json. First-class plans/prompts/reports/review/ledger stay in the slice root. Earlier inventory statements retain their historical scope.
+
+### Bubble-up and next action
+
+Slice03 delivers the arc's one-input decoded population, raw-corroborated relationships and independent location comparison piece. Scope-as-delivered equals the seven investigation criteria; unresolved general field authority, nonzero packed reality, invalid/defaulting and API/identity/cache policies are explicit outcomes, not silently dropped production requirements. Forty-four witnessed base associations do not establish universal discovery/base equivalence. Ordinal174 remains expanded-only; discovery/base scalar equalities remain correlations.
+
+No original architecture, milestone scope, compatibility or acceptance amendment is approved. Update routine arc progress and close R06-S03, then open Slice04 inside the existing address-contract-before-repair route: a source-grounded repair **decision packet**, with synthetic current-behavior probes and caller/identity/cache consequences. This details the existing prerequisite rather than issuing production changes. CDC/Operator retain consequential decisions; dependent repair is held. All15 original Arc06 rows and all22 project rows remain open; neither this slice nor the next decision packet establishes higher-scale composition.
+
+What worked: immutable full-object direction checks settle a narrative defect without repeating unaffected decoder work. Reviewer combined text reads initially truncated; required current correction sections were recovered in bounded reads/diffs before acceptance. CC's wrong-ledger-column helper failure remains recorded and was not treated as successful validation.
