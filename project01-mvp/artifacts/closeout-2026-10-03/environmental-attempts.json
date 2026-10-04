@@ -1,0 +1,21 @@
+[
+  {
+    "check": "GitHub CI retrieval, restricted attempt",
+    "command": [
+      "gh",
+      "run",
+      "list",
+      "--repo",
+      "oxur/nms-copilot",
+      "--commit",
+      "a800950ef3558fcf463517696c3c140061e7353d",
+      "--limit",
+      "10",
+      "--json",
+      "databaseId,headSha,workflowName,status,conclusion,url"
+    ],
+    "exit_code": 1,
+    "output": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com",
+    "disposition": "Retried read-only with approved host network access; see ci-runs.json and ci-jobs.json."
+  }
+]

@@ -5,11 +5,16 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-03-05
+updated: 2026-10-03
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.0
+version: 1.1
+project: project01-mvp
+status: active
+depends-on: []
+blocks: []
+related: [project02-personal-atlas]
 ---
 
 # NMS Copilot — Detailed Project Plan
@@ -542,3 +547,22 @@ Enhancements across all crates.
 3. **Multi-galaxy support** — the save file contains discoveries across multiple galaxies (RealityIndex). The graph model needs to handle this — probably one spatial index per galaxy, with cross-galaxy queries being a union operation.
 
 4. **Community data integration** — could we import coordinate lists from NMSCE or other community databases to enrich the local model? This would massively expand the queryable dataset beyond personal discoveries. Design the model to accept "external" discoveries tagged with their source.
+
+## 11. Closeout recovery — added 2026-10-03
+
+The original sections above are preserved. This addendum records the user's instruction to commit project02, enter Expedited Mode, and prepare project01 for closure without skipping steps. It adds verification planning; it does not weaken original scope, mark the project closed, or retroactively invent accepted implementation slices.
+
+The source candidate for this preparation is main `a800950ef3558fcf463517696c3c140061e7353d` (0.3.0 development). The historical 0.2.0 tag remains separate publication evidence; a local tag does not establish registry publication or installation. The original seven phases were reorganized into six existing planning arcs. The preserved summary contains 61 milestone rows; 43 numbered documents live under the arcs, including later UI refinements. Summary numbering and detailed milestone numbering differ in places, so acceptance cites paths and sections as well as numbers.
+
+Use [closure preparation](closure-preparation.md), the [project ledger](ledger.md), each arc's recovery plan/ledger, and the [captured baseline](artifacts/closeout-2026-10-03/baseline-report.md). Every original leaf specification must be reconciled, including distinct requirements missing from the summary tables. Historical implementation plus passing tests is evidence to inspect, not independent acceptance.
+
+Friendly account/save UX remains project02 Arc01. Existing project01 correctness defects—including wrong save addresses and wrong planet/system associations—must be repaired or explicitly dispositioned through the closure gate; their mention in project02 is not acceptance of a deferral.
+
+Two-Contributor Workflow applies by default. Expedited Mode is active: commit exact named paths promptly, close units once full evidence and independent gates are satisfied, and advance within the approved roadmap. No new contributor workflow is inferred. Independent project composition review and Operator acceptance remain pending.
+
+First prepared corrective assignment: `arc06-fit-and-finish/slice01-address-encoding-evidence/cc-prompt.md`. It is a bounded evidence investigation that will establish the address contracts needed for a safe repair. It authorizes no production-code edits.
+
+## 12. Version history
+
+- **1.1 — 2026-10-03:** Project-level closeout preparation surfaced missing formal acceptance records, unmeasured broad coverage, and functional defects. Added an explicit recovery route and open ledgers across the preserved arcs; retained original specifications and publication/version distinctions. User enabled Expedited Mode; no acceptance criteria or closure gates were waived.
+- **1.0 — 2026-03-05:** Original detailed project plan, retained as historical scope authority.

@@ -1,0 +1,62 @@
+id,arc,title,crates,description,deliverable,source,status
+M1.1,arc02-initial-infra,Workspace scaffold,all,"Cargo workspace with all crate stubs, CI pipeline, `data/` directory with `biomes.toml`, `glyphs.toml`, `galaxies.toml`",`cargo build` succeeds,README.md:66,open
+M1.2,arc02-initial-infra,Core types,nms-core,"`GalacticAddress`, `Biome`, `BiomeSubType`, `Discovery`, `System`, `Planet`, `PlayerBase`, `PlayerState`, galaxy table",Unit tests for address encoding/decoding,README.md:67,open
+M1.3,arc02-initial-infra,Portal glyph converter,nms-core,"Bidirectional: hex ↔ emoji ↔ coordinates ↔ signal booster. Parsing accepts hex digits, emoji, or glyph names","`nms convert --glyphs ""🌅🕊️🐜🕊️""` works",README.md:68,open
+M1.4,arc02-initial-infra,Distance calculator,nms-core,"Euclidean voxel distance × 400 ly, with helper methods (`within`, `same_region`, `same_system`)",Unit tests with known coordinate pairs,README.md:69,open
+M1.5,arc02-initial-infra,LZ4 block decompressor,nms-save,"Read `save.hg`, detect format, parse block headers (magic `0xFEEDA1E5`), decompress with `lz4_flex`, concatenate",Decompresses a real save file to JSON,README.md:70,open
+M1.6,arc02-initial-infra,Metadata verifier,nms-save,"Read `mf_save.hg`, XXTEA decrypt, verify SHA-256 and SpookyHash V2",Passes verification on test save,README.md:71,open
+M1.7,arc02-initial-infra,Key deobfuscation,nms-save,"Load `mapping.json`, recursive key replacement on parsed JSON",Obfuscated JSON → readable JSON,README.md:72,open
+M1.8,arc02-initial-infra,Serde deserialization,nms-save,"Typed structs for save file top-level structure, `DiscoveryManagerData`, `PlayerStateData` (key fields)",Parse a full save into typed structs,README.md:73,open
+M1.9,arc02-initial-infra,Goatfungus JSON fixer,nms-compat,"State-machine walker: fix `\xNN` → `\u00NN`, invalid escapes → double-backslash, inside strings only",Fixes the 22MB goatfungus export,README.md:74,open
+M1.10,arc02-initial-infra,`nms info` command,nms-cli,"Save overview: version, platform, playtime, player location (with emoji glyphs), discovery counts, base count, biome summary",Formatted terminal output,README.md:75,open
+M1.11,arc02-initial-infra,`nms convert` command,nms-cli,"Full coordinate converter CLI: `--glyphs`, `--coords`, `--ga`, `--voxel` flags, emoji output",Works standalone (no save file needed),README.md:76,open
+M2.1,arc03-map-and-query,Galaxy model,nms-graph,"`GalaxyModel` struct: petgraph, R-tree spatial index, lookup HashMaps. Constructor from parsed `SaveData`",Model builds from test save,README.md:92,open
+M2.2,arc03-map-and-query,Spatial indexing,nms-graph,R-tree (`rstar`) insertion of all systems by voxel position. Nearest-N and within-radius queries,Benchmark: <10ms for nearest-10 on 300 systems,README.md:93,open
+M2.3,arc03-map-and-query,Graph construction,nms-graph,"k-nearest-neighbor edge generation, warp-range-constrained edges, configurable strategy",Graph with edges for test data,README.md:94,open
+M2.4,arc03-map-and-query,Query engine,nms-query,"`FindQuery`, `ShowQuery`, `StatsQuery` types. Pure functions over `&GalaxyModel`",Unit tests for each query type,README.md:95,open
+M2.5,arc03-map-and-query,Display layer,nms-query,"Pretty table formatter with emoji glyphs, distance formatting (K/M ly), biome color coding, truncation",Readable terminal output,README.md:96,open
+M2.6,arc03-map-and-query,`nms find` command,nms-cli,"Search by biome, infested flag, distance (within/nearest), name pattern, discoverer. Sorted results with glyphs",Full search working,README.md:97,open
+M2.7,arc03-map-and-query,`nms show` command,nms-cli,"Detail view: system (all planets), planet (biome, seed, name), base (location, glyphs, type)",Detailed formatted output,README.md:98,open
+M2.8,arc03-map-and-query,`nms stats` command,nms-cli,"Biome distribution table, distance histogram, discovery counts by type, named vs unnamed breakdown",Stats tables,README.md:99,open
+M3.1,arc04-repl-and-session,REPL skeleton,nms-copilot,"reedline loop, command parsing (reuse clap subcommands), exit/quit/help",Interactive prompt works,README.md:115,open
+M3.2,arc04-repl-and-session,Persistent history,nms-copilot,"History file at `~/.nms-copilot/history.txt`, up/down navigation, search",History persists across sessions,README.md:116,open
+M3.3,arc04-repl-and-session,Tab completion,nms-copilot,"Complete command names, biome names, base names, system names from loaded model",Context-aware completions,README.md:117,open
+M3.4,arc04-repl-and-session,Session context,nms-copilot,"`SessionState`: current position, active biome filter, warp range, last results. Commands: `set`, `reset`, `status`","`set position ""Acadia National Park""` works",README.md:118,open
+M3.5,arc04-repl-and-session,Context-aware prompt,nms-copilot,"Prompt displays galaxy, active filters, model size: `[Euclid │ Lush │ 644 planets] 🚀`",Dynamic prompt,README.md:119,open
+M3.6,arc04-repl-and-session,rkyv serialization,nms-cache,Serialize `GalaxyModel` (discovery data + metadata) to rkyv archive. Rebuild indices on load,Cache round-trips correctly,README.md:120,open
+M3.7,arc04-repl-and-session,Cache management,nms-cache,"Freshness check (save file mtime vs cache mtime), auto-rebuild on stale, `--no-cache` flag",Startup time: <100ms from cache,README.md:121,open
+M3.8,arc04-repl-and-session,Config file,nms-copilot,"`~/.nms-copilot/config.toml` for save path, defaults, display prefs. `toml` crate parsing",Config loaded on startup,README.md:122,open
+M4.1,arc05-graph-and-mcp,Dijkstra shortest path,nms-graph,Shortest path between two systems using petgraph's Dijkstra. Warp-range-limited edges,Path with total distance and hop count,README.md:138,open
+M4.2,arc05-graph-and-mcp,Nearest-neighbor TSP,nms-graph,Greedy nearest-neighbor traversal of a target set. Returns ordered visit list with total distance,Route through all targets,README.md:139,open
+M4.3,arc05-graph-and-mcp,2-opt improvement,nms-graph,2-opt local search on TSP solution. Iterates until no improving swap found,Measurably shorter routes than greedy,README.md:140,open
+M4.4,arc05-graph-and-mcp,Hop-constrained routing,nms-graph,Route that respects max warp range per hop. Inserts intermediate waypoints if direct hop exceeds range,Realistic routes for given ship class,README.md:141,open
+M4.5,arc05-graph-and-mcp,Route query type,nms-query,"`RouteQuery` with target selection (biome filter, explicit list, within radius), algorithm choice, warp range",Unified routing API,README.md:142,open
+M4.6,arc05-graph-and-mcp,Route display,nms-query,"Step-by-step itinerary table: hop #, system name, portal glyphs (emoji), distance, cumulative distance",Pretty route output,README.md:143,open
+M4.7,arc05-graph-and-mcp,`nms route` command,"nms-cli, nms-copilot","`route --biome Scorched --warp-range 2500 --algo 2opt --from ""Acadia National Park""`",Full routing CLI + REPL,README.md:144,open
+M4.8,arc05-graph-and-mcp,Reachability analysis,nms-graph,"Connected components within a given warp range. ""Which systems can I reach from here?""",Component membership + visualization,README.md:145,open
+M5.1,arc05-graph-and-mcp,File watcher,nms-watch,"`notify` crate monitoring save directory, debounced (500ms) change detection",Detects save file writes,README.md:161,open
+M5.2,arc05-graph-and-mcp,Delta computation,nms-watch,"Diff current model against re-parsed save: new discoveries, player position change, new bases",`SaveDelta` type with typed variants,README.md:162,open
+M5.3,arc05-graph-and-mcp,Incremental model update,nms-graph,"`apply_delta()`: insert new systems/planets into graph + spatial index, update player position",Model stays current,README.md:163,open
+M5.4,arc05-graph-and-mcp,Event channel,nms-watch,`tokio::sync::broadcast` or `crossbeam` channel distributing deltas to consumers,Multiple consumers receive updates,README.md:164,open
+M5.5,arc05-graph-and-mcp,REPL integration,nms-copilot,"Background listener prints notifications: `🌅 New scan: ""Metok-Kalpa"" (Lush) at 🌅🕊️🐜🕊️...`",Live REPL notifications,README.md:165,open
+M5.6,arc05-graph-and-mcp,Cache invalidation,nms-cache,Watcher triggers cache update after applying deltas,Cache stays fresh during play,README.md:166,open
+M5.7,arc05-graph-and-mcp,Graceful handling,nms-watch,"Handle mid-write detection (partial files), permission errors, save directory not found",Robust in real-world conditions,README.md:167,open
+M6.1,arc05-graph-and-mcp,MCP protocol layer,nms-mcp,"JSON-RPC over stdio transport, tool registration, request/response handling",Server responds to tool calls,README.md:183,open
+M6.2,arc05-graph-and-mcp,`search_planets` tool,nms-mcp,"Search by biome, distance, name. Returns structured results with emoji glyphs",AI can search planets,README.md:184,open
+M6.3,arc05-graph-and-mcp,`plan_route` tool,nms-mcp,"Route planning with biome targets, warp range, algorithm selection",AI can plan routes,README.md:185,open
+M6.4,arc05-graph-and-mcp,`where_am_i` tool,nms-mcp,"Current player location from live model: system, planet, coordinates, emoji glyphs",AI knows your position,README.md:186,open
+M6.5,arc05-graph-and-mcp,`whats_nearby` tool,nms-mcp,"Nearby systems/planets sorted by distance, with biome and discovery info",AI provides situational awareness,README.md:187,open
+M6.6,arc05-graph-and-mcp,`show_system` / `show_base`,nms-mcp,Detail views for systems and bases,AI can inspect specific locations,README.md:188,open
+M6.7,arc05-graph-and-mcp,`convert_coordinates` tool,nms-mcp,Bidirectional glyph/coord conversion,AI can translate addresses,README.md:189,open
+M6.8,arc05-graph-and-mcp,Live update integration,nms-mcp,"Server subscribes to watcher delta channel, model stays current",AI has real-time data,README.md:190,open
+M6.9,arc05-graph-and-mcp,SSE transport (optional),nms-mcp,Server-sent events transport for web-based AI clients,Works with Claude web,README.md:191,open
+M7.1,arc06-fit-and-finish,`nms export` command,nms-cli,"Export filtered results as JSON, CSV. `--biome`, `--within`, `--format` flags",Scriptable data extraction,README.md:205,open
+M7.2,arc06-fit-and-finish,Shell completions,nms-cli,"`clap_complete` for bash, zsh, fish",Install instructions in README,README.md:206,open
+M7.3,arc06-fit-and-finish,Multi-save support,nms-save,Detect and list all save slots. `--slot` flag or interactive selector,Choose between save slots,README.md:207,open
+M7.4,arc06-fit-and-finish,Multi-galaxy support,nms-graph,"Separate spatial index per galaxy, cross-galaxy queries, galaxy switching in REPL",Full 256-galaxy support,README.md:208,open
+M7.5,arc06-fit-and-finish,NomNom format,nms-compat,Parser for NomNom export format (if distinct from standard deobfuscated JSON),Additional format support,README.md:209,open
+M7.6,arc06-fit-and-finish,Documentation,all,"README with screenshots/examples, rustdoc for all public APIs, CONTRIBUTING guide",Publish-ready docs,README.md:210,open
+M7.7,arc06-fit-and-finish,Integration tests,all,End-to-end tests with fixture save files covering all commands,CI green with full coverage,README.md:211,open
+M7.8,arc06-fit-and-finish,crates.io publishing,all,"Publish `nms`, `nms-core`, `nms-save`, `nms-graph`, `nms-copilot` to crates.io",`cargo install nms-copilot` works,README.md:212,open
+M7.9,arc06-fit-and-finish,Community data import,nms-graph,"Import external coordinate lists (NMSCE, community CSV) as ""external"" discoveries",Enriched galaxy model,README.md:213,open
+M7.10,arc06-fit-and-finish,Color themes,nms-copilot,"Configurable color schemes for terminal output, biome color mapping","Pretty by default, customizable",README.md:214,open

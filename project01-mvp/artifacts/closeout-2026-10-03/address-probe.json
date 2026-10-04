@@ -1,0 +1,35 @@
+{
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "command": [
+    "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+    "export",
+    "--save",
+    "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/artifacts/closeout-2026-10-03/synthetic-address-save.json",
+    "--format",
+    "json"
+  ],
+  "exit_code": 0,
+  "expected": {
+    "portal_glyphs": "212B04B2446A",
+    "galaxy": "Euclid"
+  },
+  "fixture_origin": "synthetic structure derived from tracked minimal fixture; address independently verified by user travel; all owner identifiers sanitized",
+  "observed": [
+    {
+      "planet_name": "",
+      "biome": "Lush",
+      "system_name": "",
+      "distance_ly": 264.6828728,
+      "portal_glyphs": "2B0004B2446A",
+      "portal_emoji": "\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b",
+      "coords_x": 1130,
+      "coords_y": 4,
+      "coords_z": -1244,
+      "galaxy": "Euclid",
+      "discoverer": "Synthetic Explorer",
+      "infested": false
+    }
+  ],
+  "address_contract_pass": false,
+  "names_contract_pass": false
+}

@@ -1,0 +1,120 @@
+warning: output filename collision at /Users/oubiwann/lab/oxur/nms-copilot/target/doc/nms/index.html
+  |
+  = note: the bin target `nms` in package `nms-cli v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cli)` has the same output filename as the lib target `nms` in package `nms v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms)`
+  = note: this is a known bug where multiple crates with the same name use the same path; see <https://github.com/rust-lang/cargo/issues/6313>
+    Checking regex-automata v0.4.14
+    Checking nms-core v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core)
+ Documenting nms-core v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core)
+ Documenting nms v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms)
+    Checking nms-save v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-save)
+ Documenting nms-save v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-save)
+warning: unresolved link to `D²`
+  --> crates/nms-core/src/address.rs:25:26
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                          ^^ no item named `D²` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: unresolved link to `D`
+  --> crates/nms-core/src/address.rs:25:34
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                                  ^ no item named `D` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `D²`
+  --> crates/nms-core/src/address.rs:25:47
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                                               ^^ no item named `D²` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `0`
+   --> crates/nms-core/src/address.rs:495:38
+    |
+495 |     /// (glyph positions 0-indexed: [0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX).
+    |                                      ^ no item named `0` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: `nms-core` (lib doc) generated 4 warnings
+    Checking regex v1.12.3
+    Checking nms-graph v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-graph)
+ Documenting nms-graph v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-graph)
+ Documenting nms-compat v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-compat)
+    Checking fabryk-content v0.4.2
+    Checking oxur-repl v0.2.0
+    Checking nms-cache v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cache)
+    Checking nms-watch v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-watch)
+ Documenting nms-watch v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-watch)
+ Documenting nms-cache v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cache)
+    Checking fabryk-vector v0.4.2
+    Checking fabryk-graph v0.4.2
+    Checking fabryk-mcp-content v0.4.2
+warning: unresolved link to `0`
+  --> crates/nms-graph/src/extract.rs:25:10
+   |
+25 | ///   VP[0]: seed hash (hex string or integer)
+   |          ^ no item named `0` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: unresolved link to `1`
+  --> crates/nms-graph/src/extract.rs:26:10
+   |
+26 | ///   VP[1]: biome/flags packed integer
+   |          ^ no item named `1` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: unresolved link to `0`
+  --> crates/nms-graph/src/extract.rs:82:31
+   |
+82 | /// Extract seed hash from VP[0].
+   |                               ^ no item named `0` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+warning: `nms-graph` (lib doc) generated 3 warnings
+    Checking fabryk-mcp-semantic v0.4.2
+    Checking fabryk-mcp-graph v0.4.2
+    Checking fabryk-mcp v0.4.2
+    Checking oxur-cli v0.2.0
+    Checking nms-query v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-query)
+ Documenting nms-query v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-query)
+ Documenting nms-cli v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cli)
+ Documenting nms-copilot v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-copilot)
+warning: unclosed HTML tag `label`
+   --> crates/nms-query/src/table.rs:128:18
+    |
+128 | ///    "Total: N <label>" summary. If the combined text fits within the
+    |                  ^^^^^^^
+    |
+    = note: `#[warn(rustdoc::invalid_html_tags)]` on by default
+
+warning: unclosed HTML tag `label`
+   --> crates/nms-query/src/table.rs:130:41
+    |
+130 | ///    "Total:" goes in column 0 and "N <label>" in column 1.
+    |                                         ^^^^^^^
+
+warning: `nms-query` (lib doc) generated 2 warnings
+warning: unresolved link to `effective_save_file`
+   --> crates/nms-copilot/src/config.rs:288:24
+    |
+288 |     /// Delegates to [`effective_save_file`]. For backward compatibility,
+    |                        ^^^^^^^^^^^^^^^^^^^ no item named `effective_save_file` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+    = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+
+warning: `nms-copilot` (lib doc) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.21s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+   Generated /Users/oubiwann/lab/oxur/nms-copilot/target/doc/nms/index.html and 9 other files

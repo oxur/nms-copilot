@@ -5,11 +5,11 @@ author: "the CLI"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-03-05
+updated: 2026-10-03
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.0
+version: 1.1
 ---
 
 # NMS Copilot — Project Summary
@@ -260,3 +260,9 @@ Portal Glyphs
 | 13 |   Rocket   |    D |  🚀  |   U+1F680
 | 14 |   Tree     |    E |  🌳  |   U+1F333
 | 15 |   Atlas    |    F |  🔺  |   U+1F53A
+
+## Closeout preparation — 2026-10-03
+
+The original summary and milestone tables above are preserved. Project01 remains open. Start with the [closure preparation](closure-preparation.md), [project ledger](ledger.md), and [captured baseline](artifacts/closeout-2026-10-03/baseline-report.md); each existing arc now has a recovery plan and open acceptance ledger. The user enabled Expedited Mode, preserving all validation, independent review, and Operator gates.
+
+Version 1.1 adds this navigation and the current update date; it does not claim that the original milestone descriptions have been independently accepted.

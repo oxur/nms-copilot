@@ -1,0 +1,74 @@
+{
+  "commands": [
+    [
+      "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+      "export",
+      "--save",
+      "/Users/oubiwann/lab/oxur/nms-copilot/data/test/multi_system_save.json",
+      "--format",
+      "json"
+    ],
+    [
+      "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+      "export",
+      "--save",
+      "/Users/oubiwann/lab/oxur/nms-copilot/data/test/multi_system_save.json",
+      "--format",
+      "json",
+      "--biome",
+      "Lush"
+    ]
+  ],
+  "exit_codes": [
+    0,
+    0
+  ],
+  "oracle": "A biome filter must preserve each selected planet association and coordinates from the identical unfiltered query.",
+  "expected": [
+    [
+      100,
+      0,
+      0,
+      "Euclid",
+      "001000000064"
+    ],
+    [
+      100,
+      50,
+      -200,
+      "Euclid",
+      "002A32F38064"
+    ],
+    [
+      400,
+      0,
+      0,
+      "Euclid",
+      "003000000190"
+    ]
+  ],
+  "observed": [
+    [
+      100,
+      50,
+      -200,
+      "Euclid",
+      "002A32F38064"
+    ],
+    [
+      100,
+      50,
+      -200,
+      "Euclid",
+      "002A32F38064"
+    ],
+    [
+      100,
+      50,
+      -200,
+      "Euclid",
+      "002A32F38064"
+    ]
+  ],
+  "contract_pass": false
+}

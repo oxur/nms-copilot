@@ -1,0 +1,96 @@
+{
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "planning_commit": "143a796296bc299fc7a8965c85caec77606bc36c",
+  "started_utc": "2026-10-04T00:42:32.910416+00:00",
+  "environment_overrides": {
+    "CARGO_NET_OFFLINE": "true",
+    "CARGO_TERM_COLOR": "never"
+  },
+  "checks": [
+    {
+      "name": "lint",
+      "command": [
+        "make",
+        "lint"
+      ],
+      "exit_code": 0,
+      "seconds": 1.366,
+      "log": "lint.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--all-features",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 0.495,
+      "log": "build.log"
+    },
+    {
+      "name": "test",
+      "command": [
+        "make",
+        "test"
+      ],
+      "exit_code": 0,
+      "seconds": 3.59,
+      "log": "test.log"
+    },
+    {
+      "name": "no-default-test",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--no-default-features",
+        "--locked"
+      ],
+      "exit_code": 101,
+      "seconds": 11.44,
+      "log": "no-default-test.log"
+    },
+    {
+      "name": "rustdoc",
+      "command": [
+        "cargo",
+        "doc",
+        "--workspace",
+        "--all-features",
+        "--no-deps",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "seconds": 5.272,
+      "log": "rustdoc.log"
+    },
+    {
+      "name": "coverage-existing",
+      "command": [
+        "make",
+        "coverage"
+      ],
+      "exit_code": 0,
+      "seconds": 32.894,
+      "log": "coverage-existing.log"
+    },
+    {
+      "name": "coverage-workspace",
+      "command": [
+        "cargo",
+        "llvm-cov",
+        "--workspace",
+        "--all-features",
+        "--locked",
+        "--summary-only"
+      ],
+      "exit_code": 0,
+      "seconds": 30.24,
+      "log": "coverage-workspace.log"
+    }
+  ],
+  "finished_utc": "2026-10-04T00:44:07.017610+00:00"
+}

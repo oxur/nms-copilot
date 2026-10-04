@@ -1,0 +1,76 @@
+{
+  "observed_utc": "2026-10-04T00:46:49.569026+00:00",
+  "method": "curl with normal TLS verification",
+  "versions": [
+    {
+      "crate": "nms",
+      "url": "https://crates.io/api/v1/crates/nms/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-core",
+      "url": "https://crates.io/api/v1/crates/nms-core/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-save",
+      "url": "https://crates.io/api/v1/crates/nms-save/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-compat",
+      "url": "https://crates.io/api/v1/crates/nms-compat/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-graph",
+      "url": "https://crates.io/api/v1/crates/nms-graph/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-query",
+      "url": "https://crates.io/api/v1/crates/nms-query/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-watch",
+      "url": "https://crates.io/api/v1/crates/nms-watch/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-cache",
+      "url": "https://crates.io/api/v1/crates/nms-cache/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-cli",
+      "url": "https://crates.io/api/v1/crates/nms-cli/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    },
+    {
+      "crate": "nms-copilot",
+      "url": "https://crates.io/api/v1/crates/nms-copilot/0.2.0",
+      "result": "unavailable",
+      "exit_code": 56,
+      "error": "curl: (56) The requested URL returned error: 403\n"
+    }
+  ]
+}

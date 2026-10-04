@@ -1,0 +1,8 @@
+[1;34mRunning linter checks...[0m
+[1;36m• Running clippy...[0m
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.74s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+[1;32m✓ Clippy passed[0m
+[1;36m• Checking code formatting...[0m
+[1;32m✓ Format check passed[0m

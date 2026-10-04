@@ -1,0 +1,1977 @@
+warning: output filename collision at /Users/oubiwann/lab/oxur/nms-copilot/target/doc/nms/index.html
+  |
+  = note: the bin target `nms` in package `nms-cli v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cli)` has the same output filename as the lib target `nms` in package `nms v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms)`
+  = note: this is a known bug where multiple crates with the same name use the same path; see <https://github.com/rust-lang/cargo/issues/6313>
+ Documenting nms-query v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-query)
+ Documenting nms-watch v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-watch)
+ Documenting nms-cache v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cache)
+ Documenting nms-copilot v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-copilot)
+ Documenting nms-cli v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-cli)
+ Documenting nms-graph v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-graph)
+ Documenting nms-compat v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-compat)
+ Documenting nms-save v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-save)
+ Documenting nms-core v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core)
+ Documenting nms v0.3.0 (/Users/oubiwann/lab/oxur/nms-copilot/crates/nms)
+error: missing documentation for a struct field
+  --> crates/nms-cache/src/data.rs:38:5
+   |
+38 |     pub address: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for a struct field
+  --> crates/nms-cache/src/data.rs:39:5
+   |
+39 |     pub name: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-cache/src/data.rs:40:5
+   |
+40 |     pub discoverer: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-cache/src/data.rs:43:5
+   |
+43 |     pub planets: Vec<Planet>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an enum
+ --> crates/nms-cache/src/error.rs:6:1
+  |
+6 | pub enum CacheError {
+  | ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a module
+  --> crates/nms-graph/src/lib.rs:11:1
+   |
+11 | pub mod error;
+   | ^^^^^^^^^^^^^
+   |
+   = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for a module
+  --> crates/nms-graph/src/lib.rs:17:1
+   |
+17 | pub mod spatial;
+   | ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/edges.rs:19:11
+   |
+19 |     Knn { k: usize },
+   |           ^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/edges.rs:21:17
+   |
+21 |     WarpRange { max_ly: f64 },
+   |                 ^^^^^^^^^^^
+
+error: missing documentation for an enum
+ --> crates/nms-graph/src/error.rs:5:1
+  |
+5 | pub enum GraphError {
+  | ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+ --> crates/nms-graph/src/error.rs:7:5
+  |
+7 |     SystemNotFound(String),
+  |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-graph/src/error.rs:10:5
+   |
+10 |     BaseNotFound(String),
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-graph/src/error.rs:13:5
+   |
+13 |     NoPlayerPosition,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/query.rs:15:5
+   |
+15 |     pub biome: Option<Biome>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/query.rs:16:5
+   |
+16 |     pub biome_subtype: Option<BiomeSubType>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/query.rs:17:5
+   |
+17 |     pub infested: Option<bool>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/query.rs:18:5
+   |
+18 |     pub named_only: bool,
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/route.rs:51:14
+   |
+51 |     NoPath { from: SystemId, to: SystemId },
+   |              ^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/route.rs:51:30
+   |
+51 |     NoPath { from: SystemId, to: SystemId },
+   |                              ^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-graph/src/spatial.rs:9:5
+  |
+9 |     pub id: SystemId,
+  |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-graph/src/spatial.rs:10:5
+   |
+10 |     pub point: [f64; 3],
+   |     ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-graph/src/spatial.rs:14:5
+   |
+14 |     pub fn new(id: SystemId, x: f64, y: f64, z: f64) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:3:1
+  |
+3 | pub mod address;
+  | ^^^^^^^^^^^^^^^
+  |
+  = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:4:1
+  |
+4 | pub mod biome;
+  | ^^^^^^^^^^^^^
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:6:1
+  |
+6 | pub mod discovery;
+  | ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:7:1
+  |
+7 | pub mod galaxy;
+  | ^^^^^^^^^^^^^^
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:8:1
+  |
+8 | pub mod glyph;
+  | ^^^^^^^^^^^^^
+
+error: missing documentation for a module
+ --> crates/nms-core/src/lib.rs:9:1
+  |
+9 | pub mod player;
+  | ^^^^^^^^^^^^^^
+
+error: missing documentation for a module
+  --> crates/nms-core/src/lib.rs:10:1
+   |
+10 | pub mod system;
+   | ^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/address.rs:75:5
+   |
+75 |     pub reality_index: u8,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/address.rs:331:5
+    |
+331 |     InvalidFormat,
+    |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/address.rs:332:5
+    |
+332 |     InvalidHex,
+    |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/address.rs:333:5
+    |
+333 |     InvalidLength,
+    |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/address.rs:365:5
+    |
+365 |     WrongLength(usize),
+    |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/address.rs:366:5
+    |
+366 |     InvalidGlyph(GlyphParseError),
+    |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:67:5
+   |
+67 |     Lush,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:68:5
+   |
+68 |     Toxic,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:69:5
+   |
+69 |     Scorched,
+   |     ^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:70:5
+   |
+70 |     Radioactive,
+   |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:71:5
+   |
+71 |     Frozen,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:72:5
+   |
+72 |     Barren,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:73:5
+   |
+73 |     Dead,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:74:5
+   |
+74 |     Weird,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:75:5
+   |
+75 |     Red,
+   |     ^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:76:5
+   |
+76 |     Green,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:77:5
+   |
+77 |     Blue,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:78:5
+   |
+78 |     Swamp,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:79:5
+   |
+79 |     Lava,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:80:5
+   |
+80 |     Waterworld,
+   |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/biome.rs:81:5
+   |
+81 |     GasGiant,
+   |     ^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:152:5
+    |
+152 |     LushRoomTemp,
+    |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:153:5
+    |
+153 |     LushHumid,
+    |     ^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:154:5
+    |
+154 |     LushInactive,
+    |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:155:5
+    |
+155 |     ToxicTentacles,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:156:5
+    |
+156 |     ToxicFungus,
+    |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:157:5
+    |
+157 |     ToxicEggs,
+    |     ^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:158:5
+    |
+158 |     ScorchedSinged,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:159:5
+    |
+159 |     ScorchedCharred,
+    |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:160:5
+    |
+160 |     ScorchedBlasted,
+    |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:161:5
+    |
+161 |     RadioactiveFungal,
+    |     ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:162:5
+    |
+162 |     RadioactiveContaminated,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:163:5
+    |
+163 |     RadioactiveIrradiated,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:164:5
+    |
+164 |     FrozenIce,
+    |     ^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:165:5
+    |
+165 |     FrozenSnow,
+    |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:166:5
+    |
+166 |     FrozenGlacial,
+    |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:167:5
+    |
+167 |     BarrenDusty,
+    |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:168:5
+    |
+168 |     BarrenRocky,
+    |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:169:5
+    |
+169 |     BarrenMountainous,
+    |     ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:170:5
+    |
+170 |     DeadEmpty,
+    |     ^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:171:5
+    |
+171 |     DeadCorroded,
+    |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:172:5
+    |
+172 |     DeadVoid,
+    |     ^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:173:5
+    |
+173 |     WeirdHexagonal,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:174:5
+    |
+174 |     WeirdCabled,
+    |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:175:5
+    |
+175 |     WeirdBubbling,
+    |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:176:5
+    |
+176 |     WeirdFractured,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:177:5
+    |
+177 |     WeirdShattered,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:178:5
+    |
+178 |     WeirdContorted,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:179:5
+    |
+179 |     WeirdWireCell,
+    |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:180:5
+    |
+180 |     SwampMurky,
+    |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:181:5
+    |
+181 |     LavaVolcanic,
+    |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-core/src/biome.rs:182:5
+    |
+182 |     WaterworldOcean,
+    |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/delta.rs:28:5
+   |
+28 |     pub from: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/delta.rs:29:5
+   |
+29 |     pub to: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:12:5
+   |
+12 |     Planet,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:13:5
+   |
+13 |     SolarSystem,
+   |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:14:5
+   |
+14 |     Sector,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:15:5
+   |
+15 |     Animal,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:16:5
+   |
+16 |     Flora,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/discovery.rs:17:5
+   |
+17 |     Mineral,
+   |     ^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:68:5
+   |
+68 |     pub discovery_type: Discovery,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:69:5
+   |
+69 |     pub universe_address: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:70:5
+   |
+70 |     pub timestamp: Option<DateTime<Utc>>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:71:5
+   |
+71 |     pub name: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:72:5
+   |
+72 |     pub discoverer: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/discovery.rs:73:5
+   |
+73 |     pub is_uploaded: bool,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-core/src/discovery.rs:77:5
+   |
+77 | /     pub fn new(
+78 | |         discovery_type: Discovery,
+79 | |         universe_address: GalacticAddress,
+80 | |         timestamp: Option<DateTime<Utc>>,
+...  |
+83 | |         is_uploaded: bool,
+84 | |     ) -> Self {
+   | |_____________^
+
+error: missing documentation for a variant
+ --> crates/nms-core/src/galaxy.rs:9:5
+  |
+9 |     Norm,
+  |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/galaxy.rs:10:5
+   |
+10 |     Lush,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/galaxy.rs:11:5
+   |
+11 |     Harsh,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/galaxy.rs:12:5
+   |
+12 |     Empty,
+   |     ^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/galaxy.rs:56:5
+   |
+56 |     pub index: u8,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/galaxy.rs:57:5
+   |
+57 |     pub name: &'static str,
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/galaxy.rs:58:5
+   |
+58 |     pub galaxy_type: GalaxyType,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct
+ --> crates/nms-core/src/glyph.rs:5:1
+  |
+5 | pub struct GlyphInfo {
+  | ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-core/src/glyph.rs:6:5
+  |
+6 |     pub index: u8,
+  |     ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-core/src/glyph.rs:7:5
+  |
+7 |     pub hex_char: char,
+  |     ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-core/src/glyph.rs:8:5
+  |
+8 |     pub name: &'static str,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-core/src/glyph.rs:9:5
+  |
+9 |     pub emoji: &'static str,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/glyph.rs:10:5
+   |
+10 |     pub abbrev: &'static str,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/player.rs:15:5
+   |
+15 |     HomePlanetBase,
+   |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/player.rs:16:5
+   |
+16 |     FreighterBase,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-core/src/player.rs:17:5
+   |
+17 |     ExternalPlanetBase,
+   |     ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-save/src/error.rs:9:20
+  |
+9 |     InvalidMagic { offset: usize, found: u32 },
+  |                    ^^^^^^^^^^^^^
+  |
+  = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/player.rs:65:5
+   |
+65 |     pub name: String,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/player.rs:66:5
+   |
+66 |     pub base_type: BaseType,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/player.rs:67:5
+   |
+67 |     pub address: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-core/src/player.rs:75:5
+   |
+75 | /     pub fn new(
+76 | |         name: String,
+77 | |         base_type: BaseType,
+78 | |         address: GalacticAddress,
+79 | |         position: [f32; 3],
+80 | |         owner_uid: Option<String>,
+81 | |     ) -> Self {
+   | |_____________^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:105:5
+    |
+105 |     pub current_address: GalacticAddress,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:106:5
+    |
+106 |     pub current_reality: u8,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:107:5
+    |
+107 |     pub previous_address: Option<GalacticAddress>,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:108:5
+    |
+108 |     pub freighter_address: Option<GalacticAddress>,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:109:5
+    |
+109 |     pub units: u64,
+    |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:110:5
+    |
+110 |     pub nanites: u64,
+    |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+ --> crates/nms-save/src/error.rs:9:35
+  |
+9 |     InvalidMagic { offset: usize, found: u32 },
+  |                                   ^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:13:27
+   |
+13 |     DecompressionFailed { offset: usize, message: String },
+   |                           ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-core/src/player.rs:111:5
+    |
+111 |     pub quicksilver: u64,
+    |     ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+   --> crates/nms-core/src/player.rs:115:5
+    |
+115 | /     pub fn new(
+116 | |         current_address: GalacticAddress,
+117 | |         current_reality: u8,
+118 | |         previous_address: Option<GalacticAddress>,
+...   |
+122 | |         quicksilver: u64,
+123 | |     ) -> Self {
+    | |_____________^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:30:5
+   |
+30 |     pub address: GalacticAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:31:5
+   |
+31 |     pub name: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:32:5
+   |
+32 |     pub discoverer: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:33:5
+   |
+33 |     pub timestamp: Option<DateTime<Utc>>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:34:5
+   |
+34 |     pub planets: Vec<Planet>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:13:42
+   |
+13 |     DecompressionFailed { offset: usize, message: String },
+   |                                          ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:17:21
+   |
+17 |     UnexpectedEof { offset: usize, expected: usize },
+   |                     ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:17:36
+   |
+17 |     UnexpectedEof { offset: usize, expected: usize },
+   |                                    ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:23:21
+   |
+23 |     ChunkTooLarge { offset: usize, declared: u32 },
+   |                     ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:23:36
+   |
+23 |     ChunkTooLarge { offset: usize, declared: u32 },
+   |                                    ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:27:25
+   |
+27 |     InvalidMetaLength { length: usize },
+   |                         ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:35:29
+   |
+35 |     UnsupportedMetaFormat { version: u32 },
+   |                             ^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:40:9
+   |
+40 |         expected: [u8; 32],
+   |         ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:41:9
+   |
+41 |         actual: [u8; 32],
+   |         ^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-core/src/system.rs:38:5
+   |
+38 | /     pub fn new(
+39 | |         address: GalacticAddress,
+40 | |         name: Option<String>,
+41 | |         discoverer: Option<String>,
+42 | |         timestamp: Option<DateTime<Utc>>,
+43 | |         planets: Vec<Planet>,
+44 | |     ) -> Self {
+   | |_____________^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:46:25
+   |
+46 |     MappingParseError { message: String },
+   |                         ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:70:5
+   |
+70 |     pub biome: Option<Biome>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/error.rs:50:22
+   |
+50 |     JsonParseError { message: String },
+   |                      ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:71:5
+   |
+71 |     pub biome_subtype: Option<BiomeSubType>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:16:5
+   |
+16 |     NoHomeDir,
+   |     ^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-core/src/system.rs:74:5
+   |
+74 |     pub name: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:19:5
+   |
+19 |     SaveDirNotFound(PathBuf),
+   |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:22:5
+   |
+22 |     NoAccountDirs(PathBuf),
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:25:5
+   |
+25 |     NoSaveFiles(PathBuf),
+   |     ^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-core/src/system.rs:80:5
+   |
+80 | /     pub fn new(
+81 | |         index: u8,
+82 | |         biome: Option<Biome>,
+83 | |         biome_subtype: Option<BiomeSubType>,
+...  |
+86 | |         seed_hash: Option<u64>,
+87 | |     ) -> Self {
+   | |_____________^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:28:5
+   |
+28 |     UnsupportedPlatform,
+   |     ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/locate.rs:31:5
+   |
+31 |     Io(#[from] std::io::Error),
+   |     ^^
+
+error: missing documentation for a variant
+   --> crates/nms-save/src/locate.rs:104:5
+    |
+104 |     Manual,
+    |     ^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-save/src/locate.rs:105:5
+    |
+105 |     Auto,
+    |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:44:5
+   |
+44 |     UserSettings = 0,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:45:5
+   |
+45 |     AccountData = 1,
+   |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:46:5
+   |
+46 |     PlayerState1 = 2,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:47:5
+   |
+47 |     PlayerState2 = 3,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:48:5
+   |
+48 |     PlayerState3 = 4,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:49:5
+   |
+49 |     PlayerState4 = 5,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:50:5
+   |
+50 |     PlayerState5 = 6,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:51:5
+   |
+51 |     PlayerState6 = 7,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:52:5
+   |
+52 |     PlayerState7 = 8,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:53:5
+   |
+53 |     PlayerState8 = 9,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:54:5
+   |
+54 |     PlayerState9 = 10,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:55:5
+   |
+55 |     PlayerState10 = 11,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:56:5
+   |
+56 |     PlayerState11 = 12,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:57:5
+   |
+57 |     PlayerState12 = 13,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:58:5
+   |
+58 |     PlayerState13 = 14,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:59:5
+   |
+59 |     PlayerState14 = 15,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:60:5
+   |
+60 |     PlayerState15 = 16,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:61:5
+   |
+61 |     PlayerState16 = 17,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:62:5
+   |
+62 |     PlayerState17 = 18,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:63:5
+   |
+63 |     PlayerState18 = 19,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:64:5
+   |
+64 |     PlayerState19 = 20,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:65:5
+   |
+65 |     PlayerState20 = 21,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:66:5
+   |
+66 |     PlayerState21 = 22,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:67:5
+   |
+67 |     PlayerState22 = 23,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:68:5
+   |
+68 |     PlayerState23 = 24,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:69:5
+   |
+69 |     PlayerState24 = 25,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:70:5
+   |
+70 |     PlayerState25 = 26,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:71:5
+   |
+71 |     PlayerState26 = 27,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:72:5
+   |
+72 |     PlayerState27 = 28,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:73:5
+   |
+73 |     PlayerState28 = 29,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:74:5
+   |
+74 |     PlayerState29 = 30,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-save/src/metadata.rs:75:5
+   |
+75 |     PlayerState30 = 31,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:14:5
+   |
+14 |     pub version: u32,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:15:5
+   |
+15 |     pub platform: String,
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:16:5
+   |
+16 |     pub active_context: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:17:5
+   |
+17 |     pub common_state_data: CommonStateData,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:18:5
+   |
+18 |     pub base_context: GameContext,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:19:5
+   |
+19 |     pub expedition_context: GameContext,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:20:5
+   |
+20 |     pub discovery_manager_data: DiscoveryManagerData,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:29:5
+   |
+29 |     pub save_name: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:31:5
+   |
+31 |     pub total_play_time: u64,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:40:5
+   |
+40 |     pub game_mode: u32,
+   |     ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:42:5
+   |
+42 |     pub player_state_data: PlayerStateData,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:51:5
+   |
+51 |     pub universe_address: UniverseAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:54:5
+   |
+54 |     pub previous_universe_address: UniverseAddress,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:57:5
+   |
+57 |     pub save_summary: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:64:5
+   |
+64 |     pub nanites: i64,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:71:5
+   |
+71 |     pub persistent_player_bases: Vec<PersistentPlayerBase>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:74:5
+   |
+74 |     pub health: u32,
+   |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:77:5
+   |
+77 |     pub time_alive: u64,
+   |     ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:86:5
+   |
+86 |     pub reality_index: u8,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:88:5
+   |
+88 |     pub galactic_address: GalacticAddressObject,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:97:5
+   |
+97 |     pub voxel_x: i16,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-save/src/model.rs:99:5
+   |
+99 |     pub voxel_y: i8,
+   |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:101:5
+    |
+101 |     pub voxel_z: i16,
+    |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:103:5
+    |
+103 |     pub solar_system_index: u16,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:105:5
+    |
+105 |     pub planet_index: u8,
+    |     ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:172:5
+    |
+172 |     pub discovery_data_v1: DiscoveryDataV1,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:181:5
+    |
+181 |     pub reserve_store: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:183:5
+    |
+183 |     pub reserve_managed: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:185:5
+    |
+185 |     pub store: DiscoveryStore,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:194:5
+    |
+194 |     pub record: Vec<RawDiscoveryRecord>,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:285:5
+    |
+285 |     pub base_version: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:287:5
+    |
+287 |     pub galactic_address: PackedGalacticAddress,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:290:5
+    |
+290 |     pub position: [f32; 3],
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:293:5
+    |
+293 |     pub forward: [f32; 3],
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:296:5
+    |
+296 |     pub last_update_timestamp: u64,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:303:5
+    |
+303 |     pub rid: String,
+    |     ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:306:5
+    |
+306 |     pub owner: OwnershipData,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:309:5
+    |
+309 |     pub name: String,
+    |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:312:5
+    |
+312 |     pub base_type: BaseTypeWrapper,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:315:5
+    |
+315 |     pub last_edited_by_id: String,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:318:5
+    |
+318 |     pub last_edited_by_username: String,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:321:5
+    |
+321 |     pub game_mode: Option<GameModeWrapper>,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:329:5
+    |
+329 |     pub persistent_base_types: String,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-save/src/model.rs:337:5
+    |
+337 |     pub preset_game_mode: String,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: unresolved link to `0`
+  --> crates/nms-graph/src/extract.rs:25:10
+   |
+25 | ///   VP[0]: seed hash (hex string or integer)
+   |          ^ no item named `0` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+
+error: unresolved link to `1`
+  --> crates/nms-graph/src/extract.rs:26:10
+   |
+26 | ///   VP[1]: biome/flags packed integer
+   |          ^ no item named `1` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `0`
+  --> crates/nms-graph/src/extract.rs:82:31
+   |
+82 | /// Extract seed hash from VP[0].
+   |                               ^ no item named `0` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `D²`
+  --> crates/nms-core/src/address.rs:25:26
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                          ^^ no item named `D²` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+   = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+
+error: unresolved link to `D`
+  --> crates/nms-core/src/address.rs:25:34
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                                  ^ no item named `D` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: unresolved link to `D²`
+  --> crates/nms-core/src/address.rs:25:47
+   |
+25 | /// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+   |                                               ^^ no item named `D²` in scope
+   |
+   = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/show.rs:20:5
+   |
+20 |     System(ShowSystemResult),
+   |     ^^^^^^
+   |
+   = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/show.rs:21:5
+   |
+21 |     Base(ShowBaseResult),
+   |     ^^^^
+
+error: missing documentation for a struct
+  --> crates/nms-query/src/show.rs:25:1
+   |
+25 | pub struct ShowSystemResult {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:26:5
+   |
+26 |     pub system: System,
+   |     ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:27:5
+   |
+27 |     pub portal_hex: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:28:5
+   |
+28 |     pub galaxy_name: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:29:5
+   |
+29 |     pub distance_from_player: Option<f64>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct
+  --> crates/nms-query/src/show.rs:33:1
+   |
+33 | pub struct ShowBaseResult {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:34:5
+   |
+34 |     pub base: PlayerBase,
+   |     ^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:35:5
+   |
+35 |     pub portal_hex: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:36:5
+   |
+36 |     pub galaxy_name: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:37:5
+   |
+37 |     pub system: Option<System>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/show.rs:38:5
+   |
+38 |     pub distance_from_player: Option<f64>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:18:5
+   |
+18 |     Red,
+   |     ^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:19:5
+   |
+19 |     Green,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:20:5
+   |
+20 |     Yellow,
+   |     ^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:21:5
+   |
+21 |     Blue,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:22:5
+   |
+22 |     Magenta,
+   |     ^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:23:5
+   |
+23 |     Cyan,
+   |     ^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:24:5
+   |
+24 |     White,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:25:5
+   |
+25 |     BrightRed,
+   |     ^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:26:5
+   |
+26 |     BrightGreen,
+   |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:27:5
+   |
+27 |     BrightYellow,
+   |     ^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:28:5
+   |
+28 |     BrightBlue,
+   |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:29:5
+   |
+29 |     BrightMagenta,
+   |     ^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:30:5
+   |
+30 |     BrightCyan,
+   |     ^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:31:5
+   |
+31 |     BrightWhite,
+   |     ^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-query/src/theme.rs:32:5
+   |
+32 |     Gray,
+   |     ^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/theme.rs:61:5
+   |
+61 |     pub fg: Option<Color>,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-query/src/theme.rs:62:5
+   |
+62 |     pub bold: bool,
+   |     ^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:104:5
+    |
+104 |     pub header: Style,
+    |     ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:105:5
+    |
+105 |     pub system_name: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:106:5
+    |
+106 |     pub planet_name: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:107:5
+    |
+107 |     pub distance: Style,
+    |     ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:108:5
+    |
+108 |     pub glyphs: Style,
+    |     ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:109:5
+    |
+109 |     pub muted: Style,
+    |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:112:5
+    |
+112 |     pub biome_lush: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:113:5
+    |
+113 |     pub biome_toxic: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:114:5
+    |
+114 |     pub biome_scorched: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:115:5
+    |
+115 |     pub biome_frozen: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:116:5
+    |
+116 |     pub biome_barren: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:117:5
+    |
+117 |     pub biome_dead: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:118:5
+    |
+118 |     pub biome_exotic: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-query/src/theme.rs:119:5
+    |
+119 |     pub biome_other: Style,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for the crate
+   --> crates/nms-cli/src/main.rs:1:1
+    |
+  1 | / use clap::{Parser, Subcommand};
+  2 | | use std::path::PathBuf;
+  3 | | use std::process;
+...   |
+468 | | }
+    | |_^
+    |
+    = note: requested on the command line with `-D missing-docs`
+
+error: could not document `nms-graph`
+warning: build failed, waiting for other jobs to finish...
+error: could not document `nms-save`
+error: could not document `nms-core`
+error: could not document `nms-cache`
+error: unclosed HTML tag `label`
+   --> crates/nms-query/src/table.rs:128:18
+    |
+128 | ///    "Total: N <label>" summary. If the combined text fits within the
+    |                  ^^^^^^^
+    |
+    = note: `-D rustdoc::invalid-html-tags` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(rustdoc::invalid_html_tags)]`
+
+error: unclosed HTML tag `label`
+   --> crates/nms-query/src/table.rs:130:41
+    |
+130 | ///    "Total:" goes in column 0 and "N <label>" in column 1.
+    |                                         ^^^^^^^
+
+error: could not document `nms-cli`
+error: could not document `nms-query`
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/commands.rs:20:5
+   |
+20 |     pub action: Option<Action>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: requested on the command line with `-D missing-docs`
+
+error: missing documentation for an enum
+  --> crates/nms-copilot/src/commands.rs:24:1
+   |
+24 | pub enum Action {
+   | ^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/commands.rs:59:9
+   |
+59 |         target: ShowTarget,
+   |         ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-copilot/src/commands.rs:142:9
+    |
+142 |         target: SetTarget,
+    |         ^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+   --> crates/nms-copilot/src/commands.rs:155:9
+    |
+155 |         target: ListTarget,
+    |         ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an enum
+   --> crates/nms-copilot/src/commands.rs:178:1
+    |
+178 | pub enum SetTarget {
+    | ^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an enum
+   --> crates/nms-copilot/src/commands.rs:198:1
+    |
+198 | pub enum ListTarget {
+    | ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an enum
+   --> crates/nms-copilot/src/commands.rs:235:1
+    |
+235 | pub enum ShowTarget {
+    | ^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-copilot/src/completer.rs:28:5
+   |
+28 |     pub fn new(model_data: ModelCompletions) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+   --> crates/nms-copilot/src/config.rs:329:5
+    |
+329 |     Io(std::io::Error),
+    |     ^^
+
+error: missing documentation for a variant
+   --> crates/nms-copilot/src/config.rs:330:5
+    |
+330 |     Parse(toml::de::Error),
+    |     ^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/map/state.rs:60:5
+   |
+60 |     pub letter: char,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/map/state.rs:61:5
+   |
+61 |     pub name: String,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/map/state.rs:62:5
+   |
+62 |     pub voxel_x: i16,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/map/state.rs:63:5
+   |
+63 |     pub voxel_z: i16,
+   |     ^^^^^^^^^^^^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-copilot/src/mcp/mod.rs:29:5
+   |
+29 |     Stdio,
+   |     ^^^^^
+
+error: missing documentation for a variant
+  --> crates/nms-copilot/src/mcp/mod.rs:31:5
+   |
+31 |     Http(SocketAddr),
+   |     ^^^^
+
+error: missing documentation for a function
+   --> crates/nms-copilot/src/mcp/mod.rs:224:1
+    |
+224 | pub fn mcp_info_json() -> serde_json::Value {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-copilot/src/mcp/resources.rs:31:5
+   |
+31 |     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-copilot/src/mcp/tools.rs:35:5
+   |
+35 |     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/prompt.rs:19:5
+   |
+19 |     pub galaxy_name: String,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/prompt.rs:20:5
+   |
+20 |     pub biome_filter: Option<String>,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/prompt.rs:21:5
+   |
+21 |     pub planet_count: usize,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for an associated function
+  --> crates/nms-copilot/src/prompt.rs:41:5
+   |
+41 |     pub fn new(state: PromptState) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/session.rs:39:9
+   |
+39 |         name: String,
+   |         ^^^^^^^^^^^^
+
+error: missing documentation for a struct field
+  --> crates/nms-copilot/src/session.rs:40:9
+   |
+40 |         address: GalacticAddress,
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a method
+  --> crates/nms-copilot/src/session.rs:49:5
+   |
+49 |     pub fn address(&self) -> &GalacticAddress {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: missing documentation for a method
+  --> crates/nms-copilot/src/session.rs:56:5
+   |
+56 |     pub fn label(&self) -> String {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: unresolved link to `effective_save_file`
+   --> crates/nms-copilot/src/config.rs:288:24
+    |
+288 |     /// Delegates to [`effective_save_file`]. For backward compatibility,
+    |                        ^^^^^^^^^^^^^^^^^^^ no item named `effective_save_file` in scope
+    |
+    = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+    = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+
+error: could not document `nms-copilot`

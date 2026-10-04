@@ -1,0 +1,116 @@
+{
+  "Version": 4720,
+  "Platform": "Mac|Final",
+  "ActiveContext": "Main",
+  "CommonStateData": {
+    "SaveName": "Synthetic address regression",
+    "TotalPlayTime": 3661
+  },
+  "BaseContext": {
+    "GameMode": 1,
+    "PlayerStateData": {
+      "UniverseAddress": {
+        "RealityIndex": 0,
+        "GalacticAddress": {
+          "VoxelX": 1130,
+          "VoxelY": 4,
+          "VoxelZ": -1244,
+          "SolarSystemIndex": 299,
+          "PlanetIndex": 2
+        }
+      },
+      "PreviousUniverseAddress": {
+        "RealityIndex": 0,
+        "GalacticAddress": {
+          "VoxelX": 80,
+          "VoxelY": 30,
+          "VoxelZ": -150,
+          "SolarSystemIndex": 38,
+          "PlanetIndex": 0
+        }
+      },
+      "Units": 5000000,
+      "Nanites": 10000,
+      "Specials": 500,
+      "Health": 180,
+      "TimeAlive": 100000,
+      "PersistentPlayerBases": []
+    }
+  },
+  "ExpeditionContext": {
+    "GameMode": 6,
+    "PlayerStateData": {
+      "UniverseAddress": {
+        "RealityIndex": 0,
+        "GalacticAddress": {
+          "VoxelX": 0,
+          "VoxelY": 0,
+          "VoxelZ": 0,
+          "SolarSystemIndex": 0,
+          "PlanetIndex": 0
+        }
+      },
+      "Units": 0,
+      "Nanites": 0,
+      "Specials": 0,
+      "PersistentPlayerBases": []
+    }
+  },
+  "DiscoveryManagerData": {
+    "DiscoveryData-v1": {
+      "ReserveStore": 100,
+      "ReserveManaged": 100,
+      "Store": {
+        "Record": [
+          {
+            "DD": {
+              "UA": "0x212B0004B2446A",
+              "DT": "SolarSystem",
+              "VP": [
+                "0xABCD1234"
+              ]
+            },
+            "DM": {
+              "CN": "Synthetic Named System"
+            },
+            "OWS": {
+              "LID": "",
+              "UID": "synthetic-owner",
+              "USN": "Synthetic Explorer",
+              "PTK": "ST",
+              "TS": 1700000000
+            },
+            "FL": {
+              "C": 1,
+              "U": 1
+            }
+          },
+          {
+            "DD": {
+              "UA": "0x212B0004B2446A",
+              "DT": "Planet",
+              "VP": [
+                "0xDEAD1234",
+                0
+              ]
+            },
+            "DM": {
+              "CN": "Synthetic Named Planet"
+            },
+            "OWS": {
+              "LID": "",
+              "UID": "synthetic-owner",
+              "USN": "Synthetic Explorer",
+              "PTK": "ST",
+              "TS": 1700000000
+            },
+            "FL": {
+              "C": 1,
+              "U": 1
+            }
+          }
+        ]
+      }
+    }
+  }
+}

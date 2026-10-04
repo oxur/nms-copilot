@@ -1,0 +1,65 @@
+{
+  "observed_utc": "2026-10-04T00:46:02.859568+00:00",
+  "versions": [
+    {
+      "crate": "nms",
+      "url": "https://crates.io/api/v1/crates/nms/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-core",
+      "url": "https://crates.io/api/v1/crates/nms-core/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-save",
+      "url": "https://crates.io/api/v1/crates/nms-save/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-compat",
+      "url": "https://crates.io/api/v1/crates/nms-compat/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-graph",
+      "url": "https://crates.io/api/v1/crates/nms-graph/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-query",
+      "url": "https://crates.io/api/v1/crates/nms-query/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-watch",
+      "url": "https://crates.io/api/v1/crates/nms-watch/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-cache",
+      "url": "https://crates.io/api/v1/crates/nms-cache/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-cli",
+      "url": "https://crates.io/api/v1/crates/nms-cli/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    },
+    {
+      "crate": "nms-copilot",
+      "url": "https://crates.io/api/v1/crates/nms-copilot/0.2.0",
+      "result": "unavailable",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+    }
+  ]
+}

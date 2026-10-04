@@ -1,0 +1,44 @@
+[
+  {
+    "planet_name": "",
+    "biome": "Lush",
+    "system_name": "",
+    "distance_ly": 0.0,
+    "portal_glyphs": "002A32F38064",
+    "portal_emoji": "🌅🌅😑🕋🦕😑🔺🦕🦋🌅⛵🌜",
+    "coords_x": 100,
+    "coords_y": 50,
+    "coords_z": -200,
+    "galaxy": "Euclid",
+    "discoverer": "Explorer",
+    "infested": false
+  },
+  {
+    "planet_name": "",
+    "biome": "Lush",
+    "system_name": "",
+    "distance_ly": 0.0,
+    "portal_glyphs": "002A32F38064",
+    "portal_emoji": "🌅🌅😑🕋🦕😑🔺🦕🦋🌅⛵🌜",
+    "coords_x": 100,
+    "coords_y": 50,
+    "coords_z": -200,
+    "galaxy": "Euclid",
+    "discoverer": "Explorer",
+    "infested": false
+  },
+  {
+    "planet_name": "",
+    "biome": "Lush",
+    "system_name": "",
+    "distance_ly": 0.0,
+    "portal_glyphs": "002A32F38064",
+    "portal_emoji": "🌅🌅😑🕋🦕😑🔺🦕🦋🌅⛵🌜",
+    "coords_x": 100,
+    "coords_y": 50,
+    "coords_z": -200,
+    "galaxy": "Euclid",
+    "discoverer": "Explorer",
+    "infested": false
+  }
+]

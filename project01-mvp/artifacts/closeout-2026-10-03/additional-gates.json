@@ -1,0 +1,33 @@
+[
+  {
+    "name": "strict-rustdoc",
+    "command": [
+      "cargo",
+      "doc",
+      "--workspace",
+      "--all-features",
+      "--no-deps",
+      "--locked"
+    ],
+    "extra_env": {
+      "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+    },
+    "exit_code": 101,
+    "seconds": 1.98,
+    "log": "strict-rustdoc.log"
+  },
+  {
+    "name": "package-list",
+    "command": [
+      "cargo",
+      "package",
+      "--workspace",
+      "--list",
+      "--locked"
+    ],
+    "extra_env": {},
+    "exit_code": 0,
+    "seconds": 0.128,
+    "log": "package-list.log"
+  }
+]

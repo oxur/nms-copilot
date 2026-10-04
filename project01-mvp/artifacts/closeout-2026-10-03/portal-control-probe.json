@@ -1,0 +1,21 @@
+{
+  "exit_code": 0,
+  "synthetic_control": "Portal encoding substituted into the UA field solely to distinguish truncation from intended game encoding. This is not a supported-format claim.",
+  "expected": "212B04B2446A",
+  "observed": [
+    {
+      "planet_name": "",
+      "biome": "Lush",
+      "system_name": "",
+      "distance_ly": 0.0,
+      "portal_glyphs": "212B04B2446A",
+      "portal_emoji": "\ud83d\ude11\ud83d\udd4a\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b",
+      "coords_x": 1130,
+      "coords_y": 4,
+      "coords_z": -1244,
+      "galaxy": "Euclid",
+      "discoverer": "Synthetic Explorer",
+      "infested": false
+    }
+  ]
+}

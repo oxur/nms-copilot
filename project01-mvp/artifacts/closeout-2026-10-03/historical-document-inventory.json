@@ -1,0 +1,410 @@
+[
+  {
+    "path": "README.md",
+    "sha256": "d1b67130f7eff76793b9cb0923ac5b9ad02aec7b68f1dbf1d7caba068015de1f",
+    "bytes": 19312,
+    "lines": 262,
+    "title": "NMS Copilot \u2014 Project Summary",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc01-discovery/0001-nms-technical-resources.md",
+    "sha256": "81eedfa187f1fcc07cef66edc1409734ab74ca04b769ffc7e82d6b8e676ae09b",
+    "bytes": 2232,
+    "lines": 65,
+    "title": "NMS Technical Resources",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc01-discovery/0002-nms-save-file-format-save.hg.json.md",
+    "sha256": "519c09216d0bccfd1e1825cd8ac49f0f30c5690db5d2494b4f1c2dae95682225",
+    "bytes": 6206,
+    "lines": 197,
+    "title": "NMS Save File Format (save.hg.json)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc01-discovery/0003-nms-save-file-analysis-session-findings-2026-03-05.md",
+    "sha256": "51b917b5a07e921e2702b920023f0943d7da219b84ce22ca25f31ebc9c08c80f",
+    "bytes": 2642,
+    "lines": 86,
+    "title": "NMS Save File Analysis \u2014 Session Findings (2026-03-05)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc01-discovery/0004-nms-atlas-project-notes.md",
+    "sha256": "3d1d682d19f66f95e3a9ddcea50750b7a0b07f55b94c273ae649a4566ae97a78",
+    "bytes": 2016,
+    "lines": 53,
+    "title": "NMS Atlas \u2014 Project Notes",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0005-milestone-1.2-core-types-nms-core.md",
+    "sha256": "9ec188fde88fbb4249a18316f9cb4998671d7cea86862ca50b00b7d3c646fe7d",
+    "bytes": 26292,
+    "lines": 913,
+    "title": "Milestone 1.2 \u2014 Core Types (nms-core)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0006-milestone-1.3-portal-glyph-converter-nms-core.md",
+    "sha256": "8a909399362449e178ee361142ea623ca1cbd62481f593f1b690e69a04e8fa37",
+    "bytes": 23008,
+    "lines": 684,
+    "title": "Milestone 1.3 \u2014 Portal Glyph Converter (nms-core)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0007-milestone-1.4-distance-calculator-nms-core.md",
+    "sha256": "a753c5a1deda485870755aa9bf22c266b7fc5a6b9849d9dda65454e11b5160b1",
+    "bytes": 9983,
+    "lines": 266,
+    "title": "Milestone 1.4 \u2014 Distance Calculator (nms-core)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0008-milestone-1.5-lz4-block-decompressor-nms-save.md",
+    "sha256": "6f60b00806a1e4684ebe73a0d3dd0d08cc9845323c1e48a28bedef8f688f543e",
+    "bytes": 18003,
+    "lines": 555,
+    "title": "Milestone 1.5 -- LZ4 Block Decompressor (nms-save)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0009-milestone-1.6-metadata-verifier-nms-save.md",
+    "sha256": "e3e8a9188cbc89eb6ae88f9007faa35b82e533d7f8243bb16b22325befb0f60b",
+    "bytes": 26862,
+    "lines": 809,
+    "title": "Milestone 1.6 -- Metadata Verifier (nms-save)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0010-milestone-1.7-key-deobfuscation-nms-save.md",
+    "sha256": "48f8aacc7cdffebb1cfc6155cb690b5a510a03302d6aef5fc46c8d1f7544ed24",
+    "bytes": 20281,
+    "lines": 623,
+    "title": "Milestone 1.7 -- Key Deobfuscation (nms-save)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0011-milestone-1.8-serde-deserialization-nms-save.md",
+    "sha256": "55e24a378c57cd3e1f0ae5ee694c810e96f3cf6f68c13acfa28cac4d492a79da",
+    "bytes": 31463,
+    "lines": 982,
+    "title": "Milestone 1.8 -- Serde Deserialization (nms-save)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0012-milestone-1.9-nms-info-command-nms-cli.md",
+    "sha256": "b7f9db99b04ff9b31e59146a6a70bf20f6984cf6b6b86bbdcd908ef7bf072660",
+    "bytes": 17813,
+    "lines": 576,
+    "title": "Milestone 1.9 -- `nms info` Command (nms-cli)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0013-milestone-1.10-nms-convert-command-nms-cli.md",
+    "sha256": "67fe19acf8f8666775edcf1224f525fc766b68f620ac3ebe5e3f69b85038e943",
+    "bytes": 17854,
+    "lines": 527,
+    "title": "Milestone 1.10 -- `nms convert` Command (nms-cli)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc02-initial-infra/0014-nms-save-file-discovery-nms-savelocate.md",
+    "sha256": "786655e3f760704762ea03356c9a50eb6cd150c99b9a35cc459a4592318a1295",
+    "bytes": 4972,
+    "lines": 121,
+    "title": "NMS Save File Discovery (`nms-save::locate`)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0015-milestone-2.1-galaxy-model-nms-graph.md",
+    "sha256": "3aec218295a9485308225eab75a48d3d951d54617884a07be1646539b9fea95f",
+    "bytes": 26884,
+    "lines": 826,
+    "title": "Milestone 2.1 -- Galaxy Model (nms-graph)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0016-milestone-2.2-spatial-indexing-nms-graph.md",
+    "sha256": "81b0bdf384e084af717547482bdd1ee43dae0a1f187da6567db9b932aee1016a",
+    "bytes": 15099,
+    "lines": 419,
+    "title": "Milestone 2.2 -- Spatial Indexing (nms-graph)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0017-milestone-2.3-graph-construction-nms-graph.md",
+    "sha256": "3bb22368f606d1f7c6deda26338afd1153c2bd57007dc2587699120a7ef16547",
+    "bytes": 13212,
+    "lines": 372,
+    "title": "Milestone 2.3 -- Graph Construction (nms-graph)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0018-milestone-2.4-query-engine-nms-query.md",
+    "sha256": "e2bb24b708622b36e0fa2095af1d1e70a13ff04e7bb861833cdc53378234545f",
+    "bytes": 23416,
+    "lines": 665,
+    "title": "Milestone 2.4 -- Query Engine (nms-query)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0019-milestone-2.5-display-layer-nms-query.md",
+    "sha256": "c7b47913bc7115d264cd648493391d9f25e94f33e7dbea5ba35c63a339b76dfa",
+    "bytes": 14014,
+    "lines": 431,
+    "title": "Milestone 2.5 -- Display Layer (nms-query)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0020-milestone-2.6-nms-find-command-nms-cli.md",
+    "sha256": "2a2d46d4f1e51dfee2e3e3a80c48fd9d865dff98d596cbca5c9040d4745c955a",
+    "bytes": 8175,
+    "lines": 249,
+    "title": "Milestone 2.6 -- `nms find` Command (nms-cli)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0021-milestone-2.7-nms-show-command-nms-cli.md",
+    "sha256": "d315e5037c5eed456c25c5e16dd1999e78ac011991bb830e7eae8c4dcf903560",
+    "bytes": 6807,
+    "lines": 200,
+    "title": "Milestone 2.7 -- `nms show` Command (nms-cli)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc03-map-and-query/0022-milestone-2.8-nms-stats-command-nms-cli.md",
+    "sha256": "eb100146add995e3f5f798b422e93d2136268f656f9e341ac26190eef4576dc9",
+    "bytes": 9593,
+    "lines": 295,
+    "title": "Milestone 2.8 -- `nms stats` Command (nms-cli)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0023-milestone-3.1-repl-skeleton-nms-copilot.md",
+    "sha256": "07eea7163845447a0877d7a1264dc1fff5934c36399d8f9b5a33b5d68e051f0c",
+    "bytes": 22148,
+    "lines": 714,
+    "title": "Milestone 3.1 -- REPL Skeleton (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0024-milestone-3.2-persistent-history-nms-copilot.md",
+    "sha256": "ecf0610a8ec8cf1c17836ef8139b3dbb06f201fded83ff56467bb68ff251451a",
+    "bytes": 5408,
+    "lines": 213,
+    "title": "Milestone 3.2 -- Persistent History (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0025-milestone-3.3-tab-completion-nms-copilot.md",
+    "sha256": "494935c44b25597fa99d82dae5f2c77e64152f5b014a62643d37640848d89a9b",
+    "bytes": 12871,
+    "lines": 414,
+    "title": "Milestone 3.3 -- Tab Completion (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0026-milestone-3.4-session-context-nms-copilot.md",
+    "sha256": "46926d72aa2496abf712848225c1078f68347b5675c5901c04632f6d4e69da80",
+    "bytes": 15564,
+    "lines": 478,
+    "title": "Milestone 3.4 -- Session Context (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0027-milestone-3.5-context-aware-prompt-nms-copilot.md",
+    "sha256": "3f0bdeda0b8ae0d2fe293c8e89b5be43b2082a7e4869ecf035d5fae937ab271a",
+    "bytes": 8768,
+    "lines": 282,
+    "title": "Milestone 3.5 -- Context-Aware Prompt (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0028-milestone-3.6-rkyv-serialization-nms-cache.md",
+    "sha256": "c99820565e0450657deb21bdd118943fde1386ee23333fdc39f67b56237b7c01",
+    "bytes": 17547,
+    "lines": 516,
+    "title": "Milestone 3.6 -- rkyv Serialization (nms-cache)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0029-milestone-3.7-cache-management-nms-cache.md",
+    "sha256": "16b34a5739f754bd64bb82ff3d8ca513957b40b18e1e69d06a4426c189930c3d",
+    "bytes": 11597,
+    "lines": 361,
+    "title": "Milestone 3.7 -- Cache Management (nms-cache)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc04-repl-and-session/0030-milestone-3.8-config-file-nms-copilot.md",
+    "sha256": "157e055d5ba11cd2a0fce1340f321ebd97bb2d43f8dba4d47bed700a397a2a44",
+    "bytes": 12639,
+    "lines": 461,
+    "title": "Milestone 3.8 -- Config File (nms-copilot)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0031-phase-4a-graph-routing-algorithms-nms-graph.md",
+    "sha256": "725d92c1634d456275e9f7b2553f5bb38983047f494789a266cacb2327c35e6b",
+    "bytes": 36862,
+    "lines": 1041,
+    "title": "Phase 4A -- Graph Routing Algorithms (nms-graph)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0032-phase-4b-route-query-and-cli-integration.md",
+    "sha256": "1907641b86b9693635c68db7bcae26015bc648dee163463b8caeb8ea42db34bf",
+    "bytes": 29157,
+    "lines": 899,
+    "title": "Phase 4B -- Route Query & CLI Integration",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0033-phase-5a-watch-engine-and-delta-computation.md",
+    "sha256": "306efa370102596083b0b59b7136b126fee1983468df830bd25451deb2c6c130",
+    "bytes": 26833,
+    "lines": 815,
+    "title": "Phase 5A -- Watch Engine & Delta Computation",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0034-phase-5b-consumer-integration-and-robustness.md",
+    "sha256": "1772ea11cbf9818daf5a7adb0d29a6c3d1597c51c0727bd7df14ab6c1bacc880",
+    "bytes": 18994,
+    "lines": 611,
+    "title": "Phase 5B -- Consumer Integration & Robustness",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0035-phase-6a-mcp-server-and-tools.md",
+    "sha256": "0e5ac262010836482ad206105b53dd4e41f7c790bd4d4447303d9ae33bf298e1",
+    "bytes": 37086,
+    "lines": 999,
+    "title": "Phase 6A -- MCP Server & Tool Implementations",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc05-graph-and-mcp/0036-phase-6b-live-updates-and-http-transport.md",
+    "sha256": "d6880b0ca977405b1bcac88c909b45e503b468ee2c4dc2b2ef61959ca46dad5c",
+    "bytes": 11613,
+    "lines": 387,
+    "title": "Phase 6B -- Live Updates & HTTP Transport",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0037-phase-7a-cli-polish-export-completions-multi-save.md",
+    "sha256": "5499c84999008abe11b170e0499972a55a8b5a4cee9ed4809db7125c947cbe50",
+    "bytes": 13366,
+    "lines": 496,
+    "title": "Phase 7A -- CLI Polish: Export, Completions, Multi-Save",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0038-phase-7b-model-extensions-multi-galaxy-formats-community.md",
+    "sha256": "ecd5bcbccf46ef84de0b4f33c13d3f0b1b52b67d129ee4d59c64f14ee71a1167",
+    "bytes": 14876,
+    "lines": 513,
+    "title": "Phase 7B -- Model Extensions: Multi-Galaxy, Formats, Community Data",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0039-phase-7c-release-prep-docs-tests-publishing-themes.md",
+    "sha256": "b0b840b1bf7a2852933527f392ca01d9cde6c4ee549bf55858bd02319404cf5f",
+    "bytes": 16785,
+    "lines": 635,
+    "title": "Phase 7C -- Release Prep: Documentation, Tests, Publishing, Themes",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0040-configurable-banner-support-for-nms-copilot-repl.md",
+    "sha256": "de779bd7983d026b41f425c1c1cc8110014a8a5c6aa23d0f739ea33942198979",
+    "bytes": 5860,
+    "lines": 139,
+    "title": "Configurable Banner Support for nms-copilot REPL",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0041-repl-setup-wizard-config-improvements.md",
+    "sha256": "ef8e4c1dc830029095797ebff55a25c2f97cb80f8d26c7fbdcc86cf870d2b936",
+    "bytes": 4916,
+    "lines": 108,
+    "title": "REPL Setup Wizard & Config Improvements",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0042-interactive-ascii-galaxy-map-with-ratatui.md",
+    "sha256": "85afb5515a6a911f0d2867cbbc309c6354482c774fb3e8edac5fe5d14d075e42",
+    "bytes": 6394,
+    "lines": 188,
+    "title": "Interactive ASCII Galaxy Map (with ratatui)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/0043-adopt-oxur-cli-tables-for-all-tabular-output.md",
+    "sha256": "ce27b9c62e9bc26678b9a8b2c190b2baa0e131edc8ac51901591276e2b670111",
+    "bytes": 6463,
+    "lines": 147,
+    "title": "Adopt oxur-cli tables for all tabular output",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/artifacts/banner-plan.md",
+    "sha256": "91a60fbdc1689aa75a225583c1fbad41fccacc54149a988ea102feea46ce7ce3",
+    "bytes": 5999,
+    "lines": 139,
+    "title": "Configurable Banner Support for nms-copilot REPL",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/artifacts/cli-tables.md",
+    "sha256": "33e8d28053ae608096e01f570bfaae2914cb0576c92518e6a585a61617502572",
+    "bytes": 6610,
+    "lines": 147,
+    "title": "Adopt oxur-cli tables for all tabular output",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/artifacts/galaxy-map.md",
+    "sha256": "a50287a78f11a03106dc9e3007331dfbe74d5b520742afc2defbe7f1e5617d5b",
+    "bytes": 6582,
+    "lines": 188,
+    "title": "Interactive ASCII Galaxy Map (with ratatui)",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "arc06-fit-and-finish/artifacts/repl-startup.md",
+    "sha256": "18a2061e791df1b144258a5fb41dbd7972ea5dd610f51c5b0bb121206dda4fa7",
+    "bytes": 5024,
+    "lines": 108,
+    "title": "REPL Setup Wizard & Config Improvements",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "artifacts/0001-parsing-no-mans-sky-save-files-known-resources.md",
+    "sha256": "06e5afaa3be9af7478ba688c5fc418c71c60fac9c1609e1a4b479b0a44744dbc",
+    "bytes": 22444,
+    "lines": 233,
+    "title": "Parsing No Man's Sky save files - Known Resources",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "artifacts/0004-libnom-reference-guide-for-rust-reimplementation.md",
+    "sha256": "1f382eba4af3c73f0189f2a7da5c6b906a93321b1d41033a42809ef3b128d9c7",
+    "bytes": 18160,
+    "lines": 442,
+    "title": "libNOM Reference Guide for Rust Reimplementation",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  },
+  {
+    "path": "project-plan.md",
+    "sha256": "da129a268d1d5cc107b866801841b04ea2b32caa66ecc287ebe018344bc1e000",
+    "bytes": 26793,
+    "lines": 544,
+    "title": "NMS Copilot \u2014 Detailed Project Plan",
+    "review_status": "inventory only; full semantic acceptance review pending"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "source_branch": "main",
+  "planning_design_commit": "143a796296bc299fc7a8965c85caec77606bc36c",
+  "observed_utc": "2026-10-04T00:52:36.957915+00:00",
+  "rustc": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+  "cargo": "cargo 1.98.0 (797e8a9bc 2026-08-05)",
+  "llvm_cov": "cargo-llvm-cov 0.6.21",
+  "source_status": "",
+  "original_summary_milestones": 61,
+  "original_numbered_arc_documents": 43,
+  "legacy_acceptance_note": "Arc/slice ledgers and close/independent-review records were absent at intake. New recovery plans/ledgers are preparation, not retroactive acceptance."
+}
