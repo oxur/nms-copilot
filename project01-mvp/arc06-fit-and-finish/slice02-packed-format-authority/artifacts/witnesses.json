@@ -1,0 +1,467 @@
+{
+  "schema": "slice02-packed-format-authority-witnesses-v1",
+  "interpretation_policy": {
+    "expected_values": "Independent game observation or source-derived conditional candidate only; current nms-core output is never used to establish an expected value.",
+    "source_transcription": "NMSCoordinates methods were inspected in full and transcribed for diagnostics. The original C# application was not compiled or executed. NMS Companion source was inspected but its executable was not run.",
+    "identities": "No archive member names, raw save bodies, owner names, account identifiers, discovery names, seeds, or other user identifiers are retained."
+  },
+  "population": {
+    "archive": {
+      "repository": "libNom.io",
+      "revision": "652aabb0147888776a088909cdb13bccbd3d9588",
+      "path": "libNOM.test/Resources/TESTSUITE_ARCHIVE_PLATFORM_STEAM.zip",
+      "member_count": 119,
+      "file_count": 110,
+      "directory_count": 9,
+      "classes": {
+        "metadata_mf_hg": 51,
+        "eligible_save_slot_hg": 46,
+        "accountdata_hg": 5,
+        "other_files": 8,
+        "json": 0
+      },
+      "file_encryption": {
+        "encrypted_flag_members": 110,
+        "zip_method_99_members": 110
+      },
+      "selection_rule": "First two eligible save-slot members by zero-based ZIP central-directory ordinal; no replacement after failure.",
+      "decoded_population": "unavailable: selected archive members are encrypted and the checked-in resource is a CI secret placeholder.",
+      "context_counts": null,
+      "discovery_type_counts": null,
+      "galaxy_counts": null,
+      "field_state_counts": {
+        "absent": null,
+        "null": null,
+        "empty": null,
+        "malformed": null,
+        "populated": null,
+        "reason": "JSON was not reached; unavailable counts are not zero."
+      },
+      "private_population": {
+        "status": "unavailable",
+        "reason": "No named private snapshot path was supplied in session evidence; broad home-directory search was outside the assignment."
+      },
+      "selected_attempts": [
+        {
+          "alias": "save-A",
+          "zero_based_zip_ordinal": 9,
+          "advertised_uncompressed_bytes": 308511,
+          "encrypted_stored_bytes": 229877,
+          "encrypted_stored_bytes_sha256": "fce94ae978e0f698309ee3ed8e05811cbec6668244c0babb0c7f62df5cf1da9c",
+          "uncompressed_payload_length": null,
+          "uncompressed_payload_sha256": null,
+          "decode_result": "failed",
+          "error": "zipfile.read raised RuntimeError because the member is encrypted and no password is available"
+        },
+        {
+          "alias": "save-B",
+          "zero_based_zip_ordinal": 10,
+          "advertised_uncompressed_bytes": 307526,
+          "encrypted_stored_bytes": 229053,
+          "encrypted_stored_bytes_sha256": "01fdf6f956a2cde624ebbbab501e6df6ad73d73455a749bd786029b5348a3373f",
+          "uncompressed_payload_length": null,
+          "uncompressed_payload_sha256": null,
+          "decode_result": "failed",
+          "error": "zipfile.read raised RuntimeError because the member is encrypted and no password is available"
+        }
+      ],
+      "deobfuscation_and_json_query": "not run: failed before payload bytes were available"
+    },
+    "source_limit": "Only the pinned Steam archive was sampled. The other platform archives and any broader public-save population are outside this bounded sample."
+  },
+  "references": {
+    "discovery_decoder": {
+      "repository": "https://github.com/Delwing/nms-companion",
+      "revision": "729c319a15f3be66d01587984ef6fff96a50401",
+      "file": "saveParser.ts",
+      "ranges": {
+        "decoder": "51-76",
+        "discovery_solar_system_caller": "335-393",
+        "discovery_planet_caller": "417-463",
+        "expanded_teleporter_caller": "290-333",
+        "base_caller": "483-562",
+        "current_location": "576-603"
+      },
+      "sha256": "0ddc5ccc82e5deaaeadcc2097b6d10ca2012fd6470723a62661b00aa1df6a92b",
+      "witness_claim": "Source comment says layout was verified by matching teleport endpoint explicit fields to discovery UAs. The claimed raw pair was not supplied or reproduced here."
+    },
+    "persistent_base_decoder": {
+      "repository": "https://github.com/Kevin0M16/NMSCoordinates",
+      "revision": "b8f765b03082cf5e130a538896db6d67481f9bae",
+      "caller_file": "Coords/Coordinates.cs",
+      "caller_range": "101-109",
+      "decoder_file": "Coords/Coordinates.cs",
+      "decoder_range": "242-343",
+      "helper_ranges": {
+        "GetGalacticCoordHex": "198-241",
+        "VoxelToHex": "CoordCalculations.cs:194-240",
+        "GalacticToPortal": "CoordCalculations.cs:241-277",
+        "PortalToHex": "CoordCalculations.cs:278-297"
+      },
+      "sha256": {
+        "Coordinates.cs": "7bb2e8a0ca407947770e01e37f306f92b4321630b1b762aa129ee5e65d48fdf3",
+        "CoordCalculations.cs": "388f61f63097247eb4ce6e803cdd413456e3e5c51558b363a420d1d627bf94b4"
+      },
+      "applicability": "PersistentPlayerBases[*].GalacticAddress only; this caller does not read discovery DD.UA."
+    },
+    "schema_only_or_negative": {
+      "MBINCompiler": {
+        "revision": "04a76be59439911fd9db1ea588e03ac604112e71",
+        "results": "Expanded GcUniverseAddressData carries separate RealityIndex and GcGalacticAddressData; GcPersistentBase declares ulong GalacticAddress. No packed discovery-UA decoder found in the bounded search."
+      },
+      "libNom.io": {
+        "revision": "652aabb0147888776a088909cdb13bccbd3d9588",
+        "results": "Expanded address JSON paths and persistent-base paths found; the inspected test reads/writes expanded JSON, not a packed scalar decoder."
+      },
+      "NMSSaveEditor": {
+        "repository": "https://github.com/goatfungus/NMSSaveEditor/tree/6047315f47321e2a8400d38bf8d904bcca88bb8d",
+        "revision": "6047315f47321e2a8400d38bf8d904bcca88bb8d",
+        "results": "Bounded 27-entry tree exposed documentation and prebuilt artifacts but no applicable source decoder; binaries were not run."
+      }
+    }
+  },
+  "witnesses": [
+    {
+      "id": "W-CHILI",
+      "kind": "game-confirmed",
+      "field_family": "discovery DD.UA",
+      "input_provenance": "User-confirmed Chili game visit, retained and independently accepted in Slice01; no new game visit is claimed.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0x212B0004B2446A"
+      },
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 299,
+        "reality_index": 0,
+        "voxel_x": 1130,
+        "voxel_y": 4,
+        "voxel_z": -1244,
+        "portal": "212B04B2446A"
+      },
+      "observed": {
+        "game_visit": "portal 212B04B2446A; Euclid; planet 2; SSI 299; X=1130; Y=4; Z=-1244",
+        "current_cli_export": "2B0004B2446A",
+        "portal_shaped_control_export": "212B04B2446A",
+        "freshness": "retained prior accepted Slice01 evidence; not freshly executed in Slice02"
+      },
+      "independent_method": "Player-confirmed in-game location from the accepted predecessor slice; source-family candidate split from NMS Companion agrees with this one value.",
+      "decoder_pin": {
+        "candidate_source": "Delwing/nms-companion saveParser.ts:51-76",
+        "revision": "729c319a15f3be66d01587984ef6fff96a50401"
+      },
+      "applicability": "One discovery-field witness in galaxy zero.",
+      "limitations": [
+        "Does not establish generalized discovery decoding.",
+        "Does not establish persistent-base layout or discovery/base equivalence.",
+        "Does not establish nonzero-galaxy sourcing.",
+        "Prior CLI output is an observed defect, not an expected-value oracle."
+      ]
+    },
+    {
+      "id": "W-G9",
+      "kind": "reference-derived-synthetic",
+      "field_family": "discovery candidate split; separate conditional persistent-base split",
+      "input_provenance": "Prompt-specified synthetic diagnostic; not a valid/live game observation.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0x212B0904B2446A"
+      },
+      "expected": {
+        "candidate_planet_index": 2,
+        "candidate_solar_system_index": 299,
+        "candidate_reality_index": 9,
+        "candidate_voxel_x": 1130,
+        "candidate_voxel_y": 4,
+        "candidate_voxel_z": -1244,
+        "candidate_portal": "212B04B2446A"
+      },
+      "observed": {
+        "NMS_Companion_transcription": "same candidate split and portal string",
+        "NMSCoordinates_base_transcription": "same candidate split; galaxy 9 returned separately; portal string 212B04B2446A"
+      },
+      "decoder_pin": {
+        "discovery_candidate": "Delwing/nms-companion saveParser.ts:51-76 at 729c319a15f3be66d01587984ef6fff96a50401",
+        "base_candidate": "NMSCoordinates Coordinates.cs:242-343 at b8f765b03082cf5e130a538896db6d67481f9bae"
+      },
+      "derivation": "Transcribed field slicing from the complete pinned methods; signed 12-bit Z conversion gives 0xB24=-1244. Portal fields are formatted in P-SSS-YY-ZZZ-XXX order.",
+      "applicability": "Conditional candidate bit layout only.",
+      "limitations": [
+        "Galaxy 9 is synthetic and does not close a nonzero-galaxy source gate.",
+        "Numeric width does not establish this field family or bit layout.",
+        "The base reference is not authority for discovery semantics."
+      ]
+    },
+    {
+      "id": "W-P0-WIDTH",
+      "kind": "reference-derived-synthetic",
+      "field_family": "discovery candidate split",
+      "input_provenance": "Prompt-specified synthetic diagnostic; numeric scalar is less than 2^48 because its first hex nibble is zero.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0x012B0004B2446A"
+      },
+      "expected": {
+        "candidate_planet_index": 0,
+        "candidate_solar_system_index": 299,
+        "candidate_reality_index": 0,
+        "candidate_voxel_x": 1130,
+        "candidate_voxel_y": 4,
+        "candidate_voxel_z": -1244,
+        "candidate_portal": "012B04B2446A"
+      },
+      "observed": {
+        "NMS_Companion_transcription": "same candidate split",
+        "NMSCoordinates_base_transcription": "same field split and portal output"
+      },
+      "decoder_pin": "NMS Companion discovery decoder and NMSCoordinates base decoder as separately scoped in references",
+      "derivation": "Field split preserves all 14 hex digits, including the leading zero.",
+      "applicability": "Representation diagnostic only; not a valid/live game observation.",
+      "limitations": [
+        "This 14-digit candidate fits numerically below 2^48, rejecting a numeric-width-only classifier.",
+        "Agreement between source transcriptions does not establish shared field-family semantics."
+      ]
+    },
+    {
+      "id": "W-ZERO",
+      "kind": "diagnostic",
+      "field_family": "discovery candidate string behavior; base-reference literal behavior separately",
+      "input_provenance": "Prompt-specified representational diagnostic, not an assertion that zero is a valid location.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0x00000000000000"
+      },
+      "expected": {
+        "candidate_components": {
+          "planet_index": 0,
+          "solar_system_index": 0,
+          "reality_index": 0,
+          "voxel_x": 0,
+          "voxel_y": 0,
+          "voxel_z": 0
+        },
+        "candidate_portal": "000000000000"
+      },
+      "observed": {
+        "NMS_Companion_transcription": "zero components and 000000000000 candidate portal",
+        "NMSCoordinates_hex_transcription": "zero components and 000000000000 portal"
+      },
+      "decoder_pin": "NMS Companion decodeHexAddress and NMSCoordinates HexToAll/GalacticToPortal, pinned above",
+      "derivation": "Full 14-hex-digit zero string; fixed field widths are present.",
+      "applicability": "Representation probe only.",
+      "limitations": [
+        "Valid coordinate, sentinel, missing, or absence meaning remains unresolved.",
+        "No public save JSON was decoded."
+      ]
+    },
+    {
+      "id": "W-SHORT-HEX",
+      "kind": "diagnostic",
+      "field_family": "discovery candidate string behavior; base-reference literal behavior separately",
+      "input_provenance": "Prompt-specified short hexadecimal string; diagnostic only.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0x123"
+      },
+      "expected": {
+        "candidate_components": {
+          "planet_index": 0,
+          "solar_system_index": 0,
+          "reality_index": 0,
+          "voxel_x": 291,
+          "voxel_y": 0,
+          "voxel_z": 0
+        },
+        "candidate_portal": "000000000123"
+      },
+      "observed": {
+        "NMS_Companion_transcription": "left-pads to 00000000000123 and splits to candidate X=291",
+        "NMSCoordinates_hex_transcription": "failure at fixed substring extraction; input is shorter than 16 characters including prefix"
+      },
+      "decoder_pin": "NMS Companion decodeHexAddress and NMSCoordinates HexToAll, pinned above",
+      "derivation": "Transcribed each source's literal string handling; source behaviors intentionally differ.",
+      "applicability": "Malformed-width diagnostic only.",
+      "limitations": [
+        "Neither behavior is selected as product policy.",
+        "No game validity is implied."
+      ]
+    },
+    {
+      "id": "W-LEADING-ZERO",
+      "kind": "diagnostic",
+      "field_family": "discovery candidate string behavior; base-reference literal behavior separately",
+      "input_provenance": "Prompt-specified unprefixed leading-zero string; diagnostic only.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "00000000000000"
+      },
+      "expected": {
+        "candidate_components": {
+          "planet_index": 0,
+          "solar_system_index": 0,
+          "reality_index": 0,
+          "voxel_x": 0,
+          "voxel_y": 0,
+          "voxel_z": 0
+        }
+      },
+      "observed": {
+        "NMS_Companion_transcription": "treats string as hex, zero-pads to 14 digits, returns zero components",
+        "NMSCoordinates_base_transcription": "treats no-prefix value as decimal zero, rewrites as 0x0, then fails fixed substring extraction"
+      },
+      "decoder_pin": "NMS Companion decodeHexAddress and NMSCoordinates HexToAll, pinned above",
+      "derivation": "Source-literal branch behavior transcribed separately.",
+      "applicability": "Diagnostic only.",
+      "limitations": [
+        "A leading-zero scalar can be changed by representation-specific parsing.",
+        "Product acceptance/rejection semantics remain unresolved."
+      ]
+    },
+    {
+      "id": "W-MALFORMED",
+      "kind": "diagnostic",
+      "field_family": "discovery candidate string behavior; base-reference literal behavior separately",
+      "input_provenance": "Prompt-specified malformed hexadecimal string; diagnostic only.",
+      "raw_scalar": {
+        "json_kind": "string",
+        "value": "0xGG000000000000"
+      },
+      "expected": null,
+      "observed": {
+        "NMS_Companion_transcription": "returns null after hexadecimal character validation",
+        "NMSCoordinates_hex_transcription": "conversion failure before field slicing"
+      },
+      "decoder_pin": "NMS Companion decodeHexAddress and NMSCoordinates HexToAll, pinned above",
+      "derivation": "Failure point follows complete source body.",
+      "applicability": "Malformed diagnostic only.",
+      "limitations": [
+        "A failure must remain an error; no successful zero value is inferred."
+      ]
+    },
+    {
+      "id": "W-NEGATIVE",
+      "kind": "diagnostic",
+      "field_family": "JSON integer representation and source string behavior",
+      "input_provenance": "Prompt-specified signed integer -1; not a game-value assertion.",
+      "raw_scalar": {
+        "json_kind": "integer",
+        "value": -1
+      },
+      "expected": null,
+      "observed": {
+        "nms-save serde wrapper": "visit_i64 casts -1 to u64::MAX",
+        "nms-core from_packed": "keeps the low 48 bits and uses caller-supplied galaxy",
+        "NMS_Companion_string_decoder": "string -1 fails hexadecimal character validation; numeric caller coercion is a separate JavaScript Number path",
+        "NMSCoordinates_bare_decimal_transcription": "decimal -1 becomes 0xFFFFFFFFFFFFFFFF; field slices yield P=0xFFF, SSI=0xFFF, galaxy=0xFF, Y/Z/X=all ones; malformed portal prefix is 4095"
+      },
+      "decoder_pin": "nms-save/src/model.rs:128-156; nms-core/src/address.rs:106-111; NMS Companion saveParser.ts:57-76; NMSCoordinates Coordinates.cs:242-343",
+      "derivation": "Source code inspection plus signed two's-complement/string path transcription; original C# not executed.",
+      "applicability": "Representation diagnostic only.",
+      "limitations": [
+        "Negative integer acceptance or rejection is unresolved product policy.",
+        "No expected game address is available."
+      ]
+    },
+    {
+      "id": "W-U64-MAX",
+      "kind": "diagnostic",
+      "field_family": "JSON integer width and packed candidate string behavior",
+      "input_provenance": "Prompt-specified u64 maximum; not a game-value assertion.",
+      "raw_scalar": {
+        "json_kind": "integer",
+        "value": "18446744073709551615"
+      },
+      "expected": {
+        "conditional_14_digit_candidate_components": {
+          "planet_index": 15,
+          "solar_system_index": 4095,
+          "reality_index": 255,
+          "voxel_x": -1,
+          "voxel_y": -1,
+          "voxel_z": -1
+        },
+        "conditional_candidate_portal": "FFFFFFFFFFFF"
+      },
+      "observed": {
+        "nms-save serde wrapper": "u64 integer is representable as u64",
+        "nms-core from_packed": "truncates to low 48 bits FFFFFFFFFFFF; galaxy supplied separately",
+        "NMS_Companion_14_digit_string_transcription": "truncates high two hex digits; all candidate fields are F",
+        "NMS_Companion_numeric_JSON_path": "converts through JavaScript Number before hex string; values above 2^53 may lose integer precision",
+        "NMSCoordinates_prefixed_hex_transcription": "Convert.ToInt64 from base 16 is a signed Int64 path; the retained 16-digit FF string produces P=FFF and malformed decimal planet portal prefix 4095",
+        "NMSCoordinates_bare_decimal_transcription": "decimal value exceeds Int64 and fails conversion"
+      },
+      "decoder_pin": "nms-save/src/model.rs:128-156; nms-core/src/address.rs:106-111; NMS Companion saveParser.ts:51-76,349-354; NMSCoordinates Coordinates.cs:242-343",
+      "derivation": "The integer's 16 hex F digits were separately passed through the candidate 14-digit truncation and the reference's complete literal input paths.",
+      "applicability": "Representational diagnostic only.",
+      "limitations": [
+        "This is a conditional bit split only; the high two source hex digits are dropped by the 14-digit candidate string decoder.",
+        "No valid-game or save-field semantics are inferred.",
+        "Negative, signed, over-width, and u64 policy remain unresolved."
+      ]
+    },
+    {
+      "id": "W-PLANET-A",
+      "kind": "reference-derived-synthetic",
+      "field_family": "persistent-base reference portal formatting",
+      "input_provenance": "Prompt-requested direct diagnostic of GalacticToPortal with Planet=10; not asserted as a valid saved planet.",
+      "raw_scalar": {
+        "kind": "method_arguments",
+        "planet": 10,
+        "x": "7FF",
+        "y": "7F",
+        "z": "7FF",
+        "ssi": "000"
+      },
+      "expected": {
+        "source_literal_portal": "1000000000000",
+        "source_literal_length": 13
+      },
+      "observed": {
+        "NMSCoordinates_transcription": "decimal concatenation yields prefix 10 and a 13-character result"
+      },
+      "decoder_pin": "NMSCoordinates CoordCalculations.cs:241-277",
+      "derivation": "Complete function formats Planet by string concatenation; the coordinate inputs produce zero portal fields.",
+      "applicability": "Formatting defect diagnostic only.",
+      "limitations": [
+        "Not a live game value.",
+        "Does not define intended handling of planet 10."
+      ]
+    },
+    {
+      "id": "W-PLANET-F",
+      "kind": "reference-derived-synthetic",
+      "field_family": "persistent-base reference portal formatting",
+      "input_provenance": "Prompt-requested direct diagnostic of GalacticToPortal with Planet=15; not asserted as a valid saved planet.",
+      "raw_scalar": {
+        "kind": "method_arguments",
+        "planet": 15,
+        "x": "7FF",
+        "y": "7F",
+        "z": "7FF",
+        "ssi": "000"
+      },
+      "expected": {
+        "source_literal_portal": "1500000000000",
+        "source_literal_length": 13
+      },
+      "observed": {
+        "NMSCoordinates_transcription": "decimal concatenation yields prefix 15 and a 13-character result"
+      },
+      "decoder_pin": "NMSCoordinates CoordCalculations.cs:241-277",
+      "derivation": "Complete function formats Planet by string concatenation; the coordinate inputs produce zero portal fields.",
+      "applicability": "Formatting defect diagnostic only.",
+      "limitations": [
+        "Not a live game value.",
+        "Does not define intended handling of planet 15."
+      ]
+    }
+  ],
+  "pairing": {
+    "pairing_rule": "A scalar/expanded pair is retained only when a raw save relation or independent game observation makes the link meaningful; equal candidate-decoded values alone do not count.",
+    "matched_pairs": 0,
+    "unmatched_scalar_or_expanded_locations": null,
+    "retained_pairs": [],
+    "status": "unavailable: both selected public payloads failed encrypted archive reads before JSON projection; no supplied private save pair is available.",
+    "remaining_gate": "Re-enter with a decryptable, sanitized save or independent game observation that includes an explicit location relation; seek a nonzero-galaxy pair if available."
+  }
+}
