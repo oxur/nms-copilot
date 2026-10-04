@@ -63,3 +63,5 @@ The concrete re-entry condition is a CDC-authorized bounded assignment with decr
 Before commit, planning diff contained only the five exact allowed paths; git diff --check passed. The source checkout remained clean at the pinned revision, and the planning branch was clean apart from those five assignment changes. No main-source mutation occurred. Both required co-author trailers are included exactly once in the assignment commit; the final commit identifier and post-commit planning HEAD are supplied with this report to the Operator for independent CDC review.
 
 The first git commit --only command was attempted before the four new artifacts were staged and failed because Git did not recognize those untracked pathspecs. No commit was made by that attempt. The exact five allowed paths were then staged and the scope rechecked before retrying the required named-path commit.
+
+The first exact-path git add was separately blocked from creating the shared planning worktree index lock by sandbox permissions. The same five-path staging and scope check then succeeded under elevated execution; no additional path was staged.
