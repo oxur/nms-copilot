@@ -58,7 +58,7 @@
           "zero_based_zip_ordinal": 10,
           "advertised_uncompressed_bytes": 307526,
           "encrypted_stored_bytes": 229053,
-          "encrypted_stored_bytes_sha256": "01fdf6f956a2cde624ebbbab501e6df6ad73d73455a749bd786029b5348a3373f",
+          "encrypted_stored_bytes_sha256": "01fdfb956a2cde624ebbbab501e6df6ad73d73455a749bd786029b5348a3373f",
           "uncompressed_payload_length": null,
           "uncompressed_payload_sha256": null,
           "decode_result": "failed",
@@ -72,7 +72,7 @@
   "references": {
     "discovery_decoder": {
       "repository": "https://github.com/Delwing/nms-companion",
-      "revision": "729c319a15f3be66d01587984ef6fff96a50401",
+      "revision": "729c319a15f3be66d01587984ef6fff96a50401d",
       "file": "saveParser.ts",
       "ranges": {
         "decoder": "51-76",
@@ -148,7 +148,7 @@
       "independent_method": "Player-confirmed in-game location from the accepted predecessor slice; source-family candidate split from NMS Companion agrees with this one value.",
       "decoder_pin": {
         "candidate_source": "Delwing/nms-companion saveParser.ts:51-76",
-        "revision": "729c319a15f3be66d01587984ef6fff96a50401"
+        "revision": "729c319a15f3be66d01587984ef6fff96a50401d"
       },
       "applicability": "One discovery-field witness in galaxy zero.",
       "limitations": [
@@ -181,7 +181,7 @@
         "NMSCoordinates_base_transcription": "same candidate split; galaxy 9 returned separately; portal string 212B04B2446A"
       },
       "decoder_pin": {
-        "discovery_candidate": "Delwing/nms-companion saveParser.ts:51-76 at 729c319a15f3be66d01587984ef6fff96a50401",
+        "discovery_candidate": "Delwing/nms-companion saveParser.ts:51-76 at 729c319a15f3be66d01587984ef6fff96a50401d",
         "base_candidate": "NMSCoordinates Coordinates.cs:242-343 at b8f765b03082cf5e130a538896db6d67481f9bae"
       },
       "derivation": "Transcribed field slicing from the complete pinned methods; signed 12-bit Z conversion gives 0xB24=-1244. Portal fields are formatted in P-SSS-YY-ZZZ-XXX order.",
