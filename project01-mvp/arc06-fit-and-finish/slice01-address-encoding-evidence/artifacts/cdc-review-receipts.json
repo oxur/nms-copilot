@@ -1,0 +1,330 @@
+{
+  "reviewed_utc": "2026-10-04T01:31:13.162514+00:00",
+  "reviewer": "CDC / Sofie, separate from CC author",
+  "CC_commit": "8a5352bc5a9da3b15a51835879b9742c7d4f96f9",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "build": {
+    "command": [
+      "cargo",
+      "build",
+      "--workspace",
+      "--all-features",
+      "--locked"
+    ],
+    "env": {
+      "CARGO_NET_OFFLINE": "true"
+    },
+    "exit": 0,
+    "evidence": "Fresh tool execution in this CDC review; 0.65 seconds; proc-macro-error2 future incompatibility warning, not a test run."
+  },
+  "CC_paths": [
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/address-export.stderr.log",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/address-export.stdout.json",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/caller-map.csv",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/execution.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/format-contract.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/portal-control-export.stderr.log",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/artifacts/portal-control-export.stdout.json",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/closing-report.md",
+    "project01-mvp/arc06-fit-and-finish/slice01-address-encoding-evidence/ledger.md"
+  ],
+  "caller_map_rows": 18,
+  "reconciled_source_hits_before_in_file_tests": {
+    "from_packed": [
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 48,
+        "text": "Ok(GalacticAddress::from_packed(ga.packed(), reality_index))"
+      },
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 73,
+        "text": "Ok(GalacticAddress::from_packed("
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 493,
+        "text": "Ok(GalacticAddress::from_packed(ga.packed(), reality_index))"
+      },
+      {
+        "path": "crates/nms-copilot/src/mcp/tools.rs",
+        "line": 663,
+        "text": "GalacticAddress::from_packed(packed, 0)"
+      },
+      {
+        "path": "crates/nms-copilot/src/mcp/tools.rs",
+        "line": 674,
+        "text": "GalacticAddress::from_packed(packed, 0)"
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 107,
+        "text": "pub fn from_packed(packed: u64, reality_index: u8) -> Self {"
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 512,
+        "text": "GalacticAddress::from_packed(packed, 0)"
+      },
+      {
+        "path": "crates/nms-graph/src/extract.rs",
+        "line": 113,
+        "text": "let addr = GalacticAddress::from_packed(rec.dd.ua.0, 0);"
+      },
+      {
+        "path": "crates/nms-graph/src/extract.rs",
+        "line": 142,
+        "text": "let addr = GalacticAddress::from_packed(rec.dd.ua.0, 0);"
+      },
+      {
+        "path": "crates/nms-graph/src/import.rs",
+        "line": 151,
+        "text": "let addr = GalacticAddress::from_packed(packed, galaxy_index);"
+      },
+      {
+        "path": "crates/nms-save/src/model.rs",
+        "line": 163,
+        "text": "nms_core::GalacticAddress::from_packed(self.0, reality_index)"
+      }
+    ],
+    "to_galactic_address": [
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 47,
+        "text": "let ga = portal.to_galactic_address();"
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 492,
+        "text": "let ga = portal.to_galactic_address();"
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 455,
+        "text": "pub fn to_galactic_address(&self) -> GalacticAddress {"
+      },
+      {
+        "path": "crates/nms-save/src/convert.rs",
+        "line": 37,
+        "text": "self.dd.ua.to_galactic_address(0),"
+      },
+      {
+        "path": "crates/nms-save/src/convert.rs",
+        "line": 58,
+        "text": "self.galactic_address.to_galactic_address(0),"
+      },
+      {
+        "path": "crates/nms-save/src/convert.rs",
+        "line": 82,
+        "text": "let current_address = ua.galactic_address.to_galactic_address(ua.reality_index);"
+      },
+      {
+        "path": "crates/nms-save/src/convert.rs",
+        "line": 95,
+        "text": ".to_galactic_address(prev_ua.reality_index),"
+      },
+      {
+        "path": "crates/nms-save/src/model.rs",
+        "line": 110,
+        "text": "pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {"
+      },
+      {
+        "path": "crates/nms-save/src/model.rs",
+        "line": 162,
+        "text": "pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {"
+      }
+    ],
+    "GalacticAddress::new": [
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 120,
+        "text": "Ok(GalacticAddress::new("
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 522,
+        "text": "Ok(GalacticAddress::new("
+      },
+      {
+        "path": "crates/nms-save/src/model.rs",
+        "line": 111,
+        "text": "nms_core::GalacticAddress::new("
+      }
+    ],
+    "parse_voxel": [
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 25,
+        "text": "parse_voxel(&v, solar_system_index, planet, reality_index)?"
+      },
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 79,
+        "text": "fn parse_voxel("
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 474,
+        "text": "parse_voxel(v, solar_system_index, planet, reality_index)?"
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 496,
+        "text": "fn parse_voxel("
+      }
+    ],
+    "from_signal_booster": [
+      {
+        "path": "crates/nms-cli/src/convert.rs",
+        "line": 56,
+        "text": "GalacticAddress::from_signal_booster(input.trim(), planet, reality_index)"
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "line": 468,
+        "text": "GalacticAddress::from_signal_booster(c.trim(), planet, reality_index)"
+      },
+      {
+        "path": "crates/nms-copilot/src/mcp/tools.rs",
+        "line": 665,
+        "text": "GalacticAddress::from_signal_booster(coords, 0, 0)"
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 164,
+        "text": "pub fn from_signal_booster("
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 465,
+        "text": "pub fn from_signal_booster("
+      },
+      {
+        "path": "crates/nms-core/src/address.rs",
+        "line": 470,
+        "text": "let addr = GalacticAddress::from_signal_booster(s, planet_index, reality_index)?;"
+      }
+    ]
+  },
+  "references": {
+    "MBINCompiler": "04a76be59439911fd9db1ea588e03ac604112e71",
+    "libNom.io": "652aabb0147888776a088909cdb13bccbd3d9588"
+  },
+  "probes": [
+    {
+      "case": "discovery",
+      "command": [
+        "./target/debug/nms",
+        "export",
+        "--save",
+        ".worktrees/planning/project01-mvp/artifacts/closeout-2026-10-03/synthetic-address-save.json",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout": [
+        {
+          "planet_name": "",
+          "biome": "Lush",
+          "system_name": "",
+          "distance_ly": 264.6828728,
+          "portal_glyphs": "2B0004B2446A",
+          "portal_emoji": "\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b",
+          "coords_x": 1130,
+          "coords_y": 4,
+          "coords_z": -1244,
+          "galaxy": "Euclid",
+          "discoverer": "Synthetic Explorer",
+          "infested": false
+        }
+      ],
+      "stderr": "",
+      "input_sha256": "6e9e69699bc8372961e8c0f2dca7613bfc950263aef760b43586c553d50fe089",
+      "matches_CC_output": true
+    },
+    {
+      "case": "control",
+      "command": [
+        "./target/debug/nms",
+        "export",
+        "--save",
+        ".worktrees/planning/project01-mvp/artifacts/closeout-2026-10-03/synthetic-portal-control-save.json",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout": [
+        {
+          "planet_name": "",
+          "biome": "Lush",
+          "system_name": "",
+          "distance_ly": 0.0,
+          "portal_glyphs": "212B04B2446A",
+          "portal_emoji": "\ud83d\ude11\ud83d\udd4a\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b",
+          "coords_x": 1130,
+          "coords_y": 4,
+          "coords_z": -1244,
+          "galaxy": "Euclid",
+          "discoverer": "Synthetic Explorer",
+          "infested": false
+        }
+      ],
+      "stderr": "",
+      "input_sha256": "c8f78e2980e19f44df9c6ea7cb2b803f6ace77955106a012330187a414aff381",
+      "matches_CC_output": true
+    },
+    {
+      "case": "valid-voxel",
+      "command": [
+        "./target/debug/nms",
+        "convert",
+        "--voxel",
+        "1130,4,-1244",
+        "--ssi",
+        "299",
+        "--planet",
+        "2"
+      ],
+      "exit": 0,
+      "stdout": "\n\u001b[48;2;30;58;95m\u001b[38;2;224;240;255m COORDINATE \u001b[49m\u001b[39m\u001b[48;2;30;58;95m      \u001b[49m\u001b[48;2;30;58;95m\u001b[38;2;30;58;95m\u2502\u001b[49m\u001b[39m\u001b[48;2;30;58;95m\u001b[38;2;224;240;255m CONVERSIONS \u001b[49m\u001b[39m\u001b[48;2;30;58;95m                                                \u001b[49m\n\u001b[48;2;44;95;138m\u001b[38;2;160;200;224m Format \u001b[49m\u001b[39m\u001b[48;2;44;95;138m          \u001b[49m\u001b[48;2;44;95;138m\u001b[38;2;44;95;138m\u2502\u001b[49m\u001b[39m\u001b[48;2;44;95;138m\u001b[38;2;160;200;224m Value \u001b[49m\u001b[39m\u001b[48;2;44;95;138m                                                      \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Portal Glyphs \u001b[49m\u001b[39m\u001b[48;2;10;25;41m   \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m \ud83d\ude11\ud83d\udd4a\ud83d\ude11\ud83d\udc0b\ud83c\udf05\ud83c\udf1c\ud83d\udc0b\ud83d\ude11\ud83c\udf1c\ud83c\udf1c\u26f5\ud83d\udd4b \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                    \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Hex Glyphs \u001b[49m\u001b[39m\u001b[48;2;10;25;41m      \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 212B04B2446A \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                               \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Abbreviated \u001b[49m\u001b[39m\u001b[48;2;10;25;41m     \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m face:bird:face:whle:sset:eclp:whle:face:eclp:eclp:boat:voxl \u001b[49m\u001b[39m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Signal Booster \u001b[49m\u001b[39m\u001b[48;2;10;25;41m  \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 0C69:0083:0323:012B \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                        \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Galactic Address \u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m 0x212B04B2446A \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                             \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Voxel Position \u001b[49m\u001b[39m\u001b[48;2;10;25;41m  \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m X=1130, Y=4, Z=-1244 \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                       \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m System Index \u001b[49m\u001b[39m\u001b[48;2;10;25;41m    \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m 299 (0x12B) \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m Planet Index \u001b[49m\u001b[39m\u001b[48;2;10;25;41m    \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;139;187;208m 2 \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                          \u001b[49m\n\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Galaxy \u001b[49m\u001b[39m\u001b[48;2;10;25;41m          \u001b[49m\u001b[48;2;10;25;41m\u001b[38;2;22;45;69m\u2502\u001b[49m\u001b[39m\u001b[48;2;10;25;41m\u001b[38;2;176;208;232m Euclid (0) \u001b[49m\u001b[39m\u001b[48;2;10;25;41m                                                 \u001b[49m\n\u001b[48;2;30;58;95m\u001b[38;2;74;155;199m Total: \u001b[49m\u001b[39m\u001b[48;2;30;58;95m          \u001b[49m\u001b[48;2;30;58;95m\u001b[38;2;30;58;95m\u2502\u001b[49m\u001b[39m\u001b[48;2;30;58;95m\u001b[38;2;74;155;199m 9 Conversions \u001b[49m\u001b[39m\u001b[48;2;30;58;95m                                              \u001b[49m\n\n",
+      "stderr": ""
+    },
+    {
+      "case": "invalid-X",
+      "command": [
+        "./target/debug/nms",
+        "convert",
+        "--voxel",
+        "3000,0,0",
+        "--ssi",
+        "0",
+        "--planet",
+        "2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Error: Voxel X out of range: 3000 (must be -2048..2047)\n"
+    },
+    {
+      "case": "invalid-SSI",
+      "command": [
+        "./target/debug/nms",
+        "convert",
+        "--voxel",
+        "0,0,0",
+        "--ssi",
+        "4095",
+        "--planet",
+        "2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Error: System index out of range: 4095 (must be 0..4094)\n"
+    }
+  ],
+  "main_status_after": "",
+  "planning_validation": {
+    "initial": "New-file whitespace check found one trailing blank line in arc-plan.md; corrected before commit.",
+    "final": "Links, fences, JSON, exact seven-file scope, eight ledger rows (four done/four open), original prompt/report preservation, and whitespace checks passed."
+  }
+}

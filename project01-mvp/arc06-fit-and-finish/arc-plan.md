@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.0, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.1, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -36,6 +36,12 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 - 1.0 (2026-10-03): reconstructed review units and open acceptance ledger from the preserved project01 documents during project-level closeout preparation; no historical acceptance asserted.
 
+- 1.1 (2026-10-03): slice01 initial review and bounded correction recorded; the review surfaced incomplete public-input coverage. Routine progress update only; original review units, sequencing, scope, and acceptance remain unchanged.
+
 ## Current corrective preparation
 
 First bounded assignment: [slice01-address-encoding-evidence](slice01-address-encoding-evidence/slice-plan.md), evidence only. Its accepted format-contract findings will ground a later address repair assignment. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
+
+## Initial slice01 review progress
+
+CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-encoding-evidence/cdc-verification.md) accepts four investigation rows and returns four for omitted voxel input/caller evidence. [Iteration01](slice01-address-encoding-evidence/cc-prompt-iteration01.md) is the active correction inside the same slice. No structural arc change: preserve the original evidence-before-repair sequence. General discovery/base encoding and galaxy source remain unresolved, and no dependent production repair is authorized.
