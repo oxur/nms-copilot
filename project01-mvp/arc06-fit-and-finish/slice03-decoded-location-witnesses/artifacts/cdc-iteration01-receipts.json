@@ -1,0 +1,1626 @@
+{
+  "CC_commit": "13409d1e32a86f0d16cae8163c696f1e37693c5c",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "save_sha256": "ee786384b19ae3a7974cb3130cf16b8823f3dc2a930bd55cfa092015a244c89e",
+  "fresh_decode": {
+    "blocks": 20,
+    "bytes": 10278541,
+    "trim": 1,
+    "invalid_utf8_sequences": 137,
+    "duplicate_key_objects": 0,
+    "mapped_collisions": 0
+  },
+  "header_sha256": "26b82efc53d1570f3b54eef02e9c4764c1ad374ff03cac04e2ced5ea4d4c552f",
+  "library_sha256": "3ce8bec34557e6a5c76129cef6588dc59959caa51e1e54321f45ea7c6e528e07",
+  "checks": [
+    {
+      "check": "input stability",
+      "pass": true
+    },
+    {
+      "check": "save bytes",
+      "pass": true
+    },
+    {
+      "check": "save digest",
+      "pass": true
+    },
+    {
+      "check": "native library digest",
+      "pass": true
+    },
+    {
+      "check": "blocks",
+      "pass": true
+    },
+    {
+      "check": "compressed_bytes_consumed",
+      "pass": true
+    },
+    {
+      "check": "decompressed_bytes",
+      "pass": true
+    },
+    {
+      "check": "trailing_nul_bytes_trimmed",
+      "pass": true
+    },
+    {
+      "check": "invalid_utf8_sequences_replaced",
+      "pass": true
+    },
+    {
+      "check": "JSON duplicate objects",
+      "pass": true
+    },
+    {
+      "check": "JSON duplicate occurrences",
+      "pass": true
+    },
+    {
+      "check": "mapping provenance",
+      "pass": true
+    },
+    {
+      "check": "map count",
+      "pass": true
+    },
+    {
+      "check": "mapped collision objects",
+      "pass": true
+    },
+    {
+      "check": "mapped collision occurrences",
+      "pass": true
+    },
+    {
+      "check": "records",
+      "pass": true
+    },
+    {
+      "check": "discovery DT counts",
+      "pass": true
+    },
+    {
+      "check": "eligible bases",
+      "pass": true
+    },
+    {
+      "check": "eligible endpoints",
+      "pass": true
+    },
+    {
+      "check": "raw edge count",
+      "pass": true
+    },
+    {
+      "check": "accepted pairs",
+      "pass": true
+    },
+    {
+      "check": "all paired ordinals",
+      "pass": true
+    },
+    {
+      "check": "unmatched bases",
+      "pass": true
+    },
+    {
+      "check": "unmatched endpoints",
+      "pass": true
+    },
+    {
+      "check": "incompatible bases",
+      "pass": true
+    },
+    {
+      "check": "incompatible endpoints",
+      "pass": true
+    },
+    {
+      "check": "unique witness IDs",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-000-039 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-001-142 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-003-047 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-004-050 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-005-004 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-007-055 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-008-057 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-009-056 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-010-059 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-011-066 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-012-017 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-014-070 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-015-162 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-016-165 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-017-034 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-018-073 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-019-072 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-021-092 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-022-090 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-023-091 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-024-089 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-025-088 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-026-087 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-027-084 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-028-037 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-029-036 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-030-086 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-031-083 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-033-167 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-034-197 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-035-160 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-036-184 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-037-189 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-038-199 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-039-187 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-040-175 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-041-201 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-042-198 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-046-185 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-047-200 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-048-190 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-050-202 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-052-203 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 expanded oracle",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 literal",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 companion",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 normalized scalar",
+      "pass": true
+    },
+    {
+      "check": "W-BASE-053-206 scalar kind",
+      "pass": true
+    },
+    {
+      "check": "SYN-DUPLICATE-ENDPOINT",
+      "pass": true
+    },
+    {
+      "check": "SYN-CHANGED-POSITION",
+      "pass": true
+    },
+    {
+      "check": "SYN-CHANGED-NAME",
+      "pass": true
+    },
+    {
+      "check": "nonzero endpoint oracle",
+      "pass": true
+    },
+    {
+      "check": "nonzero endpoint explicit reality",
+      "pass": true
+    },
+    {
+      "check": "VP shapes",
+      "pass": true
+    },
+    {
+      "check": "candidate discovery reality",
+      "pass": true
+    },
+    {
+      "check": "all scalar correlations",
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "comparisons": [
+    {
+      "base_ordinal": 0,
+      "endpoint_ordinal": 39,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 1,
+      "endpoint_ordinal": 142,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 3,
+      "endpoint_ordinal": 47,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 4,
+      "endpoint_ordinal": 50,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 5,
+      "endpoint_ordinal": 4,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 7,
+      "endpoint_ordinal": 55,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 8,
+      "endpoint_ordinal": 57,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 9,
+      "endpoint_ordinal": 56,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 10,
+      "endpoint_ordinal": 59,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 11,
+      "endpoint_ordinal": 66,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 12,
+      "endpoint_ordinal": 17,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 14,
+      "endpoint_ordinal": 70,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 15,
+      "endpoint_ordinal": 162,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 16,
+      "endpoint_ordinal": 165,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 17,
+      "endpoint_ordinal": 34,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 18,
+      "endpoint_ordinal": 73,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 19,
+      "endpoint_ordinal": 72,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 21,
+      "endpoint_ordinal": 92,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 22,
+      "endpoint_ordinal": 90,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 23,
+      "endpoint_ordinal": 91,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 24,
+      "endpoint_ordinal": 89,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 25,
+      "endpoint_ordinal": 88,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 26,
+      "endpoint_ordinal": 87,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 27,
+      "endpoint_ordinal": 84,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 28,
+      "endpoint_ordinal": 37,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 29,
+      "endpoint_ordinal": 36,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 30,
+      "endpoint_ordinal": 86,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 31,
+      "endpoint_ordinal": 83,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 33,
+      "endpoint_ordinal": 167,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 34,
+      "endpoint_ordinal": 197,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 35,
+      "endpoint_ordinal": 160,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 36,
+      "endpoint_ordinal": 184,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 37,
+      "endpoint_ordinal": 189,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 38,
+      "endpoint_ordinal": 199,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 39,
+      "endpoint_ordinal": 187,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 40,
+      "endpoint_ordinal": 175,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 41,
+      "endpoint_ordinal": 201,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 42,
+      "endpoint_ordinal": 198,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 46,
+      "endpoint_ordinal": 185,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 47,
+      "endpoint_ordinal": 200,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 48,
+      "endpoint_ordinal": 190,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 50,
+      "endpoint_ordinal": 202,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 52,
+      "endpoint_ordinal": 203,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    },
+    {
+      "base_ordinal": 53,
+      "endpoint_ordinal": 206,
+      "companion_agrees": true,
+      "literal_portal_agrees": true
+    }
+  ],
+  "limits": [
+    "One pinned save; raw-corroborated associations are not shared-ID or game-confirmed pairs.",
+    "Source transcriptions, not original external runtime execution.",
+    "No production or generalized field/galaxy policy."
+  ],
+  "review_failures": [
+    "Oversized combined text output truncated; recovered added sections and field-assessment in bounded reads.",
+    "No build/test/lint/coverage or original external runtime execution; metadata/text correction scope only."
+  ],
+  "negative_control": [
+    {
+      "id": "W-BASE-000-039",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-001-142",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-003-047",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-004-050",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-005-004",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-007-055",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-008-057",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-009-056",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-010-059",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-011-066",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-012-017",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-014-070",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-015-162",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-016-165",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-017-034",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-018-073",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-019-072",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-021-092",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-022-090",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-023-091",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-024-089",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-025-088",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-026-087",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-027-084",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-028-037",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-029-036",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-030-086",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-031-083",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-033-167",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-034-197",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-035-160",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-036-184",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-037-189",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-038-199",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-039-187",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-040-175",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-041-201",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-042-198",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-046-185",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-047-200",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-048-190",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-050-202",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-052-203",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    },
+    {
+      "id": "W-BASE-053-206",
+      "components_match": false,
+      "portal_match": false,
+      "reproduces_initial_bad_transcription": true
+    }
+  ],
+  "spelling_checks": {
+    "BaseContext": {
+      "UniverseAddress": "object",
+      "PreviousUniverseAddress": "object",
+      "UniversalAddress": "absent",
+      "PreviousUniversalAddress": "absent",
+      "endpoint_count": 207,
+      "endpoint_native_objects": 207,
+      "endpoint_alternate_absent": 207
+    },
+    "ExpeditionContext": {
+      "UniverseAddress": "object",
+      "PreviousUniverseAddress": "object",
+      "UniversalAddress": "absent",
+      "PreviousUniversalAddress": "absent",
+      "endpoint_count": 17,
+      "endpoint_native_objects": 17,
+      "endpoint_alternate_absent": 17
+    }
+  },
+  "provenance_hashes": {
+    "header": "26b82efc53d1570f3b54eef02e9c4764c1ad374ff03cac04e2ced5ea4d4c552f",
+    "library": "3ce8bec34557e6a5c76129cef6588dc59959caa51e1e54321f45ea7c6e528e07"
+  },
+  "structural": {
+    "exact_five_paths": true,
+    "only_authorized_JSON_changes": true,
+    "population_bytes_unchanged": true,
+    "initial_execution_report_prefixes_preserved": true,
+    "accepted_rows_and_criteria_unchanged": true,
+    "intake_source_planning_references_clean": true,
+    "trailers_once": true
+  },
+  "receipt_direction": {
+    "faithful_actual_matches": 44,
+    "initial_bad_expected_matches": 0,
+    "affected_execution_line": 72
+  },
+  "retention": "Initial 2026-10-04 independently reproduced population/oracles/Companion/relationships/controls and DW-01/DW-04 remain applicable under unchanged bytes, source, mappings, criteria and relation predicate; current changed outcomes freshly checked, not a relabeled prior run.",
+  "source_hashes_unchanged": {
+    "/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-save/src/mapping.rs": "555e111d0b8f4d8245d088cd674d059631d55aa9f6658f4814460590b922812c",
+    "/private/tmp/nms-cdc-slice02-saveParser.ts": "0ddc5ccc82e5deaaeadcc2097b6d10ca2012fd6470723a62661b00aa1df6a92b",
+    "/private/tmp/nms-coordinates-Coordinates.cs": "7bb2e8a0ca407947770e01e37f306f92b4321630b1b762aa129ee5e65d48fdf3",
+    "/private/tmp/nms-coordinates-CoordCalculations.cs": "388f61f63097247eb4ce6e803cdd413456e3e5c51558b363a420d1d627bf94b4"
+  },
+  "review_date_local": "2026-10-04",
+  "prose_finding": "R04: execution.md line72 claims fresh results equal both faithful actual objects and initial incorrect expected objects; fresh comparisons produce44 faithful actual matches and0 initial-bad expected matches."
+}
