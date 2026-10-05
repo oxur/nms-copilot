@@ -41,7 +41,9 @@ pub struct LoadResult {
 
 /// Load a model from cache if fresh, otherwise parse the save file.
 ///
-/// This is the primary entry point for the startup path.
+/// Freshness is determined only by file modification times. A fresh cache is
+/// still checked for a supported envelope and model semantic revision; if its
+/// read or decode fails, startup warns and rebuilds from the save file.
 pub fn load_or_rebuild(
     cache_path: &Path,
     save_path: &Path,
