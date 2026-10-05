@@ -1,5 +1,7 @@
 # Slice04 — CDC independent verification
 
+**Current verdict after iteration01: RP-01–RP-06 accepted; RP-07 remains open. Slice04 is not closed.** See the dated iteration01 section below; initial findings remain historical.
+
 2026-10-04. Reviewed CC commit `74359a92a48669d5ab0368bb51351ac840f1b9fc` against clean source main `a800950ef3558fcf463517696c3c140061e7353d`. **Correction required: RP-01 accepted; RP-02–RP-07 remain open.** Slice04, Arc06 and Project01 remain open. No production policy, API, identity or cache migration is adopted.
 
 ## Method and reproduced evidence
@@ -55,3 +57,55 @@ Evidence packet is substantially reproducible but not independently accepted as 
 ## Review/handoff structural checks
 
 Final packaging check passes: exactly eight reviewer/handoff paths,46 resolvable local Markdown links, seven sealed input/artifact hashes unchanged, all seven slice criteria unchanged, one accepted/six open RP rows, all15 original arc rows and22 project rows still open, source clean/pinned and whitespace clean. The original CC artifacts/report and initial prompt were not edited. These checks support this bounded handoff; they do not accept the packet or production policy. Commit identity and post-commit worktree state are returned to the Operator after committing.
+
+## Iteration01 independent correction review — 2026-10-04
+
+Reviewed `cc-prompt-iteration01.md`, candidate CC `7d33b1d14f8d47f46a91b08965f8033b4bc60b1a`, parent reviewer-handoff `84a314555678b04057ab62f7ccdb84a525c04e03`, against unchanged clean source main `a800950ef3558fcf463517696c3c140061e7353d`. **RP-02–RP-06 now accepted; RP-01 retained accepted; RP-07 remains open only for exact build-capture fidelity.** No production policy adopted; packet/arc/project remain open.
+
+### Fresh results, retained claims and method limits
+
+[Iteration01 review receipts](artifacts/cdc-iteration01-review-receipts.json) record145 checks:144 pass; one fails for build diagnostic text. Fresh offline/locked CLI build exits0 and retains the existing proc-macro-error2 warning. Fresh prescribed import, using a new deep-copy synthetic save and exact immutable CSV galaxies0/9, exits0 with empty stdout and `Imported 2 systems (0 duplicates, 0 skipped)` plus newline on stderr. No persisted winner/state, live watch, protocol, private save or user-cache evidence is claimed.
+
+All51 prior result objects are equal in full by ID to reviewer-handoff84a3145, with exactly one new result; current52 records partition as45 parser + six prescribed + one supplemental. Parser counts27/18 and all-run exits34/18 match recomputation. All45 parser objects, previous controls, baseline, source pin and reviewed source-body hashes are unchanged; dependencies/execution routes relevant to these synthetic observations have no delta. Initial CDC receipts identify full earlier replay and limits, so that evidence remains applicable under correction-review retention. Those parser/control results are **retained, not freshly rerun**. The new prescribed control alone is freshly exercised here.
+
+Both execution/closing reports preserve byte-exact historical prefixes; RP-01 row and all criteria/status cells are unchanged by CC. All20 seed rows preserve all seven inherited columns, and28 impact rows remain. CC commit has exactly six allowed paths, both parsed trailers once, clean whitespace and valid local links. Inspected complete corrected decision packet and S06 delta, seven-row close walk, appended intake/execution, full W-CHILI object, complete Slice03 field assessment, synthetic DD/DM projections, and pinned raw record/conversion/extraction/delta bodies. Source/criteria/earlier CDC artifacts/issued prompts/parent records remain fenced by the six-path delta.
+
+Reviewer attempt history: one receipt serializer carried raw prefix bytes and failed after build/import execution; those initial channels were not retained. Changed prefix checks to SHA-256 comparisons and repeated the affected build/import, retaining final exact captures. Total this review: two builds/two import processes, one final capture of each; no45-case replay. Several combined reading outputs truncated; the affected sections were recovered with bounded reads before dependent work. No broad tests, formatting/lint or production edits were run.
+
+### R01–R03 verdict
+
+R01 passes: prescribed distinct import uses exact names/glyphs/galaxies and is a distinct result; the same-galaxy control survives as supplemental. R02 passes: W-CHILI is prior Slice01 game-confirmed evidence inherited by Slice02 and retained by Slice03;44 expanded-base comparisons remain separate bounded evidence. There is no claimed new Chili expanded pair. RawDiscoveryRecord.dm, synthetic DM.CN, and current None name conversions are accurately distinguished from unchosen general name policy. R03 passes: watcher proof uses available addition channels after a proposed approved key migration; removals stay outside current authority. No new representation/API is selected by this review.
+
+### E01 remaining finding — exact capture claim still mismatches
+
+The new JSON `iteration01_build.stderr` and execution.md's purported complete capture say:
+
+    note: to see the problems were, use the option ...
+
+Fresh Cargo output says:
+
+    note: to see what the problems were, use the option ...
+
+Only elapsed duration was normalized for comparison; the diagnostic mismatch is not a timing difference. Successful build, warning presence and import behavior are independently reproduced and accepted. This finding concerns the explicitly assigned raw-capture contract, not a build/product failure. The original build summary is correctly qualified; the iteration01 object still cannot be accepted as exact stderr. Its cause is not established by this review. Do not repair it by inserting the expected word into a historical object or by editing an accepted report under the reviewer role.
+
+### Seven-row walk and bubble-up
+
+| Row | CDC disposition | Independent evidence / remaining work |
+|---|---|---|
+| RP-01 | done, retained | Earlier accepted intake/fences; exact row and relevant source/input boundaries unchanged. |
+| RP-02 | done | Current source/witness inspection independently confirms bounded Chili/base/name provenance. |
+| RP-03 | done | All51 old full objects retained; current52 classification checked; new sixth prescribed import freshly reproduces. Build success independently established. |
+| RP-04 | done |20/20 inherited columns preserved; S06 corrected to existing delta channels, verified against pinned source. |
+| RP-05 | done | All eight source-qualified recommendations/owners/gates present; corrections pass without policy adoption. |
+| RP-06 | done | Corrected oracle provenance and feasible future watcher addition sequence; remaining cache/query obligations retained within their static/future limits. |
+| RP-07 | open | Scope/history/privacy/row walk pass; E01 exact build channel mismatch remains. |
+
+Delivered against arc plan: the substantive eight-topic decision material and synthetic coverage now pass; an exact-capture metadata obligation is still missing. Scope-as-specified versus delivered is fully accounted for above, with no silent production policy or removed-key expansion. Supporting inventory remains author-baseline.json, behavior-probes.json, decision-packet.md, execution.md, impact-map.csv, initial cdc-review-receipts.json and this cdc-iteration01-review-receipts.json; root close/review/prompts remain separate first-class documents. No structural arc re-sequencing, architecture, scope or acceptance amendment is needed. Update only routine progress/version/current assignment before the next pass. Original arc/project gates remain open.
+
+What worked: full-object retention avoids another45-case replay; separating witnesses and existing observable APIs resolves substantive findings without new save access or production changes. [Iteration02](cc-prompt-iteration02.md) targets RP-07 only. Six accepted ledger rows and the52 result objects are frozen; capture directly from a fresh process and compare serialized bytes back to their original streams.
+
+### Iteration02 author readiness and handoff checks
+
+One additional author-preparation build captured stdout/stderr as raw bytes, wrote temporary streams and generated JSON directly, then read the JSON back and verified byte-for-byte UTF-8 equality. Exit0; stdout0 bytes, stderr327 bytes with hashes in the iteration01 review receipts. This is readiness evidence for the next assignment, not CC acceptance. Including the failed receipt attempt, this turn ran three builds and two prescribed imports; no45-case replay.
+
+Final handoff checks pass: exactly eight reviewer/handoff paths,49 resolvable local links, nine CC evidence/issued-prompt files byte-identical to7d33b1d, seven criteria unchanged, six accepted/one open RP rows, all15 original arc rows and22 project rows still open, source clean/pinned and whitespace clean. Required commit trailer/path checks and final worktree state are returned after committing.

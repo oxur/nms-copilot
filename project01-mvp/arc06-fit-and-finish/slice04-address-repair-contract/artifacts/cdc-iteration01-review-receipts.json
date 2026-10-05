@@ -1,0 +1,1706 @@
+{
+  "review_date_local": "2026-10-04",
+  "assignment": "arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration01.md",
+  "CC_commit": "7d33b1d14f8d47f46a91b08965f8033b4bc60b1a",
+  "reviewer_handoff": "84a314555678b04057ab62f7ccdb84a525c04e03",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "checks": [
+    {
+      "check": "planning reviewed HEAD",
+      "pass": true,
+      "actual": "7d33b1d14f8d47f46a91b08965f8033b4bc60b1a",
+      "expected": "7d33b1d14f8d47f46a91b08965f8033b4bc60b1a"
+    },
+    {
+      "check": "source pinned",
+      "pass": true,
+      "actual": "a800950ef3558fcf463517696c3c140061e7353d",
+      "expected": "a800950ef3558fcf463517696c3c140061e7353d"
+    },
+    {
+      "check": "source clean",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "planning clean intake",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "CC parent reviewer handoff",
+      "pass": true,
+      "actual": "84a314555678b04057ab62f7ccdb84a525c04e03",
+      "expected": "84a314555678b04057ab62f7ccdb84a525c04e03"
+    },
+    {
+      "check": "exact six CC paths",
+      "pass": true,
+      "actual": [
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/behavior-probes.json",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/impact-map.csv",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/ledger.md"
+      ],
+      "expected": [
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/behavior-probes.json",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/impact-map.csv",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/ledger.md"
+      ]
+    },
+    {
+      "check": "baseline digest",
+      "pass": true,
+      "actual": "0c3d0208a79f23cd8ff44ea101ad5d4909b2c0921aef4435d8291b3d11e30bdf",
+      "expected": "0c3d0208a79f23cd8ff44ea101ad5d4909b2c0921aef4435d8291b3d11e30bdf"
+    },
+    {
+      "check": "old51 objects unique",
+      "pass": true,
+      "actual": 51,
+      "expected": 51
+    },
+    {
+      "check": "new52 objects unique",
+      "pass": true,
+      "actual": 52,
+      "expected": 52
+    },
+    {
+      "check": "exact new ID",
+      "pass": true,
+      "actual": [
+        "import-distinct-prescribed"
+      ],
+      "expected": [
+        "import-distinct-prescribed"
+      ]
+    },
+    {
+      "check": "discovery-int-zero full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "750553f3f3f3bf5375e4339f26120065675b6b0f1601d2527eae4eab53d905d6"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "750553f3f3f3bf5375e4339f26120065675b6b0f1601d2527eae4eab53d905d6"
+      }
+    },
+    {
+      "check": "base-int-zero full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "12029db31ff4afe18f53aed5a4012885ee14bd3c90611e1f57c5751c2f4fc0da"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "12029db31ff4afe18f53aed5a4012885ee14bd3c90611e1f57c5751c2f4fc0da"
+      }
+    },
+    {
+      "check": "discovery-hex-zero full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "66752d0d4e117f99a0818772814805c2a7b1f7789e54584b2a93f94a11c19933"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "66752d0d4e117f99a0818772814805c2a7b1f7789e54584b2a93f94a11c19933"
+      }
+    },
+    {
+      "check": "base-hex-zero full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "f3b228763cc3260e1f465c6f489ee0d28d8b467bb303674fc911b444600f2955"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "f3b228763cc3260e1f465c6f489ee0d28d8b467bb303674fc911b444600f2955"
+      }
+    },
+    {
+      "check": "discovery-hex14 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "a09e419f37899c6ad8f5d5be907e60bfc8712f6e0a6300b4b23bd63d6677541b"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "a09e419f37899c6ad8f5d5be907e60bfc8712f6e0a6300b4b23bd63d6677541b"
+      }
+    },
+    {
+      "check": "base-hex14 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "c1a2b513612b514657ddd91fb1373040fa46f486db3337d53ba465c6c8d42e6e"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "c1a2b513612b514657ddd91fb1373040fa46f486db3337d53ba465c6c8d42e6e"
+      }
+    },
+    {
+      "check": "discovery-uppercase-prefix full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "6f77cc7b4c2af86374dd7e705de96c462cdfdf476e18d6e2b0663fe08f60c109"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "6f77cc7b4c2af86374dd7e705de96c462cdfdf476e18d6e2b0663fe08f60c109"
+      }
+    },
+    {
+      "check": "base-uppercase-prefix full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "fb8da3b1cfb95853d287509bffadbf7cb73b0127bdfe6ab3e3be66cbd102740d"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "fb8da3b1cfb95853d287509bffadbf7cb73b0127bdfe6ab3e3be66cbd102740d"
+      }
+    },
+    {
+      "check": "discovery-bare-short-hex full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "c355900295a5284ce72cf7e8196cab0ced25863a986ca328a98249730e7dbc2d"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "c355900295a5284ce72cf7e8196cab0ced25863a986ca328a98249730e7dbc2d"
+      }
+    },
+    {
+      "check": "base-bare-short-hex full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "88cca829d9721385eef822a5b81046b124771fbe9137fc0fef7354ac5968df7a"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "88cca829d9721385eef822a5b81046b124771fbe9137fc0fef7354ac5968df7a"
+      }
+    },
+    {
+      "check": "discovery-numeric-string full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "48335d8675324f9b2b9c67e4b7577e83e93c49182e7258fd32493413de364fd3"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "48335d8675324f9b2b9c67e4b7577e83e93c49182e7258fd32493413de364fd3"
+      }
+    },
+    {
+      "check": "base-numeric-string full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "5de1e8ac9eb4a5c57745772d336e06c06a89e86bb3ffc87374611b2b0cd09f69"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "5de1e8ac9eb4a5c57745772d336e06c06a89e86bb3ffc87374611b2b0cd09f69"
+      }
+    },
+    {
+      "check": "discovery-signed-negative full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "1469a9b160e1ee89090dc96eb5e8557b34a7f90ee0d488f7cf17956df600de6f"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "1469a9b160e1ee89090dc96eb5e8557b34a7f90ee0d488f7cf17956df600de6f"
+      }
+    },
+    {
+      "check": "base-signed-negative full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "5f7a6bc0d3d378ba3e6d988788afc728c0e708447bf62ecc7877c5b1c0a076ba"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "5f7a6bc0d3d378ba3e6d988788afc728c0e708447bf62ecc7877c5b1c0a076ba"
+      }
+    },
+    {
+      "check": "discovery-fraction full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "8465ec96ba7a7d665f88e628628062973d48b78d948f0bc748431efd3a4ec9f8"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "8465ec96ba7a7d665f88e628628062973d48b78d948f0bc748431efd3a4ec9f8"
+      }
+    },
+    {
+      "check": "base-fraction full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "c169174d9c7813391497b67003d2f99e7b8c2db9407f5a97e2aa04a684d6badb"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "c169174d9c7813391497b67003d2f99e7b8c2db9407f5a97e2aa04a684d6badb"
+      }
+    },
+    {
+      "check": "discovery-boolean full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "147b17009da3738882a0157458c3671743fd34b2aeb241d94886db5ef64436a5"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "147b17009da3738882a0157458c3671743fd34b2aeb241d94886db5ef64436a5"
+      }
+    },
+    {
+      "check": "base-boolean full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "404bf243fdf0c8b029bcea44ff2f49a9984361feb97295918be2a7d405897b75"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "404bf243fdf0c8b029bcea44ff2f49a9984361feb97295918be2a7d405897b75"
+      }
+    },
+    {
+      "check": "discovery-null full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "d47d13aec1a436b88aa058c0750d2e5c12bb2cd8a0a1b26100230957c7a72fa8"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "d47d13aec1a436b88aa058c0750d2e5c12bb2cd8a0a1b26100230957c7a72fa8"
+      }
+    },
+    {
+      "check": "base-null full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "17268421da135115d57c4fc29525178218318e4091ba1b910a84239ccf238557"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "17268421da135115d57c4fc29525178218318e4091ba1b910a84239ccf238557"
+      }
+    },
+    {
+      "check": "discovery-missing full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "4834db0693c3fd68f978b957036aa55e9e02098d182bfe835e60a1b64f81080e"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "4834db0693c3fd68f978b957036aa55e9e02098d182bfe835e60a1b64f81080e"
+      }
+    },
+    {
+      "check": "base-missing full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "e110c591597f10fe4ec9bf06425659915b3c291ef60e1c0b45792436eff9db72"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "e110c591597f10fe4ec9bf06425659915b3c291ef60e1c0b45792436eff9db72"
+      }
+    },
+    {
+      "check": "discovery-empty full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "e08fa368bc190c152b47b6714ed808229c89b511025c0956f60e3c296f894d05"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "e08fa368bc190c152b47b6714ed808229c89b511025c0956f60e3c296f894d05"
+      }
+    },
+    {
+      "check": "base-empty full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "33b1701a8085e6847e97d4ce617117a57cd1d09365fcacc69d54874620d4193b"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "33b1701a8085e6847e97d4ce617117a57cd1d09365fcacc69d54874620d4193b"
+      }
+    },
+    {
+      "check": "discovery-bad-hex full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "71f23d485811c8d90e33e60cfe63a568dc23c8544850ca7533911d06cc432a50"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "71f23d485811c8d90e33e60cfe63a568dc23c8544850ca7533911d06cc432a50"
+      }
+    },
+    {
+      "check": "base-bad-hex full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "2ce00c80bd77ce2de1f45fecee0fba08cb5764ece0916fe915b79e8ccf7161d8"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "2ce00c80bd77ce2de1f45fecee0fba08cb5764ece0916fe915b79e8ccf7161d8"
+      }
+    },
+    {
+      "check": "discovery-over56 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "eb1925edb5d70f825cd085550d0efdb0612ab1290e88d5f6c34fd985a7128014"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "eb1925edb5d70f825cd085550d0efdb0612ab1290e88d5f6c34fd985a7128014"
+      }
+    },
+    {
+      "check": "base-over56 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "c96ad72f441ba786c1d220a5ffa699e7dc98c60e370498b1655a3266ae8c7d07"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "c96ad72f441ba786c1d220a5ffa699e7dc98c60e370498b1655a3266ae8c7d07"
+      }
+    },
+    {
+      "check": "discovery-over-u64 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "0d4137e6afbb8cd67a4026ffef2865475d91a08169a85be71b443510f4b2b639"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "0d4137e6afbb8cd67a4026ffef2865475d91a08169a85be71b443510f4b2b639"
+      }
+    },
+    {
+      "check": "base-over-u64 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "512a87c4f4151f641989290af4f202aa6e3527935f85bf960e978960f4282a21"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "512a87c4f4151f641989290af4f202aa6e3527935f85bf960e978960f4282a21"
+      }
+    },
+    {
+      "check": "discovery-max56 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "624f955106ae4dc6ad022df39e6e0ab235ba98381f92cb59b72b6d41094abf74"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "624f955106ae4dc6ad022df39e6e0ab235ba98381f92cb59b72b6d41094abf74"
+      }
+    },
+    {
+      "check": "base-max56 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "cbb4f7a497589d887bb4e14c98d2ecf42650312970c168db5d2f6fe179cdb71f"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "cbb4f7a497589d887bb4e14c98d2ecf42650312970c168db5d2f6fe179cdb71f"
+      }
+    },
+    {
+      "check": "expanded-valid full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "c0e8872227bf4b51a795c7109124a79ee71cd312fecf4b0dcbc43e7be510a034"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "c0e8872227bf4b51a795c7109124a79ee71cd312fecf4b0dcbc43e7be510a034"
+      }
+    },
+    {
+      "check": "expanded-missing-wrapper full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "8993491c056968d3360e6f4d6d21c20319fd9a3667a75e27a18fc0062635b15b"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "8993491c056968d3360e6f4d6d21c20319fd9a3667a75e27a18fc0062635b15b"
+      }
+    },
+    {
+      "check": "expanded-null-wrapper full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "0f3dc768bdf04d83d59a7fec837f3733e06877bb909e6d2996faae683ac637be"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "0f3dc768bdf04d83d59a7fec837f3733e06877bb909e6d2996faae683ac637be"
+      }
+    },
+    {
+      "check": "expanded-empty-wrapper full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "05b97875cf81dad2bb76749127b717a78c43dae027df27911649fa2e7a6f2e39"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "05b97875cf81dad2bb76749127b717a78c43dae027df27911649fa2e7a6f2e39"
+      }
+    },
+    {
+      "check": "expanded-zero-object full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "594b839e2bcb97558a1b4a89d01220106b52598afe5bd0d9f56a80f701d12ca2"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "594b839e2bcb97558a1b4a89d01220106b52598afe5bd0d9f56a80f701d12ca2"
+      }
+    },
+    {
+      "check": "expanded-partial-object full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "3dd96486d6a4a0809d015459d30a14fd8fda8ced3bb4ef890e8dbb64d6014b51"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "3dd96486d6a4a0809d015459d30a14fd8fda8ced3bb4ef890e8dbb64d6014b51"
+      }
+    },
+    {
+      "check": "expanded-x2048 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "9849f06d5a87ab79f271bf1c1883af120d25483efb797b2ef0f7ab8be6cf72a0"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "9849f06d5a87ab79f271bf1c1883af120d25483efb797b2ef0f7ab8be6cf72a0"
+      }
+    },
+    {
+      "check": "expanded-y128 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "cc5214ded3226e1ef8b66db979cd18a755d3168dacf5a49ffc859d6dcd618780"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "cc5214ded3226e1ef8b66db979cd18a755d3168dacf5a49ffc859d6dcd618780"
+      }
+    },
+    {
+      "check": "expanded-ssi4095 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "5996ef5fbd964574cff2fd93e90c8148f17a905bc9959de7fae98b22b1b906c6"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "5996ef5fbd964574cff2fd93e90c8148f17a905bc9959de7fae98b22b1b906c6"
+      }
+    },
+    {
+      "check": "expanded-planet16 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "70bc711945573b7c5f17c890ee3432c8050a52bba4a7ebc2e5bef11cdc9eeb37"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "70bc711945573b7c5f17c890ee3432c8050a52bba4a7ebc2e5bef11cdc9eeb37"
+      }
+    },
+    {
+      "check": "expanded-ssi4096 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "28c509a206c005e86b602ecf18e4fa8d173c9a1485497fbfb68fcb00192a62cc"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "28c509a206c005e86b602ecf18e4fa8d173c9a1485497fbfb68fcb00192a62cc"
+      }
+    },
+    {
+      "check": "expanded-planet256 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "4daa4ff129a42ceb617733c32d1f807334d3be453bb5de26f2262fbb2c7a9c81"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "4daa4ff129a42ceb617733c32d1f807334d3be453bb5de26f2262fbb2c7a9c81"
+      }
+    },
+    {
+      "check": "expanded-reality256 full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "d3d0f82d0450deab9ed3009817411b43d147c9a221f9f8af7ce0bd9a5d3a5b72"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "d3d0f82d0450deab9ed3009817411b43d147c9a221f9f8af7ce0bd9a5d3a5b72"
+      }
+    },
+    {
+      "check": "convert-raw-ga full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "eeb1a295e35f2af3828b7d5082bdd85512256a83332f29c9d50ce300f5dacbbd"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "eeb1a295e35f2af3828b7d5082bdd85512256a83332f29c9d50ce300f5dacbbd"
+      }
+    },
+    {
+      "check": "convert-portal-glyphs full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "bfd60dfd7f206236ad03d18f68eb3d82565071d1faec519fb2a1e71c394363f4"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "bfd60dfd7f206236ad03d18f68eb3d82565071d1faec519fb2a1e71c394363f4"
+      }
+    },
+    {
+      "check": "convert-portal-shaped-ga full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "08dd73e9de3ba0d532a224aa044337b2128516fb048efc65ce936376352e1240"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "08dd73e9de3ba0d532a224aa044337b2128516fb048efc65ce936376352e1240"
+      }
+    },
+    {
+      "check": "import-collision full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "1ff7947a2cba9f435a5628a3fa455e3e8467675da26b3d3a7e18340264639248"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "1ff7947a2cba9f435a5628a3fa455e3e8467675da26b3d3a7e18340264639248"
+      }
+    },
+    {
+      "check": "import-collision-reversed full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "734ead3904f732232e5ba7640358580ee5d6d76692d9e0ad0c5b73c8f546ec81"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "734ead3904f732232e5ba7640358580ee5d6d76692d9e0ad0c5b73c8f546ec81"
+      }
+    },
+    {
+      "check": "import-distinct-ssi-same-galaxy full object retention",
+      "pass": true,
+      "actual": {
+        "canonical_full_object_sha256": "9cf1d49b9e0a784d706ddd21eb9ecb751fd8ccbe037d2ba68be7c131ea8e2b75"
+      },
+      "expected": {
+        "canonical_full_object_sha256": "9cf1d49b9e0a784d706ddd21eb9ecb751fd8ccbe037d2ba68be7c131ea8e2b75"
+      }
+    },
+    {
+      "check": "original build object retained",
+      "pass": true,
+      "actual": {
+        "argv": [
+          "cargo",
+          "build",
+          "--offline",
+          "--locked",
+          "-p",
+          "nms-cli"
+        ],
+        "exit_code": 0,
+        "stdout": "Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.51s\n",
+        "stderr": "warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the full report, run `cargo report future-incompatibilities --id 1`\n",
+        "scope": "root source worktree; no source edits"
+      },
+      "expected": {
+        "argv": [
+          "cargo",
+          "build",
+          "--offline",
+          "--locked",
+          "-p",
+          "nms-cli"
+        ],
+        "exit_code": 0,
+        "stdout": "Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.51s\n",
+        "stderr": "warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the full report, run `cargo report future-incompatibilities --id 1`\n",
+        "scope": "root source worktree; no source edits"
+      }
+    },
+    {
+      "check": "artifacts/execution.md exact historical prefix",
+      "pass": true,
+      "actual": "330084f8eeff62029d68bb867930eb9d60540f825a3e9591074bd638fcafefd0",
+      "expected": "330084f8eeff62029d68bb867930eb9d60540f825a3e9591074bd638fcafefd0"
+    },
+    {
+      "check": "closing-report.md exact historical prefix",
+      "pass": true,
+      "actual": "ff4fb30b1d8579258feff15fc52fcc820854ba1fd741c857e612888d9b104f39",
+      "expected": "ff4fb30b1d8579258feff15fc52fcc820854ba1fd741c857e612888d9b104f39"
+    },
+    {
+      "check": "seven ledger rows",
+      "pass": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "RP01 row byte-identical",
+      "pass": true,
+      "actual": "| RP-01 | Source/assignment fences and complete scoped intake/readback recorded | Check main/planning state, manifest coverage and cited readback | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md; artifacts/cdc-review-receipts.json | CDC accepted pinned intake/readback and fences at74359a9. Downstream source claims reviewed separately; preserve this row in iteration01. |",
+      "expected": "| RP-01 | Source/assignment fences and complete scoped intake/readback recorded | Check main/planning state, manifest coverage and cited readback | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md; artifacts/cdc-review-receipts.json | CDC accepted pinned intake/readback and fences at74359a9. Downstream source claims reviewed separately; preserve this row in iteration01. |"
+    },
+    {
+      "check": "all criterion/status cells preserved",
+      "pass": true,
+      "actual": [
+        [
+          " RP-01 ",
+          " Source/assignment fences and complete scoped intake/readback recorded ",
+          " Check main/planning state, manifest coverage and cited readback ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-02 ",
+          " Field-specific evidence warrants and unresolved applicability are faithful ",
+          " Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-03 ",
+          " All45 parser cases and six integration controls independently reproducible ",
+          " Replay named fixture injections through existing CLI; record exits/projections/errors and denominators ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-04 ",
+          " Every20 seed caller rows and named identity/query/watch/cache consumers mapped ",
+          " Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-05 ",
+          " Eight consequential decision topics have concrete recommendations, impacts and owners ",
+          " Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-06 ",
+          " Repair sequencing and meaningful future exact-value/error/integration proof obligations specified ",
+          " Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-07 ",
+          " Scope/privacy/failures/artifacts and all seven rows honestly accounted for ",
+          " Check exact six-path CC diff, unchanged source/seed data, links/JSON/CSV/whitespace/trailers and close walk ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ]
+      ],
+      "expected": [
+        [
+          " RP-01 ",
+          " Source/assignment fences and complete scoped intake/readback recorded ",
+          " Check main/planning state, manifest coverage and cited readback ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-02 ",
+          " Field-specific evidence warrants and unresolved applicability are faithful ",
+          " Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-03 ",
+          " All45 parser cases and six integration controls independently reproducible ",
+          " Replay named fixture injections through existing CLI; record exits/projections/errors and denominators ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-04 ",
+          " Every20 seed caller rows and named identity/query/watch/cache consumers mapped ",
+          " Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-05 ",
+          " Eight consequential decision topics have concrete recommendations, impacts and owners ",
+          " Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-06 ",
+          " Repair sequencing and meaningful future exact-value/error/integration proof obligations specified ",
+          " Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ],
+        [
+          " RP-07 ",
+          " Scope/privacy/failures/artifacts and all seven rows honestly accounted for ",
+          " Check exact six-path CC diff, unchanged source/seed data, links/JSON/CSV/whitespace/trailers and close walk ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ]
+      ]
+    },
+    {
+      "check": "28 impact rows",
+      "pass": true,
+      "actual": 28,
+      "expected": 28
+    },
+    {
+      "check": "seed 1 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 1 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-core/src/address.rs:34-117 GalacticAddress::new/from_packed/packed",
+        "field/input family": "core 48-bit portal-frame value",
+        "producer": "typed coordinate fields or caller packed u64",
+        "consumer": "core address accessors and downstream model",
+        "current operation": "construct masks/narrows to 48 bits; decode P-SSS-YY-ZZZ-XXX",
+        "galaxy source": "explicit reality_index argument",
+        "contract evidence": "source API only; intentionally retained core contract"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-core/src/address.rs:34-117 GalacticAddress::new/from_packed/packed",
+        "field/input family": "core 48-bit portal-frame value",
+        "producer": "typed coordinate fields or caller packed u64",
+        "consumer": "core address accessors and downstream model",
+        "current operation": "construct masks/narrows to 48 bits; decode P-SSS-YY-ZZZ-XXX",
+        "galaxy source": "explicit reality_index argument",
+        "contract evidence": "source API only; intentionally retained core contract"
+      }
+    },
+    {
+      "check": "seed 2 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 2 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-core/src/address.rs:159-208 signal booster parse/format",
+        "field/input family": "signal-booster XXXX:YYYY:ZZZZ:SSSS",
+        "producer": "CLI/REPL/MCP input",
+        "consumer": "core GalacticAddress",
+        "current operation": "apply fixed wrapping offsets then mask fields; emit reverse offsets",
+        "galaxy source": "caller argument; MCP currently supplies 0",
+        "contract evidence": "source implementation; game-format witness absent"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-core/src/address.rs:159-208 signal booster parse/format",
+        "field/input family": "signal-booster XXXX:YYYY:ZZZZ:SSSS",
+        "producer": "CLI/REPL/MCP input",
+        "consumer": "core GalacticAddress",
+        "current operation": "apply fixed wrapping offsets then mask fields; emit reverse offsets",
+        "galaxy source": "caller argument; MCP currently supplies 0",
+        "contract evidence": "source implementation; game-format witness absent"
+      }
+    },
+    {
+      "check": "seed 3 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 3 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-core/src/address.rs:352-544 PortalAddress conversions",
+        "field/input family": "12 portal glyphs",
+        "producer": "portal parser or core address",
+        "consumer": "core address / display output",
+        "current operation": "map 12 nibbles directly to/from core 48-bit value; no galaxy in glyph payload",
+        "galaxy source": "defaults to 0 unless caller replaces reality index",
+        "contract evidence": "source API; portal-frame contract"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-core/src/address.rs:352-544 PortalAddress conversions",
+        "field/input family": "12 portal glyphs",
+        "producer": "portal parser or core address",
+        "consumer": "core address / display output",
+        "current operation": "map 12 nibbles directly to/from core 48-bit value; no galaxy in glyph payload",
+        "galaxy source": "defaults to 0 unless caller replaces reality index",
+        "contract evidence": "source API; portal-frame contract"
+      }
+    },
+    {
+      "check": "seed 4 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 4 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/model.rs:80-120 UniverseAddress/GalacticAddressObject",
+        "field/input family": "expanded player current/previous address",
+        "producer": "JSON expanded object",
+        "consumer": "save conversion to core object fields",
+        "current operation": "GalacticAddressObject::to_galactic_address calls GalacticAddress::new; missing fields default to zero",
+        "galaxy source": "UniverseAddress.RealityIndex",
+        "contract evidence": "MBIN GcUniverseAddressData/GcGalacticAddressData schema at pinned clone; no paired private witness"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/model.rs:80-120 UniverseAddress/GalacticAddressObject",
+        "field/input family": "expanded player current/previous address",
+        "producer": "JSON expanded object",
+        "consumer": "save conversion to core object fields",
+        "current operation": "GalacticAddressObject::to_galactic_address calls GalacticAddress::new; missing fields default to zero",
+        "galaxy source": "UniverseAddress.RealityIndex",
+        "contract evidence": "MBIN GcUniverseAddressData/GcGalacticAddressData schema at pinned clone; no paired private witness"
+      }
+    },
+    {
+      "check": "seed 5 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 5 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/model.rs:122-165 PackedGalacticAddress",
+        "field/input family": "packed single-value wrapper",
+        "producer": "JSON integer or hex string",
+        "consumer": "base/discovery models",
+        "current operation": "serde retains u64; signed i64 is cast to u64; wrapper conversion calls core from_packed",
+        "galaxy source": "caller supplies galaxy",
+        "contract evidence": "source type and parser behavior; does not establish common encoding"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/model.rs:122-165 PackedGalacticAddress",
+        "field/input family": "packed single-value wrapper",
+        "producer": "JSON integer or hex string",
+        "consumer": "base/discovery models",
+        "current operation": "serde retains u64; signed i64 is cast to u64; wrapper conversion calls core from_packed",
+        "galaxy source": "caller supplies galaxy",
+        "contract evidence": "source type and parser behavior; does not establish common encoding"
+      }
+    },
+    {
+      "check": "seed 6 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 6 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/model.rs:197-239 RawDiscoveryRecord/DiscoveryData",
+        "field/input family": "discovery DD.UA",
+        "producer": "save JSON DD.UA",
+        "consumer": "save conversion and graph extraction",
+        "current operation": "required PackedGalacticAddress; no format-specific type boundary",
+        "galaxy source": "none carried in record",
+        "contract evidence": "source schema only; DD.UA decode semantics unresolved"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/model.rs:197-239 RawDiscoveryRecord/DiscoveryData",
+        "field/input family": "discovery DD.UA",
+        "producer": "save JSON DD.UA",
+        "consumer": "save conversion and graph extraction",
+        "current operation": "required PackedGalacticAddress; no format-specific type boundary",
+        "galaxy source": "none carried in record",
+        "contract evidence": "source schema only; DD.UA decode semantics unresolved"
+      }
+    },
+    {
+      "check": "seed 7 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 7 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/model.rs:279-322 PersistentPlayerBase",
+        "field/input family": "persistent-base packed GalacticAddress",
+        "producer": "save JSON base GalacticAddress",
+        "consumer": "base conversion to core",
+        "current operation": "required PackedGalacticAddress reused from discovery; no context field",
+        "galaxy source": "currently forced to galaxy 0",
+        "contract evidence": "MBIN GcPersistentBase declares ulong GalacticAddress; packed semantics unresolved"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/model.rs:279-322 PersistentPlayerBase",
+        "field/input family": "persistent-base packed GalacticAddress",
+        "producer": "save JSON base GalacticAddress",
+        "consumer": "base conversion to core",
+        "current operation": "required PackedGalacticAddress reused from discovery; no context field",
+        "galaxy source": "currently forced to galaxy 0",
+        "contract evidence": "MBIN GcPersistentBase declares ulong GalacticAddress; packed semantics unresolved"
+      }
+    },
+    {
+      "check": "seed 8 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 8 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/convert.rs:7-43 RawDiscoveryRecord::to_core_record",
+        "field/input family": "discovery DD.UA",
+        "producer": "RawDiscoveryRecord",
+        "consumer": "core DiscoveryRecord",
+        "current operation": "wrapper to_galactic_address(0)",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; loses record display name; no game decoder"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/convert.rs:7-43 RawDiscoveryRecord::to_core_record",
+        "field/input family": "discovery DD.UA",
+        "producer": "RawDiscoveryRecord",
+        "consumer": "core DiscoveryRecord",
+        "current operation": "wrapper to_galactic_address(0)",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; loses record display name; no game decoder"
+      }
+    },
+    {
+      "check": "seed 9 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 9 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/convert.rs:46-67 PersistentPlayerBase::to_core_base",
+        "field/input family": "persistent-base packed address",
+        "producer": "PersistentPlayerBase",
+        "consumer": "core PlayerBase",
+        "current operation": "wrapper to_galactic_address(0)",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; test asserts fields other than decoded address"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/convert.rs:46-67 PersistentPlayerBase::to_core_base",
+        "field/input family": "persistent-base packed address",
+        "producer": "PersistentPlayerBase",
+        "consumer": "core PlayerBase",
+        "current operation": "wrapper to_galactic_address(0)",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; test asserts fields other than decoded address"
+      }
+    },
+    {
+      "check": "seed 10 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 10 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-save/src/convert.rs:69-108 SaveRoot::to_core_player_state",
+        "field/input family": "expanded current/previous player addresses",
+        "producer": "active PlayerStateData",
+        "consumer": "core PlayerState",
+        "current operation": "expanded object to core; previous address treated absent when X/Y/Z/SSI all zero",
+        "galaxy source": "UniverseAddress.RealityIndex per field",
+        "contract evidence": "source code/schema; zero sentinel interpretation is unconfirmed"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-save/src/convert.rs:69-108 SaveRoot::to_core_player_state",
+        "field/input family": "expanded current/previous player addresses",
+        "producer": "active PlayerStateData",
+        "consumer": "core PlayerState",
+        "current operation": "expanded object to core; previous address treated absent when X/Y/Z/SSI all zero",
+        "galaxy source": "UniverseAddress.RealityIndex per field",
+        "contract evidence": "source code/schema; zero sentinel interpretation is unconfirmed"
+      }
+    },
+    {
+      "check": "seed 11 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 11 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-graph/src/extract.rs:104-177 extract_systems",
+        "field/input family": "discovery DD.UA",
+        "producer": "save discovery records",
+        "consumer": "GalaxyModel systems/planets",
+        "current operation": "from_packed on each SolarSystem and Planet then SystemId grouping",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; no separate DD.UA decoder; planet index derived from low-48 core layout"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-graph/src/extract.rs:104-177 extract_systems",
+        "field/input family": "discovery DD.UA",
+        "producer": "save discovery records",
+        "consumer": "GalaxyModel systems/planets",
+        "current operation": "from_packed on each SolarSystem and Planet then SystemId grouping",
+        "galaxy source": "hardcoded 0",
+        "contract evidence": "source code; no separate DD.UA decoder; planet index derived from low-48 core layout"
+      }
+    },
+    {
+      "check": "seed 12 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 12 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-graph/src/import.rs:92-160 import_csv",
+        "field/input family": "community portal glyphs",
+        "producer": "CSV Portal Glyphs and Galaxy columns",
+        "consumer": "GalaxyModel",
+        "current operation": "validates 12 hex digits then from_packed",
+        "galaxy source": "resolve_galaxy_index; unknown name falls back to 0",
+        "contract evidence": "portal-shaped public format; not a save UA path"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-graph/src/import.rs:92-160 import_csv",
+        "field/input family": "community portal glyphs",
+        "producer": "CSV Portal Glyphs and Galaxy columns",
+        "consumer": "GalaxyModel",
+        "current operation": "validates 12 hex digits then from_packed",
+        "galaxy source": "resolve_galaxy_index; unknown name falls back to 0",
+        "contract evidence": "portal-shaped public format; not a save UA path"
+      }
+    },
+    {
+      "check": "seed 13 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 13 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-cli/src/convert.rs:6-128 run/parse_glyphs/parse_signal_booster/parse_galactic_address/parse_voxel",
+        "field/input family": "CLI portal glyphs/signal booster/raw --ga/voxel inputs",
+        "producer": "CLI flags",
+        "consumer": "format table",
+        "current operation": "portal parser or raw hex then low-48 mask; voxel route checks X/Z and SSI before GalacticAddress::new; planet is u8 then constructor masks to 4 bits",
+        "galaxy source": "selected --galaxy; signal booster and voxel use --planet",
+        "contract evidence": "source API and CLI route; existing test explicitly expects 56-bit raw --ga truncation"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-cli/src/convert.rs:6-128 run/parse_glyphs/parse_signal_booster/parse_galactic_address/parse_voxel",
+        "field/input family": "CLI portal glyphs/signal booster/raw --ga/voxel inputs",
+        "producer": "CLI flags",
+        "consumer": "format table",
+        "current operation": "portal parser or raw hex then low-48 mask; voxel route checks X/Z and SSI before GalacticAddress::new; planet is u8 then constructor masks to 4 bits",
+        "galaxy source": "selected --galaxy; signal booster and voxel use --planet",
+        "contract evidence": "source API and CLI route; existing test explicitly expects 56-bit raw --ga truncation"
+      }
+    },
+    {
+      "check": "seed 14 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 14 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-cli/src/convert.rs:79-128 parse_voxel; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "CLI --voxel X,Y,Z plus --ssi",
+        "producer": "CLI flags (X/Z strings; --ssi u16; --planet u8)",
+        "consumer": "core GalacticAddress then format table",
+        "current operation": "parses X/Z as i16 and Y as i8; rejects X/Z outside -2048..2047 and SSI > 4094; constructor masks planet to low 4 bits",
+        "galaxy source": "explicit --galaxy resolves to u8; no galaxy in packed value",
+        "contract evidence": "source observation; actual CLI valid and range-error probes repeated in iteration01; acceptance policy remains owner decision"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-cli/src/convert.rs:79-128 parse_voxel; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "CLI --voxel X,Y,Z plus --ssi",
+        "producer": "CLI flags (X/Z strings; --ssi u16; --planet u8)",
+        "consumer": "core GalacticAddress then format table",
+        "current operation": "parses X/Z as i16 and Y as i8; rejects X/Z outside -2048..2047 and SSI > 4094; constructor masks planet to low 4 bits",
+        "galaxy source": "explicit --galaxy resolves to u8; no galaxy in packed value",
+        "contract evidence": "source observation; actual CLI valid and range-error probes repeated in iteration01; acceptance policy remains owner decision"
+      }
+    },
+    {
+      "check": "seed 15 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 15 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-copilot/src/dispatch.rs:454-533 dispatch_convert/parse_voxel/resolve_galaxy; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "REPL portal glyphs/signal booster/--ga alias/voxel inputs",
+        "producer": "REPL convert command",
+        "consumer": "formatted textual address",
+        "current operation": "--ga route calls parse_glyphs (portal parser); voxel route parses i16/i8/i16 and calls masking constructor without CLI X/Z/SSI checks",
+        "galaxy source": "selected galaxy; signal booster and voxel use planet",
+        "contract evidence": "source observation; CLI and REPL validation differ; no live REPL receipt or policy decision"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-copilot/src/dispatch.rs:454-533 dispatch_convert/parse_voxel/resolve_galaxy; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "REPL portal glyphs/signal booster/--ga alias/voxel inputs",
+        "producer": "REPL convert command",
+        "consumer": "formatted textual address",
+        "current operation": "--ga route calls parse_glyphs (portal parser); voxel route parses i16/i8/i16 and calls masking constructor without CLI X/Z/SSI checks",
+        "galaxy source": "selected galaxy; signal booster and voxel use planet",
+        "contract evidence": "source observation; CLI and REPL validation differ; no live REPL receipt or policy decision"
+      }
+    },
+    {
+      "check": "seed 16 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 16 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-copilot/src/dispatch.rs:496-533 parse_voxel; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "REPL --voxel X,Y,Z plus --ssi",
+        "producer": "REPL command fields (X/Z strings; --ssi u16; --planet u8)",
+        "consumer": "core GalacticAddress then textual formatter",
+        "current operation": "parses X/Z as i16 and Y as i8; no explicit X/Z or SSI bound checks; constructor masks X/Z/SSI to 12 bits and planet to 4 bits",
+        "galaxy source": "explicit --galaxy resolves to u8; no galaxy in packed value",
+        "contract evidence": "source inspection only; 3000 X and SSI 4095 are within primitive parse widths and reach constructor by route; no live REPL execution claimed"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-copilot/src/dispatch.rs:496-533 parse_voxel; crates/nms-core/src/address.rs:78-117 GalacticAddress::new",
+        "field/input family": "REPL --voxel X,Y,Z plus --ssi",
+        "producer": "REPL command fields (X/Z strings; --ssi u16; --planet u8)",
+        "consumer": "core GalacticAddress then textual formatter",
+        "current operation": "parses X/Z as i16 and Y as i8; no explicit X/Z or SSI bound checks; constructor masks X/Z/SSI to 12 bits and planet to 4 bits",
+        "galaxy source": "explicit --galaxy resolves to u8; no galaxy in packed value",
+        "contract evidence": "source inspection only; 3000 X and SSI 4095 are within primitive parse widths and reach constructor by route; no live REPL execution claimed"
+      }
+    },
+    {
+      "check": "seed 17 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 17 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-copilot/src/mcp/tools.rs:646-695 handle_convert",
+        "field/input family": "MCP portal glyphs/signal booster/raw galactic_address",
+        "producer": "JSON tool args",
+        "consumer": "MCP conversion result",
+        "current operation": "12-digit check for glyphs; raw galactic_address parsed as u64 then from_packed; output truncates to 12 digits",
+        "galaxy source": "hardcoded 0 for every input",
+        "contract evidence": "source API; width handling differs by input branch"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-copilot/src/mcp/tools.rs:646-695 handle_convert",
+        "field/input family": "MCP portal glyphs/signal booster/raw galactic_address",
+        "producer": "JSON tool args",
+        "consumer": "MCP conversion result",
+        "current operation": "12-digit check for glyphs; raw galactic_address parsed as u64 then from_packed; output truncates to 12 digits",
+        "galaxy source": "hardcoded 0 for every input",
+        "contract evidence": "source API; width handling differs by input branch"
+      }
+    },
+    {
+      "check": "seed 18 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 18 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-query/src/find.rs:60-160 execute_find/FindResult",
+        "field/input family": "decoded System and Planet",
+        "producer": "GalaxyModel and FindQuery",
+        "consumer": "CLI/REPL/MCP find output",
+        "current operation": "formats portal_hex from system.address.packed(); returns matched planet separately",
+        "galaxy source": "system address reality index",
+        "contract evidence": "source code; glyph planet nibble can differ from returned planet.index; biome-only branch joins by planet index alone"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-query/src/find.rs:60-160 execute_find/FindResult",
+        "field/input family": "decoded System and Planet",
+        "producer": "GalaxyModel and FindQuery",
+        "consumer": "CLI/REPL/MCP find output",
+        "current operation": "formats portal_hex from system.address.packed(); returns matched planet separately",
+        "galaxy source": "system address reality index",
+        "contract evidence": "source code; glyph planet nibble can differ from returned planet.index; biome-only branch joins by planet index alone"
+      }
+    },
+    {
+      "check": "seed 19 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 19 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-watch/src/snapshot.rs:13-61 SaveSnapshot::from_save",
+        "field/input family": "discovery/player/base addresses",
+        "producer": "SaveRoot via extract_systems and save conversion",
+        "consumer": "snapshot systems/planets/bases/player_address",
+        "current operation": "delegates conversions; indexes planets by (SystemId, planet index)",
+        "galaxy source": "inherited from source conversions",
+        "contract evidence": "source code; inherits address and identity behavior"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-watch/src/snapshot.rs:13-61 SaveSnapshot::from_save",
+        "field/input family": "discovery/player/base addresses",
+        "producer": "SaveRoot via extract_systems and save conversion",
+        "consumer": "snapshot systems/planets/bases/player_address",
+        "current operation": "delegates conversions; indexes planets by (SystemId, planet index)",
+        "galaxy source": "inherited from source conversions",
+        "contract evidence": "source code; inherits address and identity behavior"
+      }
+    },
+    {
+      "check": "seed 20 unique",
+      "pass": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "check": "seed 20 full seven columns preserved",
+      "pass": true,
+      "actual": {
+        "path/symbol": "crates/nms-cache/src/data.rs:9-46 and serialize.rs:17-44",
+        "field/input family": "derived decoded addresses",
+        "producer": "CachedSystem from GalaxyModel",
+        "consumer": "rkyv cache and rebuild",
+        "current operation": "serializes GalacticAddress directly; freshness currently compares cache/save mtimes",
+        "galaxy source": "not encoded separately except embedded address",
+        "contract evidence": "source code; no decoder/schema version field found"
+      },
+      "expected": {
+        "path/symbol": "crates/nms-cache/src/data.rs:9-46 and serialize.rs:17-44",
+        "field/input family": "derived decoded addresses",
+        "producer": "CachedSystem from GalaxyModel",
+        "consumer": "rkyv cache and rebuild",
+        "current operation": "serializes GalacticAddress directly; freshness currently compares cache/save mtimes",
+        "galaxy source": "not encoded separately except embedded address",
+        "contract evidence": "source code; no decoder/schema version field found"
+      }
+    },
+    {
+      "check": "six prescribed IDs",
+      "pass": true,
+      "actual": [
+        "convert-raw-ga",
+        "convert-portal-glyphs",
+        "convert-portal-shaped-ga",
+        "import-collision",
+        "import-collision-reversed",
+        "import-distinct-prescribed"
+      ],
+      "expected": [
+        "convert-raw-ga",
+        "convert-portal-glyphs",
+        "convert-portal-shaped-ga",
+        "import-collision",
+        "import-collision-reversed",
+        "import-distinct-prescribed"
+      ]
+    },
+    {
+      "check": "supplement ID",
+      "pass": true,
+      "actual": [
+        "import-distinct-ssi-same-galaxy"
+      ],
+      "expected": [
+        "import-distinct-ssi-same-galaxy"
+      ]
+    },
+    {
+      "check": "parser denominator",
+      "pass": true,
+      "actual": 45,
+      "expected": 45
+    },
+    {
+      "check": "parser27/18",
+      "pass": true,
+      "actual": [
+        27,
+        18
+      ],
+      "expected": [
+        27,
+        18
+      ]
+    },
+    {
+      "check": "all-run34/18",
+      "pass": true,
+      "actual": [
+        34,
+        18
+      ],
+      "expected": [
+        34,
+        18
+      ]
+    },
+    {
+      "check": "method counts",
+      "pass": true,
+      "actual": [
+        45,
+        7,
+        52
+      ],
+      "expected": [
+        45,
+        7,
+        52
+      ]
+    },
+    {
+      "check": "prescribed CSV exact rows",
+      "pass": true,
+      "actual": [
+        "System Name,Portal Glyphs,Galaxy",
+        "Synthetic zero,212B04B2446A,0",
+        "Synthetic nine,212C04B2446A,9"
+      ],
+      "expected": [
+        "System Name,Portal Glyphs,Galaxy",
+        "Synthetic zero,212B04B2446A,0",
+        "Synthetic nine,212C04B2446A,9"
+      ]
+    },
+    {
+      "check": "fresh build exit",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "CC build argv",
+      "pass": true,
+      "actual": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "nms-cli"
+      ],
+      "expected": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "nms-cli"
+      ]
+    },
+    {
+      "check": "CC build exit",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "CC build stdout exact",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "CC build stderr exact except elapsed duration",
+      "pass": false,
+      "actual": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n",
+      "expected": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+    },
+    {
+      "check": "fresh prescribed exit",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "fresh prescribed stderr",
+      "pass": true,
+      "actual": "Imported 2 systems (0 duplicates, 0 skipped)\n",
+      "expected": "Imported 2 systems (0 duplicates, 0 skipped)\n"
+    },
+    {
+      "check": "fresh prescribed original stdout digest",
+      "pass": true,
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "check": "Co-authored-by: Codex <noreply@openai.com> exactly once",
+      "pass": true,
+      "actual": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "check": "Co-authored-by: Billo AI <ai-engineering@billo.systems> exactly once",
+      "pass": true,
+      "actual": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "check": "CC whitespace",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link behavior-probes.json",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link impact-map.csv",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link ../../slice02-packed-format-authority/artifacts/witnesses.json",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link ../../slice03-decoded-location-witnesses/artifacts/field-assessment.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link ../../../artifacts/closeout-2026-10-03/baseline-report.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link ../../slice02-packed-format-authority/artifacts/witnesses.json",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/decision-packet.md link ../../slice03-decoded-location-witnesses/artifacts/field-assessment.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md link artifacts/decision-packet.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md link artifacts/impact-map.csv",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md link artifacts/behavior-probes.json",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md link artifacts/execution.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md link ledger.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration01.md link cc-prompt.md",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "crates/nms-save/src/model.rs prior reviewed source hash",
+      "pass": true,
+      "actual": "8295307ae79e7c5c3bb7532f57f3691e692dcc67b8702df2acd69e76c5283df9",
+      "expected": "8295307ae79e7c5c3bb7532f57f3691e692dcc67b8702df2acd69e76c5283df9"
+    },
+    {
+      "check": "crates/nms-save/src/convert.rs prior reviewed source hash",
+      "pass": true,
+      "actual": "fd3035b3ba1729f4d0ab93a6e7ef1575c0f930b68c8e0cc9e01197b20da30596",
+      "expected": "fd3035b3ba1729f4d0ab93a6e7ef1575c0f930b68c8e0cc9e01197b20da30596"
+    },
+    {
+      "check": "crates/nms-graph/src/extract.rs prior reviewed source hash",
+      "pass": true,
+      "actual": "0ac87f1ba3f3ce0f578e3b68c7fcf7c7c1983ed6f5b703b31ec26af16566227d",
+      "expected": "0ac87f1ba3f3ce0f578e3b68c7fcf7c7c1983ed6f5b703b31ec26af16566227d"
+    },
+    {
+      "check": "crates/nms-core/src/delta.rs prior reviewed source hash",
+      "pass": true,
+      "actual": "1664331d84d85f8ac5a6e0382c36e4588b499dd8d9690d7493f4fcc4e73643ab",
+      "expected": "1664331d84d85f8ac5a6e0382c36e4588b499dd8d9690d7493f4fcc4e73643ab"
+    },
+    {
+      "check": "crates/nms-watch/src/delta.rs prior reviewed source hash",
+      "pass": true,
+      "actual": "36413fb4426e3644568f4180fb04974e9715fe72ed49794348b77cfb56b7384c",
+      "expected": "36413fb4426e3644568f4180fb04974e9715fe72ed49794348b77cfb56b7384c"
+    },
+    {
+      "check": "source clean final",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    }
+  ],
+  "failed_checks": [
+    {
+      "check": "CC build stderr exact except elapsed duration",
+      "pass": false,
+      "actual": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n",
+      "expected": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+    }
+  ],
+  "fresh_build": {
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "nms-cli"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.21s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+  },
+  "fresh_import": {
+    "argv": [
+      "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+      "import",
+      "/private/tmp/nms-s04-it01-cdc-gg7olfx4/distinct.csv",
+      "--save",
+      "/private/tmp/nms-s04-it01-cdc-gg7olfx4/empty.json",
+      "--source",
+      "synthetic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Imported 2 systems (0 duplicates, 0 skipped)\n",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "csv": "System Name,Portal Glyphs,Galaxy\nSynthetic zero,212B04B2446A,0\nSynthetic nine,212C04B2446A,9\n",
+    "save_sha256": "d4fb42b7c99bbad31d85d4f52425be3c00c1994ce7c60ff75630d0098bc27d9d"
+  },
+  "retained_evidence": {
+    "receipt": "artifacts/cdc-review-receipts.json",
+    "reviewed_commit": "74359a92a48669d5ab0368bb51351ac840f1b9fc",
+    "full_prior_result_objects_unchanged": 51,
+    "parser_cases_not_rerun": 45,
+    "prior_controls_not_rerun": 6
+  },
+  "review_attempts": [
+    {
+      "attempt": "First reviewer helper",
+      "result": "Built and executed prescribed import, then receipt serialization failed because historical-prefix checks carried raw bytes. Output was not retained. Replaced those checks with SHA-256 comparisons and repeated the affected build/import to capture evidence. Two builds and two import executions total; only final captures retained."
+    }
+  ],
+  "limits": [
+    "synthetic import only, invocation-local counts; no winner/persistence proof",
+    "No raw save/user cache/live watcher/protocol/production repair",
+    "Build diagnostic elapsed duration normalized; all other stderr compared exactly",
+    "Earlier required reading outputs truncated; relevant sections recovered with bounded reads"
+  ],
+  "manual_review": {
+    "R01": "Pass: exact prescribed import freshly reproduced; 52 result objects correctly classified; all51 previous full objects retained.",
+    "R02": "Pass: current packet matches full W-CHILI provenance and separate Slice03 base warrant; raw dm/DM.CN and current None conversions confirmed.",
+    "R03": "Pass: future same-coordinate galaxy snapshot test observes new_systems/new_planets; no removal API/acceptance is asserted.",
+    "E01": "Incomplete: historical build summary qualified, but iteration01_build claims exact stderr and omits what from the Cargo diagnostic. Build exit and warning reproduce; raw-capture fidelity does not. Only RP07 remains open."
+  },
+  "iteration02_author_readiness": {
+    "kind": "author readiness, not CC acceptance",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 327,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "c4a8f6d8e631dfc34473fe99ff573d59296a8a6f6ef4c8b147fd27fc7de0af1e",
+    "JSON_roundtrip_matches_captured_bytes": true,
+    "method": "Captured byte streams directly; temp raw files; generated JSON from returned process data; read back and encode exact UTF-8 bytes. One additional build, no import/parser replay."
+  }
+}

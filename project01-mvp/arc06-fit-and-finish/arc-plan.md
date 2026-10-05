@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.8, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.9, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -70,6 +70,12 @@ Authority: the user's closeout preparation and Expedited Mode authorize this bou
 
 ## Slice04 initial independent review
 
-CDC review of74359a9 accepts RP-01 and returns six rows for bounded correction. All45 parser cases reproduce27/18 and prescribed controls reproduce independently, but CC substituted the sixth control; oracle/name provenance and unsupported watcher removal proof need correction. [Iteration01](slice04-address-repair-contract/cc-prompt-iteration01.md) is current. R06-S04 remains open. No packet adoption or production repair is authorized.
+CDC review of74359a9 accepts RP-01 and returns six rows for bounded correction. All45 parser cases reproduce27/18 and prescribed controls reproduce independently, but CC substituted the sixth control; oracle/name provenance and unsupported watcher removal proof need correction. [Iteration01](slice04-address-repair-contract/cc-prompt-iteration01.md) was current at the initial review; iteration02 below supersedes that active assignment. R06-S04 remains open. No packet adoption or production repair is authorized.
 
 Version1.8 (2026-10-04): routine Slice04 progress and corrective assignment, retaining source/acceptance/architecture/compatibility boundaries and the existing dependency sequence.
+
+## Slice04 iteration01 review progress
+
+CDC review of7d33b1d accepts RP-02–RP-06; RP-01 retained. Only RP-07 exact build-capture fidelity remains (the recorded diagnostic omits one word); successful build/import and corrected semantic packet are reproduced. [Iteration02](slice04-address-repair-contract/cc-prompt-iteration02.md) is current, confined to four existing CC files; all52 result objects and accepted decision/map components are retained. R06-S04 remains open, and no production policy/repair or original arc capability is accepted.
+
+Version1.9 (2026-10-04): routine child-review/current-assignment update after Slice04 iteration01; no structural sequencing, architecture, acceptance or compatibility amendment. Six rows accepted, one metadata refinement pending.

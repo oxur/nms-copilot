@@ -31,7 +31,7 @@ The existing CI run passed default-feature tests on Linux, Windows, and macOS at
 ## Active assignment
 
 ```text
-arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration01.md
+arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md
 ```
 
 Current follow-up: Slice03 is [independently accepted](arc06-fit-and-finish/slice03-decoded-location-witnesses/cdc-verification.md) after iteration02; seven bounded investigation rows done, with all prior failures preserved. Slice04's [open set](arc06-fit-and-finish/slice04-address-repair-contract/slice-plan.md) prepares the concrete repair decision packet: synthetic invalid/default behavior, caller/galaxy identity consequences and API/cache/watch compatibility choices. This is the existing address-contract prerequisite, not production approval. Slice01/Slice02 remain independently closed investigations with their documented limits; original arc/project capabilities remain open.
@@ -39,6 +39,8 @@ Current follow-up: Slice03 is [independently accepted](arc06-fit-and-finish/slic
 Progress2026-10-04:44 corrected literals match faithful actual44/44, initial-bad expected0/44; initial witnesses match expected44/44, actual0/44. CDC retained unaffected evidence and freshly accepted the clarification. Source-level/synthetic author reconnaissance for Slice04 exposes same-coordinate cross-galaxy SystemId collision and unchanged-cache decoding risks; those are addressed by a decision packet before implementation.
 
 Progress2026-10-04, Slice04 initial review: [CDC](arc06-fit-and-finish/slice04-address-repair-contract/cdc-verification.md) accepts RP-01, returns six rows for bounded iteration01. All45 parser cases independently reproduce27/18; missing prescribed control independently passes. CC must record it without replacing the supplemental run, correct Chili/name provenance and use available watcher additions rather than an unapproved removal API. Packet, arc and project remain open; no new policy adopted.
+
+Progress2026-10-04, Slice04 iteration01: CDC accepts five corrected rows, retaining RP-01; only RP-07 exact diagnostic capture remains open. Fresh prescribed import and build succeed; all51 earlier result objects remain identical. Iteration02 is a four-file metadata correction with no parser/import replay or production policy. Original arc/project gates remain held.
 
 ## Gates and authority
 

@@ -1,6 +1,6 @@
 # Slice04 — Address repair contract decision packet
 
-Version: 1.1, opened 2026-10-04. Status: active, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
+Version: 1.2, opened 2026-10-04. Status: active, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
 
 ## Outcome and boundaries
 
@@ -23,8 +23,9 @@ The executable recipe names a complete45-case manifest, field injection paths, e
 ## Assignment history and version history
 
 - Initial cc-prompt.md, issued2026-10-04, returned for review at74359a9; CDC accepts RP-01 and returns six rows for correction. Initial prompt preserved.
-- cc-prompt-iteration01.md, issued2026-10-04, predecessor cc-prompt.md; active correction of control substitution, oracle/name source claims and watcher proof feasibility, plus historical build-summary clarification. Executed refinement passes:0; iteration01 not yet executed.
-- Current assignment: `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration01.md`.
+- cc-prompt-iteration01.md, issued2026-10-04, predecessor cc-prompt.md; returned for independent review at7d33b1d; substantive corrections accepted, RP-07 exact capture mismatch remains. Executed refinement passes:1.
+- cc-prompt-iteration02.md, issued2026-10-04, predecessor cc-prompt-iteration01.md; active RP-07-only raw-build-capture correction. Iteration02 not yet executed.
+- Current assignment: `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md`.
 - Version1.0: opened after Slice03 closes, detailing the existing address-contract-before-repair step; no original scope, architecture, compatibility or acceptance amendment.
 
 ## Author packet checks
@@ -38,3 +39,11 @@ CDC independently replayed all45 parser cases27/18, five prescribed controls, th
 Iteration01 author inspected the exact distinct_csv and fresh import stderr route, real RawDiscoveryRecord.dm/DM.CN witness and conversion/extraction bodies, and complete SaveDelta/compute_delta observable fields. It supplies a concrete one-control recipe and source-grounded future addition test. No all45 rerun is required when full original result objects/source/baseline are preserved. Scope remains six CC paths; execution and closing history are exact retained prefixes, RP-01 is byte-stable and all production decisions stay held. Domain guideline applications stay at proposal/error/evidence-role level; no code/API design selected.
 
 Version1.1: initial independent review and concrete iteration01 issued inside the existing slice; original criteria, architecture, repair sequence and compatibility/Operator gates unchanged.
+
+## Iteration01 verdict and iteration02 readiness
+
+CDC accepts RP-02–RP-06 after independently checking full51-object retention, exact prescribed import, complete corrected packet, witness/source contracts and S06. RP-01 retains acceptance. Only RP-07 is open: iteration01_build's claimed exact diagnostic omits one word from actual Cargo output. The build itself passes; no product repair is required. Prior failed history and original issued prompts remain preserved.
+
+Author directly captured the current Cargo build, confirmed the diagnostic mismatch (normalizing elapsed duration only), and checked the available raw-stream→JSON byte-equality method. Iteration02 narrows work to four existing CC files and appends one new build object/note; all52 result objects, decision/map files, and six accepted rows are frozen. No substantive contract, code, policy, scope or compatibility choice changes. This is one bounded metadata refinement within the existing slice, not another evidence investigation.
+
+Version1.2 (2026-10-04): iteration01 reviewed and one executed refinement recorded; five additional rows accepted, one exact-capture issue returned in iteration02. Original seven criteria and production gates unchanged.
