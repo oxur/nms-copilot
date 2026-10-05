@@ -6,12 +6,20 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use chrono::TimeZone;
 use rkyv::rancor::Error as RkyvError;
+use rkyv::util::AlignedVec;
 
 use nms_core::system::System;
 use nms_graph::{EdgeStrategy, GalaxyModel};
 
 use crate::data::{CacheData, CachedSystem};
-use crate::error::CacheError;
+use crate::error::{CacheCompatibilityError, CacheError};
+
+// Bump the schema revision when the archive layout or codec changes. Bump the
+// semantic revision when the meaning or identity rules of CacheData change.
+const CACHE_MAGIC: &[u8; 8] = b"NMSCACHE";
+const CACHE_SCHEMA_REVISION: u32 = 1;
+const CACHE_SEMANTIC_REVISION: u32 = 1;
+const CACHE_HEADER_LEN: usize = 16;
 
 /// Extract cache data from a GalaxyModel.
 pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
@@ -43,16 +51,64 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
     }
 }
 
-/// Serialize cache data to bytes.
+/// Serialize cache data to bytes with a 16-byte compatibility envelope.
+///
+/// The envelope contains the archive schema and model semantic revisions;
+/// these revisions are independent of [`CacheData::save_version`].
 pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
-    rkyv::to_bytes::<RkyvError>(data)
-        .map(|v| v.to_vec())
-        .map_err(|e| CacheError::Serialize(e.to_string()))
+    let payload =
+        rkyv::to_bytes::<RkyvError>(data).map_err(|e| CacheError::Serialize(e.to_string()))?;
+    let mut bytes = Vec::with_capacity(CACHE_HEADER_LEN + payload.len());
+    bytes.extend_from_slice(CACHE_MAGIC);
+    bytes.extend_from_slice(&CACHE_SCHEMA_REVISION.to_le_bytes());
+    bytes.extend_from_slice(&CACHE_SEMANTIC_REVISION.to_le_bytes());
+    bytes.extend_from_slice(&payload);
+    Ok(bytes)
 }
 
-/// Deserialize cache data from bytes.
+/// Validate the compatibility envelope, then checked-decode its rkyv payload.
+///
+/// Envelope and revision errors are returned before the payload is inspected.
 pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
-    rkyv::from_bytes::<CacheData, RkyvError>(bytes)
+    if bytes.len() < CACHE_HEADER_LEN {
+        return Err(CacheError::Incompatible(
+            CacheCompatibilityError::TruncatedHeader {
+                actual: bytes.len(),
+            },
+        ));
+    }
+
+    if &bytes[..8] != CACHE_MAGIC {
+        return Err(CacheError::Incompatible(
+            CacheCompatibilityError::InvalidMagic,
+        ));
+    }
+
+    let schema_revision = u32::from_le_bytes(bytes[8..12].try_into().unwrap());
+    if schema_revision != CACHE_SCHEMA_REVISION {
+        return Err(CacheError::Incompatible(
+            CacheCompatibilityError::SchemaMismatch {
+                found: schema_revision,
+                expected: CACHE_SCHEMA_REVISION,
+            },
+        ));
+    }
+
+    let semantic_revision = u32::from_le_bytes(bytes[12..16].try_into().unwrap());
+    if semantic_revision != CACHE_SEMANTIC_REVISION {
+        return Err(CacheError::Incompatible(
+            CacheCompatibilityError::SemanticMismatch {
+                found: semantic_revision,
+                expected: CACHE_SEMANTIC_REVISION,
+            },
+        ));
+    }
+
+    // The envelope is a Vec<u8>, so its payload offset need not satisfy rkyv's
+    // alignment requirements. Copy into aligned storage before checked decode.
+    let mut aligned = AlignedVec::<16>::with_capacity(bytes.len() - CACHE_HEADER_LEN);
+    aligned.extend_from_slice(&bytes[CACHE_HEADER_LEN..]);
+    rkyv::from_bytes::<CacheData, RkyvError>(&aligned)
         .map_err(|e| CacheError::Deserialize(e.to_string()))
 }
 
@@ -113,6 +169,7 @@ pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::error::CacheCompatibilityError;
 
     fn test_model() -> GalaxyModel {
         let json = r#"{
@@ -211,5 +268,141 @@ mod tests {
         let data = extract_cache_data(&model, 4720);
         let rebuilt = rebuild_model(&data);
         assert!(rebuilt.base("Test Base").is_some());
+    }
+
+    #[test]
+    fn test_envelope_has_literal_header_and_roundtrips() {
+        let data = extract_cache_data(&test_model(), 4720);
+        let bytes = serialize(&data).unwrap();
+
+        assert_eq!(
+            &bytes[..CACHE_HEADER_LEN],
+            &[
+                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 1, 0, 0, 0, 1, 0, 0, 0
+            ]
+        );
+        assert_eq!(data.save_version, 4720);
+        assert_ne!(data.save_version, CACHE_SCHEMA_REVISION);
+        assert_eq!(deserialize(&bytes).unwrap().save_version, 4720);
+    }
+
+    #[test]
+    fn test_deserialize_handles_misaligned_borrowed_envelope() {
+        let data = extract_cache_data(&test_model(), 4720);
+        let bytes = serialize(&data).unwrap();
+        let mut backing = vec![0_u8; bytes.len() + 16];
+        let base = backing.as_ptr() as usize;
+        let offset = (0..16)
+            .find(|offset| !(base + offset).is_multiple_of(16))
+            .unwrap();
+        backing[offset..offset + bytes.len()].copy_from_slice(&bytes);
+        let borrowed = &backing[offset..offset + bytes.len()];
+
+        assert!(!(borrowed.as_ptr() as usize).is_multiple_of(16));
+        assert_eq!(deserialize(borrowed).unwrap().save_version, 4720);
+    }
+
+    #[test]
+    fn test_deserialize_compatibility_error_precedence() {
+        for size in [7, 8, 15] {
+            assert!(matches!(
+                deserialize(&vec![0; size]),
+                Err(CacheError::Incompatible(
+                    CacheCompatibilityError::TruncatedHeader { actual }
+                )) if actual == size
+            ));
+        }
+
+        let mut bytes = vec![0; CACHE_HEADER_LEN];
+        bytes[..8].copy_from_slice(b"BADMAGIC");
+        assert!(matches!(
+            deserialize(&bytes),
+            Err(CacheError::Incompatible(
+                CacheCompatibilityError::InvalidMagic
+            ))
+        ));
+
+        for schema in [0_u32, 2] {
+            bytes[..8].copy_from_slice(CACHE_MAGIC);
+            bytes[8..12].copy_from_slice(&schema.to_le_bytes());
+            bytes[12..16].copy_from_slice(&1_u32.to_le_bytes());
+            assert!(matches!(
+                deserialize(&bytes),
+                Err(CacheError::Incompatible(CacheCompatibilityError::SchemaMismatch {
+                    found,
+                    expected: 1
+                })) if found == schema
+            ));
+        }
+
+        for semantic in [0_u32, 2] {
+            bytes[8..12].copy_from_slice(&1_u32.to_le_bytes());
+            bytes[12..16].copy_from_slice(&semantic.to_le_bytes());
+            assert!(matches!(
+                deserialize(&bytes),
+                Err(CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
+                    found,
+                    expected: 1
+                })) if found == semantic
+            ));
+        }
+
+        // Mismatches are returned before inspecting an invalid payload, with
+        // schema precedence when both revision fields differ.
+        bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
+        bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
+        assert!(matches!(
+            deserialize(&bytes),
+            Err(CacheError::Incompatible(
+                CacheCompatibilityError::SchemaMismatch {
+                    found: 2,
+                    expected: 1
+                }
+            ))
+        ));
+    }
+
+    #[test]
+    fn test_current_header_with_bad_payload_is_deserialize_error() {
+        let mut bytes = CACHE_MAGIC.to_vec();
+        bytes.extend_from_slice(&1_u32.to_le_bytes());
+        bytes.extend_from_slice(&1_u32.to_le_bytes());
+        assert!(matches!(
+            deserialize(&bytes),
+            Err(CacheError::Deserialize(_))
+        ));
+    }
+
+    #[test]
+    fn test_headerless_archive_is_not_a_compatible_cache() {
+        let data = extract_cache_data(&test_model(), 9999);
+        let legacy = rkyv::to_bytes::<RkyvError>(&data).unwrap();
+        assert!(matches!(
+            deserialize(&legacy),
+            Err(CacheError::Incompatible(
+                CacheCompatibilityError::InvalidMagic
+            ))
+        ));
+    }
+
+    #[test]
+    fn test_compatibility_error_display_and_source_are_observable() {
+        let error = CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
+            found: 9,
+            expected: 1,
+        });
+        assert!(error.to_string().contains("semantic revision 9"));
+        assert!(error.to_string().contains("expected 1"));
+        assert_eq!(
+            std::error::Error::source(&error).unwrap().to_string(),
+            "cache model semantic revision 9 is incompatible (expected 1)"
+        );
+    }
+
+    #[test]
+    fn test_read_missing_cache_preserves_io_error() {
+        let dir = tempfile::tempdir().unwrap();
+        let error = read_cache(&dir.path().join("missing.rkyv")).unwrap_err();
+        assert!(matches!(error, CacheError::Io(_)));
     }
 }
