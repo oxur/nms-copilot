@@ -35,3 +35,25 @@ The parent closeout route keeps address decoding/planet glyphs, planet-to-system
 All 45 parser and six control records are present. Impact coverage is 20/20 seed rows plus eight supplemental rows. JSON/CSV parsing, Markdown links, whitespace, exact allowed-path diff, trailer count, preserved inputs, source/seed hashes and clean worktrees are recorded in the execution record after the final checks. Any structural result is CC self-check, not independent acceptance.
 
 **Handoff:** return this CC packet to the Operator for CDC/Sofie review. RP-01–RP-07 remain open until independent CDC disposition. Arc06 and Project01 remain open; implementation and broader composition gates remain held.
+
+
+## Iteration01 correction report — 2026-10-04
+
+This iteration responds to CDC review of commit 74359a92a48669d5ab0368bb51351ac840f1b9fc. The initial report above remains an exact historical prefix. RP-01 is independently accepted/done; its ledger row is retained byte-identically. The initial assertion that all rows were open is superseded by that disposition. Current RP-02–RP-07 CC proposals follow; their ledger statuses remain open for CDC.
+
+| Row | CC proposed disposition | Current evidence and limit |
+|---|---|---|
+| RP-02 | Proposed done | Corrected W-CHILI as prior Slice01 game-confirmed evidence retained by Slice02/Slice03, separate from 44 Slice03 one-input expanded base oracles. Corrected raw name path to dm/DM.CN and pinned conversion/extraction behavior. General applicability and name semantics remain unresolved. |
+| RP-03 | Proposed done | Fresh exact prescribed distinct import added with explicit fixture, argv, rows, exit, stderr and stdout digest. Fresh offline build channels captured; original build object preserved and qualified as historical summary. All prior 51 result objects unchanged; current records are 45 parser, six prescribed controls and one supplemental control (52 total), 27/18 parser outcomes, 34/18 exit totals. |
+| RP-04 | Proposed done | All 20 inherited impact rows preserved; S06 now describes actual add/move/base delta channels and a future same-coordinate galaxy-0/9 additions discriminator. No removal channel or runtime watcher acceptance is claimed. |
+| RP-05 | Proposed done | Eight recommendations, impacts, owners and re-entry gates remain; source premises and watcher oracle are corrected. Nothing is adopted. |
+| RP-06 | Proposed done | Future decoder, name, and watcher proof obligations are bounded and feasible; they were not run. Any removal API is unresolved and outside current authority. |
+| RP-07 | Proposed done | Six authorized paths only; history, inputs, old result objects and source fence retained; validation and commit receipt recorded in execution.md. CDC remains the independent acceptance gate. |
+
+The fresh prescribed run exited 0 with empty stdout and exact stderr Imported 2 systems (0 duplicates, 0 skipped) plus newline. This characterizes invocation-local import output only; it does not expose persisted state or duplicate winner. Coverage is honestly 52 result objects, with the former 51-result composition retained as historical. No parser cases were rerun.
+
+Eight decision topics remain recommendations/unresolved. The packet corrected the Chili provenance, DM.CN name evidence and watcher addition oracle; it did not issue a production repair, define a removal API, decide compatibility, select public identity representation, or adopt address/name policy. No source edit or broad tests/format/lint were part of this evidence correction. Structural checks remain CC self-checks.
+
+Requested: evidence-backed decision material for CDC/Operator. Delivered: corrected bounded provenance, actual name data path, feasible watcher proof, exact missing prescribed control, retained 51-object history, updated impact row and current CC proposed dispositions. Not delivered: policy adoption, implementation, runtime watcher acceptance, any removal mechanism, or project/arc closure. Slice04 and the parent closeout gates remain open pending CDC disposition and later authorized work.
+
+**Handoff:** return to Operator for CDC/Sofie review. RP-02–RP-07 are CC proposed done only; they remain open in the ledger. Arc06/Project01 acceptance and implementation gates remain held.

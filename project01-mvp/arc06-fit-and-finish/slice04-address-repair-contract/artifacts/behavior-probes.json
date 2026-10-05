@@ -21,9 +21,20 @@
     "fixture_basis": "independent deep copy of synthetic_save for every case; packed values from author-baseline; exact JSON kinds preserved",
     "save_argv": "nms info --save <temporary fixture>",
     "parse_run_count": 45,
-    "integration_run_count": 6,
-    "run_count": 51,
-    "observation": "stdout_projection is the relevant output projection; stdout_sha256 fingerprints complete original stdout; stderr is complete; failure status retained. No full save output or game-save values."
+    "integration_run_count": 7,
+    "run_count": 52,
+    "observation": "stdout_projection is the relevant output projection; stdout_sha256 fingerprints complete original stdout; stderr is complete; failure status retained. No full save output or game-save values.",
+    "prescribed_control_ids": [
+      "convert-raw-ga",
+      "convert-portal-glyphs",
+      "convert-portal-shaped-ga",
+      "import-collision",
+      "import-collision-reversed",
+      "import-distinct-prescribed"
+    ],
+    "supplemental_control_ids": [
+      "import-distinct-ssi-same-galaxy"
+    ]
   },
   "results": [
     {
@@ -1445,11 +1456,37 @@
       "stdout_projection": [],
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "interpretation": "Same galaxy, distinct portal system nibble/SSI; invocation-local model only."
+    },
+    {
+      "id": "import-distinct-prescribed",
+      "family": "integration",
+      "injection": {
+        "csv_rows": [
+          "System Name,Portal Glyphs,Galaxy",
+          "Synthetic zero,212B04B2446A,0",
+          "Synthetic nine,212C04B2446A,9"
+        ],
+        "save": "fresh deep copy of synthetic_save"
+      },
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/target/debug/nms",
+        "import",
+        "/private/tmp/slice04-iteration01/import-distinct-prescribed.csv",
+        "--save",
+        "/private/tmp/slice04-iteration01/import-distinct-prescribed-save.json",
+        "--source",
+        "synthetic"
+      ],
+      "exit_code": 0,
+      "stderr": "Imported 2 systems (0 duplicates, 0 skipped)\n",
+      "stdout_projection": [],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "interpretation": "Prescribed distinct-galaxy and distinct-system control; invocation-local model only. ImportStats does not expose persisted model state."
     }
   ],
   "summary": {
     "parse_runs": 45,
-    "integration_runs": 6,
+    "integration_runs": 7,
     "accepted": 27,
     "rejected": 18,
     "parse_by_family": {
@@ -1458,8 +1495,22 @@
       "expanded": 13
     },
     "exit_counts": {
-      "0": 33,
+      "0": 34,
       "1": 18
     }
-  }
+  },
+  "iteration01_build": {
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "nms-cli"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+  },
+  "historical_build_note": "The original build object is retained from the initial CC record. Its channel text was summary wording, not an exact captured stdout/stderr transcript; use iteration01_build for this iteration exact capture."
 }

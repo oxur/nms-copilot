@@ -7,8 +7,8 @@
 | Label | Evidence and scope | What it supports |
 |---|---|---|
 | Pinned source behavior | nms-core GalacticAddress packs 48 bits as P-SSS-YY-ZZZ-XXX; reality is a separate u8. from_packed/new mask. PortalAddress maps twelve glyph nibbles. Save PackedGalacticAddress deserializes integer/string forms and calls the core 48-bit conversion. Expanded UniverseAddress has RealityIndex plus typed GalacticAddressObject. Discovery/base conversions supply reality 0; player conversion uses expanded reality. | Current implementation and compatibility surfaces only. |
-| Accepted game-input evidence | Slice03's accepted one-save work contains the Chili discovery witness and 44 bidirectionally unique raw Name+Position base/endpoint corroborations. Base comparisons support bounded field agreement for those rows. | A narrow witness set; not universal DD.UA semantics, native-ID equivalence, or nonzero packed-galaxy policy. |
-| Synthetic current behavior | 45 explicit nms info --save runs: 18/32 packed-family injections and 9/13 expanded cases exited 0; 18 rejected. Six additional CLI controls all exited 0. Fixtures derive only from the author baseline. | Current serde/info and CLI routes for these JSON examples. It does not establish game validity or product correctness. |
+| Accepted game-input evidence | Prior Slice01 player/game-confirmed W-CHILI, inherited by Slice02 and retained by Slice03, is one discovery witness. Slice03 separately supplies 44 bounded one-input Name+Position expanded-field base/endpoint oracles; it adds no new game-confirmed witness or expanded Chili pairing ([W-CHILI](../../slice02-packed-format-authority/artifacts/witnesses.json), [field assessment](../../slice03-decoded-location-witnesses/artifacts/field-assessment.md)). | A narrow witness set; not universal DD.UA semantics, native-ID equivalence, or nonzero packed-galaxy policy. |
+| Synthetic current behavior | 45 explicit nms info --save runs: 18/32 packed-family injections and 9/13 expanded cases exited 0; 18 rejected. Seven CLI controls are now recorded: six prescribed and one supplemental; all exited 0. Fixtures derive only from the author baseline. | Current serde/info and CLI routes for these JSON examples. It does not establish game validity or product correctness. |
 | Recommendation | The proposals below are candidates for decision. | Nothing is adopted until CDC/Operator disposition and required evidence are complete. |
 | Unresolved | Discovery/base decoder warrant, exact game ranges, reality source, public API and identity migration remain unsettled. | A named owner and re-entry evidence are required before dependent production work. |
 
@@ -26,7 +26,7 @@ For a candidate 56-bit layout, split the field positions above, validate no bits
 
 **Callers/compatibility:** impact-map rows 1–12 and 17–20; direct save extraction, graph IDs, CLI base display and cache consumers. Existing public 48-bit callers remain unchanged under this recommendation.
 
-**Discriminating oracle:** exact low-48 components and portal results from independent expanded fields for Chili and a representative paired base, followed by all 44 accepted base comparisons retained from Slice03; candidate discovery decoding must reproduce the independent Chili oracle. Include accepted and deliberately wrong field partitions. A self-roundtrip is not an oracle.
+**Discriminating oracle:** candidate discovery decoding must reproduce the prior game-confirmed W-CHILI portal/components oracle; it is not a Slice03 expanded-field pair. Separately use a representative paired base and all 44 accepted Slice03 base comparisons. Include accepted and deliberately wrong field partitions. A self-roundtrip is not an oracle.
 
 **Owner / re-entry:** CDC validates evidence scope; Operator owns cross-crate/API choice. Re-enter implementation only after independent discovery and base oracle coverage is accepted and compatibility consequences are dispositioned.
 
@@ -92,7 +92,9 @@ For a candidate 56-bit layout, split the field positions above, validate no bits
 
 **Callers/compatibility:** identity maps, query joins, routes/edges, watchers and serialized caches. Per-galaxy R-trees do not repair a collision in shared maps.
 
-**Oracle:** identical portal coordinates in realities 0 and 9 must yield two systems, planets, lookup/node entries and distinct watcher add/remove keys; reverse insertion order; retain distinct-SSI same-galaxy control. Assert route/query lookup returns requested galaxy.
+**Oracle:** identical portal coordinates in realities 0 and 9 must yield two systems, planets, lookup/node entries and new_systems and new_planets additions for the newly present galaxy-qualified key; reverse insertion order; retain distinct-SSI same-galaxy control. Assert route/query lookup returns requested galaxy.
+
+Current SaveDelta exposes new_systems, new_planets, player_moved, new_bases and modified_bases; it has no removal channel (crates/nms-core/src/delta.rs:10–60; crates/nms-watch/src/snapshot.rs:1–61; crates/nms-watch/src/delta.rs:1–69). The bounded future sequence compares an old same-coordinate galaxy-0 snapshot with a new snapshot containing galaxies 0 and 9; after approved key migration, galaxy 9 must appear as a newly added system and planet. Reverse insertion roles/order to verify the corresponding addition. Assert player_moved only if the test deliberately changes the player address. Current identity collision should fail this intended proof. No removal test or claim is made; any removal API remains unresolved, outside current implementation authority, and requires Operator re-entry before implementation.
 
 **Owner / re-entry:** Operator chooses public identity/migration; graph owner proposes key. Re-enter after serialized/public SystemId consequences and migration plan are reviewed.
 
@@ -100,7 +102,7 @@ For a candidate 56-bit layout, split the field positions above, validate no bits
 
 **Recommendation (unresolved):** keep adjacent defects in their existing corrective tracks. The parent closeout route names separate work for address decoding/planet glyphs, planet-to-system query association, lost names, and supported feature combinations. Route save decode plus portal glyph correctness to address-repair implementation after this decision; route biome-only index association to the separate query-association corrective slice; route dropped RawDiscoveryRecord display names to the separate lost-name slice; leave feature/build combinations on their separate feature track. These are planned categories, not issued implementation assignments. Do not move them to Project02 or fold them into this packet.
 
-Current source: biome-only find associates by planet index alone rather than full originating key; FindResult builds portal glyphs from system address, so its planet nibble may not equal the matched Planet.index; CLI info masks base packed values directly to low48; discovery conversion drops record.name. Correcting packed decoding alone does not fix these consumers.
+Current source: biome-only find associates by planet index alone rather than full originating key; FindResult builds portal glyphs from system address, so its planet nibble may not equal the matched Planet.index; CLI info masks base packed values directly to low48; RawDiscoveryRecord carries generic dm JSON but no name field, to_core_record supplies None, and graph extraction ignores dm. The prior F02 synthetic fixture contains SolarSystem and Planet DM.CN names ([baseline report](../../../artifacts/closeout-2026-10-03/baseline-report.md)); these support a bounded future lost-name test, not a current preserved-name behavior claim. See crates/nms-save/src/model.rs:197–239, crates/nms-save/src/convert.rs:7–43 and crates/nms-graph/src/extract.rs:104–181. Correcting packed decoding alone does not fix these consumers.
 
 **Oracle:** two systems with equal planet indexes and only one matching biome must return its originating system; request a nonzero planet whose index differs from system address nibble and require that exact portal; assert base glyphs from independent oracle; verify name preservation from a synthetic named raw record separately from decoded address. Track each test under its future slice.
 
@@ -122,7 +124,7 @@ Before decoder release, either version semantic cache decoding separately from a
 
 | Contract decision | Future exact proof | Existing evidence usable within scope | Separate later gate |
 |---|---|---|---|
-| Save packed fields / D01 | Independent expanded components and portal for Chili and representative paired base; all 44 accepted base comparisons; wrong partition fails | Slice03 accepted witness receipt; current core portal oracle | Full parser-to-interface composition |
+| Save packed fields / D01 | Reproduce prior game-confirmed W-CHILI portal/components oracle; separately test a representative paired base and all 44 accepted base comparisons; wrong partition fails | [Slice02 W-CHILI](../../slice02-packed-format-authority/artifacts/witnesses.json); [Slice03 field assessment](../../slice03-decoded-location-witnesses/artifacts/field-assessment.md); current core portal oracle | Any new expanded Chili pair; full parser-to-interface composition |
 | Packed syntax/errors / D02 | JSON-token matrix, signed min/max, width+1, lexical forms, missing/null/empty/malformed; exact error or components | 45 synthetic current-behavior results characterize today's parser only | Game validity and chosen reject/skip policy |
 | Expanded policy / D03 | Signed bounds, SSI 0xFFE/0xFFF, planet 15/16, reality bounds, missing/default and previous sentinel | Existing source/schema and synthetic info observations | Primary game schema/range authority |
 | Reality / D04 | Same address with explicit realities 0/9 and independent source, plus missing/conflict cases | Synthetic collision counts only; accepted Slice03 rows where fields apply | Nonzero packed game witness |
@@ -132,3 +134,8 @@ Before decoder release, either version semantic cache decoding separately from a
 | Lifecycle / D08 | Old-decoded cache newer than source; stale/corrupt/missing; active galaxy and watcher cases | Pinned cache/watch source | Full parser/model/query/interface and live update composition |
 
 These are proof obligations for a future authorized repair, not tests run or promised APIs in this slice. No new test framework, trait, dependency, edition or runtime is proposed.
+
+
+## Iteration01 correction note — 2026-10-04
+
+This current packet corrects the source warrants and watcher oracle after CDC review of 74359a92a48669d5ab0368bb51351ac840f1b9fc. The prior version remains sealed at that commit. W-CHILI is prior Slice01 game-confirmed evidence retained by Slice02/Slice03; the separate 44 one-input base/endpoint expanded-field oracles are bounded to Slice03's save. Chili is not claimed as a Slice03 expanded-field pairing. Name evidence is RawDiscoveryRecord.dm and the fixture's DM.CN values; the current conversion/extraction path drops names as described above. Watcher proof now requires observable additions after an approved galaxy-qualified identity migration. Removal behavior has no current delta channel and is not a proposed implementation requirement. All D01–D08 recommendations and named policy choices remain unresolved; this note adopts no policy.
