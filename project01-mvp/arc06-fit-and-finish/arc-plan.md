@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.7, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.8, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -67,3 +67,9 @@ CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-enc
 5. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
 
 Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.
+
+## Slice04 initial independent review
+
+CDC review of74359a9 accepts RP-01 and returns six rows for bounded correction. All45 parser cases reproduce27/18 and prescribed controls reproduce independently, but CC substituted the sixth control; oracle/name provenance and unsupported watcher removal proof need correction. [Iteration01](slice04-address-repair-contract/cc-prompt-iteration01.md) is current. R06-S04 remains open. No packet adoption or production repair is authorized.
+
+Version1.8 (2026-10-04): routine Slice04 progress and corrective assignment, retaining source/acceptance/architecture/compatibility boundaries and the existing dependency sequence.

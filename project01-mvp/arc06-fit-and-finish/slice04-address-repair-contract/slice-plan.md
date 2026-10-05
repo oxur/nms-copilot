@@ -1,6 +1,6 @@
 # Slice04 — Address repair contract decision packet
 
-Version: 1.0, opened 2026-10-04. Status: active, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
+Version: 1.1, opened 2026-10-04. Status: active, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
 
 ## Outcome and boundaries
 
@@ -10,7 +10,7 @@ Binding inspection scope is in cc-prompt.md: all20 predecessor caller rows plus 
 
 ## Verification and authority
 
-Seven open RP rows govern acceptance of the packet's fidelity, not adoption of a decoder or desired policy. Source facts, accepted one-input observations, synthetic results, author recommendations and unresolved policy must remain distinct. Unknown/unsupported outcomes with concrete owner/re-entry conditions are legitimate investigation findings. CDC independently checks CC outputs, then resolves the consequential design/Operator gates before a separate production assignment. Never turn recommended types/errors/migrations into current APIs or a promised implementation.
+Seven RP rows govern acceptance of the packet's fidelity, not adoption of a decoder or desired policy. Source facts, accepted one-input observations, synthetic results, author recommendations and unresolved policy must remain distinct. Unknown/unsupported outcomes with concrete owner/re-entry conditions are legitimate investigation findings. CDC independently checks CC outputs, then resolves the consequential design/Operator gates before a separate production assignment. Never turn recommended types/errors/migrations into current APIs or a promised implementation.
 
 ## Author readiness
 
@@ -22,9 +22,19 @@ The executable recipe names a complete45-case manifest, field injection paths, e
 
 ## Assignment history and version history
 
-- Initial cc-prompt.md, issued2026-10-04, active for fresh CC execution, then Operator relay to CDC/Sofie. Executed refinement passes:0.
+- Initial cc-prompt.md, issued2026-10-04, returned for review at74359a9; CDC accepts RP-01 and returns six rows for correction. Initial prompt preserved.
+- cc-prompt-iteration01.md, issued2026-10-04, predecessor cc-prompt.md; active correction of control substitution, oracle/name source claims and watcher proof feasibility, plus historical build-summary clarification. Executed refinement passes:0; iteration01 not yet executed.
+- Current assignment: `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration01.md`.
 - Version1.0: opened after Slice03 closes, detailing the existing address-contract-before-repair step; no original scope, architecture, compatibility or acceptance amendment.
 
 ## Author packet checks
 
 Checked the exact eleven-path reviewer/open-set diff, seven unchanged predecessor criteria now closed, six previously accepted ledger rows byte-identical, all three issued predecessor prompts and CC/data/receipt files unchanged, seven new rows open, all fifteen original arc rows and twenty-two project rows still open, JSON syntax, all52 local Markdown links, case IDs/counts, whitespace, pinned clean source and unchanged save hash. The new slice has no pre-created close/review report. These checks establish preparation and preservation, not independent acceptance of the new packet or production policy. The author build and51 synthetic executions are recorded separately from the sentence-only Slice03 review, which ran neither decode nor broad production checks.
+
+## Initial CDC review and iteration01 readiness
+
+CDC independently replayed all45 parser cases27/18, five prescribed controls, the missing prescribed sixth control and CC supplement (52 executions total); retained complete injection/object/seed coverage. [Review](cdc-verification.md) accepts RP-01 only. Six rows remain open because delivered coverage substitutes a control, Chili provenance/name source claims need correction, and removed-key watcher proof has no current API. The packet is not closed or adopted.
+
+Iteration01 author inspected the exact distinct_csv and fresh import stderr route, real RawDiscoveryRecord.dm/DM.CN witness and conversion/extraction bodies, and complete SaveDelta/compute_delta observable fields. It supplies a concrete one-control recipe and source-grounded future addition test. No all45 rerun is required when full original result objects/source/baseline are preserved. Scope remains six CC paths; execution and closing history are exact retained prefixes, RP-01 is byte-stable and all production decisions stay held. Domain guideline applications stay at proposal/error/evidence-role level; no code/API design selected.
+
+Version1.1: initial independent review and concrete iteration01 issued inside the existing slice; original criteria, architecture, repair sequence and compatibility/Operator gates unchanged.
