@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.11, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.12, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -96,7 +96,7 @@ Add required arc criteria R06-R01 (field-specific save decoding), R06-R02 (galax
 
 Current sequence:
 
-1. [Slice05](slice05-cache-semantic-compatibility/slice-plan.md): implement a versioned cache envelope and startup rejection/rebuild. This is independent of unresolved game-layout policy. Current prompt: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md` relative to Project01.
+1. [Slice05](slice05-cache-semantic-compatibility/slice-plan.md): implement a versioned cache envelope and startup rejection/rebuild. This is independent of unresolved game-layout policy. Initial prompt: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md`, now returned for refinement; current iteration is below.
 2. Next bounded identity slice: design and migrate an explicit reality-plus-system key throughout core/model/query/import/route/watch/cache; preserve 48-bit portal conversion. Detail it after Slice05 review, including public/serialized API shape and active-galaxy cache restoration. Required evidence includes both insertion orders of same coordinates in galaxies0/9, correctly scoped lookup/routing and actual watcher additions. No removal channel is promised.
 3. Field-specific save repair: re-enter discovery/base and expanded address policy with accepted Chili game evidence and separate bounded44 base associations. Resolve D02–D04 input, requiredness, invalid-range/failure and reality-source policy before issuing dependent code. Approval of the boundary does not prove a universal decoder or all nonzero galaxies.
 4. Subsequent original correctness and closeout work proceeds under closure-preparation.md: query associations/names/features, full original-document reconciliation, docs/coverage/packages/performance and independent composition. Each semantic repair must assess the new cache revision, bump it when interpretation changes and prove rejection of its predecessor.
@@ -104,3 +104,9 @@ Current sequence:
 CDC may detail routine mechanics inside these approved directions without another approval request. Material changes to the selected boundary, identity strategy, failure scope, original acceptance or release authority still need their owner's disposition. No production work is represented as complete. Source main remains pinned and clean; CC has a separate implementation branch/worktree and planning evidence allowlist.
 
 Version1.11 (2026-10-04): Slice04 bubble-up and Operator approval expand required correctness/process scope; add three repair rows and Slice05 child, issue cache protection first. Historical holds remain visible; unresolved save semantics and all original closeout gates remain explicit. This is an approved scope/architecture/compatibility expansion, not routine progress or retroactive packet adoption.
+
+## Slice05 initial CDC review and current refinement — 2026-10-04
+
+CDC review at source8d2cf00/planning4f6ca66 independently reproduces protection and all relevant gates (31 cache tests,824 workspace tests). CS-01/02/05/07 accepted; CS-03/04/06 remain open for three original-contract delivery gaps: empty header regression, explicit freshness preconditions and public compatibility/process docs. Current assignment: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md`. Runtime repair is not rejected, but Slice05 is not closed. No Slice06 advancement until full independent acceptance; original approved sequence and unresolved save policies remain unchanged.
+
+Version1.12 (2026-10-04): Slice05 initial review and routine correction assignment; no architecture, scope, acceptance or sequence amendment. Four accepted child rows do not close R06-S05 or any parent capability.

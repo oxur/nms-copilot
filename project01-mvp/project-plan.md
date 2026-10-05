@@ -9,7 +9,7 @@ updated: 2026-10-04
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.2
+version: 1.3
 project: project01-mvp
 status: active
 depends-on: []
@@ -564,6 +564,9 @@ First prepared corrective assignment: `arc06-fit-and-finish/slice01-address-enco
 
 ## 12. Version history
 
+- **1.3 — 2026-10-04:** Arc06 Slice05 runtime protection/gates independently reproduce, but three original delivery obligations require iteration01. Record current handoff; approved scope/sequence and all25 project criteria unchanged.
+
+
 - **1.2 — 2026-10-04:** Arc06 Slice04 surfaced separate save decoding, missing galaxy identity and cache evolution needs; Operator explicitly approved expanding Project01 to require all three. Add three project acceptance rows and sequence cache protection before identity and evidence-gated save repair. Original scope/gates preserved; only the named direction/scope hold is discharged.
 
 - **1.1 — 2026-10-03:** Project-level closeout preparation surfaced missing formal acceptance records, unmeasured broad coverage, and functional defects. Added an explicit recovery route and open ledgers across the preserved arcs; retained original specifications and publication/version distinctions. User enabled Expedited Mode; no acceptance criteria or closure gates were waived.
@@ -585,4 +588,8 @@ Arc06 execution sequence after the four independently closed preparation slices:
 
 D02/D03 lexical/requiredness/range/failure scope and D04 per-record/nonzero reality/conflict semantics remain evidence/design work owned by CDC with Operator disposition where user-visible policy is consequential. Their unresolved state holds the affected save-decoding implementation, not independent cache protection or a separately detailed identity repair. Lost names, query association, feature/build, documentation, coverage, performance, distribution and final composition retain their existing gates. No release, push or publish is authorized.
 
-Current CC assignment: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md`. Two-Contributor Workflow and Expedited Mode continue; CDC designs/reviews, CC implements in an isolated source worktree, and higher-scale assembly still needs independent composition and Operator acceptance.
+Initial CC assignment (now returned for refinement): `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md`. Current assignment is `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md` after the initial review described below. Two-Contributor Workflow and Expedited Mode continue; CDC designs/reviews, CC implements in an isolated source worktree, and higher-scale assembly still needs independent composition and Operator acceptance.
+
+## 14. Slice05 review progress — 2026-10-04
+
+Four Slice05 rows accepted and three remain open for bounded proof/docs refinement;31 cache tests and824 workspace tests independently pass. The current iteration01 implements original obligations without changing runtime semantics or architecture. This does not close the cache repair/process parent criterion or permit identity work to skip the Slice05 acceptance gate. Original coverage/features/distribution/composition requirements remain unchanged.

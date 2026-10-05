@@ -1,6 +1,6 @@
 # Slice05 — cache semantic compatibility
 
-Version: 1.0. Created 2026-10-04. Status: open; implementation assigned, not accepted.
+Version: 1.1. Created 2026-10-04. Status: open; initial CDC review accepted four rows, three require iteration01.
 
 ## Goal, authority and boundaries
 
@@ -48,10 +48,24 @@ The [CC prompt](cc-prompt.md) contains the complete file/symbol recipe, reading 
 
 | Issued | Prompt | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
-|2026-10-04 | `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md` | No predecessor within this new slice; Slice04 closed | First production dependency under approved expansion | active |
+|2026-10-04 | `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md` | No predecessor within this new slice; Slice04 closed | First production dependency under approved expansion | returned for refinement |
 
-Current assignment is the initial cc-prompt.md. Closing requires seven independently reproduced rows; this open set does not close R06-R03/P01-R03, the arc or project. Later semantic transitions and complete cache/watch/project composition remain separate proof.
+Initial cc-prompt.md is preserved and returned for refinement; current assignment is cc-prompt-iteration01.md. Closing requires seven independently reproduced rows; this open set does not close R06-R03/P01-R03, the arc or project. Later semantic transitions and complete cache/watch/project composition remain separate proof.
 
 ## Version history
 
 - 1.0 (2026-10-04): opened after Operator's scope expansion; independently designed cache protection before identity and evidence-gated save repair. No production code or success report pre-created.
+
+## Initial review and iteration01 — 2026-10-04
+
+CDC independently reproduces runtime protection,31 cache tests and824 workspace tests plus format/lint/build/doc gates at source8d2cf00/planning4f6ca66. CS-01/02/05/07 are accepted; CS-03/04/06 remain open for empty-envelope coverage, durable freshness preconditions and compatibility/process documentation. Runtime success is retained; the three delivery gaps hold closure. [CDC review](cdc-verification.md) and [Iteration01](cc-prompt-iteration01.md) govern current refinement.
+
+Assignment history continuation:
+
+| Issued | Prompt | Predecessor | Reason | Disposition |
+| --- | --- | --- | --- | --- |
+|2026-10-04 | `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md` | initial cc-prompt.md | Initial review R01–R03, no runtime repair redesign | active |
+
+Author readiness for iteration01: actual source/docs/helper call sites inspected and full binding plan/initial prompt/reports loaded; omitted assertions and missing docs are exact deltas. Fresh public-API probe proves length0 and actual-fresh schema/semantic rebuild behavior. Recipe is restricted to existing test loop/helper and public docs; no API/runtime decision is left to CC. DC01/02 and testing's behavioral/precondition guidance apply; unchanged runtime/semantic revisions are binding. Existing native gates plus crate-only rustdoc suffice, with no new verification product. Required-reading manifest/intake and preservation exceptions are explicit in the new prompt; estimate10–15k scoped reading plus ample implementation/recovery headroom. These are author readiness/self-checks, not acceptance of CC's future work.
+
+Version1.1 (2026-10-04): routine initial review and first refinement recorded. Four rows accepted; three remain open; source/runtime/semantic and original project scope unchanged.
