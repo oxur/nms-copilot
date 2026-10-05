@@ -1512,5 +1512,19 @@
     "stdout": "",
     "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
   },
-  "historical_build_note": "The original build object is retained from the initial CC record. Its channel text was summary wording, not an exact captured stdout/stderr transcript; use iteration01_build for this iteration exact capture."
+  "historical_build_note": "The original build object is retained from the initial CC record. Its channel text was summary wording, not an exact captured stdout/stderr transcript; use iteration01_build for this iteration exact capture.",
+  "iteration02_build": {
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "nms-cli"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+  },
+  "historical_iteration01_build_note": "2026-10-04: The iteration01_build object is preserved as historical evidence, but its claimed exact-capture label is superseded: its stderr says \"to see the problems were\"; fresh raw Cargo stderr says \"to see what the problems were\". The successful iteration01 build remains valid. iteration02_build is the current raw stdout/stderr capture."
 }
