@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-03
+updated: 2026-10-04
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.1
+version: 1.2
 project: project01-mvp
 status: active
 depends-on: []
@@ -564,5 +564,25 @@ First prepared corrective assignment: `arc06-fit-and-finish/slice01-address-enco
 
 ## 12. Version history
 
+- **1.2 — 2026-10-04:** Arc06 Slice04 surfaced separate save decoding, missing galaxy identity and cache evolution needs; Operator explicitly approved expanding Project01 to require all three. Add three project acceptance rows and sequence cache protection before identity and evidence-gated save repair. Original scope/gates preserved; only the named direction/scope hold is discharged.
+
 - **1.1 — 2026-10-03:** Project-level closeout preparation surfaced missing formal acceptance records, unmeasured broad coverage, and functional defects. Added an explicit recovery route and open ledgers across the preserved arcs; retained original specifications and publication/version distinctions. User enabled Expedited Mode; no acceptance criteria or closure gates were waived.
 - **1.0 — 2026-03-05:** Original detailed project plan, retained as historical scope authority.
+
+## 13. Approved correctness scope expansion — 2026-10-04
+
+Operator decision after Arc06 Slice04's accepted decision packet: “this isn't just nice to have: there's one definitive bug here (missing galaxy coord) and I'd class #1 as a bug, and #3 as a needed process. Please, expand scope to include this work!” This approves the three CDC directions in Slice04's final review and makes their delivery required for Project01 closure. Approval settles the direction/scope gate; it does not accept implementation or establish unobserved save-format semantics.
+
+| Required outcome | Approved direction | Ownership / proof |
+| --- | --- | --- |
+| Save addresses decode correctly | Preserve the existing 48-bit core/portal contract; introduce a distinct field-specific, fallible save-decoding boundary. Treat discovery and base fields separately until evidence supports shared interpretation. | Arc06 coordinates the repair across parser/model/interfaces; P01-R01 requires independent component/glyph/galaxy oracles. |
+| Galaxy participates in identity | Use an explicit galaxy-qualified system identity containing reality and planet-zeroed coordinates. Propagate it through planet keys, indexes, queries, routing, import and watcher additions. | P01-R02 requires identical coordinates in galaxies0/9 to coexist in either insertion order and remain correctly associated. |
+| Derived caches evolve safely | Reject and rebuild incompatible caches from source; distinguish archive schema from decoded/model semantic revision. Future decoder/identity changes must assess and bump semantic compatibility explicitly. | P01-R03 requires actual startup rejection/rebuild/warm-hit evidence and a continuing revision process. |
+
+These requirements expand the existing correctness closeout work. They do not replace the original22 project rows or move defects into Project02. The ledger now has25 open project criteria. The original69 recovered leaf rows and six arc composition rows remain; Arc06 adds explicit repair and child acceptance rows. Friendly save/account UX and richer atlas/search work retain Project02 placement.
+
+Arc06 execution sequence after the four independently closed preparation slices: **Slice05 cache semantic compatibility first**, then galaxy-qualified identity migration, then the field-specific save repair after sufficient evidence and exact input/reality/failure policy are recorded. CDC will prepare later slices near execution; they are roadmap entries, not pre-issued production assignments. Cache protection is first because an older mtime-fresh derived model can bypass subsequent parser repairs. Every later semantic repair must also demonstrate old-cache rejection.
+
+D02/D03 lexical/requiredness/range/failure scope and D04 per-record/nonzero reality/conflict semantics remain evidence/design work owned by CDC with Operator disposition where user-visible policy is consequential. Their unresolved state holds the affected save-decoding implementation, not independent cache protection or a separately detailed identity repair. Lost names, query association, feature/build, documentation, coverage, performance, distribution and final composition retain their existing gates. No release, push or publish is authorized.
+
+Current CC assignment: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md`. Two-Contributor Workflow and Expedited Mode continue; CDC designs/reviews, CC implements in an isolated source worktree, and higher-scale assembly still needs independent composition and Operator acceptance.

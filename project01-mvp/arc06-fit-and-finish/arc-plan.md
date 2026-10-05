@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.10, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.11, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -50,7 +50,7 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 - Version1.7 (2026-10-04): Slice03 iteration02 independently closes the seventh row. Detail the existing unresolved repair-contract prerequisite as Slice04 decision packet; source inspection also identifies same-coordinate cross-galaxy ID collision and cache compatibility consequences. No original scope/acceptance, architecture or public compatibility amendment is approved; dependent implementation still held.
 
-## Current corrective preparation
+## Preparation status at Slice04 closure — superseded by the approval below
 
 [Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is independently closed after iteration02; all seven bounded investigation rows accepted. [Slice04](slice04-address-repair-contract/slice-plan.md) is independently closed as a source-grounded address repair decision packet after iteration02; all seven preparation rows accepted. Generalized field/policy/identity/cache and compatibility decisions remain held before production repair. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
 
@@ -64,9 +64,9 @@ CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-enc
 2. Slice02 — primary packed-format authority: closed after independent correction review; seven investigation rows done. Discovery source lead strengthened, encrypted public sample failures preserved; wider field semantics remain unresolved.
 3. Slice03 — decoded local location witnesses: independently closed after iteration02; seven investigation rows accepted. One pinned known workbench save,44 raw-corroborated base associations; no production policy selected.
 4. Slice04 — address repair contract decision packet: independently closed after iteration02, seven preparation rows accepted. Current-input characterization, galaxy/API/query/watch/cache impact and bounded recommendations delivered. Previous status was active preparation; closure accepts that preparation, with policy adoption still held.
-5. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
+5. **Historical hold, superseded in part on2026-10-04:** dependent production repair was held until CDC accepted sufficient field-specific evidence and resolved consequential design policy; no implementation slice or compatibility decision was then pre-issued. The approved expansion and current sequence below govern now.
 
-Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.
+Historical authority before the scope expansion below: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.
 
 ## Slice04 initial independent review
 
@@ -80,10 +80,27 @@ CDC review of7d33b1d accepts RP-02–RP-06; RP-01 retained. Only RP-07 exact bui
 
 Version1.9 (2026-10-04): routine child-review/current-assignment update after Slice04 iteration01; no structural sequencing, architecture, acceptance or compatibility amendment. Six rows accepted, one metadata refinement pending.
 
-## Slice04 final closure and current decision gate
+## Slice04 final closure and decision gate at that time
 
 CDC final review of1339445 accepts RP-07; all seven packet rows are done and R06-S04 closes. Exact channel byte equality and a fresh build reproduce; prior52 results, semantic corrections and failed histories remain intact. No original arc capability is accepted by closing this preparation child.
 
 Current step is CDC/Operator disposition of the accepted D01–D08 recommendations before a dependent production assignment. [Final review](slice04-address-repair-contract/cdc-verification.md) gives three proposed direction choices: separate save decoding from preserved48-bit portal/core contracts, explicit galaxy-qualified identity, and reject/rebuild semantically incompatible derived caches. These are proposals, not adopted plan amendments. Invalid/default/range/error policy and per-record/nonzero reality evidence still need exact disposition. No next production prompt is issued through the held gate.
 
 Version1.10 (2026-10-04): Slice04 final independent closure/child acceptance and current decision gate recorded, surfaced by iteration02's completed fidelity proof. Routine progress within the existing sequence; no architecture/scope/public-compatibility/acceptance change approved.
+
+## Approved scope and current execution — 2026-10-04
+
+The Operator explicitly approved all three directions after the Slice04 explanation: “Please, expand scope to include this work!” Save/core boundary separation is a required bug repair; galaxy-qualified identity repairs missing galaxy coordinates; semantic cache rejection/rebuild is a required continuing process. This discharges the direction/architecture/public-compatibility scope gate for those three choices. It does not retroactively change Slice04's accepted evidence or adopt every D01–D08 recommendation.
+
+Add required arc criteria R06-R01 (field-specific save decoding), R06-R02 (galaxy-qualified identity) and R06-R03 (semantic cache lifecycle), plus current child R06-S05. All15 original recovered arc rows and four accepted preparation children are retained:23 arc rows, four done and19 open. New repair rows need independent integration/composition evidence; accepted investigation children alone cannot discharge them.
+
+Current sequence:
+
+1. [Slice05](slice05-cache-semantic-compatibility/slice-plan.md): implement a versioned cache envelope and startup rejection/rebuild. This is independent of unresolved game-layout policy. Current prompt: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md` relative to Project01.
+2. Next bounded identity slice: design and migrate an explicit reality-plus-system key throughout core/model/query/import/route/watch/cache; preserve 48-bit portal conversion. Detail it after Slice05 review, including public/serialized API shape and active-galaxy cache restoration. Required evidence includes both insertion orders of same coordinates in galaxies0/9, correctly scoped lookup/routing and actual watcher additions. No removal channel is promised.
+3. Field-specific save repair: re-enter discovery/base and expanded address policy with accepted Chili game evidence and separate bounded44 base associations. Resolve D02–D04 input, requiredness, invalid-range/failure and reality-source policy before issuing dependent code. Approval of the boundary does not prove a universal decoder or all nonzero galaxies.
+4. Subsequent original correctness and closeout work proceeds under closure-preparation.md: query associations/names/features, full original-document reconciliation, docs/coverage/packages/performance and independent composition. Each semantic repair must assess the new cache revision, bump it when interpretation changes and prove rejection of its predecessor.
+
+CDC may detail routine mechanics inside these approved directions without another approval request. Material changes to the selected boundary, identity strategy, failure scope, original acceptance or release authority still need their owner's disposition. No production work is represented as complete. Source main remains pinned and clean; CC has a separate implementation branch/worktree and planning evidence allowlist.
+
+Version1.11 (2026-10-04): Slice04 bubble-up and Operator approval expand required correctness/process scope; add three repair rows and Slice05 child, issue cache protection first. Historical holds remain visible; unresolved save semantics and all original closeout gates remain explicit. This is an approved scope/architecture/compatibility expansion, not routine progress or retroactive packet adoption.

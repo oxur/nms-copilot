@@ -28,3 +28,13 @@ Created 2026-10-03 during closeout recovery. Status: **all rows open**. Baseline
 | P01-G09 | Final project assembly is independently reproduced and accepted by Operator | Full row walk, arc reports, attributed independent composition gate and Operator verdict | serious | Project closure discipline | open | — | No success records pre-created |
 
 Statuses become `done`, `deferred`, or `no-op` only with the appropriate evidence/rationale. `done` requires independent reproduction for this ledgered closeout; deferred rows require explicit authority, reason, owner, and re-entry condition. This preparation does not discharge any row.
+
+## Approved repair requirements — 2026-10-04
+
+Added by the Operator's explicit scope expansion after Slice04. Original22 rows remain open and unchanged in criterion; total25 open rows. The earlier P01-C01 progress note is historical: Slice03 and Slice04 are now independently closed preparations, while C01 still needs production/composition proof.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| P01-R01 | Field-specific save conversion preserves correct components, planet glyphs and sourced galaxy while existing 48-bit portal/core behavior is preserved | Independent discovery/game and base/expanded oracles through parser, graph and CLI/REPL/MCP; malformed/omitted/range and reality policies demonstrated | serious | Operator approval2026-10-04; Slice04 D01/D05 | open | — | Boundary approved; D02–D04 exact policy/evidence still required; composes with C01 |
+| P01-R02 | Same system coordinates in different galaxies remain distinct through all system/planet consumers | Galaxies0/9 collision fixture in both orders; import/query/route/watch/cache and interface assertions against exact expected entities | serious | Operator approval2026-10-04; Slice04 D06 | open | — | Explicit galaxy-qualified key required; composes with M7.4/C01/C02/C05 |
+| P01-R03 | Incompatible derived cache semantics never bypass source rebuilding and future repairs carry explicit compatibility disposition | Fresh incompatible cache startup -> source rebuild -> current warm hit; revision/bump review for every decoder/identity repair and live write-through | serious | Operator approval2026-10-04; Slice04 D08 | open | — | Slice05 supplies protection; subsequent semantic migrations and project lifecycle proof still required; composes with C04 |

@@ -28,7 +28,7 @@ The existing CI run passed default-feature tests on Linux, Windows, and macOS at
 6. **Verify distribution separately.** Inspect package contents and verify packaged builds in dependency order. Establish historical 0.2.0 publication/install evidence or explicitly distinguish it from a new release candidate. Do not publish, push a release tag, or mutate registry state as a side effect of validation. Retain blocked registry attempts; network failures are not proof of absent packages.
 7. **Close leaves, then arcs, then project.** Fresh CC reports per-row dispositions; the assigned reviewer reproduces affected evidence and checks source diffs. Each arc closing report walks every review unit, proves composition, and bubbles up findings. Project closing report walks all project rows, reconciles all findings, and receives independent composition review plus Operator acceptance. Create verdict records when the review actually occurs, not in advance.
 
-## Active assignment
+## Historical assignment status at Slice04 closure
 
 No active CC assignment. Slice04 iteration02 is independently accepted; the current step is CDC/Operator disposition of the repair-contract decisions before production. The final executed prompt remains preserved at `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md`.
 
@@ -47,3 +47,11 @@ Progress2026-10-04, Slice04 final: iteration02 capture fidelity passes; all seve
 Expedited Mode changes cadence and commits, not scope, evidence, or independent review. This context's new measurements are **attested baseline evidence**. It cannot independently accept its own assembled closeout packet. The [project ledger](ledger.md) and all arc ledgers remain open. No production work or release is represented as complete.
 
 Open acceptance issues are not automatically transferred into project02. The user-facing save/account redesign belongs there by the accepted design placement, while defects in already promised project01 behavior retain project01 ownership until repaired or an explicit scope amendment is accepted. Structural re-scope and coverage-target changes require the Operator's decision after a concrete evidence packet; do not infer them from passing tests or a later project's existence.
+
+## Approved expansion and active assignment — 2026-10-04
+
+The Operator approved the three repair directions surfaced by Slice04. The old direction/scope hold above is superseded for distinct save decoding, explicit galaxy-qualified identity and semantic cache lifecycle. Exact D02–D04 save semantics remain to be resolved before dependent decoding code; all original22 project rows remain open, plus three required repair rows (25 total). Arc06 retains15 original rows and four done preparation children, adding three repair rows and one open implementation child (23 total).
+
+Current assignment: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt.md`. Implement cache compatibility first, then a detailed galaxy-identity migration, then the evidence/policy-ready save-boundary repair. The versioned envelope starts at semantic revision1 for the current model behavior; it is not a claim that address bugs are already fixed. Later semantic repairs must bump the revision and prove previous caches rebuild from source.
+
+CDC's temporary synthetic author probe observed a fresh headerless cache returning version9999 while its source contains4720, confirming the bypass route. This is source-flow evidence, not game-schema authority or independent acceptance of the proposed repair. The Slice05 author baseline preserves the exact fresh build/harness receipts and a replayable small probe; no game saves or user caches were touched. Production work runs in an isolated CC branch/worktree, leaving main pinned for review. No broad validation gate, original feature, publication or final composition requirement is dropped.
