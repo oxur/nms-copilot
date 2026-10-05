@@ -1,0 +1,950 @@
+{
+  "review_date_local": "2026-10-04",
+  "CC_commit": "13394456db6e90387cccd62e63556b48d1a8eeaa",
+  "reviewer_handoff": "e4d7e2f7ca8aacaea4461bf2f7c2440a59973caf",
+  "source_commit": "a800950ef3558fcf463517696c3c140061e7353d",
+  "assignment": "arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md",
+  "checks": [
+    {
+      "check": "planning candidate",
+      "pass": true,
+      "actual": "13394456db6e90387cccd62e63556b48d1a8eeaa",
+      "expected": "13394456db6e90387cccd62e63556b48d1a8eeaa"
+    },
+    {
+      "check": "planning parent",
+      "pass": true,
+      "actual": "e4d7e2f7ca8aacaea4461bf2f7c2440a59973caf",
+      "expected": "e4d7e2f7ca8aacaea4461bf2f7c2440a59973caf"
+    },
+    {
+      "check": "source pin",
+      "pass": true,
+      "actual": "a800950ef3558fcf463517696c3c140061e7353d",
+      "expected": "a800950ef3558fcf463517696c3c140061e7353d"
+    },
+    {
+      "check": "source clean",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "planning clean intake",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "CC exact four paths",
+      "pass": true,
+      "actual": [
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/behavior-probes.json",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/ledger.md"
+      ],
+      "expected": [
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/behavior-probes.json",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice04-address-repair-contract/ledger.md"
+      ]
+    },
+    {
+      "check": "exact two new JSON keys",
+      "pass": true,
+      "actual": [
+        "historical_iteration01_build_note",
+        "iteration02_build"
+      ],
+      "expected": [
+        "historical_iteration01_build_note",
+        "iteration02_build"
+      ]
+    },
+    {
+      "check": "pre-existing JSON value schema",
+      "pass": true,
+      "actual": "1befb353539a27df21fd4e0816c5b4600e0b44accc75d283405cb49bcfaf4756",
+      "expected": "1befb353539a27df21fd4e0816c5b4600e0b44accc75d283405cb49bcfaf4756"
+    },
+    {
+      "check": "pre-existing JSON value source_commit",
+      "pass": true,
+      "actual": "c618746cad1137953718d618f100328a2d8180da16a889048e8b33e77a06615c",
+      "expected": "c618746cad1137953718d618f100328a2d8180da16a889048e8b33e77a06615c"
+    },
+    {
+      "check": "pre-existing JSON value baseline_sha256",
+      "pass": true,
+      "actual": "159bf2e02e356d882b931b804dc32170415b1ad06be6a58aa9f938897f909b2f",
+      "expected": "159bf2e02e356d882b931b804dc32170415b1ad06be6a58aa9f938897f909b2f"
+    },
+    {
+      "check": "pre-existing JSON value build",
+      "pass": true,
+      "actual": "0d890846a24c58b8acdbb1fc5e7510d610b9af46a2b78b3e537aa1b732c55198",
+      "expected": "0d890846a24c58b8acdbb1fc5e7510d610b9af46a2b78b3e537aa1b732c55198"
+    },
+    {
+      "check": "pre-existing JSON value method",
+      "pass": true,
+      "actual": "3786d9d17e6b305f680f759fa089d17dc7f16a304c951500b13e568ee359bfdf",
+      "expected": "3786d9d17e6b305f680f759fa089d17dc7f16a304c951500b13e568ee359bfdf"
+    },
+    {
+      "check": "pre-existing JSON value results",
+      "pass": true,
+      "actual": "199f995144c420cc271750576839e935117db2b3d171a41e0aa7ee1f4861eb21",
+      "expected": "199f995144c420cc271750576839e935117db2b3d171a41e0aa7ee1f4861eb21"
+    },
+    {
+      "check": "pre-existing JSON value summary",
+      "pass": true,
+      "actual": "ddbe2dcc1c3fb54ac410ad6008dbf5b94a4f99ae6a9461e886bf0931ef5a2046",
+      "expected": "ddbe2dcc1c3fb54ac410ad6008dbf5b94a4f99ae6a9461e886bf0931ef5a2046"
+    },
+    {
+      "check": "pre-existing JSON value iteration01_build",
+      "pass": true,
+      "actual": "ede5900907f97859f3597206238f85339afe9d60bf83284f49ced4900b164fa3",
+      "expected": "ede5900907f97859f3597206238f85339afe9d60bf83284f49ced4900b164fa3"
+    },
+    {
+      "check": "pre-existing JSON value historical_build_note",
+      "pass": true,
+      "actual": "cd67c59dd1f6d2495bc14ca580c2fe690d533f542f5b279cd95d52e2c67c7edd",
+      "expected": "cd67c59dd1f6d2495bc14ca580c2fe690d533f542f5b279cd95d52e2c67c7edd"
+    },
+    {
+      "check": "52 unique IDs",
+      "pass": true,
+      "actual": 52,
+      "expected": 52
+    },
+    {
+      "check": "same ID set",
+      "pass": true,
+      "actual": [
+        "base-bad-hex",
+        "base-bare-short-hex",
+        "base-boolean",
+        "base-empty",
+        "base-fraction",
+        "base-hex-zero",
+        "base-hex14",
+        "base-int-zero",
+        "base-max56",
+        "base-missing",
+        "base-null",
+        "base-numeric-string",
+        "base-over-u64",
+        "base-over56",
+        "base-signed-negative",
+        "base-uppercase-prefix",
+        "convert-portal-glyphs",
+        "convert-portal-shaped-ga",
+        "convert-raw-ga",
+        "discovery-bad-hex",
+        "discovery-bare-short-hex",
+        "discovery-boolean",
+        "discovery-empty",
+        "discovery-fraction",
+        "discovery-hex-zero",
+        "discovery-hex14",
+        "discovery-int-zero",
+        "discovery-max56",
+        "discovery-missing",
+        "discovery-null",
+        "discovery-numeric-string",
+        "discovery-over-u64",
+        "discovery-over56",
+        "discovery-signed-negative",
+        "discovery-uppercase-prefix",
+        "expanded-empty-wrapper",
+        "expanded-missing-wrapper",
+        "expanded-null-wrapper",
+        "expanded-partial-object",
+        "expanded-planet16",
+        "expanded-planet256",
+        "expanded-reality256",
+        "expanded-ssi4095",
+        "expanded-ssi4096",
+        "expanded-valid",
+        "expanded-x2048",
+        "expanded-y128",
+        "expanded-zero-object",
+        "import-collision",
+        "import-collision-reversed",
+        "import-distinct-prescribed",
+        "import-distinct-ssi-same-galaxy"
+      ],
+      "expected": [
+        "base-bad-hex",
+        "base-bare-short-hex",
+        "base-boolean",
+        "base-empty",
+        "base-fraction",
+        "base-hex-zero",
+        "base-hex14",
+        "base-int-zero",
+        "base-max56",
+        "base-missing",
+        "base-null",
+        "base-numeric-string",
+        "base-over-u64",
+        "base-over56",
+        "base-signed-negative",
+        "base-uppercase-prefix",
+        "convert-portal-glyphs",
+        "convert-portal-shaped-ga",
+        "convert-raw-ga",
+        "discovery-bad-hex",
+        "discovery-bare-short-hex",
+        "discovery-boolean",
+        "discovery-empty",
+        "discovery-fraction",
+        "discovery-hex-zero",
+        "discovery-hex14",
+        "discovery-int-zero",
+        "discovery-max56",
+        "discovery-missing",
+        "discovery-null",
+        "discovery-numeric-string",
+        "discovery-over-u64",
+        "discovery-over56",
+        "discovery-signed-negative",
+        "discovery-uppercase-prefix",
+        "expanded-empty-wrapper",
+        "expanded-missing-wrapper",
+        "expanded-null-wrapper",
+        "expanded-partial-object",
+        "expanded-planet16",
+        "expanded-planet256",
+        "expanded-reality256",
+        "expanded-ssi4095",
+        "expanded-ssi4096",
+        "expanded-valid",
+        "expanded-x2048",
+        "expanded-y128",
+        "expanded-zero-object",
+        "import-collision",
+        "import-collision-reversed",
+        "import-distinct-prescribed",
+        "import-distinct-ssi-same-galaxy"
+      ]
+    },
+    {
+      "check": "discovery-int-zero full object retention",
+      "pass": true,
+      "actual": "750553f3f3f3bf5375e4339f26120065675b6b0f1601d2527eae4eab53d905d6",
+      "expected": "750553f3f3f3bf5375e4339f26120065675b6b0f1601d2527eae4eab53d905d6"
+    },
+    {
+      "check": "base-int-zero full object retention",
+      "pass": true,
+      "actual": "12029db31ff4afe18f53aed5a4012885ee14bd3c90611e1f57c5751c2f4fc0da",
+      "expected": "12029db31ff4afe18f53aed5a4012885ee14bd3c90611e1f57c5751c2f4fc0da"
+    },
+    {
+      "check": "discovery-hex-zero full object retention",
+      "pass": true,
+      "actual": "66752d0d4e117f99a0818772814805c2a7b1f7789e54584b2a93f94a11c19933",
+      "expected": "66752d0d4e117f99a0818772814805c2a7b1f7789e54584b2a93f94a11c19933"
+    },
+    {
+      "check": "base-hex-zero full object retention",
+      "pass": true,
+      "actual": "f3b228763cc3260e1f465c6f489ee0d28d8b467bb303674fc911b444600f2955",
+      "expected": "f3b228763cc3260e1f465c6f489ee0d28d8b467bb303674fc911b444600f2955"
+    },
+    {
+      "check": "discovery-hex14 full object retention",
+      "pass": true,
+      "actual": "a09e419f37899c6ad8f5d5be907e60bfc8712f6e0a6300b4b23bd63d6677541b",
+      "expected": "a09e419f37899c6ad8f5d5be907e60bfc8712f6e0a6300b4b23bd63d6677541b"
+    },
+    {
+      "check": "base-hex14 full object retention",
+      "pass": true,
+      "actual": "c1a2b513612b514657ddd91fb1373040fa46f486db3337d53ba465c6c8d42e6e",
+      "expected": "c1a2b513612b514657ddd91fb1373040fa46f486db3337d53ba465c6c8d42e6e"
+    },
+    {
+      "check": "discovery-uppercase-prefix full object retention",
+      "pass": true,
+      "actual": "6f77cc7b4c2af86374dd7e705de96c462cdfdf476e18d6e2b0663fe08f60c109",
+      "expected": "6f77cc7b4c2af86374dd7e705de96c462cdfdf476e18d6e2b0663fe08f60c109"
+    },
+    {
+      "check": "base-uppercase-prefix full object retention",
+      "pass": true,
+      "actual": "fb8da3b1cfb95853d287509bffadbf7cb73b0127bdfe6ab3e3be66cbd102740d",
+      "expected": "fb8da3b1cfb95853d287509bffadbf7cb73b0127bdfe6ab3e3be66cbd102740d"
+    },
+    {
+      "check": "discovery-bare-short-hex full object retention",
+      "pass": true,
+      "actual": "c355900295a5284ce72cf7e8196cab0ced25863a986ca328a98249730e7dbc2d",
+      "expected": "c355900295a5284ce72cf7e8196cab0ced25863a986ca328a98249730e7dbc2d"
+    },
+    {
+      "check": "base-bare-short-hex full object retention",
+      "pass": true,
+      "actual": "88cca829d9721385eef822a5b81046b124771fbe9137fc0fef7354ac5968df7a",
+      "expected": "88cca829d9721385eef822a5b81046b124771fbe9137fc0fef7354ac5968df7a"
+    },
+    {
+      "check": "discovery-numeric-string full object retention",
+      "pass": true,
+      "actual": "48335d8675324f9b2b9c67e4b7577e83e93c49182e7258fd32493413de364fd3",
+      "expected": "48335d8675324f9b2b9c67e4b7577e83e93c49182e7258fd32493413de364fd3"
+    },
+    {
+      "check": "base-numeric-string full object retention",
+      "pass": true,
+      "actual": "5de1e8ac9eb4a5c57745772d336e06c06a89e86bb3ffc87374611b2b0cd09f69",
+      "expected": "5de1e8ac9eb4a5c57745772d336e06c06a89e86bb3ffc87374611b2b0cd09f69"
+    },
+    {
+      "check": "discovery-signed-negative full object retention",
+      "pass": true,
+      "actual": "1469a9b160e1ee89090dc96eb5e8557b34a7f90ee0d488f7cf17956df600de6f",
+      "expected": "1469a9b160e1ee89090dc96eb5e8557b34a7f90ee0d488f7cf17956df600de6f"
+    },
+    {
+      "check": "base-signed-negative full object retention",
+      "pass": true,
+      "actual": "5f7a6bc0d3d378ba3e6d988788afc728c0e708447bf62ecc7877c5b1c0a076ba",
+      "expected": "5f7a6bc0d3d378ba3e6d988788afc728c0e708447bf62ecc7877c5b1c0a076ba"
+    },
+    {
+      "check": "discovery-fraction full object retention",
+      "pass": true,
+      "actual": "8465ec96ba7a7d665f88e628628062973d48b78d948f0bc748431efd3a4ec9f8",
+      "expected": "8465ec96ba7a7d665f88e628628062973d48b78d948f0bc748431efd3a4ec9f8"
+    },
+    {
+      "check": "base-fraction full object retention",
+      "pass": true,
+      "actual": "c169174d9c7813391497b67003d2f99e7b8c2db9407f5a97e2aa04a684d6badb",
+      "expected": "c169174d9c7813391497b67003d2f99e7b8c2db9407f5a97e2aa04a684d6badb"
+    },
+    {
+      "check": "discovery-boolean full object retention",
+      "pass": true,
+      "actual": "147b17009da3738882a0157458c3671743fd34b2aeb241d94886db5ef64436a5",
+      "expected": "147b17009da3738882a0157458c3671743fd34b2aeb241d94886db5ef64436a5"
+    },
+    {
+      "check": "base-boolean full object retention",
+      "pass": true,
+      "actual": "404bf243fdf0c8b029bcea44ff2f49a9984361feb97295918be2a7d405897b75",
+      "expected": "404bf243fdf0c8b029bcea44ff2f49a9984361feb97295918be2a7d405897b75"
+    },
+    {
+      "check": "discovery-null full object retention",
+      "pass": true,
+      "actual": "d47d13aec1a436b88aa058c0750d2e5c12bb2cd8a0a1b26100230957c7a72fa8",
+      "expected": "d47d13aec1a436b88aa058c0750d2e5c12bb2cd8a0a1b26100230957c7a72fa8"
+    },
+    {
+      "check": "base-null full object retention",
+      "pass": true,
+      "actual": "17268421da135115d57c4fc29525178218318e4091ba1b910a84239ccf238557",
+      "expected": "17268421da135115d57c4fc29525178218318e4091ba1b910a84239ccf238557"
+    },
+    {
+      "check": "discovery-missing full object retention",
+      "pass": true,
+      "actual": "4834db0693c3fd68f978b957036aa55e9e02098d182bfe835e60a1b64f81080e",
+      "expected": "4834db0693c3fd68f978b957036aa55e9e02098d182bfe835e60a1b64f81080e"
+    },
+    {
+      "check": "base-missing full object retention",
+      "pass": true,
+      "actual": "e110c591597f10fe4ec9bf06425659915b3c291ef60e1c0b45792436eff9db72",
+      "expected": "e110c591597f10fe4ec9bf06425659915b3c291ef60e1c0b45792436eff9db72"
+    },
+    {
+      "check": "discovery-empty full object retention",
+      "pass": true,
+      "actual": "e08fa368bc190c152b47b6714ed808229c89b511025c0956f60e3c296f894d05",
+      "expected": "e08fa368bc190c152b47b6714ed808229c89b511025c0956f60e3c296f894d05"
+    },
+    {
+      "check": "base-empty full object retention",
+      "pass": true,
+      "actual": "33b1701a8085e6847e97d4ce617117a57cd1d09365fcacc69d54874620d4193b",
+      "expected": "33b1701a8085e6847e97d4ce617117a57cd1d09365fcacc69d54874620d4193b"
+    },
+    {
+      "check": "discovery-bad-hex full object retention",
+      "pass": true,
+      "actual": "71f23d485811c8d90e33e60cfe63a568dc23c8544850ca7533911d06cc432a50",
+      "expected": "71f23d485811c8d90e33e60cfe63a568dc23c8544850ca7533911d06cc432a50"
+    },
+    {
+      "check": "base-bad-hex full object retention",
+      "pass": true,
+      "actual": "2ce00c80bd77ce2de1f45fecee0fba08cb5764ece0916fe915b79e8ccf7161d8",
+      "expected": "2ce00c80bd77ce2de1f45fecee0fba08cb5764ece0916fe915b79e8ccf7161d8"
+    },
+    {
+      "check": "discovery-over56 full object retention",
+      "pass": true,
+      "actual": "eb1925edb5d70f825cd085550d0efdb0612ab1290e88d5f6c34fd985a7128014",
+      "expected": "eb1925edb5d70f825cd085550d0efdb0612ab1290e88d5f6c34fd985a7128014"
+    },
+    {
+      "check": "base-over56 full object retention",
+      "pass": true,
+      "actual": "c96ad72f441ba786c1d220a5ffa699e7dc98c60e370498b1655a3266ae8c7d07",
+      "expected": "c96ad72f441ba786c1d220a5ffa699e7dc98c60e370498b1655a3266ae8c7d07"
+    },
+    {
+      "check": "discovery-over-u64 full object retention",
+      "pass": true,
+      "actual": "0d4137e6afbb8cd67a4026ffef2865475d91a08169a85be71b443510f4b2b639",
+      "expected": "0d4137e6afbb8cd67a4026ffef2865475d91a08169a85be71b443510f4b2b639"
+    },
+    {
+      "check": "base-over-u64 full object retention",
+      "pass": true,
+      "actual": "512a87c4f4151f641989290af4f202aa6e3527935f85bf960e978960f4282a21",
+      "expected": "512a87c4f4151f641989290af4f202aa6e3527935f85bf960e978960f4282a21"
+    },
+    {
+      "check": "discovery-max56 full object retention",
+      "pass": true,
+      "actual": "624f955106ae4dc6ad022df39e6e0ab235ba98381f92cb59b72b6d41094abf74",
+      "expected": "624f955106ae4dc6ad022df39e6e0ab235ba98381f92cb59b72b6d41094abf74"
+    },
+    {
+      "check": "base-max56 full object retention",
+      "pass": true,
+      "actual": "cbb4f7a497589d887bb4e14c98d2ecf42650312970c168db5d2f6fe179cdb71f",
+      "expected": "cbb4f7a497589d887bb4e14c98d2ecf42650312970c168db5d2f6fe179cdb71f"
+    },
+    {
+      "check": "expanded-valid full object retention",
+      "pass": true,
+      "actual": "c0e8872227bf4b51a795c7109124a79ee71cd312fecf4b0dcbc43e7be510a034",
+      "expected": "c0e8872227bf4b51a795c7109124a79ee71cd312fecf4b0dcbc43e7be510a034"
+    },
+    {
+      "check": "expanded-missing-wrapper full object retention",
+      "pass": true,
+      "actual": "8993491c056968d3360e6f4d6d21c20319fd9a3667a75e27a18fc0062635b15b",
+      "expected": "8993491c056968d3360e6f4d6d21c20319fd9a3667a75e27a18fc0062635b15b"
+    },
+    {
+      "check": "expanded-null-wrapper full object retention",
+      "pass": true,
+      "actual": "0f3dc768bdf04d83d59a7fec837f3733e06877bb909e6d2996faae683ac637be",
+      "expected": "0f3dc768bdf04d83d59a7fec837f3733e06877bb909e6d2996faae683ac637be"
+    },
+    {
+      "check": "expanded-empty-wrapper full object retention",
+      "pass": true,
+      "actual": "05b97875cf81dad2bb76749127b717a78c43dae027df27911649fa2e7a6f2e39",
+      "expected": "05b97875cf81dad2bb76749127b717a78c43dae027df27911649fa2e7a6f2e39"
+    },
+    {
+      "check": "expanded-zero-object full object retention",
+      "pass": true,
+      "actual": "594b839e2bcb97558a1b4a89d01220106b52598afe5bd0d9f56a80f701d12ca2",
+      "expected": "594b839e2bcb97558a1b4a89d01220106b52598afe5bd0d9f56a80f701d12ca2"
+    },
+    {
+      "check": "expanded-partial-object full object retention",
+      "pass": true,
+      "actual": "3dd96486d6a4a0809d015459d30a14fd8fda8ced3bb4ef890e8dbb64d6014b51",
+      "expected": "3dd96486d6a4a0809d015459d30a14fd8fda8ced3bb4ef890e8dbb64d6014b51"
+    },
+    {
+      "check": "expanded-x2048 full object retention",
+      "pass": true,
+      "actual": "9849f06d5a87ab79f271bf1c1883af120d25483efb797b2ef0f7ab8be6cf72a0",
+      "expected": "9849f06d5a87ab79f271bf1c1883af120d25483efb797b2ef0f7ab8be6cf72a0"
+    },
+    {
+      "check": "expanded-y128 full object retention",
+      "pass": true,
+      "actual": "cc5214ded3226e1ef8b66db979cd18a755d3168dacf5a49ffc859d6dcd618780",
+      "expected": "cc5214ded3226e1ef8b66db979cd18a755d3168dacf5a49ffc859d6dcd618780"
+    },
+    {
+      "check": "expanded-ssi4095 full object retention",
+      "pass": true,
+      "actual": "5996ef5fbd964574cff2fd93e90c8148f17a905bc9959de7fae98b22b1b906c6",
+      "expected": "5996ef5fbd964574cff2fd93e90c8148f17a905bc9959de7fae98b22b1b906c6"
+    },
+    {
+      "check": "expanded-planet16 full object retention",
+      "pass": true,
+      "actual": "70bc711945573b7c5f17c890ee3432c8050a52bba4a7ebc2e5bef11cdc9eeb37",
+      "expected": "70bc711945573b7c5f17c890ee3432c8050a52bba4a7ebc2e5bef11cdc9eeb37"
+    },
+    {
+      "check": "expanded-ssi4096 full object retention",
+      "pass": true,
+      "actual": "28c509a206c005e86b602ecf18e4fa8d173c9a1485497fbfb68fcb00192a62cc",
+      "expected": "28c509a206c005e86b602ecf18e4fa8d173c9a1485497fbfb68fcb00192a62cc"
+    },
+    {
+      "check": "expanded-planet256 full object retention",
+      "pass": true,
+      "actual": "4daa4ff129a42ceb617733c32d1f807334d3be453bb5de26f2262fbb2c7a9c81",
+      "expected": "4daa4ff129a42ceb617733c32d1f807334d3be453bb5de26f2262fbb2c7a9c81"
+    },
+    {
+      "check": "expanded-reality256 full object retention",
+      "pass": true,
+      "actual": "d3d0f82d0450deab9ed3009817411b43d147c9a221f9f8af7ce0bd9a5d3a5b72",
+      "expected": "d3d0f82d0450deab9ed3009817411b43d147c9a221f9f8af7ce0bd9a5d3a5b72"
+    },
+    {
+      "check": "convert-raw-ga full object retention",
+      "pass": true,
+      "actual": "eeb1a295e35f2af3828b7d5082bdd85512256a83332f29c9d50ce300f5dacbbd",
+      "expected": "eeb1a295e35f2af3828b7d5082bdd85512256a83332f29c9d50ce300f5dacbbd"
+    },
+    {
+      "check": "convert-portal-glyphs full object retention",
+      "pass": true,
+      "actual": "bfd60dfd7f206236ad03d18f68eb3d82565071d1faec519fb2a1e71c394363f4",
+      "expected": "bfd60dfd7f206236ad03d18f68eb3d82565071d1faec519fb2a1e71c394363f4"
+    },
+    {
+      "check": "convert-portal-shaped-ga full object retention",
+      "pass": true,
+      "actual": "08dd73e9de3ba0d532a224aa044337b2128516fb048efc65ce936376352e1240",
+      "expected": "08dd73e9de3ba0d532a224aa044337b2128516fb048efc65ce936376352e1240"
+    },
+    {
+      "check": "import-collision full object retention",
+      "pass": true,
+      "actual": "1ff7947a2cba9f435a5628a3fa455e3e8467675da26b3d3a7e18340264639248",
+      "expected": "1ff7947a2cba9f435a5628a3fa455e3e8467675da26b3d3a7e18340264639248"
+    },
+    {
+      "check": "import-collision-reversed full object retention",
+      "pass": true,
+      "actual": "734ead3904f732232e5ba7640358580ee5d6d76692d9e0ad0c5b73c8f546ec81",
+      "expected": "734ead3904f732232e5ba7640358580ee5d6d76692d9e0ad0c5b73c8f546ec81"
+    },
+    {
+      "check": "import-distinct-ssi-same-galaxy full object retention",
+      "pass": true,
+      "actual": "9cf1d49b9e0a784d706ddd21eb9ecb751fd8ccbe037d2ba68be7c131ea8e2b75",
+      "expected": "9cf1d49b9e0a784d706ddd21eb9ecb751fd8ccbe037d2ba68be7c131ea8e2b75"
+    },
+    {
+      "check": "import-distinct-prescribed full object retention",
+      "pass": true,
+      "actual": "214a1a5d686c0a0fcb98b3c62feca0b787182e44f8f5a84d874a748093a66792",
+      "expected": "214a1a5d686c0a0fcb98b3c62feca0b787182e44f8f5a84d874a748093a66792"
+    },
+    {
+      "check": "artifacts/decision-packet.md sealed byte identity",
+      "pass": true,
+      "actual": "be205c26c5537e8e1f001b9f3f673246482ee63ec6db8bebfd7377299143b757",
+      "expected": "be205c26c5537e8e1f001b9f3f673246482ee63ec6db8bebfd7377299143b757"
+    },
+    {
+      "check": "artifacts/impact-map.csv sealed byte identity",
+      "pass": true,
+      "actual": "37f6801c83023549208fc280707db07c530eac7b41a905403217f13fe618de6e",
+      "expected": "37f6801c83023549208fc280707db07c530eac7b41a905403217f13fe618de6e"
+    },
+    {
+      "check": "artifacts/author-baseline.json sealed byte identity",
+      "pass": true,
+      "actual": "0c3d0208a79f23cd8ff44ea101ad5d4909b2c0921aef4435d8291b3d11e30bdf",
+      "expected": "0c3d0208a79f23cd8ff44ea101ad5d4909b2c0921aef4435d8291b3d11e30bdf"
+    },
+    {
+      "check": "cc-prompt.md sealed byte identity",
+      "pass": true,
+      "actual": "9f3cca177247281b9cee18c1bd6e9663c3ea8971a826a106f558d32c43c65578",
+      "expected": "9f3cca177247281b9cee18c1bd6e9663c3ea8971a826a106f558d32c43c65578"
+    },
+    {
+      "check": "cc-prompt-iteration01.md sealed byte identity",
+      "pass": true,
+      "actual": "d3e936d62f1575a985031da47628622dd94dedb56cf2d81e33b8f024791dfc3e",
+      "expected": "d3e936d62f1575a985031da47628622dd94dedb56cf2d81e33b8f024791dfc3e"
+    },
+    {
+      "check": "cc-prompt-iteration02.md sealed byte identity",
+      "pass": true,
+      "actual": "8f53f65a79dcc15ae48022c41a0cfabeec906bf64274141c380a054eff5fe4ec",
+      "expected": "8f53f65a79dcc15ae48022c41a0cfabeec906bf64274141c380a054eff5fe4ec"
+    },
+    {
+      "check": "artifacts/cdc-review-receipts.json sealed byte identity",
+      "pass": true,
+      "actual": "1602616a7e50f81f77504589d18793bae471190bd3a2ca1d8f065a1bc186399a",
+      "expected": "1602616a7e50f81f77504589d18793bae471190bd3a2ca1d8f065a1bc186399a"
+    },
+    {
+      "check": "artifacts/cdc-iteration01-review-receipts.json sealed byte identity",
+      "pass": true,
+      "actual": "57b714739edbae6e7b3834617fdda61fd6b6042887ba8f669c278952919be345",
+      "expected": "57b714739edbae6e7b3834617fdda61fd6b6042887ba8f669c278952919be345"
+    },
+    {
+      "check": "cdc-verification.md sealed byte identity",
+      "pass": true,
+      "actual": "802346643d701daf4dc3815c8a23de5208022911383f549b0e64d36bacada8a4",
+      "expected": "802346643d701daf4dc3815c8a23de5208022911383f549b0e64d36bacada8a4"
+    },
+    {
+      "check": "slice-plan.md sealed byte identity",
+      "pass": true,
+      "actual": "ffcf3fc08184a5026ceccc6114e1aced345e823b5ca1f2a9c72444a88df42dc7",
+      "expected": "ffcf3fc08184a5026ceccc6114e1aced345e823b5ca1f2a9c72444a88df42dc7"
+    },
+    {
+      "check": "artifacts/execution.md exact prefix",
+      "pass": true,
+      "actual": "3d854697b2f4ca98b5e3f862919d221c048889a091922c281b9180ff97c50f73",
+      "expected": "3d854697b2f4ca98b5e3f862919d221c048889a091922c281b9180ff97c50f73"
+    },
+    {
+      "check": "closing-report.md exact prefix",
+      "pass": true,
+      "actual": "b93ad530c188f2c2cb67c54849e97f2b5105f2ca931fb177da8fab0c22ef759e",
+      "expected": "b93ad530c188f2c2cb67c54849e97f2b5105f2ca931fb177da8fab0c22ef759e"
+    },
+    {
+      "check": "seven rows",
+      "pass": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "six accepted rows byte-identical",
+      "pass": true,
+      "actual": [
+        "| RP-01 | Source/assignment fences and complete scoped intake/readback recorded | Check main/planning state, manifest coverage and cited readback | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md; artifacts/cdc-review-receipts.json | CDC accepted pinned intake/readback and fences at74359a9. Downstream source claims reviewed separately; preserve this row in iteration01. |",
+        "| RP-02 | Field-specific evidence warrants and unresolved applicability are faithful | Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/cdc-iteration01-review-receipts.json | CDC reproduced corrected W-CHILI/base/dm/DM.CN warrant at7d33b1d; all wider semantics remain unresolved. |",
+        "| RP-03 | All45 parser cases and six integration controls independently reproducible | Replay named fixture injections through existing CLI; record exits/projections/errors and denominators | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/cdc-iteration01-review-receipts.json; artifacts/cdc-review-receipts.json | CDC fresh prescribed import succeeds2/0/0;52-result classification/full51-object retention checked. Earlier45 parser cases27/18 retained independently; build success reproduced. |",
+        "| RP-04 | Every20 seed caller rows and named identity/query/watch/cache consumers mapped | Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/impact-map.csv | CDC verifies20/20 original columns and corrected S06 actual delta channels/future additions proof; no live watcher acceptance. |",
+        "| RP-05 | Eight consequential decision topics have concrete recommendations, impacts and owners | Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/decision-packet.md | Eight bounded source-qualified recommendations/owners/gates independently accepted as a packet component; no adoption. |",
+        "| RP-06 | Repair sequencing and meaningful future exact-value/error/integration proof obligations specified | Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/decision-packet.md | Corrected oracle provenance and feasible future additions accepted; static future proof only, no new API or live composition. |"
+      ],
+      "expected": [
+        "| RP-01 | Source/assignment fences and complete scoped intake/readback recorded | Check main/planning state, manifest coverage and cited readback | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md; artifacts/cdc-review-receipts.json | CDC accepted pinned intake/readback and fences at74359a9. Downstream source claims reviewed separately; preserve this row in iteration01. |",
+        "| RP-02 | Field-specific evidence warrants and unresolved applicability are faithful | Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/cdc-iteration01-review-receipts.json | CDC reproduced corrected W-CHILI/base/dm/DM.CN warrant at7d33b1d; all wider semantics remain unresolved. |",
+        "| RP-03 | All45 parser cases and six integration controls independently reproducible | Replay named fixture injections through existing CLI; record exits/projections/errors and denominators | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/cdc-iteration01-review-receipts.json; artifacts/cdc-review-receipts.json | CDC fresh prescribed import succeeds2/0/0;52-result classification/full51-object retention checked. Earlier45 parser cases27/18 retained independently; build success reproduced. |",
+        "| RP-04 | Every20 seed caller rows and named identity/query/watch/cache consumers mapped | Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/impact-map.csv | CDC verifies20/20 original columns and corrected S06 actual delta channels/future additions proof; no live watcher acceptance. |",
+        "| RP-05 | Eight consequential decision topics have concrete recommendations, impacts and owners | Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/decision-packet.md | Eight bounded source-qualified recommendations/owners/gates independently accepted as a packet component; no adoption. |",
+        "| RP-06 | Repair sequencing and meaningful future exact-value/error/integration proof obligations specified | Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases | correctness-grade | Existing address repair prerequisite / Slice03 bubble-up | done | cdc-verification.md Iteration01; artifacts/decision-packet.md | Corrected oracle provenance and feasible future additions accepted; static future proof only, no new API or live composition. |"
+      ]
+    },
+    {
+      "check": "all criterion/status cells preserved",
+      "pass": true,
+      "actual": [
+        [
+          " RP-01 ",
+          " Source/assignment fences and complete scoped intake/readback recorded ",
+          " Check main/planning state, manifest coverage and cited readback ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-02 ",
+          " Field-specific evidence warrants and unresolved applicability are faithful ",
+          " Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-03 ",
+          " All45 parser cases and six integration controls independently reproducible ",
+          " Replay named fixture injections through existing CLI; record exits/projections/errors and denominators ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-04 ",
+          " Every20 seed caller rows and named identity/query/watch/cache consumers mapped ",
+          " Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-05 ",
+          " Eight consequential decision topics have concrete recommendations, impacts and owners ",
+          " Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-06 ",
+          " Repair sequencing and meaningful future exact-value/error/integration proof obligations specified ",
+          " Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-07 ",
+          " Scope/privacy/failures/artifacts and all seven rows honestly accounted for ",
+          " Check exact six-path CC diff, unchanged source/seed data, links/JSON/CSV/whitespace/trailers and close walk ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ]
+      ],
+      "expected": [
+        [
+          " RP-01 ",
+          " Source/assignment fences and complete scoped intake/readback recorded ",
+          " Check main/planning state, manifest coverage and cited readback ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-02 ",
+          " Field-specific evidence warrants and unresolved applicability are faithful ",
+          " Reconcile Slice01–03 accepted claims; keep synthetic and game/source evidence distinct ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-03 ",
+          " All45 parser cases and six integration controls independently reproducible ",
+          " Replay named fixture injections through existing CLI; record exits/projections/errors and denominators ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-04 ",
+          " Every20 seed caller rows and named identity/query/watch/cache consumers mapped ",
+          " Inspect complete symbols, data flow and current compatibility behavior; preserve seed coverage ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-05 ",
+          " Eight consequential decision topics have concrete recommendations, impacts and owners ",
+          " Check source-qualified proposals, rejected alternatives and held approvals; no adoption inference ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-06 ",
+          " Repair sequencing and meaningful future exact-value/error/integration proof obligations specified ",
+          " Check feasible API routes, discriminating oracles, cache/watch and same-coordinate galaxy cases ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " done "
+        ],
+        [
+          " RP-07 ",
+          " Scope/privacy/failures/artifacts and all seven rows honestly accounted for ",
+          " Check exact six-path CC diff, unchanged source/seed data, links/JSON/CSV/whitespace/trailers and close walk ",
+          " correctness-grade ",
+          " Existing address repair prerequisite / Slice03 bubble-up ",
+          " open "
+        ]
+      ]
+    },
+    {
+      "check": "CC stdout raw stream available",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "CC stdout serialized bytes equal raw",
+      "pass": true,
+      "actual": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "expected": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "check": "CC stderr raw stream available",
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "CC stderr serialized bytes equal raw",
+      "pass": true,
+      "actual": {
+        "bytes": 327,
+        "sha256": "e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38"
+      },
+      "expected": {
+        "bytes": 327,
+        "sha256": "e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38"
+      }
+    },
+    {
+      "check": "CC stdout length",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "CC stderr length",
+      "pass": true,
+      "actual": 327,
+      "expected": 327
+    },
+    {
+      "check": "CC stderr hash matches reported",
+      "pass": true,
+      "actual": "e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38",
+      "expected": "e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38"
+    },
+    {
+      "check": "fresh build exit",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "new build argv",
+      "pass": true,
+      "actual": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "nms-cli"
+      ],
+      "expected": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "nms-cli"
+      ]
+    },
+    {
+      "check": "CC exit matches fresh",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "fresh stdout equals CC",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "check": "fresh stderr equals CC except elapsed time",
+      "pass": true,
+      "actual": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n",
+      "expected": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in <elapsed>s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n"
+    },
+    {
+      "check": "Co-authored-by: Codex <noreply@openai.com> once",
+      "pass": true,
+      "actual": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "check": "Co-authored-by: Billo AI <ai-engineering@billo.systems> once",
+      "pass": true,
+      "actual": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "check": "CC whitespace",
+      "pass": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "source clean after fresh build",
+      "pass": true,
+      "actual": "",
+      "expected": ""
+    }
+  ],
+  "failed_checks": [],
+  "CC_capture": {
+    "stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stream_available": true
+    },
+    "stderr": {
+      "bytes": 327,
+      "sha256": "e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38",
+      "raw_stream_available": true
+    }
+  },
+  "fresh_build": {
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-p",
+      "nms-cli"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.44s\nwarning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1\nnote: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`\n",
+    "stdout_bytes": 0,
+    "stderr_bytes": 327,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "af92395ed45a67cc63b13cae5132d0ceb091b9759893473753be1bd44fc6f9a0"
+  },
+  "historical_prefixes": {
+    "artifacts/execution.md": {
+      "bytes": 38943,
+      "sha256": "3d854697b2f4ca98b5e3f862919d221c048889a091922c281b9180ff97c50f73"
+    },
+    "closing-report.md": {
+      "bytes": 8521,
+      "sha256": "b93ad530c188f2c2cb67c54849e97f2b5105f2ca931fb177da8fab0c22ef759e"
+    }
+  },
+  "retention": "Six accepted ledger rows, all52 full result objects and all old JSON values unchanged; initial and iteration01 independent replay retained, not rerun.",
+  "limits": [
+    "Exact CC stream comparison uses its named temporary raw files; no raw save/private data access.",
+    "Fresh stderr comparison normalizes elapsed build duration only; CC JSON-to-raw byte comparison uses no normalization.",
+    "One fresh offline build, no parser/import/live watcher/cache/protocol/production run.",
+    "Combined initial CC diff output truncated slightly; raw-capture paragraph recovered with a bounded read."
+  ]
+}

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.9, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.10, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -52,7 +52,7 @@ Two contributors by default: this context prepares/designs; a fresh CC performs 
 
 ## Current corrective preparation
 
-[Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is independently closed after iteration02; all seven bounded investigation rows accepted. [Slice04](slice04-address-repair-contract/slice-plan.md) is current for a source-grounded address repair decision packet. Generalized field/policy/identity/cache and compatibility decisions remain held before production repair. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
+[Slice01](slice01-address-encoding-evidence/slice-plan.md) is independently closed as a caller/format inventory investigation. [Slice02](slice02-packed-format-authority/slice-plan.md) is independently closed after iteration01; seven investigation rows accepted. [Slice03](slice03-decoded-location-witnesses/slice-plan.md) is independently closed after iteration02; all seven bounded investigation rows accepted. [Slice04](slice04-address-repair-contract/slice-plan.md) is independently closed as a source-grounded address repair decision packet after iteration02; all seven preparation rows accepted. Generalized field/policy/identity/cache and compatibility decisions remain held before production repair. Feature/build, query association, documentation, coverage, and package work remain separate unresolved closeout tracks.
 
 ## Initial slice01 review progress
 
@@ -63,7 +63,7 @@ CC packet `8a5352b` was independently reviewed; [CDC record](slice01-address-enc
 1. Slice01 — current caller/format inventory: closed, eight independently accepted investigation rows. Does not establish a general save decoder.
 2. Slice02 — primary packed-format authority: closed after independent correction review; seven investigation rows done. Discovery source lead strengthened, encrypted public sample failures preserved; wider field semantics remain unresolved.
 3. Slice03 — decoded local location witnesses: independently closed after iteration02; seven investigation rows accepted. One pinned known workbench save,44 raw-corroborated base associations; no production policy selected.
-4. Slice04 — address repair contract decision packet: current bounded preparation within the existing contract-before-repair route. Characterize synthetic current input behavior; map galaxy identity, API/query/watch/cache consequences; recommend concrete policies with owners and held approval gates. No production changes.
+4. Slice04 — address repair contract decision packet: independently closed after iteration02, seven preparation rows accepted. Current-input characterization, galaxy/API/query/watch/cache impact and bounded recommendations delivered. Previous status was active preparation; closure accepts that preparation, with policy adoption still held.
 5. Dependent production repair: held until CDC accepts sufficient field-specific evidence and resolves consequential design policy. No implementation slice or compatibility decision is pre-issued.
 
 Authority: the user's closeout preparation and Expedited Mode authorize this bounded continuation of the established investigation route. Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation. Opening another evidence slice does not approve those changes.
@@ -76,6 +76,14 @@ Version1.8 (2026-10-04): routine Slice04 progress and corrective assignment, ret
 
 ## Slice04 iteration01 review progress
 
-CDC review of7d33b1d accepts RP-02–RP-06; RP-01 retained. Only RP-07 exact build-capture fidelity remains (the recorded diagnostic omits one word); successful build/import and corrected semantic packet are reproduced. [Iteration02](slice04-address-repair-contract/cc-prompt-iteration02.md) is current, confined to four existing CC files; all52 result objects and accepted decision/map components are retained. R06-S04 remains open, and no production policy/repair or original arc capability is accepted.
+CDC review of7d33b1d accepts RP-02–RP-06; RP-01 retained. Only RP-07 exact build-capture fidelity remains (the recorded diagnostic omits one word); successful build/import and corrected semantic packet are reproduced. [Iteration02](slice04-address-repair-contract/cc-prompt-iteration02.md) was current at that review, confined to four existing CC files; all52 result objects and accepted decision/map components are retained. R06-S04 remains open, and no production policy/repair or original arc capability is accepted.
 
 Version1.9 (2026-10-04): routine child-review/current-assignment update after Slice04 iteration01; no structural sequencing, architecture, acceptance or compatibility amendment. Six rows accepted, one metadata refinement pending.
+
+## Slice04 final closure and current decision gate
+
+CDC final review of1339445 accepts RP-07; all seven packet rows are done and R06-S04 closes. Exact channel byte equality and a fresh build reproduce; prior52 results, semantic corrections and failed histories remain intact. No original arc capability is accepted by closing this preparation child.
+
+Current step is CDC/Operator disposition of the accepted D01–D08 recommendations before a dependent production assignment. [Final review](slice04-address-repair-contract/cdc-verification.md) gives three proposed direction choices: separate save decoding from preserved48-bit portal/core contracts, explicit galaxy-qualified identity, and reject/rebuild semantically incompatible derived caches. These are proposals, not adopted plan amendments. Invalid/default/range/error policy and per-record/nonzero reality evidence still need exact disposition. No next production prompt is issued through the held gate.
+
+Version1.10 (2026-10-04): Slice04 final independent closure/child acceptance and current decision gate recorded, surfaced by iteration02's completed fidelity proof. Routine progress within the existing sequence; no architecture/scope/public-compatibility/acceptance change approved.

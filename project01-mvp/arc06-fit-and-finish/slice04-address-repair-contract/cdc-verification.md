@@ -1,6 +1,6 @@
 # Slice04 — CDC independent verification
 
-**Current verdict after iteration01: RP-01–RP-06 accepted; RP-07 remains open. Slice04 is not closed.** See the dated iteration01 section below; initial findings remain historical.
+**Current verdict after iteration02: RP-01–RP-07 accepted. Slice04 is independently closed as an evidence/decision packet.** See the final dated review below. Earlier failed verdicts remain historical; production decisions and original arc/project gates remain held.
 
 2026-10-04. Reviewed CC commit `74359a92a48669d5ab0368bb51351ac840f1b9fc` against clean source main `a800950ef3558fcf463517696c3c140061e7353d`. **Correction required: RP-01 accepted; RP-02–RP-07 remain open.** Slice04, Arc06 and Project01 remain open. No production policy, API, identity or cache migration is adopted.
 
@@ -109,3 +109,55 @@ What worked: full-object retention avoids another45-case replay; separating witn
 One additional author-preparation build captured stdout/stderr as raw bytes, wrote temporary streams and generated JSON directly, then read the JSON back and verified byte-for-byte UTF-8 equality. Exit0; stdout0 bytes, stderr327 bytes with hashes in the iteration01 review receipts. This is readiness evidence for the next assignment, not CC acceptance. Including the failed receipt attempt, this turn ran three builds and two prescribed imports; no45-case replay.
 
 Final handoff checks pass: exactly eight reviewer/handoff paths,49 resolvable local links, nine CC evidence/issued-prompt files byte-identical to7d33b1d, seven criteria unchanged, six accepted/one open RP rows, all15 original arc rows and22 project rows still open, source clean/pinned and whitespace clean. Required commit trailer/path checks and final worktree state are returned after committing.
+
+## Iteration02 final independent review and closure — 2026-10-04
+
+Assignment `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md`; CC candidate `13394456db6e90387cccd62e63556b48d1a8eeaa`, reviewer handoff `e4d7e2f7ca8aacaea4461bf2f7c2440a59973caf`, unchanged clean source main `a800950ef3558fcf463517696c3c140061e7353d`. **RP-07 passes; six prior accepted rows retain acceptance; all seven rows are done and Slice04 closes.** This accepts the packet's fidelity and completeness, not adoption of a save decoder, identity/API/cache migration or production policy. Arc06 and Project01 remain open.
+
+### Fresh verification and retention
+
+[Final review receipts](artifacts/cdc-iteration02-review-receipts.json) record101 checks, all passing. Independently read CC's explicitly named temporary stdout.bin/stderr.bin, compare them with UTF-8 re-encoded iteration02_build channels **without normalization**: stdout0 bytes and stderr327 bytes, exact byte equality. CC stderr SHA-256 is `e8bfb9a7fad04be83cc3aa647826d9e2b11eb4220a52af624d527ab7c4ba0c38`; empty stdout hash matches the report. The full diagnostic includes `to see what the problems were` and the existing proc-macro-error2 future-compatibility warning. One fresh offline/locked source-root build exits0; its stdout matches exactly and stderr matches except independently variable elapsed duration. The CC byte-fidelity proof itself uses no duration or whitespace normalization.
+
+Exactly two top-level JSON additions are present. Every pre-existing value, both old build objects, all52 full result objects and classification/count metadata are unchanged. All six accepted ledger rows remain byte-identical; all seven criterion/status cells are preserved by CC. Execution and closing reports retain exact historical prefixes. Decision packet, impact map, author baseline, all three issued prompts, previous review receipts/record and current plan remain byte-identical to the reviewer handoff. The four-path CC commit, contiguous parsed trailers once, source/planning fences and whitespace pass. The new dated note correctly marks iteration01's exact-capture claim superseded while retaining the old text as history.
+
+Earlier independent evidence remains applicable: the initial review directly replayed45 parser cases and controls; iteration01 freshly reproduced the missing prescribed control and verified semantic corrections; now unchanged full result objects, source/dependency/input fences and criteria establish retention. No new delta undermines those methods or witnesses. Parser27/18 and current45+6+1 coverage are retained evidence, **not freshly executed again**. The one build is the only fresh process run in this final review. No game save, user cache, live protocol/watch, production change or broad tests/format/lint. A slightly truncated combined CC diff was recovered with a bounded raw-capture paragraph read; no dependent required content was left unread. CC's two mistyped expected-hash checker failures are retained in its execution record and independently verified not to have altered the fenced inputs.
+
+### Final seven-row walk
+
+| Row | Final CDC disposition | Evidence strength and limit |
+|---|---|---|
+| RP-01 | done, retained | Initial independent intake/fence acceptance; row and relevant boundaries unchanged. |
+| RP-02 | done, retained | Iteration01 independently reconciled prior game-confirmed Chili, separate44 expanded-base comparisons and dm/DM.CN path; no new format or name policy. |
+| RP-03 | done, retained | Initial45-case replay27/18, iteration01 fresh prescribed import, full-object preservation and honest52 classification; synthetic current behavior only. |
+| RP-04 | done, retained |20/20 inherited caller columns and eight consumers reviewed; corrected S06 source/API observables retained. |
+| RP-05 | done, retained | All eight consequential topics have concrete bounded recommendations/impacts/owners; none adopted by packet acceptance. |
+| RP-06 | done, retained | Independent/static future oracles and sequence reviewed, watcher proof uses actual additions; future production/composition tests remain unrun. |
+| RP-07 | done, freshly reproduced | Exact CC raw-stream/JSON byte equality plus fresh build; scope/history/privacy/preservation/commit checks pass, earlier failures remain historical. |
+
+### Bubble-up and complete artifact inventory
+
+Against the arc plan, Slice04 delivered the address-repair decision preparation it was assigned: eight topics, full synthetic current-behavior coverage, caller/consumer impact mapping, faithful field-specific evidence limits and feasible future proof obligations. Scope-as-specified versus delivered is complete: the substituted control was retained as a supplement, the prescribed control was added, and all required corrections independently passed. No silent production implementation, removal channel or generalized-format claim was added.
+
+Supporting artifacts: author-baseline.json, behavior-probes.json, decision-packet.md, execution.md, impact-map.csv, cdc-review-receipts.json, cdc-iteration01-review-receipts.json and cdc-iteration02-review-receipts.json, all under artifacts/. Root ledger/plan/closing-report/cdc-verification and all three issued prompts are first-class slice documents. CC's closing report retains the seven-row history and identifies final RP-07 proof and limits; CDC's table above supplies final independent dispositions without rewriting CC's report.
+
+Arc-plan change assessment: update routine status/version, child R06-S04 acceptance and current gate. No change to original scope, acceptance, architecture or structural sequence is approved. This remains the existing contract-before-repair route. Original15 arc rows and22 project rows still require their own capability/composition acceptance; closed preparation children cannot substitute for them.
+
+What worked: direct stream capture plus serialized-byte comparison resolves transcript fidelity; full-object and exact-prefix retention preserves evidence while avoiding redundant parser/control execution. All failed attempts and all three handoffs remain attributable.
+
+### Next gate — CDC recommendations for the Operator
+
+The accepted packet's D01–D08 are still recommended/unresolved. The arc-plan Authority explicitly says: “Findings that would alter architecture, original scope, public compatibility or acceptance still require the recorded decision before implementation.” Therefore no dependent production CC assignment is issued by this closure. Expedited cadence cannot discharge that gate.
+
+Three concrete direction choices are ready for discussion/approval, recommended by CDC from the accepted packet:
+
+| Decision | Recommended direction | Consequence / approval boundary |
+|---|---|---|
+| D01/D05 — save/core boundary | Preserve the current48-bit core/portal and existing portal conversion contracts; add a distinct save-packed boundary with field-specific fallible discovery/base conversion. | Existing portal users keep their representation. Save callers get an explicit conversion/error boundary and may need API migration; approval is the boundary direction, not a universal decoder or syntax/fallback policy. |
+| D06 — system identity | Use an explicit galaxy-qualified identity key containing reality and planet-zeroed system coordinates, carried through planet keys/indexes/query/watch paths; prefer that explicit type over changing an opaque numeric encoding. | Same coordinates in galaxies0/9 can coexist. This changes public/serialized SystemId shape and requires caller/migration design and regressions before implementation. No type definition is shipped here. |
+| D08 — derived cache transition | When decoder or identity semantics change, reject old derived caches and rebuild from source rather than reinterpret their decoded addresses; make the compatibility check distinguish semantic revisions. | One rebuild cost; requires explicit compatibility/freshness handling before serving cached results. No user cache touched by this decision packet. |
+
+Approval of those directions would not settle D02/D03 invalid/omission/range/whole-save-versus-record failure policy, D04 per-record/nonzero galaxy evidence and conflict handling, or authorize production implementation. Those need their own exact CDC disposition and evidence re-entry. D07 query association, planet glyphs, name retention and feature/build corrections keep their existing separate Project01 ownership. No defects are transferred to Project02. The next work is resolving this recorded decision gate and detailed repair contract; all source implementation remains held until the applicable choices and proof are sufficient.
+
+### Final closure packaging checks
+
+Exactly seven reviewer/closure paths;52 resolvable local links;11 sealed CC evidence/issued-prompt files byte-identical; all seven criteria preserved and accepted, six previously accepted rows byte-identical; R06-S04 done; all15 original arc and22 project rows open. Current assignment is none at the held decision gate. Source clean/pinned and whitespace clean. Required trailer/commit scope and post-commit worktree checks are returned after committing.

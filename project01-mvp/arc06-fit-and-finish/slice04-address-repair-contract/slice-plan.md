@@ -1,6 +1,6 @@
 # Slice04 — Address repair contract decision packet
 
-Version: 1.2, opened 2026-10-04. Status: active, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
+Version: 1.3, opened 2026-10-04. Status: independently closed, evidence/design preparation only. Two-Contributor Workflow; Expedited Mode. Depends on independently closed Slice03. Source main `a800950ef3558fcf463517696c3c140061e7353d`.
 
 ## Outcome and boundaries
 
@@ -24,8 +24,8 @@ The executable recipe names a complete45-case manifest, field injection paths, e
 
 - Initial cc-prompt.md, issued2026-10-04, returned for review at74359a9; CDC accepts RP-01 and returns six rows for correction. Initial prompt preserved.
 - cc-prompt-iteration01.md, issued2026-10-04, predecessor cc-prompt.md; returned for independent review at7d33b1d; substantive corrections accepted, RP-07 exact capture mismatch remains. Executed refinement passes:1.
-- cc-prompt-iteration02.md, issued2026-10-04, predecessor cc-prompt-iteration01.md; active RP-07-only raw-build-capture correction. Iteration02 not yet executed.
-- Current assignment: `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md`.
+- cc-prompt-iteration02.md, issued2026-10-04, predecessor cc-prompt-iteration01.md; returned at1339445 and independently accepted; RP-07 closes. Executed refinement passes:2; both accepted through their recorded independent review.
+- Current assignment: none; `arc06-fit-and-finish/slice04-address-repair-contract/cc-prompt-iteration02.md` is the final executed/accepted assignment. All three issued prompts remain preserved.
 - Version1.0: opened after Slice03 closes, detailing the existing address-contract-before-repair step; no original scope, architecture, compatibility or acceptance amendment.
 
 ## Author packet checks
@@ -47,3 +47,11 @@ CDC accepts RP-02–RP-06 after independently checking full51-object retention, 
 Author directly captured the current Cargo build, confirmed the diagnostic mismatch (normalizing elapsed duration only), and checked the available raw-stream→JSON byte-equality method. Iteration02 narrows work to four existing CC files and appends one new build object/note; all52 result objects, decision/map files, and six accepted rows are frozen. No substantive contract, code, policy, scope or compatibility choice changes. This is one bounded metadata refinement within the existing slice, not another evidence investigation.
 
 Version1.2 (2026-10-04): iteration01 reviewed and one executed refinement recorded; five additional rows accepted, one exact-capture issue returned in iteration02. Original seven criteria and production gates unchanged.
+
+## Final closure and next decision gate
+
+Iteration02 at1339445 independently passes101 checks, including exact CC raw-stream/JSON equality, fresh successful build and unchanged52 result objects/six accepted rows/history. RP-07 accepted; all seven rows done. [Final review](cdc-verification.md) retains earlier failed attempts and bounded evidence, inventories all artifacts, and bubbles preparation acceptance to Arc06. No generalized decoder, public API/key/cache choice or production behavior is adopted.
+
+Next work is the existing CDC/Operator repair-contract decision gate, with three concrete architectural direction recommendations in the final review; no production CC prompt issued. D02/D03 invalid/default/game-range policy and D04 galaxy source proof remain separately unsettled. The existing arc sequence and original acceptance obligations are unchanged.
+
+Version1.3 (2026-10-04): final iteration02 accepted and Slice04 closed; two executed refinements recorded. Routine closure/status only, no scope/architecture/compatibility amendment.
