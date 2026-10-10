@@ -50,3 +50,37 @@ Repository-known no-default-feature tests, workspace coverage target (81.16% obs
 - Source commit `8d2cf00fba41689f817cad35ec835315ba9aa415` — the five authorized cache source/test files only.
 
 The post-commit planning audit checks its four-path allowlist, unchanged open statuses, clean worktrees, and both trailers exactly once; the CC handoff reports that result. Independent CDC reproduction/acceptance remains the next gate. The downstream identity migration and save-repair work remain outside this slice.
+
+## Iteration01 — 2026-10-10 (CC proposed-done; CDC review pending)
+
+This is an append-only refinement record for the three delivery gaps in CDC review R01–R03. It does not change the binding cache contract, ledger criteria/statuses, accepted runtime evidence, or approved Arc06 sequence. The source commit is `decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a`, limited to `crates/nms-cache/src/lib.rs`, `crates/nms-cache/src/serialize.rs`, and `crates/nms-cache/tests/load_integration.rs`. Full intake/readback and command receipts are in `artifacts/execution.md` and `artifacts/validation.json` under `iteration01`.
+
+### Iteration01 row walk
+
+| Row | Iteration01 CC disposition | Fresh evidence and limit |
+|---|---|---|
+| CS-01 | Retain prior CDC accepted disposition | Active iteration, planning intake `688486a42deedcdfdc195a8adb32c9ae1501352b`, source baseline `8d2cf00fba41689f817cad35ec835315ba9aa415`, complete required reads, contract readback, exact source pathset, and clean source fence are recorded. This is CC intake attestation; CDC retains acceptance authority. |
+| CS-02 | Retain prior CDC accepted disposition | Runtime and envelope bytes are unchanged. Focused package tests pass (18 unit, 13 integration); the existing literal header, populated-field and misaligned-input oracles remain. This iteration adds no new CS-02 claim. |
+| CS-03 | Proposed-done; ledger remains open | `test_deserialize_compatibility_error_precedence` now runs the same `TruncatedHeader { actual }` predicate for 0, 7, 8 and 15 bytes. The existing current 16-byte header with empty payload still expects `CacheError::Deserialize`. Package and workspace gates pass. CDC should confirm the exact source diff and retained precedence cases. |
+| CS-04 | Proposed-done; ledger remains open | `set_fresh` asserts `is_cache_fresh` after both deterministic timestamp writes. The complete caller set covers normal fresh load, legacy/schema/semantic/corrupt probes, malformed-source, no-cache, the standalone freshness test, and the warm step in `assert_rebuilt_and_warm`; the stale assertion remains false. Package and workspace gates pass. The assertion establishes the test precondition, while existing public-path oracles establish rebuild then warm behavior. |
+| CS-05 | Retain prior CDC accepted disposition | No production lifecycle body changed. The fresh focused and workspace suites pass; prior CDC evidence remains the evidence for corrupt/stale/missing/bypass, source-error preservation, and best-effort write behavior. |
+| CS-06 | Proposed-done; ledger remains open | Crate docs and serialize module/function docs describe the 16-byte offsets, current revisions 1/1, exact-match rejection, direct typed errors versus enabled-startup rebuild/write, schema versus semantic responsibilities, later semantic bump and predecessor rejection/rebuild/warm proof, revision-1 limits, external exhaustive-match consequence, unchanged signatures, non-exhaustive nested error, and no release/universal guarantee. They now describe checked owned/aligned decoding and reconstructed indexes without zero-copy or speed claims. `cargo test ... --doc` passes with 0 doctests; the strict crate rustdoc intra-doc-link command passes. These are doc/link checks, not evidence of release compatibility or game-format authority. |
+| CS-07 | Retain prior CDC accepted disposition | Required sequence passes: format, lint, focused package tests, workspace tests, all-features build and cache doctests; the additional strict crate rustdoc check also passes. `make lint` initially could not unpack a cached dependency due sandbox permissions; the identical command passed on retry via authorized Git/Cargo metadata escalation. Exact streams and this failed attempt are preserved. The source commit has the exact three-file pathset and both trailers once. The planning pathset is limited to the four assigned paths; JSON history, report prefixes, and ledger criteria/statuses are checked before the separate planning commit. |
+
+The initial CDC accepted rows remain attributed to their original review at candidate `8d2cf00`; no row has been changed to accepted by CC. CS-03/04/06 return as proposed-done only. CS-01/02/05/07 retain their prior `done` statuses; CS-03/04/06 remain `open` pending CDC correction review.
+
+### Iteration01 validation
+
+- `make format` passed. `make lint` passed on retry; its first attempt failed before linting because Cargo could not write the extracted `aho-corasick v1.1.4` package below `~/.cargo` in the default sandbox. The successful retry used the reviewed filesystem escalation. The existing `proc-macro-error2 v2.0.1` future-incompatibility warning remains.
+- `cargo test --offline --locked -p nms-cache` passed: 18 unit + 13 integration, 0 failed or ignored.
+- `make test` passed: 824 tests across 30 test/doc summaries, 0 failed or ignored.
+- `cargo build --offline --locked --workspace --all-features` passed.
+- `cargo test --offline --locked -p nms-cache --doc` passed with 0 doctests.
+- `RUSTDOCFLAGS='-D rustdoc::broken_intra_doc_links' cargo doc --offline --locked -p nms-cache --no-deps` passed.
+- `git show --check --format=oneline HEAD` passed. Exact subprocess output/error streams, argv, cwd, environment additions, exits and summaries are in the iteration01 validation object. The planning commit uses only the four assigned planning paths; CS-01/02/05/07 remain `done` and CS-03/04/06 remain `open`.
+
+### Bubble-up and scope boundary
+
+Future address decoder or galaxy-identity work must assess whether decoded model meaning changes and bump semantic revision when it does, even if archive shape is unchanged. It must reject the predecessor cache, rebuild from the source save, and witness a compatible warm load. Schema and semantic revisions may both need to advance for one repair. This slice does not repair the known address/identity defects, settle save-format authority, restore active galaxy, redesign performance, or close any broader Project01 gates. No no-default-feature, coverage, strict workspace-doc/package/MSRV/performance or release gate is claimed here.
+
+Slice05 remains open pending independent CDC acceptance. Arc06 identity and save-repair slices remain in the approved order, and Arc06 and Project01 remain open.
