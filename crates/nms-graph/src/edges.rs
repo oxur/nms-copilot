@@ -373,7 +373,10 @@ mod tests {
         let edges_before = model.graph.edge_count();
 
         // Try connecting a system that doesn't exist
-        model.connect_new_system(SystemId(0xDEADBEEF), 2);
+        let missing = SystemId::from_address(&nms_core::address::GalacticAddress::from_packed(
+            0xDEADBEEF, 0,
+        ));
+        model.connect_new_system(missing, 2);
 
         assert_eq!(model.graph.edge_count(), edges_before);
     }

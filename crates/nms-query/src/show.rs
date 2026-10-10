@@ -1,5 +1,6 @@
 //! Detail view queries for systems, planets, and bases.
 
+use nms_core::address::GalacticAddress;
 use nms_core::player::PlayerBase;
 use nms_core::system::System;
 use nms_graph::spatial::SystemId;
@@ -57,7 +58,7 @@ fn show_system(model: &GalaxyModel, name_or_id: &str) -> Result<ShowResult, Grap
             .unwrap_or(name_or_id);
         let packed = u64::from_str_radix(hex, 16)
             .map_err(|_| GraphError::SystemNotFound(name_or_id.to_string()))?;
-        let id = SystemId(packed & 0x0FFF_FFFF_FFFF);
+        let id = SystemId::from_address(&GalacticAddress::from_packed(packed, model.active_galaxy));
         model
             .system(&id)
             .ok_or_else(|| GraphError::SystemNotFound(name_or_id.to_string()))?
@@ -152,5 +153,87 @@ mod tests {
     fn test_show_system_not_found() {
         let model = test_model();
         assert!(execute_show(&model, &ShowQuery::System("No System".into())).is_err());
+    }
+
+    #[test]
+    fn test_show_packed_address_uses_active_galaxy_and_clears_planet_bits() {
+        let address0 = GalacticAddress::from_packed(0x050003AB8C07, 0);
+        let address9 = GalacticAddress::from_packed(0x050003AB8C07, 9);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(
+            address0,
+            Some("Zero".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            address9,
+            Some("Nine".into()),
+            None,
+            None,
+            vec![],
+        ));
+
+        model.set_active_galaxy(0);
+        let result = execute_show(&model, &ShowQuery::System("150003AB8C07".into())).unwrap();
+        assert!(
+            matches!(result, ShowResult::System(s) if s.system.name.as_deref() == Some("Zero"))
+        );
+
+        model.set_active_galaxy(9);
+        let result = execute_show(&model, &ShowQuery::System("150003AB8C07".into())).unwrap();
+        assert!(
+            matches!(result, ShowResult::System(s) if s.system.name.as_deref() == Some("Nine"))
+        );
+
+        model.set_active_galaxy(1);
+        assert!(matches!(
+            execute_show(&model, &ShowQuery::System("050003AB8C07".into())),
+            Err(GraphError::SystemNotFound(_))
+        ));
+    }
+
+    #[test]
+    fn test_show_named_bases_attach_to_their_qualified_systems() {
+        let address0 = GalacticAddress::from_packed(0x050003AB8C07, 0);
+        let address9 = GalacticAddress::from_packed(0x050003AB8C07, 9);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(
+            address0,
+            Some("Zero".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            address9,
+            Some("Nine".into()),
+            None,
+            None,
+            vec![],
+        ));
+        for (name, address) in [("Zero Base", address0), ("Nine Base", address9)] {
+            model.insert_base(nms_core::player::PlayerBase::new(
+                name.into(),
+                nms_core::player::BaseType::HomePlanetBase,
+                address,
+                [0.0; 3],
+                None,
+            ));
+        }
+
+        for (base_name, system_name) in [("Zero Base", "Zero"), ("Nine Base", "Nine")] {
+            let result = execute_show(&model, &ShowQuery::Base(base_name.into())).unwrap();
+            match result {
+                ShowResult::Base(base) => assert_eq!(
+                    base.system
+                        .as_ref()
+                        .and_then(|system| system.name.as_deref()),
+                    Some(system_name)
+                ),
+                _ => panic!("expected base result"),
+            }
+        }
     }
 }

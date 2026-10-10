@@ -296,7 +296,7 @@ fn test_pipeline_every_system_has_address_to_id_entry() {
     let model = model_from_fixture("multi_system_save.json");
     for sys_id in model.systems.keys() {
         assert!(
-            model.address_to_id.contains_key(&sys_id.0),
+            model.address_to_id.contains_key(sys_id),
             "System {sys_id:?} missing from address_to_id"
         );
     }

@@ -51,8 +51,8 @@ pub struct GalaxyModel {
     /// System name -> SystemId (lowercase, only for named systems).
     pub name_index: HashMap<String, SystemId>,
 
-    /// Packed address (planet bits zeroed) -> SystemId.
-    pub address_to_id: HashMap<u64, SystemId>,
+    /// Galaxy-qualified system key -> the matching `SystemId`.
+    pub address_to_id: HashMap<SystemId, SystemId>,
 
     /// SystemId -> petgraph NodeIndex.
     pub node_map: HashMap<SystemId, NodeIndex>,
@@ -109,7 +109,7 @@ impl GalaxyModel {
             galaxy_points.entry(galaxy).or_default().push(point);
 
             // Add to address lookup
-            address_to_id.insert(sys_id.0, sys_id);
+            address_to_id.insert(sys_id, sys_id);
 
             // Add to name index
             if let Some(ref name) = system.name {
@@ -267,7 +267,7 @@ impl GalaxyModel {
         let galaxy = system.address.reality_index;
         self.spatial.entry(galaxy).or_default().insert(point);
 
-        self.address_to_id.insert(sys_id.0, sys_id);
+        self.address_to_id.insert(sys_id, sys_id);
 
         if let Some(ref name) = system.name {
             self.name_index.insert(name.to_lowercase(), sys_id);
@@ -518,7 +518,8 @@ mod tests {
     fn test_system_not_found_returns_none() {
         let save = minimal_save();
         let model = GalaxyModel::from_save(&save);
-        assert!(model.system(&SystemId(0xDEADBEEF)).is_none());
+        let missing = SystemId::from_address(&GalacticAddress::from_packed(0xDEADBEEF, 0));
+        assert!(model.system(&missing).is_none());
     }
 
     #[test]
@@ -541,7 +542,126 @@ mod tests {
         let model = GalaxyModel::from_save(&save);
         // Every system should have an address_to_id entry
         for &sys_id in model.systems.keys() {
-            assert!(model.address_to_id.contains_key(&sys_id.0));
+            assert_eq!(model.address_to_id.get(&sys_id), Some(&sys_id));
+        }
+    }
+
+    #[test]
+    fn test_insert_same_coordinates_in_two_galaxies_preserves_qualified_indexes() {
+        let addr0 = GalacticAddress::from_packed(0x150003AB8C07, 0);
+        let addr9 = GalacticAddress::from_packed(0x150003AB8C07, 9);
+        let id0 = SystemId::from_address(&addr0);
+        let id9 = SystemId::from_address(&addr9);
+
+        for reverse in [false, true] {
+            let mut model = GalaxyModel::new();
+            let systems = [
+                System::new(
+                    addr0,
+                    Some("Zero".into()),
+                    None,
+                    None,
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Lush marker".into()),
+                        None,
+                    )],
+                ),
+                System::new(
+                    addr9,
+                    Some("Nine".into()),
+                    None,
+                    None,
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Toxic),
+                        None,
+                        false,
+                        Some("Toxic marker".into()),
+                        None,
+                    )],
+                ),
+            ];
+            let order = if reverse { [1, 0] } else { [0, 1] };
+            for index in order {
+                model.insert_system(systems[index].clone());
+            }
+
+            assert_eq!(model.system_count(), 2);
+            assert_eq!(model.planet_count(), 2);
+            assert_eq!(model.graph.node_count(), 2);
+            assert_eq!(model.node_map.len(), 2);
+            assert_eq!(model.address_to_id.len(), 2);
+            assert_eq!(model.spatial_size(), 2);
+            assert_eq!(model.spatial_for(0).unwrap().size(), 1);
+            assert_eq!(model.spatial_for(9).unwrap().size(), 1);
+            assert_eq!(model.address_to_id.get(&id0), Some(&id0));
+            assert_eq!(model.address_to_id.get(&id9), Some(&id9));
+            assert!(model.node_map.contains_key(&id0));
+            assert!(model.node_map.contains_key(&id9));
+            assert_eq!(model.system(&id0).unwrap().name.as_deref(), Some("Zero"));
+            assert_eq!(model.system(&id9).unwrap().name.as_deref(), Some("Nine"));
+            assert_eq!(
+                model.planets.get(&(id0, 1)).unwrap().name.as_deref(),
+                Some("Lush marker")
+            );
+            assert_eq!(
+                model.planets.get(&(id9, 1)).unwrap().name.as_deref(),
+                Some("Toxic marker")
+            );
+            assert_eq!(model.biome_index.get(&Biome::Lush), Some(&vec![(id0, 1)]));
+            assert_eq!(model.biome_index.get(&Biome::Toxic), Some(&vec![(id9, 1)]));
+
+            model.set_active_galaxy(0);
+            assert_eq!(model.nearest_systems(&addr0, 1)[0].0, id0);
+            assert_eq!(
+                model.nearest_planets(&addr0, 1, &Default::default())[0].0,
+                (id0, 1)
+            );
+            model.set_active_galaxy(9);
+            assert_eq!(model.nearest_systems(&addr9, 1)[0].0, id9);
+            assert_eq!(
+                model.nearest_planets(&addr9, 1, &Default::default())[0].0,
+                (id9, 1)
+            );
+            model.set_active_galaxy(7);
+            assert!(model.nearest_systems(&addr0, 1).is_empty());
+            assert!(
+                model
+                    .nearest_planets(&addr0, 1, &Default::default())
+                    .is_empty()
+            );
+
+            let before = (
+                model.system_count(),
+                model.planet_count(),
+                model.graph.node_count(),
+                model.node_map.len(),
+                model.address_to_id.len(),
+                model.spatial_size(),
+            );
+            model.insert_system(System::new(
+                addr9,
+                Some("Should not overwrite".into()),
+                None,
+                None,
+                vec![Planet::new(1, Some(Biome::Frozen), None, false, None, None)],
+            ));
+            assert_eq!(
+                (
+                    model.system_count(),
+                    model.planet_count(),
+                    model.graph.node_count(),
+                    model.node_map.len(),
+                    model.address_to_id.len(),
+                    model.spatial_size(),
+                ),
+                before
+            );
+            assert_eq!(model.system(&id9).unwrap().name.as_deref(), Some("Nine"));
         }
     }
 
