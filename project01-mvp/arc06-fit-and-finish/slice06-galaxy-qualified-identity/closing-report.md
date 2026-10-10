@@ -60,3 +60,32 @@ The source commit pathset is the 15 allowlisted paths named in the assignment pl
 ## Handoff
 
 Return this candidate to the Operator for independent CDC/Sofie review. Do not merge, push, release, move main, self-accept the eight rows, or report Project01/arc identity closure. The planning commit SHA and post-commit fence checks are supplied with the handoff.
+
+## Iteration01 — evidence recovery — 2026-10-10
+
+This append-only refinement follows cc-prompt-iteration01.md at reviewer issuance 41fdc4757661fac1495a875ce7bea27c9888035f; source remains f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8. The original report above is retained verbatim, including its initial CC proposal. CDC independently accepted GI-01–GI-07 at the stated source and initial planning packet 3293cc24de2e0d758c9fe3270c2f64a147633427; those seven accepted rows remain unchanged.
+
+### Eight-row iteration01 walk
+
+| Row | Iteration01 disposition | Basis and remaining work |
+| --- | --- | --- |
+| GI-01 | Retain CDC accepted | Independent acceptance at f57a38f remains applicable; source, dependencies and intake pins did not change. |
+| GI-02 | Retain CDC accepted | Independent key/serde acceptance remains applicable; no production files changed. |
+| GI-03 | Retain CDC accepted | Independent model/topology acceptance remains applicable; no production files changed. |
+| GI-04 | Retain CDC accepted | Independent import/show acceptance remains applicable; no production files changed. |
+| GI-05 | Retain CDC accepted | Independent snapshot-delta acceptance remains applicable; no production files changed. |
+| GI-06 | Retain CDC accepted | Independent cache transition/transport acceptance remains applicable; no production files changed. |
+| GI-07 | Retain CDC accepted | Independent compatibility/documentation acceptance remains applicable; no production files changed. |
+| GI-08 | Open; partial historical evidence recovered | Authentic original call and combined output are located and preserved with provenance, byte length and SHA-256. Separate original stdout/stderr and direct process exit metadata were not retained, so the exact-channel requirement is unmet. Status remains open for explicit CDC/Operator disposition; no waiver or deferred/no-op claim is proposed. |
+
+### Recovery provenance and limit
+
+The source is the October 10 codex-home session file identified in validation.json iteration01.recovery.original_invocation (invocation line 1059; paired response line 1062; call ID call_4287652b9c5c46dd904cd49389cccda6). It establishes command, source worktree, inline offline setting, tool parameters and authentic combined text containing E0507 and final Make Error 101. The output is one UTF-8 text block returned by text(r.output), not separate stdout/stderr. Direct process exit is absent. The prior JSON exit_code 101 is unchanged, but the retained wrapper does not independently prove that outer status. No explicit truncation marker appears, the failure tail is present, and the original tool had a 5000-token output cap without a truncation flag. This evidence is partial and cannot close GI-08.
+
+The bounded search covered the three existing /private/tmp/nms-s06-* locations and date-scoped codex-home session records. No raw-channel file was found in temp storage. Search locations, counts, diagnostic-reference matches, session/call IDs, and output hash/base64 are in validation.json. The unavailable alternate ~/.codex/sessions lookup and earlier CC transcript-only observation are retained without claiming deletion. Finding this combined record does not establish whether separate channels exist elsewhere.
+
+### Preservation and ownership
+
+No Rust/source changes, tests, lint re-execution, or new production claims were made. The 24 original captures, 8 final entries, summaries, uncaptured_attempts[0], all previous validation JSON values, and both original prose prefixes are preserved. Seven accepted ledger rows and criteria/statuses are unchanged; only GI-08 Evidence/Notes changed. Prior focused/workspace reviewer receipts remain applicable because source, dependencies and inputs did not change. Every original query/routing/save-decoding/doc/coverage/feature/MSRV/package/performance gate remains open as before.
+
+GI-08 returns to CDC/Operator for explicit disposition of the authentic merged transcript and missing exact channels. No acceptance amendment is preauthorized. Slice06, Arc06 and Project01 remain open; no successor prompt, merge, push, release or main movement is authorized. The source commit and parent remain unchanged.

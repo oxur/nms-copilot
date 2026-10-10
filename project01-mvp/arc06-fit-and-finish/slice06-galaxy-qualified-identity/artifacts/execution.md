@@ -43,3 +43,27 @@ This pass proves the foundation through dual-order insert/import, exact show/bas
 - Source commit: `f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8`, parent `decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a`. It contains exactly the 15 allowlisted existing source/test paths and the sealed predecessor fixture; both required co-author trailers are present once.
 - Planning intake remains pinned to issuance HEAD `abe4a8d9caeea32bbbc041a8a1f2a158a1e85cae` (with accepted Slice05 closure planning pin `ba6859d51d1871a09e1be9a18dbfb2c873ad9f18`). The exact command evidence, captured retry streams, parsed test summaries, transcript-only preliminary lint diagnostic and source commit are recorded in `artifacts/validation.json`.
 - Evidence remains proposed for independent CDC/Sofie review. No parent/arc/project status or criteria were changed.
+
+## Iteration01 — evidence recovery — 2026-10-10
+
+### Assignment and intake
+
+- Active assignment: arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md; reviewer issuance/intake HEAD 41fdc4757661fac1495a875ce7bea27c9888035f, parent initial CC packet 3293cc24de2e0d758c9fe3270c2f64a147633427, on planning. Source remained clean at f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8 on codex/galaxy-qualified-identity; no source edits or tests were needed.
+- Read the active iteration prompt (60 lines), slice plan (58), ledger (14), CDC verification (42), repository AGENTS.md and project-management README in full. Read the initial prompt's complete permitted-path and validation/return sections and the prior CC execution (45 lines) and closing report (62 lines) at 3293cc2. Required guide sections read: iteration issuance/execution, evidence during correction review, and CC intake. Complete structured reading scope is in validation.json iteration01.intake.
+- Strict-base64 decoded all 24 prior captures; recorded byte lengths and parsed test summaries agree. All 24 are successful captured attempts; the 8 final-sequence entries and single declared uncaptured lint attempt were inspected. All 8 CDC gate receipts and their artifact audit were inspected. Existing uncaptured_attempts[0] and every pre-existing JSON value are preserved.
+
+### Contract readback
+
+Historical evidence is distinct from rerunning a now-successful gate. Recovery must be authentic and provenance-bearing; a merged transcript is partial and cannot be relabeled as separate stdout/stderr. Original records and the seven CDC-accepted rows remain unchanged. GI-08 remains open unless exact original channels are substantiated; no waiver or source repair is authorized.
+
+### Bounded original-record recovery
+
+A bounded inventory covered 8 files in /private/tmp/nms-s06-author, 15 in /private/tmp/nms-s06-review, and all 24 files in /private/tmp/nms-s06-validation. No temporary file contains the original failed lint's output channels. E0507 mentions in review audit.json, iteration.md and package.py are reviewer/audit references, not executor captures. The validation directory contains only the prior 24 captured attempts. A date-scoped search of codex-home/sessions/2026/10/10 found the original source session. The alternate /Users/oubiwann/.codex/sessions/2026/10/10 lookup was unavailable; the available codex-home store was searched. Search coverage and file lists are in validation.json iteration01.recovery.searches.
+
+The original call is in session file rollout-2026-10-10T16-49-26-01a127ca-d5c2-79d3-8637-fc60159cc5ec.jsonl, lines 1059 and 1062, SHA-256 dd7f6113751e17782c6c34c1bcc73ba73c807b813eba4967eb623995ddefc08e. Call call_4287652b9c5c46dd904cd49389cccda6 at 2026-10-10T22:55:03.889Z invokes CARGO_NET_OFFLINE=true make lint in the source worktree, with yield_time_ms=30000 and max_output_tokens=5000; the inline command sets CARGO_NET_OFFLINE=true, while nested exec_command env is absent. Its paired response is timestamped 2026-10-10T22:55:23.134Z. The wrapper emitted only r.output and dropped direct process exit metadata. The output record retains a 12,414-byte UTF-8 combined transcript, SHA-256 392bc1ee8731f6120922cd4a31c71886a89a066243120da1940d4f6c80d0f6b4; its text is base64-embedded in validation.json iteration01. It contains E0507 and the final make Error 101 line, with no explicit truncation marker. The executor retained neither separate stdout/stderr nor a truncation flag. The earlier uncaptured_attempts[0].exit_code=101 is preserved verbatim; the direct process exit cannot be independently verified from this wrapper response.
+
+Result: partial recovery. The authentic combined transcript improves on an irretrievable claim but does not meet the original separate-stream and direct-exit contract. GI-08 remains open for CDC/Operator disposition; no automatic acceptance. Source stays at the independently reviewed SHA.
+
+### Evidence preservation
+
+Initial execution.md and closing-report.md prefixes are byte-for-byte preserved. validation.json has only a new iteration01 object: all prior JSON values, including uncaptured_attempts[0], compare equal to the 3293cc2 version. Ledger criteria/statuses and seven accepted rows are unchanged; only GI-08 Evidence/Notes describe this partial recovery. Prompt, slice plan, CDC record/receipts and three sealed author inputs were not edited. Structural hashes, bounded inspection capture and original transcript provenance are recorded in validation.json.
