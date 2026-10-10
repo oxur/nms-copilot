@@ -1,4 +1,22 @@
-//! Serialize and deserialize galaxy data to/from rkyv archives.
+//! Serialize and deserialize galaxy data using a versioned cache envelope.
+//!
+//! The header is exactly 16 bytes: ASCII `NMSCACHE` at bytes 0–7, the schema
+//! revision as a little-endian `u32` at bytes 8–11, and the semantic revision
+//! as a little-endian `u32` at bytes 12–15. The checked rkyv payload begins at
+//! byte 16. Both revisions must exactly match the reader's current values;
+//! headerless legacy caches and mismatched revisions are rejected. Startup
+//! fallback and cache rewriting are handled by [`crate::load_or_rebuild`], not
+//! by the direct decoding functions in this module.
+//!
+//! The schema revision describes archive layout, codec, and configuration
+//! compatibility. The semantic revision describes the meaning and identity of
+//! decoded model data. Future address-decoder or galaxy-identity changes must
+//! assess and bump the semantic revision when meaning changes, even if archive
+//! shape stays the same. One change may require both revisions to advance.
+//! The current schema and semantic revisions are both 1. These initial values
+//! label current behavior; they do not repair known address or identity
+//! defects. Both revisions are separate from game save version, crate version,
+//! and `cached_at`.
 
 use std::fs;
 use std::path::Path;
@@ -51,10 +69,15 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
     }
 }
 
-/// Serialize cache data to bytes with a 16-byte compatibility envelope.
+/// Encode cache data with the current 16-byte compatibility envelope.
 ///
-/// The envelope contains the archive schema and model semantic revisions;
-/// these revisions are independent of [`CacheData::save_version`].
+/// The envelope contains the ASCII `NMSCACHE` magic, then the schema and
+/// semantic revisions as little-endian `u32` values, followed by the rkyv
+/// payload. The revisions are independent of [`CacheData::save_version`].
+///
+/// # Errors
+///
+/// Returns [`CacheError::Serialize`] if rkyv cannot encode the cache data.
 pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
     let payload =
         rkyv::to_bytes::<RkyvError>(data).map_err(|e| CacheError::Serialize(e.to_string()))?;
@@ -68,7 +91,18 @@ pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
 
 /// Validate the compatibility envelope, then checked-decode its rkyv payload.
 ///
+/// Both revisions must exactly equal the current schema and semantic revisions.
 /// Envelope and revision errors are returned before the payload is inspected.
+/// A headerless archive is incompatible; this function returns its typed error
+/// without rebuilding from the source save. A 16-byte current header with an
+/// empty payload reaches payload decoding and returns [`CacheError::Deserialize`].
+///
+/// # Errors
+///
+/// Returns [`CacheError::Incompatible`] for a truncated header, invalid magic,
+/// unsupported schema revision, or unsupported semantic revision. Returns
+/// [`CacheError::Deserialize`] when the current envelope contains an invalid
+/// rkyv payload.
 pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     if bytes.len() < CACHE_HEADER_LEN {
         return Err(CacheError::Incompatible(
@@ -304,7 +338,7 @@ mod tests {
 
     #[test]
     fn test_deserialize_compatibility_error_precedence() {
-        for size in [7, 8, 15] {
+        for size in [0, 7, 8, 15] {
             assert!(matches!(
                 deserialize(&vec![0; size]),
                 Err(CacheError::Incompatible(
