@@ -227,6 +227,56 @@ Alpha Duplicate,Euclid,01717D8A4EA2,Toxic
     }
 
     #[test]
+    fn test_import_csv_same_coordinates_in_two_galaxies_is_order_independent() {
+        for reverse in [false, true] {
+            let rows = if reverse {
+                "Nine,9,050003AB8C07,Toxic\nZero,0,050003AB8C07,Lush\n"
+            } else {
+                "Zero,0,050003AB8C07,Lush\nNine,9,050003AB8C07,Toxic\n"
+            };
+            let csv = format!("System Name,Galaxy,Portal Glyphs,Biome\n{rows}");
+            let file = csv_file(&csv);
+            let mut model = GalaxyModel::new();
+            let stats = import_csv(&mut model, file.path(), "test").unwrap();
+            assert_eq!((stats.added, stats.duplicates, stats.skipped), (2, 0, 0));
+            assert_eq!(model.system_count(), 2);
+
+            let replay = csv_file(&csv);
+            let replay_stats = import_csv(&mut model, replay.path(), "test").unwrap();
+            assert_eq!(
+                (
+                    replay_stats.added,
+                    replay_stats.duplicates,
+                    replay_stats.skipped
+                ),
+                (0, 2, 0)
+            );
+            let id0 = SystemId::from_address(&GalacticAddress::from_packed(0x050003AB8C07, 0));
+            let id9 = SystemId::from_address(&GalacticAddress::from_packed(0x050003AB8C07, 9));
+            assert_eq!(model.system(&id0).unwrap().name.as_deref(), Some("Zero"));
+            assert_eq!(model.system(&id9).unwrap().name.as_deref(), Some("Nine"));
+            assert_eq!(
+                model.system(&id0).unwrap().planets[0].biome,
+                Some(Biome::Lush)
+            );
+            assert_eq!(
+                model.system(&id9).unwrap().planets[0].biome,
+                Some(Biome::Toxic)
+            );
+        }
+    }
+
+    #[test]
+    fn test_import_csv_different_planet_glyphs_same_galaxy_remain_duplicate() {
+        let csv = "System Name,Galaxy,Portal Glyphs\nFirst,0,050003AB8C07\nSecond,0,F50003AB8C07\n";
+        let file = csv_file(csv);
+        let mut model = GalaxyModel::new();
+        let stats = import_csv(&mut model, file.path(), "test").unwrap();
+        assert_eq!((stats.added, stats.duplicates, stats.skipped), (1, 1, 0));
+        assert_eq!(model.system_count(), 1);
+    }
+
+    #[test]
     fn test_import_csv_bad_glyphs_skipped() {
         let csv = "\
 System Name,Galaxy,Portal Glyphs,Biome

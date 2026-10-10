@@ -53,7 +53,7 @@ fn show_system_with_planets() {
 
     // Look up the system by hex address
     let sys_id = model.systems.keys().next().unwrap();
-    let hex = format!("{:012X}", sys_id.0);
+    let hex = format!("{:012X}", sys_id.system_address());
     let result = execute_show(&model, &ShowQuery::System(hex)).unwrap();
 
     match result {

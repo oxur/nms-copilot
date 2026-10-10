@@ -52,6 +52,10 @@ mod tests {
     use super::*;
     use nms_core::address::GalacticAddress;
 
+    fn id(packed: u64) -> SystemId {
+        SystemId::from_address(&GalacticAddress::from_packed(packed, 0))
+    }
+
     #[test]
     fn test_system_id_from_address_zeroes_planet() {
         let addr1 = GalacticAddress::new(100, 50, 200, 0x123, 0, 0);
@@ -82,7 +86,7 @@ mod tests {
     #[test]
     fn test_system_point_distance_squared() {
         use rstar::PointDistance;
-        let p = SystemPoint::new(SystemId(0), 0.0, 0.0, 0.0);
+        let p = SystemPoint::new(id(0), 0.0, 0.0, 0.0);
         let target = [3.0, 4.0, 0.0];
         assert!((p.distance_2(&target) - 25.0).abs() < 1e-10);
     }
@@ -91,21 +95,21 @@ mod tests {
     fn test_rtree_nearest_neighbor() {
         use rstar::RTree;
         let points = vec![
-            SystemPoint::new(SystemId(1), 0.0, 0.0, 0.0),
-            SystemPoint::new(SystemId(2), 10.0, 0.0, 0.0),
-            SystemPoint::new(SystemId(3), 100.0, 0.0, 0.0),
+            SystemPoint::new(id(1), 0.0, 0.0, 0.0),
+            SystemPoint::new(id(2), 10.0, 0.0, 0.0),
+            SystemPoint::new(id(3), 100.0, 0.0, 0.0),
         ];
         let tree = RTree::bulk_load(points);
         let nearest = tree.nearest_neighbor(&[1.0, 0.0, 0.0]).unwrap();
-        assert_eq!(nearest.id, SystemId(1));
+        assert_eq!(nearest.id, id(1));
     }
 
     #[test]
     fn test_rtree_bulk_load_size() {
         use rstar::RTree;
         let points = vec![
-            SystemPoint::new(SystemId(1), 0.0, 0.0, 0.0),
-            SystemPoint::new(SystemId(2), 5.0, 5.0, 5.0),
+            SystemPoint::new(id(1), 0.0, 0.0, 0.0),
+            SystemPoint::new(id(2), 5.0, 5.0, 5.0),
         ];
         let tree = RTree::bulk_load(points);
         assert_eq!(tree.size(), 2);
@@ -114,7 +118,7 @@ mod tests {
     #[test]
     fn test_system_point_envelope() {
         use rstar::RTreeObject;
-        let p = SystemPoint::new(SystemId(1), 3.0, 4.0, 5.0);
+        let p = SystemPoint::new(id(1), 3.0, 4.0, 5.0);
         let env = p.envelope();
         assert_eq!(env.lower(), [3.0, 4.0, 5.0]);
         assert_eq!(env.upper(), [3.0, 4.0, 5.0]);

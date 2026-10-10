@@ -9,6 +9,9 @@ use nms_core::system::Planet;
 /// Flattened galaxy data for cache serialization.
 ///
 /// Contains all the raw data needed to reconstruct a `GalaxyModel`.
+///
+/// The archive schema stores the selected galaxy explicitly. Downstream Rust
+/// struct literals must provide [`active_galaxy`](Self::active_galaxy).
 /// Indices (graph, R-tree, HashMaps) are rebuilt on load.
 #[derive(Archive, Serialize, Deserialize, Debug)]
 pub struct CacheData {
@@ -20,6 +23,9 @@ pub struct CacheData {
 
     /// Player state at time of caching.
     pub player_state: Option<PlayerState>,
+
+    /// Galaxy selected for spatial queries, independent of player position.
+    pub active_galaxy: u8,
 
     /// Save file version that produced this cache.
     pub save_version: u32,

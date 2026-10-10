@@ -9,6 +9,8 @@ use nms_cache::{
 use nms_graph::GalaxyModel;
 
 const HEADER_LEN: usize = 16;
+const PREDECESSOR_SCHEMA1_SEMANTIC1: &[u8] =
+    include_bytes!("fixtures/predecessor-schema1-semantic1.rkyv");
 
 fn save_mtime() -> SystemTime {
     SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_000)
@@ -38,16 +40,32 @@ fn test_save_json() -> &'static str {
 }
 
 fn source_model() -> GalaxyModel {
-    let save = nms_save::parse_save(test_save_json().as_bytes()).unwrap();
+    source_model_from_json(test_save_json())
+}
+
+fn source_json_active_galaxy_9() -> String {
+    let mut value: serde_json::Value = serde_json::from_str(test_save_json()).unwrap();
+    value["BaseContext"]["PlayerStateData"]["UniverseAddress"]["RealityIndex"] =
+        serde_json::json!(9);
+    serde_json::to_string(&value).unwrap()
+}
+
+fn source_model_from_json(json: &str) -> GalaxyModel {
+    let save = nms_save::parse_save(json.as_bytes()).unwrap();
     GalaxyModel::from_save(&save)
 }
 
 fn assert_source_semantics(actual: &GalaxyModel) {
     let expected = source_model();
+    assert_source_semantics_against(actual, &expected);
+}
+
+fn assert_source_semantics_against(actual: &GalaxyModel, expected: &GalaxyModel) {
     assert_eq!(actual.systems, expected.systems);
     assert_eq!(actual.planets, expected.planets);
     assert_eq!(actual.bases, expected.bases);
     assert_eq!(actual.player_state, expected.player_state);
+    assert_eq!(actual.active_galaxy, expected.active_galaxy);
     assert_eq!(actual.systems.len(), 1);
     assert_eq!(actual.planets.len(), 2);
     let system = actual.systems.values().next().unwrap();
@@ -68,6 +86,84 @@ fn assert_source_semantics(actual: &GalaxyModel) {
         (player.units, player.nanites, player.quicksilver),
         (5_000_000, 10_000, 500)
     );
+}
+
+fn dual_galaxy_model(reverse: bool, with_player: bool) -> GalaxyModel {
+    let mut model = GalaxyModel::new();
+    if with_player {
+        model.player_state = source_model().player_state;
+    }
+    let systems = [
+        nms_core::system::System::new(
+            nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 0),
+            Some("Zero".into()),
+            None,
+            None,
+            vec![nms_core::system::Planet::new(
+                1,
+                Some(nms_core::biome::Biome::Lush),
+                None,
+                false,
+                Some("Zero marker".into()),
+                None,
+            )],
+        ),
+        nms_core::system::System::new(
+            nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9),
+            Some("Nine".into()),
+            None,
+            None,
+            vec![nms_core::system::Planet::new(
+                1,
+                Some(nms_core::biome::Biome::Toxic),
+                None,
+                false,
+                Some("Nine marker".into()),
+                None,
+            )],
+        ),
+    ];
+    for index in if reverse { [1, 0] } else { [0, 1] } {
+        model.insert_system(systems[index].clone());
+    }
+    model.set_active_galaxy(9);
+    model
+}
+
+fn assert_dual_galaxy_model(actual: &GalaxyModel, with_player: bool) {
+    let address0 = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 0);
+    let address9 = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9);
+    let id0 = nms_core::system::SystemId::from_address(&address0);
+    let id9 = nms_core::system::SystemId::from_address(&address9);
+    assert_eq!(actual.active_galaxy, 9);
+    assert_eq!(actual.system_count(), 2);
+    assert_eq!(actual.planet_count(), 2);
+    assert_eq!(actual.spatial_for(0).unwrap().size(), 1);
+    assert_eq!(actual.spatial_for(9).unwrap().size(), 1);
+    assert_eq!(actual.address_to_id.get(&id0), Some(&id0));
+    assert_eq!(actual.address_to_id.get(&id9), Some(&id9));
+    assert_eq!(actual.system(&id0).unwrap().name.as_deref(), Some("Zero"));
+    assert_eq!(actual.system(&id9).unwrap().name.as_deref(), Some("Nine"));
+    assert_eq!(
+        actual.planets.get(&(id0, 1)).unwrap().name.as_deref(),
+        Some("Zero marker")
+    );
+    assert_eq!(
+        actual.planets.get(&(id9, 1)).unwrap().name.as_deref(),
+        Some("Nine marker")
+    );
+    assert_eq!(
+        actual.planets.get(&(id0, 1)).unwrap().biome,
+        Some(nms_core::biome::Biome::Lush)
+    );
+    assert_eq!(
+        actual.planets.get(&(id9, 1)).unwrap().biome,
+        Some(nms_core::biome::Biome::Toxic)
+    );
+    assert_eq!(actual.player_state.is_some(), with_player);
+    if with_player {
+        assert_eq!(actual.player_position().unwrap().reality_index, 0);
+    }
 }
 
 fn set_mtime(path: &std::path::Path, time: SystemTime) {
@@ -132,7 +228,7 @@ fn load_or_rebuild_from_save_when_no_cache() {
     assert!(cache_path.exists());
     assert_eq!(
         &fs::read(&cache_path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x01\0\0\0\x01\0\0\0"
+        b"NMSCACHE\x02\0\0\0\x02\0\0\0"
     );
 }
 
@@ -200,7 +296,7 @@ fn corrupt_current_payload_rebuilds_then_warm_hits() {
     let dir = tempfile::tempdir().unwrap();
     let (save_path, cache_path) = paths(&dir);
     fs::write(&save_path, test_save_json()).unwrap();
-    let mut bytes = current_cache_with_revision(1, 1);
+    let mut bytes = current_cache_with_revision(2, 2);
     bytes.truncate(HEADER_LEN);
     fs::write(&cache_path, bytes).unwrap();
     set_fresh(&cache_path, &save_path);
@@ -212,7 +308,7 @@ fn incompatible_fresh_cache_and_malformed_save_preserve_cache_bytes() {
     let dir = tempfile::tempdir().unwrap();
     let (save_path, cache_path) = paths(&dir);
     fs::write(&save_path, "not a save").unwrap();
-    let bytes = current_cache_with_revision(1, 2);
+    let bytes = current_cache_with_revision(2, 1);
     fs::write(&cache_path, &bytes).unwrap();
     set_fresh(&cache_path, &save_path);
 
@@ -288,7 +384,7 @@ fn direct_file_roundtrip_has_header_and_source_version_is_not_header_version() {
     let data = extract_cache_data(&source_model(), 4720);
     write_cache(&data, &path).unwrap();
     let bytes = fs::read(&path).unwrap();
-    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x01\0\0\0\x01\0\0\0");
+    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
     assert_eq!(deserialize(&bytes).unwrap().save_version, 4720);
     assert_eq!(read_cache(&path).unwrap().save_version, 4720);
 }
@@ -305,7 +401,118 @@ fn compatible_cache_preserves_populated_model_with_independent_save_version() {
     assert_eq!(restored.save_version, 9999);
     assert_eq!(
         &fs::read(&path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x01\0\0\0\x01\0\0\0"
+        b"NMSCACHE\x02\0\0\0\x02\0\0\0"
     );
     assert_source_semantics(&rebuild_model(&restored));
+}
+
+#[test]
+fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_hits() {
+    assert_eq!(
+        &PREDECESSOR_SCHEMA1_SEMANTIC1[..HEADER_LEN],
+        b"NMSCACHE\x01\0\0\0\x01\0\0\0"
+    );
+    assert!(matches!(
+        deserialize(PREDECESSOR_SCHEMA1_SEMANTIC1),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 1,
+                expected: 2
+            }
+        ))
+    ));
+
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    let active9_json = source_json_active_galaxy_9();
+    fs::write(&save_path, &active9_json).unwrap();
+    fs::write(&cache_path, PREDECESSOR_SCHEMA1_SEMANTIC1).unwrap();
+    assert!(matches!(
+        read_cache(&cache_path),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 1,
+                expected: 2
+            }
+        ))
+    ));
+    assert!(is_cache_fresh(&cache_path, &save_path));
+
+    let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(!rebuilt.was_cached);
+    assert_eq!(rebuilt.save_version, 4720);
+    let expected = source_model_from_json(&active9_json);
+    assert_source_semantics_against(&rebuilt.model, &expected);
+    assert_eq!(rebuilt.model.active_galaxy, 9);
+    assert!(
+        rebuilt
+            .model
+            .systems
+            .keys()
+            .all(|id| id.reality_index() == 0)
+    );
+
+    let rewritten = fs::read(&cache_path).unwrap();
+    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+    assert_eq!(deserialize(&rewritten).unwrap().active_galaxy, 9);
+    assert!(is_cache_fresh(&cache_path, &save_path));
+
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_eq!(warm.save_version, 4720);
+    assert_source_semantics_against(&warm.model, &expected);
+    assert_eq!(warm.model.active_galaxy, 9);
+}
+
+#[test]
+fn current_schema_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits() {
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    let active9_json = source_json_active_galaxy_9();
+    fs::write(&save_path, &active9_json).unwrap();
+    let mut semantic1 = serialize(&extract_cache_data(&source_model(), 9999)).unwrap();
+    semantic1[12..16].copy_from_slice(&1_u32.to_le_bytes());
+    assert!(matches!(
+        deserialize(&semantic1),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SemanticMismatch {
+                found: 1,
+                expected: 2
+            }
+        ))
+    ));
+    fs::write(&cache_path, &semantic1).unwrap();
+    assert!(is_cache_fresh(&cache_path, &save_path));
+
+    let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(!rebuilt.was_cached);
+    assert_eq!(rebuilt.save_version, 4720);
+    assert_eq!(rebuilt.model.active_galaxy, 9);
+    assert_eq!(
+        &fs::read(&cache_path).unwrap()[..HEADER_LEN],
+        b"NMSCACHE\x02\0\0\0\x02\0\0\0"
+    );
+    set_fresh(&cache_path, &save_path);
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_eq!(warm.save_version, 4720);
+    assert_eq!(warm.model.active_galaxy, 9);
+
+    for reverse in [false, true] {
+        for with_player in [false, true] {
+            let model = dual_galaxy_model(reverse, with_player);
+            let data = extract_cache_data(&model, 9999);
+            assert_eq!(data.active_galaxy, 9);
+            let bytes = serialize(&data).unwrap();
+            let direct = rebuild_model(&deserialize(&bytes).unwrap());
+            assert_dual_galaxy_model(&direct, with_player);
+
+            write_cache(&data, &cache_path).unwrap();
+            set_fresh(&cache_path, &save_path);
+            let cached = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+            assert!(cached.was_cached);
+            assert_eq!(cached.save_version, 9999);
+            assert_dual_galaxy_model(&cached.model, with_player);
+        }
+    }
 }

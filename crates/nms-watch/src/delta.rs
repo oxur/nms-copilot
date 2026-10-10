@@ -70,6 +70,7 @@ pub fn compute_delta(old: &SaveSnapshot, new: &SaveSnapshot) -> SaveDelta {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::snapshot::SaveSnapshot;
     use nms_core::address::GalacticAddress;
     use nms_core::biome::Biome;
     use nms_core::player::{BaseType, PlayerBase};
@@ -249,5 +250,113 @@ mod tests {
         let delta = compute_delta(&old, &new);
         // 1 system + 1 player_moved + 1 base = 3
         assert_eq!(delta.change_count(), 3);
+    }
+
+    fn identity_snapshot(galaxies: &[u8]) -> SaveSnapshot {
+        let mut systems = std::collections::HashMap::new();
+        let mut planets = std::collections::HashMap::new();
+        for &galaxy in galaxies {
+            let address = GalacticAddress::from_packed(0x150003AB8C07, galaxy);
+            let name = if galaxy == 0 { "Zero" } else { "Nine" };
+            let biome = if galaxy == 0 {
+                Biome::Lush
+            } else {
+                Biome::Toxic
+            };
+            let planet = Planet::new(
+                1,
+                Some(biome),
+                None,
+                false,
+                Some(format!("{name} marker")),
+                None,
+            );
+            let system = System::new(address, Some(name.into()), None, None, vec![planet.clone()]);
+            let system_id = SystemId::from_address(&address);
+            systems.insert(system_id, system);
+            planets.insert((system_id, 1), planet);
+        }
+
+        SaveSnapshot {
+            systems,
+            planets,
+            bases: std::collections::HashMap::new(),
+            player_address: GalacticAddress::new(0, 0, 0, 1, 0, 0),
+        }
+    }
+
+    #[test]
+    fn test_compute_delta_and_apply_add_same_coordinates_in_other_galaxy() {
+        for (old_galaxy, added_galaxy) in [(0, 9), (9, 0)] {
+            let old = identity_snapshot(&[old_galaxy]);
+            let new = identity_snapshot(&[old_galaxy, added_galaxy]);
+            let delta = compute_delta(&old, &new);
+            assert_eq!(delta.new_systems.len(), 1);
+            assert_eq!(delta.new_planets.len(), 1);
+            assert!(delta.player_moved.is_none());
+            assert!(delta.new_bases.is_empty());
+            assert!(delta.modified_bases.is_empty());
+
+            let old_system = old.systems.values().next().unwrap().clone();
+            let mut model = nms_graph::GalaxyModel::new();
+            model.insert_system(old_system);
+            model.apply_delta(&delta);
+
+            let old_address = GalacticAddress::from_packed(0x150003AB8C07, old_galaxy);
+            let added_address = GalacticAddress::from_packed(0x150003AB8C07, added_galaxy);
+            let old_id = SystemId::from_address(&old_address);
+            let added_id = SystemId::from_address(&added_address);
+            assert_eq!(model.system_count(), 2);
+            assert_eq!(model.planet_count(), 2);
+            assert_eq!(
+                model.system(&old_id).unwrap().name.as_deref(),
+                Some(if old_galaxy == 0 { "Zero" } else { "Nine" })
+            );
+            assert_eq!(
+                model.system(&added_id).unwrap().name.as_deref(),
+                Some(if added_galaxy == 0 { "Zero" } else { "Nine" })
+            );
+            assert_eq!(
+                model.planets.get(&(old_id, 1)).unwrap().biome,
+                Some(if old_galaxy == 0 {
+                    Biome::Lush
+                } else {
+                    Biome::Toxic
+                })
+            );
+            assert_eq!(
+                model.planets.get(&(added_id, 1)).unwrap().biome,
+                Some(if added_galaxy == 0 {
+                    Biome::Lush
+                } else {
+                    Biome::Toxic
+                })
+            );
+            assert_eq!(
+                model.planets.get(&(old_id, 1)).unwrap().name.as_deref(),
+                Some(if old_galaxy == 0 {
+                    "Zero marker"
+                } else {
+                    "Nine marker"
+                })
+            );
+            assert_eq!(
+                model.planets.get(&(added_id, 1)).unwrap().name.as_deref(),
+                Some(if added_galaxy == 0 {
+                    "Zero marker"
+                } else {
+                    "Nine marker"
+                })
+            );
+            assert_eq!(model.address_to_id.get(&old_id), Some(&old_id));
+            assert_eq!(model.address_to_id.get(&added_id), Some(&added_id));
+
+            model.apply_delta(&delta);
+            assert_eq!(model.system_count(), 2);
+            assert_eq!(model.planet_count(), 2);
+            assert_eq!(model.address_to_id.len(), 2);
+            assert_eq!(model.node_map.len(), 2);
+            assert_eq!(model.spatial_size(), 2);
+        }
     }
 }
