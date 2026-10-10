@@ -67,3 +67,7 @@ Runtime cache protection and all relevant gates independently pass at source8d2c
 ## Current identity assignment — 2026-10-10
 
 Slice05 is independently closed. Current production CC assignment: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md`; execute the explicit-key/index/cache foundation on a new isolated branch from accepted decd8d6. Main remainsa800950. The identity direction is detailed into foundation then required query/routing/interface composition before save repair; no requirement moves out of Project01. Existing query/name/feature/docs/coverage/packages/performance and full composition gates persist. Current arc ledger24 rows (five done/nineteen open), project25 open.
+
+## Slice06 independent review — 2026-10-10
+
+[CDC review](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md) accepts GI-01–07 atf57a38f, with359 focused/840 workspace and all scoped gates passing. GI-08 stays open for the original failed lint's missing exact channels. Active CC assignment is `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md`, bounded evidence recovery; source stays unchanged. No successor pass until acceptance or explicit acceptance disposition. Arc24/five done/nineteen open and project25 open remain, as do every original closeout requirement and main/release boundaries.

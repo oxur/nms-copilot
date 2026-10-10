@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.5
+version: 1.6
 project: project01-mvp
 status: active
 depends-on: []
@@ -605,3 +605,9 @@ Version1.4 (2026-10-10): routine Slice05 child closure progress, no scope/accept
 [Slice06](arc06-fit-and-finish/slice06-galaxy-qualified-identity/slice-plan.md) details the approved identity direction into a foundation pass and subsequent query/routing/interface composition, before evidence-gated save repair. Current production CC assignment: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md`. Dependency source is accepted decd8d6; new isolated worktree, main remainsa800950. All25 project criteria stay open, with no amendment to required outcomes, original gates or approval authority. Child acceptance cannot replace parent composition.
 
 Version1.5 (2026-10-10): routine bounded identity execution detail after Slice05 closure; all approved scope and acceptance preserved.
+
+## Slice06 independent review — 2026-10-10
+
+Seven foundation rows independently accepted at sourcef57a38f/planning3293cc2; current gates pass (359 focused/840 workspace). GI-08 remains open for exact historical failed-lint capture. Current assignment supersedes initial implementation: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md`, evidence recovery only, no source changes. Slice06, arc and all25 project criteria remain open. Subsequent identity composition, save policy and all original gates are unchanged; an unavailable historical record requires explicit disposition rather than implicit acceptance.
+
+Version1.6 (2026-10-10): routine partial Slice06 review/current-assignment update; no scope/architecture/acceptance amendment.

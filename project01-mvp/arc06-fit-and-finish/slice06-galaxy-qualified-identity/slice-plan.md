@@ -1,6 +1,6 @@
 # Slice06 — galaxy-qualified identity foundation
 
-Version:1.0. Created2026-10-10. Status:open; eight rows await CC and independent CDC review.
+Version:1.1. Created2026-10-10. Status:open; seven rows independently accepted; GI-08 requires evidence recovery.
 
 ## Goal and authority
 
@@ -36,9 +36,10 @@ Coherent/portable: source versus planning allowlists and source dependency chain
 
 | Issued | Prompt relative to Project01 | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
-|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md | No predecessor within slice; Slice05 independently closed | First identity implementation pass on accepted cache dependency | active |
+|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md | No predecessor within slice; Slice05 independently closed | First identity implementation pass on accepted cache dependency | reviewed; seven rows accepted, GI-08 returned |
+|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md | sibling cc-prompt.md | Recover original failed lint evidence for GI-08; source unchanged | active |
 
-Current assignment: cc-prompt.md. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
+Current assignment: cc-prompt-iteration01.md. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
 
 ## Version history
 
@@ -47,3 +48,11 @@ Current assignment: cc-prompt.md. Up to five refinement iterations, preserving i
 Author validation limit: the strict combined core/graph/query/cache documentation baseline fails at unchanged core/address.rs bracket links (four errors). Exact channels are retained in author-baseline.json. Native ordinary docs plus strict cache links and source inspection cover this pass; the original strict core/workspace gate remains open for its existing documentation work. No source math/doc cleanup is smuggled into the identity allowlist.
 
 Ordinary scoped documentation baseline passes with4 core bracket warnings,3 graph extraction bracket warnings and2 query table HTML warnings, plus the existing dependency future-compatibility warning. Retained exact channels distinguish success-with-warnings from the failed strict baseline. Packaging checks preserve all prior23 arc criteria/statuses and all25 project criteria/statuses; one new child remains open.
+
+## Initial independent review and recovery assignment — 2026-10-10
+
+[CDC review](cdc-verification.md) independently accepts GI-01–07 at f57a38f/planning3293cc2. Fresh359 focused/840 workspace tests, lint/build/docs gates pass; current code and source boundaries satisfy the foundation contract. GI-08 remains open because the initial failed lint lacks exact historical channels. Current iteration01 is bounded evidence recovery only: four existing CC artifact paths, no source change, seven accepted rows retained. If original executor records cannot supply exact streams, return the observed limit for CDC/Operator disposition; no waiver is preauthorized. All original claims, captures and issued prompts are preserved. No successor composition work is issued.
+
+Author readiness for iteration01: actual24 captures and failure entry inspected with strict decode/length/summary checks, current source reviewed and eight independent gates executed. The prompt specifies narrowly scoped original-record lookup, fidelity/provenance assessment, append-only recovery evidence and preservation verifiers. Work-verification retention and engineering-methods evidence-assignment guidance apply; no Rust design/production repair is requested. Source-of-record availability is unknown and observable, not a guaranteed passing outcome.
+
+Version1.1 (2026-10-10): routine partial independent acceptance and evidence-recovery refinement; original scope/criteria/sequence unchanged, GI-08 not waived.
