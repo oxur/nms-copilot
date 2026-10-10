@@ -13,10 +13,10 @@
 //! decoded model data. Future address-decoder or galaxy-identity changes must
 //! assess and bump the semantic revision when meaning changes, even if archive
 //! shape stays the same. One change may require both revisions to advance.
-//! The current schema and semantic revisions are both 1. These initial values
-//! label current behavior; they do not repair known address or identity
-//! defects. Both revisions are separate from game save version, crate version,
-//! and `cached_at`.
+//! The current schema and semantic revisions are both 2. Schema 2 adds the
+//! selected galaxy to the archive; semantic 2 preserves the qualified system
+//! identity and selected galaxy when rebuilding a model. Both revisions are
+//! separate from game save version, crate version, and `cached_at`.
 
 use std::fs;
 use std::path::Path;
@@ -35,8 +35,8 @@ use crate::error::{CacheCompatibilityError, CacheError};
 // Bump the schema revision when the archive layout or codec changes. Bump the
 // semantic revision when the meaning or identity rules of CacheData change.
 const CACHE_MAGIC: &[u8; 8] = b"NMSCACHE";
-const CACHE_SCHEMA_REVISION: u32 = 1;
-const CACHE_SEMANTIC_REVISION: u32 = 1;
+const CACHE_SCHEMA_REVISION: u32 = 2;
+const CACHE_SEMANTIC_REVISION: u32 = 2;
 const CACHE_HEADER_LEN: usize = 16;
 
 /// Extract cache data from a GalaxyModel.
@@ -64,6 +64,7 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
         systems,
         bases,
         player_state: model.player_state.clone(),
+        active_galaxy: model.active_galaxy,
         save_version,
         cached_at,
     }
@@ -195,6 +196,7 @@ pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
     }
 
     model.player_state = data.player_state.clone();
+    model.set_active_galaxy(data.active_galaxy);
     model.build_edges(EdgeStrategy::default());
 
     model
@@ -297,6 +299,94 @@ mod tests {
     }
 
     #[test]
+    fn test_direct_cache_transport_preserves_two_galaxies_and_selected_galaxy() {
+        for reverse in [false, true] {
+            for with_player in [false, true] {
+                let mut model = GalaxyModel::new();
+                if with_player {
+                    model.player_state = test_model().player_state;
+                }
+                let addresses = [
+                    nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 0),
+                    nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9),
+                ];
+                let systems = [
+                    System::new(
+                        addresses[0],
+                        Some("Zero".into()),
+                        None,
+                        None,
+                        vec![nms_core::system::Planet::new(
+                            1,
+                            Some(nms_core::biome::Biome::Lush),
+                            None,
+                            false,
+                            Some("Zero marker".into()),
+                            None,
+                        )],
+                    ),
+                    System::new(
+                        addresses[1],
+                        Some("Nine".into()),
+                        None,
+                        None,
+                        vec![nms_core::system::Planet::new(
+                            1,
+                            Some(nms_core::biome::Biome::Toxic),
+                            None,
+                            false,
+                            Some("Nine marker".into()),
+                            None,
+                        )],
+                    ),
+                ];
+                for index in if reverse { [1, 0] } else { [0, 1] } {
+                    model.insert_system(systems[index].clone());
+                }
+                model.set_active_galaxy(9);
+
+                let data = extract_cache_data(&model, 4720);
+                assert_eq!(data.active_galaxy, 9);
+                let bytes = serialize(&data).unwrap();
+                let decoded = deserialize(&bytes).unwrap();
+                let rebuilt = rebuild_model(&decoded);
+
+                let id0 = nms_core::system::SystemId::from_address(&addresses[0]);
+                let id9 = nms_core::system::SystemId::from_address(&addresses[1]);
+                assert_eq!(rebuilt.active_galaxy, 9);
+                assert_eq!(rebuilt.system_count(), 2);
+                assert_eq!(rebuilt.planet_count(), 2);
+                assert_eq!(rebuilt.spatial_for(0).unwrap().size(), 1);
+                assert_eq!(rebuilt.spatial_for(9).unwrap().size(), 1);
+                assert_eq!(rebuilt.address_to_id.get(&id0), Some(&id0));
+                assert_eq!(rebuilt.address_to_id.get(&id9), Some(&id9));
+                assert_eq!(rebuilt.system(&id0).unwrap().name.as_deref(), Some("Zero"));
+                assert_eq!(rebuilt.system(&id9).unwrap().name.as_deref(), Some("Nine"));
+                assert_eq!(
+                    rebuilt.planets.get(&(id0, 1)).unwrap().name.as_deref(),
+                    Some("Zero marker")
+                );
+                assert_eq!(
+                    rebuilt.planets.get(&(id9, 1)).unwrap().name.as_deref(),
+                    Some("Nine marker")
+                );
+                assert_eq!(
+                    rebuilt.planets.get(&(id0, 1)).unwrap().biome,
+                    Some(nms_core::biome::Biome::Lush)
+                );
+                assert_eq!(
+                    rebuilt.planets.get(&(id9, 1)).unwrap().biome,
+                    Some(nms_core::biome::Biome::Toxic)
+                );
+                assert_eq!(rebuilt.player_state.is_some(), with_player);
+                if with_player {
+                    assert_eq!(rebuilt.player_position().unwrap().reality_index, 0);
+                }
+            }
+        }
+    }
+
+    #[test]
     fn test_rebuild_preserves_base_lookup() {
         let model = test_model();
         let data = extract_cache_data(&model, 4720);
@@ -312,7 +402,7 @@ mod tests {
         assert_eq!(
             &bytes[..CACHE_HEADER_LEN],
             &[
-                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 1, 0, 0, 0, 1, 0, 0, 0
+                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 2, 0, 0, 0, 2, 0, 0, 0
             ]
         );
         assert_eq!(data.save_version, 4720);
@@ -356,41 +446,41 @@ mod tests {
             ))
         ));
 
-        for schema in [0_u32, 2] {
+        for schema in [0_u32, 1, 3] {
             bytes[..8].copy_from_slice(CACHE_MAGIC);
             bytes[8..12].copy_from_slice(&schema.to_le_bytes());
-            bytes[12..16].copy_from_slice(&1_u32.to_le_bytes());
+            bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SchemaMismatch {
                     found,
-                    expected: 1
+                    expected: 2
                 })) if found == schema
             ));
         }
 
-        for semantic in [0_u32, 2] {
-            bytes[8..12].copy_from_slice(&1_u32.to_le_bytes());
+        for semantic in [0_u32, 1, 3] {
+            bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
             bytes[12..16].copy_from_slice(&semantic.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
                     found,
-                    expected: 1
+                    expected: 2
                 })) if found == semantic
             ));
         }
 
         // Mismatches are returned before inspecting an invalid payload, with
         // schema precedence when both revision fields differ.
-        bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
-        bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
+        bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
+        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Incompatible(
                 CacheCompatibilityError::SchemaMismatch {
-                    found: 2,
-                    expected: 1
+                    found: 3,
+                    expected: 2
                 }
             ))
         ));
@@ -399,8 +489,8 @@ mod tests {
     #[test]
     fn test_current_header_with_bad_payload_is_deserialize_error() {
         let mut bytes = CACHE_MAGIC.to_vec();
-        bytes.extend_from_slice(&1_u32.to_le_bytes());
-        bytes.extend_from_slice(&1_u32.to_le_bytes());
+        bytes.extend_from_slice(&2_u32.to_le_bytes());
+        bytes.extend_from_slice(&2_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Deserialize(_))
@@ -423,13 +513,13 @@ mod tests {
     fn test_compatibility_error_display_and_source_are_observable() {
         let error = CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
             found: 9,
-            expected: 1,
+            expected: 2,
         });
         assert!(error.to_string().contains("semantic revision 9"));
-        assert!(error.to_string().contains("expected 1"));
+        assert!(error.to_string().contains("expected 2"));
         assert_eq!(
             std::error::Error::source(&error).unwrap().to_string(),
-            "cache model semantic revision 9 is incompatible (expected 1)"
+            "cache model semantic revision 9 is incompatible (expected 2)"
         );
     }
 

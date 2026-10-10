@@ -317,7 +317,7 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
         let portal_hex = model
             .system(&hop.system_id)
             .map(|s| format!("{:012X}", s.address.packed()))
-            .unwrap_or_else(|| format!("{:012X}", hop.system_id.0));
+            .unwrap_or_else(|| format!("{:012X}", hop.system_id.system_address()));
         let glyphs = hex_to_emoji(&portal_hex);
 
         let distance = format_distance(hop.leg_distance_ly);
@@ -393,6 +393,10 @@ mod tests {
     use nms_core::address::GalacticAddress;
     use nms_core::biome::Biome;
     use nms_core::system::{Planet, System};
+
+    fn system_id(packed: u64) -> nms_graph::SystemId {
+        nms_graph::SystemId::from_address(&GalacticAddress::from_packed(packed, 0))
+    }
 
     fn plain() -> Theme {
         Theme::none()
@@ -622,7 +626,7 @@ mod tests {
         let result = RouteResult {
             route: nms_graph::Route {
                 hops: vec![nms_graph::RouteHop {
-                    system_id: nms_graph::SystemId(0x001000000064),
+                    system_id: system_id(0x001000000064),
                     leg_distance_ly: 0.0,
                     cumulative_ly: 0.0,
                     is_waypoint: false,
@@ -648,7 +652,7 @@ mod tests {
         let result = RouteResult {
             route: nms_graph::Route {
                 hops: vec![nms_graph::RouteHop {
-                    system_id: nms_graph::SystemId(0x001000000064),
+                    system_id: system_id(0x001000000064),
                     leg_distance_ly: 0.0,
                     cumulative_ly: 0.0,
                     is_waypoint: false,
@@ -678,13 +682,13 @@ mod tests {
             route: nms_graph::Route {
                 hops: vec![
                     nms_graph::RouteHop {
-                        system_id: nms_graph::SystemId(0x001000000064),
+                        system_id: system_id(0x001000000064),
                         leg_distance_ly: 0.0,
                         cumulative_ly: 0.0,
                         is_waypoint: false,
                     },
                     nms_graph::RouteHop {
-                        system_id: nms_graph::SystemId(0x002000000C80),
+                        system_id: system_id(0x002000000C80),
                         leg_distance_ly: 5000.0,
                         cumulative_ly: 5000.0,
                         is_waypoint: false,
@@ -709,19 +713,19 @@ mod tests {
             route: nms_graph::Route {
                 hops: vec![
                     nms_graph::RouteHop {
-                        system_id: nms_graph::SystemId(0x001000000064),
+                        system_id: system_id(0x001000000064),
                         leg_distance_ly: 0.0,
                         cumulative_ly: 0.0,
                         is_waypoint: false,
                     },
                     nms_graph::RouteHop {
-                        system_id: nms_graph::SystemId(0x001000000064),
+                        system_id: system_id(0x001000000064),
                         leg_distance_ly: 1000.0,
                         cumulative_ly: 1000.0,
                         is_waypoint: true,
                     },
                     nms_graph::RouteHop {
-                        system_id: nms_graph::SystemId(0x001000000064),
+                        system_id: system_id(0x001000000064),
                         leg_distance_ly: 1000.0,
                         cumulative_ly: 2000.0,
                         is_waypoint: false,
@@ -737,5 +741,32 @@ mod tests {
         let output = format_route(&result, &model, &plain());
         assert!(output.contains("*"));
         assert!(output.contains("\u{21B3}"));
+    }
+
+    #[test]
+    fn test_format_route_missing_system_fallback_uses_coordinate_only_for_glyphs() {
+        let model = test_route_model();
+        let missing =
+            nms_graph::SystemId::from_address(&GalacticAddress::from_packed(0x150003AB8C07, 9));
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![nms_graph::RouteHop {
+                    system_id: missing,
+                    leg_distance_ly: 0.0,
+                    cumulative_ly: 0.0,
+                    is_waypoint: false,
+                }],
+                total_distance_ly: 0.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::TwoOpt,
+            targets_visited: 0,
+        };
+
+        let output = format_route(&result, &model, &plain());
+        assert!(output.contains("050003AB8C07"));
+        assert!(output.contains(&hex_to_emoji("050003AB8C07")));
+        assert!(!output.contains("9:050003AB8C07"));
     }
 }

@@ -4,7 +4,7 @@
 //! archive. Bytes 0–7 are the ASCII magic `NMSCACHE`, bytes 8–11 are the
 //! little-endian archive schema revision, and bytes 12–15 are the little-endian
 //! model semantic revision. The checked payload begins at byte 16.
-//! The current schema and semantic revision values are both 1.
+//! The current schema and semantic revision values are both 2.
 //!
 //! Readers require both revisions to equal the values they support. Headerless
 //! legacy caches and caches with mismatched revisions are rejected. The schema
@@ -13,11 +13,14 @@
 //! A single repair may require changing both. These revisions are independent
 //! of the game's `SaveRoot.version`, the crate version, and `CacheData::cached_at`.
 //!
-//! Revision 1 for each field labels the current cache interpretation. It does
-//! not repair known address or galaxy-identity defects, establish game-format
-//! authority, or make older model meanings safe to reuse. A later semantic
-//! repair must reject its predecessor cache, rebuild from the source save, and
-//! demonstrate a subsequent compatible warm load.
+//! Schema 2 adds the independently selected galaxy to `CacheData`; semantic 2
+//! stores the galaxy-qualified system identity and restores that selection.
+//! Older 1/1 archives are rejected and rebuilt from the source save. Public
+//! `CacheData` struct literals must now provide `active_galaxy`. These revisions
+//! do not establish game-format authority or universal nonzero-galaxy
+//! extraction correctness. Future semantic repairs must reject their
+//! predecessor cache, rebuild from source, and demonstrate a compatible warm
+//! load.
 //!
 //! [`is_cache_fresh`] checks modification times only; it does not validate the
 //! envelope or model semantics. With caching enabled, [`load_or_rebuild`]

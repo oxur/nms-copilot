@@ -56,9 +56,9 @@ pub enum RouteError {
 impl std::fmt::Display for RouteError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::SystemNotFound(id) => write!(f, "system not found: 0x{:012X}", id.0),
+            Self::SystemNotFound(id) => write!(f, "system not found: {id}"),
             Self::NoPath { from, to } => {
-                write!(f, "no path from 0x{:012X} to 0x{:012X}", from.0, to.0)
+                write!(f, "no path from {from} to {to}")
             }
             Self::TooFewTargets => write!(f, "need at least 1 target for a route"),
         }
@@ -467,6 +467,10 @@ mod tests {
     use nms_core::biome::Biome;
     use nms_core::system::{Planet, System};
 
+    fn id(packed: u64) -> SystemId {
+        SystemId::from_address(&GalacticAddress::from_packed(packed, 0))
+    }
+
     /// Build a model with N systems in a line along the X axis.
     fn line_model(n: usize, spacing: i16) -> GalaxyModel {
         let json = r#"{
@@ -494,8 +498,22 @@ mod tests {
     /// Get sorted system IDs from a model (sorted by packed address).
     fn sorted_ids(model: &GalaxyModel) -> Vec<SystemId> {
         let mut ids: Vec<SystemId> = model.systems.keys().copied().collect();
-        ids.sort_by_key(|id| id.0);
+        ids.sort_by_key(|id| (id.reality_index(), id.system_address()));
         ids
+    }
+
+    #[test]
+    fn test_route_error_display_includes_galaxy_qualified_identity() {
+        let from = SystemId::from_address(&GalacticAddress::from_packed(0x050003AB8C07, 9));
+        let to = SystemId::from_address(&GalacticAddress::from_packed(0x060003AB8C07, 0));
+        assert_eq!(
+            RouteError::SystemNotFound(from).to_string(),
+            "system not found: 9:050003AB8C07"
+        );
+        assert_eq!(
+            RouteError::NoPath { from, to }.to_string(),
+            "no path from 9:050003AB8C07 to 0:060003AB8C07"
+        );
     }
 
     // -- 4.1 tests --
@@ -523,11 +541,7 @@ mod tests {
     #[test]
     fn test_shortest_path_nonexistent_system_errors() {
         let model = line_model(3, 10);
-        assert!(
-            model
-                .shortest_path(SystemId(0xDEAD), SystemId(0xBEEF))
-                .is_err()
-        );
+        assert!(model.shortest_path(id(0xDEAD), id(0xBEEF)).is_err());
     }
 
     #[test]
@@ -616,7 +630,7 @@ mod tests {
         let id = *model.systems.keys().next().unwrap();
         assert!(
             model
-                .tsp_nearest_neighbor(id, &[SystemId(0xDEAD)], false)
+                .tsp_nearest_neighbor(id, &[self::id(0xDEAD)], false)
                 .is_err()
         );
     }
@@ -625,11 +639,7 @@ mod tests {
     fn test_tsp_nn_nonexistent_start_errors() {
         let model = line_model(3, 10);
         let ids = sorted_ids(&model);
-        assert!(
-            model
-                .tsp_nearest_neighbor(SystemId(0xDEAD), &ids, false)
-                .is_err()
-        );
+        assert!(model.tsp_nearest_neighbor(id(0xDEAD), &ids, false).is_err());
     }
 
     #[test]
@@ -742,19 +752,19 @@ mod tests {
             total_distance_ly: 10000.0,
             hops: vec![
                 RouteHop {
-                    system_id: SystemId(0),
+                    system_id: id(0),
                     leg_distance_ly: 0.0,
                     cumulative_ly: 0.0,
                     is_waypoint: false,
                 },
                 RouteHop {
-                    system_id: SystemId(1),
+                    system_id: id(1),
                     leg_distance_ly: 5000.0,
                     cumulative_ly: 5000.0,
                     is_waypoint: false,
                 },
                 RouteHop {
-                    system_id: SystemId(2),
+                    system_id: id(2),
                     leg_distance_ly: 5000.0,
                     cumulative_ly: 10000.0,
                     is_waypoint: false,
@@ -834,6 +844,6 @@ mod tests {
     #[test]
     fn test_reachable_nonexistent_start_errors() {
         let model = line_model(3, 10);
-        assert!(model.reachable_systems(SystemId(0xDEAD), 5000.0).is_err());
+        assert!(model.reachable_systems(id(0xDEAD), 5000.0).is_err());
     }
 }
