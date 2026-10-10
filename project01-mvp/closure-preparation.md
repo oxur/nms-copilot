@@ -59,3 +59,7 @@ CDC's temporary synthetic author probe observed a fresh headerless cache returni
 ## Slice05 initial independent review — 2026-10-04
 
 Runtime cache protection and all relevant gates independently pass at source8d2cf00 (31 cache tests,824 workspace tests). Four Slice05 rows accepted; three remain open for omitted durable empty-header/freshness proof and compatibility/process documentation. Current assignment supersedes the initial path above: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md`. This is a bounded refinement within approved scope, not a new approval or a failed runtime repair. Main remains pinned; all25 project criteria and19 open arc criteria remain open. Identity migration follows Slice05 closure; save policy and all other original gates remain explicit.
+
+## Slice05 final review — 2026-10-10
+
+[Final independent review](arc06-fit-and-finish/slice05-cache-semantic-compatibility/cdc-verification.md#iteration01-final-independent-cdc-review--2026-10-10) accepts all seven child rows at source decd8d6/planning180a9f6, closing Slice05 and R06-S05. Fresh31 cache/824 workspace tests and lint/build/docs pass. Historical active assignments above are superseded: no active CC assignment while the approved identity migration is detailed. All25 project criteria remain open; semantic-transition/live-composition proof and every original closure gate remain required. Main stays clean/pinned at a800950; no merge/release authority inferred.

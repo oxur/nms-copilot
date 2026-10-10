@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.12, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.13, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -110,3 +110,9 @@ Version1.11 (2026-10-04): Slice04 bubble-up and Operator approval expand require
 CDC review at source8d2cf00/planning4f6ca66 independently reproduces protection and all relevant gates (31 cache tests,824 workspace tests). CS-01/02/05/07 accepted; CS-03/04/06 remain open for three original-contract delivery gaps: empty header regression, explicit freshness preconditions and public compatibility/process docs. Current assignment: `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md`. Runtime repair is not rejected, but Slice05 is not closed. No Slice06 advancement until full independent acceptance; original approved sequence and unresolved save policies remain unchanged.
 
 Version1.12 (2026-10-04): Slice05 initial review and routine correction assignment; no architecture, scope, acceptance or sequence amendment. Four accepted child rows do not close R06-S05 or any parent capability.
+
+## Slice05 final independent closure — 2026-10-10
+
+Iteration01 source decd8d6/planning180a9f6 independently passes; all seven child rows and R06-S05 accepted. Prior failures/reviews remain historical. Five done/eighteen open among23 arc rows; all original15 rows and R06-R01/02/03 remain open. This routine status update changes no scope/architecture/acceptance sequence. Next: detail the approved galaxy-qualified identity migration using this accepted cache candidate as dependency; no next production prompt is active until author readiness is complete. No cache parent or arc/project composition is accepted by child closure.
+
+Version1.13 (2026-10-10): Slice05 final review and bubble-up; no structural amendment required by correction; accepted cache dependency ready for identity design.

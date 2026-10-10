@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-04
+updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.3
+version: 1.4
 project: project01-mvp
 status: active
 depends-on: []
@@ -593,3 +593,9 @@ Initial CC assignment (now returned for refinement): `arc06-fit-and-finish/slice
 ## 14. Slice05 review progress — 2026-10-04
 
 Four Slice05 rows accepted and three remain open for bounded proof/docs refinement;31 cache tests and824 workspace tests independently pass. The current iteration01 implements original obligations without changing runtime semantics or architecture. This does not close the cache repair/process parent criterion or permit identity work to skip the Slice05 acceptance gate. Original coverage/features/distribution/composition requirements remain unchanged.
+
+## Slice05 final review — 2026-10-10
+
+[Final independent review](arc06-fit-and-finish/slice05-cache-semantic-compatibility/cdc-verification.md#iteration01-final-independent-cdc-review--2026-10-10) accepts all seven child rows at source decd8d6/planning180a9f6, closing Slice05 and R06-S05. Fresh31 cache/824 workspace tests and lint/build/docs pass. Historical active assignments above are superseded: no active CC assignment while the approved identity migration is detailed. All25 project criteria remain open; semantic-transition/live-composition proof and every original closure gate remain required. Main stays clean/pinned at a800950; no merge/release authority inferred.
+
+Version1.4 (2026-10-10): routine Slice05 child closure progress, no scope/acceptance amendment.

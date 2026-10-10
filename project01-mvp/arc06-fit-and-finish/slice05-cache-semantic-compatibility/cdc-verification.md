@@ -59,3 +59,40 @@ What worked: complete raw stream capture preserves five failed attempts; literal
 ## Handoff packaging checks
 
 Ten exact reviewer/handoff paths;71 resolvable local links; all six sealed input/CC files and five candidate source files unchanged; all seven slice criteria retained (four done, three open); all25 project and23 arc criteria/statuses retained, with original capabilities still open. Source main/candidate are clean/pinned and whitespace/JSON checks pass. These structural checks support this refinement handoff, not slice closure. Commit trailers, exact pathset and post-commit planning cleanliness are verified after committing.
+
+
+## Iteration01 final independent CDC review — 2026-10-10
+
+**Accepted: CS-03/04/06 now done; prior CS-01/02/05/07 retained. All seven rows are done and Slice05 is closed.** Reviewed `cc-prompt-iteration01.md` against source `decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a` and planning packet `180a9f64479ce385752e1a6bada9c98f36d510f6`. This CDC context made no production changes. Initial failed review above remains historical; this section supersedes its current verdict, not its observations.
+
+### Fresh reproduction and correction assessment
+
+[Iteration01 review receipts](artifacts/cdc-iteration01-review-receipts.json) preserve seven raw stdout/stderr subprocess captures, argv, cwd, environment and exits. All pass: non-mutating `cargo fmt --all -- --check`, `make lint`, cache tests, `make test`, all-feature workspace build, cache doctests, and strict crate rustdoc links. Cache results are18 unit +13 integration (31), workspace824 across30 summaries, all0 failed/ignored. Cache doctests have0 tests; documentation content is established by source inspection, link validity by rustdoc. Existing proc-macro-error2 warning remains non-failing. No gate was blocked or failed during this independent pass.
+
+Direct source delta is exactly the assigned docs and two test changes. The error loop now distinguishes empty/short envelopes0/7/8/15 using the exact `TruncatedHeader { actual }` predicate; the unchanged current-header-empty-payload case returns Deserialize. The complete integration helper/caller set was inspected: freshness is asserted after both deterministic mtime writes and before every dependent action, including the rebuilt warm stage. Legacy/schema/semantic sentinel9999 rebuilds to source4720 with false then true, retaining populated semantic comparisons. Public crate/module/function docs now carry exact header offsets and revisions, exact equality, legacy rejection, direct errors versus startup rebuilding, separate schema/semantic evolution, predecessor rejection/rebuild/warm obligations, initial1/1 limits, exhaustive external CacheError matching consequences, and checked owned/aligned decoding without speed promises. R01–R03 are resolved without runtime changes.
+
+### Retention, provenance and seven-row walk
+
+The initial independent record at8d2cf00 and its accessible receipts/probe identify runtime claims, methods, inputs and outcomes. Actual delta cannot affect envelope/error/fallback implementations, model data, dependencies, constants, signatures or archive shape: only docs and test assertions changed. Criteria and synthetic inputs are unchanged; no new finding undermines prior methods. Therefore CS-01/02/05/07 retain their original independent evidence under the correction-retention rule. They are not relabelled fresh; current gates supplement that evidence, and newly affected regression/docs claims are freshly checked.
+
+| Row | Final CDC status | Basis |
+| --- | --- | --- |
+| CS-01 | done, retained | Historical independently checked intake/fences; current iteration intake, commits, relocated skill-path disclosure and preservation independently inspected. |
+| CS-02 | done, retained | Unchanged literal1/1 envelope, checked alignment and data transport; fresh package/workspace tests also pass. |
+| CS-03 | done, reproduced | Exact empty-envelope regression added and executed; complete unchanged negative/error precedence cases inspected and passed. |
+| CS-04 | done, reproduced | Shared freshness assertion covers all callers; real legacy/schema/semantic rejection/rebuild/warm tests pass with existing poisoned-version oracle. |
+| CS-05 | done, retained | Runtime lifecycle unchanged; fresh source-error/no-overwrite, bypass, corruption, stale/missing and write-failure tests pass. |
+| CS-06 | done, reproduced | All required public compatibility/process content inspected; strict crate rustdoc links pass. No release/game-format/performance acceptance inferred. |
+| CS-07 | done, retained and refreshed | Seven fresh gates; exact3/4 commit pathsets, direct parents, trailers once each, clean fences; all nine new CC streams decode to exact recorded byte counts and their test summaries/counts agree with raw output. |
+
+Complete preservation checks: all pre-existing validation JSON values and30 initial run objects are unchanged; the prior execution/closing reports remain exact byte prefixes; criteria/statuses unchanged by CC, four accepted rows byte-identical; all issued prompts and sealed author/CDC inputs retained. The nine iteration runs include the failed sandbox lint attempt and successful retry, six other gates plus whitespace check. That failure remains doer-recorded history, not a fresh CDC failure. Source/planning parents are8d2cf00/688486a respectively. Required trailers and exact paths match. Both candidate worktrees and main are clean at intake; main staysa800950.
+
+### Bubble-up, artifact inventory and scope diff
+
+Slice05 now delivers its assigned cache protection and continuing revision process. No deferrals, no-ops, missing rows or silent drops; denominator remains seven. No architecture/scope/acceptance change is revealed by this correction. Routine parent status/version updates record closure before the approved next galaxy-identity work is detailed. R06-S05 closes; R06-R03/P01-R03 remain open for later semantic transitions and final live/composition proof. Arc06 and Project01 remain open, with all original gates unchanged. Main integration/publication is still unauthorized.
+
+Supporting inventory (seven files, all under artifacts/): author-baseline.json, author-probe.rs, execution.md, validation.json, cdc-review-receipts.json, cdc-probe.rs, cdc-iteration01-review-receipts.json. First-class slice-plan, ledger, both preserved issued prompts, CC closing report and this reviewer record are excluded from that inventory. No user save/cache/config was touched.
+
+What worked: exact small assertion repairs guard meaningful boundaries and branch preconditions; byte-preserved failures and separate reviewer receipts make retention auditable. Earlier history remains visible. A combined reviewer read was truncated; required current correction/source/closure extents were recovered with bounded reads before acceptance. Current filesystem skill relocation was transparently recorded by CC and does not rewrite the immutable issued prompt.
+
+Packaging check recovery: first row-count helper matched only M/R/P/CS IDs and omitted the five U-prefixed original arc rows, stopping with an assertion. The corrected whole-table population check includes every data row:25 project/23 arc/7 slice, with0/5/7 done. This was a reviewer helper error, not a product failure. Project frontmatter version/date were synchronized with the new history entry.

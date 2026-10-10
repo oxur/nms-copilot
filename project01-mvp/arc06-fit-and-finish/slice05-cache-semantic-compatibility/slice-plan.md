@@ -1,6 +1,6 @@
 # Slice05 — cache semantic compatibility
 
-Version: 1.1. Created 2026-10-04. Status: open; initial CDC review accepted four rows, three require iteration01.
+Version: 1.2. Created 2026-10-04. Status: closed after independent iteration01 review2026-10-10; all seven rows done.
 
 ## Goal, authority and boundaries
 
@@ -64,8 +64,14 @@ Assignment history continuation:
 
 | Issued | Prompt | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
-|2026-10-04 | `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md` | initial cc-prompt.md | Initial review R01–R03, no runtime repair redesign | active |
+|2026-10-04 | `arc06-fit-and-finish/slice05-cache-semantic-compatibility/cc-prompt-iteration01.md` | initial cc-prompt.md | Initial review R01–R03, no runtime repair redesign | independently accepted2026-10-10 |
 
 Author readiness for iteration01: actual source/docs/helper call sites inspected and full binding plan/initial prompt/reports loaded; omitted assertions and missing docs are exact deltas. Fresh public-API probe proves length0 and actual-fresh schema/semantic rebuild behavior. Recipe is restricted to existing test loop/helper and public docs; no API/runtime decision is left to CC. DC01/02 and testing's behavioral/precondition guidance apply; unchanged runtime/semantic revisions are binding. Existing native gates plus crate-only rustdoc suffice, with no new verification product. Required-reading manifest/intake and preservation exceptions are explicit in the new prompt; estimate10–15k scoped reading plus ample implementation/recovery headroom. These are author readiness/self-checks, not acceptance of CC's future work.
 
 Version1.1 (2026-10-04): routine initial review and first refinement recorded. Four rows accepted; three remain open; source/runtime/semantic and original project scope unchanged.
+
+## Final closure — 2026-10-10
+
+Iteration01 is independently accepted at source decd8d6/planning180a9f6; seven of seven rows done. Current assignment: none within this closed slice; both issued prompts remain preserved, and earlier active/refinement descriptions are historical. The final CDC record retains initial runtime evidence and reproduces affected assertions/docs plus all current gates. R06-S05 closes; cache-transition/live composition and all other parent requirements remain open. The next approved direction is explicit galaxy-qualified identity, to be detailed from this accepted candidate without moving main.
+
+Version1.2 (2026-10-10): final correction review closes all seven rows, routine child/status bubble-up only; no contract or architecture change.
