@@ -82,6 +82,7 @@ fn set_mtime(path: &std::path::Path, time: SystemTime) {
 fn set_fresh(cache_path: &std::path::Path, save_path: &std::path::Path) {
     set_mtime(save_path, save_mtime());
     set_mtime(cache_path, save_mtime() + Duration::from_secs(100));
+    assert!(is_cache_fresh(cache_path, save_path));
 }
 
 fn paths(dir: &tempfile::TempDir) -> (std::path::PathBuf, std::path::PathBuf) {
