@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.13, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.14, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -116,3 +116,15 @@ Version1.12 (2026-10-04): Slice05 initial review and routine correction assignme
 Iteration01 source decd8d6/planning180a9f6 independently passes; all seven child rows and R06-S05 accepted. Prior failures/reviews remain historical. Five done/eighteen open among23 arc rows; all original15 rows and R06-R01/02/03 remain open. This routine status update changes no scope/architecture/acceptance sequence. Next: detail the approved galaxy-qualified identity migration using this accepted cache candidate as dependency; no next production prompt is active until author readiness is complete. No cache parent or arc/project composition is accepted by child closure.
 
 Version1.13 (2026-10-10): Slice05 final review and bubble-up; no structural amendment required by correction; accepted cache dependency ready for identity design.
+
+## Identity foundation and subsequent composition — 2026-10-10
+
+The approved next identity direction is now detailed as [Slice06 foundation](slice06-galaxy-qualified-identity/slice-plan.md), followed by a bounded query/routing/interface composition pass to be designed after its review, before save-field repair. This replaces the unspecified “next bounded identity slice” roadmap detail above; it preserves the selected explicit-key strategy, all parent criteria and the identity-before-save-repair ordering. CDC may detail routine mechanics within the recorded approval; no acceptance reduction or additional scope decision is inferred.
+
+Slice06 migrates private galaxy-qualified keys and the address index, mechanical consumers, active-galaxy packed show, real snapshot additions, and archive active-galaxy state with schema2/semantic2 predecessor rejection. Source author proof at accepted decd8d6 reproduces0/9 ID equality, both-order collapse and selected9 cache restoration to0. The source change will branch from that accepted dependency, leaving main and the cache predecessor unchanged.
+
+Subsequent required identity composition: qualified name selection, explicit-reference versus selected spatial scope, existing biome association correctness, galaxy-aware routing/fallback/waypoints, movement/session notifications, and live-cache/CLI/REPL/MCP observations. Those runtime policies are held out of foundation intentionally; their owner remains R06-R02/R06-R03 and existing correctness rows. No successor CC prompt is pre-issued. Field-specific discovery/base and nonzero reality policy stays evidence-gated afterward.
+
+Current CC assignment: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md`, production foundation implementation. Add R06-S06 as a child only:24 arc rows, five done/nineteen open; all15 original and three repair rows unchanged/open. All25 project rows remain open. No independent final composition, release or main integration implied.
+
+Version1.14 (2026-10-10): detail approved identity direction into bounded foundation and later composition after Slice05 acceptance; explicit source reconnaissance/budget motivates the division. Scope/architecture/acceptance and original gates unchanged.

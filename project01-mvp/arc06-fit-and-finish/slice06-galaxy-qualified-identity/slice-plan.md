@@ -1,0 +1,49 @@
+# Slice06 — galaxy-qualified identity foundation
+
+Version:1.0. Created2026-10-10. Status:open; eight rows await CC and independent CDC review.
+
+## Goal and authority
+
+Deliver the shared explicit galaxy-plus-system key and its derived-cache migration, the first bounded pass of the approved R06-R02/P01-R02 identity repair. Operator approval of all three directions and Expedited Mode persists. Slice05 is independently closed at decd8d6; main stays a800950. This is production CC implementation, reviewed by CDC/Sofie; no merge/push/release authority.
+
+The approved identity roadmap is detailed into foundation (this slice) and subsequent query/routing/interface composition. This sequencing preserves all parent criteria; closing this child cannot close identity or cache-transition parent requirements. The following pass must resolve qualified name/query selection, the existing biome association bug, explicit-reference versus active-galaxy spatial scope, cross-galaxy routing/fallback/waypoint policy, movement/session notifications and cache/watch/CLI/REPL/MCP composition. No successor implementation prompt is pre-issued. Save field decoding/nonzero reality sourcing remains the later evidence-gated repair; do not infer discovery galaxy from player location.
+
+## Scope and binding design
+
+The [CC prompt](cc-prompt.md) is the exact implementation contract: private named SystemId fields, canonical object serde, galaxy-sensitive equality/hash, explicitly qualified address index, active-galaxy packed show lookup, mechanical numeric caller migration, watcher addition proof, and CacheData active_galaxy with schema2/semantic2. Portal/core address math and payload/error ordering remain intact. Source files and allowed operations are enumerated there; no manifests/dependencies or raw save decoder changes.
+
+Preserve current global name/base-name index and active-spatial-query selection contracts for the subsequent composition pass. Tests in this slice use distinct names and reference addresses matching selected galaxies; they do not claim duplicate-name disambiguation, cross-galaxy warp semantics, real-game nonzero discovery extraction, or full live composition. Those exclusions are required work still owned by R06-R02/R06-R03, not deferrals out of Project01.
+
+## Candidate and artifacts
+
+CC creates `.worktrees/galaxy-qualified-identity`, branch `codex/galaxy-qualified-identity`, from exact accepted dependency `decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a`; reuse only if already created for this assignment at its expected state. Preserve `.worktrees/cache-semantic-compatibility` unchanged at that revision. Planning `.worktrees/planning` on planning; record actual issuance HEAD. Stop affected work on drift.
+
+Supporting home: `artifacts/`. Sealed CDC author inputs: author-baseline.json, author-probe.rs, predecessor-cache-schema1-semantic1.rkyv. CC writes artifacts/execution.md, artifacts/validation.json, root closing-report.md, Evidence/Notes only in ledger (statuses stay open). Author inputs and issued prompt never rewritten. CDC creates verification evidence only when reviewing actual work.
+
+## Author readiness — attested, not acceptance
+
+Source-grounded: actual runtime/key/construction sites and affected consumer spans inspected at decd8d6; exact source hashes/extents in author-baseline.json. Public author-probe compiled using Cargo-emitted dependency artifacts: IDs equal across0/9, each insertion order collapses2 systems/planets to1, and active9 reloads as0. Actual predecessor1/1 cache with sentinel9999 is sealed for rejection before payload access. This is synthetic source-flow evidence, not game-schema authority.
+
+Design-complete: the prompt fixes the public type/serde representation and invalid-input policy, raw tuple migration, qualified address index, show scope, cache field/layout/revisions and exact rejection/cold/warm tests. Consequential broader query/routing policies are excluded with explicit parent ownership and subsequent pass, rather than delegated to CC. No new concurrency/ownership/runtime or speculative performance change.
+
+Guideline-applied: API-37/TD-03 SHOULD support the domain key; TD-05 MUST/AP-06 AVOID motivate private invariant fields, including checked serde; DC-01/02 MUST place contract and breaking compatibility in public docs. Testing discipline and Proportionate Proof select existing public insertion/import/show/delta/cache paths plus narrowly extended native tests, no new validator product.
+
+Executable/falsifiable: source witnesses and pinned predecessor archive exist; tests use both insertion orders, distinct names/biomes at planet1, exact2/2 literal header, old9999 versus source4720, selected9 independent of player0/no player, and actual snapshot additions. Old dropped-galaxy key or reconstructed default0 cannot pass. Representative type sketch is specified, not compiled production code; only the baseline probe was compiled.
+
+Coherent/portable: source versus planning allowlists and source dependency chain explicit. Required reading is bounded to complete named runtime/consumer sections plus affected existing tests, full current open set, scoped parent authority and applicable guide sections. Estimated20–30k tokens reading plus implementation/recovery headroom. No private saves, old investigation replay or unavailable skill path needed; current profile skill root is used. All eight rows start open and all parent gates remain.
+
+## Assignment history
+
+| Issued | Prompt relative to Project01 | Predecessor | Reason | Disposition |
+| --- | --- | --- | --- | --- |
+|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md | No predecessor within slice; Slice05 independently closed | First identity implementation pass on accepted cache dependency | active |
+
+Current assignment: cc-prompt.md. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
+
+## Version history
+
+-1.0 (2026-10-10): detailed foundation pass within approved identity direction after Slice05 closure; held query/routing/composition work explicitly retained, no new scope/acceptance amendment.
+
+Author validation limit: the strict combined core/graph/query/cache documentation baseline fails at unchanged core/address.rs bracket links (four errors). Exact channels are retained in author-baseline.json. Native ordinary docs plus strict cache links and source inspection cover this pass; the original strict core/workspace gate remains open for its existing documentation work. No source math/doc cleanup is smuggled into the identity allowlist.
+
+Ordinary scoped documentation baseline passes with4 core bracket warnings,3 graph extraction bracket warnings and2 query table HTML warnings, plus the existing dependency future-compatibility warning. Retained exact channels distinguish success-with-warnings from the failed strict baseline. Packaging checks preserve all prior23 arc criteria/statuses and all25 project criteria/statuses; one new child remains open.

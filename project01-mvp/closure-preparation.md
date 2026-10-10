@@ -63,3 +63,7 @@ Runtime cache protection and all relevant gates independently pass at source8d2c
 ## Slice05 final review — 2026-10-10
 
 [Final independent review](arc06-fit-and-finish/slice05-cache-semantic-compatibility/cdc-verification.md#iteration01-final-independent-cdc-review--2026-10-10) accepts all seven child rows at source decd8d6/planning180a9f6, closing Slice05 and R06-S05. Fresh31 cache/824 workspace tests and lint/build/docs pass. Historical active assignments above are superseded: no active CC assignment while the approved identity migration is detailed. All25 project criteria remain open; semantic-transition/live-composition proof and every original closure gate remain required. Main stays clean/pinned at a800950; no merge/release authority inferred.
+
+## Current identity assignment — 2026-10-10
+
+Slice05 is independently closed. Current production CC assignment: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md`; execute the explicit-key/index/cache foundation on a new isolated branch from accepted decd8d6. Main remainsa800950. The identity direction is detailed into foundation then required query/routing/interface composition before save repair; no requirement moves out of Project01. Existing query/name/feature/docs/coverage/packages/performance and full composition gates persist. Current arc ledger24 rows (five done/nineteen open), project25 open.

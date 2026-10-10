@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.4
+version: 1.5
 project: project01-mvp
 status: active
 depends-on: []
@@ -599,3 +599,9 @@ Four Slice05 rows accepted and three remain open for bounded proof/docs refineme
 [Final independent review](arc06-fit-and-finish/slice05-cache-semantic-compatibility/cdc-verification.md#iteration01-final-independent-cdc-review--2026-10-10) accepts all seven child rows at source decd8d6/planning180a9f6, closing Slice05 and R06-S05. Fresh31 cache/824 workspace tests and lint/build/docs pass. Historical active assignments above are superseded: no active CC assignment while the approved identity migration is detailed. All25 project criteria remain open; semantic-transition/live-composition proof and every original closure gate remain required. Main stays clean/pinned at a800950; no merge/release authority inferred.
 
 Version1.4 (2026-10-10): routine Slice05 child closure progress, no scope/acceptance amendment.
+
+## 15. Identity foundation execution — 2026-10-10
+
+[Slice06](arc06-fit-and-finish/slice06-galaxy-qualified-identity/slice-plan.md) details the approved identity direction into a foundation pass and subsequent query/routing/interface composition, before evidence-gated save repair. Current production CC assignment: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md`. Dependency source is accepted decd8d6; new isolated worktree, main remainsa800950. All25 project criteria stay open, with no amendment to required outcomes, original gates or approval authority. Child acceptance cannot replace parent composition.
+
+Version1.5 (2026-10-10): routine bounded identity execution detail after Slice05 closure; all approved scope and acceptance preserved.

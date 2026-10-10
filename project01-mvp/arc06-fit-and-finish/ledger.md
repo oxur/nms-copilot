@@ -41,3 +41,11 @@ The Operator approved scope expansion after Slice04. All15 original rows and fou
 | R06-R02 | Galaxy-qualified identity retains same-coordinate systems/planets without collisions in all consumers | Both-order galaxies0/9 fixtures through graph/query/import/route/watch additions and cache restoration | serious | Operator approval2026-10-04; D06 | open | — | Explicit key, not opaque numeric repacking; no new watcher removal API |
 | R06-R03 | Cache compatibility composes with every decoder/identity semantic transition and normal lifecycle | Slice05 review plus later revision-bump and old-cache/live-update proofs on the final repair candidate | serious | Operator approval2026-10-04; D08 | open | — | Header protection alone does not prove later migrations or full C04 lifecycle |
 | R06-S05 | Versioned semantic cache protection independently accepted | Seven-row Slice05 ledger, source diff, header/error and real load_or_rebuild tests | correctness-grade | R06-R03 first implementation dependency | done | [CDC final review](slice05-cache-semantic-compatibility/cdc-verification.md#iteration01-final-independent-cdc-review--2026-10-10) — reproduced | Seven child rows accepted at decd8d6 after iteration01; later semantic-transition/composition parent remains open |
+
+## Identity foundation child — 2026-10-10
+
+Prior23 rows and their criteria/dispositions remain;24 total, five done/nineteen open. R06-R02/R03 require the subsequent identity composition and later semantic-transition/live evidence as well as this child.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | open | — | Foundation alone cannot close parent query/routing/interface composition; [plan](slice06-galaxy-qualified-identity/slice-plan.md) |
