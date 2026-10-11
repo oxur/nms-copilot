@@ -1,6 +1,6 @@
 # Slice06 — galaxy-qualified identity foundation
 
-Version:1.2. Created2026-10-10. Status:open; seven rows independently accepted; GI-08 awaits Operator evidence-exception disposition.
+Version:1.3. Created2026-10-10. Status:closed; all eight rows independently accepted, GI-08 under the explicit Operator-approved historical exception.
 
 ## Goal and authority
 
@@ -37,9 +37,9 @@ Coherent/portable: source versus planning allowlists and source dependency chain
 | Issued | Prompt relative to Project01 | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
 |2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md | No predecessor within slice; Slice05 independently closed | First identity implementation pass on accepted cache dependency | reviewed; seven rows accepted, GI-08 returned |
-|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md | sibling cc-prompt.md | Recover original failed lint evidence for GI-08; source unchanged | reviewed; partial recovery independently checked; Operator disposition pending |
+|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md | sibling cc-prompt.md | Recover original failed lint evidence for GI-08; source unchanged | accepted under Operator-approved historical-call exception; recovery limits retained |
 
-Current assignment: none; iteration01 completed and independently reviewed, Operator disposition pending. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
+Current assignment: none; Slice06 closed after independent review and Operator-approved exception. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
 
 ## Version history
 
@@ -62,3 +62,11 @@ Version1.1 (2026-10-10): routine partial independent acceptance and evidence-rec
 [CDC correction review](cdc-verification.md#iteration01-independent-review--2026-10-10) verifies the authentic original combined lint transcript, historical session prefix hash, four-path evidence commit a317761 and all preservation fences. GI-01–07 retain prior independent acceptance; GI-08 stays open because separate historical channels/direct exit were not retained. No new Rust gates are required by this evidence-only delta and none were rerun. Current CC assignment is none. The narrowly worded one-time acceptance amendment is proposed in the reviewer record for explicit Operator approval; it is not yet applied. Recovery is complete within its bounded source population; no repeated CC recovery loop or successor work is issued without a concrete new evidence target or approval.
 
 Version1.2 (2026-10-10): routine completed-recovery/current-assignment update and pending decision; no acceptance amendment yet, no source or scope changes.
+
+## Accepted GI-08 amendment and closure — 2026-10-10
+
+Operator response “yes, I approve — go ahead” explicitly approves the narrow exception proposed by CDC after iteration01 verification. This supersedes the pending-disposition status above. Accepted exception: For GI-08 only, the original preliminary `CARGO_NET_OFFLINE=true make lint` call `call_4287652b9c5c46dd904cd49389cccda6` may use the independently verified combined transcript and provenance retained by Iteration01 in place of unavailable original separate raw channels and direct exit metadata. Those missing facts remain unknown. Exact capture requirements continue for all other validation and future attempts.
+
+All eight rows done at unchanged sourcef57a38f, with prior proof retained and historical gaps still unknown. [Final review](cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) closes the child only. Required identity composition, save policy and every parent/original gate persist. No source integration/publication is authorized.
+
+Version1.3 (2026-10-10): applied the explicitly approved one-call evidence amendment and closed Slice06; surfaced by iteration01's verified partial recovery. No other acceptance, scope or runtime change.

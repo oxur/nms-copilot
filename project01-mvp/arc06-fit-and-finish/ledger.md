@@ -44,8 +44,8 @@ The Operator approved scope expansion after Slice04. All15 original rows and fou
 
 ## Identity foundation child — 2026-10-10
 
-Prior23 rows and their criteria/dispositions remain;24 total, five done/nineteen open. R06-R02/R03 require the subsequent identity composition and later semantic-transition/live evidence as well as this child.
+Prior23 rows and their criteria/dispositions remain;24 total, six done/eighteen open. R06-R02/R03 require the subsequent identity composition and later semantic-transition/live evidence as well as this child.
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | open | [CDC partial review](slice06-galaxy-qualified-identity/cdc-verification.md) | Seven child rows accepted; partial original evidence independently verified; GI-08 awaits Operator exception disposition; parent composition required |
+| R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | done | [CDC final closure](slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) — reproduced with approved evidence exception | Eight child rows accepted at f57a38f; required parent identity composition remains open |

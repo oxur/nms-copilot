@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.16, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.17, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -140,3 +140,9 @@ Version1.15 (2026-10-10): routine Slice06 partial review and evidence-only refin
 Iteration01 planninga317761 is independently reviewed against unchanged sourcef57a38f. Authentic combined historical lint output is reproduced; separate channels/direct exit remain unknown. Seven foundation rows retain acceptance, GI-08 remains open awaiting Operator disposition of the precise one-time evidence exception proposed in [CDC review](slice06-galaxy-qualified-identity/cdc-verification.md#proposed-one-time-gi-08-exception--awaiting-operator-approval). No further CC assignment is active; no approval or amendment is inferred. Arc24/five done/nineteen open and project25 open persist; subsequent identity composition follows full child acceptance.
 
 Version1.16 (2026-10-10): routine completed-recovery/pending-disposition update; no scope/architecture/acceptance change applied.
+
+## Slice06 final closure — 2026-10-10
+
+Operator explicitly approved CDC's single historical-lint evidence exception (“yes, I approve — go ahead”). [Final CDC closure](slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) accepts GI-08 under that amendment, preserving missing metadata as unknown; all eight child rows and R06-S06 are done atf57a38f. No current validation requirement or broader gate was waived. Arc24/six done/eighteen open; project25 open. No active CC prompt while required next identity composition is detailed. Existing query/name/biome/explicit-reference/routing/movement/interface work, later save policy and all original gates persist.
+
+Version1.17 (2026-10-10): applied Operator-approved one-call historical evidence exception surfaced by Slice06 iteration01, then recorded child closure. No architecture/scope/sequence change or parent closure.

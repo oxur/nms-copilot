@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.7
+version: 1.8
 project: project01-mvp
 status: active
 depends-on: []
@@ -617,3 +617,9 @@ Version1.6 (2026-10-10): routine partial Slice06 review/current-assignment updat
 Evidence-only iteration01 at planninga317761 is independently reviewed; sourcef57a38f remains unchanged and seven child rows retain acceptance. GI-08 stays open for Operator disposition of the original failed lint's missing raw channels/direct exit, with an authentic combined record now verified. [CDC](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#proposed-one-time-gi-08-exception--awaiting-operator-approval) proposes a one-time exception limited to that historical call; it is not yet an accepted amendment. No active CC assignment while awaiting the decision. All25 project rows and all original gates remain open/unchanged; no source integration/publication authorized.
 
 Version1.7 (2026-10-10): routine recovery review and pending Operator decision; no acceptance amendment applied.
+
+## Slice06 final closure — 2026-10-10
+
+Operator approved the precise one-time historical lint evidence exception and continuation. [CDC final review](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) closes all eight foundation rows and R06-S06 at unchanged sourcef57a38f. Missing historical channels/direct exit remain unknown; all current gates and every other capture requirement persist. All25 project criteria remain open, including required identity composition/save repair/original closure gates. No active CC assignment until next unit is ready. Main remains pinned; no merge/release authorization.
+
+Version1.8 (2026-10-10): Slice06 child closure after explicit evidence amendment; no other acceptance/scope/architecture change.
