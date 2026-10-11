@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.17, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.18, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -146,3 +146,13 @@ Version1.16 (2026-10-10): routine completed-recovery/pending-disposition update;
 Operator explicitly approved CDC's single historical-lint evidence exception (“yes, I approve — go ahead”). [Final CDC closure](slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) accepts GI-08 under that amendment, preserving missing metadata as unknown; all eight child rows and R06-S06 are done atf57a38f. No current validation requirement or broader gate was waived. Arc24/six done/eighteen open; project25 open. No active CC prompt while required next identity composition is detailed. Existing query/name/biome/explicit-reference/routing/movement/interface work, later save policy and all original gates persist.
 
 Version1.17 (2026-10-10): applied Operator-approved one-call historical evidence exception surfaced by Slice06 iteration01, then recorded child closure. No architecture/scope/sequence change or parent closure.
+
+## Slice07 query composition assignment — 2026-10-10
+
+After independent Slice06 closure, source reconnaissance and a compiled native probe reproduce global-name collisions, lost biome associations, filter inconsistencies, wrong explicit-reference galaxy selection, premature nearest filtering and false cross-galaxy show distances. Detail the required composition into [Slice07](slice07-galaxy-scoped-queries/slice-plan.md) query correctness, then a required routing/spatial/session/live-interface unit after its review, before save-field repair. This follows the approved identity direction and preserves all original/expanded requirements; it is bounded sequencing, not a scope reduction.
+
+Current CC production assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md`, isolated candidate from acceptedf57a38f. Query names/defaults select active reality, explicit references select their own reality without mutation; default/player mismatch is a typed error. Canonical complete PlanetKey and full filter-before-ranking remove fabricated associations and underreturn. Show omits incomparable distance. Raw archive shape/meaning is unchanged;2/2 compatibility is explicitly assessed and tested with genuine predecessor bytes, rather than automatically bumped for a recomputed index/query fix.
+
+Required follow-on owners R06-R02/R03 and original correctness retain route rejection/fallback/waypoints/reachability, low-level active/explicit spatial policy, movement/session/galaxy commands, duplicate-name/base identity, lost names, planet portal construction and live-cache/CLI/REPL/MCP composition. Save interpretation still waits for field-specific policy. No successor prompt pre-issued; detail after query review. Add childR06-S07 only:25 arc rows, six done/nineteen open; project25 open. Main/dependencies pinned; no merge/publication authority.
+
+Version1.18 (2026-10-10): bounded query composition assignment after Slice06 closure; source proof and context budget justify separating required routing/session/live follow-on. Scope, identity architecture, original acceptance and final gates unchanged.

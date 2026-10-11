@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.8
+version: 1.9
 project: project01-mvp
 status: active
 depends-on: []
@@ -623,3 +623,11 @@ Version1.7 (2026-10-10): routine recovery review and pending Operator decision; 
 Operator approved the precise one-time historical lint evidence exception and continuation. [CDC final review](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) closes all eight foundation rows and R06-S06 at unchanged sourcef57a38f. Missing historical channels/direct exit remain unknown; all current gates and every other capture requirement persist. All25 project criteria remain open, including required identity composition/save repair/original closure gates. No active CC assignment until next unit is ready. Main remains pinned; no merge/release authorization.
 
 Version1.8 (2026-10-10): Slice06 child closure after explicit evidence amendment; no other acceptance/scope/architecture change.
+
+## Slice07 query composition — 2026-10-10
+
+Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md`, production query repair from acceptedf57a38f in an isolated candidate. The approved identity composition is detailed as query correctness then required routing/spatial/session/live interfaces before save-field repair; every requirement remains in Project01. Explicit/default query scope, exact planet associations/filters/ranking, names and meaningful show distances are resolved in the child contract. Derived-index/query changes retain raw2/2 archive compatibility with genuine predecessor proof; later stored-meaning changes still require revision advances.
+
+Arc25/six done/nineteen open; project25 rows all open. Required route/selected-galaxy/session/movement/live cache/CLI/REPL/MCP composition, save semantics and all original docs/features/coverage/packages/performance/final review/Operator gates remain. Main and accepted dependencies unchanged; no source integration/publication.
+
+Version1.9 (2026-10-10): source-grounded query composition detail and assignment after Slice06 closure, with required follow-on owners retained; no scope/acceptance/architecture amendment.

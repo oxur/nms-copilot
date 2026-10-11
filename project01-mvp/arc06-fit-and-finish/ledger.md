@@ -49,3 +49,11 @@ Prior23 rows and their criteria/dispositions remain;24 total, six done/eighteen 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
 | R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | done | [CDC final closure](slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) — reproduced with approved evidence exception | Eight child rows accepted at f57a38f; required parent identity composition remains open |
+
+## Query composition child — 2026-10-10
+
+Prior24 rows and all criteria/dispositions retained;25 total, six done/nineteen open. Parent identity/cache and original capability criteria remain open through required subsequent routing/session/live and save-repair composition.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S07 | Galaxy-scoped query associations/names/filters/reference/ranking/show and raw-cache compatibility independently accepted | Nine-row Slice07 ledger, native literal regressions, actual CLI and prior2/2 archive parity | correctness-grade | Approved R06-R02/R03 subsequent composition / original query correctness | open | — | Initial CC assignment issued; no parent acceptance implied |

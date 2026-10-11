@@ -79,3 +79,9 @@ Slice05 is independently closed. Current production CC assignment: `arc06-fit-an
 ## Slice06 accepted and next composition preparation — 2026-10-10
 
 The Operator approved the narrowly proposed historical-lint evidence exception. [CDC final closure](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#operator-approved-exception-and-final-closure--2026-10-10) closes Slice06/R06-S06 atf57a38f; historical channels/direct exit remain unknown. No active CC assignment while subsequent identity composition is detailed. Arc24/six done/eighteen open, project25 open; every original gate and main/release boundary remains.
+
+## Slice07 active query repair — 2026-10-10
+
+Current production CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md`. This supersedes the prior no-active-assignment status. Accepted foundationf57a38f supplies the isolated candidate baseline; the compiled author probe reproduces concrete remaining query bugs. Names, canonical associations/filters, reference scope, ranking, show distances and unchanged raw-cache compatibility form the next bounded unit. Required routing/spatial/session/live-interface composition follows its independent review before save repair; all scope stays in Project01.
+
+Arc25/six done/nineteen open, project25 open. No broad gate is waived, no future acceptance inferred, no main/dependency movement or publication authorized. The one-call GI-08 exception remains confined to its original historical capture; all new evidence requirements apply fully.
