@@ -977,52 +977,95 @@ mod tests {
     #[test]
     fn test_reachable_nine_galaxy_returns_exact_complete_set_with_collisions() {
         let mut model = GalaxyModel::new();
-        let mut expected = Vec::new();
-        for x in 0..120_i16 {
-            let address = GalacticAddress::new(x, 0, 0, 1000 + x as u16, 0, 9);
-            expected.push(SystemId::from_address(&address));
+        let player = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        model.player_state = Some(nms_core::player::PlayerState::new(
+            player, 0, None, None, 7, 8, 9,
+        ));
+        for ssi in 1..=120_u16 {
+            let address = GalacticAddress::new(0, 0, 0, ssi, 0, 9);
             model.insert_system(System::new(address, None, None, None, vec![]));
         }
-        for x in [0_i16, 10, 50] {
-            let address = GalacticAddress::new(x, 0, 0, 1000 + x as u16, 0, 0);
+        for ssi in [1_u16, 2, 3] {
+            let address = GalacticAddress::new(0, 0, 0, ssi, 0, 0);
             model.insert_system(System::new(address, None, None, None, vec![]));
         }
-        let isolated = GalacticAddress::new(1000, 0, 0, 500, 0, 9);
+        let isolated = GalacticAddress::new(10, 0, 0, 500, 0, 9);
         model.insert_system(System::new(isolated, None, None, None, vec![]));
         model.set_active_galaxy(0);
-        let start = expected[0];
-        let reachable = model.reachable_systems(start, 47_600.0).unwrap();
-        expected.sort_by(|a, b| crate::query::system_id_order(*a, *b));
-        assert_eq!(reachable, expected);
+        let start = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 1, 0, 9));
+        let expected: std::collections::HashSet<_> = (1..=120_u16)
+            .map(|ssi| SystemId::from_address(&GalacticAddress::new(0, 0, 0, ssi, 0, 9)))
+            .collect();
+        let before = (model.player_state.clone(), model.active_galaxy);
+        let reachable = model.reachable_systems(start, 1_000.0).unwrap();
+        assert_eq!(reachable.len(), 120);
+        assert_eq!(
+            reachable
+                .iter()
+                .copied()
+                .collect::<std::collections::HashSet<_>>(),
+            expected
+        );
         assert!(reachable.iter().all(|id| id.reality_index() == 9));
         assert!(!reachable.contains(&SystemId::from_address(&isolated)));
-        assert!(model.reachable_systems(id(0xDEAD), 47_600.0).is_err());
+        assert!(reachable.iter().all(|id| id.reality_index() != 0));
+        assert!(matches!(
+            model.reachable_systems(id(0xDEAD), 1_000.0),
+            Err(RouteError::SystemNotFound(missing)) if missing == id(0xDEAD)
+        ));
+        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
     }
 
     #[test]
-    fn test_waypoint_search_finds_progress_after_sixty_nonprogress_decoys() {
-        let mut model = line_model(0, 1);
-        let start_address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
-        let target_address = GalacticAddress::new(100, 0, 0, 1, 0, 0);
-        let start = SystemId::from_address(&start_address);
-        let target = SystemId::from_address(&target_address);
-        model.insert_system(System::new(start_address, None, None, None, vec![]));
-        model.insert_system(System::new(target_address, None, None, None, vec![]));
-        for ssi in 10..70 {
-            let decoy = GalacticAddress::new(0, 0, 0, ssi, 0, 0);
+    fn test_waypoint_search_uses_full_nine_galaxy_neighborhood_with_sixty_decoys() {
+        let mut model = GalaxyModel::new();
+        let a = GalacticAddress::new(0, 0, 0, 100, 0, 9);
+        let b = GalacticAddress::new(1, 0, 0, 101, 0, 9);
+        let c = GalacticAddress::new(2, 0, 0, 102, 0, 9);
+        let player = GalacticAddress::new(0, 0, 0, 100, 0, 0);
+        model.player_state = Some(nms_core::player::PlayerState::new(
+            player, 0, None, None, 7, 8, 9,
+        ));
+        for (address, name) in [
+            (GalacticAddress::new(0, 0, 0, 100, 0, 0), "A0"),
+            (GalacticAddress::new(1, 0, 0, 101, 0, 0), "B0"),
+            (GalacticAddress::new(2, 0, 0, 102, 0, 0), "C0"),
+            (a, "A9"),
+            (b, "B9"),
+            (c, "C9"),
+        ] {
+            model.insert_system(System::new(address, Some(name.into()), None, None, vec![]));
+        }
+        for ssi in 1..=60 {
+            let decoy = GalacticAddress::new(0, 0, 0, ssi, 0, 9);
             model.insert_system(System::new(decoy, None, None, None, vec![]));
         }
-        let advancing = GalacticAddress::new(10, 0, 0, 1, 0, 0);
-        model.insert_system(System::new(advancing, None, None, None, vec![]));
-
-        let direct = model.build_route_from_order(&[start, target]).unwrap();
-        let constrained = model.constrain_hops(&direct, 4_000.0).unwrap();
-        assert!(constrained.hops.len() > 2);
-        assert!(constrained.hops[1].is_waypoint);
+        model.set_active_galaxy(0);
+        let before = (model.player_state.clone(), model.active_galaxy);
+        let a_id = SystemId::from_address(&a);
+        let b_id = SystemId::from_address(&b);
+        let c_id = SystemId::from_address(&c);
+        let direct = model.build_route_from_order(&[a_id, c_id]).unwrap();
+        let constrained = model.constrain_hops(&direct, 400.0).unwrap();
         assert_eq!(
-            constrained.hops[1].system_id,
-            SystemId::from_address(&advancing)
+            constrained
+                .hops
+                .iter()
+                .map(|hop| (
+                    hop.system_id,
+                    hop.is_waypoint,
+                    hop.leg_distance_ly,
+                    hop.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![
+                (a_id, false, 0.0, 0.0),
+                (b_id, true, 400.0, 400.0),
+                (c_id, false, 400.0, 800.0)
+            ]
         );
+        assert_eq!(constrained.total_distance_ly, 800.0);
+        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
     }
 
     #[test]
@@ -1304,6 +1347,164 @@ mod tests {
     fn test_reachable_nonexistent_start_errors() {
         let model = line_model(3, 10);
         assert!(model.reachable_systems(id(0xDEAD), 5000.0).is_err());
+    }
+
+    #[test]
+    fn test_route_entrypoints_validate_exact_membership_and_foreign_payloads() {
+        let mut model = GalaxyModel::new();
+        let a0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let a0_id = SystemId::from_address(&a0);
+        let a9_id = SystemId::from_address(&a9);
+        let missing = id(0xDEAD);
+        for address in [a0, a9] {
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+        let manual = |ids: &[SystemId]| Route {
+            hops: ids
+                .iter()
+                .enumerate()
+                .map(|(index, system_id)| RouteHop {
+                    system_id: *system_id,
+                    leg_distance_ly: 12.0,
+                    cumulative_ly: 12.0 * index as f64,
+                    is_waypoint: index == 0,
+                })
+                .collect(),
+            total_distance_ly: 12.0 * ids.len().saturating_sub(1) as f64,
+        };
+
+        assert!(matches!(
+            model.build_route_from_order(&[a0_id, a9_id]),
+            Err(RouteError::NoPath { from, to }) if from == a0_id && to == a9_id
+        ));
+        assert!(matches!(
+            model.build_route_from_order(&[a0_id, a9_id, missing]),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        assert!(matches!(
+            model.build_route_from_order(&[missing]),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        let empty = model.build_route_from_order(&[]).unwrap();
+        assert!(empty.hops.is_empty());
+        assert_eq!(empty.total_distance_ly, 0.0);
+        let one = model.build_route_from_order(&[a9_id]).unwrap();
+        assert_eq!(
+            one.hops
+                .iter()
+                .map(|hop| (
+                    hop.system_id,
+                    hop.is_waypoint,
+                    hop.leg_distance_ly,
+                    hop.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![(a9_id, false, 0.0, 0.0)]
+        );
+        assert_eq!(one.total_distance_ly, 0.0);
+
+        assert!(matches!(
+            model.shortest_path(a9_id, a9_id),
+            Ok(route) if route.hops.len() == 1
+                && route.hops[0].system_id == a9_id
+                && route.hops[0].leg_distance_ly == 0.0
+                && route.hops[0].cumulative_ly == 0.0
+                && route.total_distance_ly == 0.0
+        ));
+        assert!(matches!(
+            model.shortest_path(missing, missing),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+
+        assert!(matches!(
+            model.two_opt_improve(vec![a0_id, a9_id]),
+            Err(RouteError::NoPath { from, to }) if from == a0_id && to == a9_id
+        ));
+        assert!(matches!(
+            model.two_opt_improve(vec![a0_id, a9_id, missing]),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        assert!(matches!(
+            model.two_opt_improve(vec![missing]),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        let empty = model.two_opt_improve(vec![]).unwrap();
+        assert!(empty.hops.is_empty());
+        assert_eq!(empty.total_distance_ly, 0.0);
+        let one = model.two_opt_improve(vec![a9_id]).unwrap();
+        assert_eq!(one.hops.len(), 1);
+        assert_eq!(one.hops[0].system_id, a9_id);
+        assert_eq!(one.hops[0].leg_distance_ly, 0.0);
+        assert_eq!(one.hops[0].cumulative_ly, 0.0);
+        assert_eq!(one.total_distance_ly, 0.0);
+
+        assert!(matches!(
+            model.constrain_hops(&manual(&[a0_id, a9_id]), 400.0),
+            Err(RouteError::NoPath { from, to }) if from == a0_id && to == a9_id
+        ));
+        assert!(matches!(
+            model.constrain_hops(&manual(&[a0_id, a9_id, missing]), 400.0),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        assert!(matches!(
+            model.constrain_hops(&manual(&[missing]), 400.0),
+            Err(RouteError::SystemNotFound(id)) if id == missing
+        ));
+        let empty = model.constrain_hops(&manual(&[]), 400.0).unwrap();
+        assert!(empty.hops.is_empty());
+        assert_eq!(empty.total_distance_ly, 0.0);
+        let one = model.constrain_hops(&manual(&[a9_id]), 400.0).unwrap();
+        assert_eq!(
+            one.hops
+                .iter()
+                .map(|hop| (
+                    hop.system_id,
+                    hop.is_waypoint,
+                    hop.leg_distance_ly,
+                    hop.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![(a9_id, true, 0.0, 0.0)]
+        );
+        assert_eq!(one.total_distance_ly, 0.0);
+
+        for return_to_start in [false, true] {
+            for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+                let foreign_error = match algorithm {
+                    RoutingAlgorithm::NearestNeighbor => {
+                        model.tsp_nearest_neighbor(a0_id, &[a9_id], return_to_start)
+                    }
+                    RoutingAlgorithm::TwoOpt => model.tsp_two_opt(a0_id, &[a9_id], return_to_start),
+                };
+                assert!(matches!(
+                    foreign_error,
+                    Err(RouteError::NoPath { from, to }) if from == a0_id && to == a9_id
+                ));
+                let later_missing_error = match algorithm {
+                    RoutingAlgorithm::NearestNeighbor => {
+                        model.tsp_nearest_neighbor(a0_id, &[a9_id, missing], return_to_start)
+                    }
+                    RoutingAlgorithm::TwoOpt => {
+                        model.tsp_two_opt(a0_id, &[a9_id, missing], return_to_start)
+                    }
+                };
+                assert!(matches!(
+                    later_missing_error,
+                    Err(RouteError::SystemNotFound(id)) if id == missing
+                ));
+                let empty_missing_start = match algorithm {
+                    RoutingAlgorithm::NearestNeighbor => {
+                        model.tsp_nearest_neighbor(missing, &[], return_to_start)
+                    }
+                    RoutingAlgorithm::TwoOpt => model.tsp_two_opt(missing, &[], return_to_start),
+                };
+                assert!(matches!(
+                    empty_missing_start,
+                    Err(RouteError::TooFewTargets)
+                ));
+            }
+        }
     }
 }
 

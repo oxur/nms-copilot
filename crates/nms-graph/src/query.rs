@@ -774,7 +774,7 @@ mod tests {
                     None,
                     None,
                     vec![Planet::new(
-                        0,
+                        1,
                         Some(Biome::Lush),
                         Some(BiomeSubType::LushRoomTemp),
                         false,
@@ -850,8 +850,8 @@ mod tests {
                     .map(|(key, _, d)| (*key, *d))
                     .collect::<Vec<_>>(),
                 vec![
-                    ((expected_zero[0].0, 0), 0.0),
-                    ((expected_zero[1].0, 0), 400.0)
+                    ((expected_zero[0].0, 1), 0.0),
+                    ((expected_zero[1].0, 1), 400.0)
                 ]
             );
             assert_eq!(
@@ -860,8 +860,8 @@ mod tests {
                     .map(|(key, _, d)| (*key, *d))
                     .collect::<Vec<_>>(),
                 vec![
-                    ((expected_nine[0].0, 0), 0.0),
-                    ((expected_nine[1].0, 0), 400.0)
+                    ((expected_nine[0].0, 1), 0.0),
+                    ((expected_nine[1].0, 1), 400.0)
                 ]
             );
             assert!(std::ptr::eq(
@@ -963,6 +963,37 @@ mod tests {
                     .is_empty()
             );
             model.set_active_galaxy(7);
+            let empty_seven = GalacticAddress::new(0, 0, 0, 1, 0, 7);
+            assert_eq!(
+                model.nearest_systems_from_address(&nine, usize::MAX),
+                expected_nine
+            );
+            assert_eq!(
+                model.systems_within_radius_from_address(&nine, 400.0),
+                expected_nine
+            );
+            assert_eq!(
+                model
+                    .nearest_planets_from_address(&nine, usize::MAX, &BiomeFilter::default())
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                vec![
+                    ((expected_nine[0].0, 1), 0.0),
+                    ((expected_nine[1].0, 1), 400.0)
+                ]
+            );
+            assert_eq!(
+                model
+                    .planets_within_radius_from_address(&nine, 400.0, &BiomeFilter::default())
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                vec![
+                    ((expected_nine[0].0, 1), 0.0),
+                    ((expected_nine[1].0, 1), 400.0)
+                ]
+            );
             assert!(model.nearest_systems(&zero, usize::MAX).is_empty());
             assert!(model.systems_within_radius(&zero, f64::INFINITY).is_empty());
             assert!(
@@ -977,10 +1008,42 @@ mod tests {
             );
             assert!(
                 model
-                    .nearest_systems_from_address(
-                        &GalacticAddress::new(0, 0, 0, 1, 0, 7),
-                        usize::MAX
+                    .nearest_systems_from_address(&empty_seven, usize::MAX)
+                    .is_empty()
+            );
+            assert!(
+                model
+                    .systems_within_radius_from_address(&empty_seven, f64::INFINITY)
+                    .is_empty()
+            );
+            assert!(
+                model
+                    .nearest_planets_from_address(&empty_seven, usize::MAX, &BiomeFilter::default())
+                    .is_empty()
+            );
+            assert!(
+                model
+                    .planets_within_radius_from_address(
+                        &empty_seven,
+                        f64::INFINITY,
+                        &BiomeFilter::default()
                     )
+                    .is_empty()
+            );
+            assert!(model.nearest_systems(&empty_seven, usize::MAX).is_empty());
+            assert!(
+                model
+                    .systems_within_radius(&empty_seven, f64::INFINITY)
+                    .is_empty()
+            );
+            assert!(
+                model
+                    .nearest_planets(&empty_seven, usize::MAX, &BiomeFilter::default())
+                    .is_empty()
+            );
+            assert!(
+                model
+                    .planets_within_radius(&empty_seven, f64::INFINITY, &BiomeFilter::default())
                     .is_empty()
             );
             model.set_active_galaxy(0);
@@ -1001,14 +1064,28 @@ mod tests {
                     Some("Alpha".into()),
                     None,
                     None,
-                    vec![],
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Alpha".into()),
+                        None,
+                    )],
                 ),
                 System::new(
                     GalacticAddress::new(-1, 0, 0, 2, 0, 0),
                     Some("Zulu".into()),
                     None,
                     None,
-                    vec![],
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Zulu".into()),
+                        None,
+                    )],
                 ),
             ];
             if reverse {
@@ -1022,14 +1099,46 @@ mod tests {
             assert_eq!(tied.len(), 2);
             let left = SystemId::from_address(&GalacticAddress::new(-1, 0, 0, 2, 0, 0));
             let right = SystemId::from_address(&GalacticAddress::new(1, 0, 0, 9, 0, 0));
-            let (first, second) = if system_id_order(left, right).is_lt() {
-                (left, right)
-            } else {
-                (right, left)
-            };
-            assert_eq!(tied[0].0, first);
+            let expected_ties = [(left, 400.0), (right, 400.0)];
+            assert_eq!(left.system_address(), 8_589_938_687);
+            assert_eq!(right.system_address(), 38_654_705_665);
+            assert_eq!(tied, expected_ties);
+            assert_eq!(
+                model.nearest_systems_from_address(&origin, 1),
+                vec![expected_ties[0]]
+            );
+            assert_eq!(
+                model.systems_within_radius_from_address(&origin, 400.0),
+                expected_ties
+            );
+            let planet_ties =
+                model.nearest_planets_from_address(&origin, usize::MAX, &BiomeFilter::default());
+            assert_eq!(
+                planet_ties
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                vec![((left, 1), 400.0), ((right, 1), 400.0)]
+            );
+            assert_eq!(
+                model
+                    .nearest_planets_from_address(&origin, 1, &BiomeFilter::default())
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                vec![((left, 1), 400.0)]
+            );
+            assert_eq!(
+                model
+                    .planets_within_radius_from_address(&origin, 400.0, &BiomeFilter::default())
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                vec![((left, 1), 400.0), ((right, 1), 400.0)]
+            );
+            assert_eq!(tied[0].0, left);
             assert_eq!(tied[0].1, 400.0);
-            assert_eq!(tied[1].0, second);
+            assert_eq!(tied[1].0, right);
             assert_eq!(tied[1].1, 400.0);
         }
 
@@ -1037,10 +1146,14 @@ mod tests {
         let ssi_neighbor = GalacticAddress::new(0, 0, 0, 2, 0, 0);
         assert!((base.distance_ly(&ssi_neighbor) - 264.6828728).abs() < 1e-6);
         let mut ssi_model = GalaxyModel::new();
+        ssi_model.insert_system(System::new(base, None, None, None, vec![]));
         ssi_model.insert_system(System::new(ssi_neighbor, None, None, None, vec![]));
         assert_eq!(
-            ssi_model.nearest_systems_from_address(&base, 1)[0].1,
-            base.distance_ly(&ssi_neighbor)
+            ssi_model.nearest_systems_from_address(&base, usize::MAX),
+            vec![
+                (SystemId::from_address(&base), 0.0),
+                (SystemId::from_address(&ssi_neighbor), 264.6828728)
+            ]
         );
 
         let mut model = GalaxyModel::new();
@@ -1056,7 +1169,7 @@ mod tests {
                     0,
                     Some(Biome::Toxic),
                     Some(BiomeSubType::LushRoomTemp),
-                    true,
+                    false,
                     Some("Wrong biome".into()),
                     None,
                 ),
@@ -1064,7 +1177,7 @@ mod tests {
                     1,
                     Some(Biome::Lush),
                     Some(BiomeSubType::LushHumid),
-                    true,
+                    false,
                     Some("Wrong subtype".into()),
                     None,
                 ),
@@ -1072,7 +1185,7 @@ mod tests {
                     2,
                     Some(Biome::Lush),
                     Some(BiomeSubType::LushRoomTemp),
-                    false,
+                    true,
                     Some("Wrong infested".into()),
                     None,
                 ),
@@ -1095,7 +1208,7 @@ mod tests {
                 0,
                 Some(Biome::Lush),
                 Some(BiomeSubType::LushRoomTemp),
-                true,
+                false,
                 Some("Match".into()),
                 None,
             )],
@@ -1103,7 +1216,7 @@ mod tests {
         let filter = BiomeFilter {
             biome: Some(Biome::Lush),
             biome_subtype: Some(BiomeSubType::LushRoomTemp),
-            infested: Some(true),
+            infested: Some(false),
             named_only: true,
         };
         let nearest = model.nearest_planets_from_address(&near, 1, &filter);
@@ -1127,6 +1240,7 @@ mod tests {
                 .len(),
             1
         );
+        assert!(std::ptr::eq(nearest[0].1, &model.planets[&(far_id, 0)]));
     }
 }
 
