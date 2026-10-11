@@ -233,3 +233,7 @@ Five first-class slice documents: `slice-plan.md`, `cc-prompt.md`, `ledger.md`, 
 3. **Does the parent plan need a change, and who owns remaining decisions?** No parent-plan change is proposed. CDC owns independent row review; the Operator retains acceptance authority. No slice, arc or project closure or integration is claimed. After acceptance, the required session/live/full-startup composition still precedes evidence-gated save-field repair; all original higher-scale owner gates remain.
 
 Current prompt: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`. Current report: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md`.
+
+### Planning commit receipts — dated correction (2026-10-11)
+
+The four-record Iteration05 planning return is commit `3f21788ca8edbd20507509066d07cf902940906e`, parent `40c36abbee7574122dd766c384cf921e002c5140`, with exactly `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md`; it carries the required adjacent Codex and Billo AI trailers. Validation-only post-commit receipt commit `26aabb2f9ff9b1e2eb264a6a916a2f283d064640` parents that return and changes only `artifacts/validation.json`, with the same required trailers. The intervening parent `40c36ab` is the separate Project02 planning commit; its paths are not in either Iteration05 commit.
