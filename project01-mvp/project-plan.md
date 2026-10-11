@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.10
+version: 1.11
 project: project01-mvp
 status: active
 depends-on: []
@@ -637,3 +637,9 @@ Version1.9 (2026-10-10): source-grounded query composition detail and assignment
 Initial [CDC review](arc06-fit-and-finish/slice07-galaxy-scoped-queries/cdc-verification.md) independently accepts six child rows at b2d27017, with focused636/workspace854 and prescribed gates. Three remain open for test-matrix completeness, rendered pair/error docs and complete canonical return. Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md`; candidate, runtime contract and raw2/2 compatibility remain. No structural plan amendment; later routing/spatial/session/live and save-field owners stay required and held until child acceptance. Arc25/six done/nineteen open; project25 open. No release/merge/main movement authorized.
 
 Version1.10 (2026-10-10): routine partial Slice07 acceptance and bounded correction handoff; all criteria/scope/architecture/final gates retained.
+
+## Slice07 Iteration01 review and Iteration02 — 2026-10-10
+
+Eight Slice07 rows accepted; QG-09 remains open for closing-report assignment identification. Current CC assignment `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration02.md` is evidence-only on unchanged7118a486. Fresh637/855 and all prescribed gates pass; no structural design/runtime/cache change. Required broader composition and save-field work remain held until child closes. Arc25/six done/nineteen open; project25 open. Main/dependencies and all parent criteria/gates remain.
+
+Version1.11 (2026-10-10): routine eight-row acceptance and evidence-only correction handoff; no scope/architecture/acceptance amendment.

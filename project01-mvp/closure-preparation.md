@@ -89,3 +89,7 @@ Arc25/six done/nineteen open, project25 open. No broad gate is waived, no future
 ## Slice07 initial review and correction — 2026-10-10
 
 Current CC assignment is `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md`, superseding the initial assignment for execution while preserving it. [CDC review](arc06-fit-and-finish/slice07-galaxy-scoped-queries/cdc-verification.md) accepts six rows and holds QG-03/08/09. Prescribed gates reproduced, including focused636/workspace854. Remaining test matrix/rendered pair/error docs and inventory/bubble-up are concrete bounded corrections; runtime and raw2/2 interpretation are unchanged. Required subsequent composition waits for child closure. Arc25/six done/nineteen open, project25 open; no original gate/evidence requirement waived and no main/dependency movement or publication authorized.
+
+## Slice07 Iteration01 review and evidence correction — 2026-10-10
+
+Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration02.md`. CDC accepts eight rows and holds QG-09 only for explicit assignment paths in the canonical closing report. Source7118a486 remains fixed; fresh637/855 and prescribed gates passed. Inventory, bubble-up, retained history and scope/capture fences reproduced. No structural amendment; required next composition awaits child closure. Arc25/six done/nineteen open, project25 open; no waiver or main/dependency/publication action.
