@@ -1,6 +1,6 @@
 # Slice08 — galaxy-scoped spatial and routing composition
 
-Version:1.2. Created2026-10-11. Status:open; Iteration01 CDC accepts SR-08; eight rows remain open for Iteration02 tests/evidence correction.
+Version:1.3. Created2026-10-11. Status:open; SR-08 accepted, eight open; Iteration02 interim stop resolved as query configuration error, Iteration03 active.
 
 ## Goal, authority and boundaries
 
@@ -54,3 +54,12 @@ Iteration01 cc-prompt-iteration01.md (09a460ff, predecessor initial prompt) exec
 Iteration02 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md`, issued2026-10-11, predecessorIteration01, disposition active. Actual issuance is the commit containing this new prompt. Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md**. Candidate21494b9; four test-only source paths/four CC evidence paths; production prefixes and accepted CLI/edges/error files held unchanged. This mutation narrowing changes no criterion. Existing authority covers the pass. Main is externally updated clean6d183bde, README/logo-only delta from historicala800950; all other dependency pins unchanged. Preserve this observed state, no main movement authorized.
 
 Version1.2 routine review/assignment update: malformed nine-cell CC ledger rows restored to eight current cells, criteria retained/history preserved; original/new uncaptured groups and historical strict-cache env gap remain distinct, no exception approved. Arc26/seven done/nineteen open; project25 open, no child/parent closure. Author readiness: actual source/API and native fixture inspection, compiled corrected public witness and cap100 dense-versus-line control, literal SSI tie verification, fresh gates/audit134channels; precise typed/test recipes and bounded reading30–45k in issued prompt. Current guide/script preparation failures and successful corrections retained in receipts; no production edits. Required session/live/full startup then field repair and original closeout gates remain.
+
+
+## Iteration02 interim stop and Iteration03 continuation — 2026-10-11
+
+Iteration02 cc-prompt-iteration02.md (issued4c3d405, predecessorIteration01) executed partially; disposition returned/stopped, then superseded as active assignment, preserved unchanged. Source21494b9 plus four uncommitted test additions; planning69ff089 plus four uncommitted CC records. No CC commit. CDC reproduces the failed closed test but finds helperwarpNone, notSome400; both public algorithms correctly insert B forSome400. Existing typed constrained cache test passes. No production discrepancy established; no runtime edit authorized. See dated cdc-verification.md and artifacts/cdc-review-receipts.json iteration02_stop.
+
+Iteration03 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md`, issued2026-10-11, predecessorIteration02, reason explicit constrained input/negative control and unfinished proof/gates/evidence, disposition active. Resolve actual issuance from the new prompt commit. Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md**. Third refinement pass, within existing fix-loop budget. Reuse authorized dirty four-file test work and four CC records; preserve hashes through intake, append honest superseding stop correction. No clean-reset or CC-file inclusion in CDC commit. Production21494b9 unchanged, same four/four boundaries and accepted SR-08.
+
+Version1.3 routine disposition/assignment update, no acceptance/scope/cache-policy/structural change. Current constraints/fences/original owners persist. Author source/API and test inputs inspected; exact native failure/cache success/public None-versus400 NN/2opt projections and236-channel/four-file-prefix/fixture controls reproduced. Test callsite struct-update recipe leaves defaultNone correct for unbounded105; full unchanged nine gate continuation required. Initial zero-test filter and feature-library mismatch compile disclosed and corrected in separate receipts. No additional row accepted, no parent closure, no historical evidence exception.

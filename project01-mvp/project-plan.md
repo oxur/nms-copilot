@@ -673,3 +673,12 @@ CDC reviewed source21494b9/planningfc895617 against preserved Iteration01 issuan
 Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md`, test/evidence only, directly from21494b9, four permitted source test paths/four CC return paths. Production held unchanged; accepted CLI/positive-edge/normalization subproof retained subject to delta review. No architecture/cache-policy/criterion/structural sequence change. Main is clean6d183bde with externally committed README/logo-only change from historicala800950; preserve observed fence, no integration authority. Other dependencies unchanged. Slice/arc/project remain open: arc26/seven done/nineteen open, project25 open. Required session/live/full startup then evidence-gated save repair and all original closeout owners/gates persist.
 
 Project version1.15 (2026-10-11), surfaced by Arc06 Slice08: routine correction review, eight child rows remain open; all25 project statuses retained.
+
+
+## Slice08 Iteration02 interim-stop disposition and Iteration03 — 2026-10-11
+
+CC stopped with four uncommitted test files/four CC records at source21494b9/planning69ff089. CDC reproduced the closed test failure and identified actual warp_rangeNone; public NN/2opt Some400 returns the required A/B/C/B/A projection, None correctly returns A/B/C/A. The constrained typed cache regression passes. No production bug established by this witness; fix test configuration and append honest superseding evidence, then complete all existing proof/ordered gates.236 CC channels, old values/prefixes, production/accepted-row/sealed/dependency fences independently checked.
+
+Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md`, continuing the authorized dirty four-source-test/four-CC-record work from21494b9, without reset or production mutation. Original/Iteration01/new Iteration02 capture limits remain explicit and unwaived. SR-08 retained done/eight child rows open; arc26/seven done/nineteen open, project25 open. Routine assignment update only, no structural scope/architecture/cache/acceptance/sequence amendment. Main6d183bde and dependencies preserved; required session/live/full startup then save-field repair and original higher-scale gates remain; no integration/release/publication authority.
+
+Project version1.16 (2026-10-11), surfaced by Arc06 Slice08: routine fixture-error disposition/third refinement; original25 project statuses retained.
