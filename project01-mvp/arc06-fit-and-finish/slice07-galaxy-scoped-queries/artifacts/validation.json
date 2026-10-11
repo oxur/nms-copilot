@@ -930,6 +930,115 @@
         "fatal: unable to create candidate worktree index lock: Operation not permitted"
       ],
       "recovery": "The same exact pathspec was then staged successfully through the approved metadata-write path; no paths were changed by the denied attempt."
+    },
+    {
+      "capture_file": "nms-s07-planning-commit.json",
+      "argv": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H%n%P%n%B",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "base64": "MDBkZjU2MGZiOWJhNjZmM2JhNWQ0MTk1NWFiYjljNmFmMTc5NGUwMAo2ZmZhNmFkYjNiYzViZjgwMDZmYTE2YTYzNzY0NmYzNzk1MzU5OGQwCmRvY3MocGxhbm5pbmcpOiByZWNvcmQgU2xpY2UwNyBnYWxheHktc2NvcGVkIHF1ZXJ5IHJldHVybgoKUmVjb3JkIHRoZSBTbGljZTA3IENDIGltcGxlbWVudGF0aW9uLCBieXRlLWV4YWN0IHZhbGlkYXRpb24gYXR0ZW1wdHMsIHJvdyBldmlkZW5jZSwgYW5kIG9wZW4gQ0RDIGRpc3Bvc2l0aW9ucy4KCkNvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgoKQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPgoK",
+        "byte_length": 354,
+        "sha256": "d1fab3dc0cfb6f0fd653cc89a56a2d70a59290549fdd09ca001691e7b28ade49"
+      },
+      "stderr": {
+        "base64": "",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_result_lines": [],
+      "warning_lines": [],
+      "error_lines": []
+    },
+    {
+      "capture_file": "nms-s07-planning-pathset.json",
+      "argv": [
+        "git",
+        "diff-tree",
+        "--no-commit-id",
+        "--name-status",
+        "-r",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "base64": "QQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2FydGlmYWN0cy9leGVjdXRpb24ubWQKQQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2FydGlmYWN0cy92YWxpZGF0aW9uLmpzb24KQQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2Nsb3NpbmctcmVwb3J0Lm1kCk0JcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA3LWdhbGF4eS1zY29wZWQtcXVlcmllcy9sZWRnZXIubWQK",
+        "byte_length": 345,
+        "sha256": "2e155f39efba0afb3e2084bb390f513a5a0d3721158e7641fb5ca10050dfeac5"
+      },
+      "stderr": {
+        "base64": "",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_result_lines": [],
+      "warning_lines": [],
+      "error_lines": []
+    },
+    {
+      "capture_file": "nms-s07-planning-status-after-commit.json",
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_result_lines": [],
+      "warning_lines": [],
+      "error_lines": []
+    },
+    {
+      "capture_file": "nms-s07-planning-head-after-commit.json",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "exit_code": 0,
+      "stdout": {
+        "base64": "MDBkZjU2MGZiOWJhNjZmM2JhNWQ0MTk1NWFiYjljNmFmMTc5NGUwMAo=",
+        "byte_length": 41,
+        "sha256": "3e72e6c9d2731fc18a19f2398b453fd94fd17c9b6f946f0b34532292de93d9b5"
+      },
+      "stderr": {
+        "base64": "",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_result_lines": [],
+      "warning_lines": [],
+      "error_lines": []
     }
   ],
   "unrun": [],
@@ -976,6 +1085,17 @@
     "fixture_bytes": 360,
     "fixture_sha256": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7",
     "fixture_header_hex": "4e4d5343414348450200000002000000",
-    "planning_commit": "pending"
+    "planning_commit": "00df560fb9ba66f3ba5d41955abb9c6af1794e00",
+    "planning_commit_parent": "6ffa6adb3bc5bf8006fa16a637646f37953598d0",
+    "planning_pathset": [
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+    ],
+    "planning_trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
   }
 }
