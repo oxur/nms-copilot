@@ -1097,8 +1097,7 @@
       "Co-authored-by: Codex <noreply@openai.com>",
       "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
     ]
-  }
-,
+  },
   "iteration01": {
     "issued_prompt": "arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md",
     "source_commit": "7118a486ea43a776aa2451ec0807d43384fb954f",
@@ -1572,9 +1571,9 @@
         },
         "test_result_lines": [],
         "warning_lines": [
-          "warning: unresolved link to `D²`",
+          "warning: unresolved link to `D\u00b2`",
           "warning: unresolved link to `D`",
-          "warning: unresolved link to `D²`",
+          "warning: unresolved link to `D\u00b2`",
           "warning: unresolved link to `0`",
           "warning: `nms-core` (lib doc) generated 4 warnings",
           "warning: unresolved link to `0`",
@@ -2324,5 +2323,449 @@
         "git diff --check"
       ]
     }
+  },
+  "iteration02": {
+    "issued_prompt": "arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration02.md",
+    "source_commit": "7118a486ea43a776aa2451ec0807d43384fb954f",
+    "source_parent": "b2d27017fafb7a85ad880b20faea31ad496e23a0",
+    "source_branch": "codex/galaxy-scoped-queries",
+    "planning_issuance_head": "a609b21f4d0187cacda4f732394ae89175862715",
+    "planning_issuance_parent": "555b260e9f9e40577d1f059d3375977737fb9933",
+    "planning_paths": [
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+    ],
+    "retained_row_ids": [
+      "QG-01",
+      "QG-02",
+      "QG-03",
+      "QG-04",
+      "QG-05",
+      "QG-06",
+      "QG-07",
+      "QG-08"
+    ],
+    "retained_row_status": "accepted by CDC; pre-edit ledger lines retained byte-identically",
+    "corrected_row_status": {
+      "QG-09": "CC proposes done; open for CDC"
+    },
+    "validation_summary": {
+      "source_gates": "retained from CDC review at unchanged 7118a486; not rerun",
+      "reviewer_gate_count": 9,
+      "reviewer_gate_exits": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "focused_tests": "637 passed; 0 failed/ignored",
+      "workspace_tests": "855 passed; 0 failed/ignored",
+      "artifact_count": 6,
+      "fixture_bytes": 360,
+      "fixture_sha256": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7",
+      "audit_stdout_bytes": 12922,
+      "audit_stdout_lines": 261,
+      "audit_stdout_sha256": "b60bb704bb3c8bf6d084be8470d8a1313d406b1b64f5a7e59f7a31590aaadc44",
+      "audit_stderr_bytes": 0
+    },
+    "prefixes": {
+      "closing_report_bytes": 12103,
+      "closing_report_sha256": "097ae5bcbfb9b1ebe01ead700602bd12961d09e616eca5b20baca0657b64d3c1",
+      "execution_bytes": 25783,
+      "execution_sha256": "41a390bfad5c47deece0b8b60bef14f954dcc6e524c67170001c34909a72f0aa"
+    },
+    "attempts": [
+      {
+        "purpose": "initial structural audit; incorrect comparator used pre-CDC-acceptance ledger baseline 555b260",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-structural-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLXN0cnVjdHVyYWwtYXVkaXQucHkiLCBsaW5lIDM2LCBpbiA8bW9kdWxlPgogICAgYXNzZXJ0IGFjY2VwdGVkX25vd1tyb3ddID09IGFjY2VwdGVkX2JlZm9yZVtyb3ddLCByb3cKICAgICAgICAgICBeXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgpBc3NlcnRpb25FcnJvcjogUUctMDMK",
+          "bytes": 240,
+          "sha256": "18424e498da8b629ed1e107b9244f405441bae84fc4881faa4365205e3cb32de"
+        },
+        "capture_file": "/private/tmp/s07-i02-structural-audit.json",
+        "script_source_sha256": "72bce3b974175cd7bf1711e0beb4def6040308d92b5b615ff9fcb9c3ab2e28b6"
+      },
+      {
+        "purpose": "corrected ledger baseline; table status field index error in audit assertion",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-structural-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLXN0cnVjdHVyYWwtYXVkaXQucHkiLCBsaW5lIDM3LCBpbiA8bW9kdWxlPgogICAgYXNzZXJ0IGFjY2VwdGVkX25vd1snUUctMDknXS5zcGxpdCgnfCcpWzVdLnN0cmlwKCkgPT0gJ29wZW4nCiAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl4KQXNzZXJ0aW9uRXJyb3IK",
+          "bytes": 252,
+          "sha256": "3083755e7bc226dba6dff8eec84b954c352f44ab6cd8d7078f1417014a9b0dde"
+        },
+        "capture_file": "/private/tmp/s07-i02-structural-audit-retry.json",
+        "script_source_sha256": "72bce3b974175cd7bf1711e0beb4def6040308d92b5b615ff9fcb9c3ab2e28b6"
+      },
+      {
+        "purpose": "structural audit passed using accepted pre-edit ledger at issuance HEAD a609b21",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-structural-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UEFTUzogdGhyZWUgcHJvbXB0IHBhdGhzOyB2YWxpZGF0aW9uIG9yaWdpbmFsL2l0ZXJhdGlvbjAxIG9iamVjdHMgZXhhY3QgKDMzLzM2IGF0dGVtcHRzKTsgbmluZSBDREMgZ2F0ZXMgYW5kIGNvbXBsZXRlIGF1ZGl0IHJlY2VpcHQ7IHNpeCBhcnRpZmFjdHM7IFFHLTAxLi4wOCBieXRlLWlkZW50aWNhbDsgUUctMDkgb3BlbjsgMzYwLWJ5dGUgc2VhbGVkL25hdGl2ZSBmaXh0dXJlIGlkZW50aWNhbDsgZml2ZSBwaW5uZWQgd29ya3RyZWUgaGVhZHMgYW5kIGNsZWFuIG5vbi1wbGFubmluZyBmZW5jZXM7IHNvdXJjZSBwYXJlbnQgdmVyaWZpZWQuCg==",
+          "bytes": 310,
+          "sha256": "8b576bc242ca84815b2aa420a80813f6b39f28328abc2d65536af8bba7e7bee3"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-structural-audit-final.json",
+        "script_source_sha256": "72bce3b974175cd7bf1711e0beb4def6040308d92b5b615ff9fcb9c3ab2e28b6"
+      }
+    ],
+    "planning_fence": {
+      "main": "a800950ef3558fcf463517696c3c140061e7353d",
+      "identity_foundation": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+      "cache_dependency": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+      "candidate_source": "7118a486ea43a776aa2451ec0807d43384fb954f",
+      "candidate_parent": "b2d27017fafb7a85ad880b20faea31ad496e23a0",
+      "planning_issuance_head": "a609b21f4d0187cacda4f732394ae89175862715",
+      "fixture_identical": true,
+      "permitted_pathset": [
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+      ],
+      "commit_identity": "pending four-path planning commit",
+      "commit_message_sha256": "de44d6c5b0300cab7157336ffabaca0433b7b9cb2c45a44c479095e492d02ea9",
+      "required_trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ]
+    },
+    "write_attempts": [
+      {
+        "purpose": "editor preflight failed before writes on stale prefix-length assertion",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-apply.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLWFwcGx5LnB5IiwgbGluZSAxNCwgaW4gPG1vZHVsZT4KICAgIGFzc2VydCBsZW4oY2xvc2Vfb2xkKT09NDg2MiBhbmQgbGVuKGV4ZWN1dGlvbl9vbGQpPT0xNzQ5NAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBeXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eCkFzc2VydGlvbkVycm9yCg==",
+          "bytes": 235,
+          "sha256": "568ce072befad87e8161c2d9c42741d59b03c49cb0184dc90fbe534efa8c6dc3"
+        },
+        "capture_file": "/private/tmp/s07-i02-edit.json",
+        "script_source_sha256": "ac44c1e43a33905b4ffa9d3d07c12e25a48fd203fd838bb21eb2e3f25a72d323"
+      },
+      {
+        "purpose": "editor appended report and execution, then failed on a bytes/string ledger selector; subsequently restored exactly",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-apply.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLWFwcGx5LnB5IiwgbGluZSA0MSwgaW4gPG1vZHVsZT4KICAgIGlkeD1uZXh0KGkgZm9yIGksbCBpbiBlbnVtZXJhdGUobGluZXMpIGlmIGwuc3RhcnRzd2l0aCgnfCBRRy0wOSB8JykpCiAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLWFwcGx5LnB5IiwgbGluZSA0MSwgaW4gPGdlbmV4cHI+CiAgICBpZHg9bmV4dChpIGZvciBpLGwgaW4gZW51bWVyYXRlKGxpbmVzKSBpZiBsLnN0YXJ0c3dpdGgoJ3wgUUctMDkgfCcpKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgpUeXBlRXJyb3I6IHN0YXJ0c3dpdGggZmlyc3QgYXJnIG11c3QgYmUgYnl0ZXMgb3IgYSB0dXBsZSBvZiBieXRlcywgbm90IHN0cgo=",
+          "bytes": 524,
+          "sha256": "69863fedf2a9331185d98948d0a9cd9e25b9fbefcb05f1c2bd335fe1d3ab9d85"
+        },
+        "capture_file": "/private/tmp/s07-i02-edit-retry.json",
+        "script_source_sha256": "ac44c1e43a33905b4ffa9d3d07c12e25a48fd203fd838bb21eb2e3f25a72d323"
+      },
+      {
+        "purpose": "restored only partial append files to exact HEAD bytes",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-restore.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UmVzdG9yZWQgb25seSB0aGUgdHdvIHBhcnRpYWxseSBhcHBlbmRlZCBmaWxlcyB0byB0aGVpciBleGFjdCBwbGFubmluZyBIRUFEIGJ5dGVzIGFmdGVyIGEgY2FwdHVyZWQgZWRpdG9yIGFzc2VydGlvbiBmYWlsdXJlLgo=",
+          "bytes": 125,
+          "sha256": "ec471a58faa77de605420b141bd5cc6a2b2551b94985bd20b38938e6e409224f"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-restore.json",
+        "script_source_sha256": "526238d66619ec6afa0b8aea311b289d633879aa1c6d1a77794f263ba9fd2bdb"
+      },
+      {
+        "purpose": "appended report, execution, ledger note, and initial iteration02 validation record",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-apply.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJhdWRpdF9leGl0X2NvZGVzIjogWzEsIDEsIDBdLCAiY2hhbmdlZF9wYXRocyI6IFsicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA3LWdhbGF4eS1zY29wZWQtcXVlcmllcy9jbG9zaW5nLXJlcG9ydC5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2FydGlmYWN0cy9leGVjdXRpb24ubWQiLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA3LWdhbGF4eS1zY29wZWQtcXVlcmllcy9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwNy1nYWxheHktc2NvcGVkLXF1ZXJpZXMvbGVkZ2VyLm1kIl0sICJwbGFubmluZ19pc3N1YW5jZV9oZWFkIjogImE2MDliMjFmNGQwMTg3Y2FjZGE0ZjczMjM5NGFlODkxNzU4NjI3MTUiLCAicHJlZml4ZXMiOiB7ImNsb3NpbmdfcmVwb3J0X2J5dGVzIjogMTIxMDMsICJjbG9zaW5nX3JlcG9ydF9zaGEyNTYiOiAiMDk3YWU1YmNiZmI5YjFlYmUwMWVhZDcwMDYwMmJkMTI5NjFkMDllNjE2ZWNhNWIyMGJhY2EwNjU3YjY0ZDNjMSIsICJleGVjdXRpb25fYnl0ZXMiOiAyNTc4MywgImV4ZWN1dGlvbl9zaGEyNTYiOiAiNDFhMzkwYmZhZDVjNDdkZWVjZTBiOGI2MGJlZjE0Zjk1NGRjYzZlNTI0YzY3MTcwMDAxYzM0OTA5YTcyZjBhYSJ9LCAicmV0YWluZWRfYXR0ZW1wdF9jb3VudHMiOiBbMzMsIDM2XSwgInNvdXJjZV9jb21taXQiOiAiNzExOGE0ODZlYTQzYTc3NmFhMjQ1MWVjMDgwN2Q0MzM4NGZiOTU0ZiJ9Cg==",
+          "bytes": 820,
+          "sha256": "38c56d72691b73b4d31b0f30466714b565d8174d6717ec133d474dc656a10546"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-edit-final.json",
+        "script_source_sha256": "ac44c1e43a33905b4ffa9d3d07c12e25a48fd203fd838bb21eb2e3f25a72d323"
+      },
+      {
+        "purpose": "added actual planning issuance HEAD to execution intake",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-add-issuance.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "QWRkZWQgdGhlIHJlY29yZGVkIHBsYW5uaW5nIGlzc3VhbmNlIEhFQUQgdG8gdGhlIEl0ZXJhdGlvbjAyIGludGFrZS4K",
+          "bytes": 69,
+          "sha256": "459d84f7c11c7dcbe0ef66f49be05031bc512c64d66beb41b28fe6a31e754dc9"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-add-issuance.json",
+        "script_source_sha256": "8e9cf3145464b582e6f519c05c9e5c36c50b49afb1c3d44b3069a272b40e3746"
+      },
+      {
+        "purpose": "amended only QG-09 Evidence/Notes to name both prompt basenames",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-ledger-note.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "VXBkYXRlZCBvbmx5IHRoZSBRRy0wOSBFdmlkZW5jZS9Ob3RlcyBjZWxsIHdpdGggdGhlIGV4cGxpY2l0IHByb21wdCBiYXNlbmFtZXMuCg==",
+          "bytes": 79,
+          "sha256": "1937c78edcedd6b20bcf8a34d9456c823ffa487602013ac2a6315599dbb78943"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-ledger-note.json",
+        "script_source_sha256": "f45b45e93eb3dbf2197bc54786de3978361cb3fa74efe0e093cc3a4925330ffe"
+      }
+    ],
+    "post_edit_audit_attempts": [
+      {
+        "purpose": "post-edit fence audit failed because execution lacked literal issuance HEAD",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-postedit-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLXBvc3RlZGl0LWF1ZGl0LnB5IiwgbGluZSAxNywgaW4gPG1vZHVsZT4KICAgIGFzc2VydCAnYTYwOWIyMWY0ZDAxODdjYWNkYTRmNzMyMzk0YWU4OTE3NTg2MjcxNScgaW4gcmVwb3J0IGFuZCAnYTYwOWIyMWY0ZDAxODdjYWNkYTRmNzMyMzk0YWU4OTE3NTg2MjcxNScgaW4gZXhlY3V0aW9uCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgpBc3NlcnRpb25FcnJvcgo=",
+          "bytes": 368,
+          "sha256": "6d31e9bd943240403efa3d58c4bfd2733f10e7a9d98cbc87cecc932276a2416a"
+        },
+        "capture_file": "/private/tmp/s07-i02-postedit-audit.json",
+        "script_source_sha256": "45af21abbc5a8282bfc4b7dc31d140e92bc605dc477ce68a2a5a3c1ace2d633b"
+      },
+      {
+        "purpose": "post-edit audit failed because QG-09 note used descriptive labels, not both literal prompt basenames",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-postedit-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 1,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "VHJhY2ViYWNrIChtb3N0IHJlY2VudCBjYWxsIGxhc3QpOgogIEZpbGUgIi9wcml2YXRlL3RtcC9zMDctaTAyLXBvc3RlZGl0LWF1ZGl0LnB5IiwgbGluZSAzMSwgaW4gPG1vZHVsZT4KICAgIHE5PW5vd3Jvd3NbJ1FHLTA5J107IGFzc2VydCBxOS5zcGxpdCgnfCcpWzZdLnN0cmlwKCk9PSdvcGVuJyBhbmQgJ2NjLXByb21wdC5tZCcgaW4gcTkgYW5kICdjYy1wcm9tcHQtaXRlcmF0aW9uMDEubWQnIGluIHE5CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBeXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXgpBc3NlcnRpb25FcnJvcgo=",
+          "bytes": 374,
+          "sha256": "5fe785d3a9231a065310594d30f12f5a15bcc084b9ad8e7c73ed4bbe1f7ef7d6"
+        },
+        "capture_file": "/private/tmp/s07-i02-postedit-audit-retry.json",
+        "script_source_sha256": "45af21abbc5a8282bfc4b7dc31d140e92bc605dc477ce68a2a5a3c1ace2d633b"
+      },
+      {
+        "purpose": "post-edit structure, prefix, ledger, inventory, fixture, pin and exact pathset audit passed",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-postedit-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UEFTUzogZXhhY3QgcHJlZml4ZXMgYW5kIHByb21wdCBpZGVudGl0aWVzOyBhbGwgbmluZSByb3dzIGFjY291bnRlZDsgZWlnaHQgYWNjZXB0ZWQgbGluZXMgYnl0ZS1pZGVudGljYWw7IFFHLTA5IG9wZW47IHByaW9yIEpTT04gaW50YWN0OyBzaXgtYXJ0aWZhY3QgaW52ZW50b3J5OyBleGFjdCBmb3VyLXBhdGggc2V0OyBzb3VyY2UvbWFpbi9mb3VuZGF0aW9uL2NhY2hlIHBpbnMgYW5kIGNsZWFuIHdvcmt0cmVlczsgZml4dHVyZSBpZGVudGl0eS4K",
+          "bytes": 255,
+          "sha256": "ec6d5c44c0a9b063f5643fcff129bc10bb7893d0deb8c1c953c115f994ff8f3e"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-postedit-audit-final.json",
+        "script_source_sha256": "45af21abbc5a8282bfc4b7dc31d140e92bc605dc477ce68a2a5a3c1ace2d633b"
+      }
+    ],
+    "fence_attempts": [
+      {
+        "purpose": "initial git diff --check passed",
+        "argv": [
+          "git",
+          "-C",
+          ".worktrees/planning",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-diff-check.json"
+      },
+      {
+        "purpose": "final git diff --check passed",
+        "argv": [
+          "git",
+          "-C",
+          ".worktrees/planning",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-diff-check-final.json"
+      },
+      {
+        "purpose": "final pre-commit exact path, prefix, row, prior validation, fixture, pin and clean-worktree assertions",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-postedit-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UEFTUzogZXhhY3QgcHJlZml4ZXMgYW5kIHByb21wdCBpZGVudGl0aWVzOyBhbGwgbmluZSByb3dzIGFjY291bnRlZDsgZWlnaHQgYWNjZXB0ZWQgbGluZXMgYnl0ZS1pZGVudGljYWw7IFFHLTA5IG9wZW47IHByaW9yIEpTT04gaW50YWN0OyBzaXgtYXJ0aWZhY3QgaW52ZW50b3J5OyBleGFjdCBmb3VyLXBhdGggc2V0OyBzb3VyY2UvbWFpbi9mb3VuZGF0aW9uL2NhY2hlIHBpbnMgYW5kIGNsZWFuIHdvcmt0cmVlczsgZml4dHVyZSBpZGVudGl0eS4K",
+          "bytes": 255,
+          "sha256": "ec6d5c44c0a9b063f5643fcff129bc10bb7893d0deb8c1c953c115f994ff8f3e"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-final-precommit-audit.json"
+      }
+    ],
+    "metadata_write_attempts": [
+      {
+        "purpose": "write retained capture metadata for edit, audit, and fence attempts into iteration02",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-record-attempts.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJmZW5jZV9hdHRlbXB0cyI6IFswLCAwXSwgInBvc3RfZWRpdF9hdWRpdF9hdHRlbXB0cyI6IFsxLCAxLCAwXSwgInByaW9yX2F0dGVtcHRfY291bnRzIjogWzMzLCAzNl0sICJ3cml0ZV9hdHRlbXB0cyI6IDZ9Cg==",
+          "bytes": 121,
+          "sha256": "403e4c86acec0e9b91aeea3a63d93aa979a3e18218cf585b851719ea89ee2c87"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-record-attempts.json",
+        "script_source_sha256": "036634cd46ea96066d78aceb9f27081be59d5127a7b07d64c63952ddca8ef6a8"
+      }
+    ]
   }
 }
