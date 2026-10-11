@@ -177,3 +177,59 @@ First-class slice documents: `slice-plan.md`, the five assignment prompts (`cc-p
 3. **Does the parent plan need a change, and who owns remaining decisions?** No parent-plan change is proposed. CDC owns independent row review and contract disposition; the Operator retains acceptance authority. Required session/live/full startup evidence, evidence-gated save repair, and original higher-scale owner/gate requirements remain outstanding.
 
 All seven proposed rows remain open pending independent CDC review and any required Operator disposition. The slice, arc and project remain open.
+
+
+## Iteration05 final return — 2026-10-11
+
+This dated return supersedes Iteration04's proposed-complete descriptions for SR-01, SR-02, SR-06 and SR-09. It does not change the five prior accepted rows, their status cells, or any historical owner decision. The current assignment is `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`; the full intake/readback and receipt map are preserved in `artifacts/execution.md` and `artifacts/validation.json`.
+
+### Assignment history
+
+| Assignment path | Issuance revision | Status |
+|---|---|---|
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md` | `b792257db624d1a1c8edc35068c30481cf69648a` | executed; superseded by later corrective iteration |
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md` | `09a460ff6591b6b487fa90b0381d24071e4d7770` | executed; superseded by later corrective iteration |
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md` | `4c3d405f90152159b0f56232d6c348b512638dfa` | executed; superseded by later corrective iteration |
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md` | `50eac5224f200c2d4fe1d6b535d21d3931869fbc` | executed; superseded by later corrective iteration |
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md` | `ae3cdef467be8f02f421190c04b8cefbb1b29750` | executed; superseded by later corrective iteration |
+| `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md` | `9a9bf1147ee6cdf9caeb72a4d7b3a8484bf745fe` | executed; current evidence returned for CDC |
+
+### Source and fresh validation
+
+Source commit `0e1e8b4239881a378bc8fb928ef25741c228e171` directly parents `02260b778e6f6967fac14aa44073e948b3121d66`; it changes exactly the two assigned test files: `crates/nms-graph/src/query.rs` and `crates/nms-query/src/route.rs`. The commit has exactly once, adjacent, the required Codex and Billo AI trailers. Candidate source is clean. Production prefixes and the protected route test body remain byte-identical; the protected body is 4,976 bytes with SHA-256 `57895ddf7c65a9da8def443972bedb1f0d72d64666881ba859b2cc1ae2b53663`.
+
+All nine final gate categories passed in order. Focused all-features tests passed 682 (19 nonzero suites / 23 result summaries); workspace `make test` passed 900 (23 nonzero suites / 33 summaries). The selected doctest command passed with three zero-test summaries. Offline workspace build, format, lint, normal docs, strict cache docs and both diff checks passed. The first lint attempt exited 2 for a misplaced test import and is retained; corrected final format/lint and the complete final ordered gate pass followed. Normal docs retain four core, three graph and two query warnings plus the proc-macro-error2 v2.0.1 future-incompatibility advisory. Strict cache docs passed with the actual child `RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links`. No strict combined-docs, coverage, performance, packaging, live-session or full-startup acceptance is claimed.
+
+### Nine-row accounting
+
+| Row | Iteration05 observation and disposition |
+|---|---|
+| SR-01 | Reversed four-system index-1 fixture now supplies `PlayerState(A0, galaxy0, counters 7/8/9)`. Explicit spatial APIs assert exact system IDs and PlanetKeys/distances, exact radius boundary/invalid-radius populations, empty galaxy7, canonical planet borrows and state. Active wrappers have exact 0/9 populations and foreign/empty controls with full snapshots. CC proposes complete; remains open for CDC. |
+| SR-02 | Near/far insertion is actually reversed. Each near planet independently misses exactly biome, subtype, infestation=false, or named-only. Far planet result is exactly `((far_id, 0), 800.0)` at radius800, empty at799, with canonical borrowed pointer. CC proposes complete; remains open for CDC. |
+| SR-03 | CDC accepted in Iteration04; row remains `done` and byte-identical. No source change to its proof. |
+| SR-04 | Previously CDC accepted; row remains `done` and byte-identical. Accepted bridge/edge evidence remains retained. |
+| SR-05 | CDC accepted in Iteration04; row remains `done` and byte-identical. |
+| SR-06 | Foreign-target rejection retains exact `NoPath { from, to }` for both algorithms before max0/max1/radius0 truncation, with supplied player0 and full snapshots after each call. The unbounded fixture retains all 105 literal biome targets and 106 hops, with player0 and full snapshots. CC proposes complete; remains open for CDC. |
+| SR-07 | CDC accepted in Iteration04; row remains `done` and byte-identical. Genuine 360-byte fixture remains unchanged. |
+| SR-08 | Previously CDC accepted; row remains `done` and byte-identical. Accepted CLI route integration remains unchanged. |
+| SR-09 | Sixteen Iteration04 gate names each uniquely match an attempt; 14 old pointers resolve to another named attempt. Iteration05 final gates use stable nonnegative links and separate full channels. Historical missing channels and intake remain unresolved/unwaived. CC proposes complete for current evidence; remains open pending CDC/Operator disposition. |
+
+### Iteration04 corrections and fences
+
+Dated corrections in execution and the ledger supersede the earlier weak descriptions: SR-01's old fixture lacked player state and its final active-0 reset masked selection; SR-02's near/far fixture was not reversed, planet3 had two simultaneous filter misses, and radius800 was count-only; SR-06's two assigned tests lacked supplied player state and full immediate snapshots. Iteration04's captured `s08-i04-fixture-search` launched `rg` with literal pipe tokens and exited 2, so it is a child argument error rather than a pre-child rejection. The following captured shell pipeline succeeded.
+
+All 744 preexisting channel objects passed base64/length/SHA validation. Every Iteration05 gate attempt has separate complete stdout/stderr byte and SHA receipts; the full final validation tree also decodes and verifies. Prior validation JSON values and the existing execution/closing prefixes were preserved and checked. The main, cache, identity and query controls remain pinned at `6d183bde`, `decd8d6c`, `f57a38f7` and `7118a48`. Author baseline/probe hashes and the genuine fixture remain unchanged.
+
+### Planning return and inventory
+
+The authorized planning commit will contain exactly `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md`, using named paths and separate from the source commit. Five unrelated Project02 planning paths became dirty after Iteration05 intake; they are excluded from this return. The ledger remains nine rows and eight columns; SR-03/04/05/07/08 remain the five accepted `done` rows, and SR-01/02/06/09 remain `open`.
+
+Five first-class slice documents: `slice-plan.md`, `cc-prompt.md`, `ledger.md`, `closing-report.md`, and CDC-owned `cdc-verification.md`. Supporting artifacts: `artifacts/author-baseline.json`, `artifacts/author-probe.rs`, `artifacts/execution.md`, `artifacts/validation.json`, and `artifacts/cdc-review-receipts.json`. The five corrective assignment prompts `cc-prompt-iteration01.md` through `cc-prompt-iteration05.md` remain separately listed in the assignment history above.
+
+### Bubble-up
+
+1. **Was the assigned work delivered?** The assigned test-only corrections and all nine fresh gate categories are complete as CC proposed-complete evidence; four rows remain open for independent CDC review.
+2. **Did scope, architecture, acceptance or evidence change?** No runtime, API, compatibility, cache or sequence change occurred. The original parent gates and historical owner decisions persist. Prior unknown/missing evidence remains disclosed and unwaived; the Iteration04 pointer map is corrected additively.
+3. **Does the parent plan need a change, and who owns remaining decisions?** No parent-plan change is proposed. CDC owns independent row review; the Operator retains acceptance authority. No slice, arc or project closure or integration is claimed. After acceptance, the required session/live/full-startup composition still precedes evidence-gated save-field repair; all original higher-scale owner gates remain.
+
+Current prompt: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`. Current report: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md`.
