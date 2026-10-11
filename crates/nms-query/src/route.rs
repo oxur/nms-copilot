@@ -549,6 +549,7 @@ mod tests {
     fn test_execute_route_current_position_requires_active_galaxy_match() {
         let mut model = test_model();
         model.set_active_galaxy(9);
+        let before = (model.player_state.clone(), model.active_galaxy);
         let result = execute_route(
             &model,
             &RouteQuery {
@@ -568,6 +569,7 @@ mod tests {
                 active: 9
             })
         ));
+        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
     }
 
     #[test]
@@ -597,6 +599,7 @@ mod tests {
             None,
         ));
         let target_id = SystemId::from_address(&target);
+        let before = (model.player_state.clone(), model.active_galaxy);
         let result = execute_route(
             &model,
             &RouteQuery {
@@ -612,7 +615,7 @@ mod tests {
         .unwrap();
         assert_eq!(result.route.hops[0].system_id.reality_index(), 9);
         assert_eq!(result.route.hops[1].system_id, target_id);
-        assert_eq!(model.active_galaxy, 0);
+        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
     }
 
     #[test]
@@ -649,6 +652,7 @@ mod tests {
             [0.0; 3],
             None,
         ));
+        let before = (model.player_state.clone(), model.active_galaxy);
         let error = execute_route(
             &model,
             &RouteQuery {
@@ -663,10 +667,12 @@ mod tests {
         )
         .unwrap_err();
         let foreign_id = SystemId::from_address(&foreign_base);
+        let start_id = SystemId::from_address(&start);
         assert!(matches!(
             error.downcast_ref::<nms_graph::route::RouteError>(),
-            Some(nms_graph::route::RouteError::NoPath { to, .. }) if *to == foreign_id
+            Some(nms_graph::route::RouteError::NoPath { from, to }) if *from == start_id && *to == foreign_id
         ));
+        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
     }
 
     #[test]
@@ -1223,6 +1229,173 @@ mod iteration02_route_query_oracles {
             assert_eq!(result.targets_visited, 105);
             assert_eq!(result.route.hops.len(), 106);
             assert_eq!(got, expected);
+        }
+    }
+
+    #[test]
+    fn repeated_named_and_id_targets_keep_first_occurrence_before_the_limit() {
+        let a = addr(0, 100, 9);
+        let b = addr(1, 101, 9);
+        let c = addr(2, 102, 9);
+        let player = addr(0, 100, 0);
+        let mut model = GalaxyModel::new();
+        model.player_state = Some(PlayerState::new(player, 0, None, None, 7, 8, 9));
+        model.set_active_galaxy(0);
+        for (address, name, biome) in [
+            (player, "A", Biome::Barren),
+            (addr(1, 101, 0), "B", Biome::Barren),
+            (addr(2, 102, 0), "C", Biome::Barren),
+            (a, "A", Biome::Lush),
+            (b, "B", Biome::Lush),
+            (c, "C", Biome::Lush),
+        ] {
+            model.insert_system(System::new(
+                address,
+                Some(name.into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(biome),
+                    None,
+                    false,
+                    Some(name.into()),
+                    None,
+                )],
+            ));
+        }
+        let a_id = id(a);
+        let b_id = id(b);
+        let c_id = id(c);
+        let before = (model.player_state.clone(), model.active_galaxy);
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            for targets in [
+                TargetSelection::Named(vec![
+                    "A".into(),
+                    "C".into(),
+                    "C".into(),
+                    "A".into(),
+                    "B".into(),
+                    "B".into(),
+                ]),
+                TargetSelection::SystemIds(vec![a_id, c_id, c_id, a_id, b_id, b_id]),
+            ] {
+                let one = execute_route(
+                    &model,
+                    &query(targets.clone(), a, algorithm, Some(1), false),
+                )
+                .unwrap();
+                assert_eq!(
+                    one.route
+                        .hops
+                        .iter()
+                        .map(|hop| (
+                            hop.system_id,
+                            hop.is_waypoint,
+                            hop.leg_distance_ly,
+                            hop.cumulative_ly
+                        ))
+                        .collect::<Vec<_>>(),
+                    vec![(a_id, false, 0.0, 0.0), (c_id, false, 800.0, 800.0)]
+                );
+                assert_eq!(
+                    (one.route.total_distance_ly, one.targets_visited),
+                    (800.0, 1)
+                );
+                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+
+                let two =
+                    execute_route(&model, &query(targets, a, algorithm, Some(2), false)).unwrap();
+                assert_eq!(
+                    two.route
+                        .hops
+                        .iter()
+                        .map(|hop| (
+                            hop.system_id,
+                            hop.is_waypoint,
+                            hop.leg_distance_ly,
+                            hop.cumulative_ly
+                        ))
+                        .collect::<Vec<_>>(),
+                    vec![
+                        (a_id, false, 0.0, 0.0),
+                        (b_id, false, 400.0, 400.0),
+                        (c_id, false, 400.0, 800.0)
+                    ]
+                );
+                assert_eq!(
+                    (two.route.total_distance_ly, two.targets_visited),
+                    (800.0, 2)
+                );
+                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+            }
+
+            for targets in [
+                TargetSelection::Named(vec!["A".into(), "A".into()]),
+                TargetSelection::SystemIds(vec![a_id, a_id]),
+            ] {
+                let error =
+                    execute_route(&model, &query(targets, a, algorithm, None, false)).unwrap_err();
+                assert!(matches!(
+                    error.downcast_ref::<RouteError>(),
+                    Some(RouteError::TooFewTargets)
+                ));
+                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+            }
+
+            for targets in [
+                TargetSelection::Named(vec!["B".into(), "C".into()]),
+                TargetSelection::SystemIds(vec![b_id, c_id]),
+                TargetSelection::Biome(BiomeFilter {
+                    biome: Some(Biome::Lush),
+                    ..Default::default()
+                }),
+            ] {
+                let error = execute_route(&model, &query(targets, a, algorithm, Some(0), false))
+                    .unwrap_err();
+                assert!(matches!(
+                    error.downcast_ref::<RouteError>(),
+                    Some(RouteError::TooFewTargets)
+                ));
+                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+            }
+
+            let unknown = execute_route(
+                &model,
+                &query(
+                    TargetSelection::Named(vec!["Absent".into()]),
+                    a,
+                    algorithm,
+                    None,
+                    false,
+                ),
+            )
+            .unwrap_err();
+            assert!(matches!(
+                unknown.downcast_ref::<GraphError>(),
+                Some(GraphError::TargetNotFound(name)) if name == "Absent"
+            ));
+            assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+        }
+
+        let empty = GalaxyModel::new();
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            let error = execute_route(
+                &empty,
+                &query(
+                    TargetSelection::SystemIds(vec![]),
+                    addr(0, 1, 7),
+                    algorithm,
+                    None,
+                    false,
+                ),
+            )
+            .unwrap_err();
+            assert!(matches!(
+                error.downcast_ref::<GraphError>(),
+                Some(GraphError::NoSystemsInGalaxy(7))
+            ));
+            assert_eq!((empty.player_state.clone(), empty.active_galaxy), (None, 0));
         }
     }
 }
