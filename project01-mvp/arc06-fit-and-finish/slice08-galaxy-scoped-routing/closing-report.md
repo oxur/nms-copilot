@@ -49,3 +49,45 @@ This slice does not prove real-save galaxy extraction semantics beyond the prese
 1. **Was Slice08 delivered as assigned?** Yes, as CC proposed-done. The authorized source paths, focused integration tests, evidence artifacts, required commits and commit trailers are present. Independent CDC acceptance remains pending for all nine rows.
 2. **Did anything unforeseen arise?** The candidate worktree needed an escalated Git metadata write after the sandbox denied its branch lock; a later planning index staging attempt also needed escalation. A compiler typo and one formatter assertion were corrected. The broad docs gate retained pre-existing warnings outside the allowlist. Early unwrapped diagnostic failures have no retained raw-channel bytes; that capture gap is disclosed rather than backfilled.
 3. **Does the parent plan need a change, and who owns it?** No parent plan change is justified by this evidence. CDC owns independent row-by-row reproduction and acceptance, plus any later strict combined-doc cleanup or live/session/startup work. The Operator remains the approval authority for any scope or policy change. No parent artifact was edited.
+
+The iteration correction has now been implemented and freshly validated. The source correction candidate is the existing `codex/galaxy-scoped-routing` worktree based on `e1347bc24fafa5049f73854bede444cfa5fe2a8b`. The planning issuance commit is `09a460ff6591b6b487fa90b0381d24071e4d7770`; the current planning branch included the later receipt-only commit `6f9c282ac08a572b3d207c822270b1789c3a4262`. Source and planning commit identities, direct parents, exact paths and trailers will be recorded after the named-path commits below.
+
+### Iteration01 row dispositions
+
+All entries below are proposed dispositions for independent CDC review. The ledger remains nine rows with every Status `open`.
+
+| Row | Proposed disposition |
+|---|---|
+| SR-01 | Exact active foreign-reference exclusion and explicit 0/9/empty-7 queries, canonical borrowed planets, and no state mutation are covered by new graph tests. |
+| SR-02 | Complete population ordering, SSI ambiguity and opposing numeric/name tie witnesses, all biome predicates, insertion orders, radius boundaries and zero/max limits have literal tests. |
+| SR-03 | Membership-before-galaxy/path order, exact `NoPath` foreign route semantics and typed missing-ID propagation are covered across graph/query entry points. |
+| SR-04 | Foreign shortcut exclusion, disconnected fallback projection and positive KNN/warp-range/incremental edge weights are covered. `edges.rs` runtime is unchanged. |
+| SR-05 | Exact hop normalization/marker retention, 60 non-progress decoys, 120-member reachability and closed 2-opt endpoint/order/distance projections are covered. |
+| SR-06 | Named/base/ID/biome selection order, validation before limits, radius modes, no implicit 100 cap, current-position mismatch, mutation invariants and exact selected target count are covered. |
+| SR-07 | Original 360-byte schema2/semantic2 fixture is unchanged and rebuilt; independent predecessor projection plus rich current-cache route projection are checked without claiming old-fixture multi-node evidence. |
+| SR-08 | Native parser/query witness and actual NN/2-opt CLI subprocesses use the single Lush target and round-trip count; missing target has nonzero/no itinerary behavior; typed formatter rows pair qualified IDs and 400-ly legs. |
+| SR-09 | All nine gates were freshly run in order; each command has direct separate channel capture. Historical diagnostics and prior missing Git staging channels remain disclosed and unrecovered, so this row remains open. |
+
+### Corrected initial report statements
+
+The earlier report's statements that `RouteError` adds `ForeignGalaxy`, that explicit spatial methods return empty for foreign addresses, and that the old implementation's foreign behavior represents the final contract are superseded by the Iteration01 source readback in `artifacts/execution.md`. The corrected contract is: active wrappers reject foreign references; explicit methods use the address galaxy; canonical planets come from `model.planets`; valid mixed-galaxy route pairs yield `NoPath { from, to }` after complete membership checks; route normalization resets distances and preserves supplied endpoint markers; and selected targets are counted before routing as the post-filter non-start IDs. Cache schema and semantic version remain 2 because these route/index results are derived and not persisted archive fields.
+
+### Validation and evidence limits
+
+The fresh ordered gates all exited 0. The scoped all-feature suite reports 670 passed, 0 failed, 0 ignored; `make test` reports 888 passed, 0 failed, 0 ignored. Formatting and lint pass; workspace all-feature build, doctests, strict cache docs, and both source/planning diff checks pass. Broad docs exit 0 with existing unresolved links in untouched `crates/nms-core/src/address.rs`, `crates/nms-graph/src/extract.rs`, and unclosed `<label>` examples in untouched `crates/nms-query/src/table.rs` (4 core, 3 graph, 2 query warnings). The existing `proc-macro-error2 v2.0.1` future-incompatibility warning remains. Detailed raw captures are in `artifacts/validation.json` under `iteration01.gates`.
+
+A bounded lookup of available task receipts found no original stdout/stderr or exact status for the four prior unwrapped diagnostics, nor the raw bytes/status of the earlier source/planning staging failures. These remain explicit unknowns; current gate receipts do not reconstruct them. Thus the historical-evidence portion of SR-09 is not self-waived and requires CDC/Operator disposition. No source, planning, prompt, reviewer, or fixture boundary was expanded.
+
+### Supporting artifact inventory
+
+The five supporting artifacts are `artifacts/author-baseline.json` (sealed author baseline), `artifacts/author-probe.rs` (sealed baseline probe), `artifacts/execution.md` (CC intake/readback and execution record), `artifacts/validation.json` (preserved validation plus Iteration01 captures), and `artifacts/cdc-review-receipts.json` (independent reviewer receipts). The first two and reviewer artifact are unchanged/read-only. Report, ledger, and prompts are first-class records and excluded from this five-item inventory.
+
+### Bubble-up
+
+1. **Assigned work and gaps:** the seven source paths and four planning paths were used; all nine rows have proposed evidence, but remain open. The exact remaining known gap is missing original raw captures/status for named historical tool and Git attempts; no live-save/session/startup acceptance is claimed.
+2. **Unforeseen issues:** test fixtures and one formatter text-count expectation needed correction; final gates pass. Existing broad-doc warnings remain outside the allowlist. Historical capture recovery was unsuccessful; no new product or policy issue arose.
+3. **Parent plan and owner:** no parent-plan change is warranted by this evidence. CDC owns independent row verification and the capture-gap disposition; the Operator retains approval authority for scope or acceptance changes. No parent plan was edited.
+
+All evidence remains CC proposed-done pending independent CDC review. No slice, arc, or project acceptance is claimed.
+
+Source correction commit: `21494b963a5ffbfc5b283c5865a06fa3da096335`; direct parent `e1347bc24fafa5049f73854bede444cfa5fe2a8b`; seven original allowlisted paths; required adjacent trailers present exactly once. Initial commit attempt exit 128 due sandbox denial of worktree `index.lock` is captured, followed by successful exact scoped retry (exit 0).
