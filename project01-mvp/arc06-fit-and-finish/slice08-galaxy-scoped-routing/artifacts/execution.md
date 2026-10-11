@@ -210,3 +210,6 @@ Source correction commit receipt: `21494b963a5ffbfc5b283c5865a06fa3da096335` dir
 
 
 Planning return receipt: `b63db3133cbd7cee77d396b112d8413003afc9e3` directly parents the current receipt-only issuance head `6f9c282ac08a572b3d207c822270b1789c3a4262`; it contains exactly the four allowed planning paths and both required adjacent trailers. The initial `git commit --only` attempt exited 128 because the sandbox denied the planning worktree index lock; separate stdout/stderr are in `validation.json`. The same named-path commit succeeded after escalation, exit 0, with both channels captured. A subsequent scoped receipt commit records this commit identity and attempt pair.
+
+
+Receipt follow-up details: planning commit `6a6f304fb7b59998d3d1ff1a1211296995ca03c7` directly parents `b63db3133cbd7cee77d396b112d8413003afc9e3`, updates only the three changed paths among the four-path allowlist, and carries both required trailers. Its initial named-path attempt exited 128 on sandbox-denied index lock; the escalated exact retry exited 0. Both attempt receipts are captured in `validation.json`.

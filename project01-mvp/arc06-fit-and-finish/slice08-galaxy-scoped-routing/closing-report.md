@@ -93,3 +93,5 @@ All evidence remains CC proposed-done pending independent CDC review. No slice, 
 Source correction commit: `21494b963a5ffbfc5b283c5865a06fa3da096335`; direct parent `e1347bc24fafa5049f73854bede444cfa5fe2a8b`; seven original allowlisted paths; required adjacent trailers present exactly once. Initial commit attempt exit 128 due sandbox denial of worktree `index.lock` is captured, followed by successful exact scoped retry (exit 0).
 
 First planning return commit: `b63db3133cbd7cee77d396b112d8413003afc9e3`, parent `6f9c282ac08a572b3d207c822270b1789c3a4262`, exactly four permitted paths and both required trailers. Initial commit attempt failed exit 128 on sandbox-denied index lock; its channels and the successful exact retry are recorded in `artifacts/validation.json`. A later scoped planning receipt commit adds this identity to the durable record.
+
+Receipt follow-up commit: `6a6f304fb7b59998d3d1ff1a1211296995ca03c7`, parent `b63db3133cbd7cee77d396b112d8413003afc9e3`, three changed paths within the four-path allowlist, both required trailers. Its failed and successful exact commit attempts are preserved in `artifacts/validation.json`.
