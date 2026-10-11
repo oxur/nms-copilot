@@ -4673,6 +4673,85 @@
         },
         "elapsed_seconds": 0.5693140029907227
       }
+    ],
+    "reviewer_commit_receipts": [
+      {
+        "name": "stage-issued-prompt",
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.058064937591552734
+      },
+      {
+        "name": "reviewer-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-cdc-iteration03/commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIGFlM2NkZWZdIGRvY3M6IHJldmlldyBTbGljZTA4IGl0ZXJhdGlvbjAzIGFuZCBpc3N1ZSByZW1haW5pbmcgcHJvb2YgY29ycmVjdGlvbgogOCBmaWxlcyBjaGFuZ2VkLCA4NzUgaW5zZXJ0aW9ucygrKSwgMTEgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDQubWQK",
+          "bytes": 252,
+          "sha256": "c4c6d9ac7a71e02453f1471276ea55fbf9420bd4d5a2b330fb7306f50ee474ee"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.2021198272705078
+      },
+      {
+        "name": "postcommit-check",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-cdc-iteration03/postcheck.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJoZWFkIjogImFlM2NkZWY0NjdiZThmMDJmNDIxMTkwYzA0YjhjZWZiYjFiMjk3NTAiLCAicGFyZW50IjogIjFhOTMxMzI3ZTIwYzZjOWEzZGI4MTljMzQzNzRjNGRjNTA1MTBkMWMiLCAicGF0aHMiOiBbInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQiLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvY2RjLXJldmlldy1yZWNlaXB0cy5qc29uIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2MtcHJvbXB0LWl0ZXJhdGlvbjA0Lm1kIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2RjLXZlcmlmaWNhdGlvbi5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2xlZGdlci5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL3NsaWNlLXBsYW4ubWQiLCAicHJvamVjdDAxLW12cC9jbG9zdXJlLXByZXBhcmF0aW9uLm1kIiwgInByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kIl0sICJ0cmFpbGVyc19vbmNlX2FkamFjZW50IjogdHJ1ZSwgImFsbF9jb250cm9scyI6IFt7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90IiwgImhlYWQiOiAiNmQxODNiZGU3OWRkNzMyOGMzMmQ0NzM5ZGNhMjQ5ZjVmMWY5Y2Q2YyIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvZ2FsYXh5LXNjb3BlZC1yb3V0aW5nIiwgImhlYWQiOiAiZWRkNjY2NDJjMDUxYzA0YmM2Y2NkZjFiZDNiN2QyMGY3NGEwZjgxNiIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvcGxhbm5pbmciLCAiaGVhZCI6ICJhZTNjZGVmNDY3YmU4ZjAyZjQyMTE5MGMwNGI4Y2VmYmIxYjI5NzUwIiwgImNsZWFuIjogdHJ1ZX0sIHsicGF0aCI6ICIvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy9jYWNoZS1zZW1hbnRpYy1jb21wYXRpYmlsaXR5IiwgImhlYWQiOiAiZGVjZDhkNmMwOWMxMTk5YTZjZGQwMWZkNDhhYTUwZjNhZGVmMmIxYSIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvZ2FsYXh5LXF1YWxpZmllZC1pZGVudGl0eSIsICJoZWFkIjogImY1N2EzOGY3ZDFmMDBkMWEzZjVhYTUwMGVkNWY3Y2U3ZDhjMjZlYjgiLCAiY2xlYW4iOiB0cnVlfSwgeyJwYXRoIjogIi9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL2dhbGF4eS1zY29wZWQtcXVlcmllcyIsICJoZWFkIjogIjcxMThhNDg2ZWE0M2E3NzZhYTI0NTFlYzA4MDdkNDMzODRmYjk1NGYiLCAiY2xlYW4iOiB0cnVlfV0sICJvbGRfcmV2aWV3ZXJfdmFsdWVzX3ByZXNlcnZlZCI6IHRydWV9Cg==",
+          "bytes": 1639,
+          "sha256": "aa8830745859655406fbf51df5d45ac30411432d07298aa484eef98324b4e475"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.34178709983825684
+      }
     ]
   }
 }
