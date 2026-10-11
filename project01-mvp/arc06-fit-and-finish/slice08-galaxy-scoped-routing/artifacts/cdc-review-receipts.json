@@ -550,5 +550,77 @@
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
-  }
+  },
+  "review_commit": {
+    "commit": "09a460ff6591b6b487fa90b0381d24071e4d7770",
+    "parent": "721964e9bcd9d53001a4e3e42b3141a280922a3b",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md",
+      "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+      "project01-mvp/closure-preparation.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "message": "Record Slice08 independent findings and issue Iteration01\n\nPreserve the initial return, reproduce routing and evidence gaps, and\nkeep all nine acceptance rows open pending the scoped correction.\n\nCo-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>",
+    "clean_before_receipt_update": true
+  },
+  "review_git_attempts": [
+    {
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/nms-s08-cdc-review/commit-message.txt",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/project-plan.md",
+        "project01-mvp/closure-preparation.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "env": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "W3BsYW5uaW5nIDA5YTQ2MGZdIFJlY29yZCBTbGljZTA4IGluZGVwZW5kZW50IGZpbmRpbmdzIGFuZCBpc3N1ZSBJdGVyYXRpb24wMQogOCBmaWxlcyBjaGFuZ2VkLCA3MzYgaW5zZXJ0aW9ucygrKSwgMTIgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvY2RjLXJldmlldy1yZWNlaXB0cy5qc29uCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDEubWQKIGNyZWF0ZSBtb2RlIDEwMDY0NCBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2NkYy12ZXJpZmljYXRpb24ubWQK",
+        "bytes": 465,
+        "sha256": "ee9d9a523706bb467802fedaebb716b6d1d4406155acceadde335bbcc3eabe8a"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ]
 }
