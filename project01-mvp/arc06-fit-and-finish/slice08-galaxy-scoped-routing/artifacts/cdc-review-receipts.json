@@ -6106,6 +6106,124 @@
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "elapsed_seconds": 0.7852480411529541
-    }
+    },
+    "reviewer_commit": {
+      "sha": "9a9bf1147ee6cdf9caeb72a4d7b3a8484bf745fe",
+      "parent": "24eae38f974a037c1653e87a9a572de27892b2b3",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md",
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/project-plan.md",
+        "project01-mvp/closure-preparation.md"
+      ],
+      "new_assignment_issuance": "9a9bf1147ee6cdf9caeb72a4d7b3a8484bf745fe",
+      "trailers_once_adjacent": true
+    },
+    "reviewer_commit_receipts": [
+      {
+        "name": "stage-issued-prompt",
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.018793821334838867
+      },
+      {
+        "name": "reviewer-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-cdc-iteration04/commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDlhOWJmMTFdIFJldmlldyBTbGljZTA4IGl0ZXJhdGlvbjA0IGFuZCBpc3N1ZSBmaW5hbCBzY29wZWQgcmVmaW5lbWVudAogOCBmaWxlcyBjaGFuZ2VkLCAxNTU2IGluc2VydGlvbnMoKyksIDEyIGRlbGV0aW9ucygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2MtcHJvbXB0LWl0ZXJhdGlvbjA1Lm1kCg==",
+          "bytes": 244,
+          "sha256": "86f946a7dc9e52bdb295c27ea121092078e285d25c923142ff63d0c5a41ec1cf"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.18640589714050293
+      },
+      {
+        "name": "postcommit-check",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-cdc-iteration04/postcheck.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJoZWFkIjogIjlhOWJmMTE0N2VlNmNkZjljYWViNzJhNGQ3YjNhODQ4NGJmNzQ1ZmUiLCAicGFyZW50IjogIjI0ZWFlMzhmOTc0YTAzN2MxNjUzZTg3YTlhNTcyZGUyNzg5MmIyYjMiLCAicGF0aHMiOiBbInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQiLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvY2RjLXJldmlldy1yZWNlaXB0cy5qc29uIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2MtcHJvbXB0LWl0ZXJhdGlvbjA1Lm1kIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2RjLXZlcmlmaWNhdGlvbi5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2xlZGdlci5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL3NsaWNlLXBsYW4ubWQiLCAicHJvamVjdDAxLW12cC9jbG9zdXJlLXByZXBhcmF0aW9uLm1kIiwgInByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kIl0sICJ0cmFpbGVyc19vbmNlX2FkamFjZW50IjogdHJ1ZSwgImFsbF9jb250cm9scyI6IFt7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90IiwgImhlYWQiOiAiNmQxODNiZGU3OWRkNzMyOGMzMmQ0NzM5ZGNhMjQ5ZjVmMWY5Y2Q2YyIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvZ2FsYXh5LXNjb3BlZC1yb3V0aW5nIiwgImhlYWQiOiAiMDIyNjBiNzc4ZTZmNjk2N2ZhYzE0YWE0NDA3M2U5NDhiMzEyMWQ2NiIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvcGxhbm5pbmciLCAiaGVhZCI6ICI5YTliZjExNDdlZTZjZGY5Y2FlYjcyYTRkN2IzYTg0ODRiZjc0NWZlIiwgImNsZWFuIjogdHJ1ZX0sIHsicGF0aCI6ICIvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy9jYWNoZS1zZW1hbnRpYy1jb21wYXRpYmlsaXR5IiwgImhlYWQiOiAiZGVjZDhkNmMwOWMxMTk5YTZjZGQwMWZkNDhhYTUwZjNhZGVmMmIxYSIsICJjbGVhbiI6IHRydWV9LCB7InBhdGgiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvZ2FsYXh5LXF1YWxpZmllZC1pZGVudGl0eSIsICJoZWFkIjogImY1N2EzOGY3ZDFmMDBkMWEzZjVhYTUwMGVkNWY3Y2U3ZDhjMjZlYjgiLCAiY2xlYW4iOiB0cnVlfSwgeyJwYXRoIjogIi9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL2dhbGF4eS1zY29wZWQtcXVlcmllcyIsICJoZWFkIjogIjcxMThhNDg2ZWE0M2E3NzZhYTI0NTFlYzA4MDdkNDMzODRmYjk1NGYiLCAiY2xlYW4iOiB0cnVlfV0sICJvbGRfcmV2aWV3ZXJfdmFsdWVzX3ByZXNlcnZlZCI6IHRydWV9Cg==",
+          "bytes": 1639,
+          "sha256": "dd41051692581d0510e326c0d010a05f02aaeac8d0d2c0db88d665c02cf1de4b"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.3327522277832031
+      },
+      {
+        "name": "precommit-final-check",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-cdc-iteration04/precheck.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJvd25lZF9wYXRocyI6IFsicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9sZWRnZXIubWQiLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9zbGljZS1wbGFuLm1kIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2RjLXZlcmlmaWNhdGlvbi5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2FydGlmYWN0cy9jZGMtcmV2aWV3LXJlY2VpcHRzLmpzb24iLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDUubWQiLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCIsICJwcm9qZWN0MDEtbXZwL3Byb2plY3QtcGxhbi5tZCIsICJwcm9qZWN0MDEtbXZwL2Nsb3N1cmUtcHJlcGFyYXRpb24ubWQiXSwgInJvd3MiOiA5LCAiZG9uZSI6IFsiU1ItMDMiLCAiU1ItMDQiLCAiU1ItMDUiLCAiU1ItMDciLCAiU1ItMDgiXSwgIm9wZW4iOiA0LCAibmV3X3Jldmlld2VyX2NoYW5uZWxfb2JqZWN0c19jaGVja2VkIjogMzIsICJvbGRfY2RjX3ZhbHVlc19hbmRfY2NfcmVjb3Jkc19yZXRhaW5lZCI6IHRydWUsICJzb3VyY2VfY2xlYW5faGVsZCI6IHRydWUsICJkaWZmX2NoZWNrIjogMCwgIm5ld19wcm9tcHRfc2hhMjU2IjogIjVlMDA3N2M1MTVjYmQwZjJhZTA5OTNiZTY2OTY0M2Y3NzYxMzZmOGQxOGJkY2NlMGEzMzNjNTNjZjIwNmM4ZTkifQo=",
+          "bytes": 887,
+          "sha256": "7a3f3c7de3d2ccc3402c6a0cbc5f427a09d68e583b096a8005e1464614fba402"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.48302483558654785
+      }
+    ],
+    "reviewer_precheck_script": "import json,subprocess,hashlib,base64\nfrom pathlib import Path\nP=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning');O=Path('/private/tmp/nms-s08-cdc-iteration04');D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');S=P.parent/'galaxy-scoped-routing'\ndef git(root,*args):return subprocess.check_output(['git',*args],cwd=root)\nowned=json.loads((O/'ownedpaths.json').read_text());changed=git(P,'diff','--name-only').decode().splitlines();untracked=git(P,'ls-files','--others','--exclude-standard').decode().splitlines();assert set(changed+untracked)==set(owned)\nassert git(P,'rev-parse','HEAD').decode().strip()=='24eae38f974a037c1653e87a9a572de27892b2b3'\nassert not git(S,'status','--porcelain');assert git(S,'rev-parse','HEAD').decode().strip()=='02260b778e6f6967fac14aa44073e948b3121d66'\nv=json.loads((P/D/'artifacts/cdc-review-receipts.json').read_text());old=json.loads(git(P,'show','HEAD:'+str(D/'artifacts/cdc-review-receipts.json')));assert all(v[k]==z for k,z in old.items())\nrows=lambda b:[l.split('|')[1:-1] for l in b.decode().splitlines() if l.startswith('| SR-')];r=rows((P/D/'ledger.md').read_bytes());before=rows(git(P,'show','HEAD:'+str(D/'ledger.md')))\nassert len(r)==9 and all(len(z)==8 for z in r);assert r[3]==before[3] and r[7]==before[7];assert all(x[:5]==y[:5] for x,y in zip(r,before));assert [x[5].strip() for x in r]==['open','open','done','done','done','open','done','done','open']\nfor f in ['artifacts/execution.md','artifacts/validation.json','closing-report.md','cc-prompt.md','cc-prompt-iteration01.md','cc-prompt-iteration02.md','cc-prompt-iteration03.md','cc-prompt-iteration04.md','artifacts/author-baseline.json','artifacts/author-probe.rs']:\n assert (P/D/f).read_bytes()==git(P,'show','HEAD:'+str(D/f)),f\nassert (P/D/'cdc-verification.md').read_bytes().startswith(git(P,'show','HEAD:'+str(D/'cdc-verification.md')))\nassert 'Version:1.5.' in (P/D/'slice-plan.md').read_text();assert 'Version: 1.27,' in (P/'project01-mvp/arc06-fit-and-finish/arc-plan.md').read_text();assert '\\nversion: 1.18\\n' in (P/'project01-mvp/project-plan.md').read_text()\ncount=0\ndef channels(x):\n global count\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'} <= x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];count+=1\n  for z in x.values():channels(z)\n elif isinstance(x,list):\n  for z in x:channels(z)\nchannels(v['iteration04'])\nassert all(x['exit_code']==0 for x in v['iteration04']['gates']);assert all(x['exit_code']==0 for x in v['iteration04']['supplemental_public_probe']['receipts'])\nassert v['iteration04']['audit']['gate_pointer_mismatches']==14\nsubprocess.run(['git','diff','--check'],cwd=P,check=True)\nprint(json.dumps({'owned_paths':owned,'rows':9,'done':['SR-03','SR-04','SR-05','SR-07','SR-08'],'open':4,'new_reviewer_channel_objects_checked':count,'old_cdc_values_and_cc_records_retained':True,'source_clean_held':True,'diff_check':0,'new_prompt_sha256':hashlib.sha256((P/D/'cc-prompt-iteration05.md').read_bytes()).hexdigest()}))\n",
+    "reviewer_postcheck_script": "import json,subprocess,hashlib\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-cdc-iteration04');P=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning');D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing')\ndef git(root,*args):return subprocess.check_output(['git',*args],cwd=root)\nhead=git(P,'rev-parse','HEAD').decode().strip();assert git(P,'rev-parse','HEAD^').decode().strip()=='24eae38f974a037c1653e87a9a572de27892b2b3'\npaths=git(P,'diff-tree','--no-commit-id','--name-only','-r',head).decode().splitlines();assert set(paths)==set(json.loads((O/'ownedpaths.json').read_text()));body=git(P,'show','-s','--format=%B',head).decode().strip();trailers=['Co-authored-by: Codex <noreply@openai.com>','Co-authored-by: Billo AI <ai-engineering@billo.systems>'];assert body.endswith('\\n'.join(trailers)) and all(body.count(x)==1 for x in trailers)\na=json.loads((O/'audit.json').read_text());controls=[]\nfor root,expected in a['pins'].items():\n root=Path(root); actual=git(root,'rev-parse','HEAD').decode().strip();assert not git(root,'status','--porcelain');assert actual==(head if root==P else expected['head']);controls.append({'path':str(root),'head':actual,'clean':True})\nold=json.loads(git(P,'show','24eae38f:'+str(D/'artifacts/cdc-review-receipts.json')));v=json.loads((P/D/'artifacts/cdc-review-receipts.json').read_text());assert all(v[k]==z for k,z in old.items())\nsubprocess.run(['git','diff','--check'],cwd=P,check=True);print(json.dumps({'head':head,'parent':'24eae38f974a037c1653e87a9a572de27892b2b3','paths':paths,'trailers_once_adjacent':True,'all_controls':controls,'old_reviewer_values_preserved':True}))\n"
   }
 }
