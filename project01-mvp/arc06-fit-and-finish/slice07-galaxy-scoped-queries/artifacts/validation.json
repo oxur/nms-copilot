@@ -2468,7 +2468,100 @@
       "required_trailers": [
         "Co-authored-by: Codex <noreply@openai.com>",
         "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
-      ]
+      ],
+      "four_path_commit": "762ad959caddfbfa7c484664c856a0e305de47e5",
+      "four_path_commit_parent": "a609b21f4d0187cacda4f732394ae89175862715",
+      "four_path_commit_pathset": [
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+      ],
+      "four_path_commit_trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ],
+      "four_path_commit_clean_after": true,
+      "four_path_commit_capture": {
+        "purpose": "successful four-path planning commit; prior non-escalated denial also retained",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/s07-i02-planning-commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDc2MmFkOTVdIGRvY3M6IGlkZW50aWZ5IFNsaWNlMDcgYXNzaWdubWVudCBwYXRocyBpbiBjYW5vbmljYWwgcmV0dXJuCiA0IGZpbGVzIGNoYW5nZWQsIDQ3NCBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQo=",
+          "bytes": 131,
+          "sha256": "229b602e26b3a7f50852af09fef176a12791be014b5538b7f5a90762e7cf4064"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-planning-commit-escalated.json"
+      },
+      "denied_commit_capture": {
+        "purpose": "sandbox denied linked-worktree index.lock; escalated retry succeeded",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/s07-i02-planning-commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 128,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "ZmF0YWw6IFVuYWJsZSB0byBjcmVhdGUgJy9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8uZ2l0L3dvcmt0cmVlcy9wbGFubmluZy9pbmRleC5sb2NrJzogT3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQK",
+          "bytes": 123,
+          "sha256": "654834ce1ee8f1ee2e588489be58e5e72aa36cd091eaa136b282bafe836d0f5d"
+        },
+        "capture_file": "/private/tmp/s07-i02-planning-commit.json"
+      },
+      "postcommit_audit": {
+        "purpose": "post-commit parent/pathset/trailer/pins/clean-state audit passed",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-postcommit-audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UEFTUzogZm91ci1wYXRoIGNvbW1pdCA3NjJhZDk1OWNhZGRmYmZhN2M0ODQ2NjRjODU2YTBlMzA1ZGU0N2U1LCBwYXJlbnQgYTYwOWIyMWY0ZDAxODdjYWNkYTRmNzMyMzk0YWU4OTE3NTg2MjcxNSwgZXhhY3QgcGF0aHNldCwgYWRqYWNlbnQgcmVxdWlyZWQgdHJhaWxlcnMgb25jZSwgY2xlYW4gcGxhbm5pbmcgd29ya3RyZWU7IHJldGFpbmVkIHZhbGlkYXRpb24gb2JqZWN0cywgc2l4IGFydGlmYWN0cywgZml4dHVyZSBpZGVudGl0eSBhbmQgc291cmNlL21haW4vZm91bmRhdGlvbi9jYWNoZSBwaW5zIGludGFjdC4K",
+          "bytes": 294,
+          "sha256": "e6a57dd8ec1b00eceac4a6aec6229a0d0391e7857f0bccb2f389778db07c3e9d"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-postcommit-audit.json"
+      },
+      "receipt_followup_commit": "pending validation-only commit"
     },
     "write_attempts": [
       {
@@ -2765,6 +2858,28 @@
         },
         "capture_file": "/private/tmp/s07-i02-record-attempts.json",
         "script_source_sha256": "036634cd46ea96066d78aceb9f27081be59d5127a7b07d64c63952ddca8ef6a8"
+      },
+      {
+        "purpose": "record the four-path commit identity and commit/audit channel captures",
+        "argv": [
+          "python3",
+          "/private/tmp/s07-i02-receipt-update.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJmb3VyX3BhdGhfY29tbWl0IjogIjc2MmFkOTU5Y2FkZGZiZmE3YzQ4NDY2NGM4NTZhMGUzMDVkZTQ3ZTUiLCAicGFyZW50IjogImE2MDliMjFmNGQwMTg3Y2FjZGE0ZjczMjM5NGFlODkxNzU4NjI3MTUiLCAicGF0aHMiOiA0LCAicG9zdGNvbW1pdF9hdWRpdF9leGl0IjogMCwgInRyYWlsZXJzIjogWyJDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT4iLCAiQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPiJdfQo=",
+          "bytes": 278,
+          "sha256": "71c836d96456e6eb2e0199cf6382fb45ae35115ce5d88e34295f9d4f6363b932"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "capture_file": "/private/tmp/s07-i02-receipt-update.json",
+        "script_source_sha256": "16995cadc4df8c798c66c736379cc58cc3eb7d1146f297639782628d9af51e88"
       }
     ]
   }
