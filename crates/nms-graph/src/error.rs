@@ -11,4 +11,9 @@ pub enum GraphError {
 
     #[error("no player position available")]
     NoPlayerPosition,
+
+    #[error(
+        "reference galaxy {reference} differs from active galaxy {active}; use an explicit address or base"
+    )]
+    ReferenceGalaxyMismatch { reference: u8, active: u8 },
 }
