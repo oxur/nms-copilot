@@ -143,6 +143,90 @@ fn find_infested_flag_filters_the_real_cli_process_result() {
 }
 
 #[test]
+fn find_formatter_keeps_named_planets_paired_with_their_systems() {
+    let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+    let cedar_address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+    let maple_address = GalacticAddress::new(1, 0, 0, 1, 0, 0);
+    let mut model = GalaxyModel::new();
+    model.player_state = Some(PlayerState::new(origin, 0, None, None, 0, 0, 0));
+    model.insert_system(System::new(
+        cedar_address,
+        Some("Cedar".into()),
+        Some("Explorer".into()),
+        None,
+        vec![nms_core::system::Planet::new(
+            1,
+            Some(Biome::Lush),
+            None,
+            false,
+            Some("Bud-A".into()),
+            None,
+        )],
+    ));
+    model.insert_system(System::new(
+        maple_address,
+        Some("Maple".into()),
+        Some("Explorer".into()),
+        None,
+        vec![nms_core::system::Planet::new(
+            1,
+            Some(Biome::Lush),
+            None,
+            false,
+            Some("Bud-B".into()),
+            None,
+        )],
+    ));
+
+    let results = execute_find(&model, &FindQuery::default()).unwrap();
+    assert_eq!(results.len(), 2);
+    let actual: Vec<_> = results
+        .iter()
+        .map(|result| {
+            (
+                SystemId::from_address(&result.system.address),
+                result.planet.name.as_deref().unwrap(),
+                result.system.name.as_deref().unwrap(),
+                result.distance_ly,
+            )
+        })
+        .collect();
+    assert_eq!(
+        actual,
+        vec![
+            (
+                SystemId::from_address(&cedar_address),
+                "Bud-A",
+                "Cedar",
+                0.0,
+            ),
+            (
+                SystemId::from_address(&maple_address),
+                "Bud-B",
+                "Maple",
+                400.0,
+            ),
+        ]
+    );
+
+    let output = format_find_results(&results, &Theme::none());
+    let bud_a_lines: Vec<_> = output
+        .lines()
+        .filter(|line| line.contains("Bud-A"))
+        .collect();
+    let bud_b_lines: Vec<_> = output
+        .lines()
+        .filter(|line| line.contains("Bud-B"))
+        .collect();
+    assert_eq!(bud_a_lines.len(), 1);
+    assert!(bud_a_lines[0].contains("Cedar"));
+    assert!(!bud_a_lines[0].contains("Maple"));
+    assert_eq!(bud_b_lines.len(), 1);
+    assert!(bud_b_lines[0].contains("Maple"));
+    assert!(!bud_b_lines[0].contains("Cedar"));
+}
+
+#[test]
 fn show_formatter_omits_distance_when_player_and_system_galaxies_differ() {
     let player = GalacticAddress::new(0, 0, 0, 1, 0, 0);
     let remote = GalacticAddress::new(0, 0, 0, 1, 0, 9);

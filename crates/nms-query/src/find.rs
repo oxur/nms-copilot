@@ -522,7 +522,13 @@ mod tests {
             Some(origin),
         );
 
-        for (filter, expected) in [
+        let spatial_modes = [
+            (None, None),
+            (Some(10_000.0), None),
+            (None, Some(10)),
+            (Some(10_000.0), Some(10)),
+        ];
+        let predicate_cases = [
             (
                 BiomeFilter {
                     biome: Some(Biome::Lush),
@@ -560,71 +566,52 @@ mod tests {
                 },
                 vec!["Cool"],
             ),
-        ] {
-            let query = FindQuery {
-                biome: filter.biome,
-                biome_subtype: filter.biome_subtype,
-                infested: filter.infested,
-                named_only: filter.named_only,
+            (
+                BiomeFilter {
+                    biome: Some(Biome::Lava),
+                    ..Default::default()
+                },
+                vec![],
+            ),
+        ];
+
+        let mut population_assertions = 0;
+        for (filter, expected) in predicate_cases {
+            for (within_ly, nearest) in spatial_modes {
+                let query = FindQuery {
+                    biome: filter.biome,
+                    biome_subtype: filter.biome_subtype,
+                    infested: filter.infested,
+                    named_only: filter.named_only,
+                    from: ReferencePoint::Address(origin),
+                    within_ly,
+                    nearest,
+                    ..Default::default()
+                };
+                assert_eq!(
+                    result_planet_names(&execute_find(&model, &query).unwrap()),
+                    expected
+                );
+                population_assertions += 1;
+            }
+        }
+        assert_eq!(population_assertions, 24);
+
+        for (within_ly, nearest) in spatial_modes {
+            let system_name_does_not_satisfy_named_only = FindQuery {
                 from: ReferencePoint::Address(origin),
+                name_pattern: Some("System 1".into()),
+                named_only: true,
+                within_ly,
+                nearest,
                 ..Default::default()
             };
-            assert_eq!(
-                result_planet_names(&execute_find(&model, &query).unwrap()),
-                expected
+            assert!(
+                execute_find(&model, &system_name_does_not_satisfy_named_only)
+                    .unwrap()
+                    .is_empty()
             );
         }
-
-        let system_name_does_not_satisfy_named_only = FindQuery {
-            from: ReferencePoint::Address(origin),
-            name_pattern: Some("System 1".into()),
-            named_only: true,
-            ..Default::default()
-        };
-        assert!(
-            execute_find(&model, &system_name_does_not_satisfy_named_only)
-                .unwrap()
-                .is_empty()
-        );
-
-        let combined = FindQuery {
-            from: ReferencePoint::Address(origin),
-            biome: Some(Biome::Lush),
-            biome_subtype: Some(BiomeSubType::LushHumid),
-            infested: Some(false),
-            named_only: true,
-            ..Default::default()
-        };
-        let expected = vec!["Cool".to_string()];
-        for (radius, nearest) in [
-            (None, None),
-            (Some(10_000.0), None),
-            (None, Some(10)),
-            (Some(10_000.0), Some(10)),
-        ] {
-            let results = execute_find(
-                &model,
-                &FindQuery {
-                    within_ly: radius,
-                    nearest,
-                    ..combined.clone()
-                },
-            )
-            .unwrap();
-            assert_eq!(result_planet_names(&results), expected);
-        }
-        assert!(
-            execute_find(
-                &model,
-                &FindQuery {
-                    biome: Some(Biome::Lava),
-                    from: ReferencePoint::Address(origin),
-                    ..Default::default()
-                }
-            )
-            .unwrap()
-            .is_empty()
-        );
     }
 
     #[test]
