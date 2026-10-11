@@ -216,12 +216,12 @@ fn predecessor_fixture_rebuild_matches_independent_fresh_and_current_round_trip(
     assert_eq!(&PREDECESSOR_ARCHIVE[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
 
     let expected = predecessor_fresh_model();
-    let fixture =
-        nms_cache::rebuild_model(&nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap());
+    let fixture_data = nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap();
+    let fixture = nms_cache::rebuild_model(&fixture_data);
     let current_bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&expected, 4720)).unwrap();
-    let current =
-        nms_cache::rebuild_model(&nms_cache::serialize::deserialize(&current_bytes).unwrap());
+    let current_data = nms_cache::serialize::deserialize(&current_bytes).unwrap();
+    let current = nms_cache::rebuild_model(&current_data);
 
     for model in [&expected, &fixture, &current] {
         assert_eq!(model.system_count(), 2);
@@ -287,12 +287,20 @@ struct TypedPredecessorProjection {
     player_state: Option<PlayerState>,
     explicit_zero: Vec<(SystemId, f64)>,
     explicit_nine: Vec<(SystemId, f64)>,
+    explicit_zero_radius: Vec<(SystemId, f64)>,
+    explicit_nine_radius: Vec<(SystemId, f64)>,
     active_nine: Vec<(SystemId, f64)>,
     active_zero: Vec<(SystemId, f64)>,
+    active_nine_radius: Vec<(SystemId, f64)>,
+    active_zero_radius: Vec<(SystemId, f64)>,
     explicit_zero_planets: Vec<((SystemId, u8), f64)>,
     explicit_nine_planets: Vec<((SystemId, u8), f64)>,
+    explicit_zero_planets_radius: Vec<((SystemId, u8), f64)>,
+    explicit_nine_planets_radius: Vec<((SystemId, u8), f64)>,
     active_nine_planets: Vec<((SystemId, u8), f64)>,
     active_zero_planets: Vec<((SystemId, u8), f64)>,
+    active_nine_planets_radius: Vec<((SystemId, u8), f64)>,
+    active_zero_planets_radius: Vec<((SystemId, u8), f64)>,
     errors: Vec<TypedRouteError>,
     reachable_nine: std::collections::HashSet<SystemId>,
 }
@@ -335,6 +343,7 @@ fn typed_predecessor_projection(model: &GalaxyModel) -> TypedPredecessorProjecti
     let zero_id = id(zero);
     let nine_id = id(nine);
     let filter = BiomeFilter::default();
+    let state_before = (model.player_state.clone(), model.active_galaxy);
     let current = RouteQuery {
         targets: TargetSelection::SystemIds(vec![]),
         from: RouteFrom::CurrentPosition,
@@ -373,26 +382,43 @@ fn typed_predecessor_projection(model: &GalaxyModel) -> TypedPredecessorProjecti
             .map(|(key, _, distance)| (key, distance))
             .collect()
     };
-    TypedPredecessorProjection {
+    let projection = TypedPredecessorProjection {
         systems: model.system_count(),
         planets: model.planet_count(),
         active_galaxy: model.active_galaxy,
         player_state: model.player_state.clone(),
         explicit_zero: model.nearest_systems_from_address(&zero, usize::MAX),
         explicit_nine: model.nearest_systems_from_address(&nine, usize::MAX),
+        explicit_zero_radius: model.systems_within_radius_from_address(&zero, 0.0),
+        explicit_nine_radius: model.systems_within_radius_from_address(&nine, 0.0),
         active_nine: model.nearest_systems(&nine, usize::MAX),
         active_zero: model.nearest_systems(&zero, usize::MAX),
+        active_nine_radius: model.systems_within_radius(&nine, 0.0),
+        active_zero_radius: model.systems_within_radius(&zero, 0.0),
         explicit_zero_planets: keys(model.nearest_planets_from_address(&zero, usize::MAX, &filter)),
         explicit_nine_planets: keys(model.nearest_planets_from_address(&nine, usize::MAX, &filter)),
+        explicit_zero_planets_radius: keys(
+            model.planets_within_radius_from_address(&zero, 0.0, &filter),
+        ),
+        explicit_nine_planets_radius: keys(
+            model.planets_within_radius_from_address(&nine, 0.0, &filter),
+        ),
         active_nine_planets: keys(model.nearest_planets(&nine, usize::MAX, &filter)),
         active_zero_planets: keys(model.nearest_planets(&zero, usize::MAX, &filter)),
+        active_nine_planets_radius: keys(model.planets_within_radius(&nine, 0.0, &filter)),
+        active_zero_planets_radius: keys(model.planets_within_radius(&zero, 0.0, &filter)),
         errors: vec![mismatch, foreign, same_start],
         reachable_nine: model
             .reachable_systems(nine_id, 400.0)
             .unwrap()
             .into_iter()
             .collect(),
-    }
+    };
+    assert_eq!(
+        (model.player_state.clone(), model.active_galaxy),
+        state_before
+    );
+    projection
 }
 
 #[derive(Debug, PartialEq)]
@@ -443,11 +469,12 @@ fn typed_rich_projection(
 #[test]
 fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectations() {
     let fresh = predecessor_fresh_model();
-    let fixture =
-        nms_cache::rebuild_model(&nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap());
+    let fixture_data = nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap();
+    let fixture = nms_cache::rebuild_model(&fixture_data);
     let bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
-    let current = nms_cache::rebuild_model(&nms_cache::serialize::deserialize(&bytes).unwrap());
+    let current_data = nms_cache::serialize::deserialize(&bytes).unwrap();
+    let current = nms_cache::rebuild_model(&current_data);
     let zero = GalacticAddress::new(0, 0, 0, 1, 0, 0);
     let nine = GalacticAddress::new(0, 0, 0, 1, 0, 9);
     let zero_id = id(zero);
@@ -459,12 +486,20 @@ fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectati
         player_state: Some(PlayerState::new(zero, 0, None, None, 7, 8, 9)),
         explicit_zero: vec![(zero_id, 0.0)],
         explicit_nine: vec![(nine_id, 0.0)],
+        explicit_zero_radius: vec![(zero_id, 0.0)],
+        explicit_nine_radius: vec![(nine_id, 0.0)],
         active_nine: vec![(nine_id, 0.0)],
         active_zero: vec![],
+        active_nine_radius: vec![(nine_id, 0.0)],
+        active_zero_radius: vec![],
         explicit_zero_planets: vec![((zero_id, 1), 0.0)],
         explicit_nine_planets: vec![((nine_id, 1), 0.0)],
+        explicit_zero_planets_radius: vec![((zero_id, 1), 0.0)],
+        explicit_nine_planets_radius: vec![((nine_id, 1), 0.0)],
         active_nine_planets: vec![((nine_id, 1), 0.0)],
         active_zero_planets: vec![],
+        active_nine_planets_radius: vec![((nine_id, 1), 0.0)],
+        active_zero_planets_radius: vec![],
         errors: vec![
             TypedRouteError::ReferenceMismatch {
                 reference: 0,
@@ -478,12 +513,54 @@ fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectati
         ],
         reachable_nine: [nine_id].into_iter().collect(),
     };
-    for model in [&fresh, &fixture, &current] {
+    for data in [&fixture_data, &current_data] {
+        assert_eq!(data.save_version, 4720);
+        assert_eq!(data.bases.len(), 0);
+        assert_eq!(data.active_galaxy, 9);
+        let player = data.player_state.as_ref().unwrap();
+        assert_eq!(player.current_address, zero);
+        assert_eq!(player.current_reality, 0);
         assert_eq!(
-            nms_cache::extract_cache_data(model, 4720).save_version,
-            4720
+            (player.units, player.nanites, player.quicksilver),
+            (7, 8, 9)
         );
+        assert_eq!(data.systems.len(), 2);
+        for (address, planet_name, infested) in [(zero, "Zero", false), (nine, "Nine", true)] {
+            let system = data
+                .systems
+                .iter()
+                .find(|system| system.address == address)
+                .unwrap();
+            assert_eq!(system.name.as_deref(), Some("Shared"));
+            assert_eq!(system.discoverer.as_deref(), Some("Explorer"));
+            assert_eq!(system.planets.len(), 1);
+            assert_eq!(
+                (
+                    system.planets[0].index,
+                    system.planets[0].biome,
+                    system.planets[0].infested,
+                    system.planets[0].name.as_deref()
+                ),
+                (1, Some(Biome::Lush), infested, Some(planet_name))
+            );
+        }
+    }
+    for model in [&fresh, &fixture, &current] {
         assert_eq!(typed_predecessor_projection(model), expected);
+        for (address, key, planet_name, infested) in [
+            (zero, (zero_id, 1), "Zero", false),
+            (nine, (nine_id, 1), "Nine", true),
+        ] {
+            let system = &model.systems[&key.0];
+            assert_eq!(system.address, address);
+            assert_eq!(system.name.as_deref(), Some("Shared"));
+            assert_eq!(system.discoverer.as_deref(), Some("Explorer"));
+            let planet = &model.planets[&key];
+            assert_eq!(planet.index, 1);
+            assert_eq!(planet.biome, Some(Biome::Lush));
+            assert_eq!(planet.infested, infested);
+            assert_eq!(planet.name.as_deref(), Some(planet_name));
+        }
         for (address, expected_key) in [(zero, (zero_id, 1)), (nine, (nine_id, 1))] {
             let planets =
                 model.nearest_planets_from_address(&address, usize::MAX, &BiomeFilter::default());
