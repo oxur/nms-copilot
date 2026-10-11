@@ -9825,6 +9825,28 @@
           "bytes": 0,
           "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         }
+      },
+      {
+        "name": "s08-i04-post-return-audit-planning-diffcheck-retry1",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "duration_seconds": 0.128,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
       }
     ],
     "gates": [
@@ -10246,12 +10268,19 @@
         "name": "s08-i04-final-planning-diffcheck",
         "status": "passed",
         "receipt": "iteration04.attempts[-2]"
+      },
+      {
+        "gate": 9,
+        "name": "s08-i04-post-return-audit-planning-diffcheck-retry1",
+        "status": "passed",
+        "receipt": "iteration04.attempts[14]"
       }
     ],
     "limitations": [
       "A gate-1 receipt updater first used a repository-root-relative planning path and exited 1 before writing; the immediately corrected updater persisted the complete format receipt before gate 2. The intermediate command continued to capture post-format status, which shows exactly the four permitted source files changed.",
       "One Iteration03 diagnostic-inspection script was not created: the outer Python command had an unterminated triple-quoted string and exited before writing its spec; the subsequent capture wrapper reported the absent spec. No child inspection or repository write ran. A simpler bounded inspector will be captured before any historical classification.",
-      "An anti-pattern receipt updater first used a repository-root-relative planning path while running from the planning worktree and exited 1 before writing; the captured Rust-guidance reads were then persisted by a corrected updater. The 2188-line anti-pattern guide was not read in full; its index and task-relevant test/oracle sections are being loaded in bounded chunks."
+      "An anti-pattern receipt updater first used a repository-root-relative planning path while running from the planning worktree and exited 1 before writing; the captured Rust-guidance reads were then persisted by a corrected updater. The 2188-line anti-pattern guide was not read in full; its index and task-relevant test/oracle sections are being loaded in bounded chunks.",
+      "A post-return receipt updater ran git diff --check successfully, then exited at an assertion because it incorrectly expected all four planning paths to remain dirty after their successful commit. It wrote no validation update. The corrected audit recognized that only validation.json is dirty for the authorized receipt-only followup; it reran and captured the planning diff check successfully."
     ],
     "status": "proposed_done_pending_cdc",
     "test_counts": {
@@ -10721,7 +10750,36 @@
         "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
         "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
       ],
-      "final_diffchecks": "both source and planning passed after closeout edits"
+      "final_diffchecks": "source and planning git diff --check both passed after closeout; final planning retry receipt is recorded.",
+      "planning_commit": {
+        "commit": "cd41b842da9d814f6ab5d5c39b5fbbdccd72d8b7",
+        "parent": "d8502c448fe27c039f025329a8af19066392f7de",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ],
+        "trailers": [
+          "Co-authored-by: Codex <noreply@openai.com>",
+          "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+        ],
+        "message": "docs: return Slice08 Iteration04 evidence"
+      },
+      "planning_commit_attempts": [
+        {
+          "attempt": "default sandbox commit",
+          "exit_code": 128,
+          "visible_result": "git reported fatal: Unable to create .git/worktrees/planning/index.lock: Operation not permitted; no commit was created by this attempt. The enclosing command output also included the preceding diff stat, so stdout/stderr were not preserved as separate raw child channels."
+        },
+        {
+          "attempt": "same four-path scoped retry with authorized elevated filesystem access",
+          "result": "created the recorded planning commit; the tool returned commit identity and file summary, but did not provide separate raw stdout/stderr channels."
+        }
+      ],
+      "planning_commit_followup": {
+        "planned": "receipt-only update to artifacts/validation.json will record final diffcheck and final scoped commit identity; source/planning worktrees remain separate."
+      }
     }
   }
 }
