@@ -2052,7 +2052,9 @@
       "neighborhood.rs": "use nms_core::{address::GalacticAddress,system::System};\nuse nms_graph::{GalaxyModel,SystemId};\nuse std::collections::HashSet;\nfn capped(m:&GalaxyModel,s:SystemId,r:f64)->usize{\n let mut seen=HashSet::from([s]);let mut todo=vec![s];\n while let Some(current)=todo.pop(){let a=m.system(&current).unwrap().address;\n  for (id,d) in m.nearest_systems_from_address(&a,100){if d<=r && seen.insert(id){todo.push(id);}}\n } seen.len()\n}\nfn main(){\n for dense in [false,true]{\n let mut m=GalaxyModel::new();let mut all=HashSet::new();\n for n in 0..120u16 {let a=if dense{GalacticAddress::new(0,0,0,n+1,0,9)}else{GalacticAddress::new(n as i16,0,0,1000+n,0,9)};all.insert(SystemId::from_address(&a));m.insert_system(System::new(a,None,None,None,vec![]));}\n let a=if dense{GalacticAddress::new(0,0,0,1,0,9)}else{GalacticAddress::new(0,0,0,1000,0,9)};let s=SystemId::from_address(&a);let r=if dense{1000.0}else{47600.0};\n let got=m.reachable_systems(s,r).unwrap().into_iter().collect::<HashSet<_>>();assert_eq!(got,all);\n println!(\"dense={dense} actual={} nearest100_negative_control={}\",got.len(),capped(&m,s,r));\n }\n let mut m=GalaxyModel::new();let left=GalacticAddress::new(-1,0,0,2,0,0);let right=GalacticAddress::new(1,0,0,9,0,0);\n for (a,name) in [(left,\"Zulu\"),(right,\"Alpha\")]{m.insert_system(System::new(a,Some(name.into()),None,None,vec![]));}\n let got=m.nearest_systems_from_address(&GalacticAddress::new(0,0,0,1,0,0),usize::MAX);assert_eq!(got,vec![(SystemId::from_address(&left),400.0),(SystemId::from_address(&right),400.0)]);println!(\"literal_numeric_tie={got:?}\");\n}\n",
       "audit.py": "import subprocess,hashlib,json,base64,re\nfrom pathlib import Path\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot'); P=R/'.worktrees/planning'; C=R/'.worktrees/galaxy-scoped-routing'; S=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing'); O=Path('/private/tmp/nms-s08-cdc-iteration01')\nrecords=[]\ndef g(cwd,*args):\n p=subprocess.run(['git',*args],cwd=cwd,capture_output=True)\n def ch(b):return dict(base64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())\n records.append(dict(argv=['git',*args],cwd=str(cwd),env={},exit_code=p.returncode,stdout=ch(p.stdout),stderr=ch(p.stderr)))\n (O/'audit-commands.json').write_text(json.dumps(records,indent=2)+'\\n');assert p.returncode==0\n return p.stdout\nsrc='21494b963a5ffbfc5b283c5865a06fa3da096335'; par='e1347bc24fafa5049f73854bede444cfa5fe2a8b'; issue='6f9c282ac08a572b3d207c822270b1789c3a4262'; head='fc89561767d45fffb91434729673b2205025de48'\nsp=['crates/nms-graph/src/'+p+'.rs' for p in ['query','route','error','edges']]+['crates/nms-query/src/route.rs','crates/nms-cli/tests/route_integration.rs','crates/nms-copilot/tests/route_cache_integration.rs']\npp=[str(S/p) for p in ['artifacts/execution.md','artifacts/validation.json','closing-report.md','ledger.md']]\nassert g(C,'rev-parse','HEAD').decode().strip()==src and g(C,'rev-parse','HEAD^').decode().strip()==par\nassert sorted(g(C,'diff-tree','--no-commit-id','--name-only','-r',src).decode().splitlines())==sorted(sp)\nassert sorted(g(P,'diff','--name-only',issue,head).decode().splitlines())==sorted(pp)\ncommits=['b63db3133cbd7cee77d396b112d8413003afc9e3','6a6f304fb7b59998d3d1ff1a1211296995ca03c7',head]; prev=issue; receipts=[]\nfor sha in commits:\n assert g(P,'rev-parse',sha+'^').decode().strip()==prev\n paths=g(P,'diff-tree','--no-commit-id','--name-only','-r',sha).decode().splitlines();assert set(paths)<=set(pp);receipts.append(dict(commit=sha,parent=prev,paths=paths));prev=sha\nfor cwd,sha in [(C,src)]+[(P,s) for s in commits]:\n msg=g(cwd,'show','-s','--format=%B',sha).decode().strip(); tail='Co-authored-by: Codex <noreply@openai.com>\\nCo-authored-by: Billo AI <ai-engineering@billo.systems>';assert msg.endswith(tail) and msg.count('Co-authored-by: Codex')==msg.count('Co-authored-by: Billo AI')==1\nfor name in ['cc-prompt.md','cc-prompt-iteration01.md','slice-plan.md','cdc-verification.md','artifacts/author-baseline.json','artifacts/author-probe.rs','artifacts/cdc-review-receipts.json']:\n assert g(P,'show',issue+':'+str(S/name))==(P/S/name).read_bytes()\nfor name in ['closing-report.md','artifacts/execution.md']:assert (P/S/name).read_bytes().startswith(g(P,'show',issue+':'+str(S/name)))\nv=json.loads((P/S/'artifacts/validation.json').read_text()); old=json.loads(g(P,'show',issue+':'+str(S/'artifacts/validation.json'))); assert {k:z for k,z in v.items() if k!='iteration01'}==old\ncount=0\ndef check(x):\n global count\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];count+=1\n  for z in x.values():check(z)\n elif isinstance(x,list):\n  for z in x:check(z)\ncheck(v)\nrows=lambda s:[line.split('|')[1:7] for line in s.splitlines() if line.startswith('| SR-')]\nassert rows((P/S/'ledger.md').read_text())==rows(g(P,'show',issue+':'+str(S/'ledger.md')).decode())\nledger_widths=[len(line.split('|')[1:-1]) for line in (P/S/'ledger.md').read_text().splitlines() if line.startswith('| SR-')]\nfixture=C/'crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv';b=fixture.read_bytes();assert len(b)==360 and hashlib.sha256(b).hexdigest()=='291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7'\nassert b==g(C,'show',par+':crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv')\nassert (C/'crates/nms-graph/src/edges.rs').read_bytes().split(b'#[cfg(test)]')[0]==g(C,'show','7118a486:crates/nms-graph/src/edges.rs').split(b'#[cfg(test)]')[0]\nfences={}\nfor name,pin in [('', '6d183bde79dd7328c32d4739dca249f5f1f9cd6c'),('.worktrees/cache-semantic-compatibility','decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a'),('.worktrees/galaxy-qualified-identity','f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8'),('.worktrees/galaxy-scoped-queries','7118a486ea43a776aa2451ec0807d43384fb954f'),('.worktrees/galaxy-scoped-routing',src),('.worktrees/planning',head)]:\n cwd=R/name;actual=g(cwd,'rev-parse','HEAD').decode().strip();assert actual==pin and not g(cwd,'status','--porcelain');fences[str(cwd)]=actual\nmain_paths=g(R,'diff','--name-only','a800950ef3558fcf463517696c3c140061e7353d','HEAD').decode().splitlines();assert main_paths==['README.md','assets/images/logo/v2-x250.jpg','assets/images/logo/v2.jpg']\nsummary=dict(source=src,source_parent=par,source_paths=sp,planning_returns=receipts,planning_paths=pp,checked_channels=count,ledger_column_counts=ledger_widths,ledger_criteria_nine_open_unchanged=True,immutable_inputs_and_cc_prefixes_preserved=True,edges_runtime_unchanged=True,fixture_sha256=hashlib.sha256(b).hexdigest(),worktree_fences=fences,main_external_logo_only_delta=main_paths)\n(O/'audit-summary.json').write_text(json.dumps(summary,indent=2)+'\\n');print(json.dumps(summary,indent=2))\n",
       "final-check.py": "import json,subprocess,hashlib,base64\nfrom pathlib import Path\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');old='fc89561767d45fffb91434729673b2205025de48'\ndef g(cwd,*a):return subprocess.check_output(['git',*a],cwd=cwd)\nexpected=[str(S/p) for p in ['slice-plan.md','ledger.md','cdc-verification.md','cc-prompt-iteration02.md','artifacts/cdc-review-receipts.json']]+['project01-mvp/'+p for p in ['project-plan.md','closure-preparation.md','arc06-fit-and-finish/arc-plan.md']]\nactual=g(P,'status','--porcelain').decode().splitlines();paths=[s[3:] for s in actual];assert sorted(paths)==sorted(expected),(paths,expected)\nfor name in ['artifacts/execution.md','artifacts/validation.json','closing-report.md','cc-prompt.md','cc-prompt-iteration01.md','artifacts/author-baseline.json','artifacts/author-probe.rs']:\n assert (P/S/name).read_bytes()==g(P,'show',old+':'+str(S/name))\nassert (P/S/'cdc-verification.md').read_bytes().startswith(g(P,'show',old+':'+str(S/'cdc-verification.md')))\nv=json.loads((P/S/'artifacts/cdc-review-receipts.json').read_text());ov=json.loads(g(P,'show',old+':'+str(S/'artifacts/cdc-review-receipts.json')));assert {k:x for k,x in v.items() if k!='iteration01'}==ov\nn=0\ndef check(x):\n global n\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];n+=1\n  for y in x.values():check(y)\n elif isinstance(x,list):\n  for y in x:check(y)\ncheck(v)\nrows=lambda text:[[c.strip() for c in line.split('|')[1:-1]] for line in text.splitlines() if line.startswith('| SR-')]\na=rows((P/S/'ledger.md').read_text());b=rows(g(P,'show',old+':'+str(S/'ledger.md')).decode());assert len(a)==9 and all(len(r)==8 for r in a)\nassert [r[:5] for r in a]==[r[:5] for r in b];assert [(r[0],r[5]) for r in a]==[(f'SR-0{i}','done' if i==8 else 'open') for i in range(1,10)]\nfor name in ['project01-mvp/ledger.md','project01-mvp/arc06-fit-and-finish/ledger.md']:assert (P/name).read_bytes()==g(P,'show',old+':'+name)\nfor name,pin in v['iteration01']['audit']['worktree_fences'].items():\n assert g(Path(name),'rev-parse','HEAD').decode().strip()==pin\n if Path(name)!=P:assert not g(Path(name),'status','--porcelain')\nfor cwd in [P,R/'.worktrees/galaxy-scoped-routing']:assert subprocess.run(['git','diff','--check'],cwd=cwd).returncode==0\nprint(json.dumps({'checked_paths':expected,'reviewer_channels_validated':n,'cc_records_and_prior_prompts_unchanged':True,'ledger_nine_rows_eight_columns_one_done_eight_open':True,'parent_ledgers_unchanged':True,'all_source_worktrees_clean_at_observed_pins':True,'all_prior_cdc_receipt_values_preserved':True},indent=2))\n",
-      "check-runner.py": "import json,subprocess,hashlib,base64\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-cdc-iteration01');argv=['python3',str(O/'final-check.py')];cwd='/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning';p=subprocess.run(argv,cwd=cwd,capture_output=True)\ndef c(b):return dict(base64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())\nrecord=dict(argv=argv,cwd=cwd,env={},exit_code=p.returncode,stdout=c(p.stdout),stderr=c(p.stderr));f=O/'final-check-records.json';d=json.loads(f.read_text()) if f.exists() else [];d.append(record);f.write_text(json.dumps(d,indent=2)+'\\n');print(p.stdout.decode(),p.stderr.decode());raise SystemExit(p.returncode)\n"
+      "check-runner.py": "import json,subprocess,hashlib,base64\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-cdc-iteration01');argv=['python3',str(O/'final-check.py')];cwd='/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning';p=subprocess.run(argv,cwd=cwd,capture_output=True)\ndef c(b):return dict(base64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())\nrecord=dict(argv=argv,cwd=cwd,env={},exit_code=p.returncode,stdout=c(p.stdout),stderr=c(p.stderr));f=O/'final-check-records.json';d=json.loads(f.read_text()) if f.exists() else [];d.append(record);f.write_text(json.dumps(d,indent=2)+'\\n');print(p.stdout.decode(),p.stderr.decode());raise SystemExit(p.returncode)\n",
+      "postcommit.py": "import subprocess,json,base64,hashlib\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-cdc-iteration01');R=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S='project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/';sha='4c3d405f90152159b0f56232d6c348b512638dfa';records=[]\ndef run(cwd,*args):\n p=subprocess.run(['git',*args],cwd=cwd,capture_output=True)\n def ch(b):return dict(base64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())\n records.append(dict(argv=['git',*args],cwd=str(cwd),env={},exit_code=p.returncode,stdout=ch(p.stdout),stderr=ch(p.stderr)));(O/'postcommit-records.json').write_text(json.dumps(records,indent=2)+'\\n');assert p.returncode==0\n return p.stdout.decode().strip()\nassert run(P,'rev-parse','HEAD')==sha\nparent=run(P,'rev-parse','HEAD^');assert parent=='fc89561767d45fffb91434729673b2205025de48'\npaths=run(P,'diff-tree','--no-commit-id','--name-only','-r','HEAD').splitlines();expected=[S+p for p in ['slice-plan.md','ledger.md','cdc-verification.md','cc-prompt-iteration02.md','artifacts/cdc-review-receipts.json']]+['project01-mvp/'+p for p in ['project-plan.md','closure-preparation.md','arc06-fit-and-finish/arc-plan.md']];assert sorted(paths)==sorted(expected)\nmsg=run(P,'log','-1','--format=%B');assert msg.endswith('Co-authored-by: Codex <noreply@openai.com>\\nCo-authored-by: Billo AI <ai-engineering@billo.systems>') and msg.count('Co-authored-by: Codex')==msg.count('Co-authored-by: Billo AI')==1\nassert not run(P,'status','--porcelain');assert not run(P,'diff','--check')\ni=json.loads((P/S/'artifacts/cdc-review-receipts.json').read_text())['iteration01']\nfor root,pin in i['audit']['worktree_fences'].items():\n if Path(root)!=P:assert run(root,'rev-parse','HEAD')==pin and not run(root,'status','--porcelain')\nprint(json.dumps(dict(commit=sha,parent=parent,paths=paths,trailers_once=True,all_worktrees_clean=True)))\n",
+      "commit.py": "import subprocess,json,base64,hashlib\nfrom pathlib import Path\nP=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning');O=Path('/private/tmp/nms-s08-cdc-iteration01');S='project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/'\npaths=[S+p for p in ['slice-plan.md','ledger.md','cdc-verification.md','cc-prompt-iteration02.md','artifacts/cdc-review-receipts.json']]+['project01-mvp/'+p for p in ['project-plan.md','closure-preparation.md','arc06-fit-and-finish/arc-plan.md']]\nf=O/'commit-records.json';records=json.loads(f.read_text()) if f.exists() else []\ndef run(argv):\n p=subprocess.run(argv,cwd=P,capture_output=True)\n def ch(b):return dict(base64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())\n records.append(dict(argv=argv,cwd=str(P),env={},exit_code=p.returncode,stdout=ch(p.stdout),stderr=ch(p.stderr)));f.write_text(json.dumps(records,indent=2)+'\\n');print(p.stdout.decode(),p.stderr.decode(),flush=True)\n if p.returncode:raise SystemExit(p.returncode)\n return p.stdout\nrun(['git','add','--',S+'cc-prompt-iteration02.md'])\nrun(['git','commit','--only','-F',str(O/'commit-message.txt'),'--',*paths])\nrun(['git','rev-parse','HEAD'])\n"
     },
     "limitations": [
       "No historical raw channels/exit or strict-gate env reconstructed.",
@@ -2072,6 +2074,421 @@
           "base64": "ewogICJjaGVja2VkX3BhdGhzIjogWwogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvc2xpY2UtcGxhbi5tZCIsCiAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9sZWRnZXIubWQiLAogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2RjLXZlcmlmaWNhdGlvbi5tZCIsCiAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDIubWQiLAogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbiIsCiAgICAicHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQiLAogICAgInByb2plY3QwMS1tdnAvY2xvc3VyZS1wcmVwYXJhdGlvbi5tZCIsCiAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCIKICBdLAogICJyZXZpZXdlcl9jaGFubmVsc192YWxpZGF0ZWQiOiAxNTIsCiAgImNjX3JlY29yZHNfYW5kX3ByaW9yX3Byb21wdHNfdW5jaGFuZ2VkIjogdHJ1ZSwKICAibGVkZ2VyX25pbmVfcm93c19laWdodF9jb2x1bW5zX29uZV9kb25lX2VpZ2h0X29wZW4iOiB0cnVlLAogICJwYXJlbnRfbGVkZ2Vyc191bmNoYW5nZWQiOiB0cnVlLAogICJhbGxfc291cmNlX3dvcmt0cmVlc19jbGVhbl9hdF9vYnNlcnZlZF9waW5zIjogdHJ1ZSwKICAiYWxsX3ByaW9yX2NkY19yZWNlaXB0X3ZhbHVlc19wcmVzZXJ2ZWQiOiB0cnVlCn0K",
           "bytes": 918,
           "sha256": "b182d3608f295656f83ed98bafc8339ecf8554c55a84c9d073b1f77ef6165d7b"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "review_commit": {
+      "commit": "4c3d405f90152159b0f56232d6c348b512638dfa",
+      "parent": "fc89561767d45fffb91434729673b2205025de48",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+        "project01-mvp/closure-preparation.md",
+        "project01-mvp/project-plan.md"
+      ],
+      "note": "Eight-path planning review/Iteration02 issuance; exact paths and parent recorded in postcommit command channels."
+    },
+    "review_git_attempts": [
+      {
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-cdc-iteration01/commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDRjM2Q0MDVdIFJldmlldyBTbGljZTA4IGl0ZXJhdGlvbjAxIGFuZCBpc3N1ZSB0ZXN0cy1vbmx5IGl0ZXJhdGlvbjAyCiA4IGZpbGVzIGNoYW5nZWQsIDE2MzYgaW5zZXJ0aW9ucygrKSwgMTMgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDIubWQK",
+          "bytes": 243,
+          "sha256": "f1597be25954e2de55d623584766cfeec9722582d7628583535315cc9b49e2e2"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "NGMzZDQwNWY5MDE1MjE1OWIwZjU2MjMyZDZjMzQ4YjUxMjYzOGRmYQo=",
+          "bytes": 41,
+          "sha256": "b7ed36a5efeaed87cd85253e28ea65a8e1978db686befdf84d2bcc678a06835e"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ],
+    "postcommit_audit": [
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "NGMzZDQwNWY5MDE1MjE1OWIwZjU2MjMyZDZjMzQ4YjUxMjYzOGRmYQo=",
+          "bytes": 41,
+          "sha256": "b7ed36a5efeaed87cd85253e28ea65a8e1978db686befdf84d2bcc678a06835e"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD^"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ZmM4OTU2MTc2N2Q0NWZmZmI5MTQzNDcyOTY3M2IyMjA1MDI1ZGU0OAo=",
+          "bytes": 41,
+          "sha256": "0a33835f02bcd4b88eb0cad4e2608b862bdab61301f44930b96be90f5ccf35f6"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "diff-tree",
+          "--no-commit-id",
+          "--name-only",
+          "-r",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "cHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZApwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2FydGlmYWN0cy9jZGMtcmV2aWV3LXJlY2VpcHRzLmpzb24KcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jYy1wcm9tcHQtaXRlcmF0aW9uMDIubWQKcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jZGMtdmVyaWZpY2F0aW9uLm1kCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvbGVkZ2VyLm1kCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvc2xpY2UtcGxhbi5tZApwcm9qZWN0MDEtbXZwL2Nsb3N1cmUtcHJlcGFyYXRpb24ubWQKcHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQK",
+          "bytes": 543,
+          "sha256": "304257225504da728307c40218f4724fe62f1bef64f13226cae9bdbb82506ca9"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "log",
+          "-1",
+          "--format=%B"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "UmV2aWV3IFNsaWNlMDggaXRlcmF0aW9uMDEgYW5kIGlzc3VlIHRlc3RzLW9ubHkgaXRlcmF0aW9uMDIKCkFjY2VwdCBTUi0wODsgcmV0YWluIGNvcnJlY3RlZCBydW50aW1lIHdoaWxlIGNvbXBsZXRpbmcgdGhlIHByZXNjcmliZWQKbmF0aXZlIG9yYWNsZXMgYW5kIGFjY291bnRpbmcgZm9yIG9yaWdpbmFsIGFuZCBuZXcgY2FwdHVyZSBnYXBzLgoKQ28tYXV0aG9yZWQtYnk6IENvZGV4IDxub3JlcGx5QG9wZW5haS5jb20+CkNvLWF1dGhvcmVkLWJ5OiBCaWxsbyBBSSA8YWktZW5naW5lZXJpbmdAYmlsbG8uc3lzdGVtcz4KCg==",
+          "bytes": 298,
+          "sha256": "a76edefa61bf8336e539a52c5edd93cb916a02520ea6be1e7e2e27b8834527e4"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "NmQxODNiZGU3OWRkNzMyOGMzMmQ0NzM5ZGNhMjQ5ZjVmMWY5Y2Q2Ywo=",
+          "bytes": 41,
+          "sha256": "8aa6c21b9ebbe7c2ca8dc01e01f6d1b51b5b9243c649257394fec2d96ae114c6"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ZGVjZDhkNmMwOWMxMTk5YTZjZGQwMWZkNDhhYTUwZjNhZGVmMmIxYQo=",
+          "bytes": 41,
+          "sha256": "0561507a0975acf6b5ae2eff1ddc0e0f7ff096fa2ceec01a7f6014634940aa8d"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ZjU3YTM4ZjdkMWYwMGQxYTNmNWFhNTAwZWQ1ZjdjZTdkOGMyNmViOAo=",
+          "bytes": 41,
+          "sha256": "d5d7ba4ffe1f3efe59143e711dbb3a7a98cbb281dbc9b08b28268ef5446c0ac9"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "NzExOGE0ODZlYTQzYTc3NmFhMjQ1MWVjMDgwN2Q0MzM4NGZiOTU0Zgo=",
+          "bytes": 41,
+          "sha256": "8a8108d5eebd71733e7048592095731d122368ad21ec238e3b5ebdb5c24a25c8"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "MjE0OTRiOTYzYTVmZmJmYzViMjgzYzU4NjVhMDZmYTNkYTA5NjMzNQo=",
+          "bytes": 41,
+          "sha256": "0e1591b52096c78d517144be0d376c5453efb7b81a9bd2408b3a0b0098338dd5"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "stderr": {
           "base64": "",
