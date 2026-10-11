@@ -7715,6 +7715,100 @@
         }
       ],
       "qualification": "Definition start lines in this table exclude preceding whitespace; complete endings directly brace-counted at pinned source. Incomplete attestation is not proof every omitted line was unread. Spatial production methods fit stated1-240."
-    }
+    },
+    "reviewer_commit": {
+      "sha": "85ab7f4889e701e4ee910ed4c8be49d09394e51f",
+      "parent": "aae22e7dadf807c6e5730e9c6ef5facc5076e40f",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+        "project01-mvp/closure-preparation.md",
+        "project01-mvp/project-plan.md"
+      ],
+      "trailers_once_adjacent": true,
+      "planning_clean": true,
+      "new_assignment_issued": false
+    },
+    "reviewer_commit_receipts": [
+      {
+        "name": "final-precommit-check",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-cdc-iteration05/precheck.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJleGFjdF9zZXZlbl9wbGFubmluZ19wYXRocyI6IHRydWUsICJvbGRfY2RjX3ZhbHVlc19yZXRhaW5lZCI6IHRydWUsICJjY19hbmRfcHJvbXB0c19oZWxkIjogdHJ1ZSwgImZpdmVfb2xkX2FjY2VwdGVkX3Jvd3NfaGVsZCI6IHRydWUsICJzaXhfZG9uZV90aHJlZV9vcGVuIjogdHJ1ZSwgIm5vX3NpeHRoX3Byb21wdCI6IHRydWUsICJhbGxfc291cmNlX2NvbnRyb2xzX2NsZWFuX3Bpbm5lZCI6IHRydWUsICJwcm9qZWN0MDJfaGVsZCI6IHRydWUsICJyZXZpZXdfY2hhbm5lbF9vYmplY3RzX3ZhbGlkYXRlZCI6IDQwOH0K",
+          "bytes": 297,
+          "sha256": "48d2585e54e1d782a3001c1e16251c4a04230ae17e2c832aa3ea48ec4ce2b192"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.7931809425354004
+      },
+      {
+        "name": "reviewer-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-cdc-iteration05/commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDg1YWI3ZjRdIFJldmlldyBTbGljZTA4IGl0ZXJhdGlvbjA1IGFuZCBzdXJmYWNlIHJlZmluZW1lbnQgY2FwCiA3IGZpbGVzIGNoYW5nZWQsIDE1ODYgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkK",
+          "bytes": 126,
+          "sha256": "f3630c3957d3e96eb3538266a63f0a89d73d038ba9da8d57496a79006b5e4749"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.19840621948242188
+      },
+      {
+        "name": "postcommit-check",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-cdc-iteration05/postcheck.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJzaGEiOiAiODVhYjdmNDg4OWU3MDFlNGVlOTEwZWQ0YzhiZTQ5ZDA5Mzk0ZTUxZiIsICJwYXJlbnQiOiAiYWFlMjJlN2RhZGY4MDdjNmU1NzMwZTljNmVmNWZhY2M1MDc2ZTQwZiIsICJwYXRocyI6IFsicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCIsICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2FydGlmYWN0cy9jZGMtcmV2aWV3LXJlY2VpcHRzLmpzb24iLCAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9jZGMtdmVyaWZpY2F0aW9uLm1kIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvbGVkZ2VyLm1kIiwgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvc2xpY2UtcGxhbi5tZCIsICJwcm9qZWN0MDEtbXZwL2Nsb3N1cmUtcHJlcGFyYXRpb24ubWQiLCAicHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQiXSwgInRyYWlsZXJzX29uY2VfYWRqYWNlbnQiOiB0cnVlLCAicGxhbm5pbmdfY2xlYW4iOiB0cnVlLCAibmV3X2Fzc2lnbm1lbnRfaXNzdWVkIjogZmFsc2V9Cg==",
+          "bytes": 679,
+          "sha256": "123d927f0d3049c337291a16c002001306284f89d9af1648815f11ed00a228ec"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.19381499290466309
+      }
+    ],
+    "reviewer_postcheck_script": "import subprocess,json\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-cdc-iteration05');P=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning');B='aae22e7dadf807c6e5730e9c6ef5facc5076e40f'\ndef git(*args):return subprocess.check_output(['git',*args],cwd=P)\nhead=git('rev-parse','HEAD').decode().strip();assert head.startswith('85ab7f4');assert git('rev-parse','HEAD^').decode().strip()==B\npaths=git('diff-tree','--no-commit-id','--name-only','-r','HEAD').decode().splitlines();assert sorted(paths)==sorted(json.loads((O/'ownedpaths.json').read_text()))\nbody=git('show','-s','--format=%B','HEAD').decode().strip();trailers=['Co-authored-by: Codex <noreply@openai.com>','Co-authored-by: Billo AI <ai-engineering@billo.systems>'];assert all(body.count(t)==1 for t in trailers) and body.endswith('\\n'.join(trailers));assert git('status','--porcelain')==b''\nf='project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json';old=json.loads(git('show',B+':'+f));new=json.loads((P/f).read_text());assert all(new[k]==z for k,z in old.items())\nsubprocess.run(['git','diff','--check'],cwd=P,check=True)\nrecord={'sha':head,'parent':B,'paths':paths,'trailers_once_adjacent':True,'planning_clean':True,'new_assignment_issued':False};(O/'reviewer-commit-identity.json').write_text(json.dumps(record,indent=2)+'\\n');print(json.dumps(record))\n",
+    "reviewer_update_script": "import json\nfrom pathlib import Path\nP=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning');D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');O=Path('/private/tmp/nms-s08-cdc-iteration05')\na=json.loads((O/'audit.json').read_text())\np=P/D/'cdc-verification.md';p.write_text(p.read_text()+(O/'review.md').read_text())\np=P/D/'artifacts/cdc-review-receipts.json';v=json.loads(p.read_text());assert 'iteration05' not in v\nv['iteration05']={'reviewer':'Sofie/CDC','date':'2026-10-11','assignment':'arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md','issuance':'9a9bf1147ee6cdf9caeb72a4d7b3a8484bf745fe','source':a['commits'][0],'cc_planning_return':a['commits'][1:],'gates':json.loads((O/'gates.json').read_text()),'audit':a,'summary':{'accepted':['SR-03','SR-04','SR-05','SR-06','SR-07','SR-08'],'newly_accepted':['SR-06'],'retained':['SR-03','SR-04','SR-05','SR-07','SR-08'],'open':['SR-01','SR-02','SR-09'],'focused':{'passed':682,'failed':0,'ignored':0,'nonzero_suites':19,'all_result_summaries':23},'workspace':{'passed':900,'failed':0,'ignored':0,'nonzero_suites':23,'all_result_summaries':33},'executed_refinements':5,'refinement_budget':5,'new_assignment_issued':False,'operator_decision':'Pending: recommended one additional bounded graph-query-tests/current-evidence correction pass; historical exception not proposed or approved.','limitations':['Historical channels/env/intake remain unknown and unwaived.','Final CC strict receipt[17] lacks recorded RUSTDOCFLAGS; earlier CC[9] and fresh CDC strict command pass with recorded actual flag. No invented inherited environment.','Native SR01 full both-order active0/9/7 boundary matrix and SR02 filtered radius canonical pointer assertion remain incomplete.','Current CC source-body intake coverage and draft-before-intake ordering remain qualified, not backdated.','Oversized reviewer reads and quoted wildcard guide navigation were recovered; ordinary inspection tool channels not synthesized.','Ordinary docs retain core4/graph3/query2 warnings and dependency advisory; parent strict combined-doc gate remains open.']},'audit_script':(O/'audit.py').read_text(),'supplemental_audit_script':(O/'supplement.py').read_text(),'gate_script':(O/'gates.py').read_text()}\np.write_text(json.dumps(v,indent=2)+'\\n')\nnotes={\n'SR-01':'Open after CDC Iteration05: player0, exact radius views and immediate state checks now sound, but complete boundary/limit/canonical matrix is only partial across active0/9/7 and both actual orders. Matching active0 positives absent in main fixture; active9 boundaries/n0 and active7 explicit0/full sweep omitted. Secondary one-order proof does not complete issued native matrix. No runtime discrepancy reproduced; cap reached, further assignment requires Operator decision.',\n'SR-02':'Open after CDC Iteration05: actual near/far reversal, four single-field misses and exact far-key800/799-empty pass. Filtered nearest has canonical ptr assertion; filtered radius800 has only key/distance projection. Both nonempty canonical-borrow assertions were explicitly required. Literal tie/SSI subproof retained. Cap reached, further assignment requires Operator decision.',\n'SR-06':'CDC accepted2026-10-11 at0e1e8b4: supplied ordinary player0/counters7/8/9/active0 and full tuple after every foreign max0/max1/radius0 error and unbounded105 NN/2opt success. Exact NoPath IDs and105-ID/106-hop/105-target inputs/results retained. Snapshot once per unchanged loop is equivalent because every prior call is checked. Protected100planetNone/Some400 bytes and prior first-occurrence/error/count proof retained.',\n'SR-09':'Open after CDC Iteration05:804 channels,16 predecessor corrections,22 stable current links, all current independent gates/fences pass. Final CC strict attempt17 omits recorded RUSTDOCFLAGS while earlier9 includes it; final report overclaims exact flag. Current incomplete native/intake/history prose and disclosed pre-intake drafting need honest correction; historical gaps remain unwaived. Five-pass cap reached; no sixth prompt issued.'}\np=P/D/'ledger.md';s=p.read_text();old='Current Iteration04 CDC verdict: five done (SR-03/04/05/07/08), four open';assert old in s;s=s.replace(old,'Current Iteration05 CDC verdict: six done (SR-03/04/05/06/07/08), three open',1);out=[]\nfor l in s.splitlines():\n if l.startswith('| SR-'):\n  c=l.split('|')[1:-1];rid=c[0].strip();assert len(c)==8\n  if rid in notes:\n   c[5]=' done ' if rid=='SR-06' else ' open ';c[6]=' Iteration05 independent review: cdc-verification.md; artifacts/cdc-review-receipts.json iteration05; source0e1e8b4. '+('Accepted.' if rid=='SR-06' else 'Budget exhausted; Operator disposition pending, no new CC assignment.')+' ';c[7]=' '+notes[rid]+' '\n  l='|'+'|'.join(c)+'|'\n out.append(l)\np.write_text('\\n'.join(out)+'\\n')\np=P/D/'slice-plan.md';s=p.read_text();old='Version:1.5. Created2026-10-11. Status:open; SR-03/04/05/07/08 accepted, four open; Iteration04 reviewed, Iteration05 active.';assert old in s;s=s.replace(old,'Version:1.6. Created2026-10-11. Status:open; SR-03/04/05/06/07/08 accepted, three open; Iteration05 reviewed, five-pass cap exhausted; Operator decision pending.',1)\ns+='''\n\n## Iteration05 review and refinement-cap disposition \u2014 2026-10-11\n\nIteration05 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`, issued9a9bf1147ee6cdf9caeb72a4d7b3a8484bf745fe, predecessorIteration04, returned source0e1e8b4/planningaae22e7 (return3f21788, validation receipt26aabb2). Disposition: independently reviewed; remaining obligations unresolved, not accepted as a complete slice. Preserve the issued prompt unchanged. All fresh nine gate categories pass682 focused/900 workspace;804 CC channels,16 predecessor corrected mappings/22 new stable links, stopped prefixes/JSON, two-source/four-planning scope/trailers, protected bodies and clean six-worktree fences pass. SR-06 newly accepted; SR-03/04/05/07/08 retained; SR-01/02/09 open. Exact remaining native matrix, filtered-radius canonical-reference and current strict-env/intake/report defects are recorded in cdc-verification.md and receipts iteration05. Historical evidence gaps remain unwaived.\n\nCurrent assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md**, executed, returned and reviewed; no implementation pass currently authorized beyond it. Five executed refinements01\u201305 include stopped02 (no CC commit; retracted false production discrepancy). Budget exhausted. **No cc-prompt-iteration06.md issued. Operator decision pending.** Recommended concrete decision: one additional bounded correction beyond the cap, graph query.rs tests only plus four existing CC records, direct source parent0e1e8b4, six accepted rows/all other source held. Full scope and alternatives in the current independent review; historical exception excluded. Re-scoping cannot silently discharge these original obligations.\n\nVersion1.6 routine review/partial acceptance/cap update, no accepted scope/architecture/cache/criteria or sequence amendment. Separate Project02 parent40c36ab (nine paths) is preserved; main6d183bde and all dependency pins held. Parent counts unchanged: arc26/seven done/nineteen open, project25 open. Required session/live/full-startup then evidence-gated save-field repair and original higher-scale owners/gates remain. No integration, release or publication authority. A further prompt requires the Operator decision; current gaps are required native/evidence delivery, not a newly reproduced production bug.\n''';p.write_text(s)\nmessage='''\n\n## Slice08 Iteration05 independent review and refinement cap \u2014 2026-10-11\n\nCDC reviewed source0e1e8b4/planningaae22e7 against immutable issuance9a9bf114. All fresh nine gate categories pass682 focused/900 workspace;804 CC channels and stable16 predecessor/22 current mappings validate. Scope/parents/trailers, six clean intake controls, stopped prefixes/JSON and fixture/protected proof fences pass. SR-06 newly accepted; SR-03/04/05/07/08 retained; SR-01/02/09 open (six child rows done, three open). Remaining native active-galaxy boundary matrix, filtered-radius canonical reference and current strict-env/intake/report qualifications are documented in Slice08 cdc-verification.md/receipts iteration05; no new runtime discrepancy or historical waiver established.\n\nFive executed refinements include stoppedIteration02; the current Iteration05 assignment is returned and reviewed. Budget exhausted, **no sixth prompt issued**. Operator decision pending on the concrete recommendation: one additional bounded graph-query-tests/current-evidence correction pass beyond the cap, preserving six accepted rows/all other source, or explicit re-scoping. Historical evidence exception remains outside that proposal and unapproved. No child/parent closure. Parent counts unchanged: arc26/seven done/nineteen open, project25 open. Separate Project02 commit40c36ab preserved. Required session/live/full-startup composition, then evidence-gated save-field repair and original higher-scale owners/gates persist. Main6d183bde/dependencies held; no merge/release/publication authority.\n'''\nfor f in ['project01-mvp/arc06-fit-and-finish/arc-plan.md','project01-mvp/project-plan.md','project01-mvp/closure-preparation.md']:\n p=P/f;s=p.read_text()\n if f.endswith('arc-plan.md'):\n  assert 'Version: 1.27,' in s;s=s.replace('Version: 1.27,','Version: 1.28,',1)\n elif f.endswith('project-plan.md'):\n  assert '\\nversion: 1.18\\n' in s;s=s.replace('\\nversion: 1.18\\n','\\nversion: 1.19\\n',1)\n s+=message\n if f.endswith('arc-plan.md'):s+='\\nVersion1.28 (2026-10-11): routine Slice08 review/partial acceptance/refinement-cap disposition; original parent criteria/statuses retained.\\n'\n elif f.endswith('project-plan.md'):s+='\\nProject version1.19 (2026-10-11): routine Slice08 review/partial acceptance/refinement-cap disposition; parent criteria/statuses retained.\\n'\n p.write_text(s)\nowned=[str(D/x) for x in ['ledger.md','slice-plan.md','cdc-verification.md','artifacts/cdc-review-receipts.json']]+['project01-mvp/arc06-fit-and-finish/arc-plan.md','project01-mvp/project-plan.md','project01-mvp/closure-preparation.md'];(O/'ownedpaths.json').write_text(json.dumps(owned,indent=2)+'\\n');print(json.dumps({'owned_paths':owned,'accepted':6,'open':3,'new_assignment_issued':False}))\n"
   }
 }
