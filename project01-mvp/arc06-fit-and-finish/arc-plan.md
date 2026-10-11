@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.27, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.28, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -227,3 +227,12 @@ CDC reviewed source02260b7/planning24eae38 against preserved Iteration04 issuanc
 Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`, fifth/final refinement under existing budget, directly from02260b7; only graph query.rs/query route.rs tests plus four existing CC records. Accepted graph-route/cache/CLI/edges and protectedNone/Some400 proof held unchanged. No automatic sixth pass: nonconvergence requires re-scoping or explicit Operator decision. Parent statuses unchanged: arc26/seven done/nineteen open, project25 open. Required session/live/full startup then evidence-gated save-field repair and original gates persist. Main6d183bde/dependencies held, no merge/release/publication authority.
 
 Version1.27 (2026-10-11): routine Slice08 review/partial acceptance/final refinement; original parent criteria/statuses retained.
+
+
+## Slice08 Iteration05 independent review and refinement cap — 2026-10-11
+
+CDC reviewed source0e1e8b4/planningaae22e7 against immutable issuance9a9bf114. All fresh nine gate categories pass682 focused/900 workspace;804 CC channels and stable16 predecessor/22 current mappings validate. Scope/parents/trailers, six clean intake controls, stopped prefixes/JSON and fixture/protected proof fences pass. SR-06 newly accepted; SR-03/04/05/07/08 retained; SR-01/02/09 open (six child rows done, three open). Remaining native active-galaxy boundary matrix, filtered-radius canonical reference and current strict-env/intake/report qualifications are documented in Slice08 cdc-verification.md/receipts iteration05; no new runtime discrepancy or historical waiver established.
+
+Five executed refinements include stoppedIteration02; the current Iteration05 assignment is returned and reviewed. Budget exhausted, **no sixth prompt issued**. Operator decision pending on the concrete recommendation: one additional bounded graph-query-tests/current-evidence correction pass beyond the cap, preserving six accepted rows/all other source, or explicit re-scoping. Historical evidence exception remains outside that proposal and unapproved. No child/parent closure. Parent counts unchanged: arc26/seven done/nineteen open, project25 open. Separate Project02 commit40c36ab preserved. Required session/live/full-startup composition, then evidence-gated save-field repair and original higher-scale owners/gates persist. Main6d183bde/dependencies held; no merge/release/publication authority.
+
+Version1.28 (2026-10-11): routine Slice08 review/partial acceptance/refinement-cap disposition; original parent criteria/statuses retained.
