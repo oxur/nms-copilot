@@ -93,20 +93,12 @@ fn resolve_named_targets(
     model: &GalaxyModel,
     names: &[String],
     galaxy: u8,
-    start: SystemId,
 ) -> Result<Vec<SystemId>, Box<dyn std::error::Error>> {
     let mut ids = Vec::with_capacity(names.len());
     for name in names {
         // Try as a base first
         if let Some(base) = model.base(name) {
             let id = SystemId::from_address(&base.address);
-            if base.address.reality_index != galaxy {
-                return Err(nms_graph::route::RouteError::NoPath {
-                    from: start,
-                    to: id,
-                }
-                .into());
-            }
             ids.push(id);
             continue;
         }
@@ -130,12 +122,7 @@ fn resolve_biome_targets(
         .nearest_planets_from_address(from, usize::MAX, filter)
         .into_iter()
         .map(|(key, _, _)| key.0)
-        .fold(Vec::new(), |mut ids, id| {
-            if !ids.contains(&id) {
-                ids.push(id);
-            }
-            ids
-        })
+        .collect()
 }
 
 /// Execute a route query against the galaxy model.
@@ -165,7 +152,7 @@ pub fn execute_route(
     let mut target_ids = match &query.targets {
         TargetSelection::Biome(filter) => resolve_biome_targets(model, filter, &start_addr),
         TargetSelection::Named(names) => {
-            resolve_named_targets(model, names, start_addr.reality_index, start_id)?
+            resolve_named_targets(model, names, start_addr.reality_index)?
         }
         TargetSelection::SystemIds(ids) => ids.clone(),
     };
@@ -201,6 +188,7 @@ pub fn execute_route(
     // and system deduplication. Other selections retain caller order.
     if let TargetSelection::Biome(_) = &query.targets {
         target_ids.sort_by(|a, b| {
+            // Membership was checked above, before radius or limit filtering.
             let da = start_addr.distance_ly(&model.system(a).expect("validated target").address);
             let db = start_addr.distance_ly(&model.system(b).expect("validated target").address);
             da.total_cmp(&db).then_with(|| {
@@ -241,13 +229,7 @@ pub fn execute_route(
         .warp_range
         .map(|wr| GalaxyModel::warp_jump_count(&route, wr));
 
-    // Count non-waypoint targets (excluding start)
-    let targets_visited = route
-        .hops
-        .iter()
-        .skip(1)
-        .filter(|hop| !hop.is_waypoint && hop.system_id != start_id)
-        .count();
+    let targets_visited = target_ids.len();
 
     Ok(RouteResult {
         route,
@@ -653,6 +635,13 @@ mod tests {
             None,
             vec![],
         ));
+        model.insert_system(nms_core::system::System::new(
+            foreign_base,
+            Some("Shadow".into()),
+            None,
+            None,
+            vec![],
+        ));
         model.insert_base(nms_core::player::PlayerBase::new(
             "Shadow".into(),
             nms_core::player::BaseType::HomePlanetBase,
@@ -781,5 +770,202 @@ mod tests {
             error.downcast_ref::<nms_graph::route::RouteError>(),
             Some(nms_graph::route::RouteError::SystemNotFound(id)) if *id == missing
         ));
+    }
+
+    #[test]
+    fn test_nine_galaxy_query_modes_validate_before_limit_and_count_selected_targets() {
+        let mut model = GalaxyModel::new();
+        let start = GalacticAddress::new(0, 0, 0, 100, 0, 9);
+        let b = GalacticAddress::new(1, 0, 0, 101, 0, 9);
+        let c = GalacticAddress::new(2, 0, 0, 102, 0, 9);
+        let zero = GalacticAddress::new(0, 0, 0, 100, 0, 0);
+        let foreign = GalacticAddress::new(1, 0, 0, 101, 0, 0);
+        model.player_state = Some(nms_core::player::PlayerState::new(
+            zero, 0, None, None, 7, 8, 9,
+        ));
+        for (address, name, biome) in [
+            (start, "Start", Biome::Barren),
+            (b, "B", Biome::Lush),
+            (c, "C", Biome::Lush),
+            (zero, "Zero", Biome::Barren),
+            (foreign, "Foreign", Biome::Barren),
+        ] {
+            model.insert_system(nms_core::system::System::new(
+                address,
+                Some(name.into()),
+                None,
+                None,
+                vec![nms_core::system::Planet::new(
+                    0,
+                    Some(biome),
+                    None,
+                    false,
+                    None,
+                    None,
+                )],
+            ));
+        }
+        model.insert_base(nms_core::player::PlayerBase::new(
+            "Shadow".into(),
+            nms_core::player::BaseType::HomePlanetBase,
+            foreign,
+            [0.0; 3],
+            None,
+        ));
+        let missing = GalacticAddress::new(50, 0, 0, 1, 0, 9);
+        model.insert_base(nms_core::player::PlayerBase::new(
+            "Missing".into(),
+            nms_core::player::BaseType::HomePlanetBase,
+            missing,
+            [0.0; 3],
+            None,
+        ));
+        let state_before = (model.player_position().copied(), model.active_galaxy);
+        let b_id = SystemId::from_address(&b);
+        let c_id = SystemId::from_address(&c);
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            let query = RouteQuery {
+                targets: TargetSelection::SystemIds(vec![b_id, c_id]),
+                from: RouteFrom::Address(start),
+                warp_range: Some(400.0),
+                within_ly: None,
+                max_targets: None,
+                algorithm,
+                return_to_start: true,
+            };
+            let result = execute_route(&model, &query).unwrap();
+            assert_eq!(result.targets_visited, 2);
+            assert_eq!(
+                result.route.hops.first().unwrap().system_id,
+                SystemId::from_address(&start)
+            );
+            assert_eq!(
+                result.route.hops.last().unwrap().system_id,
+                SystemId::from_address(&start)
+            );
+            assert!(
+                result
+                    .route
+                    .hops
+                    .iter()
+                    .all(|hop| hop.system_id.reality_index() == 9)
+            );
+
+            for targets in [
+                TargetSelection::SystemIds(vec![b_id, c_id]),
+                TargetSelection::Named(vec!["B".into(), "C".into()]),
+                TargetSelection::Biome(BiomeFilter {
+                    biome: Some(Biome::Lush),
+                    ..Default::default()
+                }),
+            ] {
+                let at_400 = execute_route(
+                    &model,
+                    &RouteQuery {
+                        targets: targets.clone(),
+                        within_ly: Some(400.0),
+                        max_targets: Some(1),
+                        return_to_start: false,
+                        ..query.clone()
+                    },
+                )
+                .unwrap();
+                assert_eq!(at_400.route.hops[1].system_id, b_id);
+                assert_eq!(at_400.targets_visited, 1);
+                let at_399 = execute_route(
+                    &model,
+                    &RouteQuery {
+                        targets,
+                        within_ly: Some(399.0),
+                        max_targets: None,
+                        return_to_start: false,
+                        ..query.clone()
+                    },
+                )
+                .unwrap_err();
+                assert!(matches!(
+                    at_399.downcast_ref::<nms_graph::route::RouteError>(),
+                    Some(nms_graph::route::RouteError::TooFewTargets)
+                ));
+            }
+
+            let foreign_id = SystemId::from_address(&foreign);
+            let missing_id = SystemId::from_address(&missing);
+            for max in [Some(0), Some(1)] {
+                let error = execute_route(
+                    &model,
+                    &RouteQuery {
+                        targets: TargetSelection::SystemIds(vec![foreign_id, missing_id]),
+                        max_targets: max,
+                        within_ly: Some(0.0),
+                        ..query.clone()
+                    },
+                )
+                .unwrap_err();
+                assert!(
+                    matches!(error.downcast_ref::<nms_graph::route::RouteError>(), Some(nms_graph::route::RouteError::SystemNotFound(id)) if *id == missing_id)
+                );
+            }
+            for max in [Some(0), Some(1)] {
+                let foreign_base_error = execute_route(
+                    &model,
+                    &RouteQuery {
+                        targets: TargetSelection::Named(vec!["Shadow".into(), "Missing".into()]),
+                        max_targets: max,
+                        within_ly: Some(0.0),
+                        ..query.clone()
+                    },
+                )
+                .unwrap_err();
+                assert!(
+                    matches!(foreign_base_error.downcast_ref::<nms_graph::route::RouteError>(), Some(nms_graph::route::RouteError::SystemNotFound(id)) if *id == missing_id)
+                );
+            }
+            let foreign_name_error = execute_route(
+                &model,
+                &RouteQuery {
+                    targets: TargetSelection::Named(vec!["Shadow".into()]),
+                    ..query.clone()
+                },
+            )
+            .unwrap_err();
+            assert!(
+                matches!(foreign_name_error.downcast_ref::<nms_graph::route::RouteError>(), Some(nms_graph::route::RouteError::NoPath { to, .. }) if *to == foreign_id)
+            );
+        }
+        assert_eq!(
+            state_before,
+            (model.player_position().copied(), model.active_galaxy)
+        );
+
+        model.set_active_galaxy(9);
+        let mismatch = execute_route(
+            &model,
+            &RouteQuery {
+                targets: TargetSelection::SystemIds(vec![]),
+                from: RouteFrom::CurrentPosition,
+                warp_range: None,
+                within_ly: None,
+                max_targets: Some(0),
+                algorithm: RoutingAlgorithm::NearestNeighbor,
+                return_to_start: false,
+            },
+        )
+        .unwrap_err();
+        assert!(matches!(
+            mismatch.downcast_ref::<GraphError>(),
+            Some(GraphError::ReferenceGalaxyMismatch {
+                reference: 0,
+                active: 9
+            })
+        ));
+        assert_eq!(
+            GraphError::NoSystemsInGalaxy(7).to_string(),
+            "no systems in galaxy 7"
+        );
+        assert_eq!(
+            GraphError::TargetNotFound("Missing".into()).to_string(),
+            "target not found: Missing"
+        );
     }
 }

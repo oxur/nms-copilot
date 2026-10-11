@@ -48,9 +48,7 @@ pub enum RoutingAlgorithm {
 pub enum RouteError {
     /// A system ID was not found in the model.
     SystemNotFound(SystemId),
-    /// Two valid systems belong to different galaxies.
-    ForeignGalaxy { from: SystemId, to: SystemId },
-    /// No path exists between two systems in the graph.
+    /// No same-galaxy path exists, or the requested systems are in different galaxies.
     NoPath { from: SystemId, to: SystemId },
     /// Too few targets to form a route.
     TooFewTargets,
@@ -60,9 +58,6 @@ impl std::fmt::Display for RouteError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::SystemNotFound(id) => write!(f, "system not found: {id}"),
-            Self::ForeignGalaxy { from, to } => {
-                write!(f, "systems belong to different galaxies: {from} and {to}")
-            }
             Self::NoPath { from, to } => {
                 write!(f, "no path from {from} to {to}")
             }
@@ -84,7 +79,7 @@ impl GalaxyModel {
     /// # Errors
     ///
     /// Returns [`RouteError::SystemNotFound`] when either ID is absent and
-    /// [`RouteError::ForeignGalaxy`] when the IDs belong to different galaxies.
+    /// [`RouteError::NoPath`] when the IDs belong to different galaxies.
     pub fn shortest_path(&self, from: SystemId, to: SystemId) -> Result<Route, RouteError> {
         if !self.systems.contains_key(&from) {
             return Err(RouteError::SystemNotFound(from));
@@ -119,7 +114,7 @@ impl GalaxyModel {
         let filtered = petgraph::visit::EdgeFiltered::from_fn(&self.graph, |edge| {
             let source = self.graph[edge.source()].reality_index();
             let target = self.graph[edge.target()].reality_index();
-            source == target
+            source == from.reality_index() && target == from.reality_index()
         });
         use petgraph::algo::astar;
         match astar(
@@ -130,10 +125,14 @@ impl GalaxyModel {
             |_| 0.0,
         ) {
             Some((_, path)) => {
-                for pair in path.windows(2) {
-                    self.validate_galaxy_pair(self.graph[pair[0]], self.graph[pair[1]])?;
+                for &node in &path {
+                    let id = self.graph[node];
+                    if !self.systems.contains_key(&id) {
+                        return Err(RouteError::SystemNotFound(id));
+                    }
+                    self.validate_galaxy_pair(from, id)?;
                 }
-                Ok(self.path_to_route(&path))
+                self.path_to_route(&path)
             }
             None => self.direct_route(from, to),
         }
@@ -141,7 +140,7 @@ impl GalaxyModel {
 
     /// Create a direct single-hop route between two systems.
     fn direct_route(&self, from: SystemId, to: SystemId) -> Result<Route, RouteError> {
-        let dist = self.euclidean_distance(from, to);
+        let dist = self.euclidean_distance(from, to)?;
         Ok(Route {
             hops: vec![
                 RouteHop {
@@ -162,7 +161,7 @@ impl GalaxyModel {
     }
 
     /// Convert a path of NodeIndexes into a Route with distances.
-    fn path_to_route(&self, path: &[NodeIndex]) -> Route {
+    fn path_to_route(&self, path: &[NodeIndex]) -> Result<Route, RouteError> {
         let mut hops = Vec::with_capacity(path.len());
         let mut cumulative = 0.0;
 
@@ -174,11 +173,11 @@ impl GalaxyModel {
                 let prev = path[i - 1];
                 self.graph
                     .find_edge(prev, node)
-                    .map(|e| self.graph[e])
+                    .map(|e| Ok(self.graph[e]))
                     .unwrap_or_else(|| {
                         let prev_id = self.graph[prev];
                         self.euclidean_distance(prev_id, sys_id)
-                    })
+                    })?
             };
             cumulative += leg_dist;
             hops.push(RouteHop {
@@ -189,23 +188,24 @@ impl GalaxyModel {
             });
         }
 
-        Route {
+        Ok(Route {
             total_distance_ly: cumulative,
             hops,
-        }
+        })
     }
 
     /// Euclidean distance in ly between two systems.
-    fn euclidean_distance(&self, a: SystemId, b: SystemId) -> f64 {
+    fn euclidean_distance(&self, a: SystemId, b: SystemId) -> Result<f64, RouteError> {
         match (self.systems.get(&a), self.systems.get(&b)) {
-            (Some(sa), Some(sb)) => sa.address.distance_ly(&sb.address),
-            _ => f64::NAN,
+            (Some(sa), Some(sb)) => Ok(sa.address.distance_ly(&sb.address)),
+            (None, _) => Err(RouteError::SystemNotFound(a)),
+            (_, None) => Err(RouteError::SystemNotFound(b)),
         }
     }
 
     fn validate_galaxy_pair(&self, from: SystemId, to: SystemId) -> Result<(), RouteError> {
         if from.reality_index() != to.reality_index() {
-            return Err(RouteError::ForeignGalaxy { from, to });
+            return Err(RouteError::NoPath { from, to });
         }
         Ok(())
     }
@@ -244,37 +244,28 @@ impl GalaxyModel {
         if targets.is_empty() {
             return Err(RouteError::TooFewTargets);
         }
-        if !self.systems.contains_key(&start) {
-            return Err(RouteError::SystemNotFound(start));
-        }
-        for &t in targets {
-            if !self.systems.contains_key(&t) {
-                return Err(RouteError::SystemNotFound(t));
-            }
-        }
-        for &target in targets {
-            if start.reality_index() != target.reality_index() {
-                return Err(RouteError::NoPath {
-                    from: start,
-                    to: target,
-                });
-            }
-        }
+        let order: Vec<_> = std::iter::once(start)
+            .chain(targets.iter().copied())
+            .collect();
+        self.validate_order(&order)?;
 
         let mut unvisited: Vec<SystemId> = targets.to_vec();
         let mut order = vec![start];
         let mut current = start;
 
         while !unvisited.is_empty() {
-            let (nearest_idx, _) = unvisited
-                .iter()
-                .enumerate()
-                .map(|(i, &t)| (i, self.euclidean_distance(current, t)))
-                .min_by(|a, b| {
-                    a.1.total_cmp(&b.1)
-                        .then_with(|| crate::query::system_id_order(unvisited[a.0], unvisited[b.0]))
-                })
-                .unwrap();
+            let mut nearest: Option<(usize, f64)> = None;
+            for (index, &target) in unvisited.iter().enumerate() {
+                let distance = self.euclidean_distance(current, target)?;
+                if nearest.is_none_or(|(best_index, best_distance)| {
+                    distance.total_cmp(&best_distance).is_lt()
+                        || (distance.total_cmp(&best_distance).is_eq()
+                            && crate::query::system_id_order(target, unvisited[best_index]).is_lt())
+                }) {
+                    nearest = Some((index, distance));
+                }
+            }
+            let (nearest_idx, _) = nearest.expect("unvisited is nonempty");
 
             current = unvisited.swap_remove(nearest_idx);
             order.push(current);
@@ -294,7 +285,7 @@ impl GalaxyModel {
     /// # Errors
     ///
     /// Returns [`RouteError::SystemNotFound`] for an absent system and
-    /// [`RouteError::ForeignGalaxy`] if IDs span galaxies.
+    /// [`RouteError::NoPath`] if IDs span galaxies.
     pub fn build_route_from_order(&self, order: &[SystemId]) -> Result<Route, RouteError> {
         self.validate_order(order)?;
         let mut hops = Vec::with_capacity(order.len());
@@ -304,7 +295,7 @@ impl GalaxyModel {
             let leg_dist = if i == 0 {
                 0.0
             } else {
-                self.euclidean_distance(order[i - 1], sys_id)
+                self.euclidean_distance(order[i - 1], sys_id)?
             };
             cumulative += leg_dist;
             hops.push(RouteHop {
@@ -348,7 +339,7 @@ impl GalaxyModel {
                     if closed && i == 0 && j == movable_end - 1 {
                         continue;
                     }
-                    let gain = self.two_opt_gain(&order, i, j);
+                    let gain = self.two_opt_gain(&order, i, j)?;
                     if gain > 1e-6 {
                         order[i + 1..=j].reverse();
                         improved = true;
@@ -361,24 +352,24 @@ impl GalaxyModel {
     }
 
     /// Calculate the distance gain from a 2-opt swap.
-    fn two_opt_gain(&self, order: &[SystemId], i: usize, j: usize) -> f64 {
+    fn two_opt_gain(&self, order: &[SystemId], i: usize, j: usize) -> Result<f64, RouteError> {
         let d = |a: SystemId, b: SystemId| self.euclidean_distance(a, b);
 
-        let old_dist = d(order[i], order[i + 1])
+        let old_dist = d(order[i], order[i + 1])?
             + if j + 1 < order.len() {
-                d(order[j], order[j + 1])
+                d(order[j], order[j + 1])?
             } else {
                 0.0
             };
 
-        let new_dist = d(order[i], order[j])
+        let new_dist = d(order[i], order[j])?
             + if j + 1 < order.len() {
-                d(order[i + 1], order[j + 1])
+                d(order[i + 1], order[j + 1])?
             } else {
                 0.0
             };
 
-        old_dist - new_dist
+        Ok(old_dist - new_dist)
     }
 
     /// Plan a route using nearest-neighbor + 2-opt.
@@ -417,19 +408,34 @@ impl GalaxyModel {
         let order: Vec<_> = route.hops.iter().map(|hop| hop.system_id).collect();
         self.validate_order(&order)?;
         if route.hops.len() < 2 {
-            return self.build_route_from_order(&order);
+            return Ok(Route {
+                hops: route
+                    .hops
+                    .first()
+                    .map(|hop| RouteHop {
+                        system_id: hop.system_id,
+                        leg_distance_ly: 0.0,
+                        cumulative_ly: 0.0,
+                        is_waypoint: hop.is_waypoint,
+                    })
+                    .into_iter()
+                    .collect(),
+                total_distance_ly: 0.0,
+            });
         }
 
-        let mut new_hops: Vec<RouteHop> = Vec::new();
+        let mut new_hops = Vec::with_capacity(route.hops.len());
         new_hops.push(RouteHop {
-            is_waypoint: false,
-            ..route.hops[0].clone()
+            system_id: route.hops[0].system_id,
+            leg_distance_ly: 0.0,
+            cumulative_ly: 0.0,
+            is_waypoint: route.hops[0].is_waypoint,
         });
 
         for i in 1..route.hops.len() {
             let prev_id = new_hops.last().unwrap().system_id;
             let next_id = route.hops[i].system_id;
-            let leg = self.euclidean_distance(prev_id, next_id);
+            let leg = self.euclidean_distance(prev_id, next_id)?;
 
             if leg <= max_ly {
                 let cumulative = new_hops.last().unwrap().cumulative_ly + leg;
@@ -440,7 +446,13 @@ impl GalaxyModel {
                     is_waypoint: route.hops[i].is_waypoint,
                 });
             } else {
-                self.insert_waypoints(&mut new_hops, prev_id, next_id, max_ly);
+                self.insert_waypoints(
+                    &mut new_hops,
+                    prev_id,
+                    next_id,
+                    max_ly,
+                    route.hops[i].is_waypoint,
+                )?;
             }
         }
 
@@ -458,9 +470,10 @@ impl GalaxyModel {
         from: SystemId,
         to: SystemId,
         max_ly: f64,
-    ) {
+        destination_is_waypoint: bool,
+    ) -> Result<(), RouteError> {
         let mut current = from;
-        let mut remaining = self.euclidean_distance(current, to);
+        let mut remaining = self.euclidean_distance(current, to)?;
         let max_iterations = 1000;
         let mut iterations = 0;
 
@@ -472,23 +485,25 @@ impl GalaxyModel {
                 None => break,
             };
 
-            let best = self
-                .systems_within_radius_from_address(&current_sys.address, max_ly)
-                .into_iter()
-                .filter(|(id, dist)| {
-                    *id != current
-                        && *dist <= max_ly
-                        && self.euclidean_distance(*id, to) < remaining
-                })
-                .min_by(|a, b| {
-                    let da = self.euclidean_distance(a.0, to);
-                    let db = self.euclidean_distance(b.0, to);
-                    da.total_cmp(&db)
-                        .then_with(|| crate::query::system_id_order(a.0, b.0))
-                });
+            let mut candidates = Vec::new();
+            for (id, distance) in
+                self.systems_within_radius_from_address(&current_sys.address, max_ly)
+            {
+                if id == current || distance > max_ly {
+                    continue;
+                }
+                let remaining_distance = self.euclidean_distance(id, to)?;
+                if remaining_distance < remaining {
+                    candidates.push((id, distance, remaining_distance));
+                }
+            }
+            let best = candidates.into_iter().min_by(|a, b| {
+                a.2.total_cmp(&b.2)
+                    .then_with(|| crate::query::system_id_order(a.0, b.0))
+            });
 
             match best {
-                Some((waypoint_id, step_dist)) => {
+                Some((waypoint_id, step_dist, _)) => {
                     let cumulative = hops.last().unwrap().cumulative_ly + step_dist;
                     hops.push(RouteHop {
                         system_id: waypoint_id,
@@ -497,20 +512,21 @@ impl GalaxyModel {
                         is_waypoint: true,
                     });
                     current = waypoint_id;
-                    remaining = self.euclidean_distance(current, to);
+                    remaining = self.euclidean_distance(current, to)?;
                 }
                 None => break,
             }
         }
 
-        let final_dist = self.euclidean_distance(current, to);
+        let final_dist = self.euclidean_distance(current, to)?;
         let cumulative = hops.last().unwrap().cumulative_ly + final_dist;
         hops.push(RouteHop {
             system_id: to,
             leg_distance_ly: final_dist,
             cumulative_ly: cumulative,
-            is_waypoint: false,
+            is_waypoint: destination_is_waypoint,
         });
+        Ok(())
     }
 
     /// Count the number of warp jumps needed for a route at a given range.
@@ -751,7 +767,7 @@ mod tests {
         model.insert_system(System::new(foreign_address, None, None, None, vec![]));
         assert!(matches!(
             model.shortest_path(local, foreign),
-            Err(RouteError::ForeignGalaxy { from, to }) if from == local && to == foreign
+            Err(RouteError::NoPath { from, to }) if from == local && to == foreign
         ));
     }
 
@@ -764,7 +780,7 @@ mod tests {
         model.insert_system(System::new(foreign_address, None, None, None, vec![]));
         assert!(matches!(
             model.build_route_from_order(&[local, foreign]),
-            Err(RouteError::ForeignGalaxy { .. })
+            Err(RouteError::NoPath { .. })
         ));
         assert!(matches!(
             model.build_route_from_order(&[local, id(0xDEAD)]),
@@ -772,7 +788,7 @@ mod tests {
         ));
         assert!(matches!(
             model.two_opt_improve(vec![local, foreign]),
-            Err(RouteError::ForeignGalaxy { .. })
+            Err(RouteError::NoPath { .. })
         ));
         assert!(matches!(
             model.two_opt_improve(vec![id(0xDEAD)]),
@@ -797,7 +813,7 @@ mod tests {
         };
         assert!(matches!(
             model.constrain_hops(&invalid_route, 1_000.0),
-            Err(RouteError::ForeignGalaxy { .. })
+            Err(RouteError::NoPath { .. })
         ));
         let missing_route = Route {
             hops: vec![RouteHop {
@@ -815,6 +831,113 @@ mod tests {
         let empty = model.build_route_from_order(&[]).unwrap();
         assert!(empty.hops.is_empty());
         assert_eq!(empty.total_distance_ly, 0.0);
+        assert!(matches!(
+            model.build_route_from_order(&[local, foreign, id(0xDEAD)]),
+            Err(RouteError::SystemNotFound(missing)) if missing == id(0xDEAD)
+        ));
+    }
+
+    #[test]
+    fn test_constrain_hops_recomputes_totals_and_preserves_waypoint_markers() {
+        let mut model = GalaxyModel::new();
+        let addresses = [
+            GalacticAddress::new(0, 0, 0, 100, 0, 9),
+            GalacticAddress::new(1, 0, 0, 101, 0, 9),
+            GalacticAddress::new(2, 0, 0, 102, 0, 9),
+        ];
+        for address in addresses {
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+        let [a, b, c] = addresses.map(|address| SystemId::from_address(&address));
+        let route = Route {
+            hops: vec![
+                RouteHop {
+                    system_id: a,
+                    leg_distance_ly: 55.0,
+                    cumulative_ly: 99.0,
+                    is_waypoint: false,
+                },
+                RouteHop {
+                    system_id: c,
+                    leg_distance_ly: 3.0,
+                    cumulative_ly: 4.0,
+                    is_waypoint: true,
+                },
+            ],
+            total_distance_ly: 4.0,
+        };
+        let constrained = model.constrain_hops(&route, 400.0).unwrap();
+        assert_eq!(
+            constrained
+                .hops
+                .iter()
+                .map(|h| h.system_id)
+                .collect::<Vec<_>>(),
+            vec![a, b, c]
+        );
+        assert_eq!(
+            constrained
+                .hops
+                .iter()
+                .map(|h| h.leg_distance_ly)
+                .collect::<Vec<_>>(),
+            vec![0.0, 400.0, 400.0]
+        );
+        assert_eq!(
+            constrained
+                .hops
+                .iter()
+                .map(|h| h.cumulative_ly)
+                .collect::<Vec<_>>(),
+            vec![0.0, 400.0, 800.0]
+        );
+        assert_eq!(
+            constrained
+                .hops
+                .iter()
+                .map(|h| h.is_waypoint)
+                .collect::<Vec<_>>(),
+            vec![false, true, true]
+        );
+        assert_eq!(constrained.total_distance_ly, 800.0);
+
+        let single = Route {
+            hops: vec![RouteHop {
+                system_id: a,
+                leg_distance_ly: 9.0,
+                cumulative_ly: 12.0,
+                is_waypoint: true,
+            }],
+            total_distance_ly: 12.0,
+        };
+        let normalized = model.constrain_hops(&single, 400.0).unwrap();
+        assert_eq!(normalized.hops.len(), 1);
+        assert_eq!(normalized.hops[0].leg_distance_ly, 0.0);
+        assert_eq!(normalized.hops[0].cumulative_ly, 0.0);
+        assert!(normalized.hops[0].is_waypoint);
+        assert_eq!(normalized.total_distance_ly, 0.0);
+    }
+
+    #[test]
+    fn test_nine_galaxy_closed_two_opt_keeps_each_target_once() {
+        let mut model = GalaxyModel::new();
+        let addresses = [0, 3, 1, 2].map(|x| GalacticAddress::new(x, 0, 0, x as u16 + 100, 0, 9));
+        for address in addresses {
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+        let ids = addresses.map(|address| SystemId::from_address(&address));
+        let route = model
+            .two_opt_improve(vec![ids[0], ids[1], ids[2], ids[3], ids[0]])
+            .unwrap();
+        assert_eq!(route.hops.first().unwrap().system_id, ids[0]);
+        assert_eq!(route.hops.last().unwrap().system_id, ids[0]);
+        assert_eq!(route.total_distance_ly, 2_400.0);
+        let interiors: HashSet<_> = route.hops[1..route.hops.len() - 1]
+            .iter()
+            .map(|hop| hop.system_id)
+            .collect();
+        assert_eq!(interiors.len(), 3);
+        assert_eq!(interiors, HashSet::from([ids[1], ids[2], ids[3]]));
     }
 
     #[test]
@@ -849,6 +972,31 @@ mod tests {
                 .windows(2)
                 .all(|pair| { crate::query::system_id_order(pair[0], pair[1]).is_lt() })
         );
+    }
+
+    #[test]
+    fn test_reachable_nine_galaxy_returns_exact_complete_set_with_collisions() {
+        let mut model = GalaxyModel::new();
+        let mut expected = Vec::new();
+        for x in 0..120_i16 {
+            let address = GalacticAddress::new(x, 0, 0, 1000 + x as u16, 0, 9);
+            expected.push(SystemId::from_address(&address));
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+        for x in [0_i16, 10, 50] {
+            let address = GalacticAddress::new(x, 0, 0, 1000 + x as u16, 0, 0);
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+        let isolated = GalacticAddress::new(1000, 0, 0, 500, 0, 9);
+        model.insert_system(System::new(isolated, None, None, None, vec![]));
+        model.set_active_galaxy(0);
+        let start = expected[0];
+        let reachable = model.reachable_systems(start, 47_600.0).unwrap();
+        expected.sort_by(|a, b| crate::query::system_id_order(*a, *b));
+        assert_eq!(reachable, expected);
+        assert!(reachable.iter().all(|id| id.reality_index() == 9));
+        assert!(!reachable.contains(&SystemId::from_address(&isolated)));
+        assert!(model.reachable_systems(id(0xDEAD), 47_600.0).is_err());
     }
 
     #[test]
