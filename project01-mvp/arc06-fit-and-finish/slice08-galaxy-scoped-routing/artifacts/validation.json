@@ -14554,7 +14554,230 @@
         "project02-personal-atlas/project-plan.md"
       ],
       "planning_unrelated_paths_excluded": true,
-      "planning_precommit_head": "c0351040b8fd6fba06c5ead8964b092a63aa7398"
+      "planning_precommit_head": "40c36abbee7574122dd766c384cf921e002c5140",
+      "planning_commit": {
+        "commit": "3f21788ca8edbd20507509066d07cf902940906e",
+        "parent": "40c36abbee7574122dd766c384cf921e002c5140",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ],
+        "trailers": [
+          "Co-authored-by: Codex <noreply@openai.com>",
+          "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+        ],
+        "message": "docs: return Slice08 Iteration05 evidence"
+      },
+      "planning_commit_attempts": [
+        {
+          "attempt": "default sandbox commit --only same four paths",
+          "exit_code": 128,
+          "visible_result": "git failed to create .git/worktrees/planning/index.lock with Operation not permitted; no commit created. Tool output also contained the four-name diff listing, so separate raw child streams were unavailable."
+        },
+        {
+          "attempt": "same four-path --only commit with escalated filesystem access",
+          "result": "3f21788ca8edbd20507509066d07cf902940906e",
+          "exit_code": 0
+        }
+      ],
+      "postcommit_checks": [
+        {
+          "name": "planning-status",
+          "argv": [
+            "git",
+            "status",
+            "--short",
+            "--branch"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "IyMgcGxhbm5pbmcuLi5vcmlnaW4vcGxhbm5pbmcgW2FoZWFkIDE2XQo=",
+            "bytes": 41,
+            "sha256": "b403f1987dafef0995743706854d606c171af5dea9e3a06f8164e0f1087d82da"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "planning-head",
+          "argv": [
+            "git",
+            "rev-parse",
+            "HEAD",
+            "HEAD^"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "M2YyMTc4OGNhOGVkYmQyMDUwNzUwOTA2NmQwN2NmOTAyOTQwOTA2ZQo0MGMzNmFiYmVlNzU3NDEyMmRkNzY2YzM4NGNmOTIxZTAwMmM1MTQwCg==",
+            "bytes": 82,
+            "sha256": "be76118f2786f52795c0ee989d6bde8fe84310b0a80617b115be4e377f4cc25d"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "planning-commit-paths",
+          "argv": [
+            "git",
+            "diff",
+            "HEAD^",
+            "HEAD",
+            "--name-only"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "cHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvZXhlY3V0aW9uLm1kCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL3ZhbGlkYXRpb24uanNvbgpwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2Nsb3NpbmctcmVwb3J0Lm1kCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvbGVkZ2VyLm1kCg==",
+            "bytes": 337,
+            "sha256": "c5df57b8bcac060f5153164537b560343799be30c826aea72c44c30712a6f501"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "planning-commit-message",
+          "argv": [
+            "git",
+            "show",
+            "-s",
+            "--format=%B",
+            "HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "ZG9jczogcmV0dXJuIFNsaWNlMDggSXRlcmF0aW9uMDUgZXZpZGVuY2UKCkNvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgpDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+Cgo=",
+            "bytes": 143,
+            "sha256": "17a1efeec583882821bed368f6d8e98d5b714ede867ec38b048f1ff066ce5bfc"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "source-status",
+          "argv": [
+            "git",
+            "status",
+            "--short",
+            "--branch"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "IyMgY29kZXgvZ2FsYXh5LXNjb3BlZC1yb3V0aW5nCg==",
+            "bytes": 31,
+            "sha256": "df37d4915b264ada9327e47ef866f9d1a24b67fa030545f38a6ef08455bc1d78"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "source-head",
+          "argv": [
+            "git",
+            "rev-parse",
+            "HEAD",
+            "HEAD^"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "MGUxZThiNDIzOTg4MWEzNzhiYzhmYjkyOGVmMjU3NDFjMjI4ZTE3MQowMjI2MGI3NzhlNmY2OTY3ZmFjMTRhYTQ0MDczZTk0OGIzMTIxZDY2Cg==",
+            "bytes": 82,
+            "sha256": "a6df5f91c6aa89ba7edd3f85aabe8d1b643a322a8e0d6d93b60f2d3bb641f798"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "name": "source-commit-paths",
+          "argv": [
+            "git",
+            "diff",
+            "HEAD^",
+            "HEAD",
+            "--name-only"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+          "env": {},
+          "exit_code": 0,
+          "stdout": {
+            "base64": "Y3JhdGVzL25tcy1ncmFwaC9zcmMvcXVlcnkucnMKY3JhdGVzL25tcy1xdWVyeS9zcmMvcm91dGUucnMK",
+            "bytes": 60,
+            "sha256": "43a3aed4207ce76b55aa5efd07555e8da5935c542f7f99df3208f7189a4903bf"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ],
+      "intervening_planning_commit": {
+        "commit": "40c36abbee7574122dd766c384cf921e002c5140",
+        "parent": "c0351040b8fd6fba06c5ead8964b092a63aa7398",
+        "subject": "docs(project02): plan journals and traveller cultures",
+        "observed_during_turn_as_five_dirty_project02_paths": [
+          "project02-personal-atlas/README.md",
+          "project02-personal-atlas/artifacts/save-account-ux.md",
+          "project02-personal-atlas/artifacts/source-findings.md",
+          "project02-personal-atlas/design.md",
+          "project02-personal-atlas/project-plan.md"
+        ],
+        "included_in_iteration05_return": false,
+        "note": "This distinct parent commit landed after the Iteration05 intake. Iteration05 precommit status then contained only its four authorized Slice08 records; this return did not modify the Project02 paths."
+      },
+      "followup_diffcheck": {
+        "name": "validation-only-followup-diffcheck",
+        "argv": [
+          "git",
+          "diff",
+          "--check",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
     },
     "predecessor_corrections": {
       "SR-01": "Iteration04 claim corrected: fixture had no supplied player; planet-radius and active9 positives were count-only; resetting active0 before comparison masked final active selection.",
@@ -14711,11 +14934,12 @@
       "disposition": "Preserved as originally recorded; missing channels, exact statuses, environments and invocation counts remain unknown where receipts are absent. No waiver inferred."
     },
     "channel_integrity": {
-      "count": 788,
+      "count": 804,
       "errors": [],
       "prior_count": 744,
       "prior_values_preserved": true,
-      "checked_after_final_attempt": "iteration05.attempts[21]"
+      "checked_after_validation_followup_diffcheck": true,
+      "includes_postcommit_receipts": true
     }
   }
 }
