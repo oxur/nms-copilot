@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.20, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.21, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -168,3 +168,9 @@ Version1.19 (2026-10-10): routine initial-review/correction handoff; preserve pr
 Current assignment `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration02.md` is evidence-only. CDC accepts eight child rows after fresh637/855 and required gate/source/evidence checks at7118a486; QG-09 remains open solely for explicitly identifying the initial/Iteration01 assignments in the canonical closing report. Inventory and bubble-up now pass; no structural/runtime/cache finding. Source unchanged; next required composition stays held until child acceptance. Arc25/six done/nineteen open and project25 open; all original/expanded owners/gates persist.
 
 Version1.20 (2026-10-10): routine correction acceptance/current-report assignment update; no structural scope, architecture, criterion or sequence change.
+
+## Slice07 final closure — 2026-10-11
+
+CDC independently accepts QG-09 after reviewing Iteration02 planningaf98f31 against issuancea609b21 and unchanged source7118a486. All nine child rows and R06-S07 are done. All186 capture channels, old prefixes/objects/eight accepted rows, assignment identification, fixture and three commit fences pass; independent637/855 and nine source gates retain applicability without rerun. No structural design/acceptance/cache change arose. Arc25/seven done/eighteen open; project25 open. Required routing/spatial/session/live composition is next, before evidence-gated save-field repair. No Slice07 CC assignment remains active; main/dependencies and all original requirements/gates remain.
+
+Version1.21 (2026-10-11): routine independently accepted child closure; approved scope, architecture, sequence and parent acceptance unchanged.

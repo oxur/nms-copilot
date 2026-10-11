@@ -1,12 +1,12 @@
 # Slice07 — galaxy-scoped query composition
 
-Version:1.2. Created2026-10-10. Status:open; eight rows accepted, evidence-only Iteration02 issued for QG-09 assignment identification.
+Version:1.3. Created2026-10-10. Status:closed after final CDC review2026-10-11; all nine rows independently accepted.
 
 ## Goal and authority
 
 Deliver the query portion of the approved galaxy-qualified identity repair on accepted Slice06 sourcef57a38f. Two-Contributor Workflow and Expedited Mode continue: CDC/Sofie designs/reviews; a separate CC implements through Operator relay. The Operator approved the correctness expansion and most recently the precise GI-08 historical exception and continuation. That exception is confined to one prior lint call; every new evidence capture retains full requirements.
 
-The preserved [initial prompt](cc-prompt.md) defines the binding implementation contract; [Iteration02](cc-prompt-iteration02.md) is the current correction assignment. This slice fixes qualified name indexing/lookup, canonical planet/system associations, consistent filters, default-active versus explicit-reference scope, complete filter-before-nearest ranking, same-galaxy-only show distances and compatibility of unchanged2/2 raw archives. All nine [ledger](ledger.md) rows need independent acceptance.
+The preserved [initial prompt](cc-prompt.md) defines the binding implementation contract; [Iteration02](cc-prompt-iteration02.md) is the preserved final correction assignment; no Slice07 assignment remains active. This slice fixes qualified name indexing/lookup, canonical planet/system associations, consistent filters, default-active versus explicit-reference scope, complete filter-before-nearest ranking, same-galaxy-only show distances and compatibility of unchanged2/2 raw archives. All nine [ledger](ledger.md) rows need independent acceptance.
 
 ## Scope, sequencing and dependencies
 
@@ -59,3 +59,5 @@ Version1.1 (2026-10-10): initial independent verdict, preserved initial prompt a
 [CDC correction review](cdc-verification.md#iteration01-independent-cdc-review--2026-10-10) accepts QG-03/08 at7118a486 and retains six prior rows after actual delta/applicability checks. Fresh focused637/workspace855 and all prescribed gates pass. QG-09 remains open solely because the canonical closing report omitted the explicitly required initial and Iteration01 prompt paths; inventory/bubble-up and evidence preservation now pass. Iteration02 appends the identification record only, with no source/test/cache change. Prior source gates are retained subject to unchanged-input fences; structural evidence checks remain required. No successor composition or parent acceptance.
 
 Version1.2 (2026-10-10): accepted two corrected rows and issued one evidence-only follow-up for the remaining explicit reporting requirement; no scope/architecture/criterion/gate reduction.
+
+Version1.3 (2026-10-11): final CDC acceptance of evidence-only Iteration02 at unchanged7118a486; all nine rows done. Required composition and parent gates remain open.

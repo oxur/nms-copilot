@@ -93,3 +93,7 @@ Current CC assignment is `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-
 ## Slice07 Iteration01 review and evidence correction — 2026-10-10
 
 Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration02.md`. CDC accepts eight rows and holds QG-09 only for explicit assignment paths in the canonical closing report. Source7118a486 remains fixed; fresh637/855 and prescribed gates passed. Inventory, bubble-up, retained history and scope/capture fences reproduced. No structural amendment; required next composition awaits child closure. Arc25/six done/nineteen open, project25 open; no waiver or main/dependency/publication action.
+
+## Slice07 final closure — 2026-10-11
+
+CDC independently accepts QG-09 after reviewing Iteration02 planningaf98f31 against issuancea609b21 and unchanged source7118a486. All nine child rows and R06-S07 are done. All186 capture channels, old prefixes/objects/eight accepted rows, assignment identification, fixture and three commit fences pass; independent637/855 and nine source gates retain applicability without rerun. No structural design/acceptance/cache change arose. Arc25/seven done/eighteen open; project25 open. Required routing/spatial/session/live composition is next, before evidence-gated save-field repair. No Slice07 CC assignment remains active; main/dependencies and all original requirements/gates remain.
