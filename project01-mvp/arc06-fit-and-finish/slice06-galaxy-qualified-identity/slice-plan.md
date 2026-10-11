@@ -1,6 +1,6 @@
 # Slice06 — galaxy-qualified identity foundation
 
-Version:1.1. Created2026-10-10. Status:open; seven rows independently accepted; GI-08 requires evidence recovery.
+Version:1.2. Created2026-10-10. Status:open; seven rows independently accepted; GI-08 awaits Operator evidence-exception disposition.
 
 ## Goal and authority
 
@@ -37,9 +37,9 @@ Coherent/portable: source versus planning allowlists and source dependency chain
 | Issued | Prompt relative to Project01 | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
 |2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt.md | No predecessor within slice; Slice05 independently closed | First identity implementation pass on accepted cache dependency | reviewed; seven rows accepted, GI-08 returned |
-|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md | sibling cc-prompt.md | Recover original failed lint evidence for GI-08; source unchanged | active |
+|2026-10-10 | arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md | sibling cc-prompt.md | Recover original failed lint evidence for GI-08; source unchanged | reviewed; partial recovery independently checked; Operator disposition pending |
 
-Current assignment: cc-prompt-iteration01.md. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
+Current assignment: none; iteration01 completed and independently reviewed, Operator disposition pending. Up to five refinement iterations, preserving issued prompts and prior failures. Exit: all eight rows independently accepted plus honest arc bubble-up, no scope reduction. The parent requirements and original closeout obligations remain open.
 
 ## Version history
 
@@ -56,3 +56,9 @@ Ordinary scoped documentation baseline passes with4 core bracket warnings,3 grap
 Author readiness for iteration01: actual24 captures and failure entry inspected with strict decode/length/summary checks, current source reviewed and eight independent gates executed. The prompt specifies narrowly scoped original-record lookup, fidelity/provenance assessment, append-only recovery evidence and preservation verifiers. Work-verification retention and engineering-methods evidence-assignment guidance apply; no Rust design/production repair is requested. Source-of-record availability is unknown and observable, not a guaranteed passing outcome.
 
 Version1.1 (2026-10-10): routine partial independent acceptance and evidence-recovery refinement; original scope/criteria/sequence unchanged, GI-08 not waived.
+
+## Iteration01 independent review and pending disposition — 2026-10-10
+
+[CDC correction review](cdc-verification.md#iteration01-independent-review--2026-10-10) verifies the authentic original combined lint transcript, historical session prefix hash, four-path evidence commit a317761 and all preservation fences. GI-01–07 retain prior independent acceptance; GI-08 stays open because separate historical channels/direct exit were not retained. No new Rust gates are required by this evidence-only delta and none were rerun. Current CC assignment is none. The narrowly worded one-time acceptance amendment is proposed in the reviewer record for explicit Operator approval; it is not yet applied. Recovery is complete within its bounded source population; no repeated CC recovery loop or successor work is issued without a concrete new evidence target or approval.
+
+Version1.2 (2026-10-10): routine completed-recovery/current-assignment update and pending decision; no acceptance amendment yet, no source or scope changes.

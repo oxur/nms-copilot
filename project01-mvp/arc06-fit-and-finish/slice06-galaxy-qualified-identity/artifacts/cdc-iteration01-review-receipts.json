@@ -1,0 +1,111 @@
+{
+  "reviewer": "CDC/Sofie; independent of CC evidence correction",
+  "date": "2026-10-10",
+  "assignment": "arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md",
+  "source_commit": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+  "planning_packet": "a3177611f80f232a585201619739fc3efb665489",
+  "runs": [
+    {
+      "argv": [
+        "python3",
+        "/private/tmp/nms-s06-i01-review/audit.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+      "explicit_env": {},
+      "exit_code": 0,
+      "stdout_length": 2003,
+      "stdout_sha256": "65edef0ca360751075ef237e3858a4383c283eb643b85e4ad63c9524aade96cb",
+      "stdout_base64": "ewogICJhc3NpZ25tZW50IjogImFyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDYtZ2FsYXh5LXF1YWxpZmllZC1pZGVudGl0eS9jYy1wcm9tcHQtaXRlcmF0aW9uMDEubWQiLAogICJzb3VyY2VfdW5jaGFuZ2VkIjogImY1N2EzOGY3ZDFmMDBkMWEzZjVhYTUwMGVkNWY3Y2U3ZDhjMjZlYjgiLAogICJwbGFubmluZ19wYWNrZXQiOiAiYTMxNzc2MTFmODBmMjMyYTU4NTIwMTYxOTczOWZjM2VmYjY2NTQ4OSIsCiAgInBhcmVudCI6ICI0MWZkYzQ3NTc2NjFmYWMxNDk1YTg3NWNlN2JlYTI3Yzk4ODgwMzVmIiwKICAiZXhhY3RfZm91cl9wYXRoc2V0IjogWwogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwNi1nYWxheHktcXVhbGlmaWVkLWlkZW50aXR5L2FydGlmYWN0cy9leGVjdXRpb24ubWQiLAogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwNi1nYWxheHktcXVhbGlmaWVkLWlkZW50aXR5L2FydGlmYWN0cy92YWxpZGF0aW9uLmpzb24iLAogICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwNi1nYWxheHktcXVhbGlmaWVkLWlkZW50aXR5L2Nsb3NpbmctcmVwb3J0Lm1kIiwKICAgICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDYtZ2FsYXh5LXF1YWxpZmllZC1pZGVudGl0eS9sZWRnZXIubWQiCiAgXSwKICAidHJhaWxlcnNfb25jZSI6IHRydWUsCiAgImNsZWFuX3Bpbm5lZF93b3JrdHJlZXMiOiA0LAogICJhbGxfcHJpb3JfanNvbl92YWx1ZXNfZXF1YWwiOiB0cnVlLAogICJwcmlvcl9jY19wcm9zZV9wcmVmaXhlc19wcmVzZXJ2ZWQiOiB0cnVlLAogICJzZXZlbl9hY2NlcHRlZF9yb3dzX2J5dGVfaWRlbnRpY2FsIjogdHJ1ZSwKICAiZ2kwOF9jcml0ZXJpYV9zdGF0dXNfdW5jaGFuZ2VkIjogdHJ1ZSwKICAiaW1tdXRhYmxlX2lucHV0c19lcXVhbCI6IHRydWUsCiAgInByaW9yXzI0X2NhcHR1cmVzX3JlZGVjb2RlZF9hbmRfc3VtbWFyaWVzX3ZlcmlmaWVkIjogdHJ1ZSwKICAiaXRlcmF0aW9uMDFfY2FwdHVyZV9lbnRyaWVzX2NoZWNrZWQiOiAxMywKICAiY2FwdHVyZV9lbnRyeV9leGl0X2NvZGVzIjogWwogICAgMCwKICAgIDEsCiAgICAxLAogICAgMCwKICAgIDEsCiAgICAxLAogICAgMCwKICAgIDAsCiAgICAwLAogICAgMSwKICAgIDAsCiAgICAwLAogICAgMAogIF0sCiAgInNlc3Npb25fY3VycmVudF9zaGEyNTYiOiAiZGNjYTY5ZjU0ZGEwMWUxMzA2OWZhNGMzZmI5YTI1MjY5MGQxMjIxNmVlNWFlMDQzMzE2MzQ2MmM5NzQ2MmJkMSIsCiAgInJlY29yZGVkX3Nlc3Npb25fc2hhMjU2IjogImRkN2Y2MTEzNzUxZTE3NzgyYzZjMzRjMWJjYzczYmE3M2M4MDdiODEzZWJhNDk2N2ViNjIzOTk1ZGRlZmMwOGUiLAogICJyZWNvcmRlZF9zZXNzaW9uX21hdGNoZXNfY3VycmVudF9wcmVmaXgiOiB7CiAgICAibGluZV9jb3VudCI6IDE2NjQsCiAgICAiYnl0ZV9jb3VudCI6IDExMzcwNzQ5CiAgfSwKICAib3JpZ2luYWxfY2FsbF9saW5lIjogMTA1OSwKICAib3JpZ2luYWxfb3V0cHV0X2xpbmUiOiAxMDYyLAogICJjYWxsX2lkIjogImNhbGxfNDI4NzY1MmI5YzVjNDZkZDkwNGNkNDkzODljY2NkYTYiLAogICJvcmlnaW5hbF9jYWxsX2lucHV0X2VxdWFsIjogdHJ1ZSwKICAicmVjb3ZlcmVkX2NvbWJpbmVkX3RleHRfYnl0ZV9pZGVudGljYWwiOiB0cnVlLAogICJjb21iaW5lZF90ZXh0X2J5dGVzIjogMTI0MTQsCiAgImNvbWJpbmVkX3RleHRfc2hhMjU2IjogIjM5MmJjMWVlODczMWY2MTIwOTIyY2Q0YTMxYzcxODg2YTg5YTA2NjI0MzEyMGRhMTk0MGQ0ZjZjODBkMGY2YjQiLAogICJvdXRlcl90b29sX21ldGFkYXRhIjogIlNjcmlwdCBjb21wbGV0ZWRcbldhbGwgdGltZSAxOS4yIHNlY29uZHNcbk91dHB1dDpcbiIsCiAgInNlcGFyYXRlX3N0ZG91dF9zdGRlcnJfcmVjb3ZlcmVkIjogZmFsc2UsCiAgIm9yaWdpbmFsX3Byb2Nlc3NfZXhpdF9pbmRlcGVuZGVudGx5X3ZlcmlmaWVkIjogZmFsc2UKfQo=",
+      "stderr_length": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_base64": "",
+      "result": {
+        "assignment": "arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md",
+        "source_unchanged": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+        "planning_packet": "a3177611f80f232a585201619739fc3efb665489",
+        "parent": "41fdc4757661fac1495a875ce7bea27c9888035f",
+        "exact_four_pathset": [
+          "project01-mvp/arc06-fit-and-finish/slice06-galaxy-qualified-identity/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice06-galaxy-qualified-identity/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice06-galaxy-qualified-identity/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice06-galaxy-qualified-identity/ledger.md"
+        ],
+        "trailers_once": true,
+        "clean_pinned_worktrees": 4,
+        "all_prior_json_values_equal": true,
+        "prior_cc_prose_prefixes_preserved": true,
+        "seven_accepted_rows_byte_identical": true,
+        "gi08_criteria_status_unchanged": true,
+        "immutable_inputs_equal": true,
+        "prior_24_captures_redecoded_and_summaries_verified": true,
+        "iteration01_capture_entries_checked": 13,
+        "capture_entry_exit_codes": [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "session_current_sha256": "dcca69f54da01e13069fa4c3fb9a252690d12216ee5ae0433163462c97462bd1",
+        "recorded_session_sha256": "dd7f6113751e17782c6c34c1bcc73ba73c807b813eba4967eb623995ddefc08e",
+        "recorded_session_matches_current_prefix": {
+          "line_count": 1664,
+          "byte_count": 11370749
+        },
+        "original_call_line": 1059,
+        "original_output_line": 1062,
+        "call_id": "call_4287652b9c5c46dd904cd49389cccda6",
+        "original_call_input_equal": true,
+        "recovered_combined_text_byte_identical": true,
+        "combined_text_bytes": 12414,
+        "combined_text_sha256": "392bc1ee8731f6120922cd4a31c71886a89a066243120da1940d4f6c80d0f6b4",
+        "outer_tool_metadata": "Script completed\nWall time 19.2 seconds\nOutput:\n",
+        "separate_stdout_stderr_recovered": false,
+        "original_process_exit_independently_verified": false
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "/private/tmp/nms-s06-i01-review/search.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+      "explicit_env": {},
+      "exit_code": 0,
+      "stdout_length": 379,
+      "stdout_sha256": "35430a9759aeac8fea53e65c0d328c3dbcba7fd92d3321395972da6802cfc8e7",
+      "stdout_base64": "ewogICJpbnZlbnRvcnkiOiBbCiAgICB7CiAgICAgICJyb290IjogIi9wcml2YXRlL3RtcC9ubXMtczA2LWF1dGhvciIsCiAgICAgICJyZWd1bGFyX2ZpbGVzIjogOAogICAgfSwKICAgIHsKICAgICAgInJvb3QiOiAiL3ByaXZhdGUvdG1wL25tcy1zMDYtcmV2aWV3IiwKICAgICAgInJlZ3VsYXJfZmlsZXMiOiAxNQogICAgfSwKICAgIHsKICAgICAgInJvb3QiOiAiL3ByaXZhdGUvdG1wL25tcy1zMDYtdmFsaWRhdGlvbiIsCiAgICAgICJyZWd1bGFyX2ZpbGVzIjogMjQKICAgIH0KICBdLAogICJqc29uX2ZpbGVzX2NoZWNrZWQiOiAzNywKICAiY2hhbm5lbF9maWVsZHNfY2hlY2tlZCI6IDcyLAogICJvcmlnaW5hbF9lcnJvcl9jaGFubmVsX21hdGNoZXMiOiBbXQp9Cg==",
+      "stderr_length": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_base64": "",
+      "result": {
+        "inventory": [
+          {
+            "root": "/private/tmp/nms-s06-author",
+            "regular_files": 8
+          },
+          {
+            "root": "/private/tmp/nms-s06-review",
+            "regular_files": 15
+          },
+          {
+            "root": "/private/tmp/nms-s06-validation",
+            "regular_files": 24
+          }
+        ],
+        "json_files_checked": 37,
+        "channel_fields_checked": 72,
+        "original_error_channel_matches": []
+      }
+    }
+  ],
+  "native_rust_gates": "Not rerun: evidence-only delta, unchanged source/dependencies/fixtures; prior independent proof retained explicitly in cdc-verification.md."
+}

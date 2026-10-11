@@ -48,4 +48,4 @@ Prior23 rows and their criteria/dispositions remain;24 total, five done/nineteen
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | open | [CDC partial review](slice06-galaxy-qualified-identity/cdc-verification.md) | Seven child rows accepted; GI-08 exact failed-lint evidence remains open for iteration01; parent composition required |
+| R06-S06 | Galaxy-qualified key/index and cache foundation independently accepted | Eight-row Slice06 ledger; both-order collisions, canonical serde, import/show/snapshot and predecessor cache proofs | correctness-grade | Approved R06-R02/R03 bounded implementation | open | [CDC partial review](slice06-galaxy-qualified-identity/cdc-verification.md) | Seven child rows accepted; partial original evidence independently verified; GI-08 awaits Operator exception disposition; parent composition required |

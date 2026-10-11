@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.6
+version: 1.7
 project: project01-mvp
 status: active
 depends-on: []
@@ -611,3 +611,9 @@ Version1.5 (2026-10-10): routine bounded identity execution detail after Slice05
 Seven foundation rows independently accepted at sourcef57a38f/planning3293cc2; current gates pass (359 focused/840 workspace). GI-08 remains open for exact historical failed-lint capture. Current assignment supersedes initial implementation: `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md`, evidence recovery only, no source changes. Slice06, arc and all25 project criteria remain open. Subsequent identity composition, save policy and all original gates are unchanged; an unavailable historical record requires explicit disposition rather than implicit acceptance.
 
 Version1.6 (2026-10-10): routine partial Slice06 review/current-assignment update; no scope/architecture/acceptance amendment.
+
+## Slice06 evidence disposition pending — 2026-10-10
+
+Evidence-only iteration01 at planninga317761 is independently reviewed; sourcef57a38f remains unchanged and seven child rows retain acceptance. GI-08 stays open for Operator disposition of the original failed lint's missing raw channels/direct exit, with an authentic combined record now verified. [CDC](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#proposed-one-time-gi-08-exception--awaiting-operator-approval) proposes a one-time exception limited to that historical call; it is not yet an accepted amendment. No active CC assignment while awaiting the decision. All25 project rows and all original gates remain open/unchanged; no source integration/publication authorized.
+
+Version1.7 (2026-10-10): routine recovery review and pending Operator decision; no acceptance amendment applied.

@@ -71,3 +71,7 @@ Slice05 is independently closed. Current production CC assignment: `arc06-fit-an
 ## Slice06 independent review — 2026-10-10
 
 [CDC review](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md) accepts GI-01–07 atf57a38f, with359 focused/840 workspace and all scoped gates passing. GI-08 stays open for the original failed lint's missing exact channels. Active CC assignment is `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md`, bounded evidence recovery; source stays unchanged. No successor pass until acceptance or explicit acceptance disposition. Arc24/five done/nineteen open and project25 open remain, as do every original closeout requirement and main/release boundaries.
+
+## Slice06 recovered evidence and pending decision — 2026-10-10
+
+[CDC iteration01 review](arc06-fit-and-finish/slice06-galaxy-qualified-identity/cdc-verification.md#iteration01-independent-review--2026-10-10) verifies the original merged lint record and preservation of all prior proof at unchanged sourcef57a38f/planninga317761. Separate historical channels/direct exit remain unavailable in the bounded records. GI-01–07 accepted; GI-08 awaits an explicit Operator decision on the proposed one-time exception. No active CC assignment or successor implementation while this gate is unresolved. All25 project rows and arc24/five done/nineteen open persist; original scope/gates and main boundary unchanged.

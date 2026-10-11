@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.15, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.16, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -134,3 +134,9 @@ Version1.14 (2026-10-10): detail approved identity direction into bounded founda
 [CDC](slice06-galaxy-qualified-identity/cdc-verification.md) independently accepts seven foundation rows at sourcef57a38f/planning3293cc2. Fresh359 focused/840 workspace tests and all eight scoped gates pass. Only GI-08 exact original failed-lint evidence remains open; current source needs no repair. Active assignment is `arc06-fit-and-finish/slice06-galaxy-qualified-identity/cc-prompt-iteration01.md`, bounded original-record recovery with four existing planning artifact paths and no source edits. Irretrievable/partial output must return for explicit disposition; no acceptance waiver or successor advancement is authorized. Arc24 rows/five done/nineteen open and project25 open remain. No structural scope/architecture/sequence change is revealed; subsequent query/routing/interface composition remains required after child acceptance.
 
 Version1.15 (2026-10-10): routine Slice06 partial review and evidence-only refinement; preserve original failed attempt, accepted production evidence, all contracts and parent gates.
+
+## Slice06 recovery review and decision gate — 2026-10-10
+
+Iteration01 planninga317761 is independently reviewed against unchanged sourcef57a38f. Authentic combined historical lint output is reproduced; separate channels/direct exit remain unknown. Seven foundation rows retain acceptance, GI-08 remains open awaiting Operator disposition of the precise one-time evidence exception proposed in [CDC review](slice06-galaxy-qualified-identity/cdc-verification.md#proposed-one-time-gi-08-exception--awaiting-operator-approval). No further CC assignment is active; no approval or amendment is inferred. Arc24/five done/nineteen open and project25 open persist; subsequent identity composition follows full child acceptance.
+
+Version1.16 (2026-10-10): routine completed-recovery/pending-disposition update; no scope/architecture/acceptance change applied.
