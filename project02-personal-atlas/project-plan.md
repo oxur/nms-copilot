@@ -1,8 +1,11 @@
 # Project02 — A personal atlas that remembers
 
-Date: 2026-10-03
+Version: 1.1 — 2026-10-11 (initial design: 2026-10-03)
 
-Status: Draft for discussion; research informs proposed decisions, not implemented capabilities.
+Project: `project02-personal-atlas`. Status: design, no active implementation arc.
+Depends on: the existing MVP and independently accepted Project01 correctness foundations before dependent delivery. Blocks: none declared. Related: `project01-mvp`.
+
+The Operator authorized this augmentation following the journal/culture design discussion. Confirmed requirements are distinguished from proposed mechanisms and unresolved research. No Project02 implementation is claimed or assigned.
 
 ## Purpose
 
@@ -10,13 +13,26 @@ Make NMS Copilot easy to point at the right save, then build a durable, explaina
 
 The atlas can preserve only evidence it has observed or the user has supplied. It cannot promise to recover discoveries that vanished before a snapshot was captured.
 
+It also serves as an adventure notebook and an atlas of a traveller's cultures: write experiences while playing, attach screenshots, preserve distinct narratives across saves, and analyze the territories that emerge from discoveries. The motivating play pattern is solitary black-hole travel, choosing a compelling world, then exploring its system and an expanding surrounding volume, repeated across four main saves on two accounts. The reported 500–1000 ly buffers describe play, not a configurable culture-definition radius.
+
 ## Confirmed priorities and proposed scope
 
 The user requires friendly accounts and saves **before** creatures, detailed expedition support, and richer searching. Full-text search is lower priority. Rust library research and a comprehensive design are authorized; implementation is not part of this design pass.
 
-Place the save/account work in **project02 Arc01**. It establishes identity and selection rules needed throughout the larger project and can ship independently of a database. Keep project01's delivery history intact. Carry the known discovery-address defect into Arc02, before adding richer location features; an urgent standalone fix may ship earlier without moving the UX behind database work.
+Place the save/account work in **project02 Arc01**. It establishes identity and selection rules needed throughout the larger project and can ship independently of a database. Keep project01's delivery history intact. Consume the independently accepted Project01 address/galaxy/cache repairs in Arc02 and extend their observation contracts where necessary. **Supersedes the 2026-10-03 proposal to carry the existing address defect into Project02:** the Operator subsequently required those repairs in Project01 Arc06. Project02 neither duplicates that assignment nor discharges its gates.
 
 Proposed project scope extends beyond the initiating planet/creature search: multi-save selection, provenance, historical observations, durable annotations/imports, relationships, structured queries, analytics, recovery, and consistent CLI/REPL/MCP behavior. The particular entity set and later arc boundaries remain reviewable.
+
+Confirmed additions from the 2026-10-11 discussion:
+
+- Discovery is the atomic claim; no separate claimed/cherished flag is required. Base presence/counts are useful evidence of attachment, without imposing a sentimental score.
+- Each save has a distinct narrative. A shared world does not merge visits, bases, or journals; a synced replica does not create a new traveller. Recorded account owner and narrative traveller are different concepts until evidence links them.
+- Cultures belong to particular travellers and develop spatial definition through accumulated discoveries. Different travellers' adjacent territories stay distinct. Names and arbitrary collective nouns (culture, empire, cluster, etc.) describe them.
+- Cohesion/completeness should be derived from the arrangement and ownership of systems. A user-selected neighborhood radius or ship warp range must not define culture identity. Mathematical methods and score calibration remain research, not settled algorithms.
+- Two historically distinct cultures may later adjoin; retain their names, histories, and dated connection evidence. Do not silently merge them.
+- All applicable atlas queries support explicit cross-save/account scope while active play and journal authorship remain independently scoped. FTS remains optional.
+
+Mechanism details and acceptance examples live in [journals/media](artifacts/journals-and-media.md) and [cultures/exploration](artifacts/cultures-and-exploration.md).
 
 ## Motivating acceptance journeys
 
@@ -29,6 +45,12 @@ Proposed project scope extends beyond the initiating planet/creature search: mul
 | Inspect disappearing discoveries | Compare observations and retain earlier evidence. “Absent from this snapshot” does not erase historical records or prove the object ceased to exist. |
 | Use knowledge regularly | Reopen the chosen save, update from stable files, retain notes/imports, explain conflicting names, and query through all three interfaces. |
 | Explore relationships and patterns | Join companions, discoveries, bases, locations, and observations; summarize counts and changes without duplicating shared-world objects or counting every snapshot as a new discovery. |
+| Capture an experience while playing | Infer the target from the selected save's latest accepted snapshot, show freshness, freeze that target while composing, allow Escape cancellation, and retain the note after reimport. |
+| Browse a local adventure journal | List notes for all supported subjects in the current system, grouped by subject type, or view a chronological journal; filter by subject or explicit cross-save scope. |
+| Keep screenshots with the story | Import files or explicitly capture a supported image clipboard; list/show images, report physical disk usage, and restore managed media with the atlas. |
+| Revisit a world in a different save | Share its world identity but show two attributed narratives and base histories; broad queries never change the active traveller. |
+| Understand a culture | Show its discoverer, named history, arbitrary collective noun, unique system counts, bases, region evidence, and mathematically derived structure with coverage limits. |
+| Plan the next exploration | Find interior gaps/candidates, connecting corridors, and outward frontier candidates; distinguish unknown data from verified discovery status and report both frontier and travel distances. |
 
 ## Roadmap
 
@@ -36,13 +58,17 @@ These are capability arcs, not implementation assignments. “Depends on” mean
 
 | Arc | Capability and boundary | Depends on | Exit evidence |
 |---|---|---|---|
-| 01 — Accounts, saves, and selection | Shared inventory/identity service; in-game names and local aliases; readable chooser/list/status; explicit selection; migration of existing configured paths; safe switching; diagnostics. No database prerequisite. | Existing MVP | CLI and REPL demonstrations with duplicate names, multiple roots, missing metadata, unavailable files, and a synced cross-platform save. Shared selector and MCP scope tests. |
-| 02 — Trustworthy addresses and observations | Separate address encodings; preserve galaxy; model source/context, absent/null/malformed fields, timestamps, and extraction versions. Establish sanitized fixtures and raw-record locators. | 01 | Independent expected-address fixtures including Chili; multiple galaxies and boundary values; mixed-context/partial-data tests. |
-| 03 — Durable catalog and history | Gate DuckDB adoption; archive stable snapshots; idempotent ingestion, migrations, retention controls, backup/restore, process ownership, and replayable projections. | 02 and database trial | Crash/restart, simultaneous interface access, replay, migration failure, and storage-limit demonstrations. |
+| 01 — Accounts, saves, and selection | Shared inventory/identity service; in-game names and local aliases; readable chooser/list/status; explicit selection; migration of existing configured paths; safe switching; diagnostics. No database prerequisite. | Existing MVP | CLI and REPL demonstrations with duplicate names, multiple roots, missing metadata, unavailable files, and a synced cross-platform save. Shared selector and MCP scope tests; distinct play/query/authorship scopes and traveller/save/replica identity contract. |
+| 02 — Trustworthy addresses and observations | Separate address encodings; preserve galaxy; model source/context, absent/null/malformed fields, timestamps, and extraction versions. Establish sanitized fixtures and raw-record locators; discovery-owner attribution and coordinate-resolution evidence. Consume accepted Project01 repairs. | 01 | Independent expected-address fixtures including Chili; multiple galaxies and boundary values; mixed-context/partial-data tests. |
+| 03 — Durable catalog and history | Gate DuckDB adoption; archive stable snapshots; idempotent ingestion, migrations, retention controls, backup/restore, process ownership, and replayable projections. | 02 and database trial | Crash/restart, simultaneous interface access, replay, migration failure, and storage-limit demonstrations; short journal writes alongside ingestion and long analytics. |
 | 04 — Rich atlas entities and relationships | Names/owners/dates; companion instances and species evidence; main/expedition contexts; discoveries, bases, teleport destinations, and supported related records. Field support documented individually. | 03 | End-to-end Chili journey and fixtures proving supported relationships, conflicting evidence, and unknown cases. |
 | 05 — Search, history, and analytics | Typed filters, scope/date controls, relationship traversal, history comparisons, aggregates, and consistent CLI/REPL/MCP results. Exact/prefix/substring names first. | 04 | Recent-world, creature-origin, cross-save, and analytics journeys with stable pagination and explainable provenance. |
-| 06 — Personal knowledge and interchange | Durable notes, tags, collections, attachment references, community imports, and portable exports; distinguish user assertions from save evidence. | 03; composes with 05 | Restart/round-trip/backup demonstrations; an annotation survives reimport and renaming; external records retain source and galaxy. |
-| 07 — Composition and release | Verify the whole experience, performance, migration/recovery instructions, supported-platform packaging, and release documentation. | 01–06 | Independent project-level journey reproduction, all ledger rows dispositioned, and documented limitations. |
+| 06 — Journals, media, and interchange | Expand the original personal-knowledge arc: scoped multiline notes, chronological/grouped views, tags/collections, managed images, captions/links, usage accounting, community imports, and portable exports. | 03; richer subjects compose with 04/05 | G08/G09; frozen-target capture/cancellation, distinct narratives, media integrity/usage, restart/reimport/rename/export/restore, source/galaxy preservation. |
+| 08 — Traveller cultures and territory | Discovery attribution; stable culture identity, custom noun/name/history, per-traveller affiliations, region evidence, base/system summaries, and historical connection records. | 02/03/06; rich attribution composes with 04/05 | G10/G14; adjacent different travellers remain distinct; same-traveller cultures retain history when they adjoin; ambiguous ownership stays explicit. |
+| 09 — Culture geometry and exploration | Research surrounding-system availability and coordinate precision; derive graded cohesion/completeness, gaps/frontiers/corridors and ranked exploration suggestions without a user-chosen culture radius. | 05/08 and G11/G12 research decisions | G11–G13; adversarial synthetic geometry, source coverage/uncertainty, reproducible analyses, and supported in-game candidate witnesses. Capability gaps require explicit disposition, not silent scope reduction. |
+| 07 — Composition and release | Retain the original release arc ID, now composed after the added arcs: whole experience, performance, migration/recovery, supported-platform packaging, and release documentation. | 01–06, 08, 09 | Independent project-level journey reproduction, all ledger rows dispositioned, and documented limitations. |
+
+Arc IDs remain stable: Arc06 is expanded, Arcs08/09 are added, and the existing Arc07 release arc moves later in dependency order. No issued arc/slice prompts exist in Project02 or are renamed. Arc01 remains the first delivery. Arc06's basic system/planet notebook can follow Arc03 without waiting for every rich entity in Arc04. Candidate-source/geometry research can start alongside Arc02/03 so feasibility is known before Arc09 implementation; a negative result does not block the notebook or culture history.
 
 FTS/Tantivy is a reserved extension after structured search proves a need. It is not a project completion gate. Source-format adapters for unsynced native console containers, cloud account APIs, game-save editing, automatic OCR, semantic/vector search, and a graph database are outside this proposal.
 
@@ -54,7 +80,7 @@ Arc01 uses a small, versioned local profile registry so the UX ships first. Late
 
 ## Definition of done
 
-The project is complete when all seven arc capabilities compose into the acceptance journeys above; ordinary use needs readable names rather than raw IDs; each result carries source/save/context/freshness; historical evidence and user knowledge survive restart/reimport; locations retain the correct galaxy; and failure/recovery behavior is demonstrated across the supported release targets.
+The project is complete when all nine arc capabilities compose into the acceptance journeys above; ordinary use needs readable names rather than raw IDs; each result carries source/save/context/freshness; historical evidence and user knowledge survive restart/reimport; locations retain the correct galaxy; journals and managed images restore with their original authorship and links; culture identity survives changing geometry; exploration results distinguish coverage, ownership, and uncertainty; and failure/recovery behavior is demonstrated across the supported release targets. Full undiscovered-system enumeration remains a required investigation and gated capability: inability to support it needs an explicit Operator-approved disposition with a re-entry condition before project closure.
 
 Each arc must supply its child verification and a composition demonstration. The [project ledger](ledger.md) remains open until an independent reviewer reproduces the required evidence. This design pass does not close project01 or assert project02 implementation completion.
 
@@ -64,5 +90,19 @@ Each arc must supply its child verification and a composition demonstration. The
 2. **DuckDB:** adopt only after Arc03's focused trial; Arc01 proceeds without it.
 3. **History storage budget:** measure real snapshot sizes, then set an explicit default limit before enabling continuous archival. Initial behavior at the limit should preserve existing history and report archival paused; automatic pruning requires a separately specified policy.
 4. **Platform commitment:** macOS is the first demonstrated host. Check existing distribution targets before promising Windows/Linux support with the new native dependency; native Xbox storage is a separate adapter problem from synced `.hg` files.
+5. **Discovery attribution:** determine whether native owner evidence distinguishes saves sharing an account; unresolved links remain unknown or explicitly user-attested, never automatically credited to every save.
+6. **Culture mathematics and candidate supply:** G11/G12 must establish available system populations, coordinate resolution, boundary/scale selection, and meaningful separate measures before a formula or geometry dependency is adopted. No user radius defines a culture.
+7. **Capture interaction:** validate command grammar, multiline submit/cancel, clipboard hosts, media limits, and display fallbacks in G08/G09. Command examples are proposals.
 
 Risks are tracked with their gates in the research document: unreliable identity inference, incomplete game records, format drift, expensive metadata scanning, sync-time ambiguity, native dependency packaging, and multiple application processes.
+
+## Workflow and authority
+
+Continue the established Two-Contributor Workflow and Expedited Mode: Sofie/CDC plans and reviews; separately assigned CC implements; the Operator carries handoffs. This augmentation authorizes planning edits and their scoped commit, not source implementation or a new assignment to the contexts working on Project01. Independent implementation acceptance uses `cdc-verification.md`; project closure also needs independent composition and Operator acceptance. Research hypotheses cannot become production policy merely by appearing in this packet.
+
+Reuse the existing `planning` worktree, `project02-personal-atlas/`, and its project-level `artifacts/` design-paper convention. Prepare arc/slice open sets only near execution. All project ledger rows remain open.
+
+## Version History
+
+- **1.0 — 2026-10-03:** Initial seven-arc design packet (version label recorded retrospectively); friendly saves first, conditional DuckDB, durable history and personal knowledge, optional FTS.
+- **1.1 — 2026-10-11:** Operator design discussion, not a child close, supplied adventure journals/media, distinct save narratives, discovery-based traveller cultures, graded geometric cohesion, late adjacency, and cross-save exploration. Expand Arc06; add Arcs08/09; retain Arc07 ID and move its release dependency gate after them. Add research gates and acceptance rows without closing any. Earlier conversational proposals for manual claim/cherished flags, shared multi-traveller culture affiliation, and configurable-radius culture definitions are superseded. Explicitly reconcile the old Project02 address-repair placement with the subsequently authorized Project01 Arc06 responsibility. No Project01 records or source are changed.

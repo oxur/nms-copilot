@@ -1,6 +1,6 @@
 # Source findings and project01 carry-over
 
-Recorded 2026-10-03. Source checkout: main `a800950ef3558fcf463517696c3c140061e7353d`; planning base `85bc9a6597c62ecbaf2c5d649b4a46eef74e3719`. Findings are scoped inspections, not a complete code audit.
+Recorded 2026-10-03. Source checkout: main `a800950ef3558fcf463517696c3c140061e7353d`; planning base `85bc9a6597c62ecbaf2c5d649b4a46eef74e3719`. Findings are scoped inspections, not a complete code audit. For current ownership of inherited repairs and this augmentation's scope, see the dated 2026-10-11 clarification below.
 
 ## Current implementation
 
@@ -59,3 +59,21 @@ No new Rust tests, database trial, latency benchmark, cross-platform build, or m
 ## Design-packet self-check
 
 The seven Markdown documents were checked for existing local-link targets, balanced code fences, accidental numeric account identifiers, and whitespace errors. All 12 project ledger IDs are unique and remain open. The seven roadmap arcs map to P02-01 through P02-07, with whole-project composition and inherited-findings rows P02-08 through P02-12. The source checkout remains unchanged. These are structural self-checks, not independent acceptance of the architecture or implementation.
+
+## 2026-10-11 superseding ownership/status clarification
+
+The inspections, examples and self-check above describe the 2026-10-03 packet and its pinned source; they are historical, not a current audit. In particular, the old proposed transfer of existing address defects to Project02 is superseded by the Operator's subsequent Project01 scope approval.
+
+Read-only review of the current [Project01 plan](../../project01-mvp/project-plan.md) and [ledger](../../project01-mvp/ledger.md), at planning `c0351040b8fd6fba06c5ead8964b092a63aa7398`, confirms existing field-specific address repair, galaxy-qualified identity/cache compatibility, contributor docs and coverage remain Project01 responsibilities with their original gates. This pass does not review or accept ongoing Slice08 work. Source main at intake is `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`.
+
+Project02 Arc02 consumes accepted fixes and extends observational provenance; Arc07 verifies the new project's documentation/coverage and reconciles inherited findings, without silently moving Project01 obligations. No source file, Project01 artifact, private save or external reference checkout was modified for this augmentation.
+
+New requirements come from the Operator's 2026-10-11 gameplay discussion: individual save narratives, discovery as claim, bases as attachment evidence, single-traveller cultures with arbitrary nouns, mathematical degrees of cohesion/completeness, late adjacency between historically separate cultures, and query scope across saves. [Journals/media](journals-and-media.md) and [cultures/exploration](cultures-and-exploration.md) distinguish those requirements from proposals and unresolved research. There is no new save decoding, candidate-star enumeration, geometry benchmark or native clipboard test in this pass.
+
+## 2026-10-11 augmentation self-check
+
+The nine Markdown documents pass local-target checks (35 links), balanced code-fence checks, consistent table-column checks and `git diff --check -- project02-personal-atlas`. The first local-link pass failed on the historical `/Users/oubiwann/.codex/skills/rust-guidelines/` location; those links now target the current installation and the repeated check passes. External references are research citations, not a claim of a complete web-link audit.
+
+Structural checks find nine roadmap arcs with stable original IDs, 14 decision-register rows, 14 research gates and 20 unique open ledger rows. All 12 original criterion IDs/statuses remain; the four expanded rows are P02-01/06/07/11, the other eight original rows remain text-identical, and eight new rows capture the added capabilities/composition. The roadmap's release dependency follows the two added arcs. Manual scope review retained original creature/history/import/export/FTS decisions while adding the journal, media, narrative, attribution, culture, geometry and region cases.
+
+This is planning-author self-check evidence, not independent acceptance or successful implementation research. No Rust code changed; no build, lint, test suite, native clipboard trial or geometric benchmark was run. Project01 evidence files were being updated concurrently by other work; the commit allowlist is exactly these nine Project02 documents, with both repository-required trailers. Existing source and Project01 changes are outside this task's writes.

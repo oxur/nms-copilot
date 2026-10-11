@@ -1,6 +1,6 @@
 # Architecture — observations, identity, and projections
 
-Status: proposed, 2026-10-03. See the [roadmap](project-plan.md) for sequencing and the [research](artifacts/research-and-library-decisions.md) for library evidence.
+Status: proposed architecture, updated 2026-10-11 (initial: 2026-10-03). See the [roadmap](project-plan.md) for sequencing and the [research](artifacts/research-and-library-decisions.md) for library evidence.
 
 ## Responsibilities and authority
 
@@ -22,7 +22,7 @@ Read-only game files / imported evidence
 Profile registry ---- stable local IDs / aliases / selection policy
 ```
 
-The archive is authoritative for captured bytes; the catalog for normalized observations and user knowledge; the profile registry for local registrations, aliases, and selection. Derived graph/cache/search indexes are rebuildable. Backups must include all authoritative components, not just the database. Registry revisions copied into catalog provenance are historical observations, not a competing editable profile store.
+The managed-media store is authoritative for captured attachment bytes; caption/association/attribution records live in the catalog. The archive is authoritative for captured save bytes; the catalog for normalized observations and user knowledge; the profile registry for local registrations, aliases, and selection. Derived graph/cache/search indexes are rebuildable. Backups must include all authoritative components, not just the database. Registry revisions copied into catalog provenance are historical observations, not a competing editable profile store.
 
 The relational catalog expands the current architecture: `nms-graph` remains the spatial/routing engine, while richer nonspatial queries use catalog relationships. A graph database is unnecessary for the first set of joins. Add arbitrary traversal machinery only when concrete queries justify it.
 
@@ -58,7 +58,11 @@ This is a relationship model, not final DDL. Every normalized observation includ
 | Companion observations | Save/context-scoped pet instance evidence, nickname, creature type, species/seed evidence, origin address. Slot index alone cannot identify a pet across replacement. |
 | Bases/teleport destinations | Record identity, owner/name observations, location, per-save/context availability. |
 | Relationships | Typed links such as located-in, discovered-by, companion-origin, observed-in; each link has provenance and resolution status. |
-| Personal knowledge | Notes/tags/collections/attachment references, explicit user assertions, imports and their provenance. Re-extraction never overwrites user content. |
+| Travellers and world experiences | App-local traveller identity linked to a logical save lineage; save/context-specific observations and narratives concerning shared worlds. Account/native owner identity is evidence, not an automatic traveller key. |
+| Journals and media | Authored entries with save/context/traveller scope, event and capture times, multiple typed subject links, edit provenance; managed blobs by digest with stable attachment IDs, captions and separate links. |
+| Cultures | Stable identity, one originating traveller, custom name/noun, founding/anchor/history references; evidence-bearing discovery affiliations. Distinct historical cultures may later connect. |
+| Culture analyses | Rebuildable membership/geometry/metrics at a catalog generation, source-population coverage, galaxy, algorithm/version, coordinate precision and ownership resolution. Separate from named culture authority. |
+| Personal knowledge and interchange | Tags/collections, explicit user assertions, imports and exports with provenance. Re-extraction never overwrites user content. |
 
 Avoid a universal untyped entity-attribute-value schema. Typed tables cover established domains; raw payloads preserve unmapped data. Similar names are search matches, not join keys. Species names and pet nicknames can change; species linkage remains provisional unless its game key semantics are validated. Keep unresolved records searchable.
 
@@ -97,6 +101,42 @@ If reliable cross-process operation makes the everyday experience too complicate
 
 Use typed filters for save/account/context, source, biome, infestation, discovery type, date basis/range, location, names, and availability. Default to the selected scope; cross-save/all-history operations are explicit. Joins expose companions' origins, worlds containing bases, and shared discoveries. All interfaces return equivalent domain results and freshness metadata. Paginated results use a stable ordering and snapshot/generation token.
 
-Start with prepared SQL and exact/prefix/substring name matching; do not expose unrestricted SQL as an MCP tool. Advanced local analytical exports can be a later interface decision. Counts must distinguish unique entities, per-save discoveries, and observations.
+Start with prepared SQL and exact/prefix/substring name matching; do not expose unrestricted SQL as an MCP tool. Advanced local analytical exports can be a later interface decision. Counts must distinguish unique world entities, distinct discovery claims, per-save observations/visits, bases, and journal entries. A discovery seen in two saves is not two discoveries. Cross-save query scope does not merge traveller narratives.
 
 Reserve stable entity IDs and generation metadata for an optional Tantivy projection. If introduced, commit an indexing outbox with catalog changes, apply it idempotently, track the indexed generation, and allow a full rebuild. Index lag must be visible. FTS relevance never determines entity identity or replaces structured filters.
+
+## Play context, query scope, and authorship
+
+Keep three independent values: selected play context (logical save, active context, latest accepted location/snapshot), read-query scope (one/many saves, account, culture, history), and journal authorship (traveller/save/context). An explicit all-save query changes only its read population. Mutations always resolve a concrete author and target; a broad read scope must not create an ambiguous or multi-save write.
+
+Freeze resolved author/subjects/snapshot at composition start. Watcher changes and save switching cannot retarget an open note/image capture. Show the selected name, galaxy and source freshness. Unavailable/ambiguous locations require an explicit target or a recoverable unresolved draft, not an inferred current planet. Retain drafts on failed commits; define cancellation and draft cleanup in Arc06.
+
+The proposed `TravellerId`, `CultureId`, `JournalEntryId`, `AttachmentId` and `AnalysisId` are semantic IDs, not aliases for paths, player names or DB keys exposed to users. Unknown/conflicting ownership and insufficient geometry are explicit states. These distinctions extend the existing Rust type guidance; exact APIs/DDL wait for slice design.
+
+## Discovery ownership and culture identity
+
+The Operator's domain rule is one discoverer for a system, and discovery is the claim. Multiple imported assertions about that claim are evidence that can conflict, not multiple ownership slots. A foreign traveller's visit/base/note is an experience link, never a transfer of discovery affiliation. Planet discovery evidence remains separate: do not automatically attribute every planet to its system's discoverer.
+
+Separate native account/player identity from the traveller represented by a save lineage. Two saves under one account can share native owner fields. Validate save-specific attribution in G10; merely storing a record in a save or matching the account name is insufficient. Preserve unresolved claims and explicit user attribution with its source, rather than manufacturing certainty. Linked replicas preserve one traveller; divergent copies require an explicit identity decision without losing either narrative.
+
+A culture has stable user-authored identity/history and derived spatial structure. It concerns one traveller's discoveries, partitionable into historically distinct cultures for that traveller. Different travellers' adjacent/interleaved cultures stay separate. Geometry may report that two named cultures have joined spatially without renaming or merging their journals. The user's chosen collective noun is display vocabulary, not an algorithm selector.
+
+Base presence/counts describe attachment without a new manual cherished flag. General bookmark collections remain possible, but adding a place to one cannot change its discovery affiliation. Prospective exploration regions are separate from currently claimed systems. Detailed semantics and geometric acceptance cases: [cultures and exploration](artifacts/cultures-and-exploration.md).
+
+## Journal and media durability
+
+Arc06 adds short authoritative writes independent of ingestion: an authored entry and its links commit together, carry revision information, and survive re-extraction. A single entry can refer to a system, planet, creature and culture without duplicate prose. Cross-save views preserve author labels; two travellers' independently authored entries never collapse because text or subjects match.
+
+Attachments are managed files outside the database with digest, size, media type, capture/import provenance and associations inside it. Publish bytes before committing references, reconcile unreferenced staged blobs after failures, and report missing/corrupt referenced media. Deduplicate exact stored bytes without merging attachment captions/authorship. Do not let snapshot pruning delete authored notes or media. Define unlink/delete/garbage-collection separately; only verified unreferenced content is eligible for collection. Backup/export includes authoritative media plus catalog/registry/archives and verifies restore into a clean directory. See [journal/media behavior](artifacts/journals-and-media.md).
+
+## Culture analysis as a reproducible projection
+
+DuckDB handles scoped populations/joins/aggregates; geometry and `rstar` handle 3D spatial questions; `petgraph` handles adjacency/connectivity/routes. Neither engine supplies absent stars or live discovery ownership. Reuse independently accepted Project01 galaxy-qualified routing contracts. Geometry must stay within one galaxy; all-galaxy queries aggregate per-galaxy results rather than drawing cross-galaxy spatial edges.
+
+Record input generation/population, sources and coverage, ownership attribution, coordinate precision, algorithm/version and internal scale decisions for each analysis. Identity coordinates may be too coarse for exact star geometry; multiple system indices at the same voxel must remain distinct, without fabricated positional jitter. Require precision/error evidence before claiming exact nearest systems in LY. Keep measured completeness, cohesion and scale separate from evidence coverage; no combined score or formula is adopted here.
+
+The candidate-population/coordinate gate G11 and geometry gate G12 precede actionable frontier claims. A known-population analysis is still useful, but must not claim global completeness or enumerate unobserved systems. A blocked full-enumeration capability remains tracked for Operator disposition. Derived membership/metrics can be rebuilt; authored culture identity and connection history cannot be silently discarded with caches.
+
+## Change record
+
+2026-10-11: expands the original personal-knowledge and cross-save architecture with independent play/query/authorship scopes, traveller and claim evidence, journals/media authority, stable culture history and reproducible geometric analyses. Supersedes generic collections as the sole model for cultures and any conversational radius/manual-claim proposals. Database choice remains conditional; no new crate, schema or production API is approved by this document.

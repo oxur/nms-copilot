@@ -92,3 +92,15 @@ MCP gets the same inventory and resolution service. Prefer explicit per-request 
 - Registry lock contention, failed replacement, and legacy migration retain recoverable prior state.
 
 These are proposed observable requirements, not passing tests. Detailed commands and test fixtures belong in the Arc01 plan after design review.
+
+## 2026-10-11 augmentation — traveller and scope foundations
+
+Arc01 must reserve stable, separate identities for logical save, replica, recorded account/player and narrative traveller. Four main saves on two accounts are an acceptance case: sharing an account name/UID must not merge their narratives. An evidenced synced replica is one logical save/traveller; a divergent copy has a visible unresolved relationship until explicitly linked or separated. Main/expedition context stays attached to its save narrative unless an explicit supported lifecycle says otherwise.
+
+The player's current save/location, a query's read scope, and journal authorship are separate. Ordinary reads default to the selected save; explicit multi-save/account/all-save queries preserve labels and never change selection. Culture-filtered reads do not switch the traveller. Every applicable query family must define its multi-save behavior; operations requiring a single location (for example routing) retain an explicit origin and galaxy rather than selecting one arbitrarily. Cross-galaxy summaries are allowed; spatial routes remain galaxy-scoped.
+
+A note/image composition captures author, resolved subjects and source snapshot at entry. Switching saves or accepting a newer autosave must not move it. Prompt/status shows both the active play save and any differing frozen author/target. A name is a selector, not an identity; same-name planets require disambiguation. Automated interfaces take explicit scope and return structured ambiguity/errors instead of interactive prompts.
+
+G01/G10 must test whether discovery-owner fields identify an account or a specific traveller. Until supported, an owner-account match alone cannot assign a claim to one of that account's saves. This uncertainty does not block separate save journals.
+
+These requirements expand the 2026-10-03 proposal; startup preference remains provisional. Command spellings and editor keybindings are still to be validated. See [journals/media](journals-and-media.md) and [cultures/exploration](cultures-and-exploration.md).
