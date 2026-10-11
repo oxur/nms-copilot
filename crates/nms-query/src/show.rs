@@ -39,7 +39,15 @@ pub struct ShowBaseResult {
     pub distance_from_player: Option<f64>,
 }
 
-/// Execute a show query.
+/// Execute a show query using active-galaxy system-name and packed-address lookup.
+///
+/// A player distance is included only when the player and selected item share
+/// a galaxy; otherwise the result has no distance.
+///
+/// # Errors
+///
+/// Returns [`GraphError::SystemNotFound`] or [`GraphError::BaseNotFound`] when
+/// the requested system or base cannot be resolved.
 pub fn execute_show(model: &GalaxyModel, query: &ShowQuery) -> Result<ShowResult, GraphError> {
     match query {
         ShowQuery::System(name_or_id) => show_system(model, name_or_id),
@@ -69,6 +77,7 @@ fn show_system(model: &GalaxyModel, name_or_id: &str) -> Result<ShowResult, Grap
 
     let distance_from_player = model
         .player_position()
+        .filter(|pos| pos.reality_index == system.address.reality_index)
         .map(|pos| pos.distance_ly(&system.address));
 
     Ok(ShowResult::System(ShowSystemResult {
@@ -93,6 +102,7 @@ fn show_base(model: &GalaxyModel, name: &str) -> Result<ShowResult, GraphError> 
 
     let distance_from_player = model
         .player_position()
+        .filter(|pos| pos.reality_index == base.address.reality_index)
         .map(|pos| pos.distance_ly(&base.address));
 
     Ok(ShowResult::Base(ShowBaseResult {
@@ -107,6 +117,10 @@ fn show_base(model: &GalaxyModel, name: &str) -> Result<ShowResult, GraphError> 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::display::{format_show_base, format_show_system};
+    use crate::theme::Theme;
+    use nms_core::player::BaseType;
+    use nms_core::player::PlayerBase;
 
     fn test_model() -> GalaxyModel {
         let json = r#"{
@@ -235,5 +249,93 @@ mod tests {
                 _ => panic!("expected base result"),
             }
         }
+    }
+
+    #[test]
+    fn test_show_omits_cross_galaxy_distance_and_formats_only_comparable_values() {
+        let zero0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let zero1 = GalacticAddress::new(1, 0, 0, 1, 0, 0);
+        let nine0 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let mut model = GalaxyModel::new();
+        model.player_state = Some(nms_core::player::PlayerState::new(
+            zero0, 0, None, None, 0, 0, 0,
+        ));
+        model.insert_system(System::new(
+            zero0,
+            Some("Shared".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            zero1,
+            Some("Zero One".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            nine0,
+            Some("Shared".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_base(PlayerBase::new(
+            "Nine Base".into(),
+            BaseType::HomePlanetBase,
+            nine0,
+            [0.0; 3],
+            None,
+        ));
+
+        model.set_active_galaxy(0);
+        let ShowResult::System(same_system) =
+            execute_show(&model, &ShowQuery::System("Shared".into())).unwrap()
+        else {
+            panic!("expected system result");
+        };
+        assert_eq!(same_system.system.name.as_deref(), Some("Shared"));
+        assert_eq!(same_system.distance_from_player, Some(0.0));
+        assert!(format_show_system(&same_system, &Theme::none()).contains("Distance"));
+
+        let ShowResult::System(same_galaxy) =
+            execute_show(&model, &ShowQuery::System("Zero One".into())).unwrap()
+        else {
+            panic!("expected system result");
+        };
+        assert_eq!(same_galaxy.distance_from_player, Some(400.0));
+
+        model.set_active_galaxy(9);
+        let ShowResult::System(other_galaxy) =
+            execute_show(&model, &ShowQuery::System("Shared".into())).unwrap()
+        else {
+            panic!("expected system result");
+        };
+        assert_eq!(other_galaxy.system.name.as_deref(), Some("Shared"));
+        assert_eq!(other_galaxy.distance_from_player, None);
+        assert!(!format_show_system(&other_galaxy, &Theme::none()).contains("Distance"));
+
+        let ShowResult::Base(base) =
+            execute_show(&model, &ShowQuery::Base("Nine Base".into())).unwrap()
+        else {
+            panic!("expected base result");
+        };
+        assert_eq!(base.distance_from_player, None);
+        assert_eq!(
+            base.system
+                .as_ref()
+                .and_then(|system| system.name.as_deref()),
+            Some("Shared")
+        );
+        assert!(!format_show_base(&base, &Theme::none()).contains("Distance"));
+
+        model.player_state = None;
+        let ShowResult::System(no_player) =
+            execute_show(&model, &ShowQuery::System("Shared".into())).unwrap()
+        else {
+            panic!("expected system result");
+        };
+        assert_eq!(no_player.distance_from_player, None);
     }
 }
