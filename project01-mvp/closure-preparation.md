@@ -101,3 +101,10 @@ CDC independently accepts QG-09 after reviewing Iteration02 planningaf98f31 agai
 ## Slice08 assignment — 2026-10-11
 
 Slice07 is closed independently (nine done, source7118a486). Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`. All nine child rows open; next required spatial/routing composition is isolated from source main and prior candidates. Required session/live/full-startup composition follows before field repair; original strict warp/numeric/name/base/planet portal, coverage/docs/packages/performance and final independent gates remain. Arc26/seven done/nineteen open; project25 open. No main movement, source acceptance or publishing authority.
+
+
+## Slice08 initial independent review and Iteration01 — 2026-10-11
+
+CDC reviewed sourcee1347bc/planning721964e against preserved initial b792257 assignment. All nine current validation gates independently pass663 focused/881 workspace; exact paths/parents/trailers, sealed inputs/fixture and six clean worktree fences pass. All nine child rows remain open: canonical spatial population, consistent NoPath, route normalization/marker preservation, named membership ordering and exact Displays need correction; prescribed native cache/CLI/spatial/routing controls and historical capture/intake/inventory proof remain incomplete. See [independent review](arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md).
+
+Current CC implementation/evidence assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md`, directly from candidatee1347bc. Historical originals must be recovered honestly; missing channels/exits are unknown and require CDC/Operator disposition, not a current rerun or inherited exception. No structural scope/architecture/cache-policy/acceptance amendment: same child, same seven/four CC boundaries, no next slice until independent acceptance. Arc26/seven done/nineteen open; project25 open. Required session/live/full-startup and save-field work plus original closeout gates persist; main/dependencies remain pinned and no merge/release/publication authority follows.

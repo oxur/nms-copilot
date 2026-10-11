@@ -1,6 +1,6 @@
 # Slice08 — galaxy-scoped spatial and routing composition
 
-Version:1.0. Created2026-10-11. Status:open; initial CC assignment prepared, all nine rows open.
+Version:1.1. Created2026-10-11. Status:open; initial CDC review returned correction; all nine rows open.
 
 ## Goal, authority and boundaries
 
@@ -35,3 +35,13 @@ Coherent/portable: bounded manifest names full versus section/data reads and an 
 Current assignment: arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md. On coherent intake CC proceeds under existing authority; on source/scope/contract mismatch it stops affected work and returns the specific owner decision. No parent closure is inferred.
 
 Author issuance recovery: the first named-path `git commit --only -F /private/tmp/nms-s08-issue-message.txt -- <the nine issue paths>` exited1 because five newly created Slice08 files were not yet known to Git. No commit was created and no source changed. Tool output reported one pathspec error for each of slice-plan.md, ledger.md, cc-prompt.md, artifacts/author-baseline.json and artifacts/author-probe.rs; separate raw channels were not provided by exec_command and are not fabricated. Recovery stages exactly those five new paths, then retries the same scoped nine-path commit. This is an author Git preparation error, not a failed Rust gate or an acceptance exception.
+
+
+## Assignment history and initial CDC review — 2026-10-11
+
+- Initial `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`, issued2026-10-11 at b792257db624d1a1c8edc35068c30481cf69648a, predecessor Slice07 closure8aca066. CC source e1347bc24fafa5049f73854bede444cfa5fe2a8b and planning721964e9bcd9d53001a4e3e42b3141a280922a3b returned for review; independent initial review did not accept any row. Disposition: returned, superseded as active assignment; preserved unchanged.
+- Iteration01 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md`, issued2026-10-11, predecessor initial prompt. Reason: reproduced API/population/normalization/validation-order mismatches and incomplete prescribed native/capture proof; see cdc-verification.md. Disposition: active, first refinement assignment, not yet executed. Resolve actual issuance SHA from the commit containing this new prompt.
+
+Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md**. Candidate baseline e1347bc, same seven source/four CC return paths; no architecture/cache-policy/acceptance amendment. Independent initial nine gates passed663 focused/881 workspace; five implementation findings and all-row proof gaps retain open statuses. Historical missing captures require actual original recovery or explicit CDC/Operator disposition; the Slice06 exception does not apply. Required session/live/startup composition and evidence-gated save repair remain subsequent work.
+
+Author readiness: corrective recipe is based on actual e1347bc runtime/native tests and compiled public findings; original literal acceptance matrix and full required-reading manifest remain binding. Separate captured gates/probe/audit and a verified temporary one-target CLI/parser-query recipe are in artifacts/cdc-review-receipts.json. Pre-issuance recipe field transcription and an author probe compile error were corrected; their limitations/failure and successful corrected checks are disclosed there. Current plan/version/history update is routine; no child/parent closure or source movement. Version1.1 adds the independent review/current iteration record, preserving the initial prompt and CC records.

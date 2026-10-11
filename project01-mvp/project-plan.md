@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.13
+version: 1.14
 project: project01-mvp
 status: active
 depends-on: []
@@ -655,3 +655,12 @@ After independent Slice07 closure8aca066, CDC details the next required identity
 Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`, separate candidate from7118a486. Retain original active wrappers with foreign-reference exclusion; add explicit-address APIs; route input guards and three fallible builder signatures propagate known missing/foreign-ID errors. Complete same-galaxy neighborhoods and target dedup/filter-before-limit remove fixed caps. Retain raw archive2/2 because stored meaning is unchanged; prove actual predecessor/fresh/current parity. Best-effort unbridged waypoints are not accepted as strict warp-feasibility; original routing/numeric and all session/live/save/name/base/portal owners remain. This is approved internal identity composition, no new serialization architecture or broader failure-scope amendment.
 
 Add childR06-S08 only:26 arc rows/seven done/nineteen open; project25 open. All25 prior arc criteria/statuses and25 project statuses retained. Main/query/foundation/cache remain pinned; no merge/publication authority. Project version1.13 (2026-10-11), surfaced by Arc06 Slice08: Slice08 author reconnaissance and distinct session/lifecycle packet justify bounded sequencing of the approved follow-on; no acceptance reduction or parent closure.
+
+
+## Slice08 initial independent review and Iteration01 — 2026-10-11
+
+CDC reviewed sourcee1347bc/planning721964e against preserved initial b792257 assignment. All nine current validation gates independently pass663 focused/881 workspace; exact paths/parents/trailers, sealed inputs/fixture and six clean worktree fences pass. All nine child rows remain open: canonical spatial population, consistent NoPath, route normalization/marker preservation, named membership ordering and exact Displays need correction; prescribed native cache/CLI/spatial/routing controls and historical capture/intake/inventory proof remain incomplete. See [independent review](arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md).
+
+Current CC implementation/evidence assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md`, directly from candidatee1347bc. Historical originals must be recovered honestly; missing channels/exits are unknown and require CDC/Operator disposition, not a current rerun or inherited exception. No structural scope/architecture/cache-policy/acceptance amendment: same child, same seven/four CC boundaries, no next slice until independent acceptance. Arc26/seven done/nineteen open; project25 open. Required session/live/full-startup and save-field work plus original closeout gates persist; main/dependencies remain pinned and no merge/release/publication authority follows.
+
+Project version1.14 (2026-10-11), surfaced by Arc06 Slice08: initial review and corrective iteration; original requirements and all25 project statuses retained.
