@@ -969,3 +969,260 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+mod iteration02_route_query_oracles {
+    use super::*;
+    use nms_core::biome::Biome;
+    use nms_core::player::PlayerState;
+    use nms_core::system::{Planet, System};
+    use nms_graph::route::RouteError;
+
+    fn addr(x: i16, ssi: u16, g: u8) -> GalacticAddress {
+        GalacticAddress::new(x, 0, 0, ssi, 0, g)
+    }
+    fn id(a: GalacticAddress) -> SystemId {
+        SystemId::from_address(&a)
+    }
+    fn query(
+        targets: TargetSelection,
+        start: GalacticAddress,
+        algorithm: RoutingAlgorithm,
+        max_targets: Option<usize>,
+        return_to_start: bool,
+    ) -> RouteQuery {
+        RouteQuery {
+            targets,
+            from: RouteFrom::Address(start),
+            warp_range: None,
+            within_ly: None,
+            max_targets,
+            algorithm,
+            return_to_start,
+        }
+    }
+    fn lush(name: &str, index: u8) -> Planet {
+        Planet::new(
+            index,
+            Some(Biome::Lush),
+            None,
+            false,
+            Some(name.into()),
+            None,
+        )
+    }
+
+    #[test]
+    fn planet_heavy_start_selects_two_unique_targets_with_literal_open_and_closed_routes() {
+        let a = addr(0, 100, 9);
+        let b = addr(1, 101, 9);
+        let c = addr(2, 102, 9);
+        let mut model = GalaxyModel::new();
+        let player = addr(0, 100, 0);
+        model.player_state = Some(PlayerState::new(player, 0, None, None, 0, 0, 0));
+        model.set_active_galaxy(0);
+        model.insert_system(System::new(
+            player,
+            Some("Colliding player system".into()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            a,
+            Some("A".into()),
+            None,
+            None,
+            (0..100).map(|i| lush("Start", i)).collect(),
+        ));
+        model.insert_system(System::new(
+            b,
+            Some("B".into()),
+            None,
+            None,
+            vec![lush("B", 0)],
+        ));
+        model.insert_system(System::new(
+            c,
+            Some("C".into()),
+            None,
+            None,
+            vec![lush("C", 0)],
+        ));
+        let target = TargetSelection::Biome(BiomeFilter {
+            biome: Some(Biome::Lush),
+            ..Default::default()
+        });
+        let ai = id(a);
+        let bi = id(b);
+        let ci = id(c);
+        let state_before = (model.player_position().copied(), model.active_galaxy);
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            let open = execute_route(&model, &query(target.clone(), a, algorithm, Some(2), false))
+                .unwrap();
+            assert_eq!(
+                open.route
+                    .hops
+                    .iter()
+                    .map(|h| (
+                        h.system_id,
+                        h.is_waypoint,
+                        h.leg_distance_ly,
+                        h.cumulative_ly
+                    ))
+                    .collect::<Vec<_>>(),
+                vec![
+                    (ai, false, 0.0, 0.0),
+                    (bi, false, 400.0, 400.0),
+                    (ci, false, 400.0, 800.0)
+                ]
+            );
+            assert_eq!(
+                (open.route.total_distance_ly, open.targets_visited),
+                (800.0, 2)
+            );
+            assert_eq!(
+                state_before,
+                (model.player_position().copied(), model.active_galaxy)
+            );
+
+            let unconstrained_query = query(target.clone(), a, algorithm, Some(2), true);
+            assert_eq!(unconstrained_query.warp_range, None);
+            let unconstrained_closed = execute_route(&model, &unconstrained_query).unwrap();
+            assert_eq!(
+                unconstrained_closed
+                    .route
+                    .hops
+                    .iter()
+                    .map(|h| (
+                        h.system_id,
+                        h.is_waypoint,
+                        h.leg_distance_ly,
+                        h.cumulative_ly
+                    ))
+                    .collect::<Vec<_>>(),
+                vec![
+                    (ai, false, 0.0, 0.0),
+                    (bi, false, 400.0, 400.0),
+                    (ci, false, 400.0, 800.0),
+                    (ai, false, 800.0, 1600.0)
+                ]
+            );
+            assert_eq!(
+                (
+                    unconstrained_closed.route.total_distance_ly,
+                    unconstrained_closed.targets_visited
+                ),
+                (1600.0, 2)
+            );
+            assert_eq!(
+                state_before,
+                (model.player_position().copied(), model.active_galaxy)
+            );
+
+            let constrained_query = RouteQuery {
+                warp_range: Some(400.0),
+                ..query(target.clone(), a, algorithm, Some(2), true)
+            };
+            assert_eq!(constrained_query.warp_range, Some(400.0));
+            let closed = execute_route(&model, &constrained_query).unwrap();
+            assert_eq!(
+                closed
+                    .route
+                    .hops
+                    .iter()
+                    .map(|h| (
+                        h.system_id,
+                        h.is_waypoint,
+                        h.leg_distance_ly,
+                        h.cumulative_ly
+                    ))
+                    .collect::<Vec<_>>(),
+                vec![
+                    (ai, false, 0.0, 0.0),
+                    (bi, false, 400.0, 400.0),
+                    (ci, false, 400.0, 800.0),
+                    (bi, true, 400.0, 1200.0),
+                    (ai, false, 400.0, 1600.0)
+                ]
+            );
+            assert_eq!(
+                (closed.route.total_distance_ly, closed.targets_visited),
+                (1600.0, 2)
+            );
+            assert_eq!(
+                state_before,
+                (model.player_position().copied(), model.active_galaxy)
+            );
+        }
+    }
+
+    #[test]
+    fn foreign_target_is_rejected_before_zero_or_one_target_truncation_for_both_algorithms() {
+        let a = addr(0, 100, 9);
+        let b = addr(1, 101, 9);
+        let foreign = addr(0, 100, 0);
+        let mut model = GalaxyModel::new();
+        for x in [a, b, foreign] {
+            model.insert_system(System::new(x, None, None, None, vec![lush("Target", 0)]));
+        }
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            for max_targets in [Some(0), Some(1)] {
+                let mut constrained = query(
+                    TargetSelection::SystemIds(vec![id(b), id(foreign)]),
+                    a,
+                    algorithm,
+                    max_targets,
+                    false,
+                );
+                constrained.within_ly = Some(0.0);
+                assert_eq!(constrained.within_ly, Some(0.0));
+                let error = execute_route(&model, &constrained).unwrap_err();
+                assert!(
+                    matches!(error.downcast_ref::<RouteError>(),Some(RouteError::NoPath{from,to}) if *from==id(a) && *to==id(foreign)),
+                    "{error:?}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn unbounded_biome_selection_visits_all_105_targets_in_both_algorithms() {
+        let start = addr(0, 2000, 9);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(start, None, None, None, vec![]));
+        let mut expected = std::collections::HashSet::new();
+        for x in 1..=105 {
+            let address = addr(x, 2000 + x as u16, 9);
+            expected.insert(id(address));
+            model.insert_system(System::new(
+                address,
+                None,
+                None,
+                None,
+                vec![lush("Target", 0)],
+            ));
+        }
+        let targets = TargetSelection::Biome(BiomeFilter {
+            biome: Some(Biome::Lush),
+            ..Default::default()
+        });
+        for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
+            let result = execute_route(
+                &model,
+                &query(targets.clone(), start, algorithm, None, false),
+            )
+            .unwrap();
+            let got = result
+                .route
+                .hops
+                .iter()
+                .skip(1)
+                .map(|h| h.system_id)
+                .collect::<std::collections::HashSet<_>>();
+            assert_eq!(result.targets_visited, 105);
+            assert_eq!(result.route.hops.len(), 106);
+            assert_eq!(got, expected);
+        }
+    }
+}
