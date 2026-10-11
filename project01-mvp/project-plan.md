@@ -9,7 +9,7 @@ updated: 2026-10-10
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.9
+version: 1.10
 project: project01-mvp
 status: active
 depends-on: []
@@ -631,3 +631,9 @@ Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-pr
 Arc25/six done/nineteen open; project25 rows all open. Required route/selected-galaxy/session/movement/live cache/CLI/REPL/MCP composition, save semantics and all original docs/features/coverage/packages/performance/final review/Operator gates remain. Main and accepted dependencies unchanged; no source integration/publication.
 
 Version1.9 (2026-10-10): source-grounded query composition detail and assignment after Slice06 closure, with required follow-on owners retained; no scope/acceptance/architecture amendment.
+
+## Slice07 initial review and Iteration01 — 2026-10-10
+
+Initial [CDC review](arc06-fit-and-finish/slice07-galaxy-scoped-queries/cdc-verification.md) independently accepts six child rows at b2d27017, with focused636/workspace854 and prescribed gates. Three remain open for test-matrix completeness, rendered pair/error docs and complete canonical return. Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md`; candidate, runtime contract and raw2/2 compatibility remain. No structural plan amendment; later routing/spatial/session/live and save-field owners stay required and held until child acceptance. Arc25/six done/nineteen open; project25 open. No release/merge/main movement authorized.
+
+Version1.10 (2026-10-10): routine partial Slice07 acceptance and bounded correction handoff; all criteria/scope/architecture/final gates retained.

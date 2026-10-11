@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.18, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.19, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -156,3 +156,9 @@ Current CC production assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-qu
 Required follow-on owners R06-R02/R03 and original correctness retain route rejection/fallback/waypoints/reachability, low-level active/explicit spatial policy, movement/session/galaxy commands, duplicate-name/base identity, lost names, planet portal construction and live-cache/CLI/REPL/MCP composition. Save interpretation still waits for field-specific policy. No successor prompt pre-issued; detail after query review. Add childR06-S07 only:25 arc rows, six done/nineteen open; project25 open. Main/dependencies pinned; no merge/publication authority.
 
 Version1.18 (2026-10-10): bounded query composition assignment after Slice06 closure; source proof and context budget justify separating required routing/session/live follow-on. Scope, identity architecture, original acceptance and final gates unchanged.
+
+## Slice07 initial review and Iteration01 — 2026-10-10
+
+[Independent CDC review](slice07-galaxy-scoped-queries/cdc-verification.md) accepts QG-01/02/04/05/06/07 at b2d27017 after focused636/workspace854 and prescribed gate/probe/fixture/fence replay. QG-03/08/09 remain open for promised individual filter-mode matrix, rendered pair/error docs and complete closing inventory/bubble-up. Current CC assignment is `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md`, a bounded test/docs/evidence correction on the same candidate. No new runtime defect, semantic-cache change or structural arc amendment is indicated. Required routing/spatial/session/live composition follows child acceptance before save policy repair. All25 parent rows retain criteria/status: six done/nineteen open; project25 open. No main/dependency movement or publishing authority.
+
+Version1.19 (2026-10-10): routine initial-review/correction handoff; preserve prior assignment and all approved scope/acceptance/architecture/sequence.

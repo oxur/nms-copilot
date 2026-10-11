@@ -1,12 +1,12 @@
 # Slice07 — galaxy-scoped query composition
 
-Version:1.0. Created2026-10-10. Status:open; initial CC production assignment issued, independent review pending.
+Version:1.1. Created2026-10-10. Status:open; initial independent review accepted six rows, Iteration01 issued for three remaining rows.
 
 ## Goal and authority
 
 Deliver the query portion of the approved galaxy-qualified identity repair on accepted Slice06 sourcef57a38f. Two-Contributor Workflow and Expedited Mode continue: CDC/Sofie designs/reviews; a separate CC implements through Operator relay. The Operator approved the correctness expansion and most recently the precise GI-08 historical exception and continuation. That exception is confined to one prior lint call; every new evidence capture retains full requirements.
 
-The [prompt](cc-prompt.md) is the authoritative current binding implementation contract. This slice fixes qualified name indexing/lookup, canonical planet/system associations, consistent filters, default-active versus explicit-reference scope, complete filter-before-nearest ranking, same-galaxy-only show distances and compatibility of unchanged2/2 raw archives. All nine [ledger](ledger.md) rows need independent acceptance.
+The preserved [initial prompt](cc-prompt.md) defines the binding implementation contract; [Iteration01](cc-prompt-iteration01.md) is the current correction assignment. This slice fixes qualified name indexing/lookup, canonical planet/system associations, consistent filters, default-active versus explicit-reference scope, complete filter-before-nearest ranking, same-galaxy-only show distances and compatibility of unchanged2/2 raw archives. All nine [ledger](ledger.md) rows need independent acceptance.
 
 ## Scope, sequencing and dependencies
 
@@ -38,10 +38,17 @@ Author lookup limits: several reconnaissance reads initially used the wrong work
 
 | Issued | Prompt relative to Project01 | Predecessor | Reason | Disposition |
 | --- | --- | --- | --- | --- |
-|2026-10-10 | arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md | No predecessor within slice; Slice06 independently closed | Query portion of required identity composition, bounded after concrete source/behavior reconnaissance | active |
+|2026-10-10 | arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md | No predecessor within slice; Slice06 independently closed | Query portion of required identity composition, bounded after concrete source/behavior reconnaissance | preserved; initial review six accepted/three open |
+|2026-10-10 | arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md | cc-prompt.md; source b2d27017 | Complete per-predicate/mode proof, rendered pair/error docs and close-set inventory/bubble-up | active |
 
-Current assignment: arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt.md. Exit: all nine rows independently accepted, preserved history/fences and parent bubble-up. Up to five refinement iterations; never rewrite an issued prompt. All original arc/project gates and required follow-on composition remain open.
+Current assignment: arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-prompt-iteration01.md. Exit: all nine rows independently accepted, preserved history/fences and parent bubble-up. Up to five refinement iterations; never rewrite an issued prompt. All original arc/project gates and required follow-on composition remain open.
 
 ## Version history
 
 -1.0 (2026-10-10): detail approved composition into query unit then required routing/session/live work, after Slice06 closure. No new scope/acceptance/architecture or release authorization.
+
+## Initial independent review and correction — 2026-10-10
+
+[CDC review](cdc-verification.md) reproduces focused636/workspace854 and the remaining prescribed gates, exact predecessor bytes, CC channels/fences and ten corrected public-probe observations. QG-01/02/04/05/06/07 accepted; QG-03/08/09 open. No runtime defect was reproduced; individual predicate mode coverage, rendered named pairings/new error rustdoc and canonical closing inventory/three-answer bubble-up remain. Iteration01 is test/docs/evidence-only on candidate b2d27017; accepted runtime and raw2/2 meaning remain. Reviewer supporting receipt lives in artifacts/cdc-review-receipts.json. No structural arc amendment or successor assignment; required broader composition remains held.
+
+Version1.1 (2026-10-10): initial independent verdict, preserved initial prompt and issued bounded Iteration01. No criterion, runtime design, scope, architecture or gate amendment.
