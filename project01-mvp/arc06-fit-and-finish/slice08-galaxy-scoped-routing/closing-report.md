@@ -136,3 +136,44 @@ The source return is \`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\` (parent \`2149
 3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.
 
 All four assignment paths are retained as provenance: \`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\`, \`.../cc-prompt-iteration01.md\`, \`.../cc-prompt-iteration02.md\`, and \`.../cc-prompt-iteration03.md\`.
+
+
+## Iteration04 final return — 2026-10-11
+
+This dated return supersedes prior Iteration03 statements that described the planning records as uncommitted and the earlier test totals. Iteration04 was assigned by `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md` (CDC issuance commit `ae3cdef467be8f02f421190c04b8cefbb1b29750`). The complete assignment sequence is `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`, `cc-prompt-iteration01.md`, `cc-prompt-iteration02.md`, `cc-prompt-iteration03.md`, and `cc-prompt-iteration04.md`. The iteration04 intake/readback and historical limits are in `artifacts/execution.md`; full receipts, attempts, per-row summary and fences are in `artifacts/validation.json`.
+
+### Source return and validation
+
+Candidate source branch `codex/galaxy-scoped-routing` returned commit `02260b778e6f6967fac14aa44073e948b3121d66`, directly parented by `edd66642c051c04bc6ccdf1bd3b7d20f74a0f816`. It changes exactly these four test files: `crates/nms-graph/src/query.rs`, `crates/nms-graph/src/route.rs`, `crates/nms-query/src/route.rs`, and `crates/nms-copilot/tests/route_cache_integration.rs`. The commit has the required adjacent Codex and Billo AI trailers. Source status is clean. The accepted SR-04 bridge test and Iteration03 None/Some(400) route test remain byte-identical; production prefixes, CLI integration, `edges.rs`, error definitions and genuine fixture remain unchanged.
+
+All nine gate categories passed in order, with every first failure and retry retained. `make format` passed. `make lint` first exited 2 from three cache-test compile mistakes (unbound deserialized data names and wrong `Planet` field); the correction was limited to the test and lint retry passed. Focused all-features tests passed 682 tests (19 nonzero suites, 4 zero-test summaries); workspace `make test` passed 900 (23 nonzero suites, 10 zero-test summaries). Offline locked workspace build passed. Selected graph/query/cache doctest command passed, with all three packages reporting zero doctests. Normal docs passed with existing warnings: four in core, three in graph, two in query; the `proc-macro-error2` future-incompatibility advisory was also present. Strict cache docs passed with `RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links`. Final source and planning diff checks passed. No coverage, performance, package, live-session, startup or save-repair acceptance is claimed.
+
+### Row-by-row disposition
+
+| Row | Iteration04 CC evidence and disposition |
+|---|---|
+| SR-01 | `test_explicit_spatial_apis_return_exact_canonical_galaxy_views` now covers index-1 planets in both insertion orders, explicit 0/9 calls under active 7, all active wrappers, empty 7, exact IDs/PlanetKeys/distances/radius/limits, canonical borrowed pointers and player/active snapshots. Proposed complete; remains open for CDC. |
+| SR-02 | `test_spatial_ssi_ties_and_all_planet_filter_fields_are_exact` adds literal qualified-ID ordering and numeric addresses for n=1/radius/planet ties, same-voxel SSI1 own/SSI2 other distances, reversed near/far insertion, four one-field filter misses, exact far key/boundaries and canonical borrow. Proposed complete; remains open for CDC. |
+| SR-03 | `test_route_entrypoints_validate_exact_membership_and_foreign_payloads` checks exact missing/foreign payloads across shortest/build/2-opt/constrain, valid empty and one-hop projections, caller marker retention, and both TSP algorithms and return modes with foreign-before-missing precedence. Query typed error checks are included. Proposed complete; remains open for CDC. |
+| SR-04 | Previously accepted/done by CDC; unchanged. The accepted positive nine-galaxy bridge/foreign-shortcut projection was verified byte-identical, and `edges.rs` was not changed. |
+| SR-05 | Dense reachability now proves the exact 120-ID set with galaxy collisions, an isolated system, player0 and snapshots. The waypoint witness uses A/B/C and 60 same-voxel decoys in galaxy9 while galaxy0 is active, with exact IDs, flags, legs, cumulatives and total. Existing closed 2,400-ly and normalization proofs remain. Proposed complete; remains open for CDC. |
+| SR-06 | Repeated named/ID targets prove first-occurrence retention before max1, exact max1/max2 routes, start removal/dedup, all-start and valid max0 typed failures, actual unknown-name and empty-galaxy errors, and snapshots. The accepted Iteration03 None/Some(400) test is unchanged. Proposed complete; remains open for CDC. |
+| SR-07 | Typed predecessor projection adds all four radius APIs with independent literal results for fresh, genuine old and current paths. Assertions read actual decoded old/current `CacheData` metadata and raw fields and check canonical planet associations. The 360-byte fixture and revision2/2 remain unchanged; rich route literals remain. Proposed complete; remains open for CDC. |
+| SR-08 | Previously accepted/done by CDC; unchanged. Accepted CLI integration file is byte-identical; current ordered gates were rerun. |
+| SR-09 | Intake/readback, gate receipts, exact scope/control/fixture/protected-function audit and current source commit are recorded. Historical Iteration03 diagnostics are classified from accessible receipts without rewriting their strings or fabricating missing channels. Proposed complete with explicit evidence limits; remains open for CDC/Operator disposition. |
+
+The candidate source change is test-only and does not alter the archive schema, semantic compatibility, runtime, APIs or fixture. The predecessor fixture remains the genuine checked 360-byte schema2/semantic2 archive with SHA-256 `291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7`. It is not claimed as multi-node route evidence.
+
+### Planning return and artifacts
+
+The authorized planning set is exactly `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md` within this slice. The ledger remains nine rows/eight columns, preserves all criteria and first six cells, and keeps SR-04/SR-08 `done`; SR-01/02/03/05/06/07/09 remain `open`. Source and planning are separate worktree commits. The planning commit and any receipt-only followup identities, parents, exact paths and trailers are recorded in `artifacts/validation.json`; earlier planning return prose is historical and superseded here.
+
+First-class slice documents: `slice-plan.md`, the five assignment prompts (`cc-prompt.md` and Iterations01–04), `ledger.md`, `closing-report.md`, and CDC-owned `cdc-verification.md`. Supporting artifacts: `artifacts/author-baseline.json`, `artifacts/author-probe.rs`, `artifacts/execution.md`, `artifacts/validation.json`, and `artifacts/cdc-review-receipts.json`. No other slice artifact was created or edited by this iteration.
+
+### Bubble-up and remaining authority
+
+1. **Was the assigned work delivered?** The seven rows' assigned test/evidence corrections and all nine fresh gate categories are present as CC proposed-complete evidence. CDC has not accepted the seven rows, and SR-04/SR-08 retain their prior independent acceptance.
+2. **Did an unforeseen scope, architecture, acceptance or evidence issue emerge?** No product or plan change emerged. Historical diagnostics remain mixed: captured updater failures and pre-child wrapper rejections are distinguished from uncaptured inspections and the removed `pwd` receipt. Original, Iteration01/02 gaps and the historical strict-doc environment omission remain unresolved and unwaived. The Rust anti-pattern guide was consulted selectively, not read in full; the intake records this limit.
+3. **Does the parent plan need a change, and who owns remaining decisions?** No parent-plan change is proposed. CDC owns independent row review and contract disposition; the Operator retains acceptance authority. Required session/live/full startup evidence, evidence-gated save repair, and original higher-scale owner/gate requirements remain outstanding.
+
+All seven proposed rows remain open pending independent CDC review and any required Operator disposition. The slice, arc and project remain open.
