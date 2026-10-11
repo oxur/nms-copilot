@@ -1164,14 +1164,17 @@ mod iteration02_route_query_oracles {
     }
 
     #[test]
-    fn foreign_target_is_rejected_before_zero_or_one_target_truncation_for_both_algorithms() {
+    fn test_foreign_target_is_rejected_before_zero_or_one_target_truncation_for_both_algorithms() {
         let a = addr(0, 100, 9);
         let b = addr(1, 101, 9);
         let foreign = addr(0, 100, 0);
         let mut model = GalaxyModel::new();
-        for x in [a, b, foreign] {
-            model.insert_system(System::new(x, None, None, None, vec![lush("Target", 0)]));
-        }
+        model.player_state = Some(PlayerState::new(foreign, 0, None, None, 7, 8, 9));
+        model.set_active_galaxy(0);
+        model.insert_system(System::new(a, None, None, None, vec![lush("Target", 0)]));
+        model.insert_system(System::new(b, None, None, None, vec![lush("Target", 0)]));
+        model.insert_system(System::new(foreign, None, None, None, vec![]));
+        let before = (model.player_state.clone(), model.active_galaxy);
         for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
             for max_targets in [Some(0), Some(1)] {
                 let mut constrained = query(
@@ -1188,14 +1191,19 @@ mod iteration02_route_query_oracles {
                     matches!(error.downcast_ref::<RouteError>(),Some(RouteError::NoPath{from,to}) if *from==id(a) && *to==id(foreign)),
                     "{error:?}"
                 );
+                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
             }
         }
     }
 
     #[test]
-    fn unbounded_biome_selection_visits_all_105_targets_in_both_algorithms() {
+    fn test_unbounded_biome_selection_visits_all_105_targets_in_both_algorithms() {
         let start = addr(0, 2000, 9);
+        let player = addr(0, 2000, 0);
         let mut model = GalaxyModel::new();
+        model.player_state = Some(PlayerState::new(player, 0, None, None, 7, 8, 9));
+        model.set_active_galaxy(0);
+        model.insert_system(System::new(player, None, None, None, vec![]));
         model.insert_system(System::new(start, None, None, None, vec![]));
         let mut expected = std::collections::HashSet::new();
         for x in 1..=105 {
@@ -1213,12 +1221,13 @@ mod iteration02_route_query_oracles {
             biome: Some(Biome::Lush),
             ..Default::default()
         });
+        let before = (model.player_state.clone(), model.active_galaxy);
         for algorithm in [RoutingAlgorithm::NearestNeighbor, RoutingAlgorithm::TwoOpt] {
-            let result = execute_route(
-                &model,
-                &query(targets.clone(), start, algorithm, None, false),
-            )
-            .unwrap();
+            let query = query(targets.clone(), start, algorithm, None, false);
+            assert_eq!(query.warp_range, None);
+            assert_eq!(query.within_ly, None);
+            assert_eq!(query.max_targets, None);
+            let result = execute_route(&model, &query).unwrap();
             let got = result
                 .route
                 .hops
@@ -1229,6 +1238,7 @@ mod iteration02_route_query_oracles {
             assert_eq!(result.targets_visited, 105);
             assert_eq!(result.route.hops.len(), 106);
             assert_eq!(got, expected);
+            assert_eq!((model.player_state.clone(), model.active_galaxy), before);
         }
     }
 
