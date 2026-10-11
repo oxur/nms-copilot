@@ -1306,3 +1306,168 @@ mod tests {
         assert!(model.reachable_systems(id(0xDEAD), 5000.0).is_err());
     }
 }
+
+#[cfg(test)]
+mod iteration02_route_oracles {
+    use super::*;
+    use nms_core::address::GalacticAddress;
+    use nms_core::system::System;
+    use std::collections::HashSet;
+
+    fn addr(x: i16, ssi: u16, galaxy: u8) -> GalacticAddress {
+        GalacticAddress::new(x, 0, 0, ssi, 0, galaxy)
+    }
+    fn id(a: GalacticAddress) -> SystemId {
+        SystemId::from_address(&a)
+    }
+
+    #[test]
+    fn positive_nine_galaxy_bridge_and_foreign_shortcut_have_exact_projection() {
+        let a = addr(0, 100, 9);
+        let b = addr(1, 101, 9);
+        let c = addr(2, 102, 9);
+        let foreign = addr(0, 100, 0);
+        let (a_id, b_id, c_id, foreign_id) = (id(a), id(b), id(c), id(foreign));
+        let mut model = GalaxyModel::new();
+        for x in [a, c, foreign] {
+            model.insert_system(System::new(x, None, None, None, vec![]));
+        }
+        let an = model.node_map[&a_id];
+        let cn = model.node_map[&c_id];
+        let fn_ = model.node_map[&foreign_id];
+        model.graph.add_edge(an, fn_, 1.0);
+        model.graph.add_edge(fn_, cn, 1.0);
+        let fallback = model.shortest_path(a_id, c_id).unwrap();
+        assert_eq!(
+            fallback
+                .hops
+                .iter()
+                .map(|h| (
+                    h.system_id,
+                    h.is_waypoint,
+                    h.leg_distance_ly,
+                    h.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![(a_id, false, 0.0, 0.0), (c_id, false, 800.0, 800.0)]
+        );
+        model.insert_system(System::new(b, None, None, None, vec![]));
+        let bn = model.node_map[&b_id];
+        model.graph.add_edge(an, bn, 400.0);
+        model.graph.add_edge(bn, cn, 400.0);
+        let route = model.shortest_path(a_id, c_id).unwrap();
+        assert_eq!(
+            route
+                .hops
+                .iter()
+                .map(|h| (
+                    h.system_id,
+                    h.is_waypoint,
+                    h.leg_distance_ly,
+                    h.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![
+                (a_id, false, 0.0, 0.0),
+                (b_id, false, 400.0, 400.0),
+                (c_id, false, 400.0, 800.0)
+            ]
+        );
+        assert_eq!(route.total_distance_ly, 800.0);
+        assert!(
+            matches!(model.shortest_path(a_id, foreign_id), Err(RouteError::NoPath { from, to }) if from == a_id && to == foreign_id)
+        );
+    }
+
+    #[test]
+    fn route_entry_points_return_exact_errors_for_empty_one_hop_missing_and_foreign_ids() {
+        let local_addr = addr(0, 1, 9);
+        let foreign_addr = addr(0, 1, 0);
+        let local = id(local_addr);
+        let foreign = id(foreign_addr);
+        let missing = id(addr(4, 99, 9));
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(local_addr, None, None, None, vec![]));
+        model.insert_system(System::new(foreign_addr, None, None, None, vec![]));
+        assert!(
+            matches!(model.shortest_path(missing, missing), Err(RouteError::SystemNotFound(id)) if id == missing)
+        );
+        assert!(
+            matches!(model.shortest_path(local, foreign), Err(RouteError::NoPath { from, to }) if from == local && to == foreign)
+        );
+        assert!(model.build_route_from_order(&[]).unwrap().hops.is_empty());
+        let one = model.build_route_from_order(&[local]).unwrap();
+        assert_eq!(
+            one.hops
+                .iter()
+                .map(|h| (
+                    h.system_id,
+                    h.is_waypoint,
+                    h.leg_distance_ly,
+                    h.cumulative_ly
+                ))
+                .collect::<Vec<_>>(),
+            vec![(local, false, 0.0, 0.0)]
+        );
+        assert!(
+            matches!(model.build_route_from_order(&[local, foreign]), Err(RouteError::NoPath { from, to }) if from == local && to == foreign)
+        );
+        assert!(
+            matches!(model.build_route_from_order(&[local, foreign, missing]), Err(RouteError::SystemNotFound(id)) if id == missing)
+        );
+        assert!(
+            matches!(model.two_opt_improve(vec![local, foreign]), Err(RouteError::NoPath { from, to }) if from == local && to == foreign)
+        );
+        assert!(matches!(
+            model.tsp_nearest_neighbor(missing, &[], false),
+            Err(RouteError::TooFewTargets)
+        ));
+        assert!(matches!(
+            model.tsp_two_opt(missing, &[], true),
+            Err(RouteError::TooFewTargets)
+        ));
+        for return_to_start in [false, true] {
+            assert!(
+                matches!(model.tsp_nearest_neighbor(local, &[foreign], return_to_start), Err(RouteError::NoPath { from, to }) if from == local && to == foreign)
+            );
+            assert!(
+                matches!(model.tsp_two_opt(local, &[foreign], return_to_start), Err(RouteError::NoPath { from, to }) if from == local && to == foreign)
+            );
+            assert!(
+                matches!(model.tsp_nearest_neighbor(missing, &[local], return_to_start), Err(RouteError::SystemNotFound(id)) if id == missing)
+            );
+            assert!(
+                matches!(model.tsp_two_opt(missing, &[local], return_to_start), Err(RouteError::SystemNotFound(id)) if id == missing)
+            );
+        }
+    }
+
+    #[test]
+    fn dense_galaxy_nine_reachability_returns_exact_120_member_set_and_preserves_selection() {
+        let mut model = GalaxyModel::new();
+        let mut expected = HashSet::new();
+        for ssi in 1..=120 {
+            let a = addr(0, ssi, 9);
+            expected.insert(id(a));
+            model.insert_system(System::new(a, None, None, None, vec![]));
+        }
+        let collision = addr(0, 1, 0);
+        let isolated = addr(10, 121, 9);
+        model.insert_system(System::new(collision, None, None, None, vec![]));
+        model.insert_system(System::new(isolated, None, None, None, vec![]));
+        let before = (model.active_galaxy, model.player_position().copied());
+        let got = model.reachable_systems(id(addr(0, 1, 9)), 1000.0).unwrap();
+        assert_eq!(got.len(), 120);
+        assert_eq!(got.iter().copied().collect::<HashSet<_>>(), expected);
+        assert!(!got.contains(&id(collision)));
+        assert!(!got.contains(&id(isolated)));
+        let missing = id(addr(77, 5, 9));
+        assert!(
+            matches!(model.reachable_systems(missing,1000.0),Err(RouteError::SystemNotFound(id)) if id==missing)
+        );
+        assert_eq!(
+            (model.active_galaxy, model.player_position().copied()),
+            before
+        );
+    }
+}
