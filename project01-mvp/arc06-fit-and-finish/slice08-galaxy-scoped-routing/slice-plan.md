@@ -1,6 +1,6 @@
 # Slice08 — galaxy-scoped spatial and routing composition
 
-Version:1.3. Created2026-10-11. Status:open; SR-08 accepted, eight open; Iteration02 interim stop resolved as query configuration error, Iteration03 active.
+Version:1.4. Created2026-10-11. Status:open; SR-04/SR-08 accepted, seven open; Iteration03 reviewed, Iteration04 active.
 
 ## Goal, authority and boundaries
 
@@ -63,3 +63,12 @@ Iteration02 cc-prompt-iteration02.md (issued4c3d405, predecessorIteration01) exe
 Iteration03 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md`, issued2026-10-11, predecessorIteration02, reason explicit constrained input/negative control and unfinished proof/gates/evidence, disposition active. Resolve actual issuance from the new prompt commit. Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md**. Third refinement pass, within existing fix-loop budget. Reuse authorized dirty four-file test work and four CC records; preserve hashes through intake, append honest superseding stop correction. No clean-reset or CC-file inclusion in CDC commit. Production21494b9 unchanged, same four/four boundaries and accepted SR-08.
 
 Version1.3 routine disposition/assignment update, no acceptance/scope/cache-policy/structural change. Current constraints/fences/original owners persist. Author source/API and test inputs inspected; exact native failure/cache success/public None-versus400 NN/2opt projections and236-channel/four-file-prefix/fixture controls reproduced. Test callsite struct-update recipe leaves defaultNone correct for unbounded105; full unchanged nine gate continuation required. Initial zero-test filter and feature-library mismatch compile disclosed and corrected in separate receipts. No additional row accepted, no parent closure, no historical evidence exception.
+
+
+## Iteration03 review and Iteration04 assignment — 2026-10-11
+
+Iteration03 cc-prompt-iteration03.md (issued50eac522, predecessorIteration02) returned sourceedd6664/planning1a931327 (049df4cf,43c4041e earlier). Disposition: independently reviewed, superseded as active assignment, preserved unchanged. Fresh independent680 focused/898 workspace and all nine categories pass. Corrected explicit None/Some400 closed-route input is sound; production unchanged at21494b9. SR-04 newly accepted; SR-08 retained; seven rows open for the specified unfinished spatial/error/decoy/selection/cache/evidence checks. All486 CC channels, stopped exact prefixes/JSON, fixture/input/commit/worktree fences checked. Historical and new evidence limits unwaived. Full findings: cdc-verification.md and artifacts/cdc-review-receipts.json iteration03.
+
+Iteration04 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md`, issued2026-10-11, predecessorIteration03, reason finish remaining native/evidence proof, disposition active. Resolve actual issuance from the prompt commit. Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md**. Fourth refinement within the five-refinement budget; stoppedIteration02 counted. Clean candidateedd6664; directly parent it for test-only return. Same four-source/four-CC-record boundaries, production/accepted bridge/CLI/edges/fixture held unchanged. No source merge/main movement or scope/cache/acceptance/structural-sequence amendment.
+
+Version1.4 routine review/assignment update: two accepted child rows do not close the slice or parent capabilities; arc26/seven done/nineteen open, project25 open. Author readiness and bounded20–35k reading/test recipes in the new prompt are grounded in actual current modules/runtime shapes, independent gates and full audit; first-occurrence example deliberately uses max1/C800 rather than identical sorted B/C results. Required session/live/full startup then save-field repair and all original closeout gates remain. No historical evidence exception adopted.

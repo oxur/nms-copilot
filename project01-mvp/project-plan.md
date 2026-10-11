@@ -682,3 +682,12 @@ CC stopped with four uncommitted test files/four CC records at source21494b9/pla
 Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md`, continuing the authorized dirty four-source-test/four-CC-record work from21494b9, without reset or production mutation. Original/Iteration01/new Iteration02 capture limits remain explicit and unwaived. SR-08 retained done/eight child rows open; arc26/seven done/nineteen open, project25 open. Routine assignment update only, no structural scope/architecture/cache/acceptance/sequence amendment. Main6d183bde and dependencies preserved; required session/live/full startup then save-field repair and original higher-scale gates remain; no integration/release/publication authority.
 
 Project version1.16 (2026-10-11), surfaced by Arc06 Slice08: routine fixture-error disposition/third refinement; original25 project statuses retained.
+
+
+## Slice08 Iteration03 independent review and Iteration04 — 2026-10-11
+
+CDC reviewed sourceedd6664/planning1a931327 against preserved Iteration03 issuance50eac522. All fresh prescribed categories pass680 focused/898 workspace; all486 CC channels, exact source4/planning4 pathsets/parents/trailers, stopped prefixes/JSON, production and sealed fixture/input/control fences pass. None-versus-Some400 correction is sound, not a production repair. SR-04 newly accepted, SR-08 retained, seven child rows open. Remaining exact native spatial/error/decoy/selection/cache and historical/current evidence obligations are enumerated in the dated Slice08 cdc-verification.md.
+
+Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md`, fourth refinement, directly from cleanedd6664, same four test-only source/four CC return paths. Completed subproof retained; no production, cache2/2, acceptance or structural-sequence change. Historical original and iteration01/02/03 capture/intake limits require exact honest disposition; no waiver. Arc26/seven done/nineteen open; project25 open. Required session/live/full startup then evidence-gated save repair and original higher-scale owners persist. Main6d183bde/dependencies unchanged; no merge/release/publication authority.
+
+Project version1.17 (2026-10-11): routine Slice08 review/partial acceptance/fourth refinement, original parent criteria and statuses retained.
