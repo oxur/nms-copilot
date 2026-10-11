@@ -9,6 +9,14 @@ pub enum GraphError {
     #[error("base not found: {0}")]
     BaseNotFound(String),
 
+    /// No discovered systems exist in the requested galaxy.
+    #[error("no systems are known in galaxy {0}")]
+    NoSystemsInGalaxy(u8),
+
+    /// A named route target could not be resolved.
+    #[error("route target not found: {0}")]
+    TargetNotFound(String),
+
     #[error("no player position available")]
     NoPlayerPosition,
 

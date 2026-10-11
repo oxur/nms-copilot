@@ -390,4 +390,73 @@ mod tests {
             assert!(weight > 0.0, "Edge weight should be positive, got {weight}");
         }
     }
+
+    #[test]
+    fn test_edge_strategies_and_incremental_insertions_stay_galaxy_local() {
+        for reverse in [false, true] {
+            for strategy in [
+                EdgeStrategy::Knn { k: 10 },
+                EdgeStrategy::WarpRange { max_ly: 10_000.0 },
+            ] {
+                let mut model = line_model(0, 1);
+                let mut systems = vec![
+                    System::new(
+                        GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                        None,
+                        None,
+                        None,
+                        vec![],
+                    ),
+                    System::new(
+                        GalacticAddress::new(1, 0, 0, 2, 0, 0),
+                        None,
+                        None,
+                        None,
+                        vec![],
+                    ),
+                    System::new(
+                        GalacticAddress::new(0, 0, 0, 1, 0, 9),
+                        None,
+                        None,
+                        None,
+                        vec![],
+                    ),
+                    System::new(
+                        GalacticAddress::new(1, 0, 0, 2, 0, 9),
+                        None,
+                        None,
+                        None,
+                        vec![],
+                    ),
+                ];
+                if reverse {
+                    systems.reverse();
+                }
+                for system in systems {
+                    model.insert_system(system);
+                }
+                model.set_active_galaxy(if reverse { 9 } else { 0 });
+                model.build_edges(strategy);
+                assert_edges_are_galaxy_local(&model);
+
+                let new_address = GalacticAddress::new(2, 0, 0, 3, 0, model.active_galaxy);
+                let new_id = SystemId::from_address(&new_address);
+                model.insert_system(System::new(new_address, None, None, None, vec![]));
+                model.connect_new_system(new_id, 10);
+                assert_edges_are_galaxy_local(&model);
+                assert_eq!(model.active_galaxy, if reverse { 9 } else { 0 });
+            }
+        }
+    }
+
+    fn assert_edges_are_galaxy_local(model: &GalaxyModel) {
+        for edge in model.graph.edge_indices() {
+            let (source, target) = model.graph.edge_endpoints(edge).unwrap();
+            assert_eq!(
+                model.graph[source].reality_index(),
+                model.graph[target].reality_index(),
+                "cross-galaxy edge found"
+            );
+        }
+    }
 }
