@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-10
+updated: 2026-10-11
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.14
+version: 1.18
 project: project01-mvp
 status: active
 depends-on: []
@@ -691,3 +691,12 @@ CDC reviewed sourceedd6664/planning1a931327 against preserved Iteration03 issuan
 Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md`, fourth refinement, directly from cleanedd6664, same four test-only source/four CC return paths. Completed subproof retained; no production, cache2/2, acceptance or structural-sequence change. Historical original and iteration01/02/03 capture/intake limits require exact honest disposition; no waiver. Arc26/seven done/nineteen open; project25 open. Required session/live/full startup then evidence-gated save repair and original higher-scale owners persist. Main6d183bde/dependencies unchanged; no merge/release/publication authority.
 
 Project version1.17 (2026-10-11): routine Slice08 review/partial acceptance/fourth refinement, original parent criteria and statuses retained.
+
+
+## Slice08 Iteration04 independent review and Iteration05 — 2026-10-11
+
+CDC reviewed source02260b7/planning24eae38 against preserved Iteration04 issuanceae3cdef4. All fresh nine categories pass682 focused/900 workspace;12/12 public missing9/zero-route checks supplement native constructor evidence.744 CC channel objects, exact source4/planning4/receipt-only commits, stopped prefixes/JSON, production/protected-body/fixture/input and six clean control fences pass. SR-03/05/07 newly accepted; SR-04/08 retained; SR-01/02/06/09 remain open. Remaining native spatial/player-state/filter coverage and two query-state fixtures,14/16 broken relative gate links and historical evidence/intake limits are recorded in Slice08 cdc-verification.md. No current runtime discrepancy or historical waiver is established.
+
+Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md`, fifth/final refinement under existing budget, directly from02260b7; only graph query.rs/query route.rs tests plus four existing CC records. Accepted graph-route/cache/CLI/edges and protectedNone/Some400 proof held unchanged. No automatic sixth pass: nonconvergence requires re-scoping or explicit Operator decision. Parent statuses unchanged: arc26/seven done/nineteen open, project25 open. Required session/live/full startup then evidence-gated save-field repair and original gates persist. Main6d183bde/dependencies held, no merge/release/publication authority.
+
+Project version1.18 (2026-10-11): routine Slice08 review/final refinement; synchronize stale frontmatter1.14 with appended effective versions1.15–1.17 and this update; historical notes preserved, parent criteria/statuses retained.
