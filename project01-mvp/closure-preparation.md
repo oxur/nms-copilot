@@ -97,3 +97,7 @@ Current CC assignment: `arc06-fit-and-finish/slice07-galaxy-scoped-queries/cc-pr
 ## Slice07 final closure — 2026-10-11
 
 CDC independently accepts QG-09 after reviewing Iteration02 planningaf98f31 against issuancea609b21 and unchanged source7118a486. All nine child rows and R06-S07 are done. All186 capture channels, old prefixes/objects/eight accepted rows, assignment identification, fixture and three commit fences pass; independent637/855 and nine source gates retain applicability without rerun. No structural design/acceptance/cache change arose. Arc25/seven done/eighteen open; project25 open. Required routing/spatial/session/live composition is next, before evidence-gated save-field repair. No Slice07 CC assignment remains active; main/dependencies and all original requirements/gates remain.
+
+## Slice08 assignment — 2026-10-11
+
+Slice07 is closed independently (nine done, source7118a486). Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`. All nine child rows open; next required spatial/routing composition is isolated from source main and prior candidates. Required session/live/full-startup composition follows before field repair; original strict warp/numeric/name/base/planet portal, coverage/docs/packages/performance and final independent gates remain. Arc26/seven done/nineteen open; project25 open. No main movement, source acceptance or publishing authority.

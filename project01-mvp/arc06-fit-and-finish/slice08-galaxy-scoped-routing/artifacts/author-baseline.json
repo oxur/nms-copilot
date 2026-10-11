@@ -1,0 +1,85 @@
+{
+  "source_commit": "7118a486ea43a776aa2451ec0807d43384fb954f",
+  "source_sha256": {
+    "crates/nms-graph/src/query.rs": "53c76877088c88855099630a60b839b2654df269560241918ab53937939f7713",
+    "crates/nms-graph/src/route.rs": "29fe81470b66586c6a25310a899565963cd3f54aa7567ac0c7e3fb9d19d4a4f4",
+    "crates/nms-graph/src/edges.rs": "497aa8d3ad0f818ba12f73d8b70b85a73bc18ec0fce0500371a27b82af2fb66c",
+    "crates/nms-query/src/route.rs": "55f413ee5d6c4c7f27293b96b396ea0b5c1d9764c0ed7dedd9467d77dd477172",
+    "crates/nms-core/src/address.rs": "9d84fcd33312100ac9606d4ce706c9c4c49259c8fe27745b6272014ac13c13e9",
+    "crates/nms-copilot/src/watch.rs": "b8f929f36921b202a59aea5bdf1f3493cde6f0b56cd3f0e478fe1e848a97947f",
+    "crates/nms-copilot/src/mcp/tools.rs": "419ff8361350bd3d29d2dede7ca2a1692ffc10df247a90a68d6b7a0f70a03f64"
+  },
+  "commands": [
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "-p",
+        "nms-query"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "env": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "ICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMS4zNHMKd2FybmluZzogdGhlIGZvbGxvd2luZyBwYWNrYWdlcyBjb250YWluIGNvZGUgdGhhdCB3aWxsIGJlIHJlamVjdGVkIGJ5IGEgZnV0dXJlIHZlcnNpb24gb2YgUnVzdDogcHJvYy1tYWNyby1lcnJvcjIgdjIuMC4xCm5vdGU6IHRvIHNlZSB3aGF0IHRoZSBwcm9ibGVtcyB3ZXJlLCB1c2UgdGhlIG9wdGlvbiBgLS1mdXR1cmUtaW5jb21wYXQtcmVwb3J0YCwgb3IgcnVuIGBjYXJnbyByZXBvcnQgZnV0dXJlLWluY29tcGF0aWJpbGl0aWVzIC0taWQgMWAK",
+        "bytes": 327,
+        "sha256": "4a662ac388400fbc0bebcae13aeaf64511ecfccf85a68375ce73a12c6d274df8"
+      }
+    },
+    {
+      "argv": [
+        "rustc",
+        "--edition=2024",
+        "/private/tmp/nms-s08-author-probe.rs",
+        "-L",
+        "dependency=/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries/target/debug/deps",
+        "-o",
+        "/private/tmp/nms-s08-author-probe",
+        "--extern",
+        "nms_core=/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries/target/debug/deps/libnms_core-00a0246427e2a23c.rlib",
+        "--extern",
+        "nms_graph=/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries/target/debug/deps/libnms_graph-e588d71706605483.rlib",
+        "--extern",
+        "nms_query=/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries/target/debug/deps/libnms_query-28df8b8c646289f1.rlib"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "env": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "/private/tmp/nms-s08-author-probe"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "env": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "bmVhcmVzdF9yZWZlcmVuY2U5X2FjdGl2ZTA9WygwLCAwLjApXQpjcm9zc19nYWxheHlfc2hvcnRlc3Q9T2soMC4wKQpyZWFjaGFibGVfc3RhcnQ5X2FjdGl2ZTA9WygwLCA0Mjk0OTY3Mjk2KSwgKDAsIDg1ODk5MzQ1OTMpLCAoOSwgNDI5NDk2NzI5NildCnF1ZXJ5X2V4cGxpY2l0OV9yb3V0ZV9nYWxheGllcz1bMCwgOV0Kc3RhdGVfYWN0aXZlPTAgc3lzdGVtcz00CmRlbnNlX3JlYWNoYWJsZT0xMDEvMTIwCg==",
+        "bytes": 232,
+        "sha256": "8098e74d4c67c1f6204e8fdf29df5ec3720051eadf438668343e3c0bd242a2a5"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "limits": "Author baseline attestation; no acceptance of future implementation, real-save semantics or live interfaces."
+}

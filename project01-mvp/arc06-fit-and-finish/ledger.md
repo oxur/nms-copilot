@@ -57,3 +57,9 @@ Prior24 rows and all criteria/dispositions retained;25 total, six done/nineteen 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
 | R06-S07 | Galaxy-scoped query associations/names/filters/reference/ranking/show and raw-cache compatibility independently accepted | Nine-row Slice07 ledger, native literal regressions, actual CLI and prior2/2 archive parity | correctness-grade | Approved R06-R02/R03 subsequent composition / original query correctness | done | [Final CDC review](slice07-galaxy-scoped-queries/cdc-verification.md#iteration02-independent-review-and-final-closure--2026-10-11) — all nine child rows independently accepted at7118a486 | Child closed; remaining composition and original/expanded parent gates stay open |
+
+## Slice08 required spatial/routing composition child — 2026-10-11
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S08 | Galaxy-scoped spatial/routing composition independently accepted | Nine-row Slice08 ledger; native exact routes, literal neighborhoods, actual CLI and raw-cache parity | correctness-grade | Approved R06-R02/R03 identity composition and original correctness | open | [Initial assignment](slice08-galaxy-scoped-routing/cc-prompt.md) | All prior criteria retained; required session/live/startup/save and original gates remain open |

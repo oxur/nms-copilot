@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.21, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.22, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -174,3 +174,11 @@ Version1.20 (2026-10-10): routine correction acceptance/current-report assignmen
 CDC independently accepts QG-09 after reviewing Iteration02 planningaf98f31 against issuancea609b21 and unchanged source7118a486. All nine child rows and R06-S07 are done. All186 capture channels, old prefixes/objects/eight accepted rows, assignment identification, fixture and three commit fences pass; independent637/855 and nine source gates retain applicability without rerun. No structural design/acceptance/cache change arose. Arc25/seven done/eighteen open; project25 open. Required routing/spatial/session/live composition is next, before evidence-gated save-field repair. No Slice07 CC assignment remains active; main/dependencies and all original requirements/gates remain.
 
 Version1.21 (2026-10-11): routine independently accepted child closure; approved scope, architecture, sequence and parent acceptance unchanged.
+
+## Slice08 spatial/routing composition assignment — 2026-10-11
+
+After independent Slice07 closure8aca066, CDC details the next required identity composition into [Slice08](slice08-galaxy-scoped-routing/slice-plan.md), spatial/routing first, then required session/live-interface/full startup composition before evidence-gated field decoding. This supersedes the previously unspecified routing/spatial/session/live unit's granularity only; all original/expanded scope and acceptance persist. Author source inspection and compiled probe at7118a486 reproduce active0 measurements of reference9, cross-galaxy direct0ly, explicit9 query hops[0,9], foreign reachable IDs and101/120 dense reachability. Native type/cache/CLI proof and exact source/caller/compatibility contracts are in the issued packet. No source repair has been made or accepted.
+
+Current CC assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md`, separate candidate from7118a486. Retain original active wrappers with foreign-reference exclusion; add explicit-address APIs; route input guards and three fallible builder signatures propagate known missing/foreign-ID errors. Complete same-galaxy neighborhoods and target dedup/filter-before-limit remove fixed caps. Retain raw archive2/2 because stored meaning is unchanged; prove actual predecessor/fresh/current parity. Best-effort unbridged waypoints are not accepted as strict warp-feasibility; original routing/numeric and all session/live/save/name/base/portal owners remain. This is approved internal identity composition, no new serialization architecture or broader failure-scope amendment.
+
+Add childR06-S08 only:26 arc rows/seven done/nineteen open; project25 open. All25 prior arc criteria/statuses and25 project statuses retained. Main/query/foundation/cache remain pinned; no merge/publication authority. Version1.22 (2026-10-11): Slice08 author reconnaissance and distinct session/lifecycle packet justify bounded sequencing of the approved follow-on; no acceptance reduction or parent closure.
