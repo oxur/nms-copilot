@@ -1,6 +1,6 @@
 # Slice08 — galaxy-scoped spatial and routing composition
 
-Version:1.1. Created2026-10-11. Status:open; initial CDC review returned correction; all nine rows open.
+Version:1.2. Created2026-10-11. Status:open; Iteration01 CDC accepts SR-08; eight rows remain open for Iteration02 tests/evidence correction.
 
 ## Goal, authority and boundaries
 
@@ -45,3 +45,12 @@ Author issuance recovery: the first named-path `git commit --only -F /private/tm
 Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md**. Candidate baseline e1347bc, same seven source/four CC return paths; no architecture/cache-policy/acceptance amendment. Independent initial nine gates passed663 focused/881 workspace; five implementation findings and all-row proof gaps retain open statuses. Historical missing captures require actual original recovery or explicit CDC/Operator disposition; the Slice06 exception does not apply. Required session/live/startup composition and evidence-gated save repair remain subsequent work.
 
 Author readiness: corrective recipe is based on actual e1347bc runtime/native tests and compiled public findings; original literal acceptance matrix and full required-reading manifest remain binding. Separate captured gates/probe/audit and a verified temporary one-target CLI/parser-query recipe are in artifacts/cdc-review-receipts.json. Pre-issuance recipe field transcription and an author probe compile error were corrected; their limitations/failure and successful corrected checks are disclosed there. Current plan/version/history update is routine; no child/parent closure or source movement. Version1.1 adds the independent review/current iteration record, preserving the initial prompt and CC records.
+
+
+## Iteration01 review and Iteration02 assignment — 2026-10-11
+
+Iteration01 cc-prompt-iteration01.md (09a460ff, predecessor initial prompt) executed source21494b9/planningfc895617; reviewed and superseded as active assignment, preserved unchanged. F1–F5 fixed; fresh independent670/888 and all required gates pass. SR-08 accepted; SR-01–07/SR-09 open for discriminating native oracles and complete evidence accounting. Full review/receipts: cdc-verification.md and artifacts/cdc-review-receipts.json iteration01.
+
+Iteration02 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md`, issued2026-10-11, predecessorIteration01, disposition active. Actual issuance is the commit containing this new prompt. Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md**. Candidate21494b9; four test-only source paths/four CC evidence paths; production prefixes and accepted CLI/edges/error files held unchanged. This mutation narrowing changes no criterion. Existing authority covers the pass. Main is externally updated clean6d183bde, README/logo-only delta from historicala800950; all other dependency pins unchanged. Preserve this observed state, no main movement authorized.
+
+Version1.2 routine review/assignment update: malformed nine-cell CC ledger rows restored to eight current cells, criteria retained/history preserved; original/new uncaptured groups and historical strict-cache env gap remain distinct, no exception approved. Arc26/seven done/nineteen open; project25 open, no child/parent closure. Author readiness: actual source/API and native fixture inspection, compiled corrected public witness and cap100 dense-versus-line control, literal SSI tie verification, fresh gates/audit134channels; precise typed/test recipes and bounded reading30–45k in issued prompt. Current guide/script preparation failures and successful corrections retained in receipts; no production edits. Required session/live/full startup then field repair and original closeout gates remain.
