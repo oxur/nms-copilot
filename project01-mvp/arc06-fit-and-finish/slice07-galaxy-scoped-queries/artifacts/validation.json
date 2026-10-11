@@ -2003,7 +2003,326 @@
         "test_result_lines": [],
         "warning_lines": [],
         "error_lines": []
+      },
+      {
+        "capture_file": "tool-output-recovered-initial-source-commit.json",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-m",
+          "test: complete galaxy query compatibility regressions",
+          "-m",
+          "Co-authored-by: Codex <noreply@openai.com>",
+          "-m",
+          "Co-authored-by: Billo AI <ai-engineering@billo.systems>",
+          "--",
+          "crates/nms-query/src/find.rs",
+          "crates/nms-cli/tests/find_integration.rs",
+          "crates/nms-graph/src/error.rs"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W2NvZGV4L2dhbGF4eS1zY29wZWQtcXVlcmllcyA1ZDQxNzRkXSB0ZXN0OiBjb21wbGV0ZSBnYWxheHkgcXVlcnkgY29tcGF0aWJpbGl0eSByZWdyZXNzaW9ucwogMyBmaWxlcyBjaGFuZ2VkLCAxNDIgaW5zZXJ0aW9ucygrKSwgNjIgZGVsZXRpb25zKC0pCg==",
+          "byte_length": 145,
+          "sha256": "080a96dc0959ba244b1becc2ae60a0d9eeb7e49d02c6a35289737a0ee30a86fe"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": [],
+        "capture_note": "Direct command output retained; immediately amended because separate -m arguments left a blank line between trailers."
+      },
+      {
+        "capture_file": "tool-output-recovered-successful-source-trailer-amend.json",
+        "argv": [
+          "git",
+          "commit",
+          "--amend",
+          "--only",
+          "-F",
+          "/private/tmp/s07-i01-source-commit-message.txt",
+          "--",
+          "crates/nms-query/src/find.rs",
+          "crates/nms-cli/tests/find_integration.rs",
+          "crates/nms-graph/src/error.rs"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W2NvZGV4L2dhbGF4eS1zY29wZWQtcXVlcmllcyA3MTE4YTQ4XSB0ZXN0OiBjb21wbGV0ZSBnYWxheHkgcXVlcnkgY29tcGF0aWJpbGl0eSByZWdyZXNzaW9ucwogRGF0ZTogU2F0IE9jdCAxMCAyMDozNTowMSAyMDI2IC0wNTAwCiAzIGZpbGVzIGNoYW5nZWQsIDE0MiBpbnNlcnRpb25zKCspLCA2MiBkZWxldGlvbnMoLSkK",
+          "byte_length": 183,
+          "sha256": "16a1e08c7f7d64458ed52ca3e161bb9ed30b55a0c60e06236f562b73bc54d939"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": [],
+        "capture_note": "Successful supported metadata-write escalation; full commit identity and trailers are separately captured in iteration attempts."
+      },
+      {
+        "capture_file": "tool-output-recovered-planning-commit-denial.json",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/s07-i01-planning-commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 128,
+        "stdout": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "ZmF0YWw6IFVuYWJsZSB0byBjcmVhdGUgJy9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8uZ2l0L3dvcmt0cmVlcy9wbGFubmluZy9pbmRleC5sb2NrJzogT3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQK",
+          "byte_length": 123,
+          "sha256": "654834ce1ee8f1ee2e588489be58e5e72aa36cd091eaa136b282bafe836d0f5d"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": [
+          "fatal: Unable to create '/Users/oubiwann/lab/oxur/nms-copilot/.git/worktrees/planning/index.lock': Operation not permitted"
+        ],
+        "capture_note": "Exact direct tool stderr retained; supported metadata-write escalation committed the authorized four paths."
+      },
+      {
+        "capture_file": "tool-output-recovered-planning-commit.json",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/s07-i01-planning-commit-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDJjYWViZmNdIGRvY3M6IHJlY29yZCBnYWxheHktc2NvcGVkIHF1ZXJ5IGl0ZXJhdGlvbiByZXR1cm4KIDQgZmlsZXMgY2hhbmdlZCwgOTg2IGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCg==",
+          "byte_length": 121,
+          "sha256": "0678fcf774a61b5420c288c138bcc39dc2bef12b09a11d47fb8420e35487b461"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": [],
+        "capture_note": "Exact direct tool output retained; full commit identity/pathset/trailers are captured below."
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-26.json",
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "MmNhZWJmYzVjY2YzNzNlM2I4NDc5ZTY0YWVlYmZlN2UzYzU5ZGJlMQo=",
+          "byte_length": 41,
+          "sha256": "a5e9e1d9962b97d45c35234139cc2b34585bc42c6db4dec41dabe064a7688523"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-27.json",
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD^"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "NWMzYWM1MGMxMDA0MTIwM2NjMmI5ZWY1YTFjNDkxZDNkMTI2NjU3NAo=",
+          "byte_length": 41,
+          "sha256": "998e0bf179a7b4ab754cc4584414ace0264b0e0c092cd81e47812114013588fd"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-28.json",
+        "argv": [
+          "git",
+          "show",
+          "-s",
+          "--format=%H%n%P%n%B",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "MmNhZWJmYzVjY2YzNzNlM2I4NDc5ZTY0YWVlYmZlN2UzYzU5ZGJlMQo1YzNhYzUwYzEwMDQxMjAzY2MyYjllZjVhMWM0OTFkM2QxMjY2NTc0CmRvY3M6IHJlY29yZCBnYWxheHktc2NvcGVkIHF1ZXJ5IGl0ZXJhdGlvbiByZXR1cm4KCkNvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgpDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+Cgo=",
+          "byte_length": 233,
+          "sha256": "8612e56d5f853410e624a0ef3b345bf0358beed6ef783bfb0ea2cd0c41b09521"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-29.json",
+        "argv": [
+          "git",
+          "diff-tree",
+          "--no-commit-id",
+          "--name-status",
+          "-r",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "TQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2FydGlmYWN0cy9leGVjdXRpb24ubWQKTQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2FydGlmYWN0cy92YWxpZGF0aW9uLmpzb24KTQlwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDctZ2FsYXh5LXNjb3BlZC1xdWVyaWVzL2Nsb3NpbmctcmVwb3J0Lm1kCk0JcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA3LWdhbGF4eS1zY29wZWQtcXVlcmllcy9sZWRnZXIubWQK",
+          "byte_length": 345,
+          "sha256": "68733fff0542b6b49b0a2970d39107d38165c1391ce9cbf6ba6b6b14c5f0f6e1"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-30.json",
+        "argv": [
+          "git",
+          "status",
+          "--porcelain=v1"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
+      },
+      {
+        "capture_file": "/private/tmp/s07-i01-attempt-31.json",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "byte_length": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "test_result_lines": [],
+        "warning_lines": [],
+        "error_lines": []
       }
-    ]
+    ],
+    "planning_fence": {
+      "branch": "planning",
+      "issuance_head": "5c3ac50c10041203cc2b9ef5a1c491d3d1266574",
+      "first_return_commit": "2caebfc5ccf373e3b8479e64aeebfe7e3c59dbe1",
+      "parent": "5c3ac50c10041203cc2b9ef5a1c491d3d1266574",
+      "pathset": [
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice07-galaxy-scoped-queries/ledger.md"
+      ],
+      "trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ],
+      "post_commit_status_clean": true,
+      "receipt_capture_commands": [
+        "git rev-parse HEAD",
+        "git rev-parse HEAD^",
+        "git show -s --format=%H%n%P%n%B HEAD",
+        "git diff-tree --no-commit-id --name-status -r HEAD",
+        "git status --porcelain=v1",
+        "git diff --check"
+      ]
+    }
   }
 }
