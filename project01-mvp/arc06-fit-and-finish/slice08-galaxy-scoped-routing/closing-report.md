@@ -95,3 +95,44 @@ Source correction commit: `21494b963a5ffbfc5b283c5865a06fa3da096335`; direct par
 First planning return commit: `b63db3133cbd7cee77d396b112d8413003afc9e3`, parent `6f9c282ac08a572b3d207c822270b1789c3a4262`, exactly four permitted paths and both required trailers. Initial commit attempt failed exit 128 on sandbox-denied index lock; its channels and the successful exact retry are recorded in `artifacts/validation.json`. A later scoped planning receipt commit adds this identity to the durable record.
 
 Receipt follow-up commit: `6a6f304fb7b59998d3d1ff1a1211296995ca03c7`, parent `b63db3133cbd7cee77d396b112d8413003afc9e3`, three changed paths within the four-path allowlist, both required trailers. Its failed and successful exact commit attempts are preserved in `artifacts/validation.json`.
+
+
+## Iteration02 execution status — stopped for CDC; not a slice close
+
+Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md`. The Iteration02 focused suite found a production discrepancy in closed-route waypoint handling. Required with 400 ly range: A9/B9/C9/B9/A9, waypoint flags `[false,false,false,true,false]`, legs `[0,400,400,400,400]`, cumulative `[0,400,800,1200,1600]`, total 1600, two targets. Observed: A9/B9/C9/A9, flags all false, legs `[0,400,400,800]`, cumulative `[0,400,800,1600]`, total 1600, two targets. The exact native failure and full channel receipts are in `artifacts/validation.json`. No production change or expected-value relaxation was made. Per the assignment, execution stopped for CDC; gates 04–09 and both source/planning commits remain unrun.
+
+The four authorized test modules contain uncommitted, reviewable test-only changes. Planning files have corresponding uncommitted intake, validation, stop and ledger evidence updates. The latest source head remains `21494b963a5ffbfc5b283c5865a06fa3da096335`; no Iteration02 source commit exists. Current planning base remains `69ff089662eb081c7a23d2621053f599a0831af9`; no Iteration02 planning return exists. Main remains read-only at `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`.
+
+SR-08 remains CDC-accepted and `done`. SR-01–SR-07 and SR-09 remain `open`; this partial attempt accepts no row and closes no slice. Four original diagnostic groups, three Iteration01 uncaptured groups (third count unknown), the historical strict-gate environment gap, and the newly disclosed pre-capture/inspection limitations remain distinct and unresolved. Current fresh strict-doc gate was not run. The five prior supporting artifacts retain their existing contents except `artifacts/execution.md` and `artifacts/validation.json`, which now include this Iteration02 intake/attempt record; no new reusable artifact was introduced.
+
+### Bubble-up to the arc
+
+1. **Assigned behavior delivered?** Partial test evidence and literal oracles were added, but Iteration02 stopped before the full assignment or fresh ordered gate set completed.
+2. **Unforeseen scope/architecture/acceptance/evidence issue?** The closed-route query projection exceeds the 400 ly warp range on the return leg and omits the prescribed waypoint. This is a production discrepancy requiring CDC disposition. Intake reads before capture and one later API-name read also lacked separate raw capture; all were disclosed in validation.
+3. **Parent change required and owner?** No parent-plan edit is proposed. CDC owns review and contract/implementation disposition; CC should resume only after direction. All other row and historical evidence gates remain open.
+
+This is an interim handoff, not a closeout. The plain relative assignment path is `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md`.
+
+
+Scope/readback audit after the stop verified that only the four permitted source files changed and all source diff hunks are additions (no deletions); only the four permitted planning records changed. Ledger remains nine rows/eight columns; SR-08 is `done`, and SR-01–SR-07/SR-09 are `open`. All 228 currently recorded channel objects validate; the original 134 and all original validation values are preserved. No further software gate was run after the mandatory discrepancy stop.
+
+
+## Iteration03 closeout candidate — proposed done pending CDC
+
+Iteration03 corrected the test configuration that led to the Iteration02 false production-bug claim. The previous failure showed the unconstrained \`None\` behavior; it did not exercise the intended 400 ly constraint. The corrected tests explicitly distinguish \`None\` from \`Some(400.0)\` for both route algorithms, retain exact route projections and state snapshots, and make the foreign-radius control explicit. CDC’s independent public probe had already confirmed both literal outcomes.
+
+All nine Iteration03 gates passed in the assigned order. The focused five-package all-features run passed 680 tests in 19 suites; full \`make test\` passed 898 tests in 23 suites. Offline locked build, selected doctests, normal docs, strict cache docs, and both diff checks passed. The normal docs retain existing nms-query unclosed-HTML warnings. Gate receipts and their complete channels are preserved in \`artifacts/validation.json\`.
+
+The source return is \`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\` (parent \`21494b963a5ffbfc5b283c5865a06fa3da096335\`). It changes exactly four test files and has the required adjacent trailers. The four planning records are being returned separately. No parent plan, CDC-owned review file, prompt, product code, cache schema, fixture, or accepted SR-08 behavior was changed.
+
+**Row disposition:** SR-08 remains accepted/done. SR-01–SR-07 and SR-09 remain open and proposed-open; this iteration does not close them. The slice remains pending independent CDC row-by-row review and any Operator disposition. No arc or project close is claimed.
+
+**Complete slice artifact inventory at closeout:** \`slice-plan.md\`; \`cc-prompt.md\`; \`cc-prompt-iteration01.md\`; \`cc-prompt-iteration02.md\`; \`cc-prompt-iteration03.md\`; \`ledger.md\`; \`closing-report.md\`; \`cdc-verification.md\`; \`artifacts/author-probe.rs\`; \`artifacts/author-baseline.json\`; \`artifacts/cdc-review-receipts.json\`; \`artifacts/execution.md\`; \`artifacts/validation.json\`. Iteration03 changed only execution, validation, closing report and the SR-06/SR-09 ledger notes; the other inventory items retain their prior bytes.
+
+### Bubble-up
+
+1. **Assigned behavior delivered?** Yes for the Iteration03 correction and gate set: the constrained and unconstrained route projections are separately configured and checked, and the accepted SR-08 behavior remains intact.
+2. **Unforeseen scope, architecture, acceptance or evidence issue?** The Iteration02 discrepancy was a wrong test setup, not a product defect. The old false claim is explicitly retracted. Historical and Iteration03 capture diagnostics remain disclosed; the Iteration03 temporary \`pwd\` receipt was removed during wrapper-output cleanup before it was copied into the durable record, and that loss is disclosed.
+3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.
+
+All four assignment paths are retained as provenance: \`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\`, \`.../cc-prompt-iteration01.md\`, \`.../cc-prompt-iteration02.md\`, and \`.../cc-prompt-iteration03.md\`.
