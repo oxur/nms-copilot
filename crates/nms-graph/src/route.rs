@@ -6,6 +6,7 @@
 use std::collections::HashSet;
 
 use petgraph::stable_graph::NodeIndex;
+use petgraph::visit::EdgeRef;
 
 use crate::model::GalaxyModel;
 use crate::spatial::SystemId;
@@ -47,6 +48,8 @@ pub enum RoutingAlgorithm {
 pub enum RouteError {
     /// A system ID was not found in the model.
     SystemNotFound(SystemId),
+    /// Two valid systems belong to different galaxies.
+    ForeignGalaxy { from: SystemId, to: SystemId },
     /// No path exists between two systems in the graph.
     NoPath { from: SystemId, to: SystemId },
     /// Too few targets to form a route.
@@ -57,6 +60,9 @@ impl std::fmt::Display for RouteError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::SystemNotFound(id) => write!(f, "system not found: {id}"),
+            Self::ForeignGalaxy { from, to } => {
+                write!(f, "systems belong to different galaxies: {from} and {to}")
+            }
             Self::NoPath { from, to } => {
                 write!(f, "no path from {from} to {to}")
             }
@@ -70,10 +76,32 @@ impl std::error::Error for RouteError {}
 impl GalaxyModel {
     // -- 4.1: Dijkstra shortest path --
 
-    /// Find the shortest path between two systems using A* (Dijkstra with zero heuristic).
+    /// Find a same-galaxy route between two systems using A* with a zero heuristic.
     ///
-    /// If no graph path exists, falls back to a direct Euclidean hop.
+    /// Disconnected systems retain the direct Euclidean fallback, which does
+    /// not assert that the leg is warp-feasible.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RouteError::SystemNotFound`] when either ID is absent and
+    /// [`RouteError::ForeignGalaxy`] when the IDs belong to different galaxies.
     pub fn shortest_path(&self, from: SystemId, to: SystemId) -> Result<Route, RouteError> {
+        if !self.systems.contains_key(&from) {
+            return Err(RouteError::SystemNotFound(from));
+        }
+        if !self.systems.contains_key(&to) {
+            return Err(RouteError::SystemNotFound(to));
+        }
+        let from_node = *self
+            .node_map
+            .get(&from)
+            .ok_or(RouteError::SystemNotFound(from))?;
+        let to_node = *self
+            .node_map
+            .get(&to)
+            .ok_or(RouteError::SystemNotFound(to))?;
+        self.validate_galaxy_pair(from, to)?;
+
         if from == to {
             return Ok(Route {
                 hops: vec![RouteHop {
@@ -86,25 +114,27 @@ impl GalaxyModel {
             });
         }
 
-        let from_node = self
-            .node_map
-            .get(&from)
-            .ok_or(RouteError::SystemNotFound(from))?;
-        let to_node = self
-            .node_map
-            .get(&to)
-            .ok_or(RouteError::SystemNotFound(to))?;
-
-        // Use astar with zero heuristic (equivalent to Dijkstra but returns the path)
+        // The borrowed view excludes accidental cross-galaxy shortcuts without
+        // mutating or cloning the shared topology.
+        let filtered = petgraph::visit::EdgeFiltered::from_fn(&self.graph, |edge| {
+            let source = self.graph[edge.source()].reality_index();
+            let target = self.graph[edge.target()].reality_index();
+            source == target
+        });
         use petgraph::algo::astar;
         match astar(
-            &self.graph,
-            *from_node,
-            |n| n == *to_node,
+            &filtered,
+            from_node,
+            |n| n == to_node,
             |e| *e.weight(),
             |_| 0.0,
         ) {
-            Some((_, path)) => Ok(self.path_to_route(&path)),
+            Some((_, path)) => {
+                for pair in path.windows(2) {
+                    self.validate_galaxy_pair(self.graph[pair[0]], self.graph[pair[1]])?;
+                }
+                Ok(self.path_to_route(&path))
+            }
             None => self.direct_route(from, to),
         }
     }
@@ -169,8 +199,29 @@ impl GalaxyModel {
     fn euclidean_distance(&self, a: SystemId, b: SystemId) -> f64 {
         match (self.systems.get(&a), self.systems.get(&b)) {
             (Some(sa), Some(sb)) => sa.address.distance_ly(&sb.address),
-            _ => 0.0,
+            _ => f64::NAN,
         }
+    }
+
+    fn validate_galaxy_pair(&self, from: SystemId, to: SystemId) -> Result<(), RouteError> {
+        if from.reality_index() != to.reality_index() {
+            return Err(RouteError::ForeignGalaxy { from, to });
+        }
+        Ok(())
+    }
+
+    fn validate_order(&self, order: &[SystemId]) -> Result<(), RouteError> {
+        for &id in order {
+            if !self.systems.contains_key(&id) || !self.node_map.contains_key(&id) {
+                return Err(RouteError::SystemNotFound(id));
+            }
+        }
+        if let Some(&first) = order.first() {
+            for &id in &order[1..] {
+                self.validate_galaxy_pair(first, id)?;
+            }
+        }
+        Ok(())
     }
 
     // -- 4.2: Nearest-neighbor TSP --
@@ -178,6 +229,12 @@ impl GalaxyModel {
     /// Plan a route visiting all targets using nearest-neighbor greedy.
     ///
     /// Uses Euclidean distances directly (not graph edges) for the TSP ordering.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RouteError::TooFewTargets`] for an empty target list,
+    /// [`RouteError::SystemNotFound`] for absent IDs, and [`RouteError::NoPath`]
+    /// when a target is in another galaxy.
     pub fn tsp_nearest_neighbor(
         &self,
         start: SystemId,
@@ -195,6 +252,14 @@ impl GalaxyModel {
                 return Err(RouteError::SystemNotFound(t));
             }
         }
+        for &target in targets {
+            if start.reality_index() != target.reality_index() {
+                return Err(RouteError::NoPath {
+                    from: start,
+                    to: target,
+                });
+            }
+        }
 
         let mut unvisited: Vec<SystemId> = targets.to_vec();
         let mut order = vec![start];
@@ -205,7 +270,10 @@ impl GalaxyModel {
                 .iter()
                 .enumerate()
                 .map(|(i, &t)| (i, self.euclidean_distance(current, t)))
-                .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
+                .min_by(|a, b| {
+                    a.1.total_cmp(&b.1)
+                        .then_with(|| crate::query::system_id_order(unvisited[a.0], unvisited[b.0]))
+                })
                 .unwrap();
 
             current = unvisited.swap_remove(nearest_idx);
@@ -216,11 +284,19 @@ impl GalaxyModel {
             order.push(start);
         }
 
-        Ok(self.build_route_from_order(&order))
+        self.build_route_from_order(&order)
     }
 
-    /// Convert an ordered list of SystemIds into a Route.
-    pub fn build_route_from_order(&self, order: &[SystemId]) -> Route {
+    /// Convert a validated ordered list of system IDs into a route.
+    ///
+    /// Empty input produces an empty zero-distance route.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RouteError::SystemNotFound`] for an absent system and
+    /// [`RouteError::ForeignGalaxy`] if IDs span galaxies.
+    pub fn build_route_from_order(&self, order: &[SystemId]) -> Result<Route, RouteError> {
+        self.validate_order(order)?;
         let mut hops = Vec::with_capacity(order.len());
         let mut cumulative = 0.0;
 
@@ -239,10 +315,10 @@ impl GalaxyModel {
             });
         }
 
-        Route {
+        Ok(Route {
             total_distance_ly: cumulative,
             hops,
-        }
+        })
     }
 
     // -- 4.3: 2-opt improvement --
@@ -251,18 +327,25 @@ impl GalaxyModel {
     ///
     /// Iteratively reverses segments when doing so reduces total distance.
     /// Runs until no improvement is found (local optimum).
-    pub fn two_opt_improve(&self, mut order: Vec<SystemId>) -> Route {
+    ///
+    /// # Errors
+    ///
+    /// Returns a typed error if any system is missing or the order spans galaxies.
+    pub fn two_opt_improve(&self, mut order: Vec<SystemId>) -> Result<Route, RouteError> {
+        self.validate_order(&order)?;
         let n = order.len();
         if n < 4 {
             return self.build_route_from_order(&order);
         }
+        let closed = order.first() == order.last();
+        let movable_end = if closed { n - 1 } else { n };
 
         let mut improved = true;
         while improved {
             improved = false;
-            for i in 0..n - 2 {
-                for j in (i + 2)..n {
-                    if i == 0 && j == n - 1 {
+            for i in 0..movable_end.saturating_sub(2) {
+                for j in (i + 2)..movable_end {
+                    if closed && i == 0 && j == movable_end - 1 {
                         continue;
                     }
                     let gain = self.two_opt_gain(&order, i, j);
@@ -299,6 +382,12 @@ impl GalaxyModel {
     }
 
     /// Plan a route using nearest-neighbor + 2-opt.
+    ///
+    /// # Errors
+    ///
+    /// Returns the validation errors produced by
+    /// [`tsp_nearest_neighbor`](Self::tsp_nearest_neighbor) or
+    /// [`two_opt_improve`](Self::two_opt_improve).
     pub fn tsp_two_opt(
         &self,
         start: SystemId,
@@ -307,18 +396,28 @@ impl GalaxyModel {
     ) -> Result<Route, RouteError> {
         let nn_route = self.tsp_nearest_neighbor(start, targets, return_to_start)?;
         let order: Vec<SystemId> = nn_route.hops.iter().map(|h| h.system_id).collect();
-        Ok(self.two_opt_improve(order))
+        self.two_opt_improve(order)
     }
 
     // -- 4.4: Hop-constrained routing --
 
-    /// Constrain a route so no hop exceeds `max_ly`.
+    /// Add best-effort waypoints for legs longer than `max_ly`.
     ///
     /// Inserts intermediate known systems as waypoints when a hop is too long.
     /// Waypoints are marked with `is_waypoint: true`.
-    pub fn constrain_hops(&self, route: &Route, max_ly: f64) -> Route {
+    /// Waypoints are selected from the complete radius neighborhood and must
+    /// move closer to the destination. If progress is unavailable or the
+    /// finite search guard is reached, the final direct leg is retained and may
+    /// exceed `max_ly`; this method does not guarantee warp feasibility.
+    ///
+    /// # Errors
+    ///
+    /// Returns a typed error if a route system is missing or the route spans galaxies.
+    pub fn constrain_hops(&self, route: &Route, max_ly: f64) -> Result<Route, RouteError> {
+        let order: Vec<_> = route.hops.iter().map(|hop| hop.system_id).collect();
+        self.validate_order(&order)?;
         if route.hops.len() < 2 {
-            return route.clone();
+            return self.build_route_from_order(&order);
         }
 
         let mut new_hops: Vec<RouteHop> = Vec::new();
@@ -346,10 +445,10 @@ impl GalaxyModel {
         }
 
         let total = new_hops.last().map(|h| h.cumulative_ly).unwrap_or(0.0);
-        Route {
+        Ok(Route {
             hops: new_hops,
             total_distance_ly: total,
-        }
+        })
     }
 
     /// Insert intermediate waypoints between `from` and `to`.
@@ -374,7 +473,7 @@ impl GalaxyModel {
             };
 
             let best = self
-                .nearest_systems(&current_sys.address, 50)
+                .systems_within_radius_from_address(&current_sys.address, max_ly)
                 .into_iter()
                 .filter(|(id, dist)| {
                     *id != current
@@ -384,7 +483,8 @@ impl GalaxyModel {
                 .min_by(|a, b| {
                     let da = self.euclidean_distance(a.0, to);
                     let db = self.euclidean_distance(b.0, to);
-                    da.partial_cmp(&db).unwrap()
+                    da.total_cmp(&db)
+                        .then_with(|| crate::query::system_id_order(a.0, b.0))
                 });
 
             match best {
@@ -428,6 +528,10 @@ impl GalaxyModel {
     /// Find all systems reachable from `start` within a given warp range.
     ///
     /// Uses DFS over the spatial index (no graph clone needed).
+    ///
+    /// # Errors
+    ///
+    /// Returns [`RouteError::SystemNotFound`] if `start` is absent.
     pub fn reachable_systems(
         &self,
         start: SystemId,
@@ -437,6 +541,11 @@ impl GalaxyModel {
             return Err(RouteError::SystemNotFound(start));
         }
 
+        let start_address = self
+            .systems
+            .get(&start)
+            .ok_or(RouteError::SystemNotFound(start))?
+            .address;
         let mut visited = HashSet::new();
         let mut stack = vec![start];
 
@@ -448,14 +557,21 @@ impl GalaxyModel {
                 Some(s) => s,
                 None => continue,
             };
-            for (neighbor_id, dist) in self.nearest_systems(&sys.address, 100) {
+            for (neighbor_id, dist) in
+                self.systems_within_radius_from_address(&sys.address, warp_range)
+            {
                 if dist <= warp_range && !visited.contains(&neighbor_id) {
                     stack.push(neighbor_id);
                 }
             }
         }
 
-        Ok(visited.into_iter().collect())
+        let mut result: Vec<_> = visited
+            .into_iter()
+            .filter(|id| id.reality_index() == start_address.reality_index)
+            .collect();
+        result.sort_by(|a, b| crate::query::system_id_order(*a, *b));
+        Ok(result)
     }
 }
 
@@ -554,6 +670,15 @@ mod tests {
     }
 
     #[test]
+    fn test_shortest_path_same_galaxy_disconnected_fallback_is_exact_800_ly() {
+        let model = line_model(2, 2);
+        let ids = sorted_ids(&model);
+        let route = model.shortest_path(ids[0], ids[1]).unwrap();
+        assert_eq!(route.total_distance_ly, 800.0);
+        assert_eq!(route.hops.len(), 2);
+    }
+
+    #[test]
     fn test_shortest_path_multi_hop() {
         let mut model = line_model(5, 10);
         model.build_edges(EdgeStrategy::Knn { k: 1 });
@@ -584,6 +709,192 @@ mod tests {
         let ids = sorted_ids(&model);
         let route = model.shortest_path(ids[0], ids[1]).unwrap();
         assert_eq!(route.hops[0].leg_distance_ly, 0.0);
+    }
+
+    #[test]
+    fn test_shortest_path_ignores_injected_cross_galaxy_bridge() {
+        let mut model = line_model(1, 10);
+        let zero_id = sorted_ids(&model)[0];
+        let a = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let b = GalacticAddress::new(2, 0, 0, 2, 0, 9);
+        let a_id = SystemId::from_address(&a);
+        let b_id = SystemId::from_address(&b);
+        model.insert_system(System::new(a, None, None, None, vec![]));
+        model.insert_system(System::new(b, None, None, None, vec![]));
+        let a_node = model.node_map[&a_id];
+        let b_node = model.node_map[&b_id];
+        let zero_node = model.node_map[&zero_id];
+        model.graph.add_edge(a_node, zero_node, 1.0);
+        model.graph.add_edge(zero_node, b_node, 1.0);
+
+        let route = model.shortest_path(a_id, b_id).unwrap();
+        assert_eq!(route.hops.len(), 2);
+        assert_eq!(route.hops[0].system_id, a_id);
+        assert_eq!(route.hops[1].system_id, b_id);
+        assert_eq!(route.total_distance_ly, 800.0);
+        let reachable = model.reachable_systems(a_id, 800.0).unwrap();
+        assert!(reachable.contains(&a_id));
+        assert!(reachable.contains(&b_id));
+        assert!(!reachable.contains(&zero_id));
+    }
+
+    #[test]
+    fn test_shortest_path_validates_membership_before_same_id_and_galaxy() {
+        let mut model = line_model(1, 1);
+        let local = sorted_ids(&model)[0];
+        assert!(matches!(
+            model.shortest_path(id(0xDEAD), id(0xDEAD)),
+            Err(RouteError::SystemNotFound(missing)) if missing == id(0xDEAD)
+        ));
+        let foreign_address = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let foreign = SystemId::from_address(&foreign_address);
+        model.insert_system(System::new(foreign_address, None, None, None, vec![]));
+        assert!(matches!(
+            model.shortest_path(local, foreign),
+            Err(RouteError::ForeignGalaxy { from, to }) if from == local && to == foreign
+        ));
+    }
+
+    #[test]
+    fn test_route_constructors_reject_foreign_and_missing_ids() {
+        let mut model = line_model(2, 1);
+        let local = sorted_ids(&model)[0];
+        let foreign_address = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let foreign = SystemId::from_address(&foreign_address);
+        model.insert_system(System::new(foreign_address, None, None, None, vec![]));
+        assert!(matches!(
+            model.build_route_from_order(&[local, foreign]),
+            Err(RouteError::ForeignGalaxy { .. })
+        ));
+        assert!(matches!(
+            model.build_route_from_order(&[local, id(0xDEAD)]),
+            Err(RouteError::SystemNotFound(_))
+        ));
+        assert!(matches!(
+            model.two_opt_improve(vec![local, foreign]),
+            Err(RouteError::ForeignGalaxy { .. })
+        ));
+        assert!(matches!(
+            model.two_opt_improve(vec![id(0xDEAD)]),
+            Err(RouteError::SystemNotFound(_))
+        ));
+        let invalid_route = Route {
+            hops: vec![
+                RouteHop {
+                    system_id: local,
+                    leg_distance_ly: 0.0,
+                    cumulative_ly: 0.0,
+                    is_waypoint: false,
+                },
+                RouteHop {
+                    system_id: foreign,
+                    leg_distance_ly: 0.0,
+                    cumulative_ly: 0.0,
+                    is_waypoint: false,
+                },
+            ],
+            total_distance_ly: 0.0,
+        };
+        assert!(matches!(
+            model.constrain_hops(&invalid_route, 1_000.0),
+            Err(RouteError::ForeignGalaxy { .. })
+        ));
+        let missing_route = Route {
+            hops: vec![RouteHop {
+                system_id: id(0xDEAD),
+                leg_distance_ly: 0.0,
+                cumulative_ly: 0.0,
+                is_waypoint: false,
+            }],
+            total_distance_ly: 0.0,
+        };
+        assert!(matches!(
+            model.constrain_hops(&missing_route, 1_000.0),
+            Err(RouteError::SystemNotFound(_))
+        ));
+        let empty = model.build_route_from_order(&[]).unwrap();
+        assert!(empty.hops.is_empty());
+        assert_eq!(empty.total_distance_ly, 0.0);
+    }
+
+    #[test]
+    fn test_tsp_foreign_target_returns_no_path_after_missing_validation() {
+        let mut model = line_model(1, 1);
+        let start = sorted_ids(&model)[0];
+        let foreign_address = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let foreign = SystemId::from_address(&foreign_address);
+        model.insert_system(System::new(foreign_address, None, None, None, vec![]));
+        assert!(matches!(
+            model.tsp_nearest_neighbor(start, &[foreign], false),
+            Err(RouteError::NoPath { from, to }) if from == start && to == foreign
+        ));
+        assert!(matches!(
+            model.tsp_nearest_neighbor(start, &[id(0xDEAD), foreign], false),
+            Err(RouteError::SystemNotFound(missing)) if missing == id(0xDEAD)
+        ));
+        assert!(matches!(
+            model.tsp_nearest_neighbor(id(0xBEEF), &[], false),
+            Err(RouteError::TooFewTargets)
+        ));
+    }
+
+    #[test]
+    fn test_reachable_systems_scans_more_than_one_hundred_neighbors() {
+        let model = line_model(120, 1);
+        let start = sorted_ids(&model)[0];
+        let reachable = model.reachable_systems(start, 100_000.0).unwrap();
+        assert_eq!(reachable.len(), 120);
+        assert!(
+            reachable
+                .windows(2)
+                .all(|pair| { crate::query::system_id_order(pair[0], pair[1]).is_lt() })
+        );
+    }
+
+    #[test]
+    fn test_waypoint_search_finds_progress_after_sixty_nonprogress_decoys() {
+        let mut model = line_model(0, 1);
+        let start_address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let target_address = GalacticAddress::new(100, 0, 0, 1, 0, 0);
+        let start = SystemId::from_address(&start_address);
+        let target = SystemId::from_address(&target_address);
+        model.insert_system(System::new(start_address, None, None, None, vec![]));
+        model.insert_system(System::new(target_address, None, None, None, vec![]));
+        for ssi in 10..70 {
+            let decoy = GalacticAddress::new(0, 0, 0, ssi, 0, 0);
+            model.insert_system(System::new(decoy, None, None, None, vec![]));
+        }
+        let advancing = GalacticAddress::new(10, 0, 0, 1, 0, 0);
+        model.insert_system(System::new(advancing, None, None, None, vec![]));
+
+        let direct = model.build_route_from_order(&[start, target]).unwrap();
+        let constrained = model.constrain_hops(&direct, 4_000.0).unwrap();
+        assert!(constrained.hops.len() > 2);
+        assert!(constrained.hops[1].is_waypoint);
+        assert_eq!(
+            constrained.hops[1].system_id,
+            SystemId::from_address(&advancing)
+        );
+    }
+
+    #[test]
+    fn test_two_opt_keeps_closed_start_and_end() {
+        let model = line_model(6, 10);
+        let ids = sorted_ids(&model);
+        let mut closed = vec![ids[0], ids[3], ids[1], ids[4], ids[2], ids[5], ids[0]];
+        let improved = model.two_opt_improve(std::mem::take(&mut closed)).unwrap();
+        assert_eq!(improved.hops.first().unwrap().system_id, ids[0]);
+        assert_eq!(improved.hops.last().unwrap().system_id, ids[0]);
+    }
+
+    #[test]
+    fn test_two_opt_closed_route_preserves_exact_2400_ly_line() {
+        let model = line_model(2, 3);
+        let ids = sorted_ids(&model);
+        let route = model.tsp_two_opt(ids[0], &[ids[1]], true).unwrap();
+        assert_eq!(route.hops.first().unwrap().system_id, ids[0]);
+        assert_eq!(route.hops.last().unwrap().system_id, ids[0]);
+        assert_eq!(route.total_distance_ly, 2_400.0);
     }
 
     // -- 4.2 tests --
@@ -663,7 +974,7 @@ mod tests {
             .tsp_nearest_neighbor(ids[0], &ids[1..], false)
             .unwrap();
         let nn_order: Vec<SystemId> = nn_route.hops.iter().map(|h| h.system_id).collect();
-        let opt_route = model.two_opt_improve(nn_order);
+        let opt_route = model.two_opt_improve(nn_order).unwrap();
         assert!(opt_route.total_distance_ly <= nn_route.total_distance_ly + 1e-6);
     }
 
@@ -684,8 +995,8 @@ mod tests {
         scrambled.swap(1, 5);
         scrambled.swap(2, 6);
 
-        let scrambled_route = model.build_route_from_order(&scrambled);
-        let improved = model.two_opt_improve(scrambled);
+        let scrambled_route = model.build_route_from_order(&scrambled).unwrap();
+        let improved = model.two_opt_improve(scrambled).unwrap();
         assert!(improved.total_distance_ly <= scrambled_route.total_distance_ly);
     }
 
@@ -703,8 +1014,8 @@ mod tests {
     fn test_constrain_hops_short_route_unchanged() {
         let model = line_model(3, 5);
         let ids = sorted_ids(&model);
-        let route = model.build_route_from_order(&ids);
-        let constrained = model.constrain_hops(&route, 100_000.0);
+        let route = model.build_route_from_order(&ids).unwrap();
+        let constrained = model.constrain_hops(&route, 100_000.0).unwrap();
         assert_eq!(constrained.hops.len(), route.hops.len());
     }
 
@@ -713,8 +1024,8 @@ mod tests {
         let model = line_model(10, 10);
         let ids = sorted_ids(&model);
         // Route from first to last (9 * 4000 = 36000 ly)
-        let route = model.build_route_from_order(&[ids[0], ids[9]]);
-        let constrained = model.constrain_hops(&route, 5000.0);
+        let route = model.build_route_from_order(&[ids[0], ids[9]]).unwrap();
+        let constrained = model.constrain_hops(&route, 5000.0).unwrap();
         assert!(constrained.hops.len() > 2, "Should insert waypoints");
         for hop in &constrained.hops[1..constrained.hops.len() - 1] {
             assert!(hop.is_waypoint);
@@ -725,8 +1036,8 @@ mod tests {
     fn test_constrain_hops_preserves_endpoints() {
         let model = line_model(10, 10);
         let ids = sorted_ids(&model);
-        let route = model.build_route_from_order(&[ids[0], ids[9]]);
-        let constrained = model.constrain_hops(&route, 5000.0);
+        let route = model.build_route_from_order(&[ids[0], ids[9]]).unwrap();
+        let constrained = model.constrain_hops(&route, 5000.0).unwrap();
         assert_eq!(constrained.hops.first().unwrap().system_id, ids[0]);
         assert_eq!(constrained.hops.last().unwrap().system_id, ids[9]);
     }
@@ -735,8 +1046,8 @@ mod tests {
     fn test_constrain_hops_respects_warp_range() {
         let model = line_model(10, 10);
         let ids = sorted_ids(&model);
-        let route = model.build_route_from_order(&[ids[0], ids[9]]);
-        let constrained = model.constrain_hops(&route, 5000.0);
+        let route = model.build_route_from_order(&[ids[0], ids[9]]).unwrap();
+        let constrained = model.constrain_hops(&route, 5000.0).unwrap();
         let within_range = constrained
             .hops
             .iter()
@@ -782,7 +1093,7 @@ mod tests {
             hops: vec![],
             total_distance_ly: 0.0,
         };
-        let constrained = model.constrain_hops(&route, 5000.0);
+        let constrained = model.constrain_hops(&route, 5000.0).unwrap();
         assert!(constrained.hops.is_empty());
     }
 
