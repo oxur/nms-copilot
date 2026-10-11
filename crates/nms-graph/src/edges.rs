@@ -394,59 +394,84 @@ mod tests {
     #[test]
     fn test_edge_strategies_and_incremental_insertions_stay_galaxy_local() {
         for reverse in [false, true] {
-            for strategy in [
-                EdgeStrategy::Knn { k: 10 },
-                EdgeStrategy::WarpRange { max_ly: 10_000.0 },
-            ] {
-                let mut model = line_model(0, 1);
-                let mut systems = vec![
-                    System::new(
-                        GalacticAddress::new(0, 0, 0, 1, 0, 0),
-                        None,
-                        None,
-                        None,
-                        vec![],
-                    ),
-                    System::new(
-                        GalacticAddress::new(1, 0, 0, 2, 0, 0),
-                        None,
-                        None,
-                        None,
-                        vec![],
-                    ),
-                    System::new(
-                        GalacticAddress::new(0, 0, 0, 1, 0, 9),
-                        None,
-                        None,
-                        None,
-                        vec![],
-                    ),
-                    System::new(
-                        GalacticAddress::new(1, 0, 0, 2, 0, 9),
-                        None,
-                        None,
-                        None,
-                        vec![],
-                    ),
-                ];
-                if reverse {
-                    systems.reverse();
-                }
-                for system in systems {
-                    model.insert_system(system);
-                }
-                model.set_active_galaxy(if reverse { 9 } else { 0 });
-                model.build_edges(strategy);
-                assert_edges_are_galaxy_local(&model);
+            for active in [0, 9] {
+                for strategy in [
+                    EdgeStrategy::Knn { k: 1 },
+                    EdgeStrategy::WarpRange { max_ly: 400.0 },
+                ] {
+                    let mut model = line_model(0, 1);
+                    let mut systems = vec![
+                        System::new(
+                            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                        System::new(
+                            GalacticAddress::new(1, 0, 0, 2, 0, 0),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                        System::new(
+                            GalacticAddress::new(0, 0, 0, 1, 0, 9),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                        System::new(
+                            GalacticAddress::new(1, 0, 0, 2, 0, 9),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                    ];
+                    if reverse {
+                        systems.reverse();
+                    }
+                    for system in systems {
+                        model.insert_system(system);
+                    }
+                    model.set_active_galaxy(active);
+                    model.build_edges(strategy);
+                    assert_edges_are_galaxy_local(&model);
+                    for galaxy in [0, 9] {
+                        let a =
+                            SystemId::from_address(&GalacticAddress::new(0, 0, 0, 1, 0, galaxy));
+                        let b =
+                            SystemId::from_address(&GalacticAddress::new(1, 0, 0, 2, 0, galaxy));
+                        assert_eq!(edge_weight(&model, a, b), Some(400.0));
+                    }
 
-                let new_address = GalacticAddress::new(2, 0, 0, 3, 0, model.active_galaxy);
-                let new_id = SystemId::from_address(&new_address);
-                model.insert_system(System::new(new_address, None, None, None, vec![]));
-                model.connect_new_system(new_id, 10);
-                assert_edges_are_galaxy_local(&model);
-                assert_eq!(model.active_galaxy, if reverse { 9 } else { 0 });
+                    let insertion_galaxy = if active == 0 { 9 } else { 0 };
+                    let new_address = GalacticAddress::new(2, 0, 0, 3, 0, insertion_galaxy);
+                    let new_id = SystemId::from_address(&new_address);
+                    model.insert_system(System::new(new_address, None, None, None, vec![]));
+                    model.connect_new_system(new_id, 10);
+                    assert_edges_are_galaxy_local(&model);
+                    let adjacent = SystemId::from_address(&GalacticAddress::new(
+                        1,
+                        0,
+                        0,
+                        2,
+                        0,
+                        insertion_galaxy,
+                    ));
+                    assert_eq!(edge_weight(&model, adjacent, new_id), Some(400.0));
+                    assert_eq!(model.active_galaxy, active);
+                }
             }
         }
+    }
+
+    fn edge_weight(model: &GalaxyModel, a: SystemId, b: SystemId) -> Option<f64> {
+        let a = *model.node_map.get(&a)?;
+        let b = *model.node_map.get(&b)?;
+        model.graph.find_edge(a, b).map(|edge| model.graph[edge])
     }
 
     fn assert_edges_are_galaxy_local(model: &GalaxyModel) {
