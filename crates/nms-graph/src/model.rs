@@ -48,8 +48,13 @@ pub struct GalaxyModel {
     /// Biome -> list of planets with that biome.
     pub biome_index: HashMap<Biome, Vec<PlanetKey>>,
 
-    /// System name -> SystemId (lowercase, only for named systems).
-    pub name_index: HashMap<String, SystemId>,
+    /// Galaxy-qualified system name -> SystemId, keyed by `(reality_index, lowercase_name)`.
+    ///
+    /// The public key shape includes the galaxy so equal system names in
+    /// different galaxies remain independently addressable. This is a derived
+    /// index: cache archives store system names in the raw system records and
+    /// rebuild this map when constructing a model.
+    pub name_index: HashMap<(u8, String), SystemId>,
 
     /// Galaxy-qualified system key -> the matching `SystemId`.
     pub address_to_id: HashMap<SystemId, SystemId>,
@@ -94,7 +99,7 @@ impl GalaxyModel {
         let mut systems = HashMap::with_capacity(extracted.len());
         let mut planets = HashMap::new();
         let mut biome_index: HashMap<Biome, Vec<PlanetKey>> = HashMap::new();
-        let mut name_index = HashMap::new();
+        let mut name_index: HashMap<(u8, String), SystemId> = HashMap::new();
         let mut address_to_id = HashMap::new();
         let mut node_map = HashMap::new();
 
@@ -113,7 +118,7 @@ impl GalaxyModel {
 
             // Add to name index
             if let Some(ref name) = system.name {
-                name_index.insert(name.to_lowercase(), sys_id);
+                name_index.insert((system.address.reality_index, name.to_lowercase()), sys_id);
             }
 
             // Extract planets into flat index
@@ -186,10 +191,22 @@ impl GalaxyModel {
         self.systems.get(id)
     }
 
-    /// Look up a system by name (case-insensitive).
+    /// Look up a system by name in the currently active galaxy.
+    ///
+    /// Names are matched case-insensitively. Use
+    /// [`system_by_name_in_galaxy`](Self::system_by_name_in_galaxy) to select
+    /// a specific galaxy without changing the active selection.
     pub fn system_by_name(&self, name: &str) -> Option<(&SystemId, &System)> {
+        self.system_by_name_in_galaxy(name, self.active_galaxy)
+    }
+
+    /// Look up a system by name in `galaxy` without changing active selection.
+    ///
+    /// Names are matched case-insensitively. This lookup never falls back to a
+    /// system with the same name in another galaxy.
+    pub fn system_by_name_in_galaxy(&self, name: &str, galaxy: u8) -> Option<(&SystemId, &System)> {
         self.name_index
-            .get(&name.to_lowercase())
+            .get(&(galaxy, name.to_lowercase()))
             .and_then(|id| self.systems.get(id).map(|s| (id, s)))
     }
 
@@ -270,7 +287,8 @@ impl GalaxyModel {
         self.address_to_id.insert(sys_id, sys_id);
 
         if let Some(ref name) = system.name {
-            self.name_index.insert(name.to_lowercase(), sys_id);
+            self.name_index
+                .insert((system.address.reality_index, name.to_lowercase()), sys_id);
         }
 
         for planet in &system.planets {
@@ -433,6 +451,16 @@ mod tests {
         let model = GalaxyModel::from_save(&save);
         assert!(model.base("home base").is_some());
         assert!(model.base("HOME BASE").is_some());
+    }
+
+    #[test]
+    fn test_from_save_name_index_uses_qualified_key_shape() {
+        let save = minimal_save();
+        let model = GalaxyModel::from_save(&save);
+        let name_index: &HashMap<(u8, String), SystemId> = &model.name_index;
+
+        // Save discovery extraction intentionally supplies no system names.
+        assert!(name_index.is_empty());
     }
 
     #[test]
@@ -663,6 +691,112 @@ mod tests {
             );
             assert_eq!(model.system(&id9).unwrap().name.as_deref(), Some("Nine"));
         }
+    }
+
+    #[test]
+    fn test_system_by_name_is_galaxy_qualified_in_both_insertion_orders() {
+        let address0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let address9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let id0 = SystemId::from_address(&address0);
+        let id9 = SystemId::from_address(&address9);
+        let systems = [
+            System::new(
+                address0,
+                Some("Shared".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Zero".into()),
+                    None,
+                )],
+            ),
+            System::new(
+                address9,
+                Some("Shared".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Toxic),
+                    None,
+                    true,
+                    Some("Nine".into()),
+                    None,
+                )],
+            ),
+        ];
+
+        for order in [[0, 1], [1, 0]] {
+            let mut model = GalaxyModel::new();
+            for index in order {
+                model.insert_system(systems[index].clone());
+            }
+
+            for (galaxy, expected_id, expected_planet) in [(0, id0, "Zero"), (9, id9, "Nine")] {
+                model.set_active_galaxy(galaxy);
+                let (id, system) = model.system_by_name("sHaReD").unwrap();
+                assert_eq!(*id, expected_id);
+                assert_eq!(system.planets[0].name.as_deref(), Some(expected_planet));
+
+                let (explicit_id, explicit_system) =
+                    model.system_by_name_in_galaxy("SHARED", galaxy).unwrap();
+                assert_eq!(*explicit_id, expected_id);
+                assert_eq!(
+                    explicit_system.planets[0].name.as_deref(),
+                    Some(expected_planet)
+                );
+            }
+            assert!(model.system_by_name_in_galaxy("Shared", 7).is_none());
+
+            let before = model.system_count();
+            model.insert_system(System::new(
+                address9,
+                Some("Changed".into()),
+                None,
+                None,
+                vec![],
+            ));
+            assert_eq!(model.system_count(), before);
+            assert_eq!(
+                model
+                    .system_by_name_in_galaxy("Shared", 9)
+                    .unwrap()
+                    .1
+                    .planets[0]
+                    .name
+                    .as_deref(),
+                Some("Nine")
+            );
+        }
+    }
+
+    #[test]
+    fn test_same_galaxy_duplicate_system_name_keeps_last_inserted_system() {
+        let mut model = GalaxyModel::new();
+        let first = System::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+            Some("Shared".into()),
+            None,
+            None,
+            vec![],
+        );
+        let last = System::new(
+            GalacticAddress::new(1, 0, 0, 2, 0, 0),
+            Some("Shared".into()),
+            None,
+            None,
+            vec![],
+        );
+        let last_id = SystemId::from_address(&last.address);
+
+        model.insert_system(first);
+        model.insert_system(last);
+
+        assert_eq!(*model.system_by_name("SHARED").unwrap().0, last_id);
     }
 
     #[test]

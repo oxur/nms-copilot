@@ -3,6 +3,7 @@
 use nms_core::address::GalacticAddress;
 use nms_core::biome::{Biome, BiomeSubType};
 use nms_core::system::{Planet, System};
+use nms_graph::model::PlanetKey;
 use nms_graph::query::BiomeFilter;
 use nms_graph::{GalaxyModel, GraphError};
 
@@ -27,15 +28,17 @@ pub struct FindQuery {
     pub biome_subtype: Option<BiomeSubType>,
     /// Filter by infested flag.
     pub infested: Option<bool>,
-    /// Only include results within this radius (light-years).
+    /// Only include results within this radius (light-years). Negative values
+    /// return no results; NaN returns no results without `nearest` and adds no
+    /// radius cutoff when `nearest` is set.
     pub within_ly: Option<f64>,
-    /// Return at most this many results (nearest first).
+    /// Return at most this many results after all filters, nearest first.
     pub nearest: Option<usize>,
-    /// Filter by planet/system name pattern (case-insensitive substring).
+    /// Filter by planet or system name substring, case-insensitively.
     pub name_pattern: Option<String>,
     /// Filter by discoverer username (case-insensitive substring).
     pub discoverer: Option<String>,
-    /// Only include named planets/systems.
+    /// Only include planets that have a name.
     pub named_only: bool,
     /// Reference point for distance calculations.
     pub from: ReferencePoint,
@@ -54,21 +57,42 @@ pub struct FindResult {
     pub portal_hex: String,
 }
 
-/// Execute a find query against the galaxy model.
+/// Execute a find query against one selected galaxy in the model.
 ///
-/// Returns results sorted by distance ascending.
+/// Current-position queries use the active galaxy and report a mismatch when
+/// the player's address is in another galaxy. Explicit address and base
+/// references select their own galaxy without mutating the model. Every planet
+/// and system filter is applied before the optional nearest limit. Results are
+/// sorted by distance, then numeric galaxy, system address, and planet index.
+///
+/// # Errors
+///
+/// Returns [`GraphError::NoPlayerPosition`] when a current-position query has
+/// no player address, [`GraphError::BaseNotFound`] when a named base is absent,
+/// or [`GraphError::ReferenceGalaxyMismatch`] when the player galaxy differs
+/// from the active galaxy.
 pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindResult>, GraphError> {
-    // Resolve the reference point
-    let from = match &query.from {
-        ReferencePoint::CurrentPosition => model
-            .player_position()
-            .copied()
-            .ok_or(GraphError::NoPlayerPosition)?,
-        ReferencePoint::Base(name) => model
-            .base(name)
-            .map(|b| b.address)
-            .ok_or_else(|| GraphError::BaseNotFound(name.clone()))?,
-        ReferencePoint::Address(addr) => *addr,
+    let (from, galaxy) = match &query.from {
+        ReferencePoint::CurrentPosition => {
+            let from = model
+                .player_position()
+                .copied()
+                .ok_or(GraphError::NoPlayerPosition)?;
+            if from.reality_index != model.active_galaxy {
+                return Err(GraphError::ReferenceGalaxyMismatch {
+                    reference: from.reality_index,
+                    active: model.active_galaxy,
+                });
+            }
+            (from, model.active_galaxy)
+        }
+        ReferencePoint::Base(name) => {
+            let base = model
+                .base(name)
+                .ok_or_else(|| GraphError::BaseNotFound(name.clone()))?;
+            (base.address, base.address.reality_index)
+        }
+        ReferencePoint::Address(address) => (*address, address.reality_index),
     };
 
     let biome_filter = BiomeFilter {
@@ -78,96 +102,88 @@ pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindRe
         named_only: query.named_only,
     };
 
-    // Choose between nearest-N or within-radius
-    let planet_matches = if let Some(n) = query.nearest {
-        model.nearest_planets(&from, n * 2, &biome_filter) // over-fetch for post-filtering
-    } else if let Some(radius) = query.within_ly {
-        model.planets_within_radius(&from, radius, &biome_filter)
-    } else {
-        // No spatial constraint: get all matching planets
-        let mut all = Vec::new();
-        if let Some(biome) = query.biome {
-            for planet in model.planets_by_biome(biome) {
-                for (&sys_id, system) in &model.systems {
-                    if system.planets.iter().any(|p| p.index == planet.index) {
-                        let dist = from.distance_ly(&system.address);
-                        all.push(((sys_id, planet.index), planet, dist));
-                        break;
-                    }
-                }
-            }
-        } else {
-            for (&sys_id, system) in &model.systems {
-                for planet in &system.planets {
-                    let dist = from.distance_ly(&system.address);
-                    all.push(((sys_id, planet.index), planet, dist));
-                }
-            }
+    if query.within_ly.is_some_and(|radius| radius < 0.0) {
+        return Ok(Vec::new());
+    }
+    if query.within_ly.is_some_and(f64::is_nan) && query.nearest.is_none() {
+        return Ok(Vec::new());
+    }
+
+    let name_pattern = query
+        .name_pattern
+        .as_ref()
+        .map(|pattern| pattern.to_lowercase());
+    let discoverer_pattern = query
+        .discoverer
+        .as_ref()
+        .map(|pattern| pattern.to_lowercase());
+    let mut candidates: Vec<(PlanetKey, &Planet, &System, f64)> = Vec::new();
+
+    for (&key, planet) in &model.planets {
+        let Some(system) = model.system(&key.0) else {
+            continue;
+        };
+        if key.0.reality_index() != galaxy || system.address.reality_index != galaxy {
+            continue;
         }
-        all
-    };
+        if !biome_filter.matches(planet) {
+            continue;
+        }
 
-    let mut results: Vec<FindResult> = planet_matches
-        .into_iter()
-        .filter_map(|(key, planet, dist)| {
-            let system = model.system(&key.0)?;
-
-            // Apply name pattern filter
-            if let Some(ref pattern) = query.name_pattern {
-                let pattern_lower = pattern.to_lowercase();
-                let name_matches = planet
+        if let Some(pattern) = &name_pattern {
+            let name_matches = planet
+                .name
+                .as_ref()
+                .is_some_and(|name| name.to_lowercase().contains(pattern))
+                || system
                     .name
                     .as_ref()
-                    .map(|n| n.to_lowercase().contains(&pattern_lower))
-                    .unwrap_or(false)
-                    || system
-                        .name
-                        .as_ref()
-                        .map(|n| n.to_lowercase().contains(&pattern_lower))
-                        .unwrap_or(false);
-                if !name_matches {
-                    return None;
-                }
+                    .is_some_and(|name| name.to_lowercase().contains(pattern));
+            if !name_matches {
+                continue;
             }
+        }
 
-            // Apply discoverer filter
-            if let Some(ref disc) = query.discoverer {
-                let disc_lower = disc.to_lowercase();
-                let disc_matches = system
-                    .discoverer
-                    .as_ref()
-                    .map(|d| d.to_lowercase().contains(&disc_lower))
-                    .unwrap_or(false);
-                if !disc_matches {
-                    return None;
-                }
-            }
+        if let Some(pattern) = &discoverer_pattern
+            && !system
+                .discoverer
+                .as_ref()
+                .is_some_and(|name| name.to_lowercase().contains(pattern))
+        {
+            continue;
+        }
 
-            // Apply within_ly if both nearest and within are specified
-            if let Some(radius) = query.within_ly
-                && dist > radius
-            {
-                return None;
-            }
+        let distance = from.distance_ly(&system.address);
+        if let Some(radius) = query.within_ly
+            && !radius.is_nan()
+            && distance > radius
+        {
+            continue;
+        }
+        candidates.push((key, planet, system, distance));
+    }
 
-            let portal_hex = format!("{:012X}", system.address.packed());
+    candidates.sort_by(|left, right| {
+        left.3
+            .total_cmp(&right.3)
+            .then_with(|| left.0.0.reality_index().cmp(&right.0.0.reality_index()))
+            .then_with(|| left.0.0.system_address().cmp(&right.0.0.system_address()))
+            .then_with(|| left.0.1.cmp(&right.0.1))
+    });
 
-            Some(FindResult {
-                planet: planet.clone(),
-                system: system.clone(),
-                distance_ly: dist,
-                portal_hex,
-            })
+    if let Some(nearest) = query.nearest {
+        candidates.truncate(nearest);
+    }
+
+    let results = candidates
+        .into_iter()
+        .map(|(_, planet, system, distance_ly)| FindResult {
+            planet: planet.clone(),
+            system: system.clone(),
+            distance_ly,
+            portal_hex: format!("{:012X}", system.address.packed()),
         })
         .collect();
-
-    // Sort by distance
-    results.sort_by(|a, b| a.distance_ly.partial_cmp(&b.distance_ly).unwrap());
-
-    // Apply nearest limit
-    if let Some(n) = query.nearest {
-        results.truncate(n);
-    }
 
     Ok(results)
 }
@@ -175,6 +191,8 @@ pub fn execute_find(model: &GalaxyModel, query: &FindQuery) -> Result<Vec<FindRe
 #[cfg(test)]
 mod tests {
     use super::*;
+    use nms_core::player::{BaseType, PlayerBase, PlayerState};
+    use nms_graph::spatial::SystemId;
 
     fn test_model() -> GalaxyModel {
         let json = r#"{
@@ -199,6 +217,51 @@ mod tests {
         nms_save::parse_save(json.as_bytes())
             .map(|save| GalaxyModel::from_save(&save))
             .unwrap()
+    }
+
+    fn system(
+        galaxy: u8,
+        x: i16,
+        ssi: u16,
+        name: &str,
+        discoverer: &str,
+        planets: Vec<Planet>,
+    ) -> System {
+        System::new(
+            GalacticAddress::new(x, 0, 0, ssi, 0, galaxy),
+            Some(name.into()),
+            Some(discoverer.into()),
+            None,
+            planets,
+        )
+    }
+
+    fn model_with_systems(
+        systems: impl IntoIterator<Item = System>,
+        active_galaxy: u8,
+        player: Option<GalacticAddress>,
+    ) -> GalaxyModel {
+        let mut model = GalaxyModel::new();
+        model.player_state = player
+            .map(|address| PlayerState::new(address, address.reality_index, None, None, 0, 0, 0));
+        model.set_active_galaxy(active_galaxy);
+        for system in systems {
+            model.insert_system(system);
+        }
+        model
+    }
+
+    fn result_planet_names(results: &[FindResult]) -> Vec<String> {
+        results
+            .iter()
+            .map(|result| {
+                result
+                    .planet
+                    .name
+                    .clone()
+                    .unwrap_or_else(|| "<unnamed>".into())
+            })
+            .collect()
     }
 
     #[test]
@@ -285,5 +348,712 @@ mod tests {
         for r in &results {
             assert!(r.system.discoverer.as_ref().unwrap().contains("Explorer"));
         }
+    }
+
+    #[test]
+    fn test_find_keeps_same_index_planets_with_their_qualified_systems() {
+        let address0a = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let address0b = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+        let address9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let id0a = SystemId::from_address(&address0a);
+        let id0b = SystemId::from_address(&address0b);
+        let id9 = SystemId::from_address(&address9);
+        let systems = [
+            System::new(
+                address0a,
+                Some("Alpha".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Alpha planet".into()),
+                    None,
+                )],
+            ),
+            System::new(
+                address0b,
+                Some("Beta".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Beta planet".into()),
+                    None,
+                )],
+            ),
+            System::new(
+                address9,
+                Some("Nine".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Nine planet".into()),
+                    None,
+                )],
+            ),
+        ];
+
+        for order in [[0, 1, 2], [2, 1, 0]] {
+            let model = model_with_systems(
+                order.into_iter().map(|index| systems[index].clone()),
+                0,
+                Some(address0a),
+            );
+            let results = execute_find(
+                &model,
+                &FindQuery {
+                    from: ReferencePoint::Address(address0a),
+                    biome: Some(Biome::Lush),
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+            assert_eq!(results.len(), 2);
+            let pairs: Vec<_> = results
+                .iter()
+                .map(|result| {
+                    let id = SystemId::from_address(&result.system.address);
+                    let contained = result
+                        .system
+                        .planets
+                        .iter()
+                        .find(|planet| planet.index == result.planet.index)
+                        .unwrap();
+                    assert_eq!(contained, &result.planet);
+                    (id, result.planet.name.as_deref().unwrap())
+                })
+                .collect();
+            assert!(pairs.contains(&(id0a, "Alpha planet")));
+            assert!(pairs.contains(&(id0b, "Beta planet")));
+            assert!(!pairs.iter().any(|(id, _)| *id == id9));
+
+            let nine_results = execute_find(
+                &model,
+                &FindQuery {
+                    from: ReferencePoint::Address(address9),
+                    biome: Some(Biome::Lush),
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+            assert_eq!(nine_results.len(), 1);
+            assert_eq!(SystemId::from_address(&nine_results[0].system.address), id9);
+            assert_eq!(nine_results[0].planet.name.as_deref(), Some("Nine planet"));
+        }
+    }
+
+    #[test]
+    fn test_find_composes_all_planet_filters_in_every_spatial_mode() {
+        let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let model = model_with_systems(
+            [
+                system(
+                    0,
+                    0,
+                    1,
+                    "System 0",
+                    "Explorer",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        Some(BiomeSubType::LushRoomTemp),
+                        true,
+                        Some("Named".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    1,
+                    1,
+                    "System 1",
+                    "Explorer",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        Some(BiomeSubType::LushHumid),
+                        false,
+                        None,
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    2,
+                    1,
+                    "System 2",
+                    "Explorer",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        Some(BiomeSubType::LushHumid),
+                        false,
+                        Some("Cool".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    3,
+                    1,
+                    "System 3",
+                    "Explorer",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Toxic),
+                        None,
+                        true,
+                        Some("Toxic".into()),
+                        None,
+                    )],
+                ),
+            ],
+            0,
+            Some(origin),
+        );
+
+        for (filter, expected) in [
+            (
+                BiomeFilter {
+                    biome: Some(Biome::Lush),
+                    ..Default::default()
+                },
+                vec!["Named", "<unnamed>", "Cool"],
+            ),
+            (
+                BiomeFilter {
+                    biome_subtype: Some(BiomeSubType::LushHumid),
+                    ..Default::default()
+                },
+                vec!["<unnamed>", "Cool"],
+            ),
+            (
+                BiomeFilter {
+                    infested: Some(false),
+                    ..Default::default()
+                },
+                vec!["<unnamed>", "Cool"],
+            ),
+            (
+                BiomeFilter {
+                    named_only: true,
+                    ..Default::default()
+                },
+                vec!["Named", "Cool", "Toxic"],
+            ),
+            (
+                BiomeFilter {
+                    biome: Some(Biome::Lush),
+                    biome_subtype: Some(BiomeSubType::LushHumid),
+                    infested: Some(false),
+                    named_only: true,
+                },
+                vec!["Cool"],
+            ),
+        ] {
+            let query = FindQuery {
+                biome: filter.biome,
+                biome_subtype: filter.biome_subtype,
+                infested: filter.infested,
+                named_only: filter.named_only,
+                from: ReferencePoint::Address(origin),
+                ..Default::default()
+            };
+            assert_eq!(
+                result_planet_names(&execute_find(&model, &query).unwrap()),
+                expected
+            );
+        }
+
+        let system_name_does_not_satisfy_named_only = FindQuery {
+            from: ReferencePoint::Address(origin),
+            name_pattern: Some("System 1".into()),
+            named_only: true,
+            ..Default::default()
+        };
+        assert!(
+            execute_find(&model, &system_name_does_not_satisfy_named_only)
+                .unwrap()
+                .is_empty()
+        );
+
+        let combined = FindQuery {
+            from: ReferencePoint::Address(origin),
+            biome: Some(Biome::Lush),
+            biome_subtype: Some(BiomeSubType::LushHumid),
+            infested: Some(false),
+            named_only: true,
+            ..Default::default()
+        };
+        let expected = vec!["Cool".to_string()];
+        for (radius, nearest) in [
+            (None, None),
+            (Some(10_000.0), None),
+            (None, Some(10)),
+            (Some(10_000.0), Some(10)),
+        ] {
+            let results = execute_find(
+                &model,
+                &FindQuery {
+                    within_ly: radius,
+                    nearest,
+                    ..combined.clone()
+                },
+            )
+            .unwrap();
+            assert_eq!(result_planet_names(&results), expected);
+        }
+        assert!(
+            execute_find(
+                &model,
+                &FindQuery {
+                    biome: Some(Biome::Lava),
+                    from: ReferencePoint::Address(origin),
+                    ..Default::default()
+                }
+            )
+            .unwrap()
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn test_find_explicit_references_select_their_galaxy_without_mutation() {
+        let zero0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let nine0 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let mut model = model_with_systems(
+            [
+                system(
+                    0,
+                    0,
+                    1,
+                    "Zero 0",
+                    "Zero",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Zero 0".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    1,
+                    1,
+                    "Zero 1",
+                    "Zero",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Zero 1".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    9,
+                    0,
+                    1,
+                    "Nine 0",
+                    "Nine",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Nine 0".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    9,
+                    1,
+                    1,
+                    "Nine 1",
+                    "Nine",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Nine 1".into()),
+                        None,
+                    )],
+                ),
+            ],
+            0,
+            Some(zero0),
+        );
+        model.insert_base(PlayerBase::new(
+            "Outer Base".into(),
+            BaseType::HomePlanetBase,
+            nine0,
+            [0.0; 3],
+            None,
+        ));
+
+        let default_results = execute_find(&model, &FindQuery::default()).unwrap();
+        assert_eq!(result_planet_names(&default_results), ["Zero 0", "Zero 1"]);
+        assert_eq!(
+            default_results
+                .iter()
+                .map(|result| result.distance_ly)
+                .collect::<Vec<_>>(),
+            [0.0, 400.0]
+        );
+
+        for reference in [
+            ReferencePoint::Address(nine0),
+            ReferencePoint::Base("Outer Base".into()),
+        ] {
+            for (radius, nearest) in [
+                (None, None),
+                (Some(400.0), None),
+                (None, Some(2)),
+                (Some(400.0), Some(2)),
+            ] {
+                let results = execute_find(
+                    &model,
+                    &FindQuery {
+                        from: reference.clone(),
+                        within_ly: radius,
+                        nearest,
+                        ..Default::default()
+                    },
+                )
+                .unwrap();
+                assert_eq!(result_planet_names(&results), ["Nine 0", "Nine 1"]);
+                assert_eq!(
+                    results
+                        .iter()
+                        .map(|result| result.distance_ly)
+                        .collect::<Vec<_>>(),
+                    [0.0, 400.0]
+                );
+            }
+        }
+
+        assert_eq!(model.active_galaxy, 0);
+        assert_eq!(model.player_position(), Some(&zero0));
+
+        model.set_active_galaxy(9);
+        assert!(matches!(
+            execute_find(&model, &FindQuery::default()),
+            Err(GraphError::ReferenceGalaxyMismatch {
+                reference: 0,
+                active: 9
+            })
+        ));
+        assert_eq!(model.active_galaxy, 9);
+        assert_eq!(model.player_position(), Some(&zero0));
+
+        let empty_galaxy = execute_find(
+            &model,
+            &FindQuery {
+                from: ReferencePoint::Address(GalacticAddress::new(0, 0, 0, 1, 0, 7)),
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        assert!(empty_galaxy.is_empty());
+    }
+
+    #[test]
+    fn test_find_nearest_zero_resolves_reference_before_returning_empty() {
+        let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let mut no_player = model_with_systems([], 0, None);
+        assert!(matches!(
+            execute_find(
+                &no_player,
+                &FindQuery {
+                    nearest: Some(0),
+                    ..Default::default()
+                }
+            ),
+            Err(GraphError::NoPlayerPosition)
+        ));
+        no_player.player_state = Some(PlayerState::new(origin, 0, None, None, 0, 0, 0));
+
+        assert!(matches!(
+            execute_find(
+                &no_player,
+                &FindQuery {
+                    from: ReferencePoint::Base("Missing".into()),
+                    nearest: Some(0),
+                    ..Default::default()
+                }
+            ),
+            Err(GraphError::BaseNotFound(name)) if name == "Missing"
+        ));
+        assert!(
+            execute_find(
+                &no_player,
+                &FindQuery {
+                    from: ReferencePoint::Address(origin),
+                    nearest: Some(0),
+                    ..Default::default()
+                }
+            )
+            .unwrap()
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn test_find_filters_before_nearest_and_radius_boundaries() {
+        let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let model = model_with_systems(
+            [
+                system(
+                    0,
+                    0,
+                    1,
+                    "Skip 0",
+                    "Other",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Skip".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    1,
+                    1,
+                    "Skip 1",
+                    "Other",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Skip".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    2,
+                    1,
+                    "Skip 2",
+                    "Other",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Skip".into()),
+                        None,
+                    )],
+                ),
+                system(
+                    0,
+                    4,
+                    1,
+                    "Target",
+                    "Explorer",
+                    vec![Planet::new(
+                        1,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Keep".into()),
+                        None,
+                    )],
+                ),
+            ],
+            0,
+            Some(origin),
+        );
+
+        let named = execute_find(
+            &model,
+            &FindQuery {
+                from: ReferencePoint::Address(origin),
+                nearest: Some(1),
+                name_pattern: Some("Keep".into()),
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        assert_eq!(result_planet_names(&named), ["Keep"]);
+        assert_eq!(named[0].distance_ly, 1600.0);
+
+        let discovered = execute_find(
+            &model,
+            &FindQuery {
+                from: ReferencePoint::Address(origin),
+                nearest: Some(1),
+                discoverer: Some("Explorer".into()),
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        assert_eq!(result_planet_names(&discovered), ["Keep"]);
+        assert_eq!(discovered[0].distance_ly, 1600.0);
+
+        for (radius, expected_len) in [(Some(1600.0), 1), (Some(1599.0), 0)] {
+            let results = execute_find(
+                &model,
+                &FindQuery {
+                    from: ReferencePoint::Address(origin),
+                    within_ly: radius,
+                    name_pattern: Some("Keep".into()),
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+            assert_eq!(results.len(), expected_len);
+        }
+        let combined = execute_find(
+            &model,
+            &FindQuery {
+                from: ReferencePoint::Address(origin),
+                within_ly: Some(1600.0),
+                nearest: Some(1),
+                name_pattern: Some("Keep".into()),
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        assert_eq!(result_planet_names(&combined), ["Keep"]);
+    }
+
+    #[test]
+    fn test_find_ties_sort_by_numeric_qualified_key_and_planet_index() {
+        let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let negative = system(
+            0,
+            -1,
+            1,
+            "Alpha",
+            "Explorer",
+            vec![
+                Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Alpha 1".into()),
+                    None,
+                ),
+                Planet::new(
+                    2,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Alpha 2".into()),
+                    None,
+                ),
+            ],
+        );
+        let positive = system(
+            0,
+            1,
+            1,
+            "Zeta",
+            "Explorer",
+            vec![
+                Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Zeta 1".into()),
+                    None,
+                ),
+                Planet::new(
+                    2,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Zeta 2".into()),
+                    None,
+                ),
+            ],
+        );
+        let expected = ["Zeta 1", "Zeta 2", "Alpha 1", "Alpha 2"];
+
+        for systems in [
+            [negative.clone(), positive.clone()],
+            [positive.clone(), negative.clone()],
+        ] {
+            let model = model_with_systems(systems, 0, Some(origin));
+            let results = execute_find(
+                &model,
+                &FindQuery {
+                    from: ReferencePoint::Address(origin),
+                    nearest: Some(4),
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+            assert_eq!(result_planet_names(&results), expected);
+            assert_eq!(
+                results
+                    .iter()
+                    .map(|result| result.distance_ly)
+                    .collect::<Vec<_>>(),
+                [400.0, 400.0, 400.0, 400.0]
+            );
+        }
+    }
+
+    #[test]
+    fn test_find_preserves_legacy_nonfinite_radius_behavior() {
+        let origin = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let model = model_with_systems(
+            [system(
+                0,
+                0,
+                1,
+                "Origin",
+                "Explorer",
+                vec![Planet::new(
+                    1,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Origin".into()),
+                    None,
+                )],
+            )],
+            0,
+            Some(origin),
+        );
+        let run = |radius, nearest| {
+            execute_find(
+                &model,
+                &FindQuery {
+                    from: ReferencePoint::Address(origin),
+                    within_ly: radius,
+                    nearest,
+                    ..Default::default()
+                },
+            )
+            .unwrap()
+        };
+
+        assert!(run(Some(-1.0), None).is_empty());
+        assert!(run(Some(f64::NEG_INFINITY), Some(1)).is_empty());
+        assert_eq!(run(Some(f64::INFINITY), None).len(), 1);
+        assert!(run(Some(f64::NAN), None).is_empty());
+        assert_eq!(run(Some(f64::NAN), Some(1)).len(), 1);
     }
 }

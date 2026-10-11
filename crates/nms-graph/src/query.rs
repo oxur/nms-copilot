@@ -12,10 +12,42 @@ use crate::spatial::SystemId;
 /// Filter criteria for planet queries.
 #[derive(Debug, Clone, Default)]
 pub struct BiomeFilter {
+    /// Require this biome when set.
     pub biome: Option<Biome>,
+    /// Require this biome subtype when set.
     pub biome_subtype: Option<BiomeSubType>,
+    /// Require the planet's infested flag to equal this value when set.
     pub infested: Option<bool>,
+    /// Require a planet name; a containing system name does not count.
     pub named_only: bool,
+}
+
+impl BiomeFilter {
+    /// Return whether `planet` satisfies every configured planet predicate.
+    ///
+    /// `named_only` requires a planet name; a containing system name does not
+    /// satisfy this filter. `Some(false)` matches non-infested planets.
+    pub fn matches(&self, planet: &Planet) -> bool {
+        if let Some(biome) = self.biome
+            && planet.biome != Some(biome)
+        {
+            return false;
+        }
+        if let Some(subtype) = self.biome_subtype
+            && planet.biome_subtype != Some(subtype)
+        {
+            return false;
+        }
+        if let Some(infested) = self.infested
+            && planet.infested != infested
+        {
+            return false;
+        }
+        if self.named_only && planet.name.is_none() {
+            return false;
+        }
+        true
+    }
 }
 
 impl GalaxyModel {
@@ -157,7 +189,7 @@ impl GalaxyModel {
                     if results.len() >= n * 3 {
                         break;
                     }
-                    if matches_filter(planet, filter) {
+                    if filter.matches(planet) {
                         let key = (sp.id, planet.index);
                         results.push((key, planet, dist_ly));
                     }
@@ -183,7 +215,7 @@ impl GalaxyModel {
         for (sys_id, dist_ly) in systems {
             if let Some(system) = self.systems.get(&sys_id) {
                 for planet in &system.planets {
-                    if matches_filter(planet, filter) {
+                    if filter.matches(planet) {
                         let key = (sys_id, planet.index);
                         results.push((key, planet, dist_ly));
                     }
@@ -193,29 +225,6 @@ impl GalaxyModel {
 
         results
     }
-}
-
-/// Check if a planet matches the given filter criteria.
-fn matches_filter(planet: &Planet, filter: &BiomeFilter) -> bool {
-    if let Some(biome) = filter.biome
-        && planet.biome != Some(biome)
-    {
-        return false;
-    }
-    if let Some(subtype) = filter.biome_subtype
-        && planet.biome_subtype != Some(subtype)
-    {
-        return false;
-    }
-    if let Some(infested) = filter.infested
-        && planet.infested != infested
-    {
-        return false;
-    }
-    if filter.named_only && planet.name.is_none() {
-        return false;
-    }
-    true
 }
 
 #[cfg(test)]
@@ -484,7 +493,7 @@ mod tests {
     fn test_matches_filter_all_pass() {
         let planet = Planet::new(0, Some(Biome::Lush), None, false, Some("Eden".into()), None);
         let filter = BiomeFilter::default();
-        assert!(matches_filter(&planet, &filter));
+        assert!(filter.matches(&planet));
     }
 
     #[test]
@@ -494,7 +503,7 @@ mod tests {
             biome: Some(Biome::Toxic),
             ..Default::default()
         };
-        assert!(!matches_filter(&planet, &filter));
+        assert!(!filter.matches(&planet));
     }
 
     #[test]
@@ -504,7 +513,7 @@ mod tests {
             biome: Some(Biome::Toxic),
             ..Default::default()
         };
-        assert!(matches_filter(&planet, &filter));
+        assert!(filter.matches(&planet));
     }
 
     #[test]
@@ -514,7 +523,7 @@ mod tests {
             infested: Some(true),
             ..Default::default()
         };
-        assert!(!matches_filter(&planet, &filter));
+        assert!(!filter.matches(&planet));
     }
 
     #[test]
@@ -525,8 +534,8 @@ mod tests {
             named_only: true,
             ..Default::default()
         };
-        assert!(!matches_filter(&unnamed, &filter));
-        assert!(matches_filter(&named, &filter));
+        assert!(!filter.matches(&unnamed));
+        assert!(filter.matches(&named));
     }
 
     #[test]
@@ -545,6 +554,6 @@ mod tests {
             infested: Some(true),
             named_only: true,
         };
-        assert!(matches_filter(&planet, &filter));
+        assert!(filter.matches(&planet));
     }
 }
