@@ -9847,6 +9847,28 @@
           "bytes": 0,
           "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         }
+      },
+      {
+        "name": "s08-i04-final-validation-followup-diffcheck",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "duration_seconds": 0.014,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
       }
     ],
     "gates": [
@@ -10274,6 +10296,12 @@
         "name": "s08-i04-post-return-audit-planning-diffcheck-retry1",
         "status": "passed",
         "receipt": "iteration04.attempts[14]"
+      },
+      {
+        "gate": 9,
+        "name": "s08-i04-final-validation-followup-diffcheck",
+        "status": "passed",
+        "receipt": "iteration04.attempts[15]"
       }
     ],
     "limitations": [
@@ -10778,7 +10806,16 @@
         }
       ],
       "planning_commit_followup": {
-        "planned": "receipt-only update to artifacts/validation.json will record final diffcheck and final scoped commit identity; source/planning worktrees remain separate."
+        "commit": "6cf63945727dc91bd498817bcff9a5d774b9d67c",
+        "parent": "cd41b842da9d814f6ab5d5c39b5fbbdccd72d8b7",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json"
+        ],
+        "trailers": [
+          "Co-authored-by: Codex <noreply@openai.com>",
+          "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+        ],
+        "purpose": "receipt-only; records the first planning closeout commit identity and separately scoped planning commit attempt results."
       }
     }
   }
