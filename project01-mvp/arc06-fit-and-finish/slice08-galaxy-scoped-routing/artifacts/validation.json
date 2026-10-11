@@ -5872,6 +5872,98 @@
             "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
           },
           "receipt_path": "/private/tmp/s08-i03-prepare-planning-commit-message.json"
+        },
+        {
+          "name": "s08-i03-planning-commit-verification",
+          "argv": [
+            "bash",
+            "-lc",
+            "git status --short; git rev-parse HEAD HEAD^; git diff-tree --no-commit-id --name-only -r HEAD; git show -s --format=%B HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.152,
+          "stdout": {
+            "base64": "IE0gcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uCjA0OWRmNGNmMTAxZjBkMDU1OTFkYjc5NTk5NTkyM2Q0OTU0NWQ4NDMKZTBjNDY1MGIyZDE5ZThhZjZlNmI5NDVmNTA5YTBlOWNlYWFjM2IwYwpwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2FydGlmYWN0cy9leGVjdXRpb24ubWQKcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2xvc2luZy1yZXBvcnQubWQKcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9sZWRnZXIubWQKZG9jczogcmV0dXJuIHNsaWNlMDggaXRlcmF0aW9uMDMgZXZpZGVuY2UKClJlY29yZCB0aGUgY29ycmVjdGlvbiB0byB0aGUgY2xvc2VkLXJvdXRlIG9yYWNsZSwgZnJlc2ggb3JkZXJlZCBnYXRlcywgYW5kIHByb3Bvc2VkIHJvdyBkaXNwb3NpdGlvbi4KCkNvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgpDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+Cgo=",
+            "bytes": 758,
+            "sha256": "1b2911c9d0c9a1cafa72bc183035dd3e1e0cb6a1a6774e914205b36b4558d11d"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "receipt_path": "/private/tmp/s08-i03-planning-commit-verification.json"
+        },
+        {
+          "name": "s08-i03-main-and-controls-final-pins",
+          "argv": [
+            "bash",
+            "-lc",
+            "git status --short; git rev-parse HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.127,
+          "stdout": {
+            "base64": "NmQxODNiZGU3OWRkNzMyOGMzMmQ0NzM5ZGNhMjQ5ZjVmMWY5Y2Q2Ywo=",
+            "bytes": 41,
+            "sha256": "8aa6c21b9ebbe7c2ca8dc01e01f6d1b51b5b9243c649257394fec2d96ae114c6"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "receipt_path": "/private/tmp/s08-i03-main-and-controls-final-pins.json"
+        },
+        {
+          "name": "s08-i03-control-worktrees-final-pins",
+          "argv": [
+            "bash",
+            "-lc",
+            "for d in .worktrees/cache-semantic-compatibility .worktrees/galaxy-qualified-identity .worktrees/galaxy-scoped-queries; do git -C \"$d\" status --short; git -C \"$d\" rev-parse HEAD; done"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.189,
+          "stdout": {
+            "base64": "ZGVjZDhkNmMwOWMxMTk5YTZjZGQwMWZkNDhhYTUwZjNhZGVmMmIxYQpmNTdhMzhmN2QxZjAwZDFhM2Y1YWE1MDBlZDVmN2NlN2Q4YzI2ZWI4CjcxMThhNDg2ZWE0M2E3NzZhYTI0NTFlYzA4MDdkNDMzODRmYjk1NGYK",
+            "bytes": 123,
+            "sha256": "39902a56a948b2146c3e71f03d6bcf6e8b4bf4a60a3368588ad12a6ac35c9b86"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "receipt_path": "/private/tmp/s08-i03-control-worktrees-final-pins.json"
+        },
+        {
+          "name": "s08-i03-prepare-final-planning-message",
+          "argv": [
+            "python3",
+            "-c",
+            "from pathlib import Path\nPath(\"/private/tmp/s08-i03-planning-finalize-message.txt\").write_text(\"docs: record slice08 planning return identity\\n\\nAttach the captured planning commit identity and final worktree pin audit to the validation record.\\n\\nCo-authored-by: Codex <noreply@openai.com>\\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\\n\")"
+          ],
+          "cwd": "/private/tmp",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.022,
+          "stdout": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "receipt_path": "/private/tmp/s08-i03-prepare-final-planning-message.json"
         }
       ],
       "assignment": "arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md",
@@ -6083,6 +6175,73 @@
           "receipt_path": "/private/tmp/s08-i03-planning-commit.json"
         },
         "result": "exit 128; planning worktree index.lock permission denied"
+      },
+      {
+        "kind": "planning commit successful scoped retry",
+        "receipt": {
+          "name": "s08-i03-planning-commit",
+          "argv": [
+            "git",
+            "commit",
+            "--only",
+            "-F",
+            "/private/tmp/s08-i03-planning-commit-message.txt",
+            "--",
+            "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+            "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+            "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+            "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.199,
+          "stdout": {
+            "base64": "W3BsYW5uaW5nIDA0OWRmNGNdIGRvY3M6IHJldHVybiBzbGljZTA4IGl0ZXJhdGlvbjAzIGV2aWRlbmNlCiA0IGZpbGVzIGNoYW5nZWQsIDQ1MTggaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkK",
+            "bytes": 114,
+            "sha256": "e75a005aa558015906779340b0a33b3550b5cd5f95654b0b59764e9423aed681"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "receipt_path": "/private/tmp/s08-i03-planning-commit.json"
+        },
+        "commit_short": "049df4c",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ]
+      },
+      {
+        "kind": "planning commit verification",
+        "receipt": {
+          "name": "s08-i03-planning-commit-verification",
+          "argv": [
+            "bash",
+            "-lc",
+            "git status --short; git rev-parse HEAD HEAD^; git diff-tree --no-commit-id --name-only -r HEAD; git show -s --format=%B HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "env": {},
+          "exit_code": 0,
+          "duration_seconds": 0.152,
+          "stdout": {
+            "base64": "IE0gcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uCjA0OWRmNGNmMTAxZjBkMDU1OTFkYjc5NTk5NTkyM2Q0OTU0NWQ4NDMKZTBjNDY1MGIyZDE5ZThhZjZlNmI5NDVmNTA5YTBlOWNlYWFjM2IwYwpwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2FydGlmYWN0cy9leGVjdXRpb24ubWQKcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uCnByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2xvc2luZy1yZXBvcnQubWQKcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9sZWRnZXIubWQKZG9jczogcmV0dXJuIHNsaWNlMDggaXRlcmF0aW9uMDMgZXZpZGVuY2UKClJlY29yZCB0aGUgY29ycmVjdGlvbiB0byB0aGUgY2xvc2VkLXJvdXRlIG9yYWNsZSwgZnJlc2ggb3JkZXJlZCBnYXRlcywgYW5kIHByb3Bvc2VkIHJvdyBkaXNwb3NpdGlvbi4KCkNvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgpDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+Cgo=",
+            "bytes": 758,
+            "sha256": "1b2911c9d0c9a1cafa72bc183035dd3e1e0cb6a1a6774e914205b36b4558d11d"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        "pathset_exact": true,
+        "trailers_verified": true
       }
     ],
     "gates": [
@@ -6492,6 +6651,28 @@
       "ledger_rows": 9,
       "ledger_columns": 8,
       "SR08_unchanged": true
+    },
+    "planning_commit": {
+      "head": "049df4cf101f0d05591db795995923d49545d843",
+      "parent": "e0c4650b2d19e8af6e6b945f509a0e9ceaac3b0c",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+      ],
+      "trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ],
+      "verification": "captured; exact paths and trailers verified"
+    },
+    "final_worktree_pins": {
+      "main": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+      "cache": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+      "identity": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+      "queries": "7118a486ea43a776aa2451ec0807d43384fb954f",
+      "source": "edd66642c051c04bc6ccdf1bd3b7d20f74a0f816"
     }
   }
 }
