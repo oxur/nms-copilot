@@ -757,18 +757,35 @@ mod tests {
         use nms_core::biome::BiomeSubType;
         use nms_core::system::System;
 
+        fn assert_planet_views(
+            model: &GalaxyModel,
+            actual: &[(PlanetKey, &Planet, f64)],
+            expected: &[(PlanetKey, f64)],
+        ) {
+            assert_eq!(
+                actual
+                    .iter()
+                    .map(|(key, _, distance)| (*key, *distance))
+                    .collect::<Vec<_>>(),
+                expected
+            );
+            assert!(
+                actual
+                    .iter()
+                    .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
+            );
+        }
+
         for reverse in [false, true] {
             let mut model = GalaxyModel::new();
             let zero = GalacticAddress::new(0, 0, 0, 1, 0, 0);
-            let player = zero;
-            let supplied_player = PlayerState::new(player, 0, None, None, 7, 8, 9);
+            let zero_far = GalacticAddress::new(1, 0, 0, 2, 0, 0);
+            let nine = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+            let nine_far = GalacticAddress::new(1, 0, 0, 2, 0, 9);
+            let empty_seven = GalacticAddress::new(0, 0, 0, 1, 0, 7);
+            let supplied_player = PlayerState::new(zero, 0, None, None, 7, 8, 9);
             model.player_state = Some(supplied_player.clone());
-            let mut addresses = vec![
-                zero,
-                GalacticAddress::new(1, 0, 0, 2, 0, 0),
-                GalacticAddress::new(0, 0, 0, 1, 0, 9),
-                GalacticAddress::new(1, 0, 0, 2, 0, 9),
-            ];
+            let mut addresses = vec![zero, zero_far, nine, nine_far];
             if reverse {
                 addresses.reverse();
             }
@@ -789,337 +806,96 @@ mod tests {
                 ));
             }
 
-            let nine = GalacticAddress::new(0, 0, 0, 1, 0, 9);
             let expected_zero = [
                 (SystemId::from_address(&zero), 0.0),
-                (
-                    SystemId::from_address(&GalacticAddress::new(1, 0, 0, 2, 0, 0)),
-                    400.0,
-                ),
+                (SystemId::from_address(&zero_far), 400.0),
             ];
             let expected_nine = [
                 (SystemId::from_address(&nine), 0.0),
-                (
-                    SystemId::from_address(&GalacticAddress::new(1, 0, 0, 2, 0, 9)),
-                    400.0,
-                ),
+                (SystemId::from_address(&nine_far), 400.0),
             ];
-            let before = (model.player_state.clone(), model.active_galaxy);
-            assert_eq!(
-                model.nearest_systems_from_address(&zero, usize::MAX),
-                expected_zero
-            );
-            assert_eq!(
-                model.nearest_systems_from_address(&nine, usize::MAX),
-                expected_nine
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&zero, 400.0),
-                expected_zero
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&nine, 400.0),
-                expected_nine
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&zero, 0.0),
-                vec![expected_zero[0]]
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&zero, 399.0),
-                vec![expected_zero[0]]
-            );
-            assert!(
-                model
-                    .systems_within_radius_from_address(&zero, -1.0)
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .systems_within_radius_from_address(&zero, f64::NAN)
-                    .is_empty()
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&zero, f64::INFINITY),
-                expected_zero
-            );
-            assert!(model.nearest_systems_from_address(&zero, 0).is_empty());
-            let zero_planets =
-                model.nearest_planets_from_address(&zero, usize::MAX, &BiomeFilter::default());
-            let nine_planets =
-                model.nearest_planets_from_address(&nine, usize::MAX, &BiomeFilter::default());
-            assert_eq!(
-                zero_planets
-                    .iter()
-                    .map(|(key, _, d)| (*key, *d))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_zero[0].0, 1), 0.0),
-                    ((expected_zero[1].0, 1), 400.0)
-                ]
-            );
-            assert_eq!(
-                nine_planets
-                    .iter()
-                    .map(|(key, _, d)| (*key, *d))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_nine[0].0, 1), 0.0),
-                    ((expected_nine[1].0, 1), 400.0)
-                ]
-            );
-            assert!(std::ptr::eq(
-                zero_planets[0].1,
-                &model.planets[&zero_planets[0].0]
-            ));
-            assert!(std::ptr::eq(
-                nine_planets[0].1,
-                &model.planets[&nine_planets[0].0]
-            ));
-            for (reference, expected) in [(&zero, &expected_zero), (&nine, &expected_nine)] {
-                let before = (model.player_state.clone(), model.active_galaxy);
-                let planets = model.planets_within_radius_from_address(
-                    reference,
-                    400.0,
-                    &BiomeFilter::default(),
-                );
-                assert_eq!(
-                    planets
-                        .iter()
-                        .map(|(key, _, distance)| (*key, *distance))
-                        .collect::<Vec<_>>(),
-                    vec![((expected[0].0, 1), 0.0), ((expected[1].0, 1), 400.0)]
-                );
-                assert!(
-                    planets
-                        .iter()
-                        .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
-                );
-                assert_eq!((model.player_state.clone(), model.active_galaxy), before);
-            }
-            for (reference, expected) in [(&zero, &expected_zero), (&nine, &expected_nine)] {
-                for (radius, included) in [
-                    (0.0, &expected[..1]),
-                    (399.0, &expected[..1]),
-                    (400.0, &expected[..]),
-                    (f64::INFINITY, &expected[..]),
-                ] {
-                    let before = (model.player_state.clone(), model.active_galaxy);
-                    assert_eq!(
-                        model.systems_within_radius_from_address(reference, radius),
-                        included
-                    );
-                    let planets = model.planets_within_radius_from_address(
-                        reference,
-                        radius,
-                        &BiomeFilter::default(),
-                    );
-                    assert_eq!(
-                        planets
-                            .iter()
-                            .map(|(key, _, distance)| (*key, *distance))
-                            .collect::<Vec<_>>(),
-                        included
-                            .iter()
-                            .map(|(id, distance)| ((*id, 1), *distance))
-                            .collect::<Vec<_>>()
-                    );
-                    assert!(
-                        planets
-                            .iter()
-                            .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
-                    );
-                    assert_eq!((model.player_state.clone(), model.active_galaxy), before);
-                }
-                for radius in [-1.0, f64::NAN] {
-                    let before = (model.player_state.clone(), model.active_galaxy);
-                    assert!(
-                        model
-                            .systems_within_radius_from_address(reference, radius)
-                            .is_empty()
-                    );
-                    assert!(
-                        model
-                            .planets_within_radius_from_address(
-                                reference,
-                                radius,
-                                &BiomeFilter::default()
-                            )
-                            .is_empty()
-                    );
-                    assert_eq!((model.player_state.clone(), model.active_galaxy), before);
-                }
-            }
-            assert!(
-                model
-                    .nearest_planets_from_address(&zero, 0, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+            let zero_planets = [
+                ((SystemId::from_address(&zero), 1), 0.0),
+                ((SystemId::from_address(&zero_far), 1), 400.0),
+            ];
+            let nine_planets = [
+                ((SystemId::from_address(&nine), 1), 0.0),
+                ((SystemId::from_address(&nine_far), 1), 400.0),
+            ];
+            let filter = BiomeFilter::default();
 
-            model.set_active_galaxy(0);
-            let active_zero = (model.player_state.clone(), model.active_galaxy);
-            assert!(model.nearest_systems(&nine, usize::MAX).is_empty());
-            assert!(model.systems_within_radius(&nine, f64::INFINITY).is_empty());
-            assert!(
-                model
-                    .nearest_planets(&nine, usize::MAX, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .planets_within_radius(&nine, f64::INFINITY, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert_eq!(
-                (model.player_state.clone(), model.active_galaxy),
-                active_zero
-            );
-            model.set_active_galaxy(9);
-            let active_nine = (model.player_state.clone(), model.active_galaxy);
-            assert_eq!(model.nearest_systems(&nine, usize::MAX), expected_nine);
-            assert_eq!(
-                model.systems_within_radius(&nine, f64::INFINITY),
-                expected_nine
-            );
-            let active_nearest = model.nearest_planets(&nine, usize::MAX, &BiomeFilter::default());
-            assert_eq!(
-                active_nearest
-                    .iter()
-                    .map(|(key, _, distance)| (*key, *distance))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_nine[0].0, 1), 0.0),
-                    ((expected_nine[1].0, 1), 400.0)
-                ]
-            );
-            assert!(
-                active_nearest
-                    .iter()
-                    .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
-            );
-            let active_within =
-                model.planets_within_radius(&nine, f64::INFINITY, &BiomeFilter::default());
-            assert_eq!(
-                active_within
-                    .iter()
-                    .map(|(key, _, distance)| (*key, *distance))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_nine[0].0, 1), 0.0),
-                    ((expected_nine[1].0, 1), 400.0)
-                ]
-            );
-            assert!(
-                active_within
-                    .iter()
-                    .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
-            );
-            assert!(model.nearest_systems(&zero, usize::MAX).is_empty());
-            assert!(model.systems_within_radius(&zero, f64::INFINITY).is_empty());
-            assert!(
-                model
-                    .nearest_planets(&zero, usize::MAX, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .planets_within_radius(&zero, f64::INFINITY, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert_eq!(
-                (model.player_state.clone(), model.active_galaxy),
-                active_nine
-            );
-            model.set_active_galaxy(7);
-            let active_seven = (model.player_state.clone(), model.active_galaxy);
-            let empty_seven = GalacticAddress::new(0, 0, 0, 1, 0, 7);
-            assert_eq!(
-                model.nearest_systems_from_address(&nine, usize::MAX),
-                expected_nine
-            );
-            assert_eq!(
-                model.systems_within_radius_from_address(&nine, 400.0),
-                expected_nine
-            );
-            assert_eq!(
-                model
-                    .nearest_planets_from_address(&nine, usize::MAX, &BiomeFilter::default())
-                    .iter()
-                    .map(|(key, _, distance)| (*key, *distance))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_nine[0].0, 1), 0.0),
-                    ((expected_nine[1].0, 1), 400.0)
-                ]
-            );
-            assert_eq!(
-                model
-                    .planets_within_radius_from_address(&nine, 400.0, &BiomeFilter::default())
-                    .iter()
-                    .map(|(key, _, distance)| (*key, *distance))
-                    .collect::<Vec<_>>(),
-                vec![
-                    ((expected_nine[0].0, 1), 0.0),
-                    ((expected_nine[1].0, 1), 400.0)
-                ]
-            );
-            assert!(model.nearest_systems(&zero, usize::MAX).is_empty());
-            assert!(model.systems_within_radius(&zero, f64::INFINITY).is_empty());
-            assert!(
-                model
-                    .nearest_planets(&zero, usize::MAX, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .planets_within_radius(&zero, f64::INFINITY, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .nearest_systems_from_address(&empty_seven, usize::MAX)
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .systems_within_radius_from_address(&empty_seven, f64::INFINITY)
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .nearest_planets_from_address(&empty_seven, usize::MAX, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .planets_within_radius_from_address(
-                        &empty_seven,
-                        f64::INFINITY,
-                        &BiomeFilter::default()
-                    )
-                    .is_empty()
-            );
-            assert!(model.nearest_systems(&empty_seven, usize::MAX).is_empty());
-            assert!(
-                model
-                    .systems_within_radius(&empty_seven, f64::INFINITY)
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .nearest_planets(&empty_seven, usize::MAX, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert!(
-                model
-                    .planets_within_radius(&empty_seven, f64::INFINITY, &BiomeFilter::default())
-                    .is_empty()
-            );
-            assert_eq!(
-                (model.player_state.clone(), model.active_galaxy),
-                active_seven
-            );
+            for active in [0, 9, 7] {
+                model.set_active_galaxy(active);
+                let before = (model.player_state.clone(), model.active_galaxy);
+                for (reference, expected_systems, expected_planets) in [
+                    (&zero, &expected_zero[..], &zero_planets[..]),
+                    (&nine, &expected_nine[..], &nine_planets[..]),
+                    (&empty_seven, &[][..], &[][..]),
+                ] {
+                    for n in [0, usize::MAX] {
+                        let systems = if n == 0 { &[][..] } else { expected_systems };
+                        let planets = if n == 0 { &[][..] } else { expected_planets };
+                        assert_eq!(model.nearest_systems_from_address(reference, n), systems);
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                        assert_planet_views(
+                            &model,
+                            &model.nearest_planets_from_address(reference, n, &filter),
+                            planets,
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+
+                        let matches_active = reference.reality_index == active;
+                        let active_systems = if matches_active { systems } else { &[][..] };
+                        let active_planets = if matches_active { planets } else { &[][..] };
+                        assert_eq!(model.nearest_systems(reference, n), active_systems);
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                        assert_planet_views(
+                            &model,
+                            &model.nearest_planets(reference, n, &filter),
+                            active_planets,
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                    }
+                    // Literal fixture prefixes: A at0, B at400; galaxy7 has no rows.
+                    for (radius, count) in [
+                        (0.0, 1),
+                        (399.0, 1),
+                        (400.0, 2),
+                        (f64::INFINITY, 2),
+                        (-1.0, 0),
+                        (f64::NAN, 0),
+                    ] {
+                        let systems = &expected_systems[..count.min(expected_systems.len())];
+                        let planets = &expected_planets[..count.min(expected_planets.len())];
+                        assert_eq!(
+                            model.systems_within_radius_from_address(reference, radius),
+                            systems
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                        assert_planet_views(
+                            &model,
+                            &model.planets_within_radius_from_address(reference, radius, &filter),
+                            planets,
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+
+                        let matches_active = reference.reality_index == active;
+                        let active_systems = if matches_active { systems } else { &[][..] };
+                        let active_planets = if matches_active { planets } else { &[][..] };
+                        assert_eq!(
+                            model.systems_within_radius(reference, radius),
+                            active_systems
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                        assert_planet_views(
+                            &model,
+                            &model.planets_within_radius(reference, radius, &filter),
+                            active_planets,
+                        );
+                        assert_eq!((model.player_state.clone(), model.active_galaxy), before);
+                    }
+                }
+            }
             assert_eq!(model.player_state, Some(supplied_player));
             assert_eq!(model.active_galaxy, 7);
         }
@@ -1313,13 +1089,18 @@ mod tests {
                 expected
             );
             assert!(std::ptr::eq(nearest[0].1, &model.planets[&(far_id, 0)]));
+            let within = model.planets_within_radius_from_address(&near, 800.0, &filter);
             assert_eq!(
-                model
-                    .planets_within_radius_from_address(&near, 800.0, &filter)
+                within
                     .iter()
                     .map(|(key, _, distance)| (*key, *distance))
                     .collect::<Vec<_>>(),
                 expected
+            );
+            assert!(
+                within
+                    .iter()
+                    .all(|(key, planet, _)| std::ptr::eq(*planet, &model.planets[key]))
             );
             assert!(
                 model
