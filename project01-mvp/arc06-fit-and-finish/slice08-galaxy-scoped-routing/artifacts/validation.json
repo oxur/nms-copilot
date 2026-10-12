@@ -15960,6 +15960,287 @@
           "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "elapsed_seconds": 0.1428482080809772
+      },
+      {
+        "name": "commit-ready-audit",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-sofie-iteration06/audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ewogICJwcmlvcl92YWx1ZXNfZXhhY3QiOiB0cnVlLAogICJleGVjdXRpb25fY2xvc2luZ19wcmVmaXhlcyI6IHRydWUsCiAgImFsbF9uaW5lX2ZpcnN0X3NpeF9jZWxsc19wcmVzZXJ2ZWQiOiB0cnVlLAogICJzaXhfYWNjZXB0ZWRfZW50aXJlX3Jvd3NfcHJlc2VydmVkIjogdHJ1ZSwKICAic291cmNlX2V4YWN0X29uZV9jZmd0ZXN0X2ZpbGUiOiBbCiAgICAiY3JhdGVzL25tcy1ncmFwaC9zcmMvcXVlcnkucnMiCiAgXSwKICAidW5lZGl0ZWRfc291cmNlX2FuZF9zZWNvbmRhcnlfYW5kX3RpZV9maWx0ZXJfY29udHJvbHNfcHJlc2VydmVkIjogdHJ1ZSwKICAic2VhbGVkX2lucHV0c19maXh0dXJlX29sZF9wcm9tcHRzX0NEQ19yZWNvcmRzX2FuZF9jb250cm9sX3BpbnNfaGVsZCI6IHRydWUsCiAgImN1cnJlbnRfcHJvbXB0X2lzc3VlZF9pbW11dGFibGUiOiAiMzQwYzdjNjIxMDhmN2E0MjJkOTU5YzNlYjQxN2RiMzUyYTdiMzA3YyIsCiAgInByaW9yX3N0YWJsZV9saW5rcyI6IDIyLAogICJjaGFubmVscyI6IHsKICAgICJjb3VudCI6IDg2MCwKICAgICJlcnJvcnMiOiBbXQogIH0sCiAgIm5ld19nYXRlX2xpbmtzIjogMTAsCiAgInN0YXRlIjogImRvZXIgc3RydWN0dXJhbC9zZWxmLWNoZWNrLCBub3QgaW5kZXBlbmRlbnQgYWNjZXB0YW5jZSIKfQo=",
+          "bytes": 653,
+          "sha256": "5e9ca25789e1107054aff75c82191804b6507ef090825d44ea01a1f471901098"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.28943145787343383
+      },
+      {
+        "name": "return-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-sofie-iteration06/return-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIGRiNTQxNmNdIFJldHVybiBTbGljZTA4IGN1cnJlbnQgdGVzdCBhbmQgZXZpZGVuY2UgY29ycmVjdGlvbnMgZm9yIENDIHJldmlldwogNCBmaWxlcyBjaGFuZ2VkLCAxMDg1IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pCg==",
+          "bytes": 139,
+          "sha256": "b1e7d3994e95b2ce2c1c5a078b8385c85c56679b05be546c8b0e6af616e26804"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.27652479195967317
+      },
+      {
+        "name": "return-head",
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ZGI1NDE2Y2ZlM2Y2ODNiYmUyODAwMmY3YWY3OWY3M2ZhNjEwYmU2Mwo=",
+          "bytes": 41,
+          "sha256": "1698ae0281981530afb7495e29a47feaf71260986bd41098142c75bb4455ac30"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.015718874987214804
+      },
+      {
+        "name": "return-audit",
+        "argv": [
+          "git",
+          "show",
+          "--format=full",
+          "--stat",
+          "db5416cfe3f683bbe28002f7af79f73fa610be63"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Y29tbWl0IGRiNTQxNmNmZTNmNjgzYmJlMjgwMDJmN2FmNzlmNzNmYTYxMGJlNjMKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIFJldHVybiBTbGljZTA4IGN1cnJlbnQgdGVzdCBhbmQgZXZpZGVuY2UgY29ycmVjdGlvbnMgZm9yIENDIHJldmlldwogICAgCiAgICBDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT4KICAgIENvLWF1dGhvcmVkLWJ5OiBCaWxsbyBBSSA8YWktZW5naW5lZXJpbmdAYmlsbG8uc3lzdGVtcz4KCiAuLi4vYXJ0aWZhY3RzL2V4ZWN1dGlvbi5tZCAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMTEgKwogLi4uL2FydGlmYWN0cy92YWxpZGF0aW9uLmpzb24gICAgICAgICAgICAgICAgICAgICAgfCAxMDQwICsrKysrKysrKysrKysrKysrKystCiAuLi4vY2xvc2luZy1yZXBvcnQubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMzMgKwogLi4uL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2xlZGdlci5tZCAgICAgICAgfCAgICA2ICstCiA0IGZpbGVzIGNoYW5nZWQsIDEwODUgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkK",
+          "bytes": 642,
+          "sha256": "4ab4c1a8128d33112a4e7824e0e1c391249f833db940b37368e3e63a0fd36e39"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.06933183409273624
+      },
+      {
+        "name": "return-status",
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.023762874770909548
+      },
+      {
+        "name": "handoff-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-sofie-iteration06/handoff-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDM5OTcxY2FdIFJlY29yZCBTbGljZTA4IHByb3Bvc2VkIHJldHVybiBhbmQgaW5kZXBlbmRlbnQgQ0MgaGFuZG9mZgogNCBmaWxlcyBjaGFuZ2VkLCAyMCBpbnNlcnRpb25zKCspCg==",
+          "bytes": 112,
+          "sha256": "7c5ab1d5e6e43890036c37b5a16c44917a8f80373a30f8b3ee985f18bbdf7e99"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.044436207972466946
+      },
+      {
+        "name": "handoff-head",
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Mzk5NzFjYTc2OWRlNmY5NTBiN2JmNzY0Y2YxZDllM2Y5NjZjMTE4NAo=",
+          "bytes": 41,
+          "sha256": "8f09f38215f942a1c9f99a986910466196def7ffb432bea9bf2a269e7fbce777"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.015962792094796896
+      },
+      {
+        "name": "handoff-audit",
+        "argv": [
+          "git",
+          "show",
+          "--format=full",
+          "--stat",
+          "39971ca769de6f950b7bf764cf1d9e3f966c1184"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Y29tbWl0IDM5OTcxY2E3NjlkZTZmOTUwYjdiZjc2NGNmMWQ5ZTNmOTY2YzExODQKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIFJlY29yZCBTbGljZTA4IHByb3Bvc2VkIHJldHVybiBhbmQgaW5kZXBlbmRlbnQgQ0MgaGFuZG9mZgogICAgCiAgICBDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT4KICAgIENvLWF1dGhvcmVkLWJ5OiBCaWxsbyBBSSA8YWktZW5naW5lZXJpbmdAYmlsbG8uc3lzdGVtcz4KCiBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL2FyYy1wbGFuLm1kICAgICAgICAgICAgICAgICAgICAgICB8IDUgKysrKysKIC4uLi9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9zbGljZS1wbGFuLm1kIHwgNSArKysrKwogcHJvamVjdDAxLW12cC9jbG9zdXJlLXByZXBhcmF0aW9uLm1kICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCA1ICsrKysrCiBwcm9qZWN0MDEtbXZwL3Byb2plY3QtcGxhbi5tZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDUgKysrKysKIDQgZmlsZXMgY2hhbmdlZCwgMjAgaW5zZXJ0aW9ucygrKQo=",
+          "bytes": 671,
+          "sha256": "32b149730119e954081118dc4f2573df1978d2b085f50e8cd5758694f6e7c848"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.01815616711974144
+      },
+      {
+        "name": "handoff-status",
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.016947291791439056
+      },
+      {
+        "name": "post-commit-audit",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-sofie-iteration06/post.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ewogICJjb21taXRzIjogWwogICAgewogICAgICAiaGVhZCI6ICJmNzFkNjA3ZTI3ZTE4ZDcyNjY4NTVhMjcwODQ0OWY5ZDZiOTBjNjMyIiwKICAgICAgInBhcmVudCI6ICIwZTFlOGI0MjM5ODgxYTM3OGJjOGZiOTI4ZWYyNTc0MWMyMjhlMTcxIiwKICAgICAgInBhdGhzIjogWwogICAgICAgICJjcmF0ZXMvbm1zLWdyYXBoL3NyYy9xdWVyeS5ycyIKICAgICAgXSwKICAgICAgInRyYWlsZXJzX29uY2VfYWRqYWNlbnRfYXRfZW5kIjogdHJ1ZQogICAgfSwKICAgIHsKICAgICAgImhlYWQiOiAiMzQwYzdjNjIxMDhmN2E0MjJkOTU5YzNlYjQxN2RiMzUyYTdiMzA3YyIsCiAgICAgICJwYXJlbnQiOiAiMjMwNzkzMDlkYTA4ZWQ2OTA4YzdlYjcwMzAyMTExMWEzZWUyOGI3MSIsCiAgICAgICJwYXRocyI6IFsKICAgICAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL2V4ZWN1dGlvbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL3ZhbGlkYXRpb24uanNvbiIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2MtcHJvbXB0LWl0ZXJhdGlvbjA2Lm1kIiwKICAgICAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9zbGljZS1wbGFuLm1kIiwKICAgICAgICAicHJvamVjdDAxLW12cC9jbG9zdXJlLXByZXBhcmF0aW9uLm1kIiwKICAgICAgICAicHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQiCiAgICAgIF0sCiAgICAgICJ0cmFpbGVyc19vbmNlX2FkamFjZW50X2F0X2VuZCI6IHRydWUKICAgIH0sCiAgICB7CiAgICAgICJoZWFkIjogImRiNTQxNmNmZTNmNjgzYmJlMjgwMDJmN2FmNzlmNzNmYTYxMGJlNjMiLAogICAgICAicGFyZW50IjogIjM0MGM3YzYyMTA4ZjdhNDIyZDk1OWMzZWI0MTdkYjM1MmE3YjMwN2MiLAogICAgICAicGF0aHMiOiBbCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL2V4ZWN1dGlvbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL3ZhbGlkYXRpb24uanNvbiIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvY2xvc2luZy1yZXBvcnQubWQiLAogICAgICAgICJwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2xlZGdlci5tZCIKICAgICAgXSwKICAgICAgInRyYWlsZXJzX29uY2VfYWRqYWNlbnRfYXRfZW5kIjogdHJ1ZQogICAgfSwKICAgIHsKICAgICAgImhlYWQiOiAiMzk5NzFjYTc2OWRlNmY5NTBiN2JmNzY0Y2YxZDllM2Y5NjZjMTE4NCIsCiAgICAgICJwYXJlbnQiOiAiZGI1NDE2Y2ZlM2Y2ODNiYmUyODAwMmY3YWY3OWY3M2ZhNjEwYmU2MyIsCiAgICAgICJwYXRocyI6IFsKICAgICAgICAicHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvc2xpY2UtcGxhbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvY2xvc3VyZS1wcmVwYXJhdGlvbi5tZCIsCiAgICAgICAgInByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kIgogICAgICBdLAogICAgICAidHJhaWxlcnNfb25jZV9hZGphY2VudF9hdF9lbmQiOiB0cnVlCiAgICB9CiAgXSwKICAiY2FuZGlkYXRlX3BsYW5uaW5nX2NsZWFuIjogdHJ1ZSwKICAicmV2aWV3X3N0YXR1cyI6ICJwcm9wb3NlZCBjdXJyZW50IGNvcnJlY3Rpb25zOyBDQyBpbmRlcGVuZGVudCByZXZpZXcgcGVuZGluZzsgc2l4IGRvbmUgdGhyZWUgb3BlbiIKfQo=",
+          "bytes": 2159,
+          "sha256": "42c774097396326ffc5a8732934dd568413b2d471794449747604e42fcce3219"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.284401707816869
+      },
+      {
+        "name": "final-audit",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-sofie-iteration06/audit.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ewogICJwcmlvcl92YWx1ZXNfZXhhY3QiOiB0cnVlLAogICJleGVjdXRpb25fY2xvc2luZ19wcmVmaXhlcyI6IHRydWUsCiAgImFsbF9uaW5lX2ZpcnN0X3NpeF9jZWxsc19wcmVzZXJ2ZWQiOiB0cnVlLAogICJzaXhfYWNjZXB0ZWRfZW50aXJlX3Jvd3NfcHJlc2VydmVkIjogdHJ1ZSwKICAic291cmNlX2V4YWN0X29uZV9jZmd0ZXN0X2ZpbGUiOiBbCiAgICAiY3JhdGVzL25tcy1ncmFwaC9zcmMvcXVlcnkucnMiCiAgXSwKICAidW5lZGl0ZWRfc291cmNlX2FuZF9zZWNvbmRhcnlfYW5kX3RpZV9maWx0ZXJfY29udHJvbHNfcHJlc2VydmVkIjogdHJ1ZSwKICAic2VhbGVkX2lucHV0c19maXh0dXJlX29sZF9wcm9tcHRzX0NEQ19yZWNvcmRzX2FuZF9jb250cm9sX3BpbnNfaGVsZCI6IHRydWUsCiAgImN1cnJlbnRfcHJvbXB0X2lzc3VlZF9pbW11dGFibGUiOiAiMzQwYzdjNjIxMDhmN2E0MjJkOTU5YzNlYjQxN2RiMzUyYTdiMzA3YyIsCiAgInByaW9yX3N0YWJsZV9saW5rcyI6IDIyLAogICJjaGFubmVscyI6IHsKICAgICJjb3VudCI6IDg4MCwKICAgICJlcnJvcnMiOiBbXQogIH0sCiAgIm5ld19nYXRlX2xpbmtzIjogMTAsCiAgInN0YXRlIjogImRvZXIgc3RydWN0dXJhbC9zZWxmLWNoZWNrLCBub3QgaW5kZXBlbmRlbnQgYWNjZXB0YW5jZSIKfQo=",
+          "bytes": 653,
+          "sha256": "e7ba38b54de84fb0eb836f3c46af98b52b853d233fb03e0d11d3f6c5a9455117"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.2977362498641014
+      },
+      {
+        "name": "receipt-diff",
+        "argv": [
+          "git",
+          "-C",
+          "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.1377727910876274
       }
     ],
     "gates": [
@@ -16336,7 +16617,8 @@
       "audit.py": "import json,base64,hashlib,subprocess,re\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06');R=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=R/'.worktrees/galaxy-scoped-routing';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');b=json.loads((O/'baseline.json').read_text());v=json.loads((P/D/'artifacts/validation.json').read_text());old=json.loads((O/'old-validation.json').read_text())\ndef git(root,*a):return subprocess.check_output(['git',*a],cwd=root)\ndef dg(x):return {'bytes':len(x),'sha256':hashlib.sha256(x).hexdigest()}\ndef retain(x,y,path='root'):\n if isinstance(x,dict):\n  for k,z in x.items(): assert k in y,path+'.'+k;retain(z,y[k],path+'.'+k)\n elif isinstance(x,list):\n  assert len(y)>=len(x),path\n  for i,z in enumerate(x):retain(z,y[i],path+f'[{i}]')\n else:assert x==y,path\nretain(old,v);assert set(v)==set(old)|{'iteration06'}\nfor name,rel in [('execution.md','artifacts/execution.md'),('closing-report.md','closing-report.md')]:assert (P/D/rel).read_bytes().startswith((O/('old-'+name)).read_bytes())\noldrows=[x for x in (O/'old-ledger.md').read_text().splitlines() if x.startswith('| SR-')];rows=[x for x in (P/D/'ledger.md').read_text().splitlines() if x.startswith('| SR-')];assert len(rows)==len(oldrows)==9\nfor x,y in zip(oldrows,rows):\n a=[k.strip() for k in x.split('|')[1:-1]];z=[k.strip() for k in y.split('|')[1:-1]];assert len(a)==len(z)==8;assert a[:6]==z[:6]\n if a[5]=='done':assert x==y\nq='crates/nms-graph/src/query.rs';base=git(S,'show','0e1e8b4:'+q).decode();now=(S/q).read_text()\nstart='    #[test]\\n    fn test_explicit_spatial_apis_return_exact_canonical_galaxy_views()';second='    #[test]\\n    fn test_spatial_ssi_ties_and_all_planet_filter_fields_are_exact()';tail='#[cfg(test)]\\nmod iteration02_oracle_tests'\nassert base[:base.index(start)]==now[:now.index(start)];assert base[base.index(tail):]==now[now.index(tail):]\na=base[base.index(second):base.index(tail)];z=now[now.index(second):now.index(tail)];s='            assert!(std::ptr::eq(nearest[0].1, &model.planets[&(far_id, 0)]));';t='            assert!(\\n                model\\n                    .planets_within_radius_from_address(&near, 799.0, &filter)';assert a[:a.index(s)+len(s)]==z[:z.index(s)+len(s)];assert a[a.index(t):]==z[z.index(t):]\nchanged=git(S,'diff','--name-only','0e1e8b4').decode().splitlines();assert changed==[q],changed\n# Parent-owned files, held controls, issued old/new prompts and CDC records.\nfor path,d in b['files'].items():\n if path==str(S/q) or path in [str(P/D/'artifacts/execution.md'),str(P/D/'artifacts/validation.json'),str(P/D/'closing-report.md'),str(P/D/'ledger.md')]:continue\n assert dg(Path(path).read_bytes())==d,path\nfor root,item in b['pins'].items():\n root=Path(root)\n if root in [S,P]:continue\n assert git(root,'rev-parse','HEAD').decode().strip()==item['head'];assert not git(root,'status','--porcelain')\nissue='340c7c62108f7a422d959c3eb417db352a7b307c';assert git(P,'show',issue+':'+str(D/'cc-prompt-iteration06.md'))==(P/D/'cc-prompt-iteration06.md').read_bytes()\n# The two previously accepted route bodies are protected by whole-file equality above and the one-path diff fence.\nc={'count':0,'errors':[]}\ndef walk(x,path='root'):\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   c['count']+=1;raw=base64.b64decode(x['base64'],validate=True);assert dg(raw)=={k:x[k] for k in ['bytes','sha256']},path\n  for k,z in x.items():walk(z,path+'.'+k)\n elif isinstance(x,list):\n  for i,z in enumerate(x):walk(z,path+f'[{i}]')\nwalk(v)\nfor g in v['iteration06']['gates']:\n m=re.fullmatch(r'iteration06\\.attempts\\[(\\d+)\\]',g['receipt']);assert m;actual=v['iteration06']['attempts'][int(m[1])];assert all(actual[k]==g[k] for k in ['name','argv','cwd','env','exit_code'])\nlinks=0\nfor g in v['iteration05']['gates']:\n m=re.fullmatch(r'iteration05\\.attempts\\[(\\d+)\\]',g['receipt']);actual=v['iteration05']['attempts'][int(m[1])];assert all(actual[k]==g[k] for k in ['name','argv','cwd','env','exit_code']);links+=1\nresult={'prior_values_exact':True,'execution_closing_prefixes':True,'all_nine_first_six_cells_preserved':True,'six_accepted_entire_rows_preserved':True,'source_exact_one_cfgtest_file':changed,'unedited_source_and_secondary_and_tie_filter_controls_preserved':True,'sealed_inputs_fixture_old_prompts_CDC_records_and_control_pins_held':True,'current_prompt_issued_immutable':issue,'prior_stable_links':links,'channels':c,'new_gate_links':len(v['iteration06']['gates']),'state':'doer structural/self-check, not independent acceptance'}\n(O/'audit-result.json').write_text(json.dumps(result,indent=2)+'\\n');print(json.dumps(result,indent=2))\n",
       "commit.py": "import sys,subprocess,json,base64,hashlib,time\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06');name,root,subject=sys.argv[1:4];paths=sys.argv[4:];out=[]\nmsg=O/(name+'-message.txt');msg.write_text(subject+'\\n\\nCo-authored-by: Codex <noreply@openai.com>\\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\\n')\ndef run(argv,label):\n t=time.monotonic();p=subprocess.run(argv,cwd=root,capture_output=True);ch=lambda b:{'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()};r={'name':name+'-'+label,'argv':argv,'cwd':root,'env':{},'exit_code':p.returncode,'stdout':ch(p.stdout),'stderr':ch(p.stderr),'elapsed_seconds':time.monotonic()-t};out.append(r);(O/(name+'.json')).write_text(json.dumps(out,indent=2)+'\\n');print(json.dumps({'name':r['name'],'exit_code':p.returncode,'stdout':p.stdout.decode(errors='replace'),'stderr':p.stderr.decode(errors='replace')}),flush=True)\n if p.returncode:sys.exit(p.returncode)\n return p.stdout\nuntracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard','--',*paths],cwd=root).decode().splitlines()\nif untracked:run(['git','add','--',*untracked],'add-new-only')\nrun(['git','commit','--only','-F',str(msg),'--',*paths],'commit')\nhead=run(['git','rev-parse','HEAD'],'head').decode().strip();run(['git','show','--format=full','--stat',head],'audit');run(['git','status','--porcelain'],'status')\n",
       "record.py": "import json,hashlib,subprocess,base64,sys,os,time\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06'); name=sys.argv[1]; argv=sys.argv[2:]; start=time.monotonic(); r=subprocess.run(argv,capture_output=True)\ndef channel(b):return {'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}\nx={'name':name,'argv':argv,'cwd':os.getcwd(),'env':{},'exit_code':r.returncode,'stdout':channel(r.stdout),'stderr':channel(r.stderr),'elapsed_seconds':time.monotonic()-start};(O/(name+'.json')).write_text(json.dumps(x,indent=2)+'\\n');print(json.dumps({'name':name,'exit_code':r.returncode,'stdout_tail':r.stdout.decode(errors='replace')[-2500:],'stderr_tail':r.stderr.decode(errors='replace')[-2500:]}));sys.exit(r.returncode)\n",
-      "finish.py": "import json,re,base64,subprocess,hashlib\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06');R=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=R/'.worktrees/galaxy-scoped-routing';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');f=P/D/'artifacts/validation.json';v=json.loads(f.read_text());i=v['iteration06'];gates=json.loads((O/'gates.json').read_text());assert len(gates)==10 and all(x['exit_code']==0 for x in gates)\ndef add(x):\n if isinstance(x,list):\n  for a in x:add(a)\n else:i['attempts'].append(x)\nfor name in ['preparation','issuance','edit','pre-return-audit','source']:add(json.loads((O/(name+'.json')).read_text()))\nfor g in gates:\n k=len(i['attempts']);add(g);i['gates'].append({**{a:g[a] for a in ['name','argv','cwd','env','exit_code']},'receipt':f'iteration06.attempts[{k}]'})\ntotals={}\nfor x in gates:\n txt=''.join(base64.b64decode(x[k]['base64']).decode(errors='replace') for k in ['stdout','stderr']);rows=re.findall(r'test result: ok\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;',txt)\n totals[x['name']]={'passed':sum(int(a) for a,b,c in rows),'failed':sum(int(b) for a,b,c in rows),'ignored':sum(int(c) for a,b,c in rows),'nonzero_suites':sum(int(a)>0 for a,b,c in rows),'result_summaries':len(rows),'warnings':[line for line in txt.splitlines() if line.startswith('warning:')]}\nassert totals['gate03']['passed']==682 and totals['gate04']['passed']==900\nsource=subprocess.check_output(['git','rev-parse','HEAD'],cwd=S).decode().strip();assert source=='f71d607e27e18d7266855a2708449f9d6b90c632';parent=subprocess.check_output(['git','rev-parse','HEAD^'],cwd=S).decode().strip();assert parent=='0e1e8b4239881a378bc8fb928ef25741c228e171'\ni.update({'issuance':'340c7c62108f7a422d959c3eb417db352a7b307c','source_return':{'head':source,'parent':parent,'paths':['crates/nms-graph/src/query.rs'],'status':'clean; exact test-only source commit'},'observed_gate_totals':totals,'native_matrix':{'actual_insertion_orders':[False,True],'active_galaxies':[0,9,7],'literal_reference_galaxies':[0,9,7],'nearest_limits':['0','usize::MAX'],'radii':['0','399','400','positive infinity','-1','NaN'],'api_observations':576,'explicit_observations':288,'active_wrapper_observations':288,'planet_view_result_checks':288,'nonempty_planet_view_result_checks':80,'individual_canonical_planet_reference_checks':128,'full_state_checks_after_api_calls':576,'expectations':'fixed fixture system/planet arrays at0/400, empty7 and literal radius-prefix table; never derived from actual query/sort output','filtered_radius':'both true near/far insertion orders: exact[((far9,0),800)] and every returned pointer equals canonical model value;799 empty retained'},'status':'Sofie proposed current repairs delivered; CC independent review pending; SR01/02/09 open; history unwaived','current_failures':'No Rust gate failed or was blocked. Temporary baseline-name collision and recovered inspection truncations disclosed in intake; no failure fabricated. All captured child commands retain actual exit and separate bytes.','strict_correction':{'original_attempt9':'required flag recorded, exit0; retained original evidence','original_final_attempt17':'flag absent from recorded overrides; inherited child flag unknown, not proven unset; no original recovery','current_gate08':'new current run with actual RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links, exit0; not historical recovery'},'historical_disposition':{'iteration02':'executed partially/stopped/no CC commit; false production discrepancy retracted because test warp_range None, not intended Some400','unwaived':['original four groups','iteration01 three groups, third invocation count unknown','iteration02 stopped/intake gaps','iteration03 unavailable diagnostic items1\u20136/8','historical strict-env omission','prior intake/draft-before-intake limitations'],'captured_distinctions':'Iteration03 SyntaxErrors7/9 preserved, pre-child rejections distinct; iteration04 rg exit2 was a launched child argument error; original bytes kept','recovery':'No broad private-log hunt or missing original recovery; current replay does not replace missing history; Slice06 exception inapplicable'},'structural_pre_return':json.loads((O/'audit-result.json').read_text()),'incidental_scripts':{name:(O/name).read_text() for name in ['intake.py','prepare.py','edit.py','gates.py','audit.py','commit.py','record.py']}})\n# Mathematical matrix accounting independently counts fixed fixture membership, not API output.\nassert 2*3*3*(2*4+6*4)==576\n# Populated0/9 explicit under3 selections: nearestMAX2views +radius0/3991 +400/inf2 =>8rows; active matching only1 selection.\nassert 2*2*(3+1)*8==128;assert 2*2*(3+1)*5==80\nf.write_text(json.dumps(v,indent=2)+'\\n')\nwith (P/D/'artifacts/execution.md').open('a') as e:\n e.write('''\\n\\n## Iteration06 execution and proposed return \u2014 2026-10-11\\n\\nAssignment issued340c7c62108f7a422d959c3eb417db352a7b307c, after the pre-edit intake above. Sofie implemented/self-checked; independent CC review is pending. Source return f71d607e27e18d7266855a2708449f9d6b90c632 directly parents0e1e8b4239881a378bc8fb928ef25741c228e171, exactly graph query.rs cfg(test). Actual diff112 insertions/331 deletions consolidates the partial repeated spatial sweep into one complete matrix plus a bound filtered-radius pointer check. No public symbols/runtime/API/cache meaning changed. Query route and secondary tests, opposing-name numeric ties, same-voxel SSI264.6828728, all four isolated filter misses and799 exclusion remain byte-identical outside the allowed block.\\n\\nMain spatial test:2 actual insertion orders \u00d73 active selections \u00d73 reference galaxies, with2 nearest limits \u00d74 APIs and6 radii \u00d74 APIs =>576 calls,288 explicit/288 active. Full state is checked immediately after each. The populated0/9 fixture supplies80 nonempty planet result vectors containing128 individual references, all checked against canonical map values;208 other planet result vectors are exactly empty. All288 planet vectors have exact key/distance projection assertions. Expected arrays/radius prefix counts derive from fixed independent fixture membership at0/400, never query or sorting output. All matching0/9 positives and foreign0/9/7 exclusions, active7 and explicit7 emptiness, n0/MAX and0/399/400/+inf/-1/NaN boundaries are exercised in both actual orders. Filtered radius800 now binds views and checks exact far-key800 and all canonical pointers in both actual near/far orders; nearest/799/tie/SSI/single-field controls retained.\\n\\nAll ordered nine categories passed, with10 captured commands (two separate diff checks): make format;make lint;focused682/0failed/0ignored over19 nonzero suites/23 summaries;make test900/0/0 over23 nonzero suites/33 summaries;all-features workspace build;scoped doctests three zero-test summaries;ordinary docs;strict cache docs with actual flag;source/planning diff. No current Rust failure/blocked gate. Ordinary docs retain4 core links/3 graph links/2 query HTML warnings and dependency future-compatibility advisory; strict cache docs has no warning. Strict combined docs, coverage/performance/live/package/full-startup gates are not claimed. Actual argv/cwd/overrides/exits/separate channels and stable nonnegative links are in validation.json iteration06; current incidental scripts embedded there are reconstruction aids, not maintained project code.\\n\\nSuperseding evidence corrections: original Iteration05 attempt9 records strict flag and exit0; original final17 omits it from recorded overrides. Its inherited flag remains unknown. Current gate08 explicitly sets actual flag and passes; this is new proof, not reconstruction of17. Earlier incomplete coverage/intake and draft-before-intake remain qualified, no retroactive attestation. Iteration02 explicitly executed/stopped/no-CC-commit; false production claim retracted (warpNone rather than intendedSome400). All unavailable historical channels/env/intake remain unwaived, including original/01/02 and03 items1\u20136/8. Captured SyntaxErrors7/9 and pre-child rejections retain correct classes. No historical recovery or exception claimed. Six accepted rows entirely unchanged; three remaining Evidence/Notes proposed only; Status remains open.\\n''')\nwith (P/D/'closing-report.md').open('a') as e:\n e.write('''\\n\\n## Iteration06 \u2014 bounded Sofie correction, CC review pending \u2014 2026-10-11\\n\\n**Proposed current corrections delivered; independent acceptance pending.** The Operator authorized one extra bounded pass beyond the five-refinement cap and selected Sofie as implementer, with a separate CC context independently reviewing. Sofie does not independently accept this return. Current assignment `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md`, issued340c7c62108f7a422d959c3eb417db352a7b307c. Pre-edit intake is execution.md Iteration06 and validation.json iteration06.intake/readback_manifest. Planning intake23079309; author issuance340c7c6; sourcef71d607e27e18d7266855a2708449f9d6b90c632 directly parents0e1e8b4239881a378bc8fb928ef25741c228e171. Planning return/receipts follow in the appended commit record.\\n\\nOnly crates/nms-graph/src/query.rs cfg(test) changed: existing main spatial test now spans2 actual insertion orders \u00d7active0/9/7 \u00d7reference0/9/7, nearest0/MAX and all six prescribed radii through explicit and active APIs. Literal fixture0/400 expected IDs/PlanetKeys distinguish wrong-key/count/galaxy/scope/selection behavior. All576 calls have immediate full player/active checks without resetting; all288 planet vectors have exact projections,80 nonempty vectors/128 references have canonical ptr checks,208 vectors are literal-empty controls. Filtered-radius800 additionally checks exact far-key800 and every canonical borrow in both actual near/far orders. Complete unchanged nearest799/tie/SSI/single-field subproof retained. No runtime/API/public-signature/cache schema or semantic revision change; genuine360-byte2/2 predecessor remains unchanged.\\n\\nAll nine gate categories passed:682 focused tests (19 nonzero suites/23 result summaries),900 workspace (23/33), zero failures/ignored; formatting/lint/build/doctests/ordinary scoped docs/actual flagged strict cache docs and separate source/planning diff checks. Three scoped doctest summaries contain zero tests. Old4 core/3 graph link and2 query HTML warnings and proc-macro-error2 advisory remain; strict combined docs stays parent-open. No current Rust failure/blocked gate. Preparation output-name collision and recovered inspection truncations are recorded honestly; complete child channels/metadata, gate links and temporary script sources are embedded in validation.json.\\n\\n| Row | Doer disposition | Current proof / retained applicability |\\n|---|---|---|\\n| SR-01 | proposed current repair delivered; open for CC | Complete576-call literal matrix with every planet canonical reference and full state; both true insertion orders; previously missing active0/9 boundaries and explicit0/9 under7 now exercised. |\\n| SR-02 | proposed current repair delivered; open for CC | Bound filtered800 views exact far-key800 plus canonical pointers in both true near/far orders; all prior numeric-ID/SSI/four isolated misses/799 controls byte-preserved. |\\n| SR-03 | retained accepted, done | Route payload/precedence/normalization files and prior12/12 public specificity unchanged; current tests pass. No new independent verdict by doer. |\\n| SR-04 | retained accepted, done | Protected positive9 bridge/direct fallback/foreign shortcut and edge tests unchanged; tests pass. |\\n| SR-05 | retained accepted, done | Dense120 reachability and9 waypoint/60decoy/closed2400 fixtures unchanged; tests pass; best-effort unbridged limitation persists. |\\n| SR-06 | retained accepted, done | Query route whole file unchanged, including protected4976-byte100planetNone/Some400 and supplied-player/error/105-target controls; tests pass. |\\n| SR-07 | retained accepted, done | Sealed genuine2/2 fixture and cache/current-route tests unchanged; cache/query/workspace pass, no revision bump. |\\n| SR-08 | retained accepted, done | CLI and typed formatter source/tests unchanged; native integration/docs pass. |\\n| SR-09 | current corrections proposed delivered; open for CC and historical disposition | Accurate manifest/coverage/state/pointer/strict-env/stopped02/actor roles; old values/prefixes preserved, new complete captures and scope/commit fences. Unavailable history is still unwaived. |\\n\\nAssignments preserved: initial arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md (b792257); iteration01 cc-prompt-iteration01.md (09a460ff), iteration02 cc-prompt-iteration02.md (4c3d405), iteration03 cc-prompt-iteration03.md (50eac522), iteration04 cc-prompt-iteration04.md (ae3cdef4), iteration05 cc-prompt-iteration05.md (9a9bf11), iteration06 cc-prompt-iteration06.md (340c7c6), all in that same canonical slice directory. Initial/01/03/04/05 returned and reviewed, superseded as active assignment. **02 executed partially/stopped/no CC commit**, then superseded; its false closed-route runtime-discrepancy claim is retracted because input warpNone, not intendedSome400. Current06 is returned as Sofie proposed proof for separate independent CC review, with no automatic seventh correction.\\n\\nStrict-doc correction supersedes earlier final-flag prose: original05 attempt9 properly records flag/exit0; final17 flag missing from recorded overrides, inherited environment unknown. Current correctly flagged gate08 is new evidence, not original recovery. Current full body/guide intake resolves only current work; it cannot establish previous pre-edit attention or erase disclosed drafting/restoration/reapplication history. Original four groups,01 three groups (third invocation count unknown),02 stopped/intake,03 unavailable items1\u20136/8, historical strict-env/prior intake remain unwaived. Captured03 SyntaxErrors7/9, pre-child rejections and04 launched rg exit2 remain distinct; missing data not invented.\\n\\nArtifact inventory: execution.md owns pre-edit intake, execution/corrections and commit history; validation.json embeds identities, guide/source manifest, child channels/env/exits/stable links, totals, preservation audits and incidental scripts; closing-report.md owns all-nine row accounting/assignment history/limits/bubble-up; ledger.md only updates Evidence/Notes on three open rows and preserves six accepted entire rows; cc-prompt-iteration06.md is immutable issued assignment and independent **review-only** handoff. Existing cdc-verification.md and artifacts/cdc-review-receipts.json remain untouched by Sofie during this doer pass; separate CC context owns the next dated independent record. Author-only slice/arc/project/closure status changes are separately scoped. No extra maintained validator artifact or product created.\\n\\n### Bubble-up to the arc \u2014 Iteration06\\n\\n1. Assigned current test/evidence corrections delivered as doer-proposed proof; all required current gates pass. Six accepted rows retained; SR01/02/09 remain open until independent CC assessment. Slice/arc/project remain open.\\n2. No new runtime/API/cache/criteria issue reproduced. Historical unavailable channels/env/intake still need explicit bounded disposition after independent current review; completing new captures does not waive them. The Operator cap approval authorized only this extra pass.\\n3. Parent scope/counts/architecture/sequence unchanged; routine authorization/actor/assignment records appended. Separate CC verifies current return and reports historical residuals to Operator/CDC; neither actor self-disposes missing historical evidence. Main/dependencies/Project02 held. Session/live/full-startup then evidence-gated save-field repair, duplicate-base/save-name/portal/numeric/original closeout and higher-scale gates remain with original owners. No integration/release/publication/closure authorized.\\n''')\np=P/D/'ledger.md';rows=p.read_text().splitlines();evidence='Iteration06 Sofie proposed repair: sourcef71d607e27e18d7266855a2708449f9d6b90c632; execution.md/validation.json iteration06; closing-report.md current section; issued340c7c6. Separate CC independent review pending.'\nnotes={'SR-01':'Current full2-order \u00d7active0/9/7 \u00d7ref0/9/7 matrix:nearest0/MAX and radius0/399/400/+inf/-1/NaN,576 calls/full-state checks, all288 planet projections/all128 nonempty canonical references. Matching/foreign/empty cases exact. Doer-attested only; prior05 partial claim superseded, no self-acceptance.', 'SR-02':'Filtered radius800 bound views now exact far-key800 plus all canonical ptr assertions in both actual near/far orders; nearest/799/tie/SSI/four isolated misses preserved. Doer-attested correction pending CC independent review.', 'SR-09':'Operator approved one additional pass and Sofie doer/separate CC review. Current complete intake/body coverage/strict flagged run/stopped02/actor/report correction and all nine gate categories captured;682 focused900 workspace. Prior values/prefixes/16 retained and22 verified links/six accepted rows held. Original final17 inherited flag unknown; historical channels/env/intake remain unwaived. Proposed current correction, historical disposition still pending.'}\nfor n,row in enumerate(rows):\n if not row.startswith('| SR-'):continue\n cells=row.split('|');rid=cells[1].strip()\n if rid in notes:cells[7]=' '+evidence+' ';cells[8]=' '+notes[rid]+' ';rows[n]='|'.join(cells)\np.write_text('\\n'.join(rows)+'\\n')\nprint(json.dumps({'source':source,'issuance':i['issuance'],'focused':totals['gate03'],'workspace':totals['gate04'],'gate_count':len(i['gates']),'matrix':i['native_matrix'],'statuses':'six done, three open; CC review pending'}))\n"
+      "finish.py": "import json,re,base64,subprocess,hashlib\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06');R=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=R/'.worktrees/galaxy-scoped-routing';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');f=P/D/'artifacts/validation.json';v=json.loads(f.read_text());i=v['iteration06'];gates=json.loads((O/'gates.json').read_text());assert len(gates)==10 and all(x['exit_code']==0 for x in gates)\ndef add(x):\n if isinstance(x,list):\n  for a in x:add(a)\n else:i['attempts'].append(x)\nfor name in ['preparation','issuance','edit','pre-return-audit','source']:add(json.loads((O/(name+'.json')).read_text()))\nfor g in gates:\n k=len(i['attempts']);add(g);i['gates'].append({**{a:g[a] for a in ['name','argv','cwd','env','exit_code']},'receipt':f'iteration06.attempts[{k}]'})\ntotals={}\nfor x in gates:\n txt=''.join(base64.b64decode(x[k]['base64']).decode(errors='replace') for k in ['stdout','stderr']);rows=re.findall(r'test result: ok\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;',txt)\n totals[x['name']]={'passed':sum(int(a) for a,b,c in rows),'failed':sum(int(b) for a,b,c in rows),'ignored':sum(int(c) for a,b,c in rows),'nonzero_suites':sum(int(a)>0 for a,b,c in rows),'result_summaries':len(rows),'warnings':[line for line in txt.splitlines() if line.startswith('warning:')]}\nassert totals['gate03']['passed']==682 and totals['gate04']['passed']==900\nsource=subprocess.check_output(['git','rev-parse','HEAD'],cwd=S).decode().strip();assert source=='f71d607e27e18d7266855a2708449f9d6b90c632';parent=subprocess.check_output(['git','rev-parse','HEAD^'],cwd=S).decode().strip();assert parent=='0e1e8b4239881a378bc8fb928ef25741c228e171'\ni.update({'issuance':'340c7c62108f7a422d959c3eb417db352a7b307c','source_return':{'head':source,'parent':parent,'paths':['crates/nms-graph/src/query.rs'],'status':'clean; exact test-only source commit'},'observed_gate_totals':totals,'native_matrix':{'actual_insertion_orders':[False,True],'active_galaxies':[0,9,7],'literal_reference_galaxies':[0,9,7],'nearest_limits':['0','usize::MAX'],'radii':['0','399','400','positive infinity','-1','NaN'],'api_observations':576,'explicit_observations':288,'active_wrapper_observations':288,'planet_view_result_checks':288,'nonempty_planet_view_result_checks':80,'individual_canonical_planet_reference_checks':128,'full_state_checks_after_api_calls':576,'expectations':'fixed fixture system/planet arrays at0/400, empty7 and literal radius-prefix table; never derived from actual query/sort output','filtered_radius':'both true near/far insertion orders: exact[((far9,0),800)] and every returned pointer equals canonical model value;799 empty retained'},'status':'Sofie proposed current repairs delivered; CC independent review pending; SR01/02/09 open; history unwaived','current_failures':'No Rust gate failed or was blocked. Temporary baseline-name collision and recovered inspection truncations disclosed in intake; no failure fabricated. All captured child commands retain actual exit and separate bytes.','strict_correction':{'original_attempt9':'required flag recorded, exit0; retained original evidence','original_final_attempt17':'flag absent from recorded overrides; inherited child flag unknown, not proven unset; no original recovery','current_gate08':'new current run with actual RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links, exit0; not historical recovery'},'historical_disposition':{'iteration02':'executed partially/stopped/no CC commit; false production discrepancy retracted because test warp_range None, not intended Some400','unwaived':['original four groups','iteration01 three groups, third invocation count unknown','iteration02 stopped/intake gaps','iteration03 unavailable diagnostic items1\u20136/8','historical strict-env omission','prior intake/draft-before-intake limitations'],'captured_distinctions':'Iteration03 SyntaxErrors7/9 preserved, pre-child rejections distinct; iteration04 rg exit2 was a launched child argument error; original bytes kept','recovery':'No broad private-log hunt or missing original recovery; current replay does not replace missing history; Slice06 exception inapplicable'},'structural_pre_return':json.loads((O/'audit-result.json').read_text()),'incidental_scripts':{name:(O/name).read_text() for name in ['intake.py','prepare.py','edit.py','gates.py','audit.py','commit.py','record.py']}})\n# Mathematical matrix accounting independently counts fixed fixture membership, not API output.\nassert 2*3*3*(2*4+6*4)==576\n# Populated0/9 explicit under3 selections: nearestMAX2views +radius0/3991 +400/inf2 =>8rows; active matching only1 selection.\nassert 2*2*(3+1)*8==128;assert 2*2*(3+1)*5==80\nf.write_text(json.dumps(v,indent=2)+'\\n')\nwith (P/D/'artifacts/execution.md').open('a') as e:\n e.write('''\\n\\n## Iteration06 execution and proposed return \u2014 2026-10-11\\n\\nAssignment issued340c7c62108f7a422d959c3eb417db352a7b307c, after the pre-edit intake above. Sofie implemented/self-checked; independent CC review is pending. Source return f71d607e27e18d7266855a2708449f9d6b90c632 directly parents0e1e8b4239881a378bc8fb928ef25741c228e171, exactly graph query.rs cfg(test). Actual diff112 insertions/331 deletions consolidates the partial repeated spatial sweep into one complete matrix plus a bound filtered-radius pointer check. No public symbols/runtime/API/cache meaning changed. Query route and secondary tests, opposing-name numeric ties, same-voxel SSI264.6828728, all four isolated filter misses and799 exclusion remain byte-identical outside the allowed block.\\n\\nMain spatial test:2 actual insertion orders \u00d73 active selections \u00d73 reference galaxies, with2 nearest limits \u00d74 APIs and6 radii \u00d74 APIs =>576 calls,288 explicit/288 active. Full state is checked immediately after each. The populated0/9 fixture supplies80 nonempty planet result vectors containing128 individual references, all checked against canonical map values;208 other planet result vectors are exactly empty. All288 planet vectors have exact key/distance projection assertions. Expected arrays/radius prefix counts derive from fixed independent fixture membership at0/400, never query or sorting output. All matching0/9 positives and foreign0/9/7 exclusions, active7 and explicit7 emptiness, n0/MAX and0/399/400/+inf/-1/NaN boundaries are exercised in both actual orders. Filtered radius800 now binds views and checks exact far-key800 and all canonical pointers in both actual near/far orders; nearest/799/tie/SSI/single-field controls retained.\\n\\nAll ordered nine categories passed, with10 captured commands (two separate diff checks): make format;make lint;focused682/0failed/0ignored over19 nonzero suites/23 summaries;make test900/0/0 over23 nonzero suites/33 summaries;all-features workspace build;scoped doctests three zero-test summaries;ordinary docs;strict cache docs with actual flag;source/planning diff. No current Rust failure/blocked gate. Ordinary docs retain4 core links/3 graph links/2 query HTML warnings and dependency future-compatibility advisory; strict cache docs has no warning. Strict combined docs, coverage/performance/live/package/full-startup gates are not claimed. Actual argv/cwd/overrides/exits/separate channels and stable nonnegative links are in validation.json iteration06; current incidental scripts embedded there are reconstruction aids, not maintained project code.\\n\\nSuperseding evidence corrections: original Iteration05 attempt9 records strict flag and exit0; original final17 omits it from recorded overrides. Its inherited flag remains unknown. Current gate08 explicitly sets actual flag and passes; this is new proof, not reconstruction of17. Earlier incomplete coverage/intake and draft-before-intake remain qualified, no retroactive attestation. Iteration02 explicitly executed/stopped/no-CC-commit; false production claim retracted (warpNone rather than intendedSome400). All unavailable historical channels/env/intake remain unwaived, including original/01/02 and03 items1\u20136/8. Captured SyntaxErrors7/9 and pre-child rejections retain correct classes. No historical recovery or exception claimed. Six accepted rows entirely unchanged; three remaining Evidence/Notes proposed only; Status remains open.\\n''')\nwith (P/D/'closing-report.md').open('a') as e:\n e.write('''\\n\\n## Iteration06 \u2014 bounded Sofie correction, CC review pending \u2014 2026-10-11\\n\\n**Proposed current corrections delivered; independent acceptance pending.** The Operator authorized one extra bounded pass beyond the five-refinement cap and selected Sofie as implementer, with a separate CC context independently reviewing. Sofie does not independently accept this return. Current assignment `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md`, issued340c7c62108f7a422d959c3eb417db352a7b307c. Pre-edit intake is execution.md Iteration06 and validation.json iteration06.intake/readback_manifest. Planning intake23079309; author issuance340c7c6; sourcef71d607e27e18d7266855a2708449f9d6b90c632 directly parents0e1e8b4239881a378bc8fb928ef25741c228e171. Planning return/receipts follow in the appended commit record.\\n\\nOnly crates/nms-graph/src/query.rs cfg(test) changed: existing main spatial test now spans2 actual insertion orders \u00d7active0/9/7 \u00d7reference0/9/7, nearest0/MAX and all six prescribed radii through explicit and active APIs. Literal fixture0/400 expected IDs/PlanetKeys distinguish wrong-key/count/galaxy/scope/selection behavior. All576 calls have immediate full player/active checks without resetting; all288 planet vectors have exact projections,80 nonempty vectors/128 references have canonical ptr checks,208 vectors are literal-empty controls. Filtered-radius800 additionally checks exact far-key800 and every canonical borrow in both actual near/far orders. Complete unchanged nearest799/tie/SSI/single-field subproof retained. No runtime/API/public-signature/cache schema or semantic revision change; genuine360-byte2/2 predecessor remains unchanged.\\n\\nAll nine gate categories passed:682 focused tests (19 nonzero suites/23 result summaries),900 workspace (23/33), zero failures/ignored; formatting/lint/build/doctests/ordinary scoped docs/actual flagged strict cache docs and separate source/planning diff checks. Three scoped doctest summaries contain zero tests. Old4 core/3 graph link and2 query HTML warnings and proc-macro-error2 advisory remain; strict combined docs stays parent-open. No current Rust failure/blocked gate. Preparation output-name collision and recovered inspection truncations are recorded honestly; complete child channels/metadata, gate links and temporary script sources are embedded in validation.json.\\n\\n| Row | Doer disposition | Current proof / retained applicability |\\n|---|---|---|\\n| SR-01 | proposed current repair delivered; open for CC | Complete576-call literal matrix with every planet canonical reference and full state; both true insertion orders; previously missing active0/9 boundaries and explicit0/9 under7 now exercised. |\\n| SR-02 | proposed current repair delivered; open for CC | Bound filtered800 views exact far-key800 plus canonical pointers in both true near/far orders; all prior numeric-ID/SSI/four isolated misses/799 controls byte-preserved. |\\n| SR-03 | retained accepted, done | Route payload/precedence/normalization files and prior12/12 public specificity unchanged; current tests pass. No new independent verdict by doer. |\\n| SR-04 | retained accepted, done | Protected positive9 bridge/direct fallback/foreign shortcut and edge tests unchanged; tests pass. |\\n| SR-05 | retained accepted, done | Dense120 reachability and9 waypoint/60decoy/closed2400 fixtures unchanged; tests pass; best-effort unbridged limitation persists. |\\n| SR-06 | retained accepted, done | Query route whole file unchanged, including protected4976-byte100planetNone/Some400 and supplied-player/error/105-target controls; tests pass. |\\n| SR-07 | retained accepted, done | Sealed genuine2/2 fixture and cache/current-route tests unchanged; cache/query/workspace pass, no revision bump. |\\n| SR-08 | retained accepted, done | CLI and typed formatter source/tests unchanged; native integration/docs pass. |\\n| SR-09 | current corrections proposed delivered; open for CC and historical disposition | Accurate manifest/coverage/state/pointer/strict-env/stopped02/actor roles; old values/prefixes preserved, new complete captures and scope/commit fences. Unavailable history is still unwaived. |\\n\\nAssignments preserved: initial arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md (b792257); iteration01 cc-prompt-iteration01.md (09a460ff), iteration02 cc-prompt-iteration02.md (4c3d405), iteration03 cc-prompt-iteration03.md (50eac522), iteration04 cc-prompt-iteration04.md (ae3cdef4), iteration05 cc-prompt-iteration05.md (9a9bf11), iteration06 cc-prompt-iteration06.md (340c7c6), all in that same canonical slice directory. Initial/01/03/04/05 returned and reviewed, superseded as active assignment. **02 executed partially/stopped/no CC commit**, then superseded; its false closed-route runtime-discrepancy claim is retracted because input warpNone, not intendedSome400. Current06 is returned as Sofie proposed proof for separate independent CC review, with no automatic seventh correction.\\n\\nStrict-doc correction supersedes earlier final-flag prose: original05 attempt9 properly records flag/exit0; final17 flag missing from recorded overrides, inherited environment unknown. Current correctly flagged gate08 is new evidence, not original recovery. Current full body/guide intake resolves only current work; it cannot establish previous pre-edit attention or erase disclosed drafting/restoration/reapplication history. Original four groups,01 three groups (third invocation count unknown),02 stopped/intake,03 unavailable items1\u20136/8, historical strict-env/prior intake remain unwaived. Captured03 SyntaxErrors7/9, pre-child rejections and04 launched rg exit2 remain distinct; missing data not invented.\\n\\nArtifact inventory: execution.md owns pre-edit intake, execution/corrections and commit history; validation.json embeds identities, guide/source manifest, child channels/env/exits/stable links, totals, preservation audits and incidental scripts; closing-report.md owns all-nine row accounting/assignment history/limits/bubble-up; ledger.md only updates Evidence/Notes on three open rows and preserves six accepted entire rows; cc-prompt-iteration06.md is immutable issued assignment and independent **review-only** handoff. Existing cdc-verification.md and artifacts/cdc-review-receipts.json remain untouched by Sofie during this doer pass; separate CC context owns the next dated independent record. Author-only slice/arc/project/closure status changes are separately scoped. No extra maintained validator artifact or product created.\\n\\n### Bubble-up to the arc \u2014 Iteration06\\n\\n1. Assigned current test/evidence corrections delivered as doer-proposed proof; all required current gates pass. Six accepted rows retained; SR01/02/09 remain open until independent CC assessment. Slice/arc/project remain open.\\n2. No new runtime/API/cache/criteria issue reproduced. Historical unavailable channels/env/intake still need explicit bounded disposition after independent current review; completing new captures does not waive them. The Operator cap approval authorized only this extra pass.\\n3. Parent scope/counts/architecture/sequence unchanged; routine authorization/actor/assignment records appended. Separate CC verifies current return and reports historical residuals to Operator/CDC; neither actor self-disposes missing historical evidence. Main/dependencies/Project02 held. Session/live/full-startup then evidence-gated save-field repair, duplicate-base/save-name/portal/numeric/original closeout and higher-scale gates remain with original owners. No integration/release/publication/closure authorized.\\n''')\np=P/D/'ledger.md';rows=p.read_text().splitlines();evidence='Iteration06 Sofie proposed repair: sourcef71d607e27e18d7266855a2708449f9d6b90c632; execution.md/validation.json iteration06; closing-report.md current section; issued340c7c6. Separate CC independent review pending.'\nnotes={'SR-01':'Current full2-order \u00d7active0/9/7 \u00d7ref0/9/7 matrix:nearest0/MAX and radius0/399/400/+inf/-1/NaN,576 calls/full-state checks, all288 planet projections/all128 nonempty canonical references. Matching/foreign/empty cases exact. Doer-attested only; prior05 partial claim superseded, no self-acceptance.', 'SR-02':'Filtered radius800 bound views now exact far-key800 plus all canonical ptr assertions in both actual near/far orders; nearest/799/tie/SSI/four isolated misses preserved. Doer-attested correction pending CC independent review.', 'SR-09':'Operator approved one additional pass and Sofie doer/separate CC review. Current complete intake/body coverage/strict flagged run/stopped02/actor/report correction and all nine gate categories captured;682 focused900 workspace. Prior values/prefixes/16 retained and22 verified links/six accepted rows held. Original final17 inherited flag unknown; historical channels/env/intake remain unwaived. Proposed current correction, historical disposition still pending.'}\nfor n,row in enumerate(rows):\n if not row.startswith('| SR-'):continue\n cells=row.split('|');rid=cells[1].strip()\n if rid in notes:cells[7]=' '+evidence+' ';cells[8]=' '+notes[rid]+' ';rows[n]='|'.join(cells)\np.write_text('\\n'.join(rows)+'\\n')\nprint(json.dumps({'source':source,'issuance':i['issuance'],'focused':totals['gate03'],'workspace':totals['gate04'],'gate_count':len(i['gates']),'matrix':i['native_matrix'],'statuses':'six done, three open; CC review pending'}))\n",
+      "post.py": "import json,subprocess\nfrom pathlib import Path\nO=Path('/private/tmp/nms-s08-sofie-iteration06');R=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=R/'.worktrees/galaxy-scoped-routing';D='project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/';src='f71d607e27e18d7266855a2708449f9d6b90c632';issue='340c7c62108f7a422d959c3eb417db352a7b307c';ret='db5416cfe3f683bbe28002f7af79f73fa610be63';handoff='39971ca769de6f950b7bf764cf1d9e3f966c1184'\ndef git(root,*a):return subprocess.check_output(['git',*a],cwd=root).decode()\nauthor=[D+'slice-plan.md','project01-mvp/arc06-fit-and-finish/arc-plan.md','project01-mvp/project-plan.md','project01-mvp/closure-preparation.md'];evidence=[D+'artifacts/execution.md',D+'artifacts/validation.json',D+'closing-report.md',D+'ledger.md'];results=[]\nfor root,commit,parent,paths in [(S,src,'0e1e8b4239881a378bc8fb928ef25741c228e171',['crates/nms-graph/src/query.rs']),(P,issue,'23079309da08ed6908c7eb703021111a3ee28b71',author+[D+'cc-prompt-iteration06.md',*evidence[:2]]),(P,ret,issue,evidence),(P,handoff,ret,author)]:\n actual_parent=git(root,'rev-parse',commit+'^').strip();actual_paths=git(root,'diff-tree','--no-commit-id','--name-only','-r',commit).splitlines();msg=git(root,'show','-s','--format=%B',commit);trailers=['Co-authored-by: Codex <noreply@openai.com>','Co-authored-by: Billo AI <ai-engineering@billo.systems>'];assert actual_parent==parent;assert sorted(paths)==sorted(actual_paths),(commit,actual_paths);assert all(msg.count(t)==1 for t in trailers);assert msg.rstrip().endswith('\\n'.join(trailers));results.append({'head':commit,'parent':actual_parent,'paths':actual_paths,'trailers_once_adjacent_at_end':True})\nassert not git(S,'status','--porcelain');assert not git(P,'status','--porcelain');assert git(S,'rev-parse','HEAD').strip()==src;assert git(P,'rev-parse','HEAD').strip()==handoff\nprint(json.dumps({'commits':results,'candidate_planning_clean':True,'review_status':'proposed current corrections; CC independent review pending; six done three open'},indent=2));(O/'post-result.json').write_text(json.dumps(results,indent=2)+'\\n')\n"
     },
     "return_structural_audit": {
       "prior_values_exact": true,
@@ -16356,6 +16638,92 @@
       },
       "new_gate_links": 10,
       "state": "doer structural/self-check, not independent acceptance"
+    },
+    "commit_audit": [
+      {
+        "head": "f71d607e27e18d7266855a2708449f9d6b90c632",
+        "parent": "0e1e8b4239881a378bc8fb928ef25741c228e171",
+        "paths": [
+          "crates/nms-graph/src/query.rs"
+        ],
+        "trailers_once_adjacent_at_end": true
+      },
+      {
+        "head": "340c7c62108f7a422d959c3eb417db352a7b307c",
+        "parent": "23079309da08ed6908c7eb703021111a3ee28b71",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/closure-preparation.md",
+          "project01-mvp/project-plan.md"
+        ],
+        "trailers_once_adjacent_at_end": true
+      },
+      {
+        "head": "db5416cfe3f683bbe28002f7af79f73fa610be63",
+        "parent": "340c7c62108f7a422d959c3eb417db352a7b307c",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ],
+        "trailers_once_adjacent_at_end": true
+      },
+      {
+        "head": "39971ca769de6f950b7bf764cf1d9e3f966c1184",
+        "parent": "db5416cfe3f683bbe28002f7af79f73fa610be63",
+        "paths": [
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/closure-preparation.md",
+          "project01-mvp/project-plan.md"
+        ],
+        "trailers_once_adjacent_at_end": true
+      }
+    ],
+    "planning_return": {
+      "head": "db5416cfe3f683bbe28002f7af79f73fa610be63",
+      "parent": "340c7c62108f7a422d959c3eb417db352a7b307c",
+      "paths": [
+        "artifacts/execution.md",
+        "artifacts/validation.json",
+        "closing-report.md",
+        "ledger.md"
+      ]
+    },
+    "author_handoff": {
+      "head": "39971ca769de6f950b7bf764cf1d9e3f966c1184",
+      "parent": "db5416cfe3f683bbe28002f7af79f73fa610be63",
+      "scope": "four author-only plan/closure paths"
+    },
+    "final_preservation_audit": {
+      "prior_values_exact": true,
+      "execution_closing_prefixes": true,
+      "all_nine_first_six_cells_preserved": true,
+      "six_accepted_entire_rows_preserved": true,
+      "source_exact_one_cfgtest_file": [
+        "crates/nms-graph/src/query.rs"
+      ],
+      "unedited_source_and_secondary_and_tie_filter_controls_preserved": true,
+      "sealed_inputs_fixture_old_prompts_CDC_records_and_control_pins_held": true,
+      "current_prompt_issued_immutable": "340c7c62108f7a422d959c3eb417db352a7b307c",
+      "prior_stable_links": 22,
+      "channels": {
+        "count": 880,
+        "errors": []
+      },
+      "new_gate_links": 10,
+      "state": "doer structural/self-check, not independent acceptance"
+    },
+    "final_population_after_audit_receipts": {
+      "old_channel_objects": 804,
+      "all_channel_objects": 884,
+      "gate_links": 10,
+      "strength": "prior880 objects validated by final-audit; four appended final-audit/diff channels validated on final read-only postcommit check"
     }
   }
 }
