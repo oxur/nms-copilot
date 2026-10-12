@@ -70,3 +70,10 @@ The MCP text-variant condition was triggered and checked above. No source/API co
 ## Remaining authority boundary
 
 All seven ledger rows remain `open`. Proposed row dispositions and the CDC handoff are in `closing-report.md`. These results cover typed model/delta consumers, standard in-process registries, and standard mpsc/tempfile cache composition only. Filesystem watch behavior, MCP stdio/HTTP/subscriptions, startup warm/cold compatibility, old inconsistent cache normalization, unknown-system placeholders/promotion, Slice10 query/REPL behavior, later save-field policy repair, and parent criteria remain open under their named owners.
+
+## Planning return commit receipt
+
+- Initial planning return commit: `32fc7f1f18a01f9fadee783bf7c22db4a568ac47`; direct parent `2d73f1192e22a2fae2af123ccd16081eb6fd4a28`; branch `planning`.
+- Exact committed pathset: the four authorized CC planning paths under this slice (`artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, `ledger.md`). Commit trailers each appear once. No other planning paths were committed.
+- A first `git commit --only` attempt exited 1 before creating a commit because the three new files were not staged. Git reported those three exact pathspecs as unknown; only those new files were then staged and the same four-path commit succeeded. This failed attempt did not alter history or expand the pathset.
+- This receipt is being recorded in a permitted receipt-only follow-up commit. The Operator return will identify that follow-up as the final planning HEAD.

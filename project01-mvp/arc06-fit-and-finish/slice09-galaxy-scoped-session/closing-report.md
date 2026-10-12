@@ -6,7 +6,7 @@
 - Issuance commit: `70a249671e9a29dfe32493bebfb491a0d7323ae0`; planning intake parent: `9d6e43e725de90737d2738fa7261ce9c35903a1c`; actual planning branch HEAD at intake: `2d73f1192e22a2fae2af123ccd16081eb6fd4a28`.
 - Source baseline/direct parent: `f71d607e27e18d7266855a2708449f9d6b90c632`.
 - Source return commit: `e9cabd5fe63f19e9fe2e6da840845315d2ee2d18` (`codex/galaxy-scoped-session`), with that exact direct parent and only the six authorized source files. Required co-author trailers each appear once.
-- Planning return will be committed on the current `planning` HEAD `2d73f1192e22a2fae2af123ccd16081eb6fd4a28`, preserving the later planning history. Its exact first return and receipt-follow-up commit IDs will be appended as an audit within the permitted return files after Git creates them.
+- Initial planning return commit: `32fc7f1f18a01f9fadee783bf7c22db4a568ac47`, direct parent `2d73f1192e22a2fae2af123ccd16081eb6fd4a28`; exact pathset is the four authorized return files, with each required trailer once. A receipt-only follow-up will record the resulting final planning HEAD.
 
 ## Work returned
 
@@ -40,6 +40,8 @@ Existing diagnostics: `proc-macro-error2 v2.0.1` emits its future-compatibility 
 
 This does not prove filesystem notifier delivery, MCP stdio/HTTP/subscription behavior, full cold/warm startup, or repair of historical inconsistent cache state. No raw save decoder was used. Cache schema and semantic revisions stay at 2/2. Unknown destination placeholders/promotion remain with Slice11; REPL galaxy commands and query-reference defaults remain with Slice10. Later DD.UA/base/nonzero-galaxy policy and all parent export/import/docs/distribution/coverage gates remain open.
 
+The first planning `git commit --only` attempt exited 1 before Git created a commit because three new artifact files were unstaged. Only those three named files were staged, then the same four-path commit succeeded; no history or pathset change occurred. Full commit-attempt detail is retained in `artifacts/execution.md`.
+
 ## Artifact inventory and CDC handoff
 
 - Immutable author input: `artifacts/author-baseline.json` (not modified; all six original source SHA256 values matched at intake).
@@ -47,4 +49,3 @@ This does not prove filesystem notifier delivery, MCP stdio/HTTP/subscription be
 - CC return: this `closing-report.md` and evidence/notes-only updates to `ledger.md`; ledger statuses remain open.
 - Immutable assignment inputs: `cc-prompt.md`, `slice-plan.md`; predecessor records and parent/Project02 planning untouched.
 - CDC handoff: independently reproduce applicable gates and review the contract, exact intake, six source identities, path/parent/trailer receipts, test oracles and evidence limits before deciding any LM row. No acceptance or parent closure is claimed here.
-
