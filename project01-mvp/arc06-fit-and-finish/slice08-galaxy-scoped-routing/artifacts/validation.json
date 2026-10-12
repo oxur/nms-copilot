@@ -17016,6 +17016,112 @@
         "elapsed_seconds": 0.41369720781221986
       }
     ],
-    "incidental_scope_check": "from pathlib import Path\nimport json,subprocess,hashlib,base64\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');O=Path('/private/tmp/nms-s08-final-close')\nold=json.loads((O/'old-validation.json').read_text());v=json.loads((P/D/'artifacts/validation.json').read_text());assert all(v[k]==x for k,x in old.items());assert set(v)==set(old)|{'operator_approved_sr09_final_closure'}\nfor rel in ['closing-report.md','cdc-verification.md','artifacts/execution.md']:assert (P/D/rel).read_bytes().startswith((O/('old-'+Path(rel).name)).read_bytes())\nassert (P/D/'artifacts/cdc-review-receipts.json').read_bytes()==(O/'old-cdc-review-receipts.json').read_bytes()\na=[x for x in (O/'old-ledger.md').read_text().splitlines() if x.startswith('| SR-')];b=[x for x in (P/D/'ledger.md').read_text().splitlines() if x.startswith('| SR-')];assert len(a)==len(b)==9;assert a[:8]==b[:8]\nfor x,y in zip(a,b):\n c=[k.strip() for k in x.split('|')[1:-1]];d=[k.strip() for k in y.split('|')[1:-1]];assert len(c)==len(d)==8 and c[:5]==d[:5] and d[5]=='done'\narc=[x for x in (P/'project01-mvp/arc06-fit-and-finish/ledger.md').read_text().splitlines() if x.startswith('| ') and x.split('|')[1].strip() not in ['ID','---']];statuses=[x.split('|')[6].strip() for x in arc];assert len(arc)==26 and statuses.count('done')==8 and statuses.count('open')==18\nn=0\ndef walk(x):\n global n\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];n+=1\n  for z in x.values():walk(z)\n elif isinstance(x,list):\n  for z in x:walk(z)\nwalk(v)\nfor name,d in v['operator_approved_sr09_final_closure']['issued_prompts_preserved'].items():assert hashlib.sha256((P/D/name).read_bytes()).hexdigest()==d['sha256']\nfor rel,pin in [('.', '6d183bde79dd7328c32d4739dca249f5f1f9cd6c'),('.worktrees/galaxy-scoped-routing','f71d607e27e18d7266855a2708449f9d6b90c632'),('.worktrees/galaxy-scoped-queries','7118a486ea43a776aa2451ec0807d43384fb954f'),('.worktrees/galaxy-qualified-identity','f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8'),('.worktrees/cache-semantic-compatibility','decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a')]:\n root=R/rel;assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=root).decode().strip()==pin;assert not subprocess.check_output(['git','status','--porcelain'],cwd=root)\nsubprocess.run(['git','diff','--check'],cwd=P,check=True)\nprint(json.dumps({'slice':'9 done;8 prior entire rows preserved;SR09 explicit approved amendment','arc':'26 rows;8 done18 open','all_old_json_values_prefixes_independent_receipts_and_prompts_preserved':True,'channels_checked':n,'source_worktrees_clean_pinned':True,'diff_check':True}))\n"
+    "incidental_scope_check": "from pathlib import Path\nimport json,subprocess,hashlib,base64\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');O=Path('/private/tmp/nms-s08-final-close')\nold=json.loads((O/'old-validation.json').read_text());v=json.loads((P/D/'artifacts/validation.json').read_text());assert all(v[k]==x for k,x in old.items());assert set(v)==set(old)|{'operator_approved_sr09_final_closure'}\nfor rel in ['closing-report.md','cdc-verification.md','artifacts/execution.md']:assert (P/D/rel).read_bytes().startswith((O/('old-'+Path(rel).name)).read_bytes())\nassert (P/D/'artifacts/cdc-review-receipts.json').read_bytes()==(O/'old-cdc-review-receipts.json').read_bytes()\na=[x for x in (O/'old-ledger.md').read_text().splitlines() if x.startswith('| SR-')];b=[x for x in (P/D/'ledger.md').read_text().splitlines() if x.startswith('| SR-')];assert len(a)==len(b)==9;assert a[:8]==b[:8]\nfor x,y in zip(a,b):\n c=[k.strip() for k in x.split('|')[1:-1]];d=[k.strip() for k in y.split('|')[1:-1]];assert len(c)==len(d)==8 and c[:5]==d[:5] and d[5]=='done'\narc=[x for x in (P/'project01-mvp/arc06-fit-and-finish/ledger.md').read_text().splitlines() if x.startswith('| ') and x.split('|')[1].strip() not in ['ID','---']];statuses=[x.split('|')[6].strip() for x in arc];assert len(arc)==26 and statuses.count('done')==8 and statuses.count('open')==18\nn=0\ndef walk(x):\n global n\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];n+=1\n  for z in x.values():walk(z)\n elif isinstance(x,list):\n  for z in x:walk(z)\nwalk(v)\nfor name,d in v['operator_approved_sr09_final_closure']['issued_prompts_preserved'].items():assert hashlib.sha256((P/D/name).read_bytes()).hexdigest()==d['sha256']\nfor rel,pin in [('.', '6d183bde79dd7328c32d4739dca249f5f1f9cd6c'),('.worktrees/galaxy-scoped-routing','f71d607e27e18d7266855a2708449f9d6b90c632'),('.worktrees/galaxy-scoped-queries','7118a486ea43a776aa2451ec0807d43384fb954f'),('.worktrees/galaxy-qualified-identity','f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8'),('.worktrees/cache-semantic-compatibility','decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a')]:\n root=R/rel;assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=root).decode().strip()==pin;assert not subprocess.check_output(['git','status','--porcelain'],cwd=root)\nsubprocess.run(['git','diff','--check'],cwd=P,check=True)\nprint(json.dumps({'slice':'9 done;8 prior entire rows preserved;SR09 explicit approved amendment','arc':'26 rows;8 done18 open','all_old_json_values_prefixes_independent_receipts_and_prompts_preserved':True,'channels_checked':n,'source_worktrees_clean_pinned':True,'diff_check':True}))\n",
+    "actual_close_commit": "9d6e43e725de90737d2738fa7261ce9c35903a1c",
+    "close_commit_receipts": [
+      {
+        "name": "final-close-commit",
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s08-sofie-iteration06/final-close-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/arc06-fit-and-finish/ledger.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/closure-preparation.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDlkNmU0M2VdIENsb3NlIFNsaWNlMDggd2l0aCBhcHByb3ZlZCBib3VuZGVkIGhpc3RvcmljYWwgZXZpZGVuY2UgZXhjZXB0aW9uCiAxMCBmaWxlcyBjaGFuZ2VkLCAyNzcgaW5zZXJ0aW9ucygrKSwgNiBkZWxldGlvbnMoLSkK",
+          "bytes": 138,
+          "sha256": "946179e7985030b70358e4163beb49dcaa58bfd430e1a74656d9423e36745d14"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.2848658752627671
+      },
+      {
+        "name": "final-close-head",
+        "argv": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "OWQ2ZTQzZTcyNWRlOTA3MzdkMjczOGZhNzI2MWNlOWMzNTkwM2ExYwo=",
+          "bytes": 41,
+          "sha256": "78291d9908a248e549ab7cd26f2503966bf77c522ccbeeebf0bba587c26e3a1e"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.018337916117161512
+      },
+      {
+        "name": "final-close-audit",
+        "argv": [
+          "git",
+          "show",
+          "--format=full",
+          "--stat",
+          "9d6e43e725de90737d2738fa7261ce9c35903a1c"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Y29tbWl0IDlkNmU0M2U3MjVkZTkwNzM3ZDI3MzhmYTcyNjFjZTljMzU5MDNhMWMKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIENsb3NlIFNsaWNlMDggd2l0aCBhcHByb3ZlZCBib3VuZGVkIGhpc3RvcmljYWwgZXZpZGVuY2UgZXhjZXB0aW9uCiAgICAKICAgIENvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgogICAgQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPgoKIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQgICAgIHwgICA5ICstCiBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL2xlZGdlci5tZCAgICAgICB8ICAgNCArLQogLi4uL2FydGlmYWN0cy9leGVjdXRpb24ubWQgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMTMgKysKIC4uLi9hcnRpZmFjdHMvdmFsaWRhdGlvbi5qc29uICAgICAgICAgICAgICAgICAgICAgIHwgMTQwICsrKysrKysrKysrKysrKysrKysrKwogLi4uL2NkYy12ZXJpZmljYXRpb24ubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMzcgKysrKysrCiAuLi4vY2xvc2luZy1yZXBvcnQubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAzNSArKysrKysKIC4uLi9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9sZWRnZXIubWQgICAgICAgIHwgICA0ICstCiAuLi4vc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvc2xpY2UtcGxhbi5tZCAgICB8ICAyNSArKystCiBwcm9qZWN0MDEtbXZwL2Nsb3N1cmUtcHJlcGFyYXRpb24ubWQgICAgICAgICAgICAgICB8ICAgNyArKwogcHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQgICAgICAgICAgICAgICAgICAgICAgfCAgIDkgKy0KIDEwIGZpbGVzIGNoYW5nZWQsIDI3NyBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQo=",
+          "bytes": 1016,
+          "sha256": "4b31427b40ed40457585571dc0a7852a9284ff449916b9c35adb95fda0ad8c2b"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.07299270806834102
+      },
+      {
+        "name": "final-close-status",
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.018888665828853846
+      }
+    ]
   }
 }

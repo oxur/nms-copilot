@@ -9,7 +9,7 @@ updated: 2026-10-11
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.22
+version: 1.23
 project: project01-mvp
 status: active
 depends-on: []
@@ -733,3 +733,10 @@ Version history2026-10-11: routine child-review status/evidence synchronization 
 Operator explicitly approved the aa83dbe bounded SR09 exception (“yes, I approve”), only its seven enumerated past observations at source f71d607e27e18d7266855a2708449f9d6b90c632. Independent CC e6bbfe53/receipt f8d31258 supplies current reproduction; unavailable past fields remain unknown and the extra unflagged review doc run remains excluded. Formal final closure/row walk/artifact inventory/bubble-up is in Slice08 closing-report.md and cdc-verification.md. Nine child rows done, R06-S08 done;26 arc rows/eight done/eighteen open; project25 open. No broader/current/future evidence waiver or source integration.
 
 Current bounded sequence: Slice08 closed; detail required session/live-interface/full-startup composition next, within the approved identity-before-save route, then field-specific discovery/base/nonzero reality policy evidence and implementation. Original scope/capabilities and all remaining owners/gates preserved. No automatic arc/project closure/release. Version history2026-10-11: arc1.31/project1.22 record the specific approved Slice08 historical-evidence amendment and formal child closure; no architecture or sequence change.
+
+
+## Arc06 Slice09 bounded consumer execution — 2026-10-11
+
+Slice08 closed in9d6e43e after specific Operator evidence approval and independent CC proof. Arc06 opens Slice09 galaxy-scoped live session state at acceptedf71d607; separate CC implements, Sofie/CDC reviews. Its seven rows remain open; arc27/eight done/nineteen open, project25 open. Existing mandatory identity consumer work is bounded into09 movement/session/location/typed drain-cache,10 REPL command/reference integration,11 actual watch/transports/full startup-cache/unknown-system and historical cached-state disposition, then evidence-gated save-field policy/repair. All original scope/correctness/coverage/docs/distribution/independent/Operator gates stay open and unchanged. No merge/main/source movement/release/Project02 mutation, old data reconstruction or extension of Slice08's historical exception.
+
+Version1.23 (2026-10-11): Arc06 Slice08 closeout/source inspection supplies the next bounded consumer assignment and explicit remaining owners, without changing approved architecture, scope or acceptance.

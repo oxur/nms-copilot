@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.31, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.32, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -260,3 +260,12 @@ Version history2026-10-11: routine child-review status/evidence synchronization 
 Operator explicitly approved the aa83dbe bounded SR09 exception (“yes, I approve”), only its seven enumerated past observations at source f71d607e27e18d7266855a2708449f9d6b90c632. Independent CC e6bbfe53/receipt f8d31258 supplies current reproduction; unavailable past fields remain unknown and the extra unflagged review doc run remains excluded. Formal final closure/row walk/artifact inventory/bubble-up is in Slice08 closing-report.md and cdc-verification.md. Nine child rows done, R06-S08 done;26 arc rows/eight done/eighteen open; project25 open. No broader/current/future evidence waiver or source integration.
 
 Current bounded sequence: Slice08 closed; detail required session/live-interface/full-startup composition next, within the approved identity-before-save route, then field-specific discovery/base/nonzero reality policy evidence and implementation. Original scope/capabilities and all remaining owners/gates preserved. No automatic arc/project closure/release. Version history2026-10-11: arc1.31/project1.22 record the specific approved Slice08 historical-evidence amendment and formal child closure; no architecture or sequence change.
+
+
+## Slice09 opening and retained follow-on owners — 2026-10-11
+
+Slice08 formally closed in9d6e43e with the precise Operator-approved historical exception. Detail the already required identity consumer route as Slice09 galaxy-scoped session; no approved capability is removed or deferred beyond parent acceptance. Current assignment: `arc06-fit-and-finish/slice09-galaxy-scoped-session/cc-prompt.md`, initial CC implementation from accepted routingf71d607. Seven LM rows open; separate CC implements, Sofie/CDC independently reviews. New R06-S09 open;27 arc rows/eight done/nineteen open, project25 open. Main6d183bde and all dependency pins/Project02 held.
+
+Next bounded breakdown of the existing remaining work: Slice09 shared live movement, qualified additions, selected session state, notification/MCP location and typed drain-cache observation; Slice10 (CDC after09) REPL galaxy command/name/index/help/completion/parser/dispatch, correct find/route reference defaults and actual command/prompt integration; Slice11 (CDC after10) actual filesystem watch, stdio/HTTP/subscriptions, full startup/cache C04/old/current envelope behavior, unknown destination placeholders/promotion and diagnosis/disposition of already persisted inconsistent player state. Names are planned owners, not pre-issued assignments. Then evidence-gated DD.UA/base/nonzero reality policy and repair with required semantic compatibility transitions; remaining original doc/format/import/export/distribution/coverage and parent independent/Operator gates persist. Slice09 does not claim full lifecycle, raw decoder authority or normalization of historical caches. Its cross-galaxy movement resumes destination view; same-galaxy movement retains explicit selection, and location reads remain physical.
+
+Version1.32 (2026-10-11): Slice08 closure/source reconnaissance surfaced the needed bounded movement/session correction; opened its seven-row consumer slice and explicitly assigned the rest of the already approved consumer/lifecycle scope to follow-on owners. Scope/architecture/acceptance remain intact; no parent closure/integration or extended exception.

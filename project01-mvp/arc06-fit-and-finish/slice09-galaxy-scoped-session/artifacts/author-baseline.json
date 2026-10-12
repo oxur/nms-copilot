@@ -1,0 +1,70 @@
+{
+  "author": "Sofie/CDC; source investigation and design, not runtime verification",
+  "source_revision": "f71d607e27e18d7266855a2708449f9d6b90c632",
+  "planning_intake": "9d6e43e725de90737d2738fa7261ce9c35903a1c",
+  "source_sha256": {
+    "crates/nms-graph/src/model.rs": "044dd844b94b03bccd1aaf1fda31cec1bdbe00562a9d880b3f5678d403a002d5",
+    "crates/nms-watch/src/delta.rs": "0c572dbbb58a785163bfaaa58e2b10fc6c23a65bb65f143a50d4a72c213d6131",
+    "crates/nms-copilot/src/session.rs": "4c27a0779456a0ae8b58b2aec5bdb0c1d94c403e3dd186e4a88894f09c34b72a",
+    "crates/nms-copilot/src/watch.rs": "b8f929f36921b202a59aea5bdf1f3493cde6f0b56cd3f0e478fe1e848a97947f",
+    "crates/nms-copilot/src/mcp/tools.rs": "419ff8361350bd3d29d2dede7ca2a1692ffc10df247a90a68d6b7a0f70a03f64",
+    "crates/nms-copilot/src/mcp/resources.rs": "adae1f7d4951ee1993baa4cc4cbde8be6d7f00931fcd6e61ad2b4671df72f3f2"
+  },
+  "observed_source_facts": [
+    "apply_delta updates current_address only; current_reality and active_galaxy are untouched",
+    "SessionState::from_model chooses player address galaxy rather than model selection",
+    "apply_and_notify overwrites explicit anchors and does not synchronize session galaxy",
+    "watch and MCP location use active-scoped nearest_systems for explicit player addresses",
+    "compute_delta already compares full GalacticAddress and retains qualified system/planet keys"
+  ],
+  "evidence_strength": "source inspection; no newly executed Rust probe or game observation",
+  "readiness": "critical constructors, typed snapshot/delta, spatial counterpart, cache writer/read/rebuild, ResourceContents variant and tool/resource public dispatch verified in local pinned source",
+  "scope_limits": [
+    "no filesystem notifier or MCP wire transport claim",
+    "no unknown-destination placeholder or promotion change",
+    "old malformed cached player state is not normalized or declared repaired by this slice"
+  ],
+  "author_preissue_correction": "A lookup found the initial draft testing guide label did not exist; corrected it to the installed 01-testing-discipline.md before issuance and loaded the complete actual guide. No implementation test failed.",
+  "author_preparation_receipt": {
+    "name": "s09-author-preparation",
+    "argv": [
+      "python3",
+      "/private/tmp/nms-s09-author/prepare.py"
+    ],
+    "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+    "env": {},
+    "exit_code": 0,
+    "stdout": {
+      "base64": "eyJuZXdfc2xpY2UiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvcGxhbm5pbmcvcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA5LWdhbGF4eS1zY29wZWQtc2Vzc2lvbiIsICJvcGVuX3Jvd3MiOiA3LCAic291cmNlX3BhdGhzIjogWyJjcmF0ZXMvbm1zLWdyYXBoL3NyYy9tb2RlbC5ycyIsICJjcmF0ZXMvbm1zLXdhdGNoL3NyYy9kZWx0YS5ycyIsICJjcmF0ZXMvbm1zLWNvcGlsb3Qvc3JjL3Nlc3Npb24ucnMiLCAiY3JhdGVzL25tcy1jb3BpbG90L3NyYy93YXRjaC5ycyIsICJjcmF0ZXMvbm1zLWNvcGlsb3Qvc3JjL21jcC90b29scy5ycyIsICJjcmF0ZXMvbm1zLWNvcGlsb3Qvc3JjL21jcC9yZXNvdXJjZXMucnMiXSwgInBsYW5uaW5nX3BhdGhzX2NoYW5nZWQiOiBbIiBNIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQiLCAiIE0gcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQiLCAiIE0gcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTA4LWdhbGF4eS1zY29wZWQtcm91dGluZy9hcnRpZmFjdHMvZXhlY3V0aW9uLm1kIiwgIiBNIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOC1nYWxheHktc2NvcGVkLXJvdXRpbmcvYXJ0aWZhY3RzL3ZhbGlkYXRpb24uanNvbiIsICIgTSBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMDgtZ2FsYXh5LXNjb3BlZC1yb3V0aW5nL2Nsb3NpbmctcmVwb3J0Lm1kIiwgIiBNIHByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kIiwgIj8/IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOS1nYWxheHktc2NvcGVkLXNlc3Npb24vIl19Cg==",
+      "bytes": 913,
+      "sha256": "ef7e9e6ab4e48ac9e8417601da886dfbf47d671a44aa130cd44f18ef14df2d5e"
+    },
+    "stderr": {
+      "base64": "",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "elapsed_seconds": 0.11139666568487883
+  },
+  "preissue_audit_receipt": {
+    "name": "s09-preissue-audit",
+    "argv": [
+      "python3",
+      "/private/tmp/nms-s09-author/check.py"
+    ],
+    "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+    "env": {},
+    "exit_code": 0,
+    "stdout": {
+      "base64": "eyJzbGljZTA4IjogIjkgZG9uZTsgYWN0dWFsIHRlbi1wYXRoIGNsb3N1cmUgY29tbWl0IGNoZWNrZWQiLCAic2xpY2UwOSI6ICI3IG9wZW47IGNvbXBsZXRlIG9wZW4gc2V0OyBubyBpbnZlbnRlZCBjbG9zZS9yZXZpZXciLCAiYXJjIjogIjI3IHJvd3M7OCBkb25lOzE5IG9wZW47MjYgcHJpb3IgZW50aXJlIHJvd3MgdW5jaGFuZ2VkIiwgInByb2plY3QiOiAiMjUgb3BlbiIsICJvbGRfdmFsaWRhdGlvbl92YWx1ZXNfYW5kX3JlY29yZF9wcmVmaXhlc19yZXRhaW5lZCI6IHRydWUsICJjaGFubmVsX29iamVjdHNfY2hlY2tlZCI6IDkwNCwgInNpeF9iYXNlbGluZV9kaWdlc3RzX2FuZF9maXZlX2NsZWFuX3NvdXJjZV9waW5zIjogdHJ1ZSwgImRpZmZfY2hlY2siOiB0cnVlfQo=",
+      "bytes": 383,
+      "sha256": "d1b4caef50abe337a2eda35efb9b6f82a4a69bfb708e08e42e6f2706221478ff"
+    },
+    "stderr": {
+      "base64": "",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "elapsed_seconds": 0.6836317088454962
+  }
+}

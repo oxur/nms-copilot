@@ -65,3 +65,12 @@ Prior24 rows and all criteria/dispositions retained;25 total, six done/nineteen 
 | R06-S08 | Galaxy-scoped spatial/routing composition independently accepted | Nine-row Slice08 ledger; native exact routes, literal neighborhoods, actual CLI and raw-cache parity | correctness-grade | Approved R06-R02/R03 identity composition and original correctness | done | [Final closure](slice08-galaxy-scoped-routing/cdc-verification.md#operator-approved-sr-09-exception-and-final-closure--2026-10-11): independent CC current proof plus Operator-approved specific SR09 evidence amendment, at f71d607. | Nine child rows closed; listed historical data remains unknown. Required session/live/startup/save and original parent gates remain open; no source integration. |
 
 Slice08 closure2026-10-11:26 rows/eight done/eighteen open; all25 other entire rows and criteria retained. Operator exception applies only to the seven listed Slice08 past observations; no parent/current/future validation waiver.
+
+
+## Required session consumer child — 2026-10-11
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S09 | Galaxy-scoped movement/session/location consumers independently accepted | Seven-row Slice09 ledger and actual typed producer/drain/cache/MCP registry proofs, current native gates | correctness-grade | Approved R06-R02/R03 identity composition and original M7.4 | open | — | CC assignment issued; full command/lifecycle/save-field and original parent gates remain open. |
+
+27 rows/eight done/nineteen open. All prior26 entire rows and criteria/dispositions retained. New child is a bounded owner within the approved required identity consumer route, not a replacement for parent acceptance.
