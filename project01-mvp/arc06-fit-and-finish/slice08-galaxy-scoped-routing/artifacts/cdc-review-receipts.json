@@ -8222,6 +8222,44 @@
       "Earlier intake/drafting sequence limitations remain historical and are not repaired retroactively by Iteration06."
     ],
     "nonqualifying_observation": "One extra strict-cache documentation invocation was made without RUSTDOCFLAGS during review; it is excluded from the gate set. The captured ordered gate08 invocation includes the required flag and passed.",
-    "scope": "No source, prompt, closing-report, CDC verdict, or acceptance-contract mutation."
+    "scope": "No source, prompt, closing-report, CDC verdict, or acceptance-contract mutation.",
+    "review_commit": {
+      "head": "e6bbfe53fe84f86592c353e9b24856f6dbf78078",
+      "parent": "e88c377fc4b24af1e3b3d02b4964ef2e5f9e07a9",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+      ],
+      "trailers_once_adjacent_at_end": true
+    },
+    "review_git_attempts": [
+      {
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/s08-cc-iteration06-review-commit.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIGU2YmJmZTVdIFJldmlldyBTbGljZTA4IEl0ZXJhdGlvbjA2IHNwYXRpYWwgZXZpZGVuY2UKIDMgZmlsZXMgY2hhbmdlZCwgNDU1IGluc2VydGlvbnMoKyksIDkgZGVsZXRpb25zKC0pCg==",
+          "bytes": 115,
+          "sha256": "a23ca2ade73a68fffcd820e197698f705e75421de7141067e857975173d55c70"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    ]
   }
 }
