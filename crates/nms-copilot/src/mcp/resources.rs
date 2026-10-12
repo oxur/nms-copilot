@@ -103,6 +103,19 @@ fn make_resource(uri: &str, name: &str, description: &str) -> Resource {
 mod tests {
     use super::*;
 
+    async fn location_json(resources: &NmsResources) -> serde_json::Value {
+        let contents = resources
+            .read(PLAYER_LOCATION_URI)
+            .expect("location resource is registered")
+            .await
+            .expect("player location should be available");
+        let Some(ResourceContents::TextResourceContents { text, .. }) = contents.into_iter().next()
+        else {
+            panic!("location resource must return text JSON");
+        };
+        serde_json::from_str(&text).expect("resource text is valid JSON")
+    }
+
     fn test_model() -> Arc<RwLock<GalaxyModel>> {
         let json = r#"{
             "Version": 4720, "Platform": "Mac|Final", "ActiveContext": "Main",
@@ -165,6 +178,99 @@ mod tests {
             .expect("should match URI");
         let contents = future.await.expect("should succeed");
         assert_eq!(contents.len(), 1);
+    }
+
+    #[tokio::test]
+    async fn test_player_location_resource_uses_physical_galaxy() {
+        use nms_core::biome::Biome;
+        use nms_core::player::PlayerState;
+        use nms_core::system::{Planet, System};
+
+        let model = test_model();
+        let a0 = nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let a9 = nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        {
+            let mut guard = model.write().await;
+            guard.insert_system(System::new(
+                a0,
+                Some("Origin-0".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Leaf-0".into()),
+                    None,
+                )],
+            ));
+            guard.insert_system(System::new(
+                a9,
+                Some("Destination-9".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Toxic),
+                    None,
+                    false,
+                    Some("Leaf-9".into()),
+                    None,
+                )],
+            ));
+            guard.player_state = Some(PlayerState::new(a0, 0, None, None, 7, 8, 9));
+            guard.set_active_galaxy(9);
+        }
+        let resources = NmsResources::new(Arc::clone(&model));
+        let origin = location_json(&resources).await;
+        assert_eq!(origin["system"], "Origin-0");
+        assert_eq!(origin["galaxy"], "Euclid");
+        assert_eq!(origin["planets_in_system"], 1);
+
+        {
+            let mut guard = model.write().await;
+            guard.apply_delta(&nms_core::SaveDelta {
+                player_moved: Some(nms_core::delta::PlayerMoved { from: a0, to: a9 }),
+                ..nms_core::SaveDelta::empty()
+            });
+            guard.set_active_galaxy(0);
+        }
+        let physical = model.read().await.player_state.clone();
+        let selected = model.read().await.active_galaxy;
+        let destination = location_json(&resources).await;
+        assert_eq!(destination["system"], "Destination-9");
+        assert_eq!(destination["galaxy"], "Eissentam");
+        assert_eq!(destination["planets_in_system"], 1);
+        {
+            let guard = model.read().await;
+            assert_eq!(guard.player_state, physical);
+            assert_eq!(guard.active_galaxy, selected);
+        }
+        {
+            let mut guard = model.write().await;
+            guard.apply_delta(&nms_core::SaveDelta {
+                player_moved: Some(nms_core::delta::PlayerMoved { from: a9, to: a0 }),
+                ..nms_core::SaveDelta::empty()
+            });
+            guard.set_active_galaxy(9);
+        }
+        let reverse_state = model.read().await.player_state.clone();
+        let reverse_selected = model.read().await.active_galaxy;
+        let origin_again = location_json(&resources).await;
+        assert_eq!(origin_again["system"], "Origin-0");
+        assert_eq!(origin_again["galaxy"], "Euclid");
+        let guard = model.read().await;
+        assert_eq!(guard.player_state, reverse_state);
+        assert_eq!(guard.active_galaxy, reverse_selected);
+        drop(guard);
+
+        {
+            let mut guard = model.write().await;
+            guard.player_state = None;
+        }
+        let error = resources.read(PLAYER_LOCATION_URI).unwrap().await;
+        assert!(error.is_err());
     }
 
     #[tokio::test]

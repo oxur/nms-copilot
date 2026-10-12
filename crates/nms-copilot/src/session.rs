@@ -70,11 +70,7 @@ impl SessionState {
             .as_ref()
             .map(|ps| PositionContext::PlayerPosition(ps.current_address));
 
-        let galaxy = model
-            .player_state
-            .as_ref()
-            .map(|ps| Galaxy::by_index(ps.current_address.reality_index))
-            .unwrap_or_else(|| Galaxy::by_index(0));
+        let galaxy = Galaxy::by_index(model.active_galaxy);
 
         Self {
             position,
@@ -83,6 +79,27 @@ impl SessionState {
             galaxy,
             system_count: model.systems.len(),
             planet_count: model.planets.len(),
+        }
+    }
+
+    /// Refresh fields derived from the model while preserving explicit anchors.
+    ///
+    /// A missing position and a player-following position follow the current
+    /// physical player address. Base and manually specified address anchors
+    /// remain fixed while the selected galaxy and model counts are refreshed.
+    pub fn sync_from_model(&mut self, model: &GalaxyModel) {
+        self.galaxy = Galaxy::by_index(model.active_galaxy);
+        self.system_count = model.system_count();
+        self.planet_count = model.planet_count();
+
+        if matches!(
+            &self.position,
+            None | Some(PositionContext::PlayerPosition(_))
+        ) {
+            self.position = model
+                .player_state
+                .as_ref()
+                .map(|player| PositionContext::PlayerPosition(player.current_address));
         }
     }
 
@@ -109,10 +126,8 @@ impl SessionState {
 
     /// Reset position to the player's save file position.
     pub fn reset_position(&mut self, model: &GalaxyModel) -> String {
-        self.position = model
-            .player_state
-            .as_ref()
-            .map(|ps| PositionContext::PlayerPosition(ps.current_address));
+        self.position = None;
+        self.sync_from_model(model);
         "Position reset to player location".into()
     }
 
@@ -211,11 +226,90 @@ mod tests {
 
     #[test]
     fn test_session_from_model() {
-        let model = test_model();
+        let mut model = test_model();
+        model.set_active_galaxy(9);
         let session = SessionState::from_model(&model);
         assert!(session.position.is_some());
-        assert_eq!(session.galaxy.name, "Euclid");
+        assert_eq!(session.galaxy.index, 9);
+        assert_eq!(session.position.unwrap().address().reality_index, 0);
         assert!(session.system_count > 0);
+    }
+
+    #[test]
+    fn test_session_from_model_without_player_uses_selected_galaxy() {
+        let mut model = test_model();
+        model.player_state = None;
+        model.set_active_galaxy(7);
+
+        let session = SessionState::from_model(&model);
+        assert_eq!(session.galaxy.index, 7);
+        assert!(session.position.is_none());
+    }
+
+    #[test]
+    fn test_sync_from_model_updates_follow_position_and_preserves_explicit_anchor() {
+        let mut model = test_model();
+        let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let mut session = SessionState::from_model(&model);
+        session.set_biome_filter(Biome::Lush);
+        session.set_warp_range(400.0);
+
+        model.set_active_galaxy(9);
+        let player = model.player_state.as_mut().unwrap();
+        player.current_address = a9;
+        player.current_reality = 9;
+        let physical_state = player.clone();
+        session.sync_from_model(&model);
+        assert_eq!(session.galaxy.index, 9);
+        assert!(
+            matches!(session.position, Some(PositionContext::PlayerPosition(address)) if address == a9)
+        );
+        assert_eq!(session.biome_filter, Some(Biome::Lush));
+        assert_eq!(session.warp_range, Some(400.0));
+
+        let explicit = GalacticAddress::new(12, 4, 3, 2, 0, 7);
+        session.position = Some(PositionContext::Address(explicit));
+        model.set_active_galaxy(0);
+        session.system_count = 0;
+        session.planet_count = 0;
+        session.sync_from_model(&model);
+        assert_eq!(session.galaxy.index, 0);
+        assert_eq!(session.system_count, model.system_count());
+        assert_eq!(session.planet_count, model.planet_count());
+        assert!(
+            matches!(session.position, Some(PositionContext::Address(address)) if address == explicit)
+        );
+        assert_eq!(model.player_state.as_ref(), Some(&physical_state));
+
+        session.position = Some(PositionContext::Base {
+            name: "Home Base".into(),
+            address: explicit,
+        });
+        session.sync_from_model(&model);
+        assert!(
+            matches!(&session.position, Some(PositionContext::Base { name, address }) if name == "Home Base" && *address == explicit)
+        );
+    }
+
+    #[test]
+    fn test_sync_from_model_absent_player_clears_follow_position_only() {
+        let mut model = test_model();
+        let mut session = SessionState::from_model(&model);
+        model.player_state = None;
+        model.set_active_galaxy(7);
+        session.sync_from_model(&model);
+        assert!(session.position.is_none());
+        assert_eq!(session.galaxy.index, 7);
+
+        let anchor = GalacticAddress::new(1, 2, 3, 4, 0, 8);
+        session.position = Some(PositionContext::Address(anchor));
+        session.sync_from_model(&model);
+        assert!(
+            matches!(session.position, Some(PositionContext::Address(address)) if address == anchor)
+        );
+        session.reset_position(&model);
+        assert!(session.position.is_none());
+        assert_eq!(session.galaxy.index, 7);
     }
 
     #[test]
@@ -265,13 +359,24 @@ mod tests {
 
     #[test]
     fn test_reset_all() {
-        let model = test_model();
+        let mut model = test_model();
+        model.set_active_galaxy(9);
+        let mut player = model.player_state.as_ref().unwrap().clone();
+        player.units = 7;
+        player.nanites = 8;
+        player.quicksilver = 9;
+        model.player_state = Some(player.clone());
         let mut session = SessionState::from_model(&model);
         session.set_biome_filter(Biome::Toxic);
         session.set_warp_range(1000.0);
         session.reset_all(&model);
         assert!(session.biome_filter.is_none());
         assert!(session.warp_range.is_none());
+        assert_eq!(session.galaxy.index, 9);
+        assert_eq!(session.system_count, model.system_count());
+        assert_eq!(session.planet_count, model.planet_count());
+        assert_eq!(model.active_galaxy, 9);
+        assert_eq!(model.player_state, Some(player));
     }
 
     #[test]
@@ -311,13 +416,20 @@ mod tests {
 
     #[test]
     fn test_reset_position() {
-        let model = test_model();
+        let mut model = test_model();
+        model.set_active_galaxy(9);
         let mut session = SessionState::from_model(&model);
         session.set_position_base("Home Base", &model).unwrap();
+        session.set_biome_filter(Biome::Lush);
+        session.set_warp_range(400.0);
         session.reset_position(&model);
         assert!(matches!(
             &session.position,
             Some(PositionContext::PlayerPosition(_))
         ));
+        assert_eq!(session.galaxy.index, 9);
+        assert_eq!(session.biome_filter, Some(Biome::Lush));
+        assert_eq!(session.warp_range, Some(400.0));
+        assert_eq!(model.active_galaxy, 9);
     }
 }

@@ -354,11 +354,19 @@ impl GalaxyModel {
             }
         }
 
-        // 3. Update player position
-        if let Some(ref moved) = delta.player_moved
-            && let Some(ref mut ps) = self.player_state
-        {
-            ps.current_address = moved.to;
+        // 3. Update physical player position. End the player-state borrow
+        // before updating the model's selected-galaxy view.
+        if let Some(moved) = &delta.player_moved {
+            let previous_reality = self.player_state.as_mut().map(|player| {
+                let previous_reality = player.current_address.reality_index;
+                player.current_address = moved.to;
+                player.current_reality = moved.to.reality_index;
+                previous_reality
+            });
+
+            if previous_reality.is_some_and(|reality| reality != moved.to.reality_index) {
+                self.active_galaxy = moved.to.reality_index;
+            }
         }
 
         // 4. Insert new bases
@@ -863,6 +871,185 @@ mod tests {
 
         model.apply_delta(&delta);
         assert_eq!(model.player_position().unwrap().voxel_x(), 999);
+    }
+
+    #[test]
+    fn test_apply_delta_cross_reality_updates_physical_state_and_selection() {
+        use nms_core::player::PlayerState;
+
+        let from = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let to = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let previous = GalacticAddress::new(8, 1, 2, 3, 0, 4);
+        let freighter = GalacticAddress::new(-7, 3, 5, 6, 0, 8);
+        let mut model = GalaxyModel::new();
+        model.player_state = Some(PlayerState::new(
+            from,
+            0,
+            Some(previous),
+            Some(freighter),
+            7,
+            8,
+            9,
+        ));
+        model.set_active_galaxy(0);
+        let delta = nms_core::delta::SaveDelta {
+            player_moved: Some(nms_core::delta::PlayerMoved { from, to }),
+            ..nms_core::delta::SaveDelta::empty()
+        };
+
+        model.apply_delta(&delta);
+        assert_eq!(
+            model.player_state,
+            Some(PlayerState::new(
+                to,
+                9,
+                Some(previous),
+                Some(freighter),
+                7,
+                8,
+                9,
+            ))
+        );
+        assert_eq!(model.active_galaxy, 9);
+
+        model.set_active_galaxy(7);
+        model.apply_delta(&delta);
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(
+            model.player_state,
+            Some(PlayerState::new(
+                to,
+                9,
+                Some(previous),
+                Some(freighter),
+                7,
+                8,
+                9,
+            ))
+        );
+        assert!(model.systems.is_empty());
+        assert!(model.planets.is_empty());
+        model.apply_delta(&nms_core::delta::SaveDelta::empty());
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(
+            model.player_state,
+            Some(PlayerState::new(
+                to,
+                9,
+                Some(previous),
+                Some(freighter),
+                7,
+                8,
+                9,
+            ))
+        );
+
+        let reverse_from = to;
+        let reverse_to = from;
+        let mut reverse = GalaxyModel::new();
+        reverse.player_state = Some(PlayerState::new(
+            reverse_from,
+            9,
+            Some(previous),
+            Some(freighter),
+            7,
+            8,
+            9,
+        ));
+        reverse.set_active_galaxy(9);
+        reverse.apply_delta(&nms_core::delta::SaveDelta {
+            player_moved: Some(nms_core::delta::PlayerMoved {
+                from: reverse_from,
+                to: reverse_to,
+            }),
+            ..nms_core::delta::SaveDelta::empty()
+        });
+        assert_eq!(reverse.active_galaxy, 0);
+        assert_eq!(
+            reverse.player_state,
+            Some(PlayerState::new(
+                reverse_to,
+                0,
+                Some(previous),
+                Some(freighter),
+                7,
+                8,
+                9,
+            ))
+        );
+    }
+
+    #[test]
+    fn test_apply_delta_same_reality_keeps_selection_and_absent_player() {
+        use nms_core::player::PlayerState;
+        use nms_core::system::SystemId;
+
+        let from = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let to = GalacticAddress::new(1, 0, 0, 2, 0, 9);
+        let mut model = GalaxyModel::new();
+        model.player_state = Some(PlayerState::new(from, 9, None, None, 7, 8, 9));
+        model.set_active_galaxy(7);
+        model.apply_delta(&nms_core::delta::SaveDelta {
+            player_moved: Some(nms_core::delta::PlayerMoved { from, to }),
+            ..nms_core::delta::SaveDelta::empty()
+        });
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(model.player_state.as_ref().unwrap().current_address, to);
+        assert_eq!(model.player_state.as_ref().unwrap().current_reality, 9);
+
+        let destination = GalacticAddress::new(4, 0, 0, 3, 0, 9);
+        let destination_id = SystemId::from_address(&destination);
+        let extra_planet = Planet::new(
+            1,
+            Some(Biome::Lush),
+            None,
+            false,
+            Some("Leaf-1".into()),
+            None,
+        );
+        let mut absent = GalaxyModel::new();
+        absent.set_active_galaxy(7);
+        absent.apply_delta(&nms_core::delta::SaveDelta {
+            new_systems: vec![System::new(
+                destination,
+                Some("Destination-9".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Toxic),
+                    None,
+                    false,
+                    Some("Leaf-9".into()),
+                    None,
+                )],
+            )],
+            new_planets: vec![(destination_id, extra_planet)],
+            player_moved: Some(nms_core::delta::PlayerMoved {
+                from,
+                to: destination,
+            }),
+            ..nms_core::delta::SaveDelta::empty()
+        });
+        assert!(absent.player_state.is_none());
+        assert_eq!(absent.active_galaxy, 7);
+        assert_eq!(
+            absent.system(&destination_id).unwrap().name.as_deref(),
+            Some("Destination-9")
+        );
+        assert_eq!(
+            absent.planets.get(&(destination_id, 0)).unwrap().biome,
+            Some(Biome::Toxic)
+        );
+        assert_eq!(
+            absent
+                .planets
+                .get(&(destination_id, 1))
+                .unwrap()
+                .name
+                .as_deref(),
+            Some("Leaf-1")
+        );
     }
 
     #[test]

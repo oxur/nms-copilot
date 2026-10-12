@@ -281,7 +281,7 @@ pub(crate) fn build_where_am_i_json(model: &GalaxyModel) -> Result<serde_json::V
     let portal_hex = format!("{:012X}", addr.packed());
     let galaxy = Galaxy::by_index(addr.reality_index);
 
-    let nearest = model.nearest_systems(addr, 1);
+    let nearest = model.nearest_systems_from_address(addr, 1);
     let (system_name, system_planets) = nearest
         .first()
         .and_then(|(id, _)| model.system(id))
@@ -793,6 +793,109 @@ mod tests {
         assert!(v.get("system").is_some());
         assert!(v.get("portal_glyphs_hex").is_some());
         assert!(v.get("galaxy").is_some());
+    }
+
+    #[tokio::test]
+    async fn test_where_am_i_reports_physical_galaxy_independent_of_selection() {
+        use nms_core::player::PlayerState;
+        use nms_core::system::{Planet, System};
+
+        let model = test_model();
+        let a0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        {
+            let mut guard = model.write().await;
+            guard.insert_system(System::new(
+                a0,
+                Some("Origin-0".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Lush),
+                    None,
+                    false,
+                    Some("Leaf-0".into()),
+                    None,
+                )],
+            ));
+            guard.insert_system(System::new(
+                a9,
+                Some("Destination-9".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Toxic),
+                    None,
+                    false,
+                    Some("Leaf-9".into()),
+                    None,
+                )],
+            ));
+            guard.player_state = Some(PlayerState::new(a0, 0, None, None, 7, 8, 9));
+            guard.set_active_galaxy(9);
+        }
+        let tools = NmsTools::new(Arc::clone(&model));
+
+        let first = tools.call("where_am_i", json!({})).unwrap().await.unwrap();
+        let first_json: Value = serde_json::from_str(&extract_text(&first)).expect("valid JSON");
+        assert_eq!(first_json["system"], "Origin-0");
+        assert_eq!(first_json["galaxy"], "Euclid");
+        assert_eq!(first_json["planets_in_system"], 1);
+        assert_eq!(first_json["voxel_x"], 0);
+
+        {
+            let mut guard = model.write().await;
+            guard.apply_delta(&nms_core::SaveDelta {
+                player_moved: Some(nms_core::PlayerMoved { from: a0, to: a9 }),
+                ..nms_core::SaveDelta::empty()
+            });
+            guard.set_active_galaxy(0);
+        }
+        let physical_state = model.read().await.player_state.clone();
+        let selected = model.read().await.active_galaxy;
+        let second = tools.call("where_am_i", json!({})).unwrap().await.unwrap();
+        let second_json: Value = serde_json::from_str(&extract_text(&second)).expect("valid JSON");
+        assert_eq!(second_json["system"], "Destination-9");
+        assert_eq!(second_json["galaxy"], "Eissentam");
+        assert_eq!(second_json["planets_in_system"], 1);
+        {
+            let guard = model.read().await;
+            assert_eq!(guard.player_state, physical_state);
+            assert_eq!(guard.active_galaxy, selected);
+        }
+        {
+            let mut guard = model.write().await;
+            guard.apply_delta(&nms_core::SaveDelta {
+                player_moved: Some(nms_core::delta::PlayerMoved { from: a9, to: a0 }),
+                ..nms_core::SaveDelta::empty()
+            });
+            guard.set_active_galaxy(9);
+        }
+        let reverse_state = model.read().await.player_state.clone();
+        let reverse_selected = model.read().await.active_galaxy;
+        let reverse = tools.call("where_am_i", json!({})).unwrap().await.unwrap();
+        let reverse_json: Value =
+            serde_json::from_str(&extract_text(&reverse)).expect("valid JSON");
+        assert_eq!(reverse_json["system"], "Origin-0");
+        assert_eq!(reverse_json["galaxy"], "Euclid");
+        let guard = model.read().await;
+        assert_eq!(guard.player_state, reverse_state);
+        assert_eq!(guard.active_galaxy, reverse_selected);
+    }
+
+    #[tokio::test]
+    async fn test_where_am_i_without_player_keeps_existing_error() {
+        assert_eq!(
+            build_where_am_i_json(&GalaxyModel::new()).unwrap_err(),
+            "Player position not available"
+        );
+        let model = test_model();
+        model.write().await.player_state = None;
+        let tools = NmsTools::new(model);
+        let result = tools.call("where_am_i", json!({})).unwrap().await;
+        assert!(result.is_err());
     }
 
     #[tokio::test]
