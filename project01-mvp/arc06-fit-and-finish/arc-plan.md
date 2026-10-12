@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.29, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.30, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -246,3 +246,10 @@ Supersedes the earlier pending-cap disposition: the Operator explicitly approved
 ### Slice08 Iteration06 proposed return / independent CC handoff — 2026-10-11
 
 Sofie returned sourcef71d607e27e18d7266855a2708449f9d6b90c632 (direct parent0e1e8b4, graph query.rs test-only) and planningdb5416cfe3f683bbe28002f7af79f73fa610be63 (parent340c7c62108f7a422d959c3eb417db352a7b307c issuance; four evidence paths). Current assignment `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md` is executed/returned as proposed current corrections and now the independent CC review-only handoff. All nine categories pass682 focused/900 workspace; full matrix/canonical filtered radius/current evidence delivered. Six accepted rows retained, SR01/02/09 open; Sofie does not accept her own implementation. Historical missing evidence remains unwaived for independent review/explicit Operator disposition. No further correction automatically authorized. Preserve main/dependencies/Project02, existing parent counts and all subsequent lifecycle/save-field/closeout owners. Receipt-only followups to four existing evidence records may record these commits; no integration or child/parent closure.
+
+
+## Slice08 Iteration06 independent result and pending SR-09 decision — 2026-10-11
+
+Supersedes the earlier six-done/three-open handoff status: independent CC review e6bbfe53/receipt f8d31258 on source f71d607 accepted SR01/02 and retained SR03–08. Current disposition eight done, SR09 open; all required current evidence/gates independently reproduced (682 focused/900 workspace). Current assignment cc-prompt-iteration06.md has been executed/returned/reviewed; no further implementation pass authorized. Sofie reconciled the recorded review without rerunning or self-accepting code. Concrete bounded historical-evidence exception proposal is in existing Slice08 closing-report.md, with exact missing groups/unknown fields, current independent evidence/residual risk and conditional formal-close steps; proposal not approved. No ledger/reviewer verdict/acceptance contract changed. Slice/arc/project stay open; arc26/seven done/nineteen open, project25 open. Keep all issued prompts and historical reports, main/dependency pins and Project02. Original session/live/full-startup then save-field repair and remaining closeout owners/gates remain.
+
+Version history2026-10-11: routine child-review status/evidence synchronization and explicit pending-decision pointer; slice1.8, arc1.30, project1.21. Trigger: Slice08 independent CC review resolves two current native rows, while historical SR09 evidence remains unwaived. This versioning does not approve the proposed exception or authorize closure/integration.
