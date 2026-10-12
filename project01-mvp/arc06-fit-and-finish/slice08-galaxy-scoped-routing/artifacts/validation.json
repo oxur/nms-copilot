@@ -5551,7 +5551,7 @@
           "argv": [
             "python3",
             "-c",
-            "import json,sys,pathlib,glob\nplan=pathlib.Path(sys.argv[1]); rel=sys.argv[2]; dpath=plan/rel\nexecution=dpath/\"artifacts/execution.md\"; closing=dpath/\"closing-report.md\"; ledger=dpath/\"ledger.md\"; validation=dpath/\"artifacts/validation.json\"\nsource_head=\"edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\"; source_parent=\"21494b963a5ffbfc5b283c5865a06fa3da096335\"\nexec_add=\"\"\"\\n## Iteration03 corrective execution — all assigned gates passed; proposed done pending CDC\\n\\nAssignment: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md\\` (issued at planning commit \\`50eac5224f200c2d4fe1d6b535d21d3931869fbc\\`). This section corrects the Iteration02 interpretation above while preserving its original observation and stop history.\\n\\n**Correction and retraction.** The Iteration02 closed-route test passed the query helper unchanged. The helper set \\`warp_range: None\\`; \\`execute_route\\` applies \\`constrain_hops\\` only for \\`Some(warp_range)\\`. The observed four-hop A9/B9/C9/A9 result therefore represented an unconstrained return, not a production defect. CDC’s captured public probe independently confirmed the distinct \\`None\\` and \\`Some(400.0)\\` projections for both algorithms. Retract Iteration02’s claim of a production discrepancy; no production code change was made or authorized. The shared helper remains \\`None\\`. The closed-route callsite now constructs a query with \\`warp_range: Some(400.0)\\` and asserts that configuration.\\n\\nThe focused route oracle now proves both outcomes for nearest-neighbor and 2-opt: unconstrained return is the exact four-hop A9/B9/C9/A9 projection, and the 400 ly constrained return is the exact five-hop A9/B9/C9/B9/A9 projection with B as a waypoint. It aligns the player to galaxy 0 and inserts a colliding galaxy-0 system, while preserving the galaxy-9 A/B/C target fixture. It snapshots player position and active galaxy around the route calls. The foreign-target-before-truncation case explicitly sets \\`within_ly: Some(0.0)\\`; the 105-target test remains unconstrained with \\`warp_range: None\\` and no target limit. No production implementation, public API, fixture, cache schema, or error type changed.\\n\\n**Fresh ordered gates, all exit 0:** (1) \\`make format\\`; (2) \\`make lint\\`; (3) offline locked all-features tests for nms-graph, nms-query, nms-cli, nms-cache and nms-copilot — 680 passed across 19 test suites; (4) \\`make test\\` — 898 passed across 23 suites; (5) offline locked all-features workspace build; (6) graph/query/cache doctests — all three packages reported zero doctests; (7) normal docs for core/graph/query/cache — success with the existing nms-query \\`<label>\\` rustdoc warnings preserved; (8) strict nms-cache docs with \\`RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links\\`; (9) source and planning \\`git diff --check\\`. Complete stdout/stderr channels, hashes, lengths, exact environments, and attempts are retained in \\`artifacts/validation.json\\`.\\n\\nSource commit: \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\`, direct parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`, exactly four authorized source paths, additions only, required adjacent trailers verified. Its default sandbox index-lock failure (exit 128) and successful exact scoped retry are captured. Planning records remain an uncommitted four-file return for the separate planning commit.\\n\\nSR-08 remains CDC-accepted and done. SR-01–SR-07 and SR-09 remain open. This is CC proposed-done for CDC review, not slice/arc/project acceptance. Historical original diagnostic groups, Iteration01 groups, Iteration02 capture gaps and strict-environment omission remain intact. Iteration03 bootstrap and receipt-readback diagnostics and the transient inspection-receipt loss are separately disclosed in validation; no exception is adopted.\\n\"\"\";\nconst_add=\"\"\"\\n\\n## Iteration03 closeout candidate — proposed done pending CDC\\n\\nIteration03 corrected the test configuration that led to the Iteration02 false production-bug claim. The previous failure showed the unconstrained \\`None\\` behavior; it did not exercise the intended 400 ly constraint. The corrected tests explicitly distinguish \\`None\\` from \\`Some(400.0)\\` for both route algorithms, retain exact route projections and state snapshots, and make the foreign-radius control explicit. CDC’s independent public probe had already confirmed both literal outcomes.\\n\\nAll nine Iteration03 gates passed in the assigned order. The focused five-package all-features run passed 680 tests in 19 suites; full \\`make test\\` passed 898 tests in 23 suites. Offline locked build, selected doctests, normal docs, strict cache docs, and both diff checks passed. The normal docs retain existing nms-query unclosed-HTML warnings. Gate receipts and their complete channels are preserved in \\`artifacts/validation.json\\`.\\n\\nThe source return is \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\` (parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`). It changes exactly four test files and has the required adjacent trailers. The four planning records are being returned separately. No parent plan, CDC-owned review file, prompt, product code, cache schema, fixture, or accepted SR-08 behavior was changed.\\n\\n**Row disposition:** SR-08 remains accepted/done. SR-01–SR-07 and SR-09 remain open and proposed-open; this iteration does not close them. The slice remains pending independent CDC row-by-row review and any Operator disposition. No arc or project close is claimed.\\n\\n**Complete slice artifact inventory at closeout:** \\`slice-plan.md\\`; \\`cc-prompt.md\\`; \\`cc-prompt-iteration01.md\\`; \\`cc-prompt-iteration02.md\\`; \\`cc-prompt-iteration03.md\\`; \\`ledger.md\\`; \\`closing-report.md\\`; \\`cdc-verification.md\\`; \\`artifacts/author-probe.rs\\`; \\`artifacts/author-baseline.json\\`; \\`artifacts/cdc-review-receipts.json\\`; \\`artifacts/execution.md\\`; \\`artifacts/validation.json\\`. Iteration03 changed only execution, validation, closing report and the SR-06/SR-09 ledger notes; the other inventory items retain their prior bytes.\\n\\n### Bubble-up\\n\\n1. **Assigned behavior delivered?** Yes for the Iteration03 correction and gate set: the constrained and unconstrained route projections are separately configured and checked, and the accepted SR-08 behavior remains intact.\\n2. **Unforeseen scope, architecture, acceptance or evidence issue?** The Iteration02 discrepancy was a wrong test setup, not a product defect. The old false claim is explicitly retracted. Historical and Iteration03 capture diagnostics remain disclosed; the Iteration03 temporary \\`pwd\\` receipt was removed during wrapper-output cleanup before it was copied into the durable record, and that loss is disclosed.\\n3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.\\n\\nAll four assignment paths are retained as provenance: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\\`, \\`.../cc-prompt-iteration01.md\\`, \\`.../cc-prompt-iteration02.md\\`, and \\`.../cc-prompt-iteration03.md\\`.\\n\"\"\";\nif(!execution.read_text().includes(\"## Iteration03 corrective execution\")) execution.write_text(execution.read_text()+exec_add);\nif(!closing.read_text().includes(\"## Iteration03 closeout candidate\")) closing.write_text(closing.read_text()+const_add);\nlet lines=ledger.read_text().splitlines();\nfor(let i=0;i<lines.length;i++){\n if(lines[i].startsWith(\"| SR-06 |\")) lines[i]=lines[i].replace(/\\|([^|]*)\\|$/, (m,c)=>\"|\"+c+\" Iteration03 retracts the production-bug interpretation: the Iteration02 closed callsite used warp_range=None; corrected constrained and unconstrained literals pass both algorithms. See artifacts/validation.json iteration03.|\");\n if(lines[i].startsWith(\"| SR-09 |\")) lines[i]=lines[i].replace(/\\|([^|]*)\\|$/, (m,c)=>\"|\"+c+\" Iteration03: all nine ordered gates pass; four-path source commit edd66642 and separate planning return. New capture diagnostics remain disclosed; CDC review still open.|\");\n}\nledger.write_text(\"\\n\".join(lines)+\"\\n\");\nlet v=JSON.parse(validation.read_text()); let it=v.iteration03;\nit.source_commit={head:source_head,parent:source_parent,paths:[\"crates/nms-copilot/tests/route_cache_integration.rs\",\"crates/nms-graph/src/query.rs\",\"crates/nms-graph/src/route.rs\",\"crates/nms-query/src/route.rs\"],trailers:[\"Co-authored-by: Codex <noreply@openai.com>\",\"Co-authored-by: Billo AI <ai-engineering@billo.systems>\"]};\nit.planning_return_paths=[\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md\"];\nit.acceptance={SR08:\"done; previously CDC-accepted\",open_rows:[\"SR-01\",\"SR-02\",\"SR-03\",\"SR-04\",\"SR-05\",\"SR-06\",\"SR-07\",\"SR-09\"],slice:\"proposed-done pending CDC; not accepted\"};\nit.new_uncaptured_diagnostics=[\n \"Initial cwd/host/worktree and broad /private/tmp discovery shell command ran outside capture wrapper.\",\n \"python command was unavailable; the python3 helper --help probe had no spec and failed outside the capture wrapper.\",\n \"A brief direct receipt-existence diagnostic ran outside the capture wrapper.\",\n \"A failed CUA exec-isolate attempt used unavailable btoa and TextEncoder globals; no child shell command ran.\",\n \"A successful captured pwd receipt was written in the source checkout by the initial helper probe, then removed during cleanup; it only recorded the checkout path and is not available in validation.\",\n \"A generated capture spec was UTF-8-invalid due an ASCII-only base64 encoder; the wrapper rejected it before launching the planning update. No planning payload command ran.\"\n];\nit.status=\"proposed_done_pending_cdc\";\nlet recs=it.intake.captured_commands; let known=new Set(recs.map(x=>x.receipt_path));\nfor(const f of glob.glob(\"/private/tmp/s08-i03-*.json\")){\n try {const r=JSON.parse(pathlib.Path(f).read_text()); if(r && typeof r===\"object\" && \"exit_code\" in r && \"stdout\" in r && \"stderr\" in r && \"argv\" in r && !known.has(String(pathlib.Path(f).resolve()))){r.receipt_path=String(pathlib.Path(f).resolve());recs.push(r);known.add(r.receipt_path);}}\n catch(e){}\n}\nvalidation.write_text(JSON.stringify(v,null,2)+\"\\n\");\n",
+            "import json,sys,pathlib,glob\nplan=pathlib.Path(sys.argv[1]); rel=sys.argv[2]; dpath=plan/rel\nexecution=dpath/\"artifacts/execution.md\"; closing=dpath/\"closing-report.md\"; ledger=dpath/\"ledger.md\"; validation=dpath/\"artifacts/validation.json\"\nsource_head=\"edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\"; source_parent=\"21494b963a5ffbfc5b283c5865a06fa3da096335\"\nexec_add=\"\"\"\\n## Iteration03 corrective execution \u2014 all assigned gates passed; proposed done pending CDC\\n\\nAssignment: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md\\` (issued at planning commit \\`50eac5224f200c2d4fe1d6b535d21d3931869fbc\\`). This section corrects the Iteration02 interpretation above while preserving its original observation and stop history.\\n\\n**Correction and retraction.** The Iteration02 closed-route test passed the query helper unchanged. The helper set \\`warp_range: None\\`; \\`execute_route\\` applies \\`constrain_hops\\` only for \\`Some(warp_range)\\`. The observed four-hop A9/B9/C9/A9 result therefore represented an unconstrained return, not a production defect. CDC\u2019s captured public probe independently confirmed the distinct \\`None\\` and \\`Some(400.0)\\` projections for both algorithms. Retract Iteration02\u2019s claim of a production discrepancy; no production code change was made or authorized. The shared helper remains \\`None\\`. The closed-route callsite now constructs a query with \\`warp_range: Some(400.0)\\` and asserts that configuration.\\n\\nThe focused route oracle now proves both outcomes for nearest-neighbor and 2-opt: unconstrained return is the exact four-hop A9/B9/C9/A9 projection, and the 400 ly constrained return is the exact five-hop A9/B9/C9/B9/A9 projection with B as a waypoint. It aligns the player to galaxy 0 and inserts a colliding galaxy-0 system, while preserving the galaxy-9 A/B/C target fixture. It snapshots player position and active galaxy around the route calls. The foreign-target-before-truncation case explicitly sets \\`within_ly: Some(0.0)\\`; the 105-target test remains unconstrained with \\`warp_range: None\\` and no target limit. No production implementation, public API, fixture, cache schema, or error type changed.\\n\\n**Fresh ordered gates, all exit 0:** (1) \\`make format\\`; (2) \\`make lint\\`; (3) offline locked all-features tests for nms-graph, nms-query, nms-cli, nms-cache and nms-copilot \u2014 680 passed across 19 test suites; (4) \\`make test\\` \u2014 898 passed across 23 suites; (5) offline locked all-features workspace build; (6) graph/query/cache doctests \u2014 all three packages reported zero doctests; (7) normal docs for core/graph/query/cache \u2014 success with the existing nms-query \\`<label>\\` rustdoc warnings preserved; (8) strict nms-cache docs with \\`RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links\\`; (9) source and planning \\`git diff --check\\`. Complete stdout/stderr channels, hashes, lengths, exact environments, and attempts are retained in \\`artifacts/validation.json\\`.\\n\\nSource commit: \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\`, direct parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`, exactly four authorized source paths, additions only, required adjacent trailers verified. Its default sandbox index-lock failure (exit 128) and successful exact scoped retry are captured. Planning records remain an uncommitted four-file return for the separate planning commit.\\n\\nSR-08 remains CDC-accepted and done. SR-01\u2013SR-07 and SR-09 remain open. This is CC proposed-done for CDC review, not slice/arc/project acceptance. Historical original diagnostic groups, Iteration01 groups, Iteration02 capture gaps and strict-environment omission remain intact. Iteration03 bootstrap and receipt-readback diagnostics and the transient inspection-receipt loss are separately disclosed in validation; no exception is adopted.\\n\"\"\";\nconst_add=\"\"\"\\n\\n## Iteration03 closeout candidate \u2014 proposed done pending CDC\\n\\nIteration03 corrected the test configuration that led to the Iteration02 false production-bug claim. The previous failure showed the unconstrained \\`None\\` behavior; it did not exercise the intended 400 ly constraint. The corrected tests explicitly distinguish \\`None\\` from \\`Some(400.0)\\` for both route algorithms, retain exact route projections and state snapshots, and make the foreign-radius control explicit. CDC\u2019s independent public probe had already confirmed both literal outcomes.\\n\\nAll nine Iteration03 gates passed in the assigned order. The focused five-package all-features run passed 680 tests in 19 suites; full \\`make test\\` passed 898 tests in 23 suites. Offline locked build, selected doctests, normal docs, strict cache docs, and both diff checks passed. The normal docs retain existing nms-query unclosed-HTML warnings. Gate receipts and their complete channels are preserved in \\`artifacts/validation.json\\`.\\n\\nThe source return is \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\` (parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`). It changes exactly four test files and has the required adjacent trailers. The four planning records are being returned separately. No parent plan, CDC-owned review file, prompt, product code, cache schema, fixture, or accepted SR-08 behavior was changed.\\n\\n**Row disposition:** SR-08 remains accepted/done. SR-01\u2013SR-07 and SR-09 remain open and proposed-open; this iteration does not close them. The slice remains pending independent CDC row-by-row review and any Operator disposition. No arc or project close is claimed.\\n\\n**Complete slice artifact inventory at closeout:** \\`slice-plan.md\\`; \\`cc-prompt.md\\`; \\`cc-prompt-iteration01.md\\`; \\`cc-prompt-iteration02.md\\`; \\`cc-prompt-iteration03.md\\`; \\`ledger.md\\`; \\`closing-report.md\\`; \\`cdc-verification.md\\`; \\`artifacts/author-probe.rs\\`; \\`artifacts/author-baseline.json\\`; \\`artifacts/cdc-review-receipts.json\\`; \\`artifacts/execution.md\\`; \\`artifacts/validation.json\\`. Iteration03 changed only execution, validation, closing report and the SR-06/SR-09 ledger notes; the other inventory items retain their prior bytes.\\n\\n### Bubble-up\\n\\n1. **Assigned behavior delivered?** Yes for the Iteration03 correction and gate set: the constrained and unconstrained route projections are separately configured and checked, and the accepted SR-08 behavior remains intact.\\n2. **Unforeseen scope, architecture, acceptance or evidence issue?** The Iteration02 discrepancy was a wrong test setup, not a product defect. The old false claim is explicitly retracted. Historical and Iteration03 capture diagnostics remain disclosed; the Iteration03 temporary \\`pwd\\` receipt was removed during wrapper-output cleanup before it was copied into the durable record, and that loss is disclosed.\\n3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.\\n\\nAll four assignment paths are retained as provenance: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\\`, \\`.../cc-prompt-iteration01.md\\`, \\`.../cc-prompt-iteration02.md\\`, and \\`.../cc-prompt-iteration03.md\\`.\\n\"\"\";\nif(!execution.read_text().includes(\"## Iteration03 corrective execution\")) execution.write_text(execution.read_text()+exec_add);\nif(!closing.read_text().includes(\"## Iteration03 closeout candidate\")) closing.write_text(closing.read_text()+const_add);\nlet lines=ledger.read_text().splitlines();\nfor(let i=0;i<lines.length;i++){\n if(lines[i].startsWith(\"| SR-06 |\")) lines[i]=lines[i].replace(/\\|([^|]*)\\|$/, (m,c)=>\"|\"+c+\" Iteration03 retracts the production-bug interpretation: the Iteration02 closed callsite used warp_range=None; corrected constrained and unconstrained literals pass both algorithms. See artifacts/validation.json iteration03.|\");\n if(lines[i].startsWith(\"| SR-09 |\")) lines[i]=lines[i].replace(/\\|([^|]*)\\|$/, (m,c)=>\"|\"+c+\" Iteration03: all nine ordered gates pass; four-path source commit edd66642 and separate planning return. New capture diagnostics remain disclosed; CDC review still open.|\");\n}\nledger.write_text(\"\\n\".join(lines)+\"\\n\");\nlet v=JSON.parse(validation.read_text()); let it=v.iteration03;\nit.source_commit={head:source_head,parent:source_parent,paths:[\"crates/nms-copilot/tests/route_cache_integration.rs\",\"crates/nms-graph/src/query.rs\",\"crates/nms-graph/src/route.rs\",\"crates/nms-query/src/route.rs\"],trailers:[\"Co-authored-by: Codex <noreply@openai.com>\",\"Co-authored-by: Billo AI <ai-engineering@billo.systems>\"]};\nit.planning_return_paths=[\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md\"];\nit.acceptance={SR08:\"done; previously CDC-accepted\",open_rows:[\"SR-01\",\"SR-02\",\"SR-03\",\"SR-04\",\"SR-05\",\"SR-06\",\"SR-07\",\"SR-09\"],slice:\"proposed-done pending CDC; not accepted\"};\nit.new_uncaptured_diagnostics=[\n \"Initial cwd/host/worktree and broad /private/tmp discovery shell command ran outside capture wrapper.\",\n \"python command was unavailable; the python3 helper --help probe had no spec and failed outside the capture wrapper.\",\n \"A brief direct receipt-existence diagnostic ran outside the capture wrapper.\",\n \"A failed CUA exec-isolate attempt used unavailable btoa and TextEncoder globals; no child shell command ran.\",\n \"A successful captured pwd receipt was written in the source checkout by the initial helper probe, then removed during cleanup; it only recorded the checkout path and is not available in validation.\",\n \"A generated capture spec was UTF-8-invalid due an ASCII-only base64 encoder; the wrapper rejected it before launching the planning update. No planning payload command ran.\"\n];\nit.status=\"proposed_done_pending_cdc\";\nlet recs=it.intake.captured_commands; let known=new Set(recs.map(x=>x.receipt_path));\nfor(const f of glob.glob(\"/private/tmp/s08-i03-*.json\")){\n try {const r=JSON.parse(pathlib.Path(f).read_text()); if(r && typeof r===\"object\" && \"exit_code\" in r && \"stdout\" in r && \"stderr\" in r && \"argv\" in r && !known.has(String(pathlib.Path(f).resolve()))){r.receipt_path=String(pathlib.Path(f).resolve());recs.push(r);known.add(r.receipt_path);}}\n catch(e){}\n}\nvalidation.write_text(JSON.stringify(v,null,2)+\"\\n\");\n",
             "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
             "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing"
           ],
@@ -5830,7 +5830,7 @@
           "argv": [
             "python3",
             "-c",
-            "import json,sys,pathlib,glob,re\nplan=pathlib.Path(sys.argv[1]); dpath=plan/sys.argv[2]\nexecution=dpath/\"artifacts/execution.md\"; closing=dpath/\"closing-report.md\"; ledger=dpath/\"ledger.md\"; validation=dpath/\"artifacts/validation.json\"\nsource_head=\"edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\"; source_parent=\"21494b963a5ffbfc5b283c5865a06fa3da096335\"\nexec_add=\"\"\"\\n## Iteration03 corrective execution — all assigned gates passed; proposed done pending CDC\\n\\nAssignment: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md\\` (issued at planning commit \\`50eac5224f200c2d4fe1d6b535d21d3931869fbc\\`). This section corrects the Iteration02 interpretation above while preserving its original observation and stop history.\\n\\n**Correction and retraction.** The Iteration02 closed-route test passed the query helper unchanged. The helper set \\`warp_range: None\\`; \\`execute_route\\` applies \\`constrain_hops\\` only for \\`Some(warp_range)\\`. The observed four-hop A9/B9/C9/A9 result therefore represented an unconstrained return, not a production defect. CDC’s captured public probe independently confirmed the distinct \\`None\\` and \\`Some(400.0)\\` projections for both algorithms. Retract Iteration02’s claim of a production discrepancy; no production code change was made or authorized. The shared helper remains \\`None\\`. The closed-route callsite now constructs a query with \\`warp_range: Some(400.0)\\` and asserts that configuration.\\n\\nThe focused route oracle now proves both outcomes for nearest-neighbor and 2-opt: unconstrained return is the exact four-hop A9/B9/C9/A9 projection, and the 400 ly constrained return is the exact five-hop A9/B9/C9/B9/A9 projection with B as a waypoint. It aligns the player to galaxy 0 and inserts a colliding galaxy-0 system, while preserving the galaxy-9 A/B/C target fixture. It snapshots player position and active galaxy around the route calls. The foreign-target-before-truncation case explicitly sets \\`within_ly: Some(0.0)\\`; the 105-target test remains unconstrained with \\`warp_range: None\\` and no target limit. No production implementation, public API, fixture, cache schema, or error type changed.\\n\\n**Fresh ordered gates, all exit 0:** (1) \\`make format\\`; (2) \\`make lint\\`; (3) offline locked all-features tests for nms-graph, nms-query, nms-cli, nms-cache and nms-copilot — 680 passed across 19 test suites; (4) \\`make test\\` — 898 passed across 23 suites; (5) offline locked all-features workspace build; (6) graph/query/cache doctests — all three packages reported zero doctests; (7) normal docs for core/graph/query/cache — success with the existing nms-query \\`<label>\\` rustdoc warnings preserved; (8) strict nms-cache docs with \\`RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links\\`; (9) source and planning \\`git diff --check\\`. Complete stdout/stderr channels, hashes, lengths, exact environments, and attempts are retained in \\`artifacts/validation.json\\`.\\n\\nSource commit: \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\`, direct parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`, exactly four authorized source paths, additions only, required adjacent trailers verified. Its default sandbox index-lock failure (exit 128) and successful exact scoped retry are captured. Planning records remain an uncommitted four-file return for the separate planning commit.\\n\\nSR-08 remains CDC-accepted and done. SR-01–SR-07 and SR-09 remain open. This is CC proposed-done for CDC review, not slice/arc/project acceptance. Historical original diagnostic groups, Iteration01 groups, Iteration02 capture gaps and strict-environment omission remain intact. Iteration03 bootstrap and receipt-readback diagnostics and the transient inspection-receipt loss are separately disclosed in validation; no exception is adopted.\\n\"\"\";\nclose_add=\"\"\"\\n\\n## Iteration03 closeout candidate — proposed done pending CDC\\n\\nIteration03 corrected the test configuration that led to the Iteration02 false production-bug claim. The previous failure showed the unconstrained \\`None\\` behavior; it did not exercise the intended 400 ly constraint. The corrected tests explicitly distinguish \\`None\\` from \\`Some(400.0)\\` for both route algorithms, retain exact route projections and state snapshots, and make the foreign-radius control explicit. CDC’s independent public probe had already confirmed both literal outcomes.\\n\\nAll nine Iteration03 gates passed in the assigned order. The focused five-package all-features run passed 680 tests in 19 suites; full \\`make test\\` passed 898 tests in 23 suites. Offline locked build, selected doctests, normal docs, strict cache docs, and both diff checks passed. The normal docs retain existing nms-query unclosed-HTML warnings. Gate receipts and their complete channels are preserved in \\`artifacts/validation.json\\`.\\n\\nThe source return is \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\` (parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`). It changes exactly four test files and has the required adjacent trailers. The four planning records are being returned separately. No parent plan, CDC-owned review file, prompt, product code, cache schema, fixture, or accepted SR-08 behavior was changed.\\n\\n**Row disposition:** SR-08 remains accepted/done. SR-01–SR-07 and SR-09 remain open and proposed-open; this iteration does not close them. The slice remains pending independent CDC row-by-row review and any Operator disposition. No arc or project close is claimed.\\n\\n**Complete slice artifact inventory at closeout:** \\`slice-plan.md\\`; \\`cc-prompt.md\\`; \\`cc-prompt-iteration01.md\\`; \\`cc-prompt-iteration02.md\\`; \\`cc-prompt-iteration03.md\\`; \\`ledger.md\\`; \\`closing-report.md\\`; \\`cdc-verification.md\\`; \\`artifacts/author-probe.rs\\`; \\`artifacts/author-baseline.json\\`; \\`artifacts/cdc-review-receipts.json\\`; \\`artifacts/execution.md\\`; \\`artifacts/validation.json\\`. Iteration03 changed only execution, validation, closing report and the SR-06/SR-09 ledger notes; the other inventory items retain their prior bytes.\\n\\n### Bubble-up\\n\\n1. **Assigned behavior delivered?** Yes for the Iteration03 correction and gate set: the constrained and unconstrained route projections are separately configured and checked, and the accepted SR-08 behavior remains intact.\\n2. **Unforeseen scope, architecture, acceptance or evidence issue?** The Iteration02 discrepancy was a wrong test setup, not a product defect. The old false claim is explicitly retracted. Historical and Iteration03 capture diagnostics remain disclosed; the Iteration03 temporary \\`pwd\\` receipt was removed during wrapper-output cleanup before it was copied into the durable record, and that loss is disclosed.\\n3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.\\n\\nAll four assignment paths are retained as provenance: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\\`, \\`.../cc-prompt-iteration01.md\\`, \\`.../cc-prompt-iteration02.md\\`, and \\`.../cc-prompt-iteration03.md\\`.\\n\"\"\";\nif \"## Iteration03 corrective execution\" not in execution.read_text(): execution.write_text(execution.read_text()+exec_add)\nif \"## Iteration03 closeout candidate\" not in closing.read_text(): closing.write_text(closing.read_text()+close_add)\nrows=ledger.read_text().splitlines()\nfor i,row in enumerate(rows):\n    if row.startswith(\"| SR-06 |\"):\n        rows[i]=re.sub(r\"\\|([^|]*)\\|$\",lambda m:\"|\"+m.group(1)+\" Iteration03 retracts the production-bug interpretation: the Iteration02 closed callsite used warp_range=None; corrected constrained and unconstrained literals pass both algorithms. See artifacts/validation.json iteration03.|\",row)\n    if row.startswith(\"| SR-09 |\"):\n        rows[i]=re.sub(r\"\\|([^|]*)\\|$\",lambda m:\"|\"+m.group(1)+\" Iteration03: all nine ordered gates pass; four-path source commit edd66642 and separate planning return. New capture diagnostics remain disclosed; CDC review still open.|\",row)\nledger.write_text(\"\\n\".join(rows)+\"\\n\")\nv=json.loads(validation.read_text()); it=v[\"iteration03\"]\nit[\"source_commit\"]={\"head\":source_head,\"parent\":source_parent,\"paths\":[\"crates/nms-copilot/tests/route_cache_integration.rs\",\"crates/nms-graph/src/query.rs\",\"crates/nms-graph/src/route.rs\",\"crates/nms-query/src/route.rs\"],\"trailers\":[\"Co-authored-by: Codex <noreply@openai.com>\",\"Co-authored-by: Billo AI <ai-engineering@billo.systems>\"]}\nit[\"planning_return_paths\"]=[\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md\"]\nit[\"acceptance\"]={\"SR08\":\"done; previously CDC-accepted\",\"open_rows\":[\"SR-01\",\"SR-02\",\"SR-03\",\"SR-04\",\"SR-05\",\"SR-06\",\"SR-07\",\"SR-09\"],\"slice\":\"proposed-done pending CDC; not accepted\"}\nit[\"new_uncaptured_diagnostics\"]=[\n \"Initial cwd/host/worktree and broad /private/tmp discovery shell command ran outside capture wrapper.\",\n \"python command was unavailable; the python3 helper --help probe had no spec and failed outside the capture wrapper.\",\n \"A brief direct receipt-existence diagnostic ran outside the capture wrapper.\",\n \"A failed CUA exec-isolate attempt used unavailable btoa and TextEncoder globals; no child shell command ran.\",\n \"A successful captured pwd receipt was written in the source checkout by the initial helper probe, then removed during cleanup; it only recorded the checkout path and is not available in validation.\",\n \"A generated capture spec was UTF-8-invalid due an ASCII-only base64 encoder; the wrapper rejected it before launching the planning update. No planning payload command ran.\",\n \"The first planning-record updater failed with Python SyntaxError because it contained JavaScript conditional syntax; the wrapper captured the failure and no planning mutation ran.\"\n]\nit[\"status\"]=\"proposed_done_pending_cdc\"\nrecs=it[\"intake\"][\"captured_commands\"]; known={x.get(\"receipt_path\") for x in recs}\nfor f in glob.glob(\"/private/tmp/s08-i03-*.json\"):\n    try:\n        r=json.loads(pathlib.Path(f).read_text())\n        q=str(pathlib.Path(f).resolve())\n        if isinstance(r,dict) and \"exit_code\" in r and \"stdout\" in r and \"stderr\" in r and \"argv\" in r and q not in known:\n            r[\"receipt_path\"]=q; recs.append(r); known.add(q)\n    except Exception:\n        pass\nvalidation.write_text(json.dumps(v,indent=2)+\"\\n\")\n",
+            "import json,sys,pathlib,glob,re\nplan=pathlib.Path(sys.argv[1]); dpath=plan/sys.argv[2]\nexecution=dpath/\"artifacts/execution.md\"; closing=dpath/\"closing-report.md\"; ledger=dpath/\"ledger.md\"; validation=dpath/\"artifacts/validation.json\"\nsource_head=\"edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\"; source_parent=\"21494b963a5ffbfc5b283c5865a06fa3da096335\"\nexec_add=\"\"\"\\n## Iteration03 corrective execution \u2014 all assigned gates passed; proposed done pending CDC\\n\\nAssignment: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md\\` (issued at planning commit \\`50eac5224f200c2d4fe1d6b535d21d3931869fbc\\`). This section corrects the Iteration02 interpretation above while preserving its original observation and stop history.\\n\\n**Correction and retraction.** The Iteration02 closed-route test passed the query helper unchanged. The helper set \\`warp_range: None\\`; \\`execute_route\\` applies \\`constrain_hops\\` only for \\`Some(warp_range)\\`. The observed four-hop A9/B9/C9/A9 result therefore represented an unconstrained return, not a production defect. CDC\u2019s captured public probe independently confirmed the distinct \\`None\\` and \\`Some(400.0)\\` projections for both algorithms. Retract Iteration02\u2019s claim of a production discrepancy; no production code change was made or authorized. The shared helper remains \\`None\\`. The closed-route callsite now constructs a query with \\`warp_range: Some(400.0)\\` and asserts that configuration.\\n\\nThe focused route oracle now proves both outcomes for nearest-neighbor and 2-opt: unconstrained return is the exact four-hop A9/B9/C9/A9 projection, and the 400 ly constrained return is the exact five-hop A9/B9/C9/B9/A9 projection with B as a waypoint. It aligns the player to galaxy 0 and inserts a colliding galaxy-0 system, while preserving the galaxy-9 A/B/C target fixture. It snapshots player position and active galaxy around the route calls. The foreign-target-before-truncation case explicitly sets \\`within_ly: Some(0.0)\\`; the 105-target test remains unconstrained with \\`warp_range: None\\` and no target limit. No production implementation, public API, fixture, cache schema, or error type changed.\\n\\n**Fresh ordered gates, all exit 0:** (1) \\`make format\\`; (2) \\`make lint\\`; (3) offline locked all-features tests for nms-graph, nms-query, nms-cli, nms-cache and nms-copilot \u2014 680 passed across 19 test suites; (4) \\`make test\\` \u2014 898 passed across 23 suites; (5) offline locked all-features workspace build; (6) graph/query/cache doctests \u2014 all three packages reported zero doctests; (7) normal docs for core/graph/query/cache \u2014 success with the existing nms-query \\`<label>\\` rustdoc warnings preserved; (8) strict nms-cache docs with \\`RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links\\`; (9) source and planning \\`git diff --check\\`. Complete stdout/stderr channels, hashes, lengths, exact environments, and attempts are retained in \\`artifacts/validation.json\\`.\\n\\nSource commit: \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\`, direct parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`, exactly four authorized source paths, additions only, required adjacent trailers verified. Its default sandbox index-lock failure (exit 128) and successful exact scoped retry are captured. Planning records remain an uncommitted four-file return for the separate planning commit.\\n\\nSR-08 remains CDC-accepted and done. SR-01\u2013SR-07 and SR-09 remain open. This is CC proposed-done for CDC review, not slice/arc/project acceptance. Historical original diagnostic groups, Iteration01 groups, Iteration02 capture gaps and strict-environment omission remain intact. Iteration03 bootstrap and receipt-readback diagnostics and the transient inspection-receipt loss are separately disclosed in validation; no exception is adopted.\\n\"\"\";\nclose_add=\"\"\"\\n\\n## Iteration03 closeout candidate \u2014 proposed done pending CDC\\n\\nIteration03 corrected the test configuration that led to the Iteration02 false production-bug claim. The previous failure showed the unconstrained \\`None\\` behavior; it did not exercise the intended 400 ly constraint. The corrected tests explicitly distinguish \\`None\\` from \\`Some(400.0)\\` for both route algorithms, retain exact route projections and state snapshots, and make the foreign-radius control explicit. CDC\u2019s independent public probe had already confirmed both literal outcomes.\\n\\nAll nine Iteration03 gates passed in the assigned order. The focused five-package all-features run passed 680 tests in 19 suites; full \\`make test\\` passed 898 tests in 23 suites. Offline locked build, selected doctests, normal docs, strict cache docs, and both diff checks passed. The normal docs retain existing nms-query unclosed-HTML warnings. Gate receipts and their complete channels are preserved in \\`artifacts/validation.json\\`.\\n\\nThe source return is \\`edd66642c051c04bc6ccdf1bd3b7d20f74a0f816\\` (parent \\`21494b963a5ffbfc5b283c5865a06fa3da096335\\`). It changes exactly four test files and has the required adjacent trailers. The four planning records are being returned separately. No parent plan, CDC-owned review file, prompt, product code, cache schema, fixture, or accepted SR-08 behavior was changed.\\n\\n**Row disposition:** SR-08 remains accepted/done. SR-01\u2013SR-07 and SR-09 remain open and proposed-open; this iteration does not close them. The slice remains pending independent CDC row-by-row review and any Operator disposition. No arc or project close is claimed.\\n\\n**Complete slice artifact inventory at closeout:** \\`slice-plan.md\\`; \\`cc-prompt.md\\`; \\`cc-prompt-iteration01.md\\`; \\`cc-prompt-iteration02.md\\`; \\`cc-prompt-iteration03.md\\`; \\`ledger.md\\`; \\`closing-report.md\\`; \\`cdc-verification.md\\`; \\`artifacts/author-probe.rs\\`; \\`artifacts/author-baseline.json\\`; \\`artifacts/cdc-review-receipts.json\\`; \\`artifacts/execution.md\\`; \\`artifacts/validation.json\\`. Iteration03 changed only execution, validation, closing report and the SR-06/SR-09 ledger notes; the other inventory items retain their prior bytes.\\n\\n### Bubble-up\\n\\n1. **Assigned behavior delivered?** Yes for the Iteration03 correction and gate set: the constrained and unconstrained route projections are separately configured and checked, and the accepted SR-08 behavior remains intact.\\n2. **Unforeseen scope, architecture, acceptance or evidence issue?** The Iteration02 discrepancy was a wrong test setup, not a product defect. The old false claim is explicitly retracted. Historical and Iteration03 capture diagnostics remain disclosed; the Iteration03 temporary \\`pwd\\` receipt was removed during wrapper-output cleanup before it was copied into the durable record, and that loss is disclosed.\\n3. **Parent-plan change and owner?** None proposed. CDC owns the independent evidence review and row disposition. The Operator retains scope and acceptance authority. No plan-level status change is implied by this CC return.\\n\\nAll four assignment paths are retained as provenance: \\`arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md\\`, \\`.../cc-prompt-iteration01.md\\`, \\`.../cc-prompt-iteration02.md\\`, and \\`.../cc-prompt-iteration03.md\\`.\\n\"\"\";\nif \"## Iteration03 corrective execution\" not in execution.read_text(): execution.write_text(execution.read_text()+exec_add)\nif \"## Iteration03 closeout candidate\" not in closing.read_text(): closing.write_text(closing.read_text()+close_add)\nrows=ledger.read_text().splitlines()\nfor i,row in enumerate(rows):\n    if row.startswith(\"| SR-06 |\"):\n        rows[i]=re.sub(r\"\\|([^|]*)\\|$\",lambda m:\"|\"+m.group(1)+\" Iteration03 retracts the production-bug interpretation: the Iteration02 closed callsite used warp_range=None; corrected constrained and unconstrained literals pass both algorithms. See artifacts/validation.json iteration03.|\",row)\n    if row.startswith(\"| SR-09 |\"):\n        rows[i]=re.sub(r\"\\|([^|]*)\\|$\",lambda m:\"|\"+m.group(1)+\" Iteration03: all nine ordered gates pass; four-path source commit edd66642 and separate planning return. New capture diagnostics remain disclosed; CDC review still open.|\",row)\nledger.write_text(\"\\n\".join(rows)+\"\\n\")\nv=json.loads(validation.read_text()); it=v[\"iteration03\"]\nit[\"source_commit\"]={\"head\":source_head,\"parent\":source_parent,\"paths\":[\"crates/nms-copilot/tests/route_cache_integration.rs\",\"crates/nms-graph/src/query.rs\",\"crates/nms-graph/src/route.rs\",\"crates/nms-query/src/route.rs\"],\"trailers\":[\"Co-authored-by: Codex <noreply@openai.com>\",\"Co-authored-by: Billo AI <ai-engineering@billo.systems>\"]}\nit[\"planning_return_paths\"]=[\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md\",\"project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md\"]\nit[\"acceptance\"]={\"SR08\":\"done; previously CDC-accepted\",\"open_rows\":[\"SR-01\",\"SR-02\",\"SR-03\",\"SR-04\",\"SR-05\",\"SR-06\",\"SR-07\",\"SR-09\"],\"slice\":\"proposed-done pending CDC; not accepted\"}\nit[\"new_uncaptured_diagnostics\"]=[\n \"Initial cwd/host/worktree and broad /private/tmp discovery shell command ran outside capture wrapper.\",\n \"python command was unavailable; the python3 helper --help probe had no spec and failed outside the capture wrapper.\",\n \"A brief direct receipt-existence diagnostic ran outside the capture wrapper.\",\n \"A failed CUA exec-isolate attempt used unavailable btoa and TextEncoder globals; no child shell command ran.\",\n \"A successful captured pwd receipt was written in the source checkout by the initial helper probe, then removed during cleanup; it only recorded the checkout path and is not available in validation.\",\n \"A generated capture spec was UTF-8-invalid due an ASCII-only base64 encoder; the wrapper rejected it before launching the planning update. No planning payload command ran.\",\n \"The first planning-record updater failed with Python SyntaxError because it contained JavaScript conditional syntax; the wrapper captured the failure and no planning mutation ran.\"\n]\nit[\"status\"]=\"proposed_done_pending_cdc\"\nrecs=it[\"intake\"][\"captured_commands\"]; known={x.get(\"receipt_path\") for x in recs}\nfor f in glob.glob(\"/private/tmp/s08-i03-*.json\"):\n    try:\n        r=json.loads(pathlib.Path(f).read_text())\n        q=str(pathlib.Path(f).resolve())\n        if isinstance(r,dict) and \"exit_code\" in r and \"stdout\" in r and \"stderr\" in r and \"argv\" in r and q not in known:\n            r[\"receipt_path\"]=q; recs.append(r); known.add(q)\n    except Exception:\n        pass\nvalidation.write_text(json.dumps(v,indent=2)+\"\\n\")\n",
             "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
             "project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing"
           ],
@@ -10240,9 +10240,9 @@
         "name": "s08-i04-gate07-doc-build",
         "status": "passed",
         "warning_lines": [
-          "warning: unresolved link to `D²`",
+          "warning: unresolved link to `D\u00b2`",
           "warning: unresolved link to `D`",
-          "warning: unresolved link to `D²`",
+          "warning: unresolved link to `D\u00b2`",
           "warning: unresolved link to `0`",
           "warning: `nms-core` (lib doc) generated 4 warnings",
           "warning: unresolved link to `0`",
@@ -14941,5 +14941,385 @@
       "checked_after_validation_followup_diffcheck": true,
       "includes_postcommit_receipts": true
     }
+  },
+  "iteration06": {
+    "role": "Sofie implementation/self-check; separate CC independent review pending",
+    "authorization": [
+      "Operator authorized one additional bounded pass beyond five-refinement cap.",
+      "Operator selected Sofie implementation followed by independent CC review: perfect \u2014 let us do that."
+    ],
+    "intake": {
+      "date": "2026-10-11",
+      "doer": "Sofie, previously CDC reviewer; this pass is implementation/self-check only",
+      "reviewer": "Separate CC context through Operator",
+      "authorization": [
+        "Operator authorized one additional bounded pass beyond five-refinement cap.",
+        "Operator selected Sofie implementation followed by independent CC review: perfect \u2014 let us do that."
+      ],
+      "pins": {
+        "/Users/oubiwann/lab/oxur/nms-copilot": {
+          "head": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+          "status": ""
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning": {
+          "head": "23079309da08ed6908c7eb703021111a3ee28b71",
+          "status": "?? project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md\n"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing": {
+          "head": "0e1e8b4239881a378bc8fb928ef25741c228e171",
+          "status": ""
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility": {
+          "head": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+          "status": ""
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity": {
+          "head": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+          "status": ""
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries": {
+          "head": "7118a486ea43a776aa2451ec0807d43384fb954f",
+          "status": ""
+        }
+      },
+      "files": {
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/execution.md": {
+          "bytes": 72780,
+          "sha256": "5d1e05b7db40ab12c9d9eae10a7d7302de42ae2cfcb7ddcd2d9de77744ceff11"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/validation.json": {
+          "bytes": 11035170,
+          "sha256": "456163b452010ec4b37a1d0d478be9ec1a0407ebf5ed03bf0b7f2ec1278b81e4"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/closing-report.md": {
+          "bytes": 38809,
+          "sha256": "cc5d614bbe1607a0f9acb8c53e13fe9045c811d0374924f9ba209600ad510544"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/ledger.md": {
+          "bytes": 7524,
+          "sha256": "f50ce6371eada51ec3054f3c35de78561680b5cb2df1cb0d0590879098aaaf4a"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/cdc-review-receipts.json": {
+          "bytes": 7468437,
+          "sha256": "e79cc7692b699f878b1ca60da00ac460a211c2e1cb22ea3ba8c55de71956daec"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/author-baseline.json": {
+          "bytes": 4037,
+          "sha256": "ef6961ce2bd169bc9b3d36d2403d0ef70bd86f9473c02698bdfc5465858b60dc"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/artifacts/author-probe.rs": {
+          "bytes": 1895,
+          "sha256": "e549044713f3a8a062928fb1ec4f0938596ce76df24dfae21c7687123cd67972"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt.md": {
+          "bytes": 32591,
+          "sha256": "de266d7f8b8e3ec7933a295776a49938a66b2a0b904af6cf4b0da93040c6b0d2"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration01.md": {
+          "bytes": 20184,
+          "sha256": "786e233e0cb3b0a6eb487a94b00cad01c8a6e8e3e0b311106420fa32944458c5"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration02.md": {
+          "bytes": 21334,
+          "sha256": "5b68da9ffcadee529ff9668531a5b8f318ce928c4c3f7ea526e428099b0024d2"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration03.md": {
+          "bytes": 11608,
+          "sha256": "1f099d360c964463ea9b61812e06b318e7ffb9f8e8c6e12d3738817c449b3a6b"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration04.md": {
+          "bytes": 19788,
+          "sha256": "0d84b0714a76c59ebb90d0c323ffad498e43a56512087066227acf03b8f728ba"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md": {
+          "bytes": 24538,
+          "sha256": "5e0077c515cbd0f2ae0993be669643f776136f8d18bdcce0a333c53cf206c8e9"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing/crates/nms-graph/src/query.rs": {
+          "bytes": 62215,
+          "sha256": "896ebbdaca066f7fc5cdb15d0482b5f45908c6467382259aa02673e234f2efa9"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing/crates/nms-query/src/route.rs": {
+          "bytes": 51371,
+          "sha256": "7b51e9607a3cfe45ced385b4ea137dfe4594df5f19f36e167008c3963e7cf3af"
+        },
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing/crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv": {
+          "bytes": 360,
+          "sha256": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7"
+        }
+      },
+      "channels": {
+        "count": 804,
+        "errors": []
+      },
+      "stable_iteration05_links": [
+        {
+          "name": "gate01-make-format",
+          "receipt": "iteration05.attempts[0]"
+        },
+        {
+          "name": "gate02-make-lint",
+          "receipt": "iteration05.attempts[1]"
+        },
+        {
+          "name": "gate01-make-format-retry1",
+          "receipt": "iteration05.attempts[2]"
+        },
+        {
+          "name": "gate02-make-lint-retry1",
+          "receipt": "iteration05.attempts[3]"
+        },
+        {
+          "name": "gate03-focused-tests",
+          "receipt": "iteration05.attempts[4]"
+        },
+        {
+          "name": "gate04-make-test",
+          "receipt": "iteration05.attempts[5]"
+        },
+        {
+          "name": "gate05-workspace-build",
+          "receipt": "iteration05.attempts[6]"
+        },
+        {
+          "name": "gate06-selected-doctests",
+          "receipt": "iteration05.attempts[7]"
+        },
+        {
+          "name": "gate07-doc-build",
+          "receipt": "iteration05.attempts[8]"
+        },
+        {
+          "name": "gate08-strict-cache-doc",
+          "receipt": "iteration05.attempts[9]"
+        },
+        {
+          "name": "gate01-final-format",
+          "receipt": "iteration05.attempts[10]"
+        },
+        {
+          "name": "gate02-final-lint",
+          "receipt": "iteration05.attempts[11]"
+        },
+        {
+          "name": "gate03-final-focused-tests",
+          "receipt": "iteration05.attempts[12]"
+        },
+        {
+          "name": "gate04-final-workspace-test",
+          "receipt": "iteration05.attempts[13]"
+        },
+        {
+          "name": "gate05-final-workspace-build",
+          "receipt": "iteration05.attempts[14]"
+        },
+        {
+          "name": "gate06-final-doctests",
+          "receipt": "iteration05.attempts[15]"
+        },
+        {
+          "name": "gate07-final-doc-build",
+          "receipt": "iteration05.attempts[16]"
+        },
+        {
+          "name": "gate08-final-strict-cache-doc",
+          "receipt": "iteration05.attempts[17]"
+        },
+        {
+          "name": "gate09-source-diffcheck",
+          "receipt": "iteration05.attempts[18]"
+        },
+        {
+          "name": "gate09-planning-diffcheck",
+          "receipt": "iteration05.attempts[19]"
+        },
+        {
+          "name": "gate09-planning-diffcheck-final",
+          "receipt": "iteration05.attempts[20]"
+        },
+        {
+          "name": "gate09-planning-diffcheck-final-audit",
+          "receipt": "iteration05.attempts[21]"
+        }
+      ],
+      "strict_record_correction": {
+        "9": {
+          "name": "gate08-strict-cache-doc",
+          "env": {
+            "CARGO_NET_OFFLINE": "true",
+            "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+          },
+          "exit_code": 0
+        },
+        "17": {
+          "name": "gate08-final-strict-cache-doc",
+          "env": {
+            "CARGO_NET_OFFLINE": "true"
+          },
+          "exit_code": 0
+        }
+      }
+    },
+    "readback_manifest": {
+      "cc-prompt-iteration06.md": {
+        "kind": "required-full",
+        "extent": "1\u201353; authored text inspected, saved final corrected manifest reloaded before source edits",
+        "identity": {
+          "bytes": 13526,
+          "sha256": "3c14fd75354c93f9b2ab7530edff1f2c03c1a10dcf5ac43926ada1dfc677e9e6"
+        }
+      },
+      "slice-plan.md": {
+        "kind": "required-full",
+        "extent": "1\u201392, recovered tail80\u2013102 after combined-output truncation"
+      },
+      "ledger.md": {
+        "kind": "required-full",
+        "extent": "all nine rows/eight columns; recovered complete standalone output"
+      },
+      "cdc-verification.md": {
+        "kind": "required-section",
+        "extent": "Iteration05 independent review176\u2013230; complete section visible in tool output; historical record retained"
+      },
+      "cc-prompt.md": {
+        "kind": "required-section",
+        "extent": "literal mapping/gates/return108\u2013153; reloaded intact"
+      },
+      "crates/nms-graph/src/query.rs": {
+        "kind": "required-source",
+        "revision": "0e1e8b4239881a378bc8fb928ef25741c228e171",
+        "extent": "production1\u2013250; imports255\u2013265; both edited tests755\u20131336; secondary imports/helpers/tests1330\u20131633; contiguous bounded loads before edit"
+      },
+      "crates/nms-graph/src/model.rs": {
+        "kind": "required-source",
+        "extent": "fields/new1\u2013100; complete set_active_galaxy/insert_system234\u2013303; earlier205\u2013310 recovered complete"
+      },
+      "crates/nms-core/src/player.rs": {
+        "kind": "required-source",
+        "extent": "101\u2013134 including all PlayerState fields and new body"
+      },
+      "crates/nms-core/src/system.rs": {
+        "kind": "required-source",
+        "extent": "88\u2013146 System::new, Planet fields/new; earlier88\u2013155 complete closing brace"
+      },
+      "crates/nms-query/src/route.rs": {
+        "kind": "reference-only",
+        "extent": "immutable; no new full-read claim for earlier missing intake"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/rust-guidelines/SKILL.md": {
+        "kind": "required-guide",
+        "loaded_extent": "required-full611 lines:1\u2013205,206\u2013410,411\u2013611; earlier oversized read recovered",
+        "identity": {
+          "bytes": 36127,
+          "sha256": "41aff6f5bc33e219045383316e7b375750d536da44124090c2422ae284da1fdb"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/rust-guidelines/guides/11-anti-patterns.md": {
+        "kind": "required-guide",
+        "loaded_extent": "required-full2188 lines:1\u2013550,551\u20131100,1101\u20131650,1651\u20132188; last-output truncation recovered1900\u20132060 before source edits",
+        "identity": {
+          "bytes": 78756,
+          "sha256": "a00c0db80ee1373e872bce6c0673599aa32539bc441b0e88a66018cc2433c676"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/testing/guides/01-testing-discipline.md": {
+        "kind": "required-guide",
+        "loaded_extent": "required-section contracts/triage;1\u2013200 covers actual complete96-line guide",
+        "identity": {
+          "bytes": 3430,
+          "sha256": "3c85f887140e2053a1d9f2ed570b48a96be1d7be3ce3a45fc2cd1233d0a34438"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/engineering-methods/guides/07-implementation-prompt-authoring.md": {
+        "kind": "required-guide",
+        "loaded_extent": "required sections5/6/corrective iterations;120\u2013300 plus current290\u2013360 reload including preflight/readback",
+        "identity": {
+          "bytes": 29775,
+          "sha256": "890fdc8e83aff3f130524d8f3af3f0614d41c63e221e90348bc7493c23c75d6f"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/guides/02-canonical-planning-worktree.md": {
+        "kind": "required-guide",
+        "loaded_extent": "iteration preservation218\u2013253",
+        "identity": {
+          "bytes": 16066,
+          "sha256": "4705221f3452b59ad215da153d7b8b4c62679663033e6c4088bfc1d4d5e2d221"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/guides/03-planning-top-down.md": {
+        "kind": "required-guide",
+        "loaded_extent": "handoff134\u2013188",
+        "identity": {
+          "bytes": 15931,
+          "sha256": "f8fde26da011201f211249fc0bc57a394a10fba1770a7273a5354a2381e3d5ce"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      },
+      "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/work-verification/guides/05-independent-verification.md": {
+        "kind": "required-guide",
+        "loaded_extent": "separation/correction review1\u2013105",
+        "identity": {
+          "bytes": 7282,
+          "sha256": "f011927b69299fc71cc98dcffe4d53a055a944dc9dc56d2e0745c74410069741"
+        },
+        "strength": "Sofie intake attestation; local digest identifies contents, not proof of reading; planning HEAD is not skill revision"
+      }
+    },
+    "contract_readback": "Two actual insertion orders \u00d7 active0/9/7 \u00d7 literal reference0/9/7. For each: nearest0/MAX and radius0/399/400/+inf/-1/NaN through explicit and active system/planet APIs. Populated expectations are independently declared A0/B0 or A9/B9 at0/400; reference7 empty. Every nonempty returned planet is ptr::eq to the canonical map value. Full player/active tuple is captured after intentional selection and checked after every API call, without resetting. Filtered radius800 gets both exact far-key800 and canonical pointers in both true near/far orders;799 and tie/SSI/single-field controls stay. Source scope is one cfg(test) file; runtime/cache/criteria and six accepted rows held. New flags/captures resolve current proof only; old final17 env remains unknown, earlier9 actual strict passes, history unwaived. Sofie proposes; separate CC independently reviews; no self-accept/merge/closure.",
+    "preparation_diagnostics": [
+      "Temporary intake.py and record.py both initially wrote intake.json; wrapper receipt overwrote the temporary baseline JSON. Original successful six-clean audit stdout survives in intake.json; baseline was recomputed before source edits as baseline.json, preserving the owned untracked new prompt state. This is a recorder output-path collision, not historical capture recovery or Rust failure.",
+      "Combined plan/ledger/source read truncated; complete ledger and plan80\u2013102 recovered in bounded separate outputs. Prompt source EOF corrected1630 to1633 and model constructor extent corrected1\u201385 to1\u2013100 before issuance."
+    ],
+    "attempts": [
+      {
+        "name": "intake",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-sofie-iteration06/intake.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ewogICJhbGxfc2l4X2NsZWFuX3Bpbm5lZCI6IHRydWUsCiAgImNoYW5uZWxzIjogewogICAgImNvdW50IjogODA0LAogICAgImVycm9ycyI6IFtdCiAgfSwKICAic3RhYmxlX2xpbmtzIjogMjIsCiAgInN0cmljdF9yZWNvcmRfY29ycmVjdGlvbiI6IHsKICAgICI5IjogewogICAgICAibmFtZSI6ICJnYXRlMDgtc3RyaWN0LWNhY2hlLWRvYyIsCiAgICAgICJlbnYiOiB7CiAgICAgICAgIkNBUkdPX05FVF9PRkZMSU5FIjogInRydWUiLAogICAgICAgICJSVVNURE9DRkxBR1MiOiAiLUQgcnVzdGRvYzo6YnJva2VuX2ludHJhX2RvY19saW5rcyIKICAgICAgfSwKICAgICAgImV4aXRfY29kZSI6IDAKICAgIH0sCiAgICAiMTciOiB7CiAgICAgICJuYW1lIjogImdhdGUwOC1maW5hbC1zdHJpY3QtY2FjaGUtZG9jIiwKICAgICAgImVudiI6IHsKICAgICAgICAiQ0FSR09fTkVUX09GRkxJTkUiOiAidHJ1ZSIKICAgICAgfSwKICAgICAgImV4aXRfY29kZSI6IDAKICAgIH0KICB9Cn0K",
+          "bytes": 498,
+          "sha256": "a7d05559ba667da1d83110f67b86d9deb6e587abe266b03e0aaedeaf2929e657"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.3335784999653697
+      },
+      {
+        "name": "intake-audit",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-sofie-iteration06/intake.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "ewogICJhbGxfc2l4X3Bpbm5lZF9zb3VyY2VfY29udHJvbHNfY2xlYW5fcGxhbm5pbmdfb25seV9vd25lZF91bnRyYWNrZWRfcHJvbXB0IjogdHJ1ZSwKICAiY2hhbm5lbHMiOiB7CiAgICAiY291bnQiOiA4MDQsCiAgICAiZXJyb3JzIjogW10KICB9LAogICJzdGFibGVfbGlua3MiOiAyMiwKICAic3RyaWN0X3JlY29yZF9jb3JyZWN0aW9uIjogewogICAgIjkiOiB7CiAgICAgICJuYW1lIjogImdhdGUwOC1zdHJpY3QtY2FjaGUtZG9jIiwKICAgICAgImVudiI6IHsKICAgICAgICAiQ0FSR09fTkVUX09GRkxJTkUiOiAidHJ1ZSIsCiAgICAgICAgIlJVU1RET0NGTEFHUyI6ICItRCBydXN0ZG9jOjpicm9rZW5faW50cmFfZG9jX2xpbmtzIgogICAgICB9LAogICAgICAiZXhpdF9jb2RlIjogMAogICAgfSwKICAgICIxNyI6IHsKICAgICAgIm5hbWUiOiAiZ2F0ZTA4LWZpbmFsLXN0cmljdC1jYWNoZS1kb2MiLAogICAgICAiZW52IjogewogICAgICAgICJDQVJHT19ORVRfT0ZGTElORSI6ICJ0cnVlIgogICAgICB9LAogICAgICAiZXhpdF9jb2RlIjogMAogICAgfQogIH0KfQo=",
+          "bytes": 551,
+          "sha256": "b1f5d91aa476341c149e43282ada832e1837858b4a6ae3d671555c991dbe47a4"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.2977556656114757
+      }
+    ],
+    "gates": [],
+    "status": "intake complete before source edits; implementation not yet performed; three rows open; historical evidence unwaived"
   }
 }

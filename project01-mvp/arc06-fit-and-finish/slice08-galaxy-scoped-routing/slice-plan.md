@@ -1,6 +1,6 @@
 # Slice08 — galaxy-scoped spatial and routing composition
 
-Version:1.6. Created2026-10-11. Status:open; SR-03/04/05/06/07/08 accepted, three open; Iteration05 reviewed, five-pass cap exhausted; Operator decision pending.
+Version:1.7. Created2026-10-11. Status:open; six accepted, three open; Operator-authorized Iteration06 Sofie correction, followed by independent CC review.
 
 ## Goal, authority and boundaries
 
@@ -90,3 +90,8 @@ Iteration05 `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iterat
 Current assignment: **arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration05.md**, executed, returned and reviewed; no implementation pass currently authorized beyond it. Five executed refinements01–05 include stopped02 (no CC commit; retracted false production discrepancy). Budget exhausted. **No cc-prompt-iteration06.md issued. Operator decision pending.** Recommended concrete decision: one additional bounded correction beyond the cap, graph query.rs tests only plus four existing CC records, direct source parent0e1e8b4, six accepted rows/all other source held. Full scope and alternatives in the current independent review; historical exception excluded. Re-scoping cannot silently discharge these original obligations.
 
 Version1.6 routine review/partial acceptance/cap update, no accepted scope/architecture/cache/criteria or sequence amendment. Separate Project02 parent40c36ab (nine paths) is preserved; main6d183bde and all dependency pins held. Parent counts unchanged: arc26/seven done/nineteen open, project25 open. Required session/live/full-startup then evidence-gated save-field repair and original higher-scale owners/gates remain. No integration, release or publication authority. A further prompt requires the Operator decision; current gaps are required native/evidence delivery, not a newly reproduced production bug.
+
+
+## Operator-authorized Slice08 Iteration06 — 2026-10-11
+
+Supersedes the earlier pending-cap disposition: the Operator explicitly approved one additional bounded correction pass and selected Sofie as implementer, followed by a separate CC context as independent reviewer. Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md` (canonical home project01-mvp). Source baseline0e1e8b4239881a378bc8fb928ef25741c228e171; planning intake23079309da08ed6908c7eb703021111a3ee28b71. Issuance is the commit containing this prompt; intake recorded before source edits in existing execution.md/validation.json. Source only graph query.rs cfg(test); return only four existing evidence records; six accepted entire rows retained and SR01/02/09 remain open. Sofie self-checks are proposed evidence; she will not independently accept her own changes. CC receives review-only handoff through Operator after return. Historical missing evidence remains unwaived; no automatic seventh pass, criteria/runtime/cache/API change, integration or closure. Arc26/seven done/nineteen open; project25 open. Preserve Project02 and held main/dependency pins. Required session/live/full-startup, subsequent evidence-gated save-field repair and original higher-scale closeout gates remain.

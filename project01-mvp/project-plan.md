@@ -9,7 +9,7 @@ updated: 2026-10-11
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.19
+version: 1.20
 project: project01-mvp
 status: active
 depends-on: []
@@ -709,3 +709,8 @@ CDC reviewed source0e1e8b4/planningaae22e7 against immutable issuance9a9bf114. A
 Five executed refinements include stoppedIteration02; the current Iteration05 assignment is returned and reviewed. Budget exhausted, **no sixth prompt issued**. Operator decision pending on the concrete recommendation: one additional bounded graph-query-tests/current-evidence correction pass beyond the cap, preserving six accepted rows/all other source, or explicit re-scoping. Historical evidence exception remains outside that proposal and unapproved. No child/parent closure. Parent counts unchanged: arc26/seven done/nineteen open, project25 open. Separate Project02 commit40c36ab preserved. Required session/live/full-startup composition, then evidence-gated save-field repair and original higher-scale owners/gates persist. Main6d183bde/dependencies held; no merge/release/publication authority.
 
 Project version1.19 (2026-10-11): routine Slice08 review/partial acceptance/refinement-cap disposition; parent criteria/statuses retained.
+
+
+## Operator-authorized Slice08 Iteration06 — 2026-10-11
+
+Supersedes the earlier pending-cap disposition: the Operator explicitly approved one additional bounded correction pass and selected Sofie as implementer, followed by a separate CC context as independent reviewer. Current assignment: `arc06-fit-and-finish/slice08-galaxy-scoped-routing/cc-prompt-iteration06.md` (canonical home project01-mvp). Source baseline0e1e8b4239881a378bc8fb928ef25741c228e171; planning intake23079309da08ed6908c7eb703021111a3ee28b71. Issuance is the commit containing this prompt; intake recorded before source edits in existing execution.md/validation.json. Source only graph query.rs cfg(test); return only four existing evidence records; six accepted entire rows retained and SR01/02/09 remain open. Sofie self-checks are proposed evidence; she will not independently accept her own changes. CC receives review-only handoff through Operator after return. Historical missing evidence remains unwaived; no automatic seventh pass, criteria/runtime/cache/API change, integration or closure. Arc26/seven done/nineteen open; project25 open. Preserve Project02 and held main/dependency pins. Required session/live/full-startup, subsequent evidence-gated save-field repair and original higher-scale closeout gates remain.
