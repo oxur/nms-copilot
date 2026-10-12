@@ -16877,5 +16877,145 @@
     "current_independent_review_evidence": "existing cdc-verification.md and cdc-review-receipts.json iteration06 retained byte-identical",
     "conditional_next_step": "Only after explicit approval: record bounded exception, disposition SR09 based on CC current proof plus Operator exception, formal slice closeout and roadmap continuation; no source integration/higher-scale automatic acceptance",
     "incidental_preservation_check": "from pathlib import Path\nimport json,subprocess,base64,hashlib\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');O=Path('/private/tmp/nms-s08-review06-intake')\ndef git(root,*args):return subprocess.check_output(['git',*args],cwd=root)\nfor name in ['ledger.md','cdc-verification.md','artifacts/cdc-review-receipts.json']:assert (P/D/name).read_bytes()==(O/('baseline-'+Path(name).name)).read_bytes()\nfor name in ['closing-report.md','artifacts/execution.md']:assert (P/D/name).read_bytes().startswith((O/('baseline-'+Path(name).name)).read_bytes())\na=json.loads((O/'baseline-validation.json').read_text());v=json.loads((P/D/'artifacts/validation.json').read_text());assert {k:v[k] for k in a}==a;assert set(v)==set(a)|{'post_iteration06_operator_decision'}\nexpected=[str(D/'slice-plan.md'),str(D/'closing-report.md'),str(D/'artifacts/execution.md'),str(D/'artifacts/validation.json'),'project01-mvp/arc06-fit-and-finish/arc-plan.md','project01-mvp/project-plan.md','project01-mvp/closure-preparation.md'];actual=git(P,'diff','--name-only').decode().splitlines();assert sorted(actual)==sorted(expected);assert not git(P,'ls-files','--others','--exclude-standard')\nfor rel,pin in [('.', '6d183bde79dd7328c32d4739dca249f5f1f9cd6c'),('.worktrees/galaxy-scoped-routing','f71d607e27e18d7266855a2708449f9d6b90c632'),('.worktrees/galaxy-scoped-queries','7118a486ea43a776aa2451ec0807d43384fb954f'),('.worktrees/galaxy-qualified-identity','f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8'),('.worktrees/cache-semantic-compatibility','decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a')]:\n root=R/rel;assert git(root,'rev-parse','HEAD').decode().strip()==pin;assert not git(root,'status','--porcelain')\nn=0\ndef walk(x):\n global n\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   raw=base64.b64decode(x['base64'],validate=True);assert len(raw)==x['bytes'] and hashlib.sha256(raw).hexdigest()==x['sha256'];n+=1\n  for z in x.values():walk(z)\n elif isinstance(x,list):\n  for z in x:walk(z)\nwalk(v)\nprint(json.dumps({'old_validation_values_exact':True,'ledger_and_independent_review_byte_identical':True,'closing_execution_exact_prefixes':True,'exact_seven_planning_paths':actual,'held_five_source_worktrees_clean_pinned':True,'all_validation_channel_objects_checked':n,'disposition':'proposal only;8 done/SR09 open;approval pending'},indent=2))\n"
+  },
+  "operator_approved_sr09_final_closure": {
+    "date": "2026-10-11",
+    "operator_statement": "yes, I approve",
+    "scope": "Approve the specific seven-observation SR09 exception proposed at aa83dbee3488033ebc232604809885f56e2e9fde, closing-report.md heading SR-09 bounded historical-evidence decision",
+    "source": "f71d607e27e18d7266855a2708449f9d6b90c632",
+    "independent_current_proof": "CC review e6bbfe53fe84f86592c353e9b24856f6dbf78078 / receipt f8d31258fe2e235af034a010b3f329444455414e; iteration06",
+    "exceptions": [
+      {
+        "observation": "Initial Slice08",
+        "unknown": "Original complete receipts for four disclosed diagnostic/capture groups."
+      },
+      {
+        "observation": "Iteration01",
+        "unknown": "Three uncaptured groups; third invocation count unknown."
+      },
+      {
+        "observation": "Iteration02",
+        "unknown": "Disclosed stopped-pass capture/intake limitations; partial execution/no CC commit and retracted warpNone discrepancy retained."
+      },
+      {
+        "observation": "Iteration03",
+        "unknown": "Unavailable items1\u20136/8 and disclosed historical strict-doc environment/intake limits; captured7/9 and pre-child rejections remain distinct."
+      },
+      {
+        "observation": "Iteration05 final strict child17",
+        "unknown": "Required flag absent from recorded overrides; original inherited environment unknown; original9 and new correctly flagged current proof remain distinct."
+      },
+      {
+        "observation": "Prior reading/intake/edit sequence",
+        "unknown": "Incomplete/unspecified coverage and draft-before-intake/restoration/reapplication do not establish original pre-edit compliance."
+      },
+      {
+        "observation": "Extra Iteration06 review doc invocation",
+        "unknown": "One disclosed unflagged invocation remains nonqualifying, narrative-only with unavailable separate argv/channel/exit details."
+      }
+    ],
+    "disposition": "SR09 done under explicit accepted historical-evidence amendment; all nine slice rows done; formal Slice08 closed",
+    "strength": "Current behavior and qualifying evidence independently reproduced by CC; historical provenance accepted only by explicit Operator amendment. Sofie records approval and closes, does not self-verify implementation.",
+    "residual_risk": "Original past failures/environment/chronology/pre-edit compliance for listed observations remain independently unauditable from this packet.",
+    "excluded": "No waiver of current qualifying gate, runtime issue, future recordkeeping, other slice/project, remaining parent/session/live/startup/save/coverage/performance/distribution obligations; no missing historical data synthesized or rerun-as-history; no integration/push/release.",
+    "artifact_inventory": {
+      "author-baseline.json": {
+        "bytes": 4037,
+        "sha256": "ef6961ce2bd169bc9b3d36d2403d0ef70bd86f9473c02698bdfc5465858b60dc"
+      },
+      "author-probe.rs": {
+        "bytes": 1895,
+        "sha256": "e549044713f3a8a062928fb1ec4f0938596ce76df24dfae21c7687123cd67972"
+      },
+      "cdc-review-receipts.json": {
+        "bytes": 7637400,
+        "sha256": "ed9889e9f814fe098df6e706c2fc0fe9018a4d9f37b75a2dbc6b3627295257dd"
+      },
+      "execution.md": {
+        "bytes": 82040,
+        "sha256": "115e74f3f118969514aae655c626208b1c0bdfda3d9cc7234f4936358ee76c92"
+      },
+      "validation.json": {
+        "bytes": 11337285,
+        "sha256": "c1f6232e4196c731ce379e04bf5fccf2157dca25e6ffa581709ce73a6b8721c0"
+      }
+    },
+    "issued_prompts_preserved": {
+      "cc-prompt-iteration01.md": {
+        "bytes": 20184,
+        "sha256": "786e233e0cb3b0a6eb487a94b00cad01c8a6e8e3e0b311106420fa32944458c5"
+      },
+      "cc-prompt-iteration02.md": {
+        "bytes": 21334,
+        "sha256": "5b68da9ffcadee529ff9668531a5b8f318ce928c4c3f7ea526e428099b0024d2"
+      },
+      "cc-prompt-iteration03.md": {
+        "bytes": 11608,
+        "sha256": "1f099d360c964463ea9b61812e06b318e7ffb9f8e8c6e12d3738817c449b3a6b"
+      },
+      "cc-prompt-iteration04.md": {
+        "bytes": 19788,
+        "sha256": "0d84b0714a76c59ebb90d0c323ffad498e43a56512087066227acf03b8f728ba"
+      },
+      "cc-prompt-iteration05.md": {
+        "bytes": 24538,
+        "sha256": "5e0077c515cbd0f2ae0993be669643f776136f8d18bdcce0a333c53cf206c8e9"
+      },
+      "cc-prompt-iteration06.md": {
+        "bytes": 13526,
+        "sha256": "3c14fd75354c93f9b2ab7530edff1f2c03c1a10dcf5ac43926ada1dfc677e9e6"
+      },
+      "cc-prompt.md": {
+        "bytes": 32591,
+        "sha256": "de266d7f8b8e3ec7933a295776a49938a66b2a0b904af6cf4b0da93040c6b0d2"
+      }
+    },
+    "planning_intake": "aa83dbee3488033ebc232604809885f56e2e9fde",
+    "close_commit": "pending until scoped closure commit; subsequent receipt records actual identity",
+    "attempts": [
+      {
+        "name": "final-close-preparation",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-final-close/close.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJzb3VyY2UiOiAiZjcxZDYwN2UyN2UxOGQ3MjY2ODU1YTI3MDg0NDlmOWQ2YjkwYzYzMiIsICJzbGljZV9yb3dzIjogOSwgImRvbmUiOiA5LCAiYXJjX3Jvd3MiOiAyNiwgImFyY19kb25lIjogOCwgImFyY19vcGVuIjogMTgsICJwcm9qZWN0X29wZW4iOiAyNSwgImV4Y2VwdGlvbl9jb3VudCI6IDcsICJzb3VyY2VfdW5jaGFuZ2VkIjogdHJ1ZSwgInN0YXR1cyI6ICJmb3JtYWwgY2xvc2UgcGFja2V0IHByZXBhcmVkOyBzY29wZWQgY29tbWl0IG5leHQifQo=",
+          "bytes": 260,
+          "sha256": "f52603c057cee7611ab5881b1050bd32f225fe0792b5973df707683885816f5a"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.2022472908720374
+      },
+      {
+        "name": "final-close-audit",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-s08-final-close/check.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "env": {},
+        "exit_code": 0,
+        "stdout": {
+          "base64": "eyJzbGljZSI6ICI5IGRvbmU7OCBwcmlvciBlbnRpcmUgcm93cyBwcmVzZXJ2ZWQ7U1IwOSBleHBsaWNpdCBhcHByb3ZlZCBhbWVuZG1lbnQiLCAiYXJjIjogIjI2IHJvd3M7OCBkb25lMTggb3BlbiIsICJhbGxfb2xkX2pzb25fdmFsdWVzX3ByZWZpeGVzX2luZGVwZW5kZW50X3JlY2VpcHRzX2FuZF9wcm9tcHRzX3ByZXNlcnZlZCI6IHRydWUsICJjaGFubmVsc19jaGVja2VkIjogODkyLCAic291cmNlX3dvcmt0cmVlc19jbGVhbl9waW5uZWQiOiB0cnVlLCAiZGlmZl9jaGVjayI6IHRydWV9Cg==",
+          "bytes": 280,
+          "sha256": "4c70fc55b4146b7f0f1522ce5c03eaf95a129c6e99dfaaad4aa3c293e1a58a09"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "elapsed_seconds": 0.41369720781221986
+      }
+    ],
+    "incidental_scope_check": "from pathlib import Path\nimport json,subprocess,hashlib,base64\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';D=Path('project01-mvp/arc06-fit-and-finish/slice08-galaxy-scoped-routing');O=Path('/private/tmp/nms-s08-final-close')\nold=json.loads((O/'old-validation.json').read_text());v=json.loads((P/D/'artifacts/validation.json').read_text());assert all(v[k]==x for k,x in old.items());assert set(v)==set(old)|{'operator_approved_sr09_final_closure'}\nfor rel in ['closing-report.md','cdc-verification.md','artifacts/execution.md']:assert (P/D/rel).read_bytes().startswith((O/('old-'+Path(rel).name)).read_bytes())\nassert (P/D/'artifacts/cdc-review-receipts.json').read_bytes()==(O/'old-cdc-review-receipts.json').read_bytes()\na=[x for x in (O/'old-ledger.md').read_text().splitlines() if x.startswith('| SR-')];b=[x for x in (P/D/'ledger.md').read_text().splitlines() if x.startswith('| SR-')];assert len(a)==len(b)==9;assert a[:8]==b[:8]\nfor x,y in zip(a,b):\n c=[k.strip() for k in x.split('|')[1:-1]];d=[k.strip() for k in y.split('|')[1:-1]];assert len(c)==len(d)==8 and c[:5]==d[:5] and d[5]=='done'\narc=[x for x in (P/'project01-mvp/arc06-fit-and-finish/ledger.md').read_text().splitlines() if x.startswith('| ') and x.split('|')[1].strip() not in ['ID','---']];statuses=[x.split('|')[6].strip() for x in arc];assert len(arc)==26 and statuses.count('done')==8 and statuses.count('open')==18\nn=0\ndef walk(x):\n global n\n if isinstance(x,dict):\n  if {'base64','bytes','sha256'}<=x.keys():\n   b=base64.b64decode(x['base64'],validate=True);assert len(b)==x['bytes'] and hashlib.sha256(b).hexdigest()==x['sha256'];n+=1\n  for z in x.values():walk(z)\n elif isinstance(x,list):\n  for z in x:walk(z)\nwalk(v)\nfor name,d in v['operator_approved_sr09_final_closure']['issued_prompts_preserved'].items():assert hashlib.sha256((P/D/name).read_bytes()).hexdigest()==d['sha256']\nfor rel,pin in [('.', '6d183bde79dd7328c32d4739dca249f5f1f9cd6c'),('.worktrees/galaxy-scoped-routing','f71d607e27e18d7266855a2708449f9d6b90c632'),('.worktrees/galaxy-scoped-queries','7118a486ea43a776aa2451ec0807d43384fb954f'),('.worktrees/galaxy-qualified-identity','f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8'),('.worktrees/cache-semantic-compatibility','decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a')]:\n root=R/rel;assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=root).decode().strip()==pin;assert not subprocess.check_output(['git','status','--porcelain'],cwd=root)\nsubprocess.run(['git','diff','--check'],cwd=P,check=True)\nprint(json.dumps({'slice':'9 done;8 prior entire rows preserved;SR09 explicit approved amendment','arc':'26 rows;8 done18 open','all_old_json_values_prefixes_independent_receipts_and_prompts_preserved':True,'channels_checked':n,'source_worktrees_clean_pinned':True,'diff_check':True}))\n"
   }
 }

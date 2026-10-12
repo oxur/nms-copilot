@@ -62,4 +62,6 @@ Prior24 rows and all criteria/dispositions retained;25 total, six done/nineteen 
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S08 | Galaxy-scoped spatial/routing composition independently accepted | Nine-row Slice08 ledger; native exact routes, literal neighborhoods, actual CLI and raw-cache parity | correctness-grade | Approved R06-R02/R03 identity composition and original correctness | open | [Initial assignment](slice08-galaxy-scoped-routing/cc-prompt.md) | All prior criteria retained; required session/live/startup/save and original gates remain open |
+| R06-S08 | Galaxy-scoped spatial/routing composition independently accepted | Nine-row Slice08 ledger; native exact routes, literal neighborhoods, actual CLI and raw-cache parity | correctness-grade | Approved R06-R02/R03 identity composition and original correctness | done | [Final closure](slice08-galaxy-scoped-routing/cdc-verification.md#operator-approved-sr-09-exception-and-final-closure--2026-10-11): independent CC current proof plus Operator-approved specific SR09 evidence amendment, at f71d607. | Nine child rows closed; listed historical data remains unknown. Required session/live/startup/save and original parent gates remain open; no source integration. |
+
+Slice08 closure2026-10-11:26 rows/eight done/eighteen open; all25 other entire rows and criteria retained. Operator exception applies only to the seven listed Slice08 past observations; no parent/current/future validation waiver.
