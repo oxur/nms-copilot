@@ -359,4 +359,124 @@ mod tests {
             assert_eq!(model.spatial_size(), 2);
         }
     }
+
+    fn movement_snapshot(
+        addresses: &[GalacticAddress],
+        player_address: GalacticAddress,
+    ) -> SaveSnapshot {
+        let mut systems = std::collections::HashMap::new();
+        let mut planets = std::collections::HashMap::new();
+        for &address in addresses {
+            let (name, leaf, biome) = if address.reality_index == 0 {
+                ("Origin-0", "Leaf-0", Biome::Lush)
+            } else {
+                ("Destination-9", "Leaf-9", Biome::Toxic)
+            };
+            let system_id = SystemId::from_address(&address);
+            let planet = Planet::new(0, Some(biome), None, false, Some(leaf.into()), None);
+            systems.insert(
+                system_id,
+                System::new(address, Some(name.into()), None, None, vec![planet.clone()]),
+            );
+            planets.insert((system_id, 0), planet);
+        }
+
+        SaveSnapshot {
+            systems,
+            planets,
+            bases: std::collections::HashMap::new(),
+            player_address,
+        }
+    }
+
+    #[test]
+    fn test_compute_delta_cross_reality_movement_preserves_qualified_discoveries() {
+        let a0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+        let id0 = SystemId::from_address(&a0);
+        let id9 = SystemId::from_address(&a9);
+
+        for (from, to, expected_zero, expected_nine) in [
+            (a0, a9, "Origin-0", "Destination-9"),
+            (a9, a0, "Origin-0", "Destination-9"),
+        ] {
+            let old = movement_snapshot(&[from], from);
+            let new = movement_snapshot(&[a0, a9], to);
+            let delta = compute_delta(&old, &new);
+            let moved = delta.player_moved.as_ref().unwrap();
+            assert_eq!(moved.from, from);
+            assert_eq!(moved.to, to);
+            assert_eq!(delta.new_systems.len(), 1);
+            let added_id = SystemId::from_address(&delta.new_systems[0].address);
+            assert_eq!(added_id, SystemId::from_address(&to));
+            assert_eq!(delta.new_planets.len(), 1);
+            assert_eq!(delta.new_planets[0].0, added_id);
+
+            let existing = if from == a0 {
+                System::new(
+                    a0,
+                    Some("Origin-0".into()),
+                    None,
+                    None,
+                    vec![Planet::new(
+                        0,
+                        Some(Biome::Lush),
+                        None,
+                        false,
+                        Some("Leaf-0".into()),
+                        None,
+                    )],
+                )
+            } else {
+                System::new(
+                    a9,
+                    Some("Destination-9".into()),
+                    None,
+                    None,
+                    vec![Planet::new(
+                        0,
+                        Some(Biome::Toxic),
+                        None,
+                        false,
+                        Some("Leaf-9".into()),
+                        None,
+                    )],
+                )
+            };
+            let mut model = nms_graph::GalaxyModel::new();
+            model.insert_system(existing);
+            model.apply_delta(&delta);
+            assert_eq!(
+                model.system(&id0).unwrap().name.as_deref(),
+                Some(expected_zero)
+            );
+            assert_eq!(
+                model.system(&id9).unwrap().name.as_deref(),
+                Some(expected_nine)
+            );
+            assert_eq!(
+                model.planets.get(&(id0, 0)).unwrap().name.as_deref(),
+                Some("Leaf-0")
+            );
+            assert_eq!(
+                model.planets.get(&(id9, 0)).unwrap().name.as_deref(),
+                Some("Leaf-9")
+            );
+            assert_eq!(
+                model.planets.get(&(id0, 0)).unwrap().biome,
+                Some(Biome::Lush)
+            );
+            assert_eq!(
+                model.planets.get(&(id9, 0)).unwrap().biome,
+                Some(Biome::Toxic)
+            );
+            assert_eq!(model.system_count(), 2);
+            assert_eq!(model.planet_count(), 2);
+        }
+
+        let same_reality = movement_snapshot(&[a0], GalacticAddress::new(1, 0, 0, 1, 0, 0));
+        let changed = movement_snapshot(&[a0], GalacticAddress::new(2, 0, 0, 1, 0, 0));
+        let delta = compute_delta(&same_reality, &changed);
+        assert_eq!(delta.player_moved.unwrap().to.voxel_x(), 2);
+    }
 }
