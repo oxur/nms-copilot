@@ -2104,6 +2104,88 @@
         "bytes": 0,
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "environment_schema": "iteration01-observed-v1",
+      "observed_process_environment_before_child": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "command_overrides": {},
+      "effective_relevant_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "cargo_offline_configuration": {
+        "config_files_checked": [],
+        "files_found": [],
+        "CARGO_NET_OFFLINE": null,
+        "argv_offline_flags": []
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.02942062495276332,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "environment_schema": "iteration01-observed-v1",
+      "observed_process_environment_before_child": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "command_overrides": {},
+      "effective_relevant_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "cargo_offline_configuration": {
+        "config_files_checked": [],
+        "files_found": [],
+        "CARGO_NET_OFFLINE": null,
+        "argv_offline_flags": []
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.029389042407274246,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     }
   ],
   "notes": [
@@ -2251,7 +2333,7 @@
     },
     "planning_commits": [
       "b3fe21820876e8a979e066007f8dc2c3fd3a9714",
-      "pending receipt follow-up"
+      "557dc58499fc98cd15d3b35b13d2b560795b805e"
     ],
     "final_gate_summary": {
       "invocation_positions_1based": [
@@ -2313,13 +2395,15 @@
         "planning": 67,
         "planning_after_summary_update": 68,
         "planning_after_primary_commit_receipt": 69,
-        "planning_after_receipt_index_update": 70
+        "planning_after_receipt_index_update": 70,
+        "planning_after_receipt_followup_record": 71,
+        "planning_after_final_receipt_index_update": 72
       },
       "complete_invocation_positions_through_final_check": [
         54,
-        70
+        72
       ],
-      "total_new_successful_invocations_including_final_diff_rechecks": 17
+      "total_new_successful_invocations_including_final_diff_rechecks": 19
     },
     "historical_inventory_correction": {
       "original_invocations": 53,
@@ -2447,6 +2531,20 @@
         "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
       ]
     },
-    "planning_receipt_followup": "pending; limited to execution.md, validation.json and closing-report.md"
+    "planning_receipt_followup": "557dc58499fc98cd15d3b35b13d2b560795b805e",
+    "planning_receipt_followup_commit": {
+      "commit": "557dc58499fc98cd15d3b35b13d2b560795b805e",
+      "parent": "b3fe21820876e8a979e066007f8dc2c3fd3a9714",
+      "message": "docs(planning): record Slice10 iteration01 commit receipt",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/closing-report.md"
+      ],
+      "trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems"
+      ]
+    }
   }
 }

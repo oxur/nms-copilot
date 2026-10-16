@@ -95,3 +95,8 @@ Planning return files are limited to `artifacts/execution.md`, `artifacts/valida
 ### Primary planning commit receipt
 
 Primary planning evidence commit is `b3fe21820876e8a979e066007f8dc2c3fd3a9714`, direct parent `c32dc420fd3303d4747ecc7cf37b4a270207fdd9`, message `docs(planning): return Slice10 iteration01 completion evidence`. It contains exactly the four authorized return paths: `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md`. Both required co-author trailers occur once. A limited receipt follow-up commits only execution, validation and this report.
+
+
+### Planning receipt follow-up
+
+Receipt follow-up commit `557dc58499fc98cd15d3b35b13d2b560795b805e`, parent `b3fe21820876e8a979e066007f8dc2c3fd3a9714`, message `docs(planning): record Slice10 iteration01 commit receipt`, records the primary planning commit in execution/validation/report metadata. Its exact pathset is `artifacts/execution.md`, `artifacts/validation.json`, and `closing-report.md`; both required trailers occur once.

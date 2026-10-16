@@ -93,3 +93,8 @@ The repair preserves the value tail after leading whitespace trim, including tra
 ## Planning return commit receipt
 
 Primary planning evidence commit `b3fe21820876e8a979e066007f8dc2c3fd3a9714`, direct parent `c32dc420fd3303d4747ecc7cf37b4a270207fdd9`, message `docs(planning): return Slice10 iteration01 completion evidence`. Exact pathset: `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, `ledger.md` under `project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/`. Each required co-author trailer occurs once. A narrow metadata follow-up records this receipt; it will use only the same four authorized files.
+
+
+## Planning receipt follow-up
+
+Receipt follow-up commit `557dc58499fc98cd15d3b35b13d2b560795b805e`, parent `b3fe21820876e8a979e066007f8dc2c3fd3a9714`, message `docs(planning): record Slice10 iteration01 commit receipt`; it is limited to execution, validation and closing report under the authorized slice path. Both required co-author trailers occur once.
