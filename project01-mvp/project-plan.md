@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-11
+updated: 2026-10-16
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.25
+version: 1.26
 project: project01-mvp
 status: active
 depends-on: []
@@ -752,3 +752,9 @@ Version1.24 (2026-10-16): Arc06 child09 acceptance, honest candidate/integration
 ## Arc06 Slice10 usable REPL increment — 2026-10-16
 
 Open planned Slice10 galaxy-scoped-repl from acceptede9cabd5 after child09 closure dcd30c4. Production command wiring/help/completion/docs and reference semantics are delivered/tested together as a reviewable candidate. Seven rows open; arc28/nine done/nineteen open, project25 open. Actual bounded dependency is accepted09; no unnecessary whole-project dependency or new investigation. Main6d183bde and Project02 preserved; CDC/Operator own later authorized integration and final-baseline acceptance, while11 live/transport/startup/cache/unknown state, subsequent field repair and original whole-project gates remain. Version1.25 (2026-10-16): Arc06 details existing next owner under framework2.7.2; approved scope/architecture/acceptance unchanged.
+
+## Slice10 independent review and bounded correction — 2026-10-16
+
+CDC independently reproduced all ordered gates at0346b193:724 focused/215 no-default/920 workspace, plus40/40 public reference/error/state checks. RG-01/02/03/04/06 accepted; RG-05/07 open. Reproduced completion bug discards a multi-word prefix ending in space; correct only the existing galaxy-completion helper/tests, clarify current inventory/environment evidence and rerun required gates. Current assignment arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md, first refinement; initial prompt preserved. No separate investigation or scope/architecture/criterion/sequence amendment.
+
+R06-S10 stays open:28 arc rows/nine done/nineteen open; all25 project rows open. Main6d183bde, dependencies and Project02 unchanged; candidate0346b193 is partially reviewed and not integrated/installed. CDC/Operator retain authorized integration/final-baseline drift/composition; Slice11 actual live/transports/fullstartup/cache/unknown-state, later raw repair and all original owners/gates remain. Version1.26 (2026-10-16): routine review/refinement status only; five child rows do not close the parent.

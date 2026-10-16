@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.34, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.35, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -285,3 +285,9 @@ Version1.33 (2026-10-16): child09 independent acceptance and framework applicati
 After Slice09 accepted candidatee9cabd5/closure dcd30c4, open the already planned REPL command/reference owner as Slice10 galaxy-scoped-repl. Current assignment arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt.md; separate CC implements, independent CDC reviews. Seven RG rows open; new childR06-S10 open,28 arc rows/nine done/nineteen open, project25 open. Useful result includes galaxy inspect/select, truthful session/reference context, working find/route defaults and command help/completion/docs/production caller integration. Actual prerequisite is acceptede9cabd5, not project-wide closure. Candidate .worktrees/galaxy-scoped-repl/codex/galaxy-scoped-repl; main6d183bde and dependencies/Project02 held. CDC/Operator retain later authorized main integration and final-baseline composition; no release claim.
 
 The original consumer route/acceptance remains:10 command/reference increment,11 actual live/transport/startup/cache/unknown-system and historical cache state disposition, then raw-field policy/repair with compatibility proof and original scope. No new inquiry or repeated readiness phase, scope reduction or structural sequence change. Version1.34 (2026-10-16): bounded useful command increment detailed from accepted09 using refreshed planning rules; all other original rows/owners/gates retained.
+
+## Slice10 independent review and bounded correction — 2026-10-16
+
+CDC independently reproduced all ordered gates at0346b193:724 focused/215 no-default/920 workspace, plus40/40 public reference/error/state checks. RG-01/02/03/04/06 accepted; RG-05/07 open. Reproduced completion bug discards a multi-word prefix ending in space; correct only the existing galaxy-completion helper/tests, clarify current inventory/environment evidence and rerun required gates. Current assignment arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md, first refinement; initial prompt preserved. No separate investigation or scope/architecture/criterion/sequence amendment.
+
+R06-S10 stays open:28 arc rows/nine done/nineteen open; all25 project rows open. Main6d183bde, dependencies and Project02 unchanged; candidate0346b193 is partially reviewed and not integrated/installed. CDC/Operator retain authorized integration/final-baseline drift/composition; Slice11 actual live/transports/fullstartup/cache/unknown-state, later raw repair and all original owners/gates remain. Version1.35 (2026-10-16): routine review/refinement status only; five child rows do not close the parent.
