@@ -1,0 +1,13 @@
+# Slice10 — acceptance ledger
+
+Created2026-10-16. Seven rows open; CC proposes, independent CDC accepts.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| RG-01 | Galaxy command parses optional index/name, reports sorted populated galaxies and switches only selected view | Exact0/9/name/quoted/mixed-case/0–255/empty7 and invalid input controls; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-02 | Session and physical player remain coherent under manual selection and movement | Exact full PlayerState and anchor/filter/warp controls, selected-view sync, cross/same movement; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-03 | Find reference precedence preserves active-view mismatch and explicit reference scope | --from overrides Base/Address; follow-player uses fresh physical model; exact0/9 planet populations; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-04 | Route reference precedence uses the same semantics for both supported algorithms | Literal Origin0/Twin400ly versus Origin9/Twin800ly; mismatches/errors and override retention; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-05 | Production REPL caller, status/prompt/help/completion and docs expose a usable command | Actual mutable dispatcher caller migration/build; parser→dispatch→render tests, quoted completion spans and readable examples; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-06 | Useful prior commands and qualified live/query/cache behavior remain intact | Existing successful command tests retained; current package/no-default/workspace gates and source scope; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |
+| RG-07 | Current implementation, intake, tests and exact commits are evidence-backed | Native ordered gates/channels, immutable inputs, exact pathsets/parents/trailers, per-row report/inventory/bubble-up; exact recipe in cc-prompt.md | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Independent CDC review pending |

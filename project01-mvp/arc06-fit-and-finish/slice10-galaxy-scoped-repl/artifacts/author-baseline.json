@@ -1,0 +1,41 @@
+{
+  "source": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+  "accepted_by": "Slice09 cdc-verification.md; planning dcd30c47a6611f3e40b2feef428e9e09c5ebe145",
+  "source_sha256": {
+    "crates/nms-copilot/src/commands.rs": "a91051abc48ae044ee648ff93913cffc9a0c5f231447d9cd24b6d1d80b84d05a",
+    "crates/nms-copilot/src/dispatch.rs": "dee14d1ebaeddb47a0d7ce0e3228457a583ca27fc341f053c6b7f672959ee367",
+    "crates/nms-copilot/src/session.rs": "a94d131536c32f52923a6c6faedbffd336292a0a53298c1ee4de407907390d5a",
+    "crates/nms-copilot/src/completer.rs": "2300a73d4a73ccdeba9f81e57192604edc24bdf6abb589fb6fd1f5d01b94b1b5",
+    "crates/nms-copilot/src/main.rs": "8ec0da6f3705af5c1255955fcd1ca8e1f0f2b7497d09e18fd50bc38c81cdeebf",
+    "crates/nms-copilot/src/prompt.rs": "556384a668b3d6805dc9fdcc1a824397ed6cde8b1d4f7ffd7f0ede23fb224a22",
+    "crates/nms-copilot/tests/dispatch_integration.rs": "c91395c46c7939c3043f43ade02880c91bfe986f156fef7d1f9166a15301694e",
+    "README.md": "66117c56420b7e54e8ddf39ea454127793becd4a8ba8e95288fc5ac4f2f0a1eb"
+  },
+  "author": "Sofie/CDC; source-grounded design, no new source implementation or runtime probe",
+  "framework": "collaboration-framework2.7.2",
+  "critical_source_findings": [
+    "Action lacks Galaxy; existing resolve_galaxy accepts0\u2013255/exact case-insensitive names",
+    "dispatch takes immutable model; main uses read guard; eleven integration call expressions need mutable migration",
+    "find ignores session.position; route flattens PlayerPosition into explicit Address, bypassing selected-view mismatch",
+    "SessionState::sync_from_model and PromptState::from_session already provide selected-view synchronization",
+    "model.discovered_galaxies is sorted, spatial_for supplies count; full Galaxy256 reference table is existing",
+    "completer supports borrowed prefix filtering/quoting and Span; extend only galaxy context"
+  ],
+  "callers": {
+    "main": "crates/nms-copilot/src/main.rs dispatch call/guard block",
+    "tests": "crates/nms-copilot/tests/dispatch_integration.rs eleven current calls"
+  },
+  "delivery": "isolated reviewed candidate branch with production REPL wiring/docs; not main integration/release",
+  "proof_limits": "native real parse/dispatch/prompt/completer paths plus binary build; no scripted terminal or MCP transport claim",
+  "planning_effort": "routine source inspection within approved next increment, not a separate investigation",
+  "preissue_checks": {
+    "slice09": "7 done; native proof retained; closure commit receipts checked",
+    "slice10": "7 open;8 source paths pinned;complete open set;no fake close",
+    "arc": "28 rows/9 done/19 open;27 previous rows unchanged",
+    "project": "25 open",
+    "review_channel_objects": 30,
+    "all_source_worktrees_clean_pinned": true,
+    "CC_evidence_immutable": true,
+    "diff_check": true
+  }
+}

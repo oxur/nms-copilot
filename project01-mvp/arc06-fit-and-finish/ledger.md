@@ -76,3 +76,12 @@ Slice08 closure2026-10-11:26 rows/eight done/eighteen open; all25 other entire r
 27 rows/eight done/nineteen open. All prior26 entire rows and criteria/dispositions retained. New child is a bounded owner within the approved required identity consumer route, not a replacement for parent acceptance.
 
 Slice09 independent closure2026-10-16:27 rows/nine done/eighteen open. Parent composition remains open; source candidate e9cabd5 not integrated into main.
+
+
+## Required usable REPL command child — 2026-10-16
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S10 | REPL galaxy selection and query-reference increment independently accepted | Seven-row Slice10 ledger; actual parser/dispatch/render/completion paths, production wiring/docs and native gates | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | open | — | Candidate from acceptede9cabd5; later main integration/lifecycle/save and original parent gates remain open. |
+
+28 rows/nine done/nineteen open; all prior27 entire rows/criteria/dispositions retained. This child details the existing owner, not a replacement for parent composition.

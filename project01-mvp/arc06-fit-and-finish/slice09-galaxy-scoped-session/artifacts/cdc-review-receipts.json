@@ -485,5 +485,104 @@
     "artifacts/author-baseline.json": "73778881b31cbc4fb4af8ffe0b9988b993d198924792f74e9741fe108482039a",
     "artifacts/validation.json": "8f24c2a1a3708188306715b5c75a463982523aa8513aa876126ff65bc7d649fb"
   },
-  "verdict": "LM-01 through LM-07 accepted; reviewed candidate slice closed; not integrated/main/released"
+  "verdict": "LM-01 through LM-07 accepted; reviewed candidate slice closed; not integrated/main/released",
+  "closure_commit": "dcd30c47a6611f3e40b2feef428e9e09c5ebe145",
+  "closure_commit_receipts": [
+    {
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/cdc-verification.md"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.02305074967443943
+    },
+    {
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/nms-s09-cdc-20261016/slice09-close-message.txt",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/slice-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/arc06-fit-and-finish/ledger.md",
+        "project01-mvp/project-plan.md",
+        "project01-mvp/closure-preparation.md"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "W3BsYW5uaW5nIGRjZDMwYzRdIEFjY2VwdCBTbGljZTA5IGdhbGF4eSBzZXNzaW9uIGNhbmRpZGF0ZSBhZnRlciBpbmRlcGVuZGVudCByZXZpZXcKIDkgZmlsZXMgY2hhbmdlZCwgNTczIGluc2VydGlvbnMoKyksIDEyIGRlbGV0aW9ucygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOS1nYWxheHktc2NvcGVkLXNlc3Npb24vYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbgogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UwOS1nYWxheHktc2NvcGVkLXNlc3Npb24vY2RjLXZlcmlmaWNhdGlvbi5tZAo=",
+        "bytes": 362,
+        "sha256": "64410b9d0f642d9fdab03a6da454c69d4c83501b7c3e42e3e7d193900dd98fdb"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.05654225032776594
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "--format=full",
+        "--stat",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "Y29tbWl0IGRjZDMwYzQ3YTY2MTFmM2U0MGIyZmVlZjQyOGU5ZTA5YzVlYmUxNDUKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIEFjY2VwdCBTbGljZTA5IGdhbGF4eSBzZXNzaW9uIGNhbmRpZGF0ZSBhZnRlciBpbmRlcGVuZGVudCByZXZpZXcKICAgIAogICAgQ28tYXV0aG9yZWQtYnk6IENvZGV4IDxub3JlcGx5QG9wZW5haS5jb20+CiAgICBDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+CgogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCAgICAgfCAgMTEgKy0KIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvbGVkZ2VyLm1kICAgICAgIHwgICA0ICstCiAuLi4vYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbiAgICAgICAgICAgICB8IDQ4OSArKysrKysrKysrKysrKysrKysrKysKIC4uLi9jZGMtdmVyaWZpY2F0aW9uLm1kICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDM3ICsrCiAuLi4vY2xvc2luZy1yZXBvcnQubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgNSArCiAuLi4vc2xpY2UwOS1nYWxheHktc2NvcGVkLXNlc3Npb24vbGVkZ2VyLm1kICAgICAgICB8ICAxNiArLQogLi4uL3NsaWNlMDktZ2FsYXh5LXNjb3BlZC1zZXNzaW9uL3NsaWNlLXBsYW4ubWQgICAgfCAgIDkgKy0KIHByb2plY3QwMS1tdnAvY2xvc3VyZS1wcmVwYXJhdGlvbi5tZCAgICAgICAgICAgICAgIHwgICA1ICsKIHByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kICAgICAgICAgICAgICAgICAgICAgIHwgICA5ICstCiA5IGZpbGVzIGNoYW5nZWQsIDU3MyBpbnNlcnRpb25zKCspLCAxMiBkZWxldGlvbnMoLSkK",
+        "bytes": 942,
+        "sha256": "abd4e0d1ea1af5955bb62b1d550ef57461c6b8ab91818f98e0cc9cd5a6e125da"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.019622792024165392
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.02073258301243186
+    }
+  ]
 }

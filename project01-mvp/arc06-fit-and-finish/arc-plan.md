@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.33, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.34, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -278,3 +278,10 @@ Slice09 independently closed seven rows at e9cabd5 (parentf71d607), fresh717 foc
 Apply reloaded collaboration-framework2.7.2: keep explicit two-contributor mode and Expedited Mode, plan the next useful REPL galaxy-selection/query-reference increment with actual accepted dependency e9cabd5 and honest candidate delivery state. Existing planned Slice10 then Slice11/live/fullstartup/unknown-state owners, later evidence-gated raw-field repair and every original acceptance gate remain. Routine source inspection/native review is within the agreed assignment; no standalone investigation or budget extension is commissioned. Three-contributor CRC/CDC retrospective duties activate only after explicit Operator selection, not by installing a new version.
 
 Version1.33 (2026-10-16): child09 independent acceptance and framework application, preserving original scope/architecture/acceptance, existing candidate fences and later composition/integration responsibility.
+
+
+## Slice10 usable command increment — 2026-10-16
+
+After Slice09 accepted candidatee9cabd5/closure dcd30c4, open the already planned REPL command/reference owner as Slice10 galaxy-scoped-repl. Current assignment arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt.md; separate CC implements, independent CDC reviews. Seven RG rows open; new childR06-S10 open,28 arc rows/nine done/nineteen open, project25 open. Useful result includes galaxy inspect/select, truthful session/reference context, working find/route defaults and command help/completion/docs/production caller integration. Actual prerequisite is acceptede9cabd5, not project-wide closure. Candidate .worktrees/galaxy-scoped-repl/codex/galaxy-scoped-repl; main6d183bde and dependencies/Project02 held. CDC/Operator retain later authorized main integration and final-baseline composition; no release claim.
+
+The original consumer route/acceptance remains:10 command/reference increment,11 actual live/transport/startup/cache/unknown-system and historical cache state disposition, then raw-field policy/repair with compatibility proof and original scope. No new inquiry or repeated readiness phase, scope reduction or structural sequence change. Version1.34 (2026-10-16): bounded useful command increment detailed from accepted09 using refreshed planning rules; all other original rows/owners/gates retained.

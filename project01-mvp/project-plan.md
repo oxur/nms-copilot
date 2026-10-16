@@ -9,7 +9,7 @@ updated: 2026-10-11
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.24
+version: 1.25
 project: project01-mvp
 status: active
 depends-on: []
@@ -747,3 +747,8 @@ Version1.23 (2026-10-11): Arc06 Slice08 closeout/source inspection supplies the 
 Slice09 seven rows independently accepted at e9cabd5;717 focused/213 no-default/913 workspace and all required gates reproduced. Arc27/nine done/eighteen open, project25 open. Delivery is a reviewed candidate; main6d183bde remains unchanged, with authorized integration and final-baseline composition owned by CDC/Operator later. Preserve Project02 and all existing scope and gate owners. Framework2.7.2 is now applied, including useful capability increments, actual bounded prerequisite results and pre-agreed investigation purposes/budgets. Existing two-contributor workflow remains; no new role/inquiry/waiver introduced. Proceed to planned Slice10 user-facing galaxy command/reference integration; Slice11 live/transports/fullstartup/cache/unknown state, later raw-field repair and all original parent acceptance remain open.
 
 Version1.24 (2026-10-16): Arc06 child09 acceptance, honest candidate/integration distinction and refreshed planning rules; no substantive scope or acceptance amendment.
+
+
+## Arc06 Slice10 usable REPL increment — 2026-10-16
+
+Open planned Slice10 galaxy-scoped-repl from acceptede9cabd5 after child09 closure dcd30c4. Production command wiring/help/completion/docs and reference semantics are delivered/tested together as a reviewable candidate. Seven rows open; arc28/nine done/nineteen open, project25 open. Actual bounded dependency is accepted09; no unnecessary whole-project dependency or new investigation. Main6d183bde and Project02 preserved; CDC/Operator own later authorized integration and final-baseline acceptance, while11 live/transport/startup/cache/unknown state, subsequent field repair and original whole-project gates remain. Version1.25 (2026-10-16): Arc06 details existing next owner under framework2.7.2; approved scope/architecture/acceptance unchanged.
