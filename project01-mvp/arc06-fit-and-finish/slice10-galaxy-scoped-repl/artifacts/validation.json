@@ -1246,6 +1246,26 @@
         "bytes": 0,
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "effective_environment": {},
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     }
   ],
   "notes": [
@@ -1289,5 +1309,19 @@
     "doctest_harnesses": 9,
     "doctests": 0,
     "warnings": "Existing warnings are disclosed in artifacts/execution.md; no new warning attributed."
+  },
+  "planning_evidence_commit": {
+    "commit": "95c4913",
+    "message": "docs(planning): return Slice10 REPL implementation evidence",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
   }
 }

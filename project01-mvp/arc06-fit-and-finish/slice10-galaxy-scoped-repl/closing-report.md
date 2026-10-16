@@ -6,7 +6,7 @@ Initial CC assignment: `arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-promp
 
 Source candidate branch `codex/galaxy-scoped-repl` is at `0346b19318326073a06ae921390add50a7e83d98`, direct parent `e9cabd5fe63f19e9fe2e6da840845315d2ee2d18`. It changes exactly seven allowlisted paths: `README.md`, the five named `crates/nms-copilot/src/{commands,completer,dispatch,main,session}.rs` files, and `crates/nms-copilot/tests/dispatch_integration.rs`. The source commit has the two required co-author trailers exactly once. The candidate is clean. Main remains pinned and clean; no source integration, merge, publish, or install occurred.
 
-Planning worktree at intake was `.worktrees/planning`, HEAD `3f73e019a0e49bd23dacf79e95d2f3fa7558faaa`. The planning return is limited to these four paths: `artifacts/execution.md`, `artifacts/validation.json`, this `closing-report.md`, and `ledger.md` Evidence/Notes. The prompt, slice plan, author baseline, parent plans, and prior evidence remain unchanged. Planning commit receipt is added after this report commit; the Slice10 rows remain open for CDC.
+Planning worktree at intake was `.worktrees/planning`, HEAD `3f73e019a0e49bd23dacf79e95d2f3fa7558faaa`. The planning return is limited to these four paths: `artifacts/execution.md`, `artifacts/validation.json`, this `closing-report.md`, and `ledger.md` Evidence/Notes. The prompt, slice plan, author baseline, parent plans, and prior evidence remain unchanged. The planning evidence commit is `95c4913` (`docs(planning): return Slice10 REPL implementation evidence`), with the required co-author trailers. A separate receipt update records this commit; the Slice10 rows remain open for CDC.
 
 ## Proposed row walk
 
