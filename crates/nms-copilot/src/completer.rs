@@ -7,7 +7,9 @@
 //! - Biome names from the Biome enum
 //! - Base names from the loaded model
 //! - System names from the loaded model
+//! - Galaxy reference names for the `galaxy` command
 
+use nms_core::galaxy::Galaxy;
 use reedline::{Completer, Span, Suggestion};
 
 /// Completions that depend on the loaded galaxy model.
@@ -31,8 +33,8 @@ impl CopilotCompleter {
 }
 
 const COMMANDS: &[&str] = &[
-    "convert", "exit", "find", "help", "info", "list", "map", "quit", "reset", "route", "set",
-    "show", "stats", "status",
+    "convert", "exit", "find", "galaxy", "help", "info", "list", "map", "quit", "reset", "route",
+    "set", "show", "stats", "status",
 ];
 
 const SHOW_SUBCOMMANDS: &[&str] = &["system", "base"];
@@ -99,6 +101,8 @@ impl Completer for CopilotCompleter {
         let (partial, candidates) = match lower_refs.as_slice() {
             [] => ("", COMMANDS.to_vec()),
             [_] if !trailing_space => (words[0], COMMANDS.to_vec()),
+
+            ["galaxy", ..] => return self.complete_galaxy_context(line_to_pos, pos),
 
             ["list"] if trailing_space => ("", LIST_SUBCOMMANDS.to_vec()),
             ["list", _] if !trailing_space => (words[1], LIST_SUBCOMMANDS.to_vec()),
@@ -174,6 +178,30 @@ impl Completer for CopilotCompleter {
 }
 
 impl CopilotCompleter {
+    fn complete_galaxy_context(&self, line_to_pos: &str, pos: usize) -> Vec<Suggestion> {
+        let Some((_, value_tail)) = line_to_pos.split_once(char::is_whitespace) else {
+            return vec![];
+        };
+        let value_tail = value_tail.trim_start();
+        let opening_quote = value_tail.starts_with('"');
+        let partial = if opening_quote {
+            &value_tail[1..]
+        } else {
+            value_tail
+        };
+        let partial = if line_to_pos.ends_with(char::is_whitespace) {
+            ""
+        } else {
+            partial
+        };
+        let replacement_len = partial.len() + usize::from(opening_quote);
+        let start = pos.saturating_sub(replacement_len);
+        let names: Vec<String> = (0..=u8::MAX)
+            .map(|index| Galaxy::by_index(index).name.to_string())
+            .collect();
+        self.complete_names_at(partial, &names, start, pos)
+    }
+
     fn complete_find_context(
         &self,
         line_to_pos: &str,
@@ -237,6 +265,16 @@ impl CopilotCompleter {
     }
 
     fn complete_names(&self, partial: &str, names: &[String], pos: usize) -> Vec<Suggestion> {
+        self.complete_names_at(partial, names, pos - partial.len(), pos)
+    }
+
+    fn complete_names_at(
+        &self,
+        partial: &str,
+        names: &[String],
+        start: usize,
+        pos: usize,
+    ) -> Vec<Suggestion> {
         let lower = partial.to_lowercase();
         names
             .iter()
@@ -254,7 +292,7 @@ impl CopilotCompleter {
                     description: None,
                     style: None,
                     extra: None,
-                    span: Span::new(pos - partial.len(), pos),
+                    span: Span::new(start, pos),
                     append_whitespace: true,
                     match_indices: None,
                 }
@@ -309,6 +347,7 @@ mod tests {
         assert!(values.contains(&"find"));
         assert!(values.contains(&"show"));
         assert!(values.contains(&"exit"));
+        assert!(values.contains(&"galaxy"));
     }
 
     #[test]
@@ -499,5 +538,37 @@ mod tests {
         let results = c.complete("FIND --b", 8);
         let values: Vec<&str> = results.iter().map(|s| s.value.as_str()).collect();
         assert!(values.contains(&"--biome"));
+    }
+
+    #[test]
+    fn test_complete_galaxy_name_prefixes_and_quoted_value_span() {
+        let mut c = test_completer();
+        let cases = [
+            ("gal", "galaxy"),
+            ("galaxy Ei", "Eissentam"),
+            ("galaxy H", "\"Hilbert Dimension\""),
+        ];
+        for (line, expected) in cases {
+            let results = c.complete(line, line.len());
+            let suggestion = results
+                .iter()
+                .find(|suggestion| suggestion.value == expected)
+                .unwrap_or_else(|| panic!("missing {expected} for {line}"));
+            if line == "galaxy Ei" {
+                assert_eq!(suggestion.span, Span::new("galaxy ".len(), line.len()));
+            }
+        }
+
+        let line = "galaxy \"Hilbert D";
+        let results = c.complete(line, line.len());
+        let suggestion = results
+            .iter()
+            .find(|suggestion| suggestion.value == "\"Hilbert Dimension\"")
+            .expect("quoted multi-word galaxy completion");
+        assert_eq!(suggestion.span, Span::new("galaxy ".len(), line.len()));
+        assert!(matches!(
+            crate::commands::parse_line(&format!("galaxy {}", suggestion.value)).unwrap(),
+            Some(crate::commands::Action::Galaxy { selection: Some(name) }) if name == "Hilbert Dimension"
+        ));
     }
 }

@@ -244,8 +244,8 @@ fn main() {
                         continue;
                     }
                     {
-                        let guard = model.blocking_read();
-                        match dispatch::dispatch(&action, &guard, &mut session) {
+                        let mut guard = model.blocking_write();
+                        match dispatch::dispatch(&action, &mut guard, &mut session) {
                             Ok(output) => {
                                 if !output.is_empty() {
                                     print!("{output}");

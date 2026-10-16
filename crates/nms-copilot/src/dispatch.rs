@@ -23,10 +23,13 @@ use nms_core::glyph::GLYPH_TABLE;
 use crate::commands::{Action, ListTarget, SetTarget, ShowTarget};
 use crate::session::SessionState;
 
-/// Execute a parsed REPL action against the model, returning output text.
+/// Execute a parsed REPL action against the shared model, returning output text.
+///
+/// The mutable model parameter supports changing the selected galaxy view.
+/// Callers sharing the model must hold a write guard only for this call.
 pub fn dispatch(
     action: &Action,
-    model: &GalaxyModel,
+    model: &mut GalaxyModel,
     session: &mut SessionState,
 ) -> Result<String, String> {
     match action {
@@ -46,9 +49,15 @@ pub fn dispatch(
                 .map_err(|e| format!("Invalid biome: {e}"))?
                 .or(session.biome_filter);
 
-            let reference = match from {
-                Some(name) => ReferencePoint::Base(name.clone()),
-                None => ReferencePoint::CurrentPosition,
+            let reference = match (from, &session.position) {
+                (Some(name), _) => ReferencePoint::Base(name.clone()),
+                (None, Some(crate::session::PositionContext::Base { address, .. }))
+                | (None, Some(crate::session::PositionContext::Address(address))) => {
+                    ReferencePoint::Address(*address)
+                }
+                (None, None | Some(crate::session::PositionContext::PlayerPosition(_))) => {
+                    ReferencePoint::CurrentPosition
+                }
             };
 
             let query = FindQuery {
@@ -106,6 +115,8 @@ pub fn dispatch(
             algo,
             round_trip,
         ),
+
+        Action::Galaxy { selection } => dispatch_galaxy(model, session, selection.as_deref()),
 
         Action::Set { target } => dispatch_set(model, session, target),
         Action::Reset { target } => Ok(dispatch_reset(model, session, target)),
@@ -176,12 +187,15 @@ fn dispatch_route(
     };
 
     // 2. Determine from: --from > session position > CurrentPosition
-    let route_from = match from {
-        Some(name) => RouteFrom::Base(name.clone()),
-        None => match &session.position {
-            Some(pos) => RouteFrom::Address(*pos.address()),
-            None => RouteFrom::CurrentPosition,
-        },
+    let route_from = match (from, &session.position) {
+        (Some(name), _) => RouteFrom::Base(name.clone()),
+        (None, Some(crate::session::PositionContext::Base { address, .. }))
+        | (None, Some(crate::session::PositionContext::Address(address))) => {
+            RouteFrom::Address(*address)
+        }
+        (None, None | Some(crate::session::PositionContext::PlayerPosition(_))) => {
+            RouteFrom::CurrentPosition
+        }
     };
 
     // 3. Determine warp_range: --warp-range > session warp_range > None
@@ -212,6 +226,43 @@ fn dispatch_route(
     let result = execute_route(model, &query).map_err(|e| e.to_string())?;
     let theme = Theme::default_dark();
     Ok(format_route(&result, model, &theme))
+}
+
+fn dispatch_galaxy(
+    model: &mut GalaxyModel,
+    session: &mut SessionState,
+    selection: Option<&str>,
+) -> Result<String, String> {
+    let Some(selection) = selection else {
+        let discovered = model
+            .discovered_galaxies()
+            .into_iter()
+            .map(|index| {
+                let galaxy = Galaxy::by_index(index);
+                format!("{} ({})", galaxy.name, galaxy.index)
+            })
+            .collect::<Vec<_>>();
+        let discovered = if discovered.is_empty() {
+            "(none)".to_string()
+        } else {
+            discovered.join(", ")
+        };
+        let active = Galaxy::by_index(model.active_galaxy);
+        return Ok(format!(
+            "Active galaxy: {} ({})\nDiscovered galaxies: {discovered}\n",
+            active.name, active.index
+        ));
+    };
+
+    let index = resolve_galaxy(selection)?;
+    let galaxy = Galaxy::by_index(index);
+    model.set_active_galaxy(index);
+    session.sync_from_model(model);
+    let count = model.spatial_for(index).map_or(0, |spatial| spatial.size());
+    Ok(format!(
+        "Switched to {} (galaxy {}). {count} systems loaded.\n",
+        galaxy.name, galaxy.index
+    ))
 }
 
 fn dispatch_list(model: &GalaxyModel, target: &ListTarget) -> Result<String, String> {
@@ -611,6 +662,7 @@ NMS Copilot -- Interactive Galaxy Explorer
 
 Commands:
   find       Search planets by biome, distance, name
+  galaxy     Show discovered galaxies or select a galaxy view
   list       List galaxies, biomes, glyphs, bases, systems, terrain-types
   map        Open interactive galaxy map
   route      Plan a route through discovered systems
@@ -627,6 +679,9 @@ Commands:
 Live updates are shown between commands when file watching is enabled.
 
 Examples:
+  galaxy
+  galaxy Eissentam
+  galaxy \"Hilbert Dimension\"
   find --biome Lush --nearest 5
   route --biome Lush --warp-range 2500
   route --target \"Alpha Base\" --target \"Beta Base\"

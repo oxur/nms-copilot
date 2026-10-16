@@ -136,6 +136,12 @@ pub enum Action {
         round_trip: bool,
     },
 
+    /// Inspect or switch the selected galaxy view without moving the player.
+    Galaxy {
+        /// Galaxy index (0-255) or exact galaxy name; omit to show discovered galaxies.
+        selection: Option<String>,
+    },
+
     /// Set session context (position, biome filter, warp range).
     Set {
         #[command(subcommand)]
@@ -620,6 +626,22 @@ mod tests {
     fn test_parse_map() {
         let action = parse_line("map").unwrap().unwrap();
         assert!(matches!(action, Action::Map));
+    }
+
+    #[test]
+    fn test_parse_galaxy_optional_selection() {
+        assert!(matches!(
+            parse_line("galaxy").unwrap(),
+            Some(Action::Galaxy { selection: None })
+        ));
+        assert!(
+            matches!(parse_line("galaxy 9").unwrap(), Some(Action::Galaxy { selection: Some(selection) }) if selection == "9")
+        );
+        assert!(
+            matches!(parse_line("galaxy \"Hilbert Dimension\"").unwrap(), Some(Action::Galaxy { selection: Some(selection) }) if selection == "Hilbert Dimension")
+        );
+        assert!(parse_line("galaxy 9 extra").is_err());
+        assert!(parse_line("galaxy -1").is_err());
     }
 
     #[test]

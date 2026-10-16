@@ -169,8 +169,8 @@ impl SessionState {
         let mut lines = Vec::new();
 
         lines.push(format!(
-            "Galaxy:      {} ({})",
-            self.galaxy.name, self.galaxy.galaxy_type
+            "Galaxy:      {} ({}; {})",
+            self.galaxy.name, self.galaxy.index, self.galaxy.galaxy_type
         ));
         lines.push(format!(
             "Model:       {} systems, {} planets",
@@ -178,7 +178,16 @@ impl SessionState {
         ));
 
         match &self.position {
-            Some(pos) => lines.push(format!("Position:    {}", pos.label())),
+            Some(pos) => {
+                let address = pos.address();
+                let reference_galaxy = Galaxy::by_index(address.reality_index);
+                lines.push(format!(
+                    "Position:    {} ({}, galaxy {})",
+                    pos.label(),
+                    reference_galaxy.name,
+                    reference_galaxy.index
+                ));
+            }
             None => lines.push("Position:    unknown".into()),
         }
 
