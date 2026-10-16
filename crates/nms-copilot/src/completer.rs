@@ -183,19 +183,13 @@ impl CopilotCompleter {
             return vec![];
         };
         let value_tail = value_tail.trim_start();
+        let start = pos.saturating_sub(value_tail.len());
         let opening_quote = value_tail.starts_with('"');
         let partial = if opening_quote {
             &value_tail[1..]
         } else {
             value_tail
         };
-        let partial = if line_to_pos.ends_with(char::is_whitespace) {
-            ""
-        } else {
-            partial
-        };
-        let replacement_len = partial.len() + usize::from(opening_quote);
-        let start = pos.saturating_sub(replacement_len);
         let names: Vec<String> = (0..=u8::MAX)
             .map(|index| Galaxy::by_index(index).name.to_string())
             .collect();
@@ -570,5 +564,115 @@ mod tests {
             crate::commands::parse_line(&format!("galaxy {}", suggestion.value)).unwrap(),
             Some(crate::commands::Action::Galaxy { selection: Some(name) }) if name == "Hilbert Dimension"
         ));
+    }
+
+    #[test]
+    fn test_complete_galaxy_values_reconstruct_and_parse_exactly() {
+        let cases = [
+            (
+                "galaxy ",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy   ",
+                9,
+                "galaxy   \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy Hilbert ",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy \"Hilbert ",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy Hilbert D",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy \"Hilbert D",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            (
+                "galaxy \"hIlBeRt ",
+                7,
+                "galaxy \"Hilbert Dimension\"",
+                "Hilbert Dimension",
+            ),
+            ("galaxy Ei", 7, "galaxy Eissentam", "Eissentam"),
+        ];
+
+        for (line, expected_start, expected_line, expected_selection) in cases {
+            let mut c = test_completer();
+            let suggestion = c
+                .complete(line, line.len())
+                .into_iter()
+                .find(|suggestion| {
+                    suggestion.value
+                        == if expected_selection == "Hilbert Dimension" {
+                            "\"Hilbert Dimension\""
+                        } else {
+                            "Eissentam"
+                        }
+                })
+                .unwrap_or_else(|| panic!("missing completion for {line:?}"));
+
+            assert_eq!(
+                suggestion.span,
+                Span::new(expected_start, line.len()),
+                "{line:?}"
+            );
+            let reconstructed = format!(
+                "{}{}{}",
+                &line[..suggestion.span.start],
+                suggestion.value,
+                &line[suggestion.span.end..]
+            );
+            assert_eq!(reconstructed, expected_line, "{line:?}");
+            assert!(matches!(
+                crate::commands::parse_line(&reconstructed).unwrap(),
+                Some(crate::commands::Action::Galaxy { selection: Some(name) })
+                    if name == expected_selection
+            ));
+        }
+    }
+
+    #[test]
+    fn test_complete_galaxy_prefix_negative_and_cap_controls() {
+        let mut c = test_completer();
+        assert!(c.complete("galaxy NotARealGalaxy ", 22).is_empty());
+
+        let hilbert = c.complete("galaxy Hilbert", 14);
+        assert!(!hilbert.is_empty());
+        assert!(hilbert.iter().all(|suggestion| {
+            suggestion
+                .value
+                .trim_matches('"')
+                .to_lowercase()
+                .starts_with("hilbert")
+        }));
+        assert!(
+            !hilbert
+                .iter()
+                .any(|suggestion| suggestion.value == "Euclid")
+        );
+
+        let all = c.complete("galaxy ", 7);
+        assert_eq!(all.len(), 20);
+        assert!(all.iter().any(|suggestion| {
+            suggestion.value == "\"Hilbert Dimension\"" && suggestion.span == Span::new(7, 7)
+        }));
     }
 }
