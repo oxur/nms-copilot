@@ -199,29 +199,46 @@ The REPL (`nms-copilot`) supports all the commands above plus session management
 ```bash
 nms-copilot
 
-[Euclid │ 644 planets │ 293 systems] 🚀 set position "Acadia National Park"
+[Euclid | 644 planets] 🚀 set position "Acadia National Park"
 📍 Position set to Acadia National Park (Lush, Gugestor Colony)
 
-[Euclid │ 644 planets │ 293 systems] 🚀 find --biome Lava --nearest 3
+[Euclid | 644 planets] 🚀 find --biome Lava --nearest 3
   #  Planet       Biome  Distance   Portal Glyphs
   1  (unnamed)    Lava     127K ly  🌅🦕🌀🕊️🐜🌳🌜🕋🌅🌀🕋🦕
   2  (unnamed)    Lava     204K ly  🌅🌜🐜🕊️🐜🌳🦋🕋🌜🔺🕋😑
   3  (unnamed)    Lava     318K ly  🌅😑🐜🕊️🐜🌅🌜🕋🌅🔺🕋🐜
 
-[Euclid │ 644 planets │ 293 systems] 🚀 list bases --limit 5
+[Euclid | 644 planets] 🚀 list bases --limit 5
   #  Base                    System            Planet          Biome
   1  Acadia National Park    Gugestor Colony   Metok-Kalpa     Lush
   2  Sealab 2038             Esurad            Sushimi         Lush
   ...
 
-[Euclid │ 644 planets │ 293 systems] 🚀 map
+[Euclid | 644 planets] 🚀 map
   (opens full-screen interactive galaxy map with zoom levels)
+
+[Euclid | 644 planets] 🚀 galaxy
+Active galaxy: Euclid (0)
+Discovered galaxies: Euclid (0), Eissentam (9)
+
+[Euclid | 644 planets] 🚀 galaxy Eissentam
+Switched to Eissentam (galaxy 9). <systems> systems loaded.
+
+[Eissentam | 644 planets] 🚀 galaxy "Hilbert Dimension"
 ```
+
+`galaxy` selects a view and does not move the traveller. Galaxy indices from 0
+through 255 and quoted multi-word names are accepted. A default follow-player
+`find` or `route` reports the existing reference/active galaxy mismatch when
+the selected view differs from the physical location. Set a base reference
+with `set position "Camp-9"` or provide `--from "Camp-9"`. Explicit base and
+address references keep their own galaxy if the selected view later changes.
 
 REPL-only commands:
 
 | Command | Description |
 |---------|-------------|
+| `galaxy [index-or-name]` | Show discovered galaxies or select the galaxy view. |
 | `set position <base>` | Set reference position for distance calculations |
 | `set biome <biome>` | Set default biome filter for find/route |
 | `set warp-range <ly>` | Set default warp range for route planning |
