@@ -90,3 +90,8 @@ The ledger preserves all five accepted rows and all non-RG-05/RG-07 cells byte-i
 The current candidate is wired but not integrated into main, installed, or released. Slice10/Arc06/Project01 remain open pending independent CDC disposition and authorized later integration. Slice11 actual watcher/MCP transports/subscriptions/startup/cache/unknown-system/historical-state disposition, later raw-field repair, and every original parent gate/owner remain outstanding. No new investigation, synthetic verification, retrospective, cross-chat message or acceptance claim was created.
 
 Planning return files are limited to `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md` (the latter only the two permitted row cells). Planning commit receipt follows this report commit.
+
+
+### Primary planning commit receipt
+
+Primary planning evidence commit is `b3fe21820876e8a979e066007f8dc2c3fd3a9714`, direct parent `c32dc420fd3303d4747ecc7cf37b4a270207fdd9`, message `docs(planning): return Slice10 iteration01 completion evidence`. It contains exactly the four authorized return paths: `artifacts/execution.md`, `artifacts/validation.json`, `closing-report.md`, and `ledger.md`. Both required co-author trailers occur once. A limited receipt follow-up commits only execution, validation and this report.

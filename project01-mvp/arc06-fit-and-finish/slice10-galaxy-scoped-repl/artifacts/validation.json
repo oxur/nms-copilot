@@ -2015,6 +2015,95 @@
         "bytes": 0,
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "environment_schema": "iteration01-observed-v1",
+      "observed_process_environment_before_child": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "command_overrides": {},
+      "effective_relevant_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "cargo_offline_configuration": {
+        "config_files_checked": [
+          "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/.cargo/config.toml",
+          "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/.cargo/config",
+          "/Users/oubiwann/lab/oxur/nms-copilot/.cargo/config.toml",
+          "/Users/oubiwann/lab/oxur/nms-copilot/.cargo/config",
+          "/Users/oubiwann/.cargo/config.toml",
+          "/Users/oubiwann/.cargo/config"
+        ],
+        "files_found": [],
+        "CARGO_NET_OFFLINE": null,
+        "argv_offline_flags": []
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.02954800007864833,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "environment_schema": "iteration01-observed-v1",
+      "observed_process_environment_before_child": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "command_overrides": {},
+      "effective_relevant_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null
+      },
+      "cargo_offline_configuration": {
+        "config_files_checked": [],
+        "files_found": [],
+        "CARGO_NET_OFFLINE": null,
+        "argv_offline_flags": []
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.028507207985967398,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
     }
   ],
   "notes": [
@@ -2161,7 +2250,7 @@
       ]
     },
     "planning_commits": [
-      "pending primary planning return",
+      "b3fe21820876e8a979e066007f8dc2c3fd3a9714",
       "pending receipt follow-up"
     ],
     "final_gate_summary": {
@@ -2222,13 +2311,15 @@
       "final_repeat_diff_receipts": {
         "source": 66,
         "planning": 67,
-        "planning_after_summary_update": 68
+        "planning_after_summary_update": 68,
+        "planning_after_primary_commit_receipt": 69,
+        "planning_after_receipt_index_update": 70
       },
       "complete_invocation_positions_through_final_check": [
         54,
-        68
+        70
       ],
-      "total_new_successful_invocations_including_final_diff_rechecks": 15
+      "total_new_successful_invocations_including_final_diff_rechecks": 17
     },
     "historical_inventory_correction": {
       "original_invocations": 53,
@@ -2340,6 +2431,22 @@
         "version": "1.2.0",
         "extent": "Gate Selection 11-26; Proportionate Proof 27-50; Minimum Validation Set 51-66; Warning/Lint/Format 78-84; Gate Evidence 100-106"
       }
-    ]
+    ],
+    "planning_primary_commit": {
+      "commit": "b3fe21820876e8a979e066007f8dc2c3fd3a9714",
+      "parent": "c32dc420fd3303d4747ecc7cf37b4a270207fdd9",
+      "message": "docs(planning): return Slice10 iteration01 completion evidence",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md"
+      ],
+      "trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ]
+    },
+    "planning_receipt_followup": "pending; limited to execution.md, validation.json and closing-report.md"
   }
 }
