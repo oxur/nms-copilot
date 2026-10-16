@@ -29,3 +29,6 @@ Current assignment: arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt.md
 ## Version history
 
 1.0 (2026-10-16): detail existing next useful command/reference increment from accepted09, including production wiring, user docs, preserved behavior, bounded native proof and honest later integration ownership.
+
+
+Initial issuance receipt:c45dd92b5303a3501ea9dc50e60f832cd28126d0, direct parentdcd30c4; exact nine planning paths and both trailers once. Actual commit/status captures and prompt SHA256 are in author-baseline.json. This is author readiness/commit evidence only, not implementation acceptance.

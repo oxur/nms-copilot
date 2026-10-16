@@ -37,5 +37,108 @@
     "all_source_worktrees_clean_pinned": true,
     "CC_evidence_immutable": true,
     "diff_check": true
-  }
+  },
+  "issuance_commit": "c45dd92b5303a3501ea9dc50e60f832cd28126d0",
+  "issued_prompt_sha256": "395425a61032baf9d6698b47fa1080f24aa508fff7eee1a252e864f8cbe1bf7f",
+  "issuance_commit_receipts": [
+    {
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/author-baseline.json",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/slice-plan.md"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.02177770808339119
+    },
+    {
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/nms-s09-cdc-20261016/slice10-issuance-message.txt",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/slice-plan.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/author-baseline.json",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice09-galaxy-scoped-session/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/arc06-fit-and-finish/ledger.md",
+        "project01-mvp/project-plan.md"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "W3BsYW5uaW5nIGM0NWRkOTJdIE9wZW4gdXNhYmxlIFJFUEwgZ2FsYXh5IHNlbGVjdGlvbiBhbmQgcmVmZXJlbmNlIGluY3JlbWVudAogOSBmaWxlcyBjaGFuZ2VkLCAyODMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMTAtZ2FsYXh5LXNjb3BlZC1yZXBsL2FydGlmYWN0cy9hdXRob3ItYmFzZWxpbmUuanNvbgogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxMC1nYWxheHktc2NvcGVkLXJlcGwvY2MtcHJvbXB0Lm1kCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTEwLWdhbGF4eS1zY29wZWQtcmVwbC9sZWRnZXIubWQKIGNyZWF0ZSBtb2RlIDEwMDY0NCBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMTAtZ2FsYXh5LXNjb3BlZC1yZXBsL3NsaWNlLXBsYW4ubWQK",
+        "bytes": 525,
+        "sha256": "c96dcfe93d9883193e6a7d77e1fb1f633e87f20e7d22618e228e8f150517da45"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.05808629235252738
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "--format=full",
+        "--stat",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "Y29tbWl0IGM0NWRkOTJiNTMwM2EzNTAxZWE5ZGM1MGU2MGY4MzJjZDI4MTI2ZDAKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIE9wZW4gdXNhYmxlIFJFUEwgZ2FsYXh5IHNlbGVjdGlvbiBhbmQgcmVmZXJlbmNlIGluY3JlbWVudAogICAgCiAgICBDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT4KICAgIENvLWF1dGhvcmVkLWJ5OiBCaWxsbyBBSSA8YWktZW5naW5lZXJpbmdAYmlsbG8uc3lzdGVtcz4KCiBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL2FyYy1wbGFuLm1kICAgICB8ICAgOSArLQogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQgICAgICAgfCAgIDkgKysKIC4uLi9hcnRpZmFjdHMvY2RjLXJldmlldy1yZWNlaXB0cy5qc29uICAgICAgICAgICAgIHwgMTAxICsrKysrKysrKysrKysrKysrKysrLQogLi4uL2NkYy12ZXJpZmljYXRpb24ubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDMgKwogLi4uL2FydGlmYWN0cy9hdXRob3ItYmFzZWxpbmUuanNvbiAgICAgICAgICAgICAgICAgfCAgNDEgKysrKysrKysrCiAuLi4vc2xpY2UxMC1nYWxheHktc2NvcGVkLXJlcGwvY2MtcHJvbXB0Lm1kICAgICAgICB8ICA3MiArKysrKysrKysrKysrKysKIC4uLi9zbGljZTEwLWdhbGF4eS1zY29wZWQtcmVwbC9sZWRnZXIubWQgICAgICAgICAgIHwgIDEzICsrKwogLi4uL3NsaWNlMTAtZ2FsYXh5LXNjb3BlZC1yZXBsL3NsaWNlLXBsYW4ubWQgICAgICAgfCAgMzEgKysrKysrKwogcHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQgICAgICAgICAgICAgICAgICAgICAgfCAgIDcgKy0KIDkgZmlsZXMgY2hhbmdlZCwgMjgzIGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCg==",
+        "bytes": 961,
+        "sha256": "bcd2e7fcdf3242582ce71463bffa7c358e861d0888a6fd9d66da3c571cf5fe08"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.02109833387658
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.029219165910035372
+    }
+  ],
+  "postcommit_audit": "Direct parentdcd30c4; nine named planning paths; both trailers once; clean planning after issuance; source pins unchanged."
 }
