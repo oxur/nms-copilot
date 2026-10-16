@@ -9,7 +9,7 @@ updated: 2026-10-11
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.23
+version: 1.24
 project: project01-mvp
 status: active
 depends-on: []
@@ -740,3 +740,10 @@ Current bounded sequence: Slice08 closed; detail required session/live-interface
 Slice08 closed in9d6e43e after specific Operator evidence approval and independent CC proof. Arc06 opens Slice09 galaxy-scoped live session state at acceptedf71d607; separate CC implements, Sofie/CDC reviews. Its seven rows remain open; arc27/eight done/nineteen open, project25 open. Existing mandatory identity consumer work is bounded into09 movement/session/location/typed drain-cache,10 REPL command/reference integration,11 actual watch/transports/full startup-cache/unknown-system and historical cached-state disposition, then evidence-gated save-field policy/repair. All original scope/correctness/coverage/docs/distribution/independent/Operator gates stay open and unchanged. No merge/main/source movement/release/Project02 mutation, old data reconstruction or extension of Slice08's historical exception.
 
 Version1.23 (2026-10-11): Arc06 Slice08 closeout/source inspection supplies the next bounded consumer assignment and explicit remaining owners, without changing approved architecture, scope or acceptance.
+
+
+## Arc06 Slice09 independent acceptance and framework refresh — 2026-10-16
+
+Slice09 seven rows independently accepted at e9cabd5;717 focused/213 no-default/913 workspace and all required gates reproduced. Arc27/nine done/eighteen open, project25 open. Delivery is a reviewed candidate; main6d183bde remains unchanged, with authorized integration and final-baseline composition owned by CDC/Operator later. Preserve Project02 and all existing scope and gate owners. Framework2.7.2 is now applied, including useful capability increments, actual bounded prerequisite results and pre-agreed investigation purposes/budgets. Existing two-contributor workflow remains; no new role/inquiry/waiver introduced. Proceed to planned Slice10 user-facing galaxy command/reference integration; Slice11 live/transports/fullstartup/cache/unknown state, later raw-field repair and all original parent acceptance remain open.
+
+Version1.24 (2026-10-16): Arc06 child09 acceptance, honest candidate/integration distinction and refreshed planning rules; no substantive scope or acceptance amendment.

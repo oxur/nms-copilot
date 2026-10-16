@@ -49,3 +49,8 @@ The first planning `git commit --only` attempt exited 1 before Git created a com
 - CC return: this `closing-report.md` and evidence/notes-only updates to `ledger.md`; ledger statuses remain open.
 - Immutable assignment inputs: `cc-prompt.md`, `slice-plan.md`; predecessor records and parent/Project02 planning untouched.
 - CDC handoff: independently reproduce applicable gates and review the contract, exact intake, six source identities, path/parent/trailer receipts, test oracles and evidence limits before deciding any LM row. No acceptance or parent closure is claimed here.
+
+
+## CDC final acceptance and bubble-up — 2026-10-16
+
+Independent Sofie/CDC review accepted all seven rows at e9cabd5 after fresh717 focused/213 no-default/913 workspace and all required categories; actual captured evidence/row walk is in cdc-verification.md and artifacts/cdc-review-receipts.json. Source/main remain unchanged. This closes the bounded reviewed candidate; integration/installed delivery and parent composition remain pending under CDC/Operator ownership. Original CC report above is preserved. Artifact inventory adds cdc-review-receipts.json (supporting); cdc-verification.md is first-class. No scope drop, raw format adoption, cache revision change or historical exception. Arc childR06-S09 done,27 arc rows/nine done/eighteen open; project25 open. Slice10 supplies public galaxy command/query-reference behavior; Slice11 supplies real live/transport/startup/cache/unknown-state composition, then later field repair and original closeout gates. Reloaded framework2.7.2 with existing two-contributor mode; no new investigation or three-contributor retrospective duty was inferred.

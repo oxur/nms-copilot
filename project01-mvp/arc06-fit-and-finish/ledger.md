@@ -71,6 +71,8 @@ Slice08 closure2026-10-11:26 rows/eight done/eighteen open; all25 other entire r
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S09 | Galaxy-scoped movement/session/location consumers independently accepted | Seven-row Slice09 ledger and actual typed producer/drain/cache/MCP registry proofs, current native gates | correctness-grade | Approved R06-R02/R03 identity composition and original M7.4 | open | — | CC assignment issued; full command/lifecycle/save-field and original parent gates remain open. |
+| R06-S09 | Galaxy-scoped movement/session/location consumers independently accepted | Seven-row Slice09 ledger and actual typed producer/drain/cache/MCP registry proofs, current native gates | correctness-grade | Approved R06-R02/R03 identity composition and original M7.4 | done | [Independent CDC review](slice09-galaxy-scoped-session/cdc-verification.md), e9cabd5;717/213/913 and all gates reproduced2026-10-16. | Seven child rows closed as reviewed candidate; all broader integration/lifecycle/save and original parent gates stay open. |
 
 27 rows/eight done/nineteen open. All prior26 entire rows and criteria/dispositions retained. New child is a bounded owner within the approved required identity consumer route, not a replacement for parent acceptance.
+
+Slice09 independent closure2026-10-16:27 rows/nine done/eighteen open. Parent composition remains open; source candidate e9cabd5 not integrated into main.

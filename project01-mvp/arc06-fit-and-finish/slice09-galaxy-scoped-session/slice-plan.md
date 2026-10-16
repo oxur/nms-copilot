@@ -1,6 +1,6 @@
 # Slice09 — galaxy-scoped live session state
 
-Version: 1.0. Created 2026-10-11. Status: active; seven rows open.
+Version: 1.1. Created 2026-10-11. Status: closed2026-10-16; seven independently accepted rows, reviewed candidate e9cabd5.
 
 ## Goal and authority
 
@@ -38,3 +38,10 @@ Initial assignment: arc06-fit-and-finish/slice09-galaxy-scoped-session/cc-prompt
 
 
 Issuance receipt2026-10-11: initial cc-prompt.md issued in70a249671e9a29dfe32493bebfb491a0d7323ae0, direct parent9d6e43e. Exact ten planning paths/trailers/clean status independently checked by the author; captured commit and postcommit structural receipts are in author-baseline.json. This is assignment readiness evidence, not runtime test proof or independent implementation acceptance. Prompt bytes remain preserved at the recorded SHA256.
+
+
+## Initial assignment independently accepted — 2026-10-16
+
+CC returned e9cabd5/planning079a2627. Sofie/CDC reproduced717 focused/213 no-default/913 workspace and all prescribed categories, reviewed source/intake/boundaries and accepted LM-01–07 in cdc-verification.md. Initial assignment disposition: accepted/closed; no current CC implementation remains in Slice09. Issued prompt/author baseline/CC evidence preserved. Candidate accepted, main not integrated; CDC/Operator retain integration and final-baseline composition responsibility under existing gates. New framework2.7.2 usable-increment/investigation/contributor rules apply prospectively; two-contributor workflow remains selected. No new inquiry, role transition or acceptance amendment.
+
+Version1.1 (2026-10-16): independent acceptance and honest reviewed-candidate/integration state recorded. Proceed to planned Slice10 command/reference capability, retaining all later lifecycle/save and original parent obligations.
