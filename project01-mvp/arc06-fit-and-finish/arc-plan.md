@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.40, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.41, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -324,3 +324,10 @@ CDC revises only implementation boundary for the already approved live-watch cap
 CDC independently reproduced original-TMPDIR live stdio/HTTP phases at46ca153 and all current gates:733 focused/219 no-default/929 workspace; watcher sandbox24/2 timeout preserved before unchanged host26/0 retry. Four child rows LW-01/02/04/06 accepted. LW-03/05/07 remain open for HTTP D-to-A assertion accidentally removed with invalid B equality, direct alias regression using9/X1 rather than prescribed0/X1, and appended current evidence correction. No runtime defect reproduced; source implementation remains frozen during this narrow refinement.
 
 Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md; predecessor iteration01 returned/reviewed and preserved, second refinement of five. Two existing test bodies/four current CC evidence paths only; all required fresh gates and independent review retained. No investigation, waiver, architecture/API/criterion/parent scope or sequence change. R06-S11 stays open:29 arc rows/ten done/nineteen open; all25 project rows open. Planned12 full startup/cache/unknown-state/historical-state/watch-config/duplicate-producer composition, raw-field repair and all original parent acceptance/integration/release owners remain. Main/dependencies/Project02 held, candidate unintegrated/uninstalled. Version1.40 records child review/refinement only.
+
+
+## Slice11 independent closure — 2026-10-17
+
+All seven LW rows accepted at239313 (parent46ca153), CC returnb1d1e09/receiptbe9cdb7. Iteration02 exactly restores HTTP D-to-A and alias0/X1 tests, production frozen; CDC fresh watcher26/lifecycle2/native2/format/lint/diff and nine actual observations, original TMPDIR, preserved restricted failure plus unchanged host retry. Prior four-row independent733/219/929 broader evidence retained with explicit applicability, and complete current CC gates/82 attempts/164 channels audited. Both close-set records preserve original history, final row walk/inventory/what-worked/silent-drop and delivery state.
+
+R06-S11 done;29 arc rows/11 done/18 open, all25 project rows open. Current11 assignment accepted/closed, no further correction. No new scope/architecture/acceptance/sequence change is required by the final child correction; status/evidence versioning only. Detail planned12 full startup-cache C04/old-current envelopes/warm/write-through in both modes, unknown-system placeholder/promotion, historical inconsistent player-state diagnosis/disposition and watcher-config/duplicate-producer composition next; no unresolved policy/inquiry delegated without required authority. Original raw-field repair/export/import/format/docs/distribution/coverage/parent independent/Operator gates remain. Main/dependencies/Project02 held; candidate unintegrated/uninstalled, CDC/Operator own later authorized integration/final-baseline composition/release. Version1.41: formal Slice11 acceptance and bubble-up, preserving every original owner and gate.

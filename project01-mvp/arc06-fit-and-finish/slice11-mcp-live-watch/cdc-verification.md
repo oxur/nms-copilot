@@ -105,3 +105,46 @@ Iteration01 is returned/reviewed and superseded as active by `arc06-fit-and-fini
 No acceptance criterion/architecture/public API/parent scope amendment, waiver or investigation. R06-S11 remains open;29 arc rows/ten done/nineteen open and all25 project rows open. Planned12 retains full startup/cache C04/old-current envelopes/warm/write-through in both modes, unknown-system placeholder/promotion, historical inconsistent player-state diagnosis/disposition and watcher configuration/duplicate-producer composition before raw-field repair and original parent acceptance. Main/dependencies/Project02 remain held. CDC/Operator retain later authorized integration/final-baseline composition/release responsibilities. No slice12 open set yet.
 
 Review/Iteration02 issuance committed as `1914324a61b7293239542cf0c9c723b07dfb11ff`, direct parent321a1f3. Exact eight named planning paths, required trailers once, clean planning and held source fences, immutable prompt digest verified; raw commit channels appended to iteration01_review. The receipt does not modify the issued prompt or accept its unexecuted corrections.
+
+
+# Slice11 Iteration02 independent acceptance and formal closure — 2026-10-17
+
+## Verdict and candidate
+
+**All seven LW rows accepted; Slice11 closed.** Source `239313cc109ca908f43f34ae5e04ba7e5487161f`, direct parent46ca153; CC planning artifact `b1d1e09ee251ed392a63f8528f712b95c113d046` / receipt `be9cdb7e553d388f8f8ca6bd527da37424097152`. Current assignment `arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md` is accepted/closed, both earlier assignments preserved as historical. Review is independent: CDC authored no Rust repair.
+
+## Exact correction, fresh proof and retained evidence
+
+Compared the complete two-file diff and reconstructed its exact expected replacements: HTTP retains actual A/loop results and compares D to A only; alias test changes only replacement and expected reality9→0 with X1 retained. Watcher production before cfg(test) retains its pinned digest; all other production/tests/docs/dependencies unchanged. The appended evidence explicitly corrects the earlier “only phase-B equality” claim while retaining earlier report/execution byte prefixes and every pre-existing validation value, including iteration01. No further implementation, decoder, cache, unknown-system or watcher policy was selected.
+
+Fresh reviewer format/lint pass. Restricted watcher package result24 passed/2 native timeouts remains captured, followed by unchanged authorized-host26/0/0 under original TMPDIR. Fresh lifecycle2/0/0 (218 filtered) and actual native transport2/0/0 pass; separate source/planning diff checks pass. Eight invocations/16 complete validated channel objects, including failure/retry; no TMPDIR override. Native output contains nine actual matching tool/resource observations: HTTP A/B/C/D; stdio A/B/retained-B/C/D. A/D Euclid0/0/0/SSI1/glyph000100000000/system `-`; B Eissentam0/0/0/same glyph/system `(unknown)`; C Eissentam1/0/0/glyph000100000001/system `(unknown)`. Restored HTTP D assertion and direct alias0→9→0/X1 both execute successfully; stdio malformed-five-failure recovery and protocol/EOF proof survives unchanged.
+
+Retain iteration01 independent evidence for LW-01/02/04/06 at46ca153, with its original date/source: exact new delta changes only these two test bodies, and none of the prior production/dependency/docs or stdio evidence is invalidated. Affected watcher/lifecycle/full native checks are fresh above. Prior independently reproduced733 focused/219 no-default/929 workspace/build/docs/strict-cache results remain qualified as prior, not falsely relabelled current. CC's current complete14-gate pass at239313 was checked from raw channels, including six identical-input restricted/host pairs, strict effective RUSTDOCFLAGS,733 focused/219 no-default/929 workspace and zero ignored tests. This satisfies mandatory current CC gates while applying the explicit correction-review retention rule.
+
+## Evidence, source and scope audit
+
+All82 primary CC invocations and164 separate raw channel objects validate base64/byte counts/SHA256; original62 attempts and all earlier root values/prefixes unchanged. Current20 attempts are63–82, original TMPDIR preserved. Source and both planning commit parents/pathsets/trailers are correct. CC only changed the two allowed test bodies and four authorized planning return paths; ledger criteria/statuses were preserved by CC. Held main/dependency/source fences clean and unchanged except authorized candidate revision. Current pre-edit reading/readback/data coverage is consistent with the repair; receipts are attestation, not a claim to prove attention. Historical late-reading chronology stays disclosed and unchanged. No new historical waiver, missing-current-channel exception or fabricated event trace.
+
+## Final row walk
+
+| Row | Final status / independent basis |
+|---|---|
+|LW-01|done; retained owned-handle/callers/task/bridge/drop proof, fresh retained-owner write/drop test|
+|LW-02|done; retained and freshly passing full stdio notification/reread/recovery/protocol/EOF sequence|
+|LW-03|done; current real HTTP session/subscribe/SSE/health/smoke/phase reads and restored actual D→A label assertion|
+|LW-04|done; unchanged lexical lock/logger, retained source-qualified proof plus fresh post-update reads/strict stdout|
+|LW-05|done; fresh startup fallback/lifecycle and full malformed recovery, direct alias0→9→0/X1 replacement and bounded cleanup|
+|LW-06|done; protected useful behavior/docs and prior independent/current CC full validation, exact test-only delta|
+|LW-07|done; current independent replay/capture/scope/commit/prefix audit, accurate superseding correction and all seven rows accounted for|
+
+No deferred/no-op/open rows remain in Slice11. Opening7/closing7; no silent drop, weakened oracle, ignored test or evidence waiver.
+
+## Bubble-up, inventory and what worked
+
+Delivered the arc-assigned reliable MCP live tracking capability as a wired/documented/tested **isolated candidate**, not an installed or integrated release. Actual file→owned watcher→shared model→subscribed stdio/HTTP update→tool/resource reread works and recovers after malformed data. Both public entrypoint owner/lock paths are preserved; a real REPL PTY/full lifecycle/cache-policy claim is not inferred. Original source bug and native path-identity mismatch are corrected; HTTP oracle/preservation gaps are now repaired without altering production to fit a mistaken label expectation.
+
+Artifacts: author-baseline.json, execution.md, validation.json and cdc-review-receipts.json under artifacts/. Slice plan/ledger/three immutable issued prompts/closing report/this verification are first-class slice documents, not additional supporting artifacts. No external artifact override/new maintained validator framework or three-contributor retrospective applies.
+
+What worked: real process/file/subscription proof exposed both ownership and path-spelling faults; successful native payload capture distinguished correct physical location from an unsupported label oracle; exact two-test correction and source-qualified evidence retention closed remaining gaps without repeated runtime redesign. Earlier failed attempts and mistaken claim remain recoverable rather than rewritten.
+
+Arc-plan change decision: status/evidence/version update and child R06-S11 acceptance are needed; no new capability/scope/architecture/criterion or sequence change surfaced by this final correction. R06-S11 done,29 arc rows/11 done/18 open; project25 rows remain open. Planned12 still owns full startup-cache C04/old-current envelopes/warm/write-through in both modes, unknown-system placeholder/promotion, historical inconsistent player-state diagnosis/disposition, watcher configuration/duplicate-producer composition. Detail that next useful increment before issuance; any required inquiry/policy change retains its original authority and Operator agreement. Raw-field repair and original exports/imports/format/docs/distribution/coverage/parent independent/Operator gates remain. CDC/Operator own later authorized source integration and final-baseline composition; main6d183bde/dependencies/Project02 unchanged. This formal child close does not close Arc06 or Project01.

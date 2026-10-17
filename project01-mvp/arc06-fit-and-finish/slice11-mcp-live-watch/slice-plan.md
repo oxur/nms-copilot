@@ -1,6 +1,6 @@
 # Slice11 — reliable MCP live save tracking
 
-Version:1.2. Created2026-10-16. Status:active test/evidence correction; LW-01/02/04/06 accepted and LW-03/05/07 open. Two contributors (CC implements; Sofie/CDC independently reviews), Expedited Mode. Supporting artifacts live in artifacts/; immutable author-baseline.json pins current source observations, CC creates execution/validation only during work and closing report on return. No review/close-set precreated.
+Version:1.3. Created2026-10-16. Status:closed; all seven LW rows independently accepted at239313. Two contributors (CC implements; Sofie/CDC independently reviews), Expedited Mode. Supporting artifacts live in artifacts/; immutable author-baseline.json pins current source observations, CC creates execution/validation only during work and closing report on return. No review/close-set precreated.
 
 ## Useful increment, dependency and delivery
 
@@ -24,7 +24,7 @@ Required reading packet is bounded to touched/consumed source, installed guide s
 
 ## Assignment history and version history
 
-Current assignment: arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md. Iteration01 returned and independently reviewed; preserved as superseded. Initial cc-prompt.md issued2026-10-16 at3509057d, predecessor closed Slice10, reason actual MCP/watch repair; returned/stopped atcdf1e20 and independently reviewed, now superseded as active. Five-refinement budget; preserve every issued prompt; no automatic extension/inquiry. Initial issuance receipt follows commit. Version1.0 details ready11 capability and explicit remaining12 owner, preserving approved scope/architecture/parent gates.
+Current assignment: arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md — accepted/closed2026-10-17. Iteration01 returned and independently reviewed; preserved as superseded. Initial cc-prompt.md issued2026-10-16 at3509057d, predecessor closed Slice10, reason actual MCP/watch repair; returned/stopped atcdf1e20 and independently reviewed, now superseded as active. Five-refinement budget; preserve every issued prompt; no automatic extension/inquiry. Initial issuance receipt follows commit. Version1.0 details ready11 capability and explicit remaining12 owner, preserving approved scope/architecture/parent gates.
 
 Initial issuance receipt:3509057d2c0af7e0134a06777c16dc97267eea72, direct parent Slice10 closure5fed0e0; exact eight named planning paths, both trailers once, prompt digest/held clean source fences checked. Raw commit captures and actual issuance identity are in author-baseline.json. This receipt does not change the immutable prompt or establish implementation acceptance.
 
@@ -54,3 +54,8 @@ Author readiness: inspected both complete test sequences/helpers, runtime identi
 Slice11/Arc06/Project01 and planned12/original parent/raw-field/integration gates remain open; all fences and parent row counts unchanged. No Operator waiver requested or applied.
 
 Iteration02 actual issuance:1914324a61b7293239542cf0c9c723b07dfb11ff, direct parent321a1f3; prompt SHA25685b4b37e7ea18b2b17d2b84bf0bf7319ae28974699fa089140af9bd21e95a2c9. Eight named planning paths, both trailers once, prompt/source/held fences and clean planning state checked after commit. Receipt followup only; no implementation/closure claim.
+
+
+## Formal closure — 2026-10-17
+
+Version1.3: Iteration02 returned b1d1e09/be9cdb7, source239313 directly parent46ca153; exact two test-body corrections, all production unchanged. CDC reproduced affected watcher26/lifecycle2/native2 and format/lint/diff checks with original TMPDIR, retaining sandbox24/2 before unchanged host retry; nine actual observations. Prior four-row independent evidence retained after applicability review, current CC full733/219/929 and all gates/captures audited. All seven rows done; cdc-verification.md and final CDC addendum to closing-report.md contain row walk, inventory, what worked and silent-drop/bubble-up. Every issued prompt/old evidence/prefix/known chronology preserved. No additional correction assignment, evidence exception or inquiry. Planned12/all original parent/raw-field/integration/Operator gates remain open. R06-S11 done; arc29/11/18, project25 open. Source isolated/unintegrated/uninstalled; main/dependencies/Project02 held. Closure receipt follows commit.

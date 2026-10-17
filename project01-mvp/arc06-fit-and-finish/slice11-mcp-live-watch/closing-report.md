@@ -132,3 +132,20 @@ Please relay this proposed-done return to CDC for independent review of the corr
 - Planning artifact commit `b1d1e09ee251ed392a63f8528f712b95c113d046`, parent `05482035d4781774506a8f38a3f835ce1d20c176`; exact four paths: `project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/execution.md, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/validation.json, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md`. Each required co-author trailer occurs once. This follow-up records the artifact commit in validation; this metadata follow-up itself changes only the validation and this report within the same four-path allowlist.
 - Source commit `239313cc109ca908f43f34ae5e04ba7e5487161f`, parent `46ca153c4418fcbf859f76ef59d600985a315b60`, exact two test paths and required trailers verified. Source worktree is clean and remains isolated.
 - Four CDC-accepted rows remain done; LW-03/05/07 remain open. Main/dependencies/Project02 and other accepted source pins remain held. No integration, install, push or release occurred.
+
+
+# Final CDC acceptance / Slice11 closure — 2026-10-17
+
+This is Sofie/CDC's final disposition appended after independent review; the CC proposed-done reports above remain verbatim historical records. Iteration02 and Slice11 are **accepted/closed** at source `239313cc109ca908f43f34ae5e04ba7e5487161f`, parent46ca153. Exact final seven-row walk and verification are in cdc-verification.md / artifacts/cdc-review-receipts.json iteration02_review. LW-01 through LW-07 are all done; no deferral, no-op, waiver or ignored test.
+
+The two permitted test corrections are exact, production unchanged. Fresh independent watcher26/lifecycle2/native2 tests and format/lint/diff pass on unchanged authorized-host input after preserved sandbox24/2 failure. Nine real matching tool/resource observations retained. Prior733/219/929 broad independent gates retained with source/date applicability; CC freshly ran all current gates at239313, and all82 invocations/164 channels, prefix/value preservation, exact parents/pathsets/trailers and clean fences were audited. Detailed current versus retained evidence remains explicit, including existing ordinary-doc warnings and passing strict cache docs. The inaccurate older preservation claim is explicitly corrected in Iteration02 without rewriting it.
+
+Artifacts: artifacts/author-baseline.json, artifacts/execution.md, artifacts/validation.json and artifacts/cdc-review-receipts.json. Immutable three prompt files, plan/ledger/close/reviewer records stay in the slice root. No extra supporting artifact home.
+
+## Bubble-up to the arc
+
+The assigned real save→watcher→model→subscribed stdio/HTTP location behavior is delivered as isolated source candidate, with malformed recovery, protocol cleanliness and bounded lifetime/cleanup. Source is unintegrated/uninstalled. Scope-as-specified equals delivered Slice11 scope; no silent drop. R06-S11 closes; arc29/11 done/18 open, all25 project rows open. The final correction reveals no new production issue or architecture/scope change; parent plan versions record closure/evidence only. Planned12 full startup/cache/unknown-system/historical-state/watch-config/duplicate-producer work remains before raw repair and original parent acceptance. Main/dependency/Project02 fences unchanged, later authorized integration/final-baseline composition and release/Operator gates remain. CDC proceeds to detail the next ready useful increment under existing authority; unresolved policies/inquiry are not silently handed to CC.
+
+What worked: actual native failures and successful payload observations guided a runtime path repair and rejected an invalid test oracle; narrow preserved corrections plus independent evidence retention avoided widening the repair. All earlier unsuccessful attempts remain in the historical packet.
+
+Planning closure commit: pending until this close packet is committed; exact identity follows in the normal receipt.
