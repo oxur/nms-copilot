@@ -9,6 +9,7 @@ pub mod config;
 pub mod resources;
 pub mod tools;
 
+#[cfg(feature = "http")]
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::thread;
@@ -54,12 +55,12 @@ pub fn spawn_mcp_background(
     thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
         rt.block_on(async {
-            let watcher_rx = start_watcher(save_path.as_deref());
+            let watcher = start_watcher(save_path.as_deref());
 
             if let Err(e) = run_mcp_server(
                 model,
                 transport,
-                watcher_rx,
+                watcher,
                 Some(ready_tx),
                 service_for_thread,
             )
@@ -95,9 +96,9 @@ pub fn run_headless(
     let mcp_service = ServiceHandle::new("mcp");
     let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
     rt.block_on(async {
-        let watcher_rx = start_watcher(save_path.as_deref());
+        let watcher = start_watcher(save_path.as_deref());
 
-        if let Err(e) = run_mcp_server(model, transport, watcher_rx, None, mcp_service).await {
+        if let Err(e) = run_mcp_server(model, transport, watcher, None, mcp_service).await {
             eprintln!("MCP server error: {e}");
         }
     });
@@ -106,9 +107,7 @@ pub fn run_headless(
 /// Start the file watcher if a save path is provided.
 ///
 /// Returns the delta receiver if the watcher started successfully.
-fn start_watcher(
-    save_path: Option<&std::path::Path>,
-) -> Option<std::sync::mpsc::Receiver<nms_core::SaveDelta>> {
+fn start_watcher(save_path: Option<&std::path::Path>) -> Option<nms_watch::WatchHandle> {
     let path = save_path?;
     let watch_config = nms_watch::WatchConfig {
         save_path: path.to_path_buf(),
@@ -117,7 +116,7 @@ fn start_watcher(
     match nms_watch::start_watching(watch_config) {
         Ok(handle) => {
             log::info!("File watcher started for {}", path.display());
-            Some(handle.receiver)
+            Some(handle)
         }
         Err(e) => {
             log::warn!("File watcher failed to start: {e}");
@@ -137,7 +136,7 @@ fn start_watcher(
 async fn run_mcp_server(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
-    watcher_rx: Option<std::sync::mpsc::Receiver<nms_core::SaveDelta>>,
+    mut watcher: Option<nms_watch::WatchHandle>,
     ready_tx: Option<std::sync::mpsc::SyncSender<Result<(), String>>>,
     service_handle: ServiceHandle,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
@@ -162,21 +161,26 @@ async fn run_mcp_server(
     // Extract notifier before serving (serve consumes the server)
     let notifier = server.notifier();
 
-    // Start delta loop with notifier if we have a watcher
+    // Move only the receiver into the existing delta bridge. Keep the
+    // WatchHandle here so its debouncer remains alive for the serving scope.
+    let watcher_rx = watcher
+        .as_mut()
+        .map(|handle| std::mem::replace(&mut handle.receiver, std::sync::mpsc::channel().1));
+    let mut delta_task = DeltaTaskGuard::default();
     if let Some(receiver) = watcher_rx {
         let model_for_watcher = Arc::clone(&model);
-        tokio::spawn(async move {
+        delta_task.0 = Some(tokio::spawn(async move {
             apply_deltas_loop(receiver, model_for_watcher, notifier).await;
-        });
+        }));
     }
 
-    match transport {
+    let serve_result: Result<(), Box<dyn std::error::Error + Send + Sync>> = match transport {
         Transport::Stdio => {
             service_handle.set_state(ServiceState::Ready);
             if let Some(tx) = ready_tx {
                 let _ = tx.send(Ok(()));
             }
-            server.serve_stdio().await?;
+            server.serve_stdio().await.map_err(Into::into)
         }
         #[cfg(feature = "http")]
         Transport::Http(addr) => {
@@ -207,12 +211,40 @@ async fn run_mcp_server(
             }
 
             log::info!("NMS Copilot MCP server listening on http://{addr}");
-            fabryk_mcp::axum::serve(listener, router).await?;
+            fabryk_mcp::axum::serve(listener, router)
+                .await
+                .map_err(Into::into)
         }
-    }
+    };
 
+    // Stop the producer before cancelling its async consumer. Early returns
+    // above are covered by WatchHandle and DeltaTaskGuard drop semantics.
+    drop(watcher);
+    delta_task.abort_and_join().await;
+    serve_result?;
     service_handle.set_state(ServiceState::Stopped);
     Ok(())
+}
+
+/// Own the delta task so every early return cancels it instead of detaching it.
+#[derive(Default)]
+struct DeltaTaskGuard(Option<tokio::task::JoinHandle<()>>);
+
+impl DeltaTaskGuard {
+    async fn abort_and_join(mut self) {
+        if let Some(task) = self.0.take() {
+            task.abort();
+            let _ = task.await;
+        }
+    }
+}
+
+impl Drop for DeltaTaskGuard {
+    fn drop(&mut self) {
+        if let Some(task) = &self.0 {
+            task.abort();
+        }
+    }
 }
 
 #[cfg(feature = "http")]
@@ -292,8 +324,10 @@ async fn apply_deltas_loop(
     });
 
     while let Some(delta) = rx.recv().await {
-        let mut model = model.write().await;
-        model.apply_delta(&delta);
+        {
+            let mut model = model.write().await;
+            model.apply_delta(&delta);
+        }
 
         // Notify connected MCP clients about changes
         if let Some(ref moved) = delta.player_moved {
@@ -498,4 +532,107 @@ fn build_guidance() -> ServerGuidance {
                 },
             ),
         ])
+}
+
+#[cfg(test)]
+mod watcher_lifecycle_tests {
+    use super::*;
+    use std::time::{Duration, Instant};
+
+    fn save_bytes(reality_index: u8, voxel_x: i16) -> Vec<u8> {
+        serde_json::to_vec(&serde_json::json!({
+            "Version": 4720,
+            "Platform": "Mac|Final",
+            "ActiveContext": "Main",
+            "CommonStateData": {"SaveName": "LiveWatch", "TotalPlayTime": 100},
+            "BaseContext": {
+                "GameMode": 1,
+                "PlayerStateData": {
+                    "UniverseAddress": {
+                        "RealityIndex": reality_index,
+                        "GalacticAddress": {
+                            "VoxelX": voxel_x,
+                            "VoxelY": 0,
+                            "VoxelZ": 0,
+                            "SolarSystemIndex": 1,
+                            "PlanetIndex": 0
+                        }
+                    },
+                    "Units": 7,
+                    "Nanites": 8,
+                    "Specials": 9,
+                    "PersistentPlayerBases": []
+                }
+            },
+            "ExpeditionContext": {
+                "GameMode": 6,
+                "PlayerStateData": {
+                    "UniverseAddress": {
+                        "RealityIndex": 0,
+                        "GalacticAddress": {
+                            "VoxelX": 0,
+                            "VoxelY": 0,
+                            "VoxelZ": 0,
+                            "SolarSystemIndex": 0,
+                            "PlanetIndex": 0
+                        }
+                    },
+                    "Units": 0,
+                    "Nanites": 0,
+                    "Specials": 0,
+                    "PersistentPlayerBases": []
+                }
+            },
+            "DiscoveryManagerData": {
+                "DiscoveryData-v1": {
+                    "ReserveStore": 0,
+                    "ReserveManaged": 0,
+                    "Store": {"Record": []}
+                }
+            }
+        }))
+        .expect("JSON fixture serializes")
+    }
+
+    #[test]
+    fn test_start_watcher_none_missing_and_malformed_falls_back_without_handle() {
+        assert!(start_watcher(None).is_none());
+
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let missing = dir.path().join("missing.json");
+        assert!(start_watcher(Some(&missing)).is_none());
+
+        let malformed = dir.path().join("malformed.json");
+        std::fs::write(&malformed, b"not a save").expect("write malformed save");
+        assert!(start_watcher(Some(&malformed)).is_none());
+    }
+
+    #[test]
+    fn test_retained_watcher_receives_later_write_and_owner_drop_disconnects() {
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes(0, 0)).expect("write initial save");
+
+        let mut owner = start_watcher(Some(&path)).expect("watcher starts");
+        let receiver = std::mem::replace(&mut owner.receiver, std::sync::mpsc::channel().1);
+        std::fs::write(&path, save_bytes(9, 0)).expect("write later save contents");
+
+        let delta = receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("watcher observes the actual file replacement");
+        let moved = delta.player_moved.expect("player moved to reality 9");
+        assert_eq!(moved.from.reality_index, 0);
+        assert_eq!(moved.to.reality_index, 9);
+        assert_eq!(moved.to.voxel_x(), 0);
+
+        drop(owner);
+        let deadline = Instant::now() + Duration::from_secs(2);
+        loop {
+            match receiver.recv_timeout(Duration::from_millis(50)) {
+                Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => break,
+                Err(std::sync::mpsc::RecvTimeoutError::Timeout) if Instant::now() < deadline => {}
+                result => panic!("watch producer did not disconnect after owner drop: {result:?}"),
+            }
+        }
+    }
 }
