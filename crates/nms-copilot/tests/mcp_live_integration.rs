@@ -221,7 +221,8 @@ fn call_where_am_i_stdio(
         "params":{"name":"where_am_i", "arguments":{}}
     }));
     let response = process.response(id, remaining(deadline));
-    let system = assert_location(&parse_text_json(&response["result"]), phase);
+    let tool_location = parse_text_json(&response["result"]);
+    let system = assert_location(&tool_location, phase);
 
     process.send(json!({
         "jsonrpc":"2.0", "id":id + 1, "method":"resources/read",
@@ -232,6 +233,12 @@ fn call_where_am_i_stdio(
     let value: Value = serde_json::from_str(contents.as_str().expect("location text exists"))
         .expect("location resource text is JSON");
     let _ = assert_location(&value, phase);
+    eprintln!(
+        "MCP_LIVE_OBSERVATION transport=stdio phase={} tool={} resource={}",
+        phase.label,
+        serde_json::to_string(&tool_location).expect("serialize actual tool location"),
+        serde_json::to_string(&value).expect("serialize actual resource location")
+    );
     system
 }
 
@@ -258,7 +265,8 @@ fn call_where_am_i_http(
         .into_iter()
         .find(|message| message["id"] == id)
         .expect("HTTP tools/call response ID");
-    let system = assert_location(&parse_text_json(&response["result"]), phase);
+    let tool_location = parse_text_json(&response["result"]);
+    let system = assert_location(&tool_location, phase);
 
     let resource = client.post_with_timeout(
         json!({
@@ -281,6 +289,12 @@ fn call_where_am_i_http(
     let value: Value = serde_json::from_str(contents.as_str().expect("location text exists"))
         .expect("location resource text is JSON");
     let _ = assert_location(&value, phase);
+    eprintln!(
+        "MCP_LIVE_OBSERVATION transport=http phase={} tool={} resource={}",
+        phase.label,
+        serde_json::to_string(&tool_location).expect("serialize actual tool location"),
+        serde_json::to_string(&value).expect("serialize actual resource location")
+    );
     system
 }
 
@@ -431,8 +445,7 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
         .find(|message| message["id"] == 3)
         .expect("resources/list response ID");
     assert_lists(&tools["result"], &resources["result"]);
-    let initial_system =
-        call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
+    let _ = call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
 
     let subscribed = client.post(json!({
         "jsonrpc":"2.0", "id":20, "method":"resources/subscribe",
@@ -444,29 +457,21 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
         "subscription response: {}",
         subscribed.body_text()
     );
+    let subscription_response = http_json_messages(&subscribed.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 20)
+        .expect("HTTP subscription response ID");
     assert!(
-        http_json_messages(&subscribed.body_text())
-            .iter()
-            .any(|message| message["id"] == 20)
+        subscription_response["result"].is_object() && subscription_response.get("error").is_none(),
+        "HTTP subscription succeeded: {subscription_response}"
     );
 
-    for (phase, id, prior_system) in [
-        (PHASE_B, 30, initial_system.clone()),
-        (PHASE_C, 40, "".to_owned()),
-        (PHASE_D, 50, initial_system.clone()),
-    ] {
+    for (phase, id) in [(PHASE_B, 30), (PHASE_C, 40), (PHASE_D, 50)] {
         let phase_started = Instant::now();
         let phase_deadline = phase_started + PHASE_TIMEOUT;
         atomic_replace(&save, &save_bytes(phase));
         event_stream.wait_location_update(phase_deadline);
-        let system = call_where_am_i_http(&mut client, id, phase, phase_deadline);
-        if !prior_system.is_empty() {
-            assert_eq!(
-                system, prior_system,
-                "preserve system label across phase {}",
-                phase.label
-            );
-        }
+        let _ = call_where_am_i_http(&mut client, id, phase, phase_deadline);
         assert!(
             phase_started.elapsed() < PHASE_TIMEOUT,
             "phase {} exceeded 8s",

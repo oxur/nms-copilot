@@ -62,6 +62,22 @@ fn is_file_stable(path: &Path) -> bool {
     size1 == size2 && size1.is_some()
 }
 
+/// Return whether an event path identifies the currently configured save file.
+///
+/// Notification backends may report paths through a different spelling of the
+/// same directory. Canonicalization is a fallback only: both paths must still
+/// exist for their canonical forms to identify the same file.
+fn event_matches_save_path(event_path: &Path, save_path: &Path) -> bool {
+    if event_path == save_path {
+        return true;
+    }
+
+    match (event_path.canonicalize(), save_path.canonicalize()) {
+        (Ok(event_path), Ok(save_path)) => event_path == save_path,
+        _ => false,
+    }
+}
+
 /// Start watching a save file for changes.
 ///
 /// Returns a `WatchHandle` whose `receiver` yields `SaveDelta` values
@@ -92,11 +108,17 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
 
     // Watch the parent directory (more reliable than watching the file directly,
     // since games often write to a temp file and rename).
-    let watch_dir = save_path.parent().unwrap_or(&save_path);
+    let watch_dir = save_path
+        .parent()
+        .filter(|parent| !parent.as_os_str().is_empty())
+        .unwrap_or_else(|| Path::new("."));
+    let watch_dir = watch_dir
+        .canonicalize()
+        .map_err(|e| WatchError::NotifyError(e.to_string()))?;
 
     debouncer
         .watcher()
-        .watch(watch_dir, notify::RecursiveMode::NonRecursive)
+        .watch(&watch_dir, notify::RecursiveMode::NonRecursive)
         .map_err(|e| WatchError::NotifyError(e.to_string()))?;
 
     // Background thread: receive notify events, re-parse, diff, send deltas
@@ -112,9 +134,9 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
             };
 
             // Only react if our save file was modified
-            let relevant = events
-                .iter()
-                .any(|e| e.kind == DebouncedEventKind::Any && e.path == save_path_bg);
+            let relevant = events.iter().any(|e| {
+                e.kind == DebouncedEventKind::Any && event_matches_save_path(&e.path, &save_path_bg)
+            });
             if !relevant {
                 continue;
             }
@@ -160,6 +182,73 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
 mod tests {
     use super::*;
 
+    fn save_bytes(reality_index: u8, voxel_x: i16) -> Vec<u8> {
+        format!(
+            r#"{{
+                "Version": 4720,
+                "Platform": "Mac|Final",
+                "ActiveContext": "Main",
+                "CommonStateData": {{"SaveName": "LiveWatch", "TotalPlayTime": 100}},
+                "BaseContext": {{
+                    "GameMode": 1,
+                    "PlayerStateData": {{
+                        "UniverseAddress": {{
+                            "RealityIndex": {reality_index},
+                            "GalacticAddress": {{
+                                "VoxelX": {voxel_x},
+                                "VoxelY": 0,
+                                "VoxelZ": 0,
+                                "SolarSystemIndex": 1,
+                                "PlanetIndex": 0
+                            }}
+                        }},
+                        "Units": 7,
+                        "Nanites": 8,
+                        "Specials": 9,
+                        "PersistentPlayerBases": []
+                    }}
+                }},
+                "ExpeditionContext": {{
+                    "GameMode": 6,
+                    "PlayerStateData": {{
+                        "UniverseAddress": {{
+                            "RealityIndex": 0,
+                            "GalacticAddress": {{
+                                "VoxelX": 0,
+                                "VoxelY": 0,
+                                "VoxelZ": 0,
+                                "SolarSystemIndex": 0,
+                                "PlanetIndex": 0
+                            }}
+                        }},
+                        "Units": 0,
+                        "Nanites": 0,
+                        "Specials": 0,
+                        "PersistentPlayerBases": []
+                    }}
+                }},
+                "DiscoveryManagerData": {{
+                    "DiscoveryData-v1": {{
+                        "ReserveStore": 0,
+                        "ReserveManaged": 0,
+                        "Store": {{"Record": []}}
+                    }}
+                }}
+            }}"#
+        )
+        .into_bytes()
+    }
+
+    fn receive_movement(handle: &WatchHandle, reality_index: u8, voxel_x: i16) {
+        let delta = handle
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("watcher observes a real save-file change");
+        let moved = delta.player_moved.expect("player movement is detected");
+        assert_eq!(moved.to.reality_index, reality_index);
+        assert_eq!(moved.to.voxel_x(), voxel_x);
+    }
+
     #[test]
     fn test_watch_config_default_debounce() {
         let config = WatchConfig::default();
@@ -202,5 +291,93 @@ mod tests {
     fn test_file_stability_check_ms_constant() {
         const { assert!(FILE_STABILITY_CHECK_MS > 0) };
         const { assert!(FILE_STABILITY_CHECK_MS <= 1000) };
+    }
+
+    #[test]
+    fn test_event_matches_save_path_exact_and_canonical_identity() {
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let save_path = dir.path().join("save.json");
+        std::fs::write(&save_path, b"save").expect("create save file");
+        let canonical_path = save_path.canonicalize().expect("canonical save path");
+
+        assert!(event_matches_save_path(&save_path, &save_path));
+        assert!(event_matches_save_path(&canonical_path, &save_path));
+
+        let other_dir = tempfile::tempdir().expect("other temporary directory");
+        let other_save = other_dir.path().join("save.json");
+        std::fs::write(&other_save, b"other save").expect("create other save file");
+        assert!(!event_matches_save_path(&other_save, &save_path));
+
+        let missing_a = dir.path().join("missing-a.json");
+        let missing_b = other_dir.path().join("missing-a.json");
+        assert!(!event_matches_save_path(&missing_a, &missing_b));
+        assert!(event_matches_save_path(&missing_a, &missing_a));
+    }
+
+    #[test]
+    fn test_start_watching_relative_directory_and_bare_filename() {
+        let cwd = std::env::current_dir().expect("current directory");
+        let relative_dir = tempfile::Builder::new()
+            .prefix("nms-watch-relative-")
+            .tempdir_in(&cwd)
+            .expect("temporary directory under current directory");
+        let relative_dir_path = relative_dir
+            .path()
+            .strip_prefix(&cwd)
+            .expect("temporary directory is beneath current directory");
+        let relative_save = relative_dir_path.join("save.json");
+        std::fs::write(&relative_save, save_bytes(0, 0)).expect("write relative save");
+        let relative_handle = start_watching(WatchConfig {
+            save_path: relative_save.clone(),
+            ..Default::default()
+        })
+        .expect("watch relative parent directory");
+        std::fs::write(&relative_save, save_bytes(9, 0)).expect("update relative save");
+        receive_movement(&relative_handle, 9, 0);
+
+        let bare_file = tempfile::NamedTempFile::new_in(&cwd)
+            .expect("temporary bare filename under current directory");
+        let bare_name = bare_file
+            .path()
+            .file_name()
+            .expect("temporary filename")
+            .to_owned();
+        let bare_save = PathBuf::from(bare_name);
+        std::fs::write(&bare_save, save_bytes(0, 0)).expect("write bare save");
+        let bare_handle = start_watching(WatchConfig {
+            save_path: bare_save.clone(),
+            ..Default::default()
+        })
+        .expect("watch bare filename through current directory");
+        std::fs::write(&bare_save, save_bytes(0, 1)).expect("update bare save");
+        receive_movement(&bare_handle, 0, 1);
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn test_start_watching_directory_symlink_alias_for_write_and_replacement() {
+        use std::os::unix::fs::symlink;
+
+        let parent = tempfile::tempdir().expect("temporary parent directory");
+        let real_dir = parent.path().join("real");
+        let alias_dir = parent.path().join("alias");
+        std::fs::create_dir(&real_dir).expect("create real save directory");
+        symlink(&real_dir, &alias_dir).expect("create directory symlink alias");
+
+        let save_path = alias_dir.join("save.json");
+        std::fs::write(&save_path, save_bytes(0, 0)).expect("write initial save");
+        let handle = start_watching(WatchConfig {
+            save_path: save_path.clone(),
+            ..Default::default()
+        })
+        .expect("watch through caller's directory alias");
+
+        std::fs::write(&save_path, save_bytes(9, 0)).expect("write through directory alias");
+        receive_movement(&handle, 9, 0);
+
+        let replacement = alias_dir.join("replacement.json");
+        std::fs::write(&replacement, save_bytes(9, 1)).expect("write replacement save");
+        std::fs::rename(&replacement, &save_path).expect("atomically replace through alias");
+        receive_movement(&handle, 9, 1);
     }
 }
