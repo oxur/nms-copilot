@@ -47,3 +47,59 @@ Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iterati
 Artifacts are this verification, existing CDC receipt with replay/audit/baselines and the new immutable iteration prompt/current plans/ledger, alongside preserved author/CC records. No new maintained tool/witness framework, synthetic retrospective or separate bubble-up document.
 
 Review/Iteration01 issuance committed as `c23e2800351d87a944458bb6b60d3cad9d5f8676`, direct parent0e8218a, exact eight named planning paths and both trailers once. Post-commit prompt/pathset/source/main/clean fences passed. Receipt-only followup preserves the immutable prompt and every open criterion/status.
+
+
+# Slice11 Iteration01 independent review — 2026-10-17
+
+## Verdict and exact state
+
+At source `46ca153c4418fcbf859f76ef59d600985a315b60` (direct parent `cdf1e20f46a2e1252f4c27d2dd228d318a179f61`), planning intake `321a1f3a8e743998a3493ea8e124fe7000523ed7`, CDC independently accepts LW-01/02/04/06. LW-03/05/07 remain open for two test-preservation corrections and their current evidence. Slice11, Arc06 and Project01 remain open. All production path/lifetime changes reviewed are sound against the prescribed contract; these findings do not reproduce a production location or label defect. Source remains clean, isolated, unintegrated and uninstalled.
+
+## Fresh independent validation
+
+All twelve ordered gate categories plus separate source/planning diff checks pass with actual original TMPDIR `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`. Fifteen reviewer invocations/30 lossless channel objects include the sandbox watcher failure (24 passed/2 timed out) and its unchanged authorized-host retry (26 passed). No canonical TMPDIR override was used. Format/lint ran first; the host retry and subsequent native gates preserve source, argv and TMPDIR. Reviewer sets and records only `CARGO_NET_OFFLINE=true`, plus the actual strict-doc RUSTDOCFLAGS on that gate.
+
+| Check | Reproduced result |
+|---|---|
+| Watcher package |26 passed;0 failed/ignored, plus0 doctests|
+| MCP lifecycle |2 passed;0 failed/ignored;218 filtered|
+| Native stdio/HTTP |2 passed;0 failed/ignored, real A/B/C/D notifications and tool/resource rereads|
+| Focused all-feature packages |733 passed;0 failed/ignored;21 non-doc and5 zero-test doc harnesses|
+| Copilot no-default library |219 passed;0 failed/ignored|
+| Workspace make test |929 passed;0 failed/ignored;25 non-doc and9 zero-test doc harnesses|
+| Format/lint/build/workspace doctests/ordinary docs/strict cache docs |All exit0; workspace doctests0 across9 harnesses; strict cache gate has `-D rustdoc::broken_intra_doc_links`|
+| Separate source/planning diff checks |Both exit0|
+
+Actual successful helper output carries nine observations (HTTP A/B/C/D, stdio A/B/retained-B/C/D) and matching tool/resource payloads. A/D are Euclid,0/0/0,SSI1,glyph000100000000,system `-`; B is Eissentam,0/0/0,same glyph,system `(unknown)`; C is Eissentam,1/0/0,glyph000100000001,system `(unknown)`. Stdio crosses actual five-parse-failure warning, retains B, recovers C and returns D, with strict stdout and bounded EOF. HTTP subscription now requires result-object/no-error before mutations and passes session/GET SSE/health/mcp-smoke/cleanup. These observations establish current behavior, but do not restore missing regression assertions by themselves.
+
+## Remaining corrections and cause
+
+**I01-F01 (LW-03):** `mcp_live_integration.rs:448,469–479` discards initial A and loop system labels. The iteration01 diff removed the valid HTTP D→A equality together with the unsupported B→A equality. F02 explicitly required keeping D→A. Current HTTP output actually returns `-` at both A/D; there is no reproduced runtime label defect. Restore initial-system capture and compare the D loop result against it only. Do not reintroduce B equality or change production unknown-system policy. Preserve successful subscription, physical fields, actual notifications, resources, deadlines and smoke/cleanup.
+
+**I01-F02 (LW-05):** `watcher.rs:379–381` uses replacement `save_bytes(9,1)` and expects9/X1; the prescribed direct alias proof was0→9→0/X1. Change only those two literals to0/X1 inside the existing alias test, retaining initial0, in-place9, actual alias input and atomic replacement. Separate MCP return-to0 evidence does not silently replace the specifically assigned direct regression. No watcher runtime change or new diagnosis is needed.
+
+**I01-F03 (LW-07):** execution.md says only phase-B equality was removed, while the diff also removes D equality. The pre-edit readback/data had the preservation obligation; loading receipts do not prove it was applied. Append a superseding factual correction to current execution/report/validation, preserving all earlier values and prefixes. The causal mistake was overbroad removal of the prior-system loop condition; the next recipe names the exact variables, D-only condition and two alias literals rather than commissioning more diagnosis.
+
+## Source, capture and intake audit
+
+The source commit has exactly three authorized paths, correct parent and both trailers once; mcp/mod.rs is byte-identical to cdf1e20 except the one required return-rustdoc line. Watch registration is canonical/nonrecursive with `.` for empty parent; original save path and parse/error ordering are preserved. Identity helper accepts exact equality or two successful canonicalizations, never missing/missing equality. Worker/read/stability/debounce/failure/delta and public contracts remain intact. Existing owner/task/drop order, short lexical mutation block and stderr logger remain. Main/README and held dependencies/pins are unchanged/clean.
+
+CC planning artifact/receipt commits `4dafc70dcfeb6aad749d348e8f73aa14104d2afe` / `321a1f3a8e743998a3493ea8e124fe7000523ed7` have correct parents/pathsets/trailers. Every prior validation root value and original38 attempts remains equal; iteration01 adds24 (39–62), total62 primary attempts/124 valid primary channel objects. All recursive channel copies also validate; exact total is in the receipt. execution/report preserve prior byte prefixes and ledger changes are confined to Evidence/Notes. Six restricted-failure/host-retry pairs have identical argv/cwd/inherited environment/overrides/offline-config and distinct retained failed/successful exits. Attempt58 is correctly disclosed as non-strict;59 has the actual strict override. Ordinary docs retain warnings in unchanged files and the existing dependency advisory; strict cache docs pass, not blanket strict combined-doc acceptance.
+
+Intake identifies current assignment/issuance/intake, protected digests, pinned native sources, relevant replay/data populations, historical late-read caveat and a coherent pre-edit readback. That is attested reading evidence, checked against source and required text; no claim of independently proven attention or recovered historical reading. One reviewer structural checker initially mixed inherited versus overridden RUSTDOCFLAGS; correction applied to checker only and recorded, not a Rust or CC failure.
+
+## Row walk, retained scope and next assignment
+
+| Row | CDC disposition at46ca153 |
+|---|---|
+|LW-01|done; both entrypoints retain owner, task/drop/bridge code inspected, native later-write/drop-disconnect reproduced|
+|LW-02|done; full real stdio sequence/recovery/notifications/location/glyph/protocol/EOF reproduced|
+|LW-03|open; HTTP current phases and successful subscription reproduced, D→A regression assertion must be restored|
+|LW-04|done; model guard ends before notifier awaits; post-update reads and protocol-only stdout reproduced; logger block inspected|
+|LW-05|open; fallback/recovery/teardown reproduced, specifically prescribed direct alias return-to0 regression incomplete|
+|LW-06|done; prior useful commands/player/view/library behavior and protected README/main preserved; full current gates reproduced|
+|LW-07|open; scope/captures audited, factual preservation correction and fresh repair evidence due|
+
+Iteration01 is returned/reviewed and superseded as active by `arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md`, refinement02 of five. Test/evidence only: two named test bodies, current four CC evidence paths, no production changes. Previously accepted four rows may retain this exact independent evidence after dependency/applicability review; affected checks receive fresh current proof, and CC still runs every required gate.
+
+No acceptance criterion/architecture/public API/parent scope amendment, waiver or investigation. R06-S11 remains open;29 arc rows/ten done/nineteen open and all25 project rows open. Planned12 retains full startup/cache C04/old-current envelopes/warm/write-through in both modes, unknown-system placeholder/promotion, historical inconsistent player-state diagnosis/disposition and watcher configuration/duplicate-producer composition before raw-field repair and original parent acceptance. Main/dependencies/Project02 remain held. CDC/Operator retain later authorized integration/final-baseline composition/release responsibilities. No slice12 open set yet.

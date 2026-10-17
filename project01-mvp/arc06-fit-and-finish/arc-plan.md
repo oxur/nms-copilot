@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.39, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.40, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -317,3 +317,10 @@ Candidate .worktrees/mcp-live-watch/codex/mcp-live-watch is promised as wired/te
 CC stopped atcdf1e20 after real watcher/MCP gates remained red on unchanged authorized retries. CDC existing-verifier replay isolates path spelling: original /var temp input fails; canonical /private/var input passes retained-owner lifecycle and full stdio, while HTTP reaches B then rejects unsupported cross-galaxy label equality. HTTP subscription assertion also needs success-result proof. Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md; all seven child rows remain open and initial prompt preserved.
 
 CDC revises only implementation boundary for the already approved live-watch capability: watcher.rs canonical parent/event identity/direct regression tests, bounded existing HTTP test proof and MCP return rustdoc. No public API/architecture/criterion/new feature/parent scope amendment or evidence waiver, and no separate investigation. All normal-input native gates still required; changed-input controls are not acceptance. If bounded repair fails, new diagnosis needs its own agreement. Planned12/later raw-field and original acceptance/integration owners retained.29 arc rows/ten done/nineteen open,25 project rows open; sourcecdf1e20/main/dependency/Project02 fences held, no integration or release. Version1.39 (2026-10-16): initial stop review grounds first correction without acceptance reduction or scope drop.
+
+
+## Slice11 Iteration01 review / bounded test correction — 2026-10-17
+
+CDC independently reproduced original-TMPDIR live stdio/HTTP phases at46ca153 and all current gates:733 focused/219 no-default/929 workspace; watcher sandbox24/2 timeout preserved before unchanged host26/0 retry. Four child rows LW-01/02/04/06 accepted. LW-03/05/07 remain open for HTTP D-to-A assertion accidentally removed with invalid B equality, direct alias regression using9/X1 rather than prescribed0/X1, and appended current evidence correction. No runtime defect reproduced; source implementation remains frozen during this narrow refinement.
+
+Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md; predecessor iteration01 returned/reviewed and preserved, second refinement of five. Two existing test bodies/four current CC evidence paths only; all required fresh gates and independent review retained. No investigation, waiver, architecture/API/criterion/parent scope or sequence change. R06-S11 stays open:29 arc rows/ten done/nineteen open; all25 project rows open. Planned12 full startup/cache/unknown-state/historical-state/watch-config/duplicate-producer composition, raw-field repair and all original parent acceptance/integration/release owners remain. Main/dependencies/Project02 held, candidate unintegrated/uninstalled. Version1.40 records child review/refinement only.

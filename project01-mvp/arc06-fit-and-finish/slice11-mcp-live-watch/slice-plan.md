@@ -1,6 +1,6 @@
 # Slice11 — reliable MCP live save tracking
 
-Version:1.1. Created2026-10-16. Status:active correction after reviewed stop; all seven LW rows open. Two contributors (CC implements; Sofie/CDC independently reviews), Expedited Mode. Supporting artifacts live in artifacts/; immutable author-baseline.json pins current source observations, CC creates execution/validation only during work and closing report on return. No review/close-set precreated.
+Version:1.2. Created2026-10-16. Status:active test/evidence correction; LW-01/02/04/06 accepted and LW-03/05/07 open. Two contributors (CC implements; Sofie/CDC independently reviews), Expedited Mode. Supporting artifacts live in artifacts/; immutable author-baseline.json pins current source observations, CC creates execution/validation only during work and closing report on return. No review/close-set precreated.
 
 ## Useful increment, dependency and delivery
 
@@ -24,7 +24,7 @@ Required reading packet is bounded to touched/consumed source, installed guide s
 
 ## Assignment history and version history
 
-Current assignment: arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md. Initial cc-prompt.md issued2026-10-16 at3509057d, predecessor closed Slice10, reason actual MCP/watch repair; returned/stopped atcdf1e20 and independently reviewed, now superseded as active. Five-refinement budget; preserve every issued prompt; no automatic extension/inquiry. Initial issuance receipt follows commit. Version1.0 details ready11 capability and explicit remaining12 owner, preserving approved scope/architecture/parent gates.
+Current assignment: arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md. Iteration01 returned and independently reviewed; preserved as superseded. Initial cc-prompt.md issued2026-10-16 at3509057d, predecessor closed Slice10, reason actual MCP/watch repair; returned/stopped atcdf1e20 and independently reviewed, now superseded as active. Five-refinement budget; preserve every issued prompt; no automatic extension/inquiry. Initial issuance receipt follows commit. Version1.0 details ready11 capability and explicit remaining12 owner, preserving approved scope/architecture/parent gates.
 
 Initial issuance receipt:3509057d2c0af7e0134a06777c16dc97267eea72, direct parent Slice10 closure5fed0e0; exact eight named planning paths, both trailers once, prompt digest/held clean source fences checked. Raw commit captures and actual issuance identity are in author-baseline.json. This receipt does not change the immutable prompt or establish implementation acceptance.
 
@@ -39,3 +39,16 @@ Iteration01 issued2026-10-16 at its introducing commit (resolve actual issuance)
 Author readiness: inspected failing source/diffs, actual retained-handle/native test phases and helpers, fixed source location builder/unknown-state boundary, and pinned notify backend/upstream canonical-path test. Existing verifiers replayed unchanged with both temp path spellings under authorized host, no source edit/event tap/new framework. Applied AP-09 AVOID/EH recoverable failure guidance to fallible parent registration and nonpanicking identity fallback, CA-20 MUST to worker-only filesystem comparison, testing behavior/proportionate-proof to alias versus unrelated/missing-file controls and the unsupported-label rejection. Complete method/recipe/oracles/readback/gates in new prompt; implementation uncertainty is bounded and no new inquiry is commissioned. Main/parent counts and planned12 obligations unchanged.
 
 Iteration01 actual issuance:c23e2800351d87a944458bb6b60d3cad9d5f8676, direct parent0e8218a; prompt SHA256247a15b9d8220f8b18f4036f4a11b2b9af929cba37928e0f8f1dba92d3acc2ce. Exact scope/trailer/clean-source audit captured in CDC receipt. This is author/review handoff evidence, not implementation acceptance.
+
+
+## Iteration01 review and second bounded correction — 2026-10-17
+
+Version1.2: CDC independently reproduces corrected source46ca153 under original TMPDIR:26 watcher/2 lifecycle/2 native/733 focused/219 no-default/929 workspace tests; all ordered format/lint/build/doc/strict-cache/diff gates pass. Sandbox watcher24/2 failure and unchanged authorized-host26/0 retry preserved. LW-01/02/04/06 accepted; LW-03/05/07 remain open. Scope/capture/source/parents/held fences independently checked; no production discrepancy found.
+
+I01-F01: HTTP removed D-to-A label equality along with invalid B equality; restore only D check using retained A/loop tool labels. I01-F02: direct alias replacement9/X1 omitted prescribed return0/X1; change only replacement+expected literals. I01-F03: execution's “only phase-B” removal claim is contradicted by diff; append factual correction, preserving prior records. Full findings, fresh evidence and row walk in cdc-verification.md and artifacts/cdc-review-receipts.json iteration01_review.
+
+Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md, issued2026-10-17 (actual introducing commit recorded after commit), predecessor iteration01; reason two specific test-preservation gaps and current evidence correction, active awaiting CC execution. Second refinement of five. Source direct parent46ca153; runtime unchanged, exact two test bodies allowed. Four CC planning return paths unchanged; accepted statuses/criteria protected and three open rows not accepted by CC. Earlier prompts/author/CDC histories immutable.
+
+Author readiness: inspected both complete test sequences/helpers, runtime identity/error/owner/lock behavior and exact source delta; all actual native phases/gates independently replayed. Applied testing Behavior/Contracts and Rust CLI-34 SHOULD to retain real binary notifications/rereads, plus existing temp-fixture discipline; no new helper framework, runtime design, API, timeout or test oracle is delegated. D-only condition and alias0/X1 inputs distinguish the missed cases; no evidence-only substitute. New prompt provides exact repair/readback/preservation/fresh gate method with no inquiry or new policy. Accepted rows may retain reproduced source-qualified evidence only after reviewer checks unchanged dependencies; required CC gates stay fresh.
+
+Slice11/Arc06/Project01 and planned12/original parent/raw-field/integration gates remain open; all fences and parent row counts unchanged. No Operator waiver requested or applied.
