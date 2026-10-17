@@ -85,3 +85,11 @@ Slice09 independent closure2026-10-16:27 rows/nine done/eighteen open. Parent co
 | R06-S10 | REPL galaxy selection and query-reference increment independently accepted | Seven-row Slice10 ledger; actual parser/dispatch/render/completion paths, production wiring/docs and native gates | correctness-grade | Original M7.4 and approved R06-R02/R03 consumer composition | done | [CDC final closure](slice10-galaxy-scoped-repl/cdc-verification.md#operator-approved-historical-exception-and-final-closure--2026-10-16), candidate e615f254 — reproduced plus explicit accepted historical amendment | Seven child rows accepted; Operator waiver only original1–53 environment metadata. Main integration, live/lifecycle and original parent gates remain open. |
 
 28 rows/nine done/nineteen open; all prior27 entire rows/criteria/dispositions retained. This child details the existing owner, not a replacement for parent composition.
+
+## Live MCP/watch implementation child — 2026-10-16
+
+Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criteria/statuses unchanged.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S11 | Reliable real MCP save tracking independently accepted | Slice11 seven-row ledger, native stdio/HTTP/filesystem subscription proof and CDC review | correctness-grade | Planned live/lifecycle consumer composition after Slice10 | open | — | Broader startup-cache/unknown-state/config composition remains planned12 before parent acceptance; no original scope dropped. |

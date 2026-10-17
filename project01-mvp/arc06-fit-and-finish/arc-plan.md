@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.37, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.38, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -303,3 +303,11 @@ R06-S10 remains open; arc28/nine done/nineteen open, project25 open. No Slice11 
 Operator explicitly approved the exact original1–53 environment-metadata waiver (“I approve and give the waiver :-D”). CDC records the accepted historical amendment without reconstructing past fields; all seven child rows accepted at e615f254. R06-S10 done;28 arc rows/ten done/eighteen open,25 project rows open. Current full independent gates/behavior/source proof unchanged and retained. Original unknowns and prompt/report/evidence history preserved; no broader/current/future or parent waiver. Final row walk/inventory/silent-drop/bubble-up is in Slice10 close-set.
 
 Advance to planned Slice11 actual watch/transport/startup-cache/unknown-state useful increment from accepted e615f254; CDC details bounded recipe before issuance, all original obligations retained. Main6d183bde/dependency/Project02 fences held; no integration/installed release. Version1.37 (2026-10-16): Slice10 approval/closure and ready next owner; the sole criterion amendment is the expressly approved historical metadata exception. Architecture/scope/original parent acceptance and later raw repair/gates unchanged.
+
+## Slice11 reliable MCP watch increment — 2026-10-16
+
+After Slice10 formal close5fed0e0 at acceptede615f254, issue arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt.md. Source inspection of mcp::start_watcher shows receiver-only return drops the debouncer; apply_deltas_loop holds model guard across notifier awaits. Ready useful repair: preserve owned handle throughout actual stdio/HTTP serving, release mutation lock before notifications, protect headless protocol stdout, native file→subscribe/update→tool/resource tests and user docs in one candidate. Actual prerequisite is e615f254, not whole-project closure. Separate CC implements, Sofie/CDC reviews; Expedited Mode and two contributors persist. Seven child rows open;29 arc rows/ten done/nineteen open;25 project rows open.
+
+The earlier single planned11 live/lifecycle placeholder is expressly subdivided for coherent implementation/review headroom:11 actual MCP/watch lifetime/transports; planned12 full startup-cache C04/old-current envelopes/warm and write-through in both modes, unknown-system placeholder/promotion, historical inconsistent cached player-state diagnosis/disposition, and watcher configuration/duplicate-producer composition. All remain required before parent R06-R02/R03/M7.4/C04 acceptance and later raw-field policy/repair;12 has no issued assignment or adopted unresolved policy. This is implementation detail of existing approved obligations, no criterion waived or silent scope drop. Any inquiry/policy change still needs its own authority/Operator agreement.
+
+Candidate .worktrees/mcp-live-watch/codex/mcp-live-watch is promised as wired/tested/documented candidate; main6d183bde/dependencies/Project02 held. CDC/Operator own later authorized integration/final-baseline drift/composition; not installed/released. Original exports/imports/format/docs/distribution/coverage/independent/Operator gates retained. Version1.38 (2026-10-16): Slice10 closure/source inspection motivates bounded ready11 and explicit12 remainder; no architecture/original parent acceptance/scope reduction.

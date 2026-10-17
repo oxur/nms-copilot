@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-16",
+  "source": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+  "source_parent": "0346b19318326073a06ae921390add50a7e83d98",
+  "source_checkout": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+  "planning_parent_at_authoring": "5fed0e023da725afcf312cb9bf8c0492f5d59cdf",
+  "slice10_closure_commit": "5fed0e023da725afcf312cb9bf8c0492f5d59cdf",
+  "held_pins": {
+    ".": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+    ".worktrees/cache-semantic-compatibility": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+    ".worktrees/galaxy-qualified-identity": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+    ".worktrees/galaxy-scoped-queries": "7118a486ea43a776aa2451ec0807d43384fb954f",
+    ".worktrees/galaxy-scoped-routing": "f71d607e27e18d7266855a2708449f9d6b90c632",
+    ".worktrees/galaxy-scoped-session": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+    ".worktrees/galaxy-scoped-repl": "e615f25419cc68e367c07eda6ef73d26c4e4839c"
+  },
+  "allowed_source_paths": {
+    "crates/nms-copilot/src/mcp/mod.rs": {
+      "exists": true,
+      "sha256": "e6fc64336e7fd28fec860e0999639ac7ed87816dac574e9d6558c88876e273dc"
+    },
+    "crates/nms-copilot/src/main.rs": {
+      "exists": true,
+      "sha256": "e2358d9846a86274a5b9148e379338faee60b8638ef3538a715fd97d6256799f"
+    },
+    "crates/nms-copilot/tests/mcp_live_integration.rs": {
+      "exists": false,
+      "sha256": null
+    },
+    "crates/nms-copilot/tests/support/mcp_live.rs": {
+      "exists": false,
+      "sha256": null
+    },
+    "README.md": {
+      "exists": true,
+      "sha256": "47f6b99beafb9b496275a1772d5672d3eeda602d9a98d795b26eebee106ee266"
+    }
+  },
+  "protected_dependency_sha256": {
+    "crates/nms-watch/src/watcher.rs": "0380ee0cb4da7f272c3758f83572dba04aa532944ef485aef4e758ec1f9cefe3",
+    "crates/nms-watch/src/snapshot.rs": "fc580e8fe38916c9c5d86f7a1e3919673c7fc20a970ab72e93777cd1fa19e901",
+    "crates/nms-watch/src/delta.rs": "cdb4981f5abe644939e99b5e2224d115a5ddf8634c349051b515504d8e687260",
+    "crates/nms-copilot/src/mcp/tools.rs": "402abe9411e4bafd4b1b34180cfdf5f55394177babf4b627a11b89601df11604",
+    "crates/nms-copilot/src/mcp/resources.rs": "264505d2dbc60b368bfdb1ac15edf28da1df7f91a21b1e5c9f97af400b7d9746",
+    "crates/nms-copilot/src/mcp/config.rs": "d3022cb68ccc459030bb442785b2271e112f3e89445d4538cd3028b8dcaaedf3",
+    "crates/nms-copilot/src/config.rs": "6d3046d3e4e2cc6984a5f3db50e2a17f40c8764d3aaab6612c7c7c8aba98d391",
+    "crates/nms-copilot/src/paths.rs": "6adf9581d6bb4fb953a4aa1aa2c2a389c59674898b860d858178d6f1d111a444",
+    "crates/nms-graph/src/model.rs": "c9c5e5e9fdc5ad84318720d00b7f6db835e5249b236f205a222c37a046697d85",
+    "crates/nms-core/src/address.rs": "9d84fcd33312100ac9606d4ce706c9c4c49259c8fe27745b6272014ac13c13e9",
+    "crates/nms-save/src/model.rs": "8295307ae79e7c5c3bb7532f57f3691e692dcc67b8702df2acd69e76c5283df9",
+    "Cargo.toml": "e45d1a29a52e43851b00a28132186a334e500bb5175ed3d532178776249cf32b",
+    "Cargo.lock": "a5f8511e470cdf8b8431f0c3ccea9c00badbcd34d8b34ded38c557827bd21bb0",
+    "crates/nms-copilot/Cargo.toml": "15b05751e8dcb6f73c56bc8bcdc332ef781dad269f2e6c6481c16719c4a8bbe8"
+  },
+  "pinned_registry_source_sha256": {
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fabryk-mcp-core-0.4.2/src/lib.rs": "d2645166eaec9fdf702ece98b9fe1e23df2e5405de821eb9e016408b988a061e",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fabryk-mcp-core-0.4.2/src/server.rs": "479af6a6dca27c0be675574d629daf58a918390abeea0ccbb519362c23171878",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fabryk-mcp-core-0.4.2/src/notifier.rs": "c23bab66554c2387eceb3bc88182ee74cb5c0c5d1ab4ef66a011cbefa56b6943",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fabryk-mcp-core-0.4.2/src/resource.rs": "6353389649716f34d3a5ce13bcbcf3a173fe2a6d773b64e2ad9b6f9cea739967",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rmcp-1.1.1/src/transport/async_rw.rs": "6cdfc820f0bbb30da645a3ec19fc9da8a5dc77d84cd9e25622968f535a54ec53",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rmcp-1.1.1/src/transport/streamable_http_server/tower.rs": "2a7408b8078da2181ccbfc9fc6fd2116f7d82d4d11f7bb4405dbcdd4f5343bcd"
+  },
+  "source_observations": [
+    {
+      "file": "crates/nms-copilot/src/mcp/mod.rs",
+      "symbols": [
+        "start_watcher",
+        "run_mcp_server"
+      ],
+      "observation": "Returning Some(handle.receiver) drops remaining private debouncer at helper end; caller owns no watch guard. Derived from actual Rust ownership/source, not a live wire replay."
+    },
+    {
+      "file": "crates/nms-copilot/src/mcp/mod.rs",
+      "symbol": "apply_deltas_loop",
+      "observation": "Loop-wide model write guard remains in scope across notification awaits; prescribe lexical mutation block."
+    },
+    {
+      "file": "crates/nms-copilot/src/main.rs",
+      "observation": "Headless twyg logger respects arbitrary logging.output; prescribed stderr override protects protocol without editing config."
+    },
+    {
+      "file": "crates/nms-copilot/src/config.rs",
+      "symbol": "McpConfig::default",
+      "observation": "Actual default loopback port5099; README MCP section says3000 and will be corrected."
+    }
+  ],
+  "oracle_derivation": "Core GalacticAddress::new packs SSI1 at shift32, planet0/voxel0 =>000100000000; X1 adds1 =>000100000001. Reality index is separate; A/B share glyph hex but require different galaxy name. Expanded player UniverseAddress avoids unresolved DD.UA/base decoder policy.",
+  "author_probes_run": false,
+  "readiness": "Current relevant source/ownership/notification/protocol/fixtures/callers and native validation inspected; no source edited. Precise private ownership/lock/logger recipe, real native transport matrix and local helper scope resolved; no new dependency or public runtime API.",
+  "prompt_sha256_at_issue": "e37e0ac70d3fdccd0d6c95df5952b490222d588855d7155f8914868f254f18b9",
+  "slice10_closure_process_receipts": [
+    {
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/nms-s11-cdc-20261016/slice10-close-message.txt",
+        "--",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/slice-plan.md",
+        "project01-mvp/arc06-fit-and-finish/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/project-plan.md",
+        "project01-mvp/closure-preparation.md"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "W3BsYW5uaW5nIDVmZWQwZTBdIGRvY3MocGxhbm5pbmcpOiBjbG9zZSBTbGljZTEwIHVuZGVyIGFwcHJvdmVkIGhpc3RvcmljYWwgZXZpZGVuY2Ugd2FpdmVyCiA5IGZpbGVzIGNoYW5nZWQsIDczIGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCg==",
+        "bytes": 142,
+        "sha256": "c9bd4ec82b7bbf147d17b31c746190620555821ac8e64d146b6e0161555b96d7"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.060283000115305185
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "--format=full",
+        "--stat",
+        "HEAD"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "Y29tbWl0IDVmZWQwZTAyM2RhNzI1YWZjZjMxMmNiOWJmOGMwNDkyZjVkNTljZGYKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIGRvY3MocGxhbm5pbmcpOiBjbG9zZSBTbGljZTEwIHVuZGVyIGFwcHJvdmVkIGhpc3RvcmljYWwgZXZpZGVuY2Ugd2FpdmVyCiAgICAKICAgIENvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgogICAgQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPgoKIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQgICAgICAgfCAgOCArKysrKysrLQogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQgICAgICAgICB8ICAyICstCiAuLi4vYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbiAgICAgICAgICAgICAgIHwgMjAgKysrKysrKysrKysrKysrKysrKysKIC4uLi9zbGljZTEwLWdhbGF4eS1zY29wZWQtcmVwbC9jZGMtdmVyaWZpY2F0aW9uLm1kICAgfCAxMyArKysrKysrKysrKysrCiAuLi4vc2xpY2UxMC1nYWxheHktc2NvcGVkLXJlcGwvY2xvc2luZy1yZXBvcnQubWQgICAgIHwgMTMgKysrKysrKysrKysrKwogLi4uL3NsaWNlMTAtZ2FsYXh5LXNjb3BlZC1yZXBsL2xlZGdlci5tZCAgICAgICAgICAgICB8ICA0ICsrLS0KIC4uLi9zbGljZTEwLWdhbGF4eS1zY29wZWQtcmVwbC9zbGljZS1wbGFuLm1kICAgICAgICAgfCAgOCArKysrKystLQogcHJvamVjdDAxLW12cC9jbG9zdXJlLXByZXBhcmF0aW9uLm1kICAgICAgICAgICAgICAgICB8ICA0ICsrKysKIHByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kICAgICAgICAgICAgICAgICAgICAgICAgfCAgOCArKysrKysrLQogOSBmaWxlcyBjaGFuZ2VkLCA3MyBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQo=",
+        "bytes": 1001,
+        "sha256": "2a863dcb79741a5ad7399e7674f6db8d4a2230c5c532bad59d5f42b3ed39c4c8"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.019848458003252745
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "seconds": 0.018641832750290632
+    }
+  ],
+  "preissue_checks": {
+    "status": "passed",
+    "eight_exact_planning_paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/author-baseline.json",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+      "project01-mvp/closure-preparation.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "held_sources_clean_and_exact": true,
+    "all_source_and_registry_digests_match": true,
+    "all_prior_parent_rows_preserved": true,
+    "arc_rows": 29,
+    "arc_done": 10,
+    "arc_open": 19,
+    "project_open": 25,
+    "slice10_seven_done": true,
+    "slice11_seven_open": true,
+    "no_close_set_precreated": true,
+    "new_investigation_authorized": false,
+    "source_changed_by_author": false
+  }
+}
