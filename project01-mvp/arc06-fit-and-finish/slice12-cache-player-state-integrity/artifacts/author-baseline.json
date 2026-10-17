@@ -130,5 +130,139 @@
       ]
     },
     "readiness": "Inspected exact APIs/data/error/fallback/wire boundaries and existing complete codec/load tests. Recovery policy, validation/error order, unchanged2/2 interpretation, independent view and negative/positive oracles resolved. Existing cache/from_save/loop caller composition is the integration home; no native cached transport claim. Scoped source comparisons plus complete new prompt/open-set self-review and required repository gates retained. No new inquiry or standalone verifier product."
+  },
+  "issuance_receipt": {
+    "commit": "30fdf09536089887395a88562ed748eb183c2e89",
+    "parent": "ad552d4abf25d183c96f9bfdec16c34acca1d0ff",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/author-baseline.json",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/slice-plan.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "trailers_once": true,
+    "clean_planning_after_issue": true,
+    "prompt_sha256": "1268796baf74dc66156b431b97314b34eafd9425150a88323d59a757e03ca17b",
+    "command_receipts": [
+      {
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/author-baseline.json",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt.md",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/slice-plan.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.02196970907971263
+      },
+      {
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s11-review-stop-20261016/s12-cache-integrity-issuance-20261017-message.txt",
+          "--",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/arc06-fit-and-finish/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+          "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt.md",
+          "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/author-baseline.json"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIDMwZmRmMDldIFJlY29yZCBTbGljZTExIGNsb3N1cmUgYW5kIHByZXBhcmUgY2FjaGUtc3RhdGUgaW50ZWdyaXR5IGluY3JlbWVudAogMTEgZmlsZXMgY2hhbmdlZCwgMzg5IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTEyLWNhY2hlLXBsYXllci1zdGF0ZS1pbnRlZ3JpdHkvYXJ0aWZhY3RzL2F1dGhvci1iYXNlbGluZS5qc29uCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTEyLWNhY2hlLXBsYXllci1zdGF0ZS1pbnRlZ3JpdHkvY2MtcHJvbXB0Lm1kCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTEyLWNhY2hlLXBsYXllci1zdGF0ZS1pbnRlZ3JpdHkvbGVkZ2VyLm1kCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTEyLWNhY2hlLXBsYXllci1zdGF0ZS1pbnRlZ3JpdHkvc2xpY2UtcGxhbi5tZAo=",
+          "bytes": 575,
+          "sha256": "1f2504fd40a69a326e0f3fd277da1be3df5ff561702fa90a9645f790577f19ef"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.0602055829949677
+      },
+      {
+        "argv": [
+          "git",
+          "show",
+          "--format=full",
+          "--stat",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Y29tbWl0IDMwZmRmMDk1MzYwODk4ODczOTVhODg1NjJlZDc0OGViMTgzYzJlODkKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIFJlY29yZCBTbGljZTExIGNsb3N1cmUgYW5kIHByZXBhcmUgY2FjaGUtc3RhdGUgaW50ZWdyaXR5IGluY3JlbWVudAogICAgCiAgICBDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT4KICAgIENvLWF1dGhvcmVkLWJ5OiBCaWxsbyBBSSA8YWktZW5naW5lZXJpbmdAYmlsbG8uc3lzdGVtcz4KCiBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL2FyYy1wbGFuLm1kICAgICB8ICAxMSArLQogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQgICAgICAgfCAgIDEgKwogLi4uL2FydGlmYWN0cy9jZGMtcmV2aWV3LXJlY2VpcHRzLmpzb24gICAgICAgICAgICAgfCAgOTAgKysrKysrKysrKysrKysKIC4uLi9zbGljZTExLW1jcC1saXZlLXdhdGNoL2NkYy12ZXJpZmljYXRpb24ubWQgICAgIHwgICAyICsKIC4uLi9zbGljZTExLW1jcC1saXZlLXdhdGNoL2Nsb3NpbmctcmVwb3J0Lm1kICAgICAgIHwgICAyICsKIC4uLi9zbGljZTExLW1jcC1saXZlLXdhdGNoL3NsaWNlLXBsYW4ubWQgICAgICAgICAgIHwgICAyICsKIC4uLi9hcnRpZmFjdHMvYXV0aG9yLWJhc2VsaW5lLmpzb24gICAgICAgICAgICAgICAgIHwgMTM0ICsrKysrKysrKysrKysrKysrKysrKwogLi4uL2NjLXByb21wdC5tZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgOTQgKysrKysrKysrKysrKysrCiAuLi4vc2xpY2UxMi1jYWNoZS1wbGF5ZXItc3RhdGUtaW50ZWdyaXR5L2xlZGdlci5tZCB8ICAxMyArKwogLi4uL3NsaWNlLXBsYW4ubWQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgMzEgKysrKysKIHByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kICAgICAgICAgICAgICAgICAgICAgIHwgIDExICstCiAxMSBmaWxlcyBjaGFuZ2VkLCAzODkgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkK",
+          "bytes": 1092,
+          "sha256": "3aae2b65dcae61e37970bf6f280ce8a09cf840926b5cdd8de557050fdf79833b"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.019955249968916178
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.018542207777500153
+      }
+    ]
+  },
+  "sealed_fixtures": {
+    "crates/nms-cache/tests/fixtures/predecessor-schema1-semantic1.rkyv": {
+      "bytes": 216,
+      "header_hex": "4e4d5343414348450100000001000000",
+      "sha256": "76ca0089af76621b5e8002828c2d0f4cea1b814bca33aced82a507357883389a"
+    },
+    "crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv": {
+      "bytes": 360,
+      "header_hex": "4e4d5343414348450200000002000000",
+      "sha256": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7"
+    }
   }
 }
