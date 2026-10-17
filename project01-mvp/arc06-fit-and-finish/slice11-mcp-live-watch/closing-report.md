@@ -77,3 +77,9 @@ No CC row is accepted or closed. The candidate remains unintegrated and uninstal
 Artifacts preserved in the named slice home: `artifacts/author-baseline.json` (immutable), `artifacts/cdc-review-receipts.json` (immutable), `artifacts/execution.md` (appended), `artifacts/validation.json` (all38 original attempts preserved plus iteration01 attempts), this report (initial stop report retained as exact prefix plus this return), and `ledger.md` (Evidence/Notes only). No separate diagnostics framework or fabricated event trace was added.
 
 Operator handoff: Iteration01's prescribed path correction, HTTP test oracle and subscription proof are implemented; native behavior and all current gates pass on the unchanged authorized-host retries. Please relay the candidate and evidence to CDC for independent review. All seven rows remain open.
+
+### Commit and held-fence receipt
+
+- Planning artifact commit: `4dafc70dcfeb6aad749d348e8f73aa14104d2afe`, parent `af36306f8d9d988662e28cc1b2ffff6e318c8087`; exact four paths are the execution artifact, append-only validation JSON, this closing report, and ledger Evidence/Notes cells. Each required co-author trailer occurs once.
+- Source commit: `46ca153c4418fcbf859f76ef59d600985a315b60`, parent `cdf1e20f46a2e1252f4c27d2dd228d318a179f61`; its exact three paths and trailers are recorded above.
+- At the planning artifact commit, main `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`, held accepted Slice10 REPL `e615f25419cc68e367c07eda6ef73d26c4e4839c`, source worktree, and planning worktree were clean. The planning metadata follow-up will append this receipt only.

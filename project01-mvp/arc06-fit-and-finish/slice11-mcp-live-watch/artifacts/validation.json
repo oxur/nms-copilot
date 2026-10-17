@@ -4272,6 +4272,26 @@
       "post_commit_clean": true
     },
     "current_disposition": "CC proposes the corrected live-watch implementation and native proof; all LW-01..LW-07 remain open for independent CDC review.",
-    "attempt_count": 24
+    "attempt_count": 24,
+    "planning_artifact_commit": {
+      "commit": "4dafc70dcfeb6aad749d348e8f73aa14104d2afe",
+      "parent": "af36306f8d9d988662e28cc1b2ffff6e318c8087",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md"
+      ],
+      "trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ],
+      "held_fences_at_commit": {
+        "main": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c clean",
+        "accepted_slice10_repl": "e615f25419cc68e367c07eda6ef73d26c4e4839c clean",
+        "source_worktree": "46ca153c4418fcbf859f76ef59d600985a315b60 clean",
+        "planning_worktree_after_commit": "4dafc70dcfeb6aad749d348e8f73aa14104d2afe clean"
+      }
+    }
   }
 }
