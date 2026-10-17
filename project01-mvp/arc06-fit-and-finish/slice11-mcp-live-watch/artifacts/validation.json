@@ -5590,7 +5590,22 @@
       "status": "committed; isolated; not integrated or installed",
       "trailers_verified": true
     },
-    "planning_artifact_commit": null,
+    "planning_artifact_commit": {
+      "hash": "b1d1e09ee251ed392a63f8528f712b95c113d046",
+      "parent": "05482035d4781774506a8f38a3f835ce1d20c176",
+      "branch": "planning",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md"
+      ],
+      "trailers": {
+        "Codex": 1,
+        "Billo AI": 1
+      },
+      "trailers_verified": true
+    },
     "current_disposition": "CC proposed-done for CDC review; LW-03/LW-05/LW-07 remain open; four prior CDC-accepted rows retained; no slice/arc/project closure",
     "corrected_source": {
       "http_test": "captures actual A and phase results; compares only D to A",

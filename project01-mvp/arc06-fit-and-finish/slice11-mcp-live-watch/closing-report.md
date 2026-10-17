@@ -125,3 +125,10 @@ Slice12 remains planned for complete startup/cache C04 and envelope/warm/write-t
 ## Handoff
 
 Please relay this proposed-done return to CDC for independent review of the corrected tests and current evidence. Four accepted rows remain accepted; LW-03/05/07 remain open. Detailed return: `project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md`.
+
+
+## Commit and held-fence receipt
+
+- Planning artifact commit `b1d1e09ee251ed392a63f8528f712b95c113d046`, parent `05482035d4781774506a8f38a3f835ce1d20c176`; exact four paths: `project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/execution.md, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/validation.json, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md, project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md`. Each required co-author trailer occurs once. This follow-up records the artifact commit in validation; this metadata follow-up itself changes only the validation and this report within the same four-path allowlist.
+- Source commit `239313cc109ca908f43f34ae5e04ba7e5487161f`, parent `46ca153c4418fcbf859f76ef59d600985a315b60`, exact two test paths and required trailers verified. Source worktree is clean and remains isolated.
+- Four CDC-accepted rows remain done; LW-03/05/07 remain open. Main/dependencies/Project02 and other accepted source pins remain held. No integration, install, push or release occurred.
