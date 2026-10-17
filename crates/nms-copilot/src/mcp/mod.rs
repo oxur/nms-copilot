@@ -106,7 +106,7 @@ pub fn run_headless(
 
 /// Start the file watcher if a save path is provided.
 ///
-/// Returns the delta receiver if the watcher started successfully.
+/// Returns the owned watcher handle if watching started successfully.
 fn start_watcher(save_path: Option<&std::path::Path>) -> Option<nms_watch::WatchHandle> {
     let path = save_path?;
     let watch_config = nms_watch::WatchConfig {
