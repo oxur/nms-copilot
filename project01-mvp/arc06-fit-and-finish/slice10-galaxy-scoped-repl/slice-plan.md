@@ -1,6 +1,6 @@
 # Slice10 — usable REPL galaxy selection and reference defaults
 
-Version:1.2. Created2026-10-16. Status:reviewed; six RG rows accepted; RG-07 awaits Operator historical-evidence disposition.
+Version:1.3. Created2026-10-16. Status:closed; all seven RG rows accepted at e615f254 with the approved bounded RG-07 historical exception.
 
 ## Useful increment and authority
 
@@ -24,7 +24,7 @@ Author readiness: loaded current complete prompt-authoring guide, usable-increme
 
 ## Assignment history
 
-Current assignment: no further CC work issued; iteration01 returned/reviewed, awaiting Operator disposition of RG-07. Last executed assignment: arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md. Initial CC implementation cc-prompt.md issued2026-10-16 after accepted Slice09; predecessor closed09, reason original M7.4 command/reference delivery, disposition returned and independently reviewed2026-10-16; superseded as active by iteration01. Five-refinement budget; preserve every issued prompt. No automatic extension or investigation.
+Current assignment: none; Slice10 closed after independent review and explicit Operator historical-evidence approval. Last executed assignment: arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md. Initial CC implementation cc-prompt.md issued2026-10-16 after accepted Slice09; predecessor closed09, reason original M7.4 command/reference delivery, disposition returned and independently reviewed2026-10-16; superseded as active by iteration01. Five-refinement budget; preserve every issued prompt. No automatic extension or investigation.
 
 ## Version history
 
@@ -46,3 +46,7 @@ Author readiness: inspected actual pinned helper and quote/span/name helpers plu
 Version1.2: F01 repair at e615f254 independently accepted; RG-05 done. Five accepted rows/evidence retained under exact helper/tests-only delta and fresh3/726/217/922 tests/all gates. Six rows done, RG-07 open solely for original1–53 environment metadata. Current correction intake/gates/source/commits/history independently verified; issuance pointer corrected by CDC to73a238c8 (c32dc420 is actual intake/receipt).
 
 Iteration01 issued2026-10-16, predecessor cc-prompt.md, reason F01/F02 correction, returned at e615f254 with planning584c4ba9, independently reviewed2026-10-16. First refinement executed; no iteration02 issued because no further source repair is needed. Operator owns pending proposal in cdc-verification.md: permit only the unrecoverable historical environment metadata while retaining unknowns and original bytes, relying on fully captured fresh independent candidate proof. Proposal not adopted; no criterion or parent gate changed. Current state awaits that explicit decision before closure/advance. All original scope, Slice11/later owners, held source/main fences and parent counts remain. No inquiry, source integration or release authorized by this update.
+
+## Final closure — 2026-10-16
+
+Version1.3: Operator approved the exact RG-07 original1–53 environment-metadata exception (“I approve and give the waiver :-D”). Unknowns/bytes preserved, all seven rows done at e615f254; final row walk/artifact inventory/silent-drop/bubble-up in cdc-verification.md and Operator/CDC closing-report addendum. Iteration01 disposition accepted/closed after one refinement, not pending. No current/future or parent waiver/source integration. Actual current candidate proof retained; next planned live/lifecycle increment belongs to Slice11, with every original obligation retained.

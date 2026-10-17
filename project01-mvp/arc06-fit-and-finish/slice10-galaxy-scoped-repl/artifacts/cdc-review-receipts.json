@@ -1934,5 +1934,25 @@
         }
       ]
     }
+  },
+  "operator_approval_and_final_closure": {
+    "date": "2026-10-16",
+    "operator_verbatim": "I approve and give the waiver :-D",
+    "approved_proposal": "cdc-verification.md Iteration01 proposed historical environment-metadata exception at prior planning e1fc32a",
+    "scope": "RG-07 original CC invocations1\u201353 environment metadata only:49 empty maps/four strict override-only maps; omitted historical variable values/unset state remain unknown.",
+    "not_extended_to": "Current/future captures, subprocess output, behavior, source/test scope, strict cache flag, any parent gate, integration or release.",
+    "source": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+    "prior_independent_review_commit": "c96a0f25b0d0273347757eae0f454799e876141d",
+    "closure_basis": "Explicit accepted historical amendment plus independent current candidate proof recorded under iteration01_review; no source/evidence input changed.",
+    "all_seven_rows_done": true,
+    "fresh_rust_gates_run_this_approval_turn": false,
+    "reason_no_rerun": "Only authorized historical acceptance disposition changed. Source/pins and immutable prompt checked unchanged; fresh tests would not recover past metadata.",
+    "parent_counts_after_close": {
+      "arc_rows": 28,
+      "done": 10,
+      "open": 18,
+      "project_open": 25
+    },
+    "next_owner": "CDC prepares planned Slice11 under existing Expedited Mode; live/transport/startup/cache/unknown-state obligations remain."
   }
 }

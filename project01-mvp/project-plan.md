@@ -9,7 +9,7 @@ updated: 2026-10-16
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.27
+version: 1.28
 project: project01-mvp
 status: active
 depends-on: []
@@ -764,3 +764,9 @@ R06-S10 stays open:28 arc rows/nine done/nineteen open; all25 project rows open.
 CDC accepts completion repair RG-05 at e615f254; five prior rows retained under exact completion-only delta, all required fresh gates3/726/217/922 and public original endpoint probe5/5. Six child rows done; RG-07 open solely for unrecoverable original1–53 environment metadata (49 empty maps/four override-only). Current gate/environment capture, all144 CC channels/72 invocations, source/commit fences and preserved history verified. Iteration01 returned/reviewed; no further CC assignment issued. Narrow Operator exception proposed in Slice10 cdc-verification.md, not approved/applied; no historical value invented and no acceptance amendment adopted.
 
 R06-S10 remains open; arc28/nine done/nineteen open, project25 open. No Slice11 opening before decision/closure. Main6d183bde/dependencies/Project02 held; candidate e615f254 not integrated/installed. CDC/Operator own the bounded decision and later authorized integration/final-baseline composition; all original Slice11 live/transport/startup/cache/unknown-state, later raw-field and parent owners/gates remain. Version1.27 (2026-10-16): child correction review exposes only historical metadata acceptance question; routine status/proposal, no scope/architecture/sequence/criterion change applied.
+
+## Slice10 Operator approval and formal closure — 2026-10-16
+
+Operator explicitly approved the exact original1–53 environment-metadata waiver (“I approve and give the waiver :-D”). CDC records the accepted historical amendment without reconstructing past fields; all seven child rows accepted at e615f254. R06-S10 done;28 arc rows/ten done/eighteen open,25 project rows open. Current full independent gates/behavior/source proof unchanged and retained. Original unknowns and prompt/report/evidence history preserved; no broader/current/future or parent waiver. Final row walk/inventory/silent-drop/bubble-up is in Slice10 close-set.
+
+Advance to planned Slice11 actual watch/transport/startup-cache/unknown-state useful increment from accepted e615f254; CDC details bounded recipe before issuance, all original obligations retained. Main6d183bde/dependency/Project02 fences held; no integration/installed release. Version1.28 (2026-10-16): Slice10 approval/closure and ready next owner; the sole criterion amendment is the expressly approved historical metadata exception. Architecture/scope/original parent acceptance and later raw repair/gates unchanged.
