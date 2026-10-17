@@ -180,3 +180,7 @@ Operator explicitly approved the original1–53 environment-metadata waiver; unk
 ## Current implementation assignment — 2026-10-16
 
 Slice10 closed under approved bounded historical waiver at e615f254/planning5fed0e0. Current CC assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt.md: owned actual MCP watcher, short model guard, protocol diagnostics/native stdio+HTTP file tracking and docs. Seven child rows open;29 arc rows/ten done/nineteen open,25 project rows open. Planned12 explicitly retains all full startup-cache/unknown-system/historical-state/config-composition obligations; no inherited waiver, inquiry or integration/release.
+
+## Slice11 current correction — 2026-10-16
+
+Initial sourcecdf1e20 stopped appropriately at watcher path observation; no row accepted. CDC original/canonical-temp existing-verifier controls ground narrow path-identity repair plus HTTP test-oracle/subscription correction. Current CC assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md; source direct parentcdf1e20 and only three bounded source files, four CC return paths. All seven child rows open;29 arc/ten done/nineteen open,25 project rows open. No new inquiry/waiver/integration; original12 and later owners/gates retained.

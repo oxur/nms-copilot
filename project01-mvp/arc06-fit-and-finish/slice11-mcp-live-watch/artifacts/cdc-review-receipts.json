@@ -1,0 +1,303 @@
+{
+  "date": "2026-10-16",
+  "reviewer": "Sofie/CDC, independent of CC implementation, existing two-contributor workflow/Expedited Mode",
+  "source": "cdf1e20f46a2e1252f4c27d2dd228d318a179f61",
+  "source_parent": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+  "planning_intake": "0e8218a7ad71c5aab6856e292fa6bba1b81347b5",
+  "cc_planning_commits": [
+    "70b61e447da16697b69e9920743075a8ee8c3c8a",
+    "0e8218a7ad71c5aab6856e292fa6bba1b81347b5"
+  ],
+  "initial_assignment_sha256": "e37e0ac70d3fdccd0d6c95df5952b490222d588855d7155f8914868f254f18b9",
+  "current_cc_attempts": 38,
+  "cc_channel_objects_validated": 76,
+  "reviewer_channel_objects_validated": 10,
+  "reviewer_replays": [
+    {
+      "label": "format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "observed_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "command_overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.57647241698578,
+      "stdout": {
+        "base64": "G1sxOzM0bUZvcm1hdHRpbmcgY29kZS4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIHJ1c3RmbXQgb24gYWxsIGZpbGVzLi4uG1swbQobWzE7MzJt4pyTIENvZGUgZm9ybWF0dGVkG1swbQo=",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "observed_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "command_overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 1.0494214156642556,
+      "stdout": {
+        "base64": "G1sxOzM0bVJ1bm5pbmcgbGludGVyIGNoZWNrcy4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIGNsaXBweS4uLhtbMG0KG1sxOzMybeKckyBDbGlwcHkgcGFzc2VkG1swbQobWzE7MzZt4oCiIENoZWNraW5nIGNvZGUgZm9ybWF0dGluZy4uLhtbMG0KG1sxOzMybeKckyBGb3JtYXQgY2hlY2sgcGFzc2VkG1swbQo=",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "base64": "ICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMC41NnMKd2FybmluZzogdGhlIGZvbGxvd2luZyBwYWNrYWdlcyBjb250YWluIGNvZGUgdGhhdCB3aWxsIGJlIHJlamVjdGVkIGJ5IGEgZnV0dXJlIHZlcnNpb24gb2YgUnVzdDogcHJvYy1tYWNyby1lcnJvcjIgdjIuMC4xCm5vdGU6IHRvIHNlZSB3aGF0IHRoZSBwcm9ibGVtcyB3ZXJlLCB1c2UgdGhlIG9wdGlvbiBgLS1mdXR1cmUtaW5jb21wYXQtcmVwb3J0YCwgb3IgcnVuIGBjYXJnbyByZXBvcnQgZnV0dXJlLWluY29tcGF0aWJpbGl0aWVzIC0taWQgMWAK",
+        "bytes": 327,
+        "sha256": "f4948d90b21bccf3ce1200c15498acd188d6817d1d3a0a7f452bfcde5f7d7b58"
+      }
+    },
+    {
+      "label": "existing-retained-test-original-tmp-spelling",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--lib",
+        "test_retained_watcher_receives_later_write_and_owner_drop_disconnects",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "observed_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "command_overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "state": "complete",
+      "exit_code": 101,
+      "elapsed_seconds": 5.391950957942754,
+      "stdout": {
+        "base64": "CnJ1bm5pbmcgMSB0ZXN0CnRlc3QgbWNwOjp3YXRjaGVyX2xpZmVjeWNsZV90ZXN0czo6dGVzdF9yZXRhaW5lZF93YXRjaGVyX3JlY2VpdmVzX2xhdGVyX3dyaXRlX2FuZF9vd25lcl9kcm9wX2Rpc2Nvbm5lY3RzIC4uLiBGQUlMRUQKCmZhaWx1cmVzOgoKZmFpbHVyZXM6CiAgICBtY3A6OndhdGNoZXJfbGlmZWN5Y2xlX3Rlc3RzOjp0ZXN0X3JldGFpbmVkX3dhdGNoZXJfcmVjZWl2ZXNfbGF0ZXJfd3JpdGVfYW5kX293bmVyX2Ryb3BfZGlzY29ubmVjdHMKCnRlc3QgcmVzdWx0OiBGQUlMRUQuIDAgcGFzc2VkOyAxIGZhaWxlZDsgMCBpZ25vcmVkOyAwIG1lYXN1cmVkOyAyMTkgZmlsdGVyZWQgb3V0OyBmaW5pc2hlZCBpbiA1LjAzcwoK",
+        "bytes": 360,
+        "sha256": "311f0dc77c6ae5808cd6f9a6a482fb244d91c49099e6426c003bc4b8d17976df"
+      },
+      "stderr": {
+        "base64": "ICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDAuMzFzCndhcm5pbmc6IHRoZSBmb2xsb3dpbmcgcGFja2FnZXMgY29udGFpbiBjb2RlIHRoYXQgd2lsbCBiZSByZWplY3RlZCBieSBhIGZ1dHVyZSB2ZXJzaW9uIG9mIFJ1c3Q6IHByb2MtbWFjcm8tZXJyb3IyIHYyLjAuMQpub3RlOiB0byBzZWUgd2hhdCB0aGUgcHJvYmxlbXMgd2VyZSwgdXNlIHRoZSBvcHRpb24gYC0tZnV0dXJlLWluY29tcGF0LXJlcG9ydGAsIG9yIHJ1biBgY2FyZ28gcmVwb3J0IGZ1dHVyZS1pbmNvbXBhdGliaWxpdGllcyAtLWlkIDFgCiAgICAgUnVubmluZyB1bml0dGVzdHMgc3JjL2xpYi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvbm1zX2NvcGlsb3QtZjY2Yjg3MmY0YzZlOWVmYSkKCnRocmVhZCAnbWNwOjp3YXRjaGVyX2xpZmVjeWNsZV90ZXN0czo6dGVzdF9yZXRhaW5lZF93YXRjaGVyX3JlY2VpdmVzX2xhdGVyX3dyaXRlX2FuZF9vd25lcl9kcm9wX2Rpc2Nvbm5lY3RzJyAoNTc1NzM5MzcpIHBhbmlja2VkIGF0IGNyYXRlcy9ubXMtY29waWxvdC9zcmMvbWNwL21vZC5yczo2MjI6MTQ6CndhdGNoZXIgb2JzZXJ2ZXMgdGhlIGFjdHVhbCBmaWxlIHJlcGxhY2VtZW50OiBUaW1lb3V0Cm5vdGU6IHJ1biB3aXRoIGBSVVNUX0JBQ0tUUkFDRT0xYCBlbnZpcm9ubWVudCB2YXJpYWJsZSB0byBkaXNwbGF5IGEgYmFja3RyYWNlCmVycm9yOiB0ZXN0IGZhaWxlZCwgdG8gcmVydW4gcGFzcyBgLXAgbm1zLWNvcGlsb3QgLS1saWJgCg==",
+        "bytes": 775,
+        "sha256": "3bce1ac5384074ee24e420fe381ae147fbc17f14abb060b9b698bf4a7e35df0f"
+      }
+    },
+    {
+      "label": "same-existing-test-canonical-tmp-spelling",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--lib",
+        "test_retained_watcher_receives_later_write_and_owner_drop_disconnects",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "observed_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/private/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T"
+      },
+      "command_overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "TMPDIR": "/private/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T"
+      },
+      "state": "complete",
+      "exit_code": 0,
+      "elapsed_seconds": 0.9088919158093631,
+      "stdout": {
+        "base64": "CnJ1bm5pbmcgMSB0ZXN0CnRlc3QgbWNwOjp3YXRjaGVyX2xpZmVjeWNsZV90ZXN0czo6dGVzdF9yZXRhaW5lZF93YXRjaGVyX3JlY2VpdmVzX2xhdGVyX3dyaXRlX2FuZF9vd25lcl9kcm9wX2Rpc2Nvbm5lY3RzIC4uLiBvawoKdGVzdCByZXN1bHQ6IG9rLiAxIHBhc3NlZDsgMCBmYWlsZWQ7IDAgaWdub3JlZDsgMCBtZWFzdXJlZDsgMjE5IGZpbHRlcmVkIG91dDsgZmluaXNoZWQgaW4gMC42NHMKCg==",
+        "bytes": 226,
+        "sha256": "50e3843e5354119a0519b418a4409637e1c87421cc4d114bd8afcb2f888ec71e"
+      },
+      "stderr": {
+        "base64": "ICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDAuMjFzCndhcm5pbmc6IHRoZSBmb2xsb3dpbmcgcGFja2FnZXMgY29udGFpbiBjb2RlIHRoYXQgd2lsbCBiZSByZWplY3RlZCBieSBhIGZ1dHVyZSB2ZXJzaW9uIG9mIFJ1c3Q6IHByb2MtbWFjcm8tZXJyb3IyIHYyLjAuMQpub3RlOiB0byBzZWUgd2hhdCB0aGUgcHJvYmxlbXMgd2VyZSwgdXNlIHRoZSBvcHRpb24gYC0tZnV0dXJlLWluY29tcGF0LXJlcG9ydGAsIG9yIHJ1biBgY2FyZ28gcmVwb3J0IGZ1dHVyZS1pbmNvbXBhdGliaWxpdGllcyAtLWlkIDFgCiAgICAgUnVubmluZyB1bml0dGVzdHMgc3JjL2xpYi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvbm1zX2NvcGlsb3QtZjY2Yjg3MmY0YzZlOWVmYSkK",
+        "bytes": 411,
+        "sha256": "0c0c843c6922b64f895e35768deb7e6b0d2f7626d4f745bde92f2b2625628d90"
+      }
+    },
+    {
+      "label": "existing-native-transport-tests-canonical-tmp-spelling",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "observed_environment": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/private/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T"
+      },
+      "command_overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "TMPDIR": "/private/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T"
+      },
+      "state": "complete",
+      "exit_code": 101,
+      "elapsed_seconds": 6.922097959090024,
+      "stdout": {
+        "base64": "CnJ1bm5pbmcgMiB0ZXN0cwp0ZXN0IHRlc3RfaHR0cF9tY3BfY2hpbGRfdHJhY2tzX3NhdmVfd2l0aF9zZXNzaW9uX2FuZF9saXZlX3NzZSAuLi4gRkFJTEVECnRlc3QgdGVzdF9zdGRpb19tY3BfY2hpbGRfb2JzZXJ2ZXNfYXRvbWljX3NhdmVfcmVwbGFjZW1lbnRzX2FuZF9yZWNvdmVycyAuLi4gb2sKCmZhaWx1cmVzOgoKLS0tLSB0ZXN0X2h0dHBfbWNwX2NoaWxkX3RyYWNrc19zYXZlX3dpdGhfc2Vzc2lvbl9hbmRfbGl2ZV9zc2Ugc3Rkb3V0IC0tLS0KCnRocmVhZCAndGVzdF9odHRwX21jcF9jaGlsZF90cmFja3Nfc2F2ZV93aXRoX3Nlc3Npb25fYW5kX2xpdmVfc3NlJyAoNTc1NzQ2MjkpIHBhbmlja2VkIGF0IGNyYXRlcy9ubXMtY29waWxvdC90ZXN0cy9tY3BfbGl2ZV9pbnRlZ3JhdGlvbi5yczo0NjQ6MTM6CmFzc2VydGlvbiBgbGVmdCA9PSByaWdodGAgZmFpbGVkOiBwcmVzZXJ2ZSBzeXN0ZW0gbGFiZWwgYWNyb3NzIHBoYXNlIEIKICBsZWZ0OiAiKHVua25vd24pIgogcmlnaHQ6ICItIgpub3RlOiBydW4gd2l0aCBgUlVTVF9CQUNLVFJBQ0U9MWAgZW52aXJvbm1lbnQgdmFyaWFibGUgdG8gZGlzcGxheSBhIGJhY2t0cmFjZQoKCmZhaWx1cmVzOgogICAgdGVzdF9odHRwX21jcF9jaGlsZF90cmFja3Nfc2F2ZV93aXRoX3Nlc3Npb25fYW5kX2xpdmVfc3NlCgp0ZXN0IHJlc3VsdDogRkFJTEVELiAxIHBhc3NlZDsgMSBmYWlsZWQ7IDAgaWdub3JlZDsgMCBtZWFzdXJlZDsgMCBmaWx0ZXJlZCBvdXQ7IGZpbmlzaGVkIGluIDYuMzhzCgo=",
+        "bytes": 761,
+        "sha256": "0d04738183af25fbcf9ec1802332f99869ebbebee52b91a8f76f1ccded8d930f"
+      },
+      "stderr": {
+        "base64": "ICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDAuNDZzCndhcm5pbmc6IHRoZSBmb2xsb3dpbmcgcGFja2FnZXMgY29udGFpbiBjb2RlIHRoYXQgd2lsbCBiZSByZWplY3RlZCBieSBhIGZ1dHVyZSB2ZXJzaW9uIG9mIFJ1c3Q6IHByb2MtbWFjcm8tZXJyb3IyIHYyLjAuMQpub3RlOiB0byBzZWUgd2hhdCB0aGUgcHJvYmxlbXMgd2VyZSwgdXNlIHRoZSBvcHRpb24gYC0tZnV0dXJlLWluY29tcGF0LXJlcG9ydGAsIG9yIHJ1biBgY2FyZ28gcmVwb3J0IGZ1dHVyZS1pbmNvbXBhdGliaWxpdGllcyAtLWlkIDFgCiAgICAgUnVubmluZyB0ZXN0cy9tY3BfbGl2ZV9pbnRlZ3JhdGlvbi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvbWNwX2xpdmVfaW50ZWdyYXRpb24tZDU3YWRhOTIzNDg0ZjYyOSkKZXJyb3I6IHRlc3QgZmFpbGVkLCB0byByZXJ1biBwYXNzIGAtcCBubXMtY29waWxvdCAtLXRlc3QgbWNwX2xpdmVfaW50ZWdyYXRpb25gCg==",
+        "bytes": 508,
+        "sha256": "a018d94f019e8d5f99f90b0ec3723e7f6ba9dcf01fb0742240683e82763abb59"
+      }
+    }
+  ],
+  "review_runner_sources": {
+    "replay.py": "from pathlib import Path\nimport os,subprocess,json,hashlib,base64,time\nO=Path('/private/tmp/nms-s11-review-stop-20261016');C=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch');records=[]\ncanonical_tmp=os.path.realpath(os.environ.get('TMPDIR','/tmp'))\ndef run(label,argv,overrides=None):\n env=os.environ.copy();env['CARGO_NET_OFFLINE']='true';env.update(overrides or {});r={'label':label,'argv':argv,'cwd':str(C),'observed_environment':{k:env.get(k) for k in ['RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR']},'command_overrides':{'CARGO_NET_OFFLINE':'true',**(overrides or {})},'state':'started'};records.append(r);(O/'replay.json').write_text(json.dumps(records,indent=2)+'\\n');t=time.monotonic();p=subprocess.run(argv,cwd=C,env=env,capture_output=True);ch=lambda b:{'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()};r.update(state='complete',exit_code=p.returncode,elapsed_seconds=time.monotonic()-t,stdout=ch(p.stdout),stderr=ch(p.stderr));(O/'replay.json').write_text(json.dumps(records,indent=2)+'\\n');print(json.dumps({'label':label,'exit_code':p.returncode,'stdout_tail':p.stdout.decode(errors='replace')[-1100:],'stderr_tail':p.stderr.decode(errors='replace')[-350:]}),flush=True);return p.returncode\nif run('format',['make','format'])!=0:raise SystemExit(1)\nif run('lint',['make','lint'])!=0:raise SystemExit(1)\na=['cargo','test','-p','nms-copilot','--all-features','--lib','test_retained_watcher_receives_later_write_and_owner_drop_disconnects','--','--exact']\na[-1]='--nocapture'\nrun('existing-retained-test-original-tmp-spelling',a)\nrun('same-existing-test-canonical-tmp-spelling',a,{'TMPDIR':canonical_tmp})\n",
+    "wire.py": "from pathlib import Path\nimport os,subprocess,json,hashlib,base64,time\nO=Path('/private/tmp/nms-s11-review-stop-20261016');C=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch');records=json.loads((O/'replay.json').read_text())\ncanonical_tmp=os.path.realpath(os.environ.get('TMPDIR','/tmp'))\ndef run(label,argv,overrides=None):\n env=os.environ.copy();env['CARGO_NET_OFFLINE']='true';env.update(overrides or {});r={'label':label,'argv':argv,'cwd':str(C),'observed_environment':{k:env.get(k) for k in ['RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR']},'command_overrides':{'CARGO_NET_OFFLINE':'true',**(overrides or {})},'state':'started'};records.append(r);(O/'replay.json').write_text(json.dumps(records,indent=2)+'\\n');t=time.monotonic();p=subprocess.run(argv,cwd=C,env=env,capture_output=True);ch=lambda b:{'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()};r.update(state='complete',exit_code=p.returncode,elapsed_seconds=time.monotonic()-t,stdout=ch(p.stdout),stderr=ch(p.stderr));(O/'replay.json').write_text(json.dumps(records,indent=2)+'\\n');print(json.dumps({'label':label,'exit_code':p.returncode,'stdout_tail':p.stdout.decode(errors='replace')[-1100:],'stderr_tail':p.stderr.decode(errors='replace')[-350:]}),flush=True);return p.returncode\nrun('existing-native-transport-tests-canonical-tmp-spelling',['cargo','test','-p','nms-copilot','--all-features','--test','mcp_live_integration','--','--test-threads=1'],{'TMPDIR':canonical_tmp})\n"
+  },
+  "scope_note": "Routine independent replay of existing required native verifiers under the captured original temp spelling and its canonical spelling, with relevant pinned source inspection. No source patch, event-tap product, broad standalone investigation or test rewrite performed. Changed-input controls are not production acceptance.",
+  "path_context": {
+    "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+    "canonical_TMPDIR": "/private/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T",
+    "same_existing_base_directory": true
+  },
+  "registry_source_sha256": {
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/notify-8.2.0/src/fsevent.rs": "6b969f5a18454cfa764e7fd797861dc3495abe739db5fe834de6da57a69c7880",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/notify-8.2.0/src/lib.rs": "ce2f43eb5d58780d4f1c0a04a8b12ecc12969cef1b6509cfcd90e4ea66b61d90",
+    "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/notify-debouncer-mini-0.7.0/src/lib.rs": "9873ecb5b375ef913c4373dc52c30e4de754f9a61733d494c236fdac77bd3a6a"
+  },
+  "iteration01_baseline_sha256": {
+    "crates/nms-watch/src/watcher.rs": "0380ee0cb4da7f272c3758f83572dba04aa532944ef485aef4e758ec1f9cefe3",
+    "crates/nms-copilot/tests/mcp_live_integration.rs": "5daf74556f0ac271c8d4e16a09285eff35a363c30bde8b255d0c09eabf635e5c",
+    "crates/nms-copilot/src/mcp/mod.rs": "d79b469653d87f8f51b81cc0dc91df860887c992f138c449233cde7ff3646bed",
+    "crates/nms-copilot/src/main.rs": "0e7a877e97da9efc1f26a31b3207e29248be79461cfed1bd0a944eabd4719ffe",
+    "README.md": "2223c89ae8e1dc4fbe65158d61c1f5df748e6fc2f5fba4cbcbebd5e6de6de4ea"
+  },
+  "held_pins": {
+    ".": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+    ".worktrees/cache-semantic-compatibility": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+    ".worktrees/galaxy-qualified-identity": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+    ".worktrees/galaxy-scoped-queries": "7118a486ea43a776aa2451ec0807d43384fb954f",
+    ".worktrees/galaxy-scoped-routing": "f71d607e27e18d7266855a2708449f9d6b90c632",
+    ".worktrees/galaxy-scoped-session": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+    ".worktrees/galaxy-scoped-repl": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+    ".worktrees/mcp-live-watch": "cdf1e20f46a2e1252f4c27d2dd228d318a179f61"
+  },
+  "cc_artifact_sha256_at_intake": {
+    "artifacts/execution.md": "a43e4cb975129b8de5112b3aadc1142f6bc79e55f5ca62faec54bdeb72775271",
+    "artifacts/validation.json": "219241ba766caf66faa2c80d9aa1710bc9746424b503b2804353a39d6b77afa3",
+    "closing-report.md": "ee6b963fa3f9146630faba2725d5b3000927cc99d6895485dfec7259120d79b2",
+    "ledger.md": "8350f843006c66e6ba32297a85c8b4230885d49bd093295269812c49e4d37a11",
+    "slice-plan.md": "5ef2d1399cdadaf41cf56b9ff4dbbb2aba60e59e57eb9a49041d6023a24d1069"
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "kind": "production path-identity defect / additional watcher-file correction",
+      "evidence": "Existing retained-owner verifier fails0/1 at original TMPDIR and passes1/1 with canonical TMPDIR; pinned watcher exact-string comparison and notify canonical directory bookkeeping support the path mismatch. Raw native event paths were not tapped or claimed.",
+      "repair": "Canonical watched parent registration with bare-relative parent fallback; exact or successfully canonical-equal event/current-save comparison; preserve original path for parse/stability and existing errors/worker semantics."
+    },
+    {
+      "id": "F02",
+      "kind": "unsupported HTTP test oracle",
+      "evidence": "Unchanged canonical-input native suite: stdio complete pass; HTTP phaseB actual notification/tool/resource location assertions reached, then unsupported system label equality fails actual(unknown) versus expected-.",
+      "repair": "Remove only cross-galaxy phaseB label equality; preserve all physical/protocol/glyph/notification/deadline/recovery and D\u2192A checks, record actual labels."
+    },
+    {
+      "id": "F03",
+      "kind": "HTTP subscribe proof gap",
+      "evidence": "HTTP subscribe test checks only response id20; server notifier can broadcast when no explicit subscriptions exist.",
+      "repair": "Require matching response successful result object with no error before any phaseB write; capture successful native fixture observations with nocapture."
+    },
+    {
+      "id": "F04",
+      "kind": "current intake/doc correction",
+      "evidence": "CC explicitly records two required PM sections loaded after edits; start_watcher rustdoc still describes receiver return.",
+      "repair": "Preserve known chronology; complete new pre-edit required intake before correction; fix stale return rustdoc only. No retroactive reading claim or historical waiver."
+    }
+  ],
+  "row_dispositions": {
+    "LW-01": "open",
+    "LW-02": "open",
+    "LW-03": "open",
+    "LW-04": "open",
+    "LW-05": "open",
+    "LW-06": "open",
+    "LW-07": "open"
+  },
+  "cc_scope_audit": {
+    "source_four_allowed_paths": true,
+    "source_parent_correct": true,
+    "planning_two_commits_only_four_return_paths": true,
+    "required_trailers_once": true,
+    "protected_dependencies_unchanged": true,
+    "all_source_worktrees_clean_pinned": true
+  },
+  "limits": "No complete current gate acceptance under original inputs, no raw event tap, no source edits by reviewer, integration, release, slice/arc/project closure or inherited waiver. Broader helper review/current preflight and corrected gates remain due.",
+  "next_assignment": "arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md",
+  "implementation_boundary_disposition": "CDC authorizes watcher.rs path identity/registration and direct tests inside already-approved live-watch capability, plus current test/doc corrections in two existing copilot files. No public API/architecture/acceptance/parent scope change; original CC stop complied with prior boundary.",
+  "preissue_checks": {
+    "status": "passed",
+    "exact_eight_planning_paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+      "project01-mvp/closure-preparation.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "unchanged_cc_records_author_baseline_original_prompt": true,
+    "all_seven_criteria_and_statuses_unchanged": true,
+    "prior_evidence_notes_preserved_as_prefix": true,
+    "parent_ledgers_unchanged": true,
+    "held_sources_clean_and_exact": true,
+    "all_current_source_digests_match": true,
+    "review_channels_valid": 10,
+    "new_prompt_sha256": "247a15b9d8220f8b18f4036f4a11b2b9af929cba37928e0f8f1dba92d3acc2ce",
+    "source_not_edited_by_reviewer": true,
+    "no_waiver_or_new_investigation": true
+  }
+}

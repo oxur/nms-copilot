@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.38, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.39, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -311,3 +311,9 @@ After Slice10 formal close5fed0e0 at acceptede615f254, issue arc06-fit-and-finis
 The earlier single planned11 live/lifecycle placeholder is expressly subdivided for coherent implementation/review headroom:11 actual MCP/watch lifetime/transports; planned12 full startup-cache C04/old-current envelopes/warm and write-through in both modes, unknown-system placeholder/promotion, historical inconsistent cached player-state diagnosis/disposition, and watcher configuration/duplicate-producer composition. All remain required before parent R06-R02/R03/M7.4/C04 acceptance and later raw-field policy/repair;12 has no issued assignment or adopted unresolved policy. This is implementation detail of existing approved obligations, no criterion waived or silent scope drop. Any inquiry/policy change still needs its own authority/Operator agreement.
 
 Candidate .worktrees/mcp-live-watch/codex/mcp-live-watch is promised as wired/tested/documented candidate; main6d183bde/dependencies/Project02 held. CDC/Operator own later authorized integration/final-baseline drift/composition; not installed/released. Original exports/imports/format/docs/distribution/coverage/independent/Operator gates retained. Version1.38 (2026-10-16): Slice10 closure/source inspection motivates bounded ready11 and explicit12 remainder; no architecture/original parent acceptance/scope reduction.
+
+## Slice11 reviewed stop / path correction — 2026-10-16
+
+CC stopped atcdf1e20 after real watcher/MCP gates remained red on unchanged authorized retries. CDC existing-verifier replay isolates path spelling: original /var temp input fails; canonical /private/var input passes retained-owner lifecycle and full stdio, while HTTP reaches B then rejects unsupported cross-galaxy label equality. HTTP subscription assertion also needs success-result proof. Current assignment arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration01.md; all seven child rows remain open and initial prompt preserved.
+
+CDC revises only implementation boundary for the already approved live-watch capability: watcher.rs canonical parent/event identity/direct regression tests, bounded existing HTTP test proof and MCP return rustdoc. No public API/architecture/criterion/new feature/parent scope amendment or evidence waiver, and no separate investigation. All normal-input native gates still required; changed-input controls are not acceptance. If bounded repair fails, new diagnosis needs its own agreement. Planned12/later raw-field and original acceptance/integration owners retained.29 arc rows/ten done/nineteen open,25 project rows open; sourcecdf1e20/main/dependency/Project02 fences held, no integration or release. Version1.39 (2026-10-16): initial stop review grounds first correction without acceptance reduction or scope drop.
