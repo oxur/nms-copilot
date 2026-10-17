@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-17",
+  "author": "Sofie / CDC, initial implementation-ready handoff",
+  "source": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+  "source_parent": "46ca153c4418fcbf859f76ef59d600985a315b60",
+  "accepted_dependency": "Slice11 all seven rows closed; planning ad552d4abf25d183c96f9bfdec16c34acca1d0ff",
+  "authoring_planning_head": "ad552d4abf25d183c96f9bfdec16c34acca1d0ff",
+  "candidate_to_create": ".worktrees/cache-player-state-integrity",
+  "candidate_branch": "codex/cache-player-state-integrity",
+  "held_pins": {
+    ".": {
+      "head": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+      "clean": true
+    },
+    ".worktrees/cache-semantic-compatibility": {
+      "head": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+      "clean": true
+    },
+    ".worktrees/galaxy-qualified-identity": {
+      "head": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+      "clean": true
+    },
+    ".worktrees/galaxy-scoped-queries": {
+      "head": "7118a486ea43a776aa2451ec0807d43384fb954f",
+      "clean": true
+    },
+    ".worktrees/galaxy-scoped-routing": {
+      "head": "f71d607e27e18d7266855a2708449f9d6b90c632",
+      "clean": true
+    },
+    ".worktrees/galaxy-scoped-session": {
+      "head": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+      "clean": true
+    },
+    ".worktrees/galaxy-scoped-repl": {
+      "head": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+      "clean": true
+    },
+    ".worktrees/mcp-live-watch": {
+      "head": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+      "clean": true
+    }
+  },
+  "allowed_source_sha256": {
+    "crates/nms-cache/src/serialize.rs": "33f4ec5d0e843cff4aeffe31efe1ff51f867aaae263250763dc95397f45f5890",
+    "crates/nms-cache/src/lib.rs": "70a78c143d7aaef38fba7c3da8eb6b1d7ee4654f27cf8e7d27b01ce1ea8b5e6f",
+    "crates/nms-cache/src/freshness.rs": "8e243d258c9705f41e438972fc09611846fa4c8409c44bec2ed0159877627773",
+    "crates/nms-cache/tests/load_integration.rs": "3ccb3d2ad1e8be81af97e3aaacb6501bb3ee19c9a3e76ed894bf98791ae329fd"
+  },
+  "protected_source_sha256": {
+    "Cargo.toml": "e45d1a29a52e43851b00a28132186a334e500bb5175ed3d532178776249cf32b",
+    "Cargo.lock": "a5f8511e470cdf8b8431f0c3ccea9c00badbcd34d8b34ded38c557827bd21bb0",
+    "crates/nms-cache/Cargo.toml": "3716bf3de9676b6f220649a3ce6377b82fb61a58fde6c87f70d66203e9e1287b",
+    "crates/nms-cache/src/data.rs": "df8c472f180dfa330ff60d478ba079e124f9ab421fd1ef8a5b82676c34673b9c",
+    "crates/nms-cache/src/error.rs": "d5fe28e15b9b5318184b312290f42c7788481ea957954aa8a5f4fe45b66f3e43",
+    "crates/nms-cache/tests/fixtures/predecessor-schema1-semantic1.rkyv": "76ca0089af76621b5e8002828c2d0f4cea1b814bca33aced82a507357883389a",
+    "crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7",
+    "crates/nms-copilot/tests/route_cache_integration.rs": "4cc034f60aa38dadc15aa7628d47d91724a15ae6d0737045be491c1b7116fd09",
+    "crates/nms-copilot/src/main.rs": "0e7a877e97da9efc1f26a31b3207e29248be79461cfed1bd0a944eabd4719ffe",
+    "crates/nms-copilot/src/session.rs": "882c8ffa2c6ab836257e29847538391f4147aacc30aacb839bdbffdf9ea320b8",
+    "crates/nms-copilot/src/watch.rs": "94b98379e6256daabe300067216727dfea0cbc50d7b36db9585539ff382a7c54",
+    "crates/nms-copilot/src/mcp/mod.rs": "f3398ed46875adb6ff05ef6ee8d51ad174ba0288741ab1adab08b124ebe49f9c",
+    "crates/nms-copilot/src/mcp/tools.rs": "402abe9411e4bafd4b1b34180cfdf5f55394177babf4b627a11b89601df11604",
+    "crates/nms-copilot/src/mcp/resources.rs": "264505d2dbc60b368bfdb1ac15edf28da1df7f91a21b1e5c9f97af400b7d9746",
+    "crates/nms-copilot/tests/mcp_live_integration.rs": "d426c80a59ff05258a2ed7983d8f4e95a3a565b4e487ce11113bb43f18ec3110",
+    "crates/nms-watch/src/watcher.rs": "4a853fd9c775cbfb36754695ca83918caa70e4cfd4ede5abd85f392ae1373717",
+    "crates/nms-watch/src/snapshot.rs": "fc580e8fe38916c9c5d86f7a1e3919673c7fc20a970ab72e93777cd1fa19e901",
+    "crates/nms-watch/src/delta.rs": "cdb4981f5abe644939e99b5e2224d115a5ddf8634c349051b515504d8e687260",
+    "crates/nms-graph/src/model.rs": "c9c5e5e9fdc5ad84318720d00b7f6db835e5249b236f205a222c37a046697d85",
+    "crates/nms-core/src/player.rs": "02806b772983d988fc8cba37b75ecd432d26a73b0c514ad1afe2b085ba90354e",
+    "crates/nms-save/src/model.rs": "8295307ae79e7c5c3bb7532f57f3691e692dcc67b8702df2acd69e76c5283df9"
+  },
+  "binding_observations": {
+    "serialize": "At239313 serialize archives CacheData with no duplicated-player-reality check; write_cache serializes before writing.",
+    "deserialize": "At239313 header/layout/semantic checks then aligned checked decode; no logical player-state comparison.",
+    "recovery": "load_or_rebuild already rebuilds any read error from actual save, and no_cache skips all cache access; source load precedes cache rewrite.",
+    "consumer": "main.rs load_model calls this loader before headless/normal branch; no startup caller change is required for this behavior.",
+    "invariant": "Graph apply_delta already updates both current_address and current_reality to moved.to, while active_galaxy is independent.",
+    "not_run": "Author made no new runtime probe or semantic survey. Source inspection grounds the prescribed validator; CC must prove actual malformed persisted input/fallback/warm behavior."
+  },
+  "revision_assessment": {
+    "schema": 2,
+    "semantic": 2,
+    "changed": false,
+    "reason": "Archive/public model interpretation unchanged; enforce existing duplicated physical-player reality invariant. Preserve valid consistent2/2 caches and sealed spatial/route fixture. Future decoder/model meaning changes still require bump assessment and predecessor rejection."
+  },
+  "remainder_owner": "Planned13/CDC: full startup/live-cache C04 in both modes, old/current/warm/write-through, unknown placeholders/promotion, watch enabled/debounce and duplicate-producer composition, historical questions beyond defined inconsistent-pair case; before raw repair/parent acceptance.",
+  "preissue_checks": {
+    "expected_commit_paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/author-baseline.json",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/slice-plan.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "source_allowed4_protected21_verified": true,
+    "held_clean_pins": 8,
+    "closed11_values_prefixes_prompts_intact": true,
+    "slice12_open_set_only": true,
+    "parent_scope_and_named13_owner_explicit": true,
+    "prompt_sha256": "1268796baf74dc66156b431b97314b34eafd9425150a88323d59a757e03ca17b",
+    "plan_sha256": "e2c84875fa8f6cbcfdb8ea2057d8512274c2aa3b81b39619a84d83b96cd93a76",
+    "ledger_sha256": "109294ac34980b02da7f4b3c5f58d7b38dd52ff911c67cc7543f925d435ba8c1",
+    "counts": {
+      "slice11": [
+        7,
+        7,
+        0
+      ],
+      "slice12": [
+        7,
+        0,
+        7
+      ],
+      "arc": [
+        30,
+        11,
+        19
+      ],
+      "project": [
+        25,
+        0,
+        25
+      ]
+    },
+    "readiness": "Inspected exact APIs/data/error/fallback/wire boundaries and existing complete codec/load tests. Recovery policy, validation/error order, unchanged2/2 interpretation, independent view and negative/positive oracles resolved. Existing cache/from_save/loop caller composition is the integration home; no native cached transport claim. Scoped source comparisons plus complete new prompt/open-set self-review and required repository gates retained. No new inquiry or standalone verifier product."
+  }
+}

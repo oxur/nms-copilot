@@ -149,3 +149,5 @@ The assigned real save→watcher→model→subscribed stdio/HTTP location behavi
 What worked: actual native failures and successful payload observations guided a runtime path repair and rejected an invalid test oracle; narrow preserved corrections plus independent evidence retention avoided widening the repair. All earlier unsuccessful attempts remain in the historical packet.
 
 Planning closure commit: pending until this close packet is committed; exact identity follows in the normal receipt.
+
+Formal closure committed as `ad552d4abf25d183c96f9bfdec16c34acca1d0ff`, direct parentbe9cdb7, eight exact named planning paths and required trailers once verified. Raw receipt in artifacts/cdc-review-receipts.json iteration02_review.closure_commit. No integration/release or parent acceptance.
