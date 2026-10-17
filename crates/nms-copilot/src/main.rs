@@ -107,7 +107,8 @@ fn main() {
 
     // In headless mode, initialize logging for the MCP server
     if cli.headless {
-        let mcp_config = mcp::config::McpConfig::load();
+        let mut mcp_config = mcp::config::McpConfig::load();
+        mcp_config.logging.output = "stderr".into();
         if let Err(e) = twyg::setup(mcp_config.logging.to_twyg_opts()) {
             eprintln!("Warning: Failed to initialize logging: {e}");
         }
