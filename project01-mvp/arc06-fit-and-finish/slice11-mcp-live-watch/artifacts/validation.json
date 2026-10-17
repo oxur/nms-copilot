@@ -1372,13 +1372,29 @@
       "attempt": 35,
       "worktree": ".worktrees/mcp-live-watch",
       "command": "git diff --check",
-      "exit_code": 0
+      "exit_code": 0,
+      "note": "pre-commit source check"
     },
     {
       "attempt": 36,
       "worktree": ".worktrees/planning/project01-mvp",
       "command": "git diff --check",
-      "exit_code": 0
+      "exit_code": 0,
+      "note": "initial planning check"
+    },
+    {
+      "attempt": 37,
+      "worktree": ".worktrees/mcp-live-watch",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "note": "post-source-commit check"
+    },
+    {
+      "attempt": 38,
+      "worktree": ".worktrees/planning/project01-mvp",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "note": "final planning check before artifact commit"
     }
   ],
   "source_commit": {
@@ -1398,7 +1414,20 @@
     "status": "committed-unintegrated",
     "trailers_verified": true
   },
-  "planning_commit": null,
+  "planning_commit": {
+    "artifact_commit": "70b61e447da16697b69e9920743075a8ee8c3c8a",
+    "branch": "planning",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
+  },
   "open_acceptance_rows": [
     "LW-01",
     "LW-02",
