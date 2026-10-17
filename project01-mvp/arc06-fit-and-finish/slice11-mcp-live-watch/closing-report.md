@@ -83,3 +83,45 @@ Operator handoff: Iteration01's prescribed path correction, HTTP test oracle and
 - Planning artifact commit: `4dafc70dcfeb6aad749d348e8f73aa14104d2afe`, parent `af36306f8d9d988662e28cc1b2ffff6e318c8087`; exact four paths are the execution artifact, append-only validation JSON, this closing report, and ledger Evidence/Notes cells. Each required co-author trailer occurs once.
 - Source commit: `46ca153c4418fcbf859f76ef59d600985a315b60`, parent `cdf1e20f46a2e1252f4c27d2dd228d318a179f61`; its exact three paths and trailers are recorded above.
 - At the planning artifact commit, main `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`, held accepted Slice10 REPL `e615f25419cc68e367c07eda6ef73d26c4e4839c`, source worktree, and planning worktree were clean. The planning metadata follow-up will append this receipt only.
+
+
+# Slice11 CC return — Iteration02 test regression correction
+
+## Disposition
+
+**Proposed-done for independent CDC review; not accepted.** This iteration restores the HTTP D-to-A regression assertion, restores the prescribed alias replacement expectation, and appends a factual correction to Iteration01's preservation statement. The four CDC-accepted rows remain done; LW-03, LW-05, and LW-07 remain open. No Slice11, Arc06, or Project01 closure is claimed.
+
+## Assignment and source identity
+
+- Assignment: `project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md`, SHA-256 `85b4b37e7ea18b2b17d2b84bf0bf7319ae28974699fa089140af9bd21e95a2c9`.
+- Issuance `1914324a61b7293239542cf0c9c723b07dfb11ff` (parent `321a1f3a8e743998a3493ea8e124fe7000523ed7`); planning intake `05482035d4781774506a8f38a3f835ce1d20c176`. Source intake `46ca153c4418fcbf859f76ef59d600985a315b60` directly parent `cdf1e20f46a2e1252f4c27d2dd228d318a179f61`.
+- Source commit `239313cc109ca908f43f34ae5e04ba7e5487161f` directly parents `46ca153c4418fcbf859f76ef59d600985a315b60` on `codex/mcp-live-watch`; exact source paths: `crates/nms-copilot/tests/mcp_live_integration.rs, crates/nms-watch/src/watcher.rs`. Each required trailer occurs once. Protected production and watcher bytes before `#[cfg(test)]` are identical to source intake.
+- Planning changes are limited to execution, validation, this report and ledger Evidence/Notes cells. Old execution/report bytes are exact prefixes; all62 prior primary attempts and124 prior raw channels remain.
+
+## Factual correction and current native proof
+
+Iteration01's execution statement that HTTP removed “only phase-B label equality” was inaccurate. At Iteration02's pre-edit intake, both initial A's return and every loop result were discarded; therefore D-to-A equality was also absent. This iteration captures the actual A and phase returns, compares only D with A, and leaves B/C unconstrained because their actual Eissentam system label is `(unknown)`, while Euclid A/D is `-`. The alias sequence is 0/0 → 9/0 → 0/X1 through the caller's directory symlink spelling and a real atomic sibling replacement.
+
+The unchanged authorized native gate5 replay passed2/2 tests and emitted nine actual tool/resource observations: HTTP A/B/C/D and stdio A/B/repeated B/C/D. Every tool/resource pair agreed. HTTP session, subscription, GET SSE, notifications and rereads passed. Raw channels and attempt metadata are validation iteration02 attempt70.
+
+## Fresh validation
+
+All14 required gates passed. Gates3-8 initially encountered sandbox watcher/loopback failures; each is retained with an unchanged authorized-host retry: 65→66, 67→68, 69→70, 71→72, 73→74 and75→76. Every attempt used original TMPDIR `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`. Strict cache docs passed with `RUSTDOCFLAGS='-D rustdoc::broken_intra_doc_links'`; ordinary combined docs passed with existing warnings. Focused all-feature suite:733 passed across21 active harnesses; `make test`:929 passed across24 active harnesses; zero failures/ignored. Per-attempt commands, environments, overrides, outputs, byte counts and digests remain in validation.
+
+## Row disposition and retained scope
+
+| Row | Current evidence | Status |
+|---|---|---|
+| LW-01 | Prior CDC owner/drop and live-write evidence retained; corrected watcher suite passes. | done (CDC accepted) |
+| LW-02 | Native stdio phases, malformed recovery, same-glyph control and protocol checks pass. | done (CDC accepted) |
+| LW-03 | HTTP session/SSE native proof passes and D-only A comparison is restored; independent review pending. | open |
+| LW-04 | Protected lock/logger inputs unchanged; rereads and protocol checks pass. | done (CDC accepted) |
+| LW-05 | Direct alias regression now expects 0/X1 on real atomic replacement; wider row awaits review. | open |
+| LW-06 | Protected docs/source unchanged; format/lint/test/build/doc gates pass. | done (CDC accepted) |
+| LW-07 | Intake, history, channels, corrected claim, commits and gates retained; independent disposition pending. | open |
+
+Slice12 remains planned for complete startup/cache C04 and envelope/warm/write-through cases, unknown-system placeholder/promotion, historical inconsistent player-state decisions, and watcher configuration/duplicate-producer composition before raw-field and original-parent acceptance. Main, dependencies and Project02 remain held. Candidate remains isolated, unintegrated and uninstalled; CDC/Operator retain later composition and acceptance.
+
+## Handoff
+
+Please relay this proposed-done return to CDC for independent review of the corrected tests and current evidence. Four accepted rows remain accepted; LW-03/05/07 remain open. Detailed return: `project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/closing-report.md`.

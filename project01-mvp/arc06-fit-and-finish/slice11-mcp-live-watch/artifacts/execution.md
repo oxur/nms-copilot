@@ -130,3 +130,38 @@ The first sandbox runs of watcher, lifecycle, integration, focused suite, no-def
 Useful candidate live tracking and wire proof are delivered only in isolated source worktree `.worktrees/mcp-live-watch`; no integration, install, push or release occurred. Planned Slice12 retains complete startup/cache C04, old/current envelopes, warm/write-through behavior, unknown-system placeholder/promotion, historical player-state decisions, and watcher configuration/duplicate-producer composition. Original R06-R02/R03/M7.4/C04 owners, raw-field repair, and every parent acceptance gate remain open. All seven LW rows remain open for independent CDC; no Slice11/Arc06/Project01 closure is claimed.
 
 Iteration01 artifacts are `artifacts/execution.md`, append-only `artifacts/validation.json`, and the appended `closing-report.md`; `ledger.md` changes only Evidence/Notes. The two original planning commits remain intact.
+
+
+## Iteration02 pre-edit intake and contract readback
+
+Before source edits, the issued prompt was read completely (SHA-256 `85b4b37e7ea18b2b17d2b84bf0bf7319ae28974699fa089140af9bd21e95a2c9`), actual issuance commit `1914324a61b7293239542cf0c9c723b07dfb11ff` was distinguished from planning intake `05482035d4781774506a8f38a3f835ce1d20c176`, and the clean source worktree was verified at `46ca153c4418fcbf859f76ef59d600985a315b60` directly parented by `cdf1e20f46a2e1252f4c27d2dd228d318a179f61`. The planning worktree was clean at `05482035d4781774506a8f38a3f835ce1d20c176`. Required text coverage, contract readback, retained-evidence counts, exact source input digests, environment, and the CDC-authorized ledger discrepancy are recorded under `iteration02.intake` in `artifacts/validation.json`. The previous execution/report bytes are preserved as the prefix of this file and their Iteration01 statements remain historical.
+
+I01-F03 correction: Iteration01's execution text said HTTP removed 'only phase-B label equality.' That preservation claim was inaccurate: at the Iteration02 intake, the HTTP test discarded both its phase-A return and every loop return, so the earlier change also removed D-to-A equality. The present correction will retain actual A and loop return values and compare them only for D; B and C remain unconstrained. The alias test at intake ended with 9/X1 after the in-place 9/0 write; its specified atomic replacement correction is 0/X1. The retained native evidence has nine real tool/resource observations and the historical reviewer/CC channel inventories have been decoded and digest-checked as recorded in validation.json.
+
+
+## Iteration02 source correction and current validation
+
+Source commit `239313cc109ca908f43f34ae5e04ba7e5487161f` directly parents `46ca153c4418fcbf859f76ef59d600985a315b60` and changes only `crates/nms-copilot/tests/mcp_live_integration.rs, crates/nms-watch/src/watcher.rs`. The HTTP test captures the actual phase-A system and each loop result, asserting equality only at D; B/C remain unconstrained. The direct alias test preserves initial 0/0 and in-place 9/0, then checks the real atomic replacement as 0/X1. Iteration01 said it removed “only phase-B label equality”; that statement was inaccurate because A and loop results were discarded, so D equality was also absent at intake. This append corrects the claim while preserving the historical bytes.
+
+All 14 current gates passed. Initial sandbox failures and unchanged authorized-host retries are retained separately, with the original TMPDIR.
+
+| Gate | Command/result | Attempts |
+|---:|---|---|
+| 1 | `make format` — **pass** | 63 |
+| 2 | `make lint` — **pass** | 64 |
+| 3 | `cargo test -p nms-watch` — **pass** | 65, 66 |
+| 4 | `cargo test -p nms-copilot --all-features --lib watcher_lifecycle_tests` — **pass** | 67, 68 |
+| 5 | `cargo test -p nms-copilot --all-features --test mcp_live_integration -- --test-threads=1 --nocapture` — **pass** | 69, 70 |
+| 6 | `cargo test --all-features -p nms-graph -p nms-watch -p nms-cache -p nms-query -p nms-copilot -p nms-cli` — **pass** | 71, 72 |
+| 7 | `cargo test -p nms-copilot --no-default-features --lib` — **pass** | 73, 74 |
+| 8 | `make test` — **pass** | 75, 76 |
+| 9 | `cargo build --workspace --all-features` — **pass** | 77 |
+| 10 | `cargo test --workspace --all-features --doc` — **pass** | 78 |
+| 11 | `cargo doc --no-deps --all-features -p nms-core -p nms-graph -p nms-query -p nms-cache -p nms-watch -p nms-copilot` — **pass** | 79 |
+| 12 | `RUSTDOCFLAGS='-D rustdoc::broken_intra_doc_links' cargo doc --no-deps --all-features -p nms-cache` — **pass** | 80 |
+| 13 | `git diff --check (source)` — **pass** | 81 |
+| 14 | `git diff --check (planning)` — **pass** | 82 |
+
+Focused suite: {'harnesses': 26, 'active_harnesses': 21, 'passed': 733, 'failed': 0, 'ignored': 0, 'filtered': 0} (733 passed, no failures/ignored across21 active harnesses). `make test`: {'harnesses': 34, 'active_harnesses': 24, 'passed': 929, 'failed': 0, 'ignored': 0, 'filtered': 0} (929 passed, no failures/ignored across24 active harnesses). Watch package26/0/0; lifecycle2/0/0 (218 filtered); native integration2/0/0; no-default copilot219/0/0. No ignored tests. Ordinary docs pass with existing HTML/unresolved-link warnings; strict cache-only docs pass using the prescribed flag and do not imply strictness for combined docs.
+
+Nine actual native tool/resource observations were captured: HTTP A/B/C/D and stdio A/B/repeated B after malformed recovery/C/D. A and D are Euclid/system `-`; B and C are Eissentam/system `(unknown)`. Tool and resource agree at each phase. Full raw output is attempt70.
