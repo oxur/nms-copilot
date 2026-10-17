@@ -72,3 +72,61 @@ Source commit `cdf1e20f46a2e1252f4c27d2dd228d318a179f61` (parent `e615f25419cc68
 The retained-handle unit test also timed out on an in-place valid save write in both the sandbox and unchanged authorized-host retry. The two full package/workspace test commands and the no-default library command therefore remain red: in the target suite 19+15+68+34+7+1+29+5+5+3 tests passed and `nms-copilot` reported 219 passed/1 failed; no-default reported 218 passed/1 failed; `make test` reached the same 219/1 copilot result. Test failures are the new live-watcher observation, with zero ignored. The authorized retry did not restore file-change delivery. This falsifies the assumed event path within the currently permitted source boundary; the watcher implementation itself lives in protected `crates/nms-watch/src/watcher.rs`. Per the prompt, stop affected production work for CDC rather than edit that protected path or weaken the atomic-replacement recipe.
 
 All attempts, exact argv/cwd, pre-launch environment snapshots, per-command overrides, offline-config observations, and separate stdout/stderr byte counts and SHA-256 values are retained in `artifacts/validation.json`; no failed attempt was overwritten. The actual `RUSTDOCFLAGS` command override is recorded separately. Attempt indices include every retry and every authorized-host retry. All `LW-01` through `LW-07` statuses remain open. Source remains isolated, unintegrated and uninstalled; parent owners R06-R02/R03/M7.4/C04 and planned Slice12 work remain open.
+
+
+## Iteration01 implementation, fresh proof and proposed return
+
+Source commit `46ca153c4418fcbf859f76ef59d600985a315b60` directly parents `cdf1e20f46a2e1252f4c27d2dd228d318a179f61` and changes exactly `crates/nms-copilot/src/mcp/mod.rs, crates/nms-copilot/tests/mcp_live_integration.rs, crates/nms-watch/src/watcher.rs`. Both required trailers occur once. The caller's save path remains the input to existence checks, initial snapshot, stability, parsing and delta computation. Watch registration now canonicalizes the nonempty parent (or `.` for a bare name) fallibly through existing `NotifyError`; event identity is exact spelling or equality of two successfully canonicalized current paths. Watcher nonrecursive/debounce/stability/failure behavior and the existing MCP owner/task/lock/notification code remain unchanged. Tests exercise same-file literal/canonical identity, same-basename separation, missing-path rejection with exact-path retention, real writes and atomic replacement through a Unix directory symlink alias, relative directory registration and bare-filename registration without changing process cwd.
+
+The HTTP correction removes only phase-B label equality and prior-label setup. It now matches response id20 and requires a result object with no error before writes. Both call helpers write compact stderr observations from actual tool and resource JSON. The HTTP and stdio child tests reach all A/B/C/D phases, real subscribed location updates and rereads; stdio also crosses the observed five-failure warning, rereads retained B, recovers to C and returns to A. `mcp-smoke`, session/SSE, strict JSON-RPC stdout and child cleanup assertions pass. Full raw output and separate stderr are in validation attempts 47/48.
+
+### Actual phase observations
+
+- http phase A: galaxy `Euclid`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `-`; tool and resource payloads agree.
+- http phase B: galaxy `Eissentam`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `(unknown)`; tool and resource payloads agree.
+- http phase C: galaxy `Eissentam`, XYZ `1/0/0`, SSI `1`, glyph `000100000001`, system `(unknown)`; tool and resource payloads agree.
+- http phase D: galaxy `Euclid`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `-`; tool and resource payloads agree.
+- stdio phase A: galaxy `Euclid`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `-`; tool and resource payloads agree.
+- stdio phase B: galaxy `Eissentam`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `(unknown)`; tool and resource payloads agree.
+- stdio phase B: galaxy `Eissentam`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `(unknown)`; tool and resource payloads agree.
+- stdio phase C: galaxy `Eissentam`, XYZ `1/0/0`, SSI `1`, glyph `000100000001`, system `(unknown)`; tool and resource payloads agree.
+- stdio phase D: galaxy `Euclid`, XYZ `0/0/0`, SSI `1`, glyph `000100000000`, system `-`; tool and resource payloads agree.
+
+The repeated stdio B observation is after malformed-save recovery. This synthetic fixture establishes the physical galaxy/address and existing system labels for these runs. In particular galaxy9's label is `(unknown)`; unknown-system resolution and placeholder policy remain Slice12. A/B have identical glyph hex `000100000000` while galaxies differ.
+
+### Validation
+
+All twelve required current gates pass on the corrected source. Sandbox-denied native watcher/loopback executions are retained as attempts and retried unchanged with authorized host access; both authorized retry suites pass using the original `/var/folders/...` TMPDIR, with no canonical TMPDIR command override. Attempt 40 records the initial fixture compile/lint error (`nms-watch` has no serde_json dependency); that test helper was corrected using raw JSON, followed by format/lint. Attempt 58 is a passing non-strict cache-doc command; the required strict invocation and override are separately recorded and pass at attempt 59. Attempt 61 is the post-commit source diff check; planning diff check is attempt 62.
+
+| Gate | Command | Result |
+|---:|---|---|
+| 1 | `make format` | pass at attempt 41; sandbox/repair records 39 |
+| 2 | `make lint` | pass at attempt 42; sandbox/repair records 40 |
+| 3 | `cargo test -p nms-watch` | pass at attempt 44; sandbox/repair records 43 |
+| 4 | `cargo test -p nms-copilot --all-features --lib watcher_lifecycle_tests` | pass at attempt 46; sandbox/repair records 45 |
+| 5 | `cargo test -p nms-copilot --all-features --test mcp_live_integration -- --test-threads=1 --nocapture` | pass at attempt 48; sandbox/repair records 47 |
+| 6 | `cargo test --all-features -p nms-graph -p nms-watch -p nms-cache -p nms-query -p nms-copilot -p nms-cli` | pass at attempt 50; sandbox/repair records 49 |
+| 7 | `cargo test -p nms-copilot --no-default-features --lib` | pass at attempt 52; sandbox/repair records 51 |
+| 8 | `make test` | pass at attempt 54; sandbox/repair records 53 |
+| 9 | `cargo build --workspace --all-features` | pass at attempt 55; sandbox/repair records none |
+| 10 | `cargo test --workspace --all-features --doc` | pass at attempt 56; sandbox/repair records none |
+| 11 | `cargo doc --no-deps --all-features -p nms-core -p nms-graph -p nms-query -p nms-cache -p nms-watch -p nms-copilot` | pass at attempt 57; sandbox/repair records none |
+| 12 | `RUSTDOCFLAGS='-D rustdoc::broken_intra_doc_links' cargo doc --no-deps --all-features -p nms-cache` | pass at attempt 59; sandbox/repair records 58 |
+
+Per-harness selected/passed/failed/ignored counts for gates 6 and 8 are retained in `validation.json` (`iteration01.focused_suite_harnesses`, `iteration01.make_test_harnesses`) alongside full raw channels. Gate6: 21 non-doc harnesses, 733 passed, zero failed/ignored; five doctest harnesses each selected zero. `make test`: 25 non-doc harnesses, 929 passed, zero failed/ignored; nine doctest harnesses each selected zero. Watcher package was 26/0/0; MCP lifecycle was 2/0/0 (218 filtered from copilot lib); native integration was 2/0/0; no-default copilot lib was 219/0/0. No tests were ignored. Ordinary no-deps docs passed with existing unrelated warnings recorded in the raw channel.
+
+The first sandbox runs of watcher, lifecycle, integration, focused suite, no-default library and `make test` failed only at filesystem/loopback access and are retained as attempts 43,45,47,49,51,53. Unchanged authorized-host retries 44,46,48,50,52,54 all passed. The first lint attempt failed to compile only because the new nms-watch test tried to use undeclared `serde_json`; the corrected crate-native raw JSON fixture compiled and lint then passed. No source outside the three exact paths changed.
+
+### Row walk and bubble-up
+
+- **LW-01 open:** current implementation keeps an owned watcher across both serving entrypoints (prior implementation evidence retained); corrected retained-handle test passed on authorized host with original TMPDIR, including owner-drop disconnect. CDC review remains required.
+- **LW-02 open:** stdio completed actual A/B, malformed barrier/recovery, C/D, tool/resource rereads, same-glyph cross-galaxy negative control, strict JSON-RPC stdout and orderly EOF. CDC must reproduce.
+- **LW-03 open:** HTTP completed health, real session initialize/initialized, GET SSE, successful subscription response, exact updates and tool/resource rereads for A/B/C/D, plus `mcp-smoke`; CDC must reproduce.
+- **LW-04 open:** existing runtime guard/logger behavior is unchanged from cdf1e20; the native suite exercises post-update rereads and protocol-only stdout.
+- **LW-05 open:** absent/missing/malformed startup fallback, retained live writes, stdio five-parse-failure barrier and recovery, bounded transport cleanup pass. Broader producer/config composition remains Slice12.
+- **LW-06 open:** README/main are byte-identical to the CDC baseline; all current suite/build/docs gates pass. CDC owns independent preservation review.
+- **LW-07 open:** current pre-edit intake, complete retained/fresh raw attempts, actual channels, exact source commit/pathset/trailers and clean held fences are recorded. Acceptance remains CDC/Operator-owned.
+
+Useful candidate live tracking and wire proof are delivered only in isolated source worktree `.worktrees/mcp-live-watch`; no integration, install, push or release occurred. Planned Slice12 retains complete startup/cache C04, old/current envelopes, warm/write-through behavior, unknown-system placeholder/promotion, historical player-state decisions, and watcher configuration/duplicate-producer composition. Original R06-R02/R03/M7.4/C04 owners, raw-field repair, and every parent acceptance gate remain open. All seven LW rows remain open for independent CDC; no Slice11/Arc06/Project01 closure is claimed.
+
+Iteration01 artifacts are `artifacts/execution.md`, append-only `artifacts/validation.json`, and the appended `closing-report.md`; `ledger.md` changes only Evidence/Notes. The two original planning commits remain intact.
