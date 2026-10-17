@@ -1954,5 +1954,25 @@
       "project_open": 25
     },
     "next_owner": "CDC prepares planned Slice11 under existing Expedited Mode; live/transport/startup/cache/unknown-state obligations remain."
+  },
+  "final_closure_commit_receipt": {
+    "commit": "5fed0e023da725afcf312cb9bf8c0492f5d59cdf",
+    "parent": "e1fc32a5a13902fdb88e99e19f5b1c5ab6f4fdd3",
+    "exact_nine_paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice10-galaxy-scoped-repl/slice-plan.md",
+      "project01-mvp/closure-preparation.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "both_trailers_once": true,
+    "source_remains": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+    "next_issued_prompt": "arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt.md",
+    "next_issuance": "3509057d2c0af7e0134a06777c16dc97267eea72",
+    "approval_scope_unchanged": true
   }
 }

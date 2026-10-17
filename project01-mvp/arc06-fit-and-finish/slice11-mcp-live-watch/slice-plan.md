@@ -25,3 +25,5 @@ Required reading packet is bounded to touched/consumed source, installed guide s
 ## Assignment history and version history
 
 Current assignment: arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt.md, initial CC implementation issued2026-10-16 at its introducing commit (resolve at intake), predecessor accepted/closed Slice10, reason ready actual MCP/watch consumer repair, disposition active. Five-refinement budget; preserve every issued prompt; no automatic extension/inquiry. Initial issuance receipt follows commit. Version1.0 details ready11 capability and explicit remaining12 owner, preserving approved scope/architecture/parent gates.
+
+Initial issuance receipt:3509057d2c0af7e0134a06777c16dc97267eea72, direct parent Slice10 closure5fed0e0; exact eight named planning paths, both trailers once, prompt digest/held clean source fences checked. Raw commit captures and actual issuance identity are in author-baseline.json. This receipt does not change the immutable prompt or establish implementation acceptance.
