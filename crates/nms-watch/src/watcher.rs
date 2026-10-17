@@ -376,8 +376,8 @@ mod tests {
         receive_movement(&handle, 9, 0);
 
         let replacement = alias_dir.join("replacement.json");
-        std::fs::write(&replacement, save_bytes(9, 1)).expect("write replacement save");
+        std::fs::write(&replacement, save_bytes(0, 1)).expect("write replacement save");
         std::fs::rename(&replacement, &save_path).expect("atomically replace through alias");
-        receive_movement(&handle, 9, 1);
+        receive_movement(&handle, 0, 1);
     }
 }

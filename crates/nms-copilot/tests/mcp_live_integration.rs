@@ -445,7 +445,8 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
         .find(|message| message["id"] == 3)
         .expect("resources/list response ID");
     assert_lists(&tools["result"], &resources["result"]);
-    let _ = call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
+    let initial_system =
+        call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
 
     let subscribed = client.post(json!({
         "jsonrpc":"2.0", "id":20, "method":"resources/subscribe",
@@ -471,7 +472,10 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
         let phase_deadline = phase_started + PHASE_TIMEOUT;
         atomic_replace(&save, &save_bytes(phase));
         event_stream.wait_location_update(phase_deadline);
-        let _ = call_where_am_i_http(&mut client, id, phase, phase_deadline);
+        let system = call_where_am_i_http(&mut client, id, phase, phase_deadline);
+        if phase.label == PHASE_D.label {
+            assert_eq!(system, initial_system, "phase D returns to phase A system");
+        }
         assert!(
             phase_started.elapsed() < PHASE_TIMEOUT,
             "phase {} exceeded 8s",
