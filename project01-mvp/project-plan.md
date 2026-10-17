@@ -9,7 +9,7 @@ updated: 2026-10-16
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.26
+version: 1.27
 project: project01-mvp
 status: active
 depends-on: []
@@ -758,3 +758,9 @@ Open planned Slice10 galaxy-scoped-repl from acceptede9cabd5 after child09 closu
 CDC independently reproduced all ordered gates at0346b193:724 focused/215 no-default/920 workspace, plus40/40 public reference/error/state checks. RG-01/02/03/04/06 accepted; RG-05/07 open. Reproduced completion bug discards a multi-word prefix ending in space; correct only the existing galaxy-completion helper/tests, clarify current inventory/environment evidence and rerun required gates. Current assignment arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md, first refinement; initial prompt preserved. No separate investigation or scope/architecture/criterion/sequence amendment.
 
 R06-S10 stays open:28 arc rows/nine done/nineteen open; all25 project rows open. Main6d183bde, dependencies and Project02 unchanged; candidate0346b193 is partially reviewed and not integrated/installed. CDC/Operator retain authorized integration/final-baseline drift/composition; Slice11 actual live/transports/fullstartup/cache/unknown-state, later raw repair and all original owners/gates remain. Version1.26 (2026-10-16): routine review/refinement status only; five child rows do not close the parent.
+
+## Slice10 Iteration01 review / pending evidence disposition — 2026-10-16
+
+CDC accepts completion repair RG-05 at e615f254; five prior rows retained under exact completion-only delta, all required fresh gates3/726/217/922 and public original endpoint probe5/5. Six child rows done; RG-07 open solely for unrecoverable original1–53 environment metadata (49 empty maps/four override-only). Current gate/environment capture, all144 CC channels/72 invocations, source/commit fences and preserved history verified. Iteration01 returned/reviewed; no further CC assignment issued. Narrow Operator exception proposed in Slice10 cdc-verification.md, not approved/applied; no historical value invented and no acceptance amendment adopted.
+
+R06-S10 remains open; arc28/nine done/nineteen open, project25 open. No Slice11 opening before decision/closure. Main6d183bde/dependencies/Project02 held; candidate e615f254 not integrated/installed. CDC/Operator own the bounded decision and later authorized integration/final-baseline composition; all original Slice11 live/transport/startup/cache/unknown-state, later raw-field and parent owners/gates remain. Version1.27 (2026-10-16): child correction review exposes only historical metadata acceptance question; routine status/proposal, no scope/architecture/sequence/criterion change applied.

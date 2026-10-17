@@ -1,6 +1,6 @@
 # Slice10 — usable REPL galaxy selection and reference defaults
 
-Version:1.1. Created2026-10-16. Status:active; five RG rows accepted, RG-05/RG-07 open.
+Version:1.2. Created2026-10-16. Status:reviewed; six RG rows accepted; RG-07 awaits Operator historical-evidence disposition.
 
 ## Useful increment and authority
 
@@ -24,7 +24,7 @@ Author readiness: loaded current complete prompt-authoring guide, usable-increme
 
 ## Assignment history
 
-Current assignment: arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md. Initial CC implementation cc-prompt.md issued2026-10-16 after accepted Slice09; predecessor closed09, reason original M7.4 command/reference delivery, disposition returned and independently reviewed2026-10-16; superseded as active by iteration01. Five-refinement budget; preserve every issued prompt. No automatic extension or investigation.
+Current assignment: no further CC work issued; iteration01 returned/reviewed, awaiting Operator disposition of RG-07. Last executed assignment: arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md. Initial CC implementation cc-prompt.md issued2026-10-16 after accepted Slice09; predecessor closed09, reason original M7.4 command/reference delivery, disposition returned and independently reviewed2026-10-16; superseded as active by iteration01. Five-refinement budget; preserve every issued prompt. No automatic extension or investigation.
 
 ## Version history
 
@@ -37,6 +37,12 @@ Initial issuance receipt:c45dd92b5303a3501ea9dc50e60f832cd28126d0, direct parent
 
 Version1.1: CDC accepts RG-01/02/03/04/06 at0346b193; RG-05/07 remain open per cdc-verification.md. All native gates independently pass724/215/920; supplemental reference checks40/40. Public completion loses the typed multi-word value ending in space (two failing observations); current evidence inventory/environment semantics require clarification. No scope, architecture, criterion or sequence change.
 
-Iteration01 issued2026-10-16; exact path arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md, predecessor cc-prompt.md, reason F01 completion repair and F02 current evidence clarity, disposition active awaiting CC execution. Resolve issuance from the commit introducing that immutable prompt; record actual intake HEAD. First refinement in the five-refinement budget, not an extension. Source direct parent0346b193; only completer.rs complete_galaxy_context and directly relevant cfg(test) may change. Four CC return paths remain execution.md/validation.json/closing-report.md/ledger.md, with only RG-05/07 Evidence/Notes editable in ledger. Five accepted rows held byte-identical. Original JSON values/history and report/execution prefixes preserved. No new investigation, waiver, merge, parent acceptance or installed release. Existing Slice11/later owners and every original gate remain.
+Iteration01 issued2026-10-16; exact path arc06-fit-and-finish/slice10-galaxy-scoped-repl/cc-prompt-iteration01.md, predecessor cc-prompt.md, reason F01 completion repair and F02 current evidence clarity, disposition returned by CC and independently reviewed; implementation accepted, historical environment decision pending. Resolve issuance from the commit introducing that immutable prompt; record actual intake HEAD. First refinement in the five-refinement budget, not an extension. Source direct parent0346b193; only completer.rs complete_galaxy_context and directly relevant cfg(test) may change. Four CC return paths remain execution.md/validation.json/closing-report.md/ledger.md, with only RG-05/07 Evidence/Notes editable in ledger. Five accepted rows held byte-identical. Original JSON values/history and report/execution prefixes preserved. No new investigation, waiver, merge, parent acceptance or installed release. Existing Slice11/later owners and every original gate remain.
 
 Author readiness: inspected actual pinned helper and quote/span/name helpers plus native tests, parser, relevant dispatcher/session/reference/caller paths, all changed production source and README scope. Loaded current framework/PM iteration mechanics, prompt-authoring correction rules, work-verification retention, Rust and testing guidance. Applied AP-09/12/29 (AVOID) by retaining defensive span bounds, existing typed shared paths and the bounded helper, testing behavioral/proportionate proof through actual Suggestion.span reconstruction then parse_line; existing helper/API verified from compiled public probes. Repair cause and concrete raw-tail/span recipe are resolved before handoff. Witnesses are bounded review proof, not a maintained tool. Current prompt reading packet is smaller than initial implementation and leaves room for correction evidence.
+
+## Iteration01 review and pending historical-evidence decision — 2026-10-16
+
+Version1.2: F01 repair at e615f254 independently accepted; RG-05 done. Five accepted rows/evidence retained under exact helper/tests-only delta and fresh3/726/217/922 tests/all gates. Six rows done, RG-07 open solely for original1–53 environment metadata. Current correction intake/gates/source/commits/history independently verified; issuance pointer corrected by CDC to73a238c8 (c32dc420 is actual intake/receipt).
+
+Iteration01 issued2026-10-16, predecessor cc-prompt.md, reason F01/F02 correction, returned at e615f254 with planning584c4ba9, independently reviewed2026-10-16. First refinement executed; no iteration02 issued because no further source repair is needed. Operator owns pending proposal in cdc-verification.md: permit only the unrecoverable historical environment metadata while retaining unknowns and original bytes, relying on fully captured fresh independent candidate proof. Proposal not adopted; no criterion or parent gate changed. Current state awaits that explicit decision before closure/advance. All original scope, Slice11/later owners, held source/main fences and parent counts remain. No inquiry, source integration or release authorized by this update.
