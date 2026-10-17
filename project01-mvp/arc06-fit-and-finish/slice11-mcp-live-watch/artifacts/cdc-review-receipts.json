@@ -2117,6 +2117,119 @@
       },
       "author_readiness": "Actual source/delta/complete test sequences and helpers inspected; exact return-value equality and two literal corrections specified; unchanged real native gates independently replayed; full prompt-authoring and required PM iteration/verification/testing guidance applied; Rust entry and CLI34/38 plus AP09/AP50 decisions loaded. No runtime API/policy/inquiry uncertainty delegated. Packet estimated35-45k tokens including mandatory full Rust material leaves implementation headroom.",
       "protected_watcher_production_sha256": "9c5150a93580e353b51baae11e152f324487435fb98188a1204922099222af67"
+    },
+    "review_and_iteration02_issuance_commit": {
+      "commit": "1914324a61b7293239542cf0c9c723b07dfb11ff",
+      "parent": "321a1f3a8e743998a3493ea8e124fe7000523ed7",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+        "project01-mvp/arc06-fit-and-finish/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md",
+        "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+        "project01-mvp/project-plan.md"
+      ],
+      "trailers_once": true,
+      "clean_at_receipt": true,
+      "prompt_sha256": "85b4b37e7ea18b2b17d2b84bf0bf7319ae28974699fa089140af9bd21e95a2c9",
+      "command_receipts": [
+        {
+          "argv": [
+            "git",
+            "add",
+            "--",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.01793812494724989
+        },
+        {
+          "argv": [
+            "git",
+            "commit",
+            "--only",
+            "-F",
+            "/private/tmp/nms-s11-review-stop-20261016/s11-iteration01-review-20261017-message.txt",
+            "--",
+            "project01-mvp/project-plan.md",
+            "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+            "project01-mvp/arc06-fit-and-finish/ledger.md",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/slice-plan.md",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/ledger.md",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cdc-verification.md",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/artifacts/cdc-review-receipts.json",
+            "project01-mvp/arc06-fit-and-finish/slice11-mcp-live-watch/cc-prompt-iteration02.md"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "W3BsYW5uaW5nIDE5MTQzMjRdIFJldmlldyBTbGljZTExIGxpdmUtd2F0Y2ggcmVwYWlyIGFuZCBpc3N1ZSB0ZXN0IGNvcnJlY3Rpb24KIDggZmlsZXMgY2hhbmdlZCwgMTg4NSBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMoLSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL3NsaWNlMTEtbWNwLWxpdmUtd2F0Y2gvY2MtcHJvbXB0LWl0ZXJhdGlvbjAyLm1kCg==",
+            "bytes": 235,
+            "sha256": "72ecc380d96e54bc07f8f69c777618c3a3073d837e5fc104c1344ff38110dff1"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.055653208401054144
+        },
+        {
+          "argv": [
+            "git",
+            "show",
+            "--format=full",
+            "--stat",
+            "HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "Y29tbWl0IDE5MTQzMjRhNjFiNzI5MzIzOTU0MmNmMGM5YzcyM2IwN2RmYjExZmYKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIFJldmlldyBTbGljZTExIGxpdmUtd2F0Y2ggcmVwYWlyIGFuZCBpc3N1ZSB0ZXN0IGNvcnJlY3Rpb24KICAgIAogICAgQ28tYXV0aG9yZWQtYnk6IENvZGV4IDxub3JlcGx5QG9wZW5haS5jb20+CiAgICBDby1hdXRob3JlZC1ieTogQmlsbG8gQUkgPGFpLWVuZ2luZWVyaW5nQGJpbGxvLnN5c3RlbXM+CgogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9hcmMtcGxhbi5tZCAgICAgfCAgICA5ICstCiBwcm9qZWN0MDEtbXZwL2FyYzA2LWZpdC1hbmQtZmluaXNoL2xlZGdlci5tZCAgICAgICB8ICAgIDIgKy0KIC4uLi9hcnRpZmFjdHMvY2RjLXJldmlldy1yZWNlaXB0cy5qc29uICAgICAgICAgICAgIHwgMTcxMiArKysrKysrKysrKysrKysrKysrKwogLi4uL2NjLXByb21wdC1pdGVyYXRpb24wMi5tZCAgICAgICAgICAgICAgICAgICAgICAgfCAgIDc2ICsKIC4uLi9zbGljZTExLW1jcC1saXZlLXdhdGNoL2NkYy12ZXJpZmljYXRpb24ubWQgICAgIHwgICA1NiArCiAuLi4vc2xpY2UxMS1tY3AtbGl2ZS13YXRjaC9sZWRnZXIubWQgICAgICAgICAgICAgICB8ICAgMTYgKy0KIC4uLi9zbGljZTExLW1jcC1saXZlLXdhdGNoL3NsaWNlLXBsYW4ubWQgICAgICAgICAgIHwgICAxNyArLQogcHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQgICAgICAgICAgICAgICAgICAgICAgfCAgIDExICstCiA4IGZpbGVzIGNoYW5nZWQsIDE4ODUgaW5zZXJ0aW9ucygrKSwgMTQgZGVsZXRpb25zKC0pCg==",
+            "bytes": 883,
+            "sha256": "afa2fb9896aab057e8e5571c0d9299ad542641a4662727f0847a7ff1b4280a31"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.020118874963372946
+        },
+        {
+          "argv": [
+            "git",
+            "status",
+            "--porcelain"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.01694791577756405
+        }
+      ]
     }
   }
 }
