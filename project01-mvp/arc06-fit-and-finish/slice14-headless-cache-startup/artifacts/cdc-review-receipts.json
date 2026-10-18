@@ -9686,6 +9686,84 @@
     "helpers": {
       "audit.py": "from pathlib import Path\nimport json,subprocess,hashlib,base64,re\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');P=R/'.worktrees/planning';S=P/'project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup';C=R/'.worktrees/headless-cache-startup';O=Path('/private/tmp/nms-s14-i01-cdc-20261017');rel=str(S.relative_to(P));pre='3d632af40f25483171a115794c9bab213365d970'\ndef git(*a,cwd=P):return subprocess.check_output(['git',*a],cwd=cwd)\ndef sha(b):return hashlib.sha256(b).hexdigest()\nv=json.loads((S/'artifacts/validation.json').read_text());old=json.loads(git('show',pre+':'+rel+'/artifacts/validation.json'));assert all(v[k]==value for k,value in old.items());i=v['iteration01']\nfor f in ['artifacts/execution.md','closing-report.md']:assert (S/f).read_bytes().startswith(git('show',pre+':'+rel+'/'+f))\nfor f in ['cc-prompt.md','cc-prompt-iteration01.md','slice-plan.md','artifacts/author-baseline.json','cdc-verification.md','artifacts/cdc-review-receipts.json']:assert (S/f).read_bytes()==git('show',pre+':'+rel+'/'+f)\ncounts=[];metadata=[];pairs=[];harness={}\nfor label,data in [('initial',v),('iteration01',i)]:\n count=0\n for g in data['gates']:\n  assert g['status']=='passed'\n  for idx,x in enumerate(g['attempts']):\n   for n in ['stdout','stderr']:\n    z=base64.b64decode(x[n]['base64'],validate=True);assert len(z)==x[n]['bytes'] and sha(z)==x[n]['sha256']\n   assert x['prelaunch_utc'] and x['completed_utc'];count+=1\n   metadata.append({'population':label,'gate':g['order'],**{k:x.get(k) for k in ['attempt','prelaunch_utc','argv','cwd','inherited_environment','environment_overrides','effective_flags','cargo_config','cargo_offline_config','global_cargo_config','execution_context','exit_code']}})\n   assert {'RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR'}<=x['inherited_environment'].keys()\n   if g['order']==12:assert {**x['inherited_environment'],**x['environment_overrides']}['RUSTDOCFLAGS']=='-D rustdoc::broken_intra_doc_links'\n   if g['order'] in [5,6,7,8] and idx%2:\n    y=g['attempts'][idx-1];keys=['argv','cwd','inherited_environment','environment_overrides','effective_flags']+(['cargo_config'] if label=='iteration01' else ['cargo_offline_config','global_cargo_config']);assert all(x[k]==y[k] for k in keys) and y['exit_code']!=0 and x['exit_code']==0;pairs.append([label,g['order'],idx,idx+1])\n  x=g['attempts'][-1];assert x['exit_code']==0\n  if label=='iteration01':\n   out=base64.b64decode(x['stdout']['base64']).decode();h=re.findall(r'test result: \\w+\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored; (\\d+) measured; (\\d+) filtered out',out);harness[g['order']]={'harnesses':len(h),'passed':sum(int(a[0]) for a in h),'failed':sum(int(a[1]) for a in h),'ignored':sum(int(a[2]) for a in h)}\n counts.append(count)\nassert counts[0]==39 and not any(x['failed'] or x['ignored'] for x in harness.values());assert [harness[x]['passed'] for x in [3,4,5,6,7,8]]==[38,4,7,747,220,943]\nlast={};cases=[];stage=[];controlled=False\nfor line in base64.b64decode(i['gates'][4]['attempts'][-1]['stderr']['base64']).decode().splitlines():\n if 'MCP_CACHE_BIND_RETRY' in line:assert 'Address already in use' in line and 'rewritten_cache_fresh=true' in line;stage.append(line);controlled=True\n if 'MCP_LIVE_OBSERVATION' in line:\n  m=re.search(r'transport=(\\w+) phase=(\\w+) tool=(\\{.*\\}) resource=(\\{.*\\})',line);t,phase,tool,res=m.groups();assert json.loads(tool)==json.loads(res);last[t]={'phase':phase,'tool':json.loads(tool),'resource':json.loads(res)}\n if 'MCP_CACHE_STARTUP' in line:\n  m=re.search(r'transport=(\\w+) case=(\\w+) source=(\\w+) served=(\\w+) cache_effect=(\\w+)',line);t,c,src,served,effect=m.groups();assert last[t]['phase']==served;cases.append({'transport':t,'case':c,'source':src,'served':served,'cache_effect':effect,'tool':last[t]['tool'],'resource':last[t]['resource'],'controlled_retry':controlled});controlled=False\nassert len(cases)==17 and len(stage)==1 and sum(x['controlled_retry'] for x in cases)==1\nassert len(i['case_observations'])==17 and len(i['controlled_bind_retry'])==1\nfor x,y in zip(cases,i['case_observations']):assert x['transport']==y['transport'] and x['case']==y['case'] and x['tool']==y['tool_observation'] and x['resource']==y['resource_observation'] and x['cache_effect']==y['cache_effect']\noldrows=[l.split('|')[1:7] for l in git('show',pre+':'+rel+'/ledger.md').decode().splitlines() if l.startswith('| HC-')];rows=[l.split('|')[1:7] for l in (S/'ledger.md').read_text().splitlines() if l.startswith('| HC-')];assert rows==oldrows and len(rows)==7\nprior=json.loads((S/'artifacts/cdc-review-receipts.json').read_text());changed=[f for f,h in prior['source_sha256'].items() if sha((C/f).read_bytes())!=h];assert changed==['crates/nms-copilot/tests/mcp_live_integration.rs'];b=json.loads((S/'artifacts/author-baseline.json').read_text())\nfor f,h in b['protected_source_sha256'].items():assert sha((C/f).read_bytes())==h\nheld={}\nfor f,info in b['held_pins'].items():\n head=git('rev-parse','HEAD',cwd=R/f).decode().strip();assert head==info['head'] and not git('status','--porcelain',cwd=R/f);held[f]={'head':head,'clean':True}\nsource='130034e8a6f2e77605058620fea2fb0cae43c608';assert git('rev-parse','HEAD',cwd=C).decode().strip()==source and not git('status','--porcelain',cwd=C) and not git('status','--porcelain',cwd=P);ch=[git('rev-parse',x).decode().strip() for x in ['e373cd2','fb8f6a4','2aed2da']];commits={};allowed={rel+'/'+f for f in ['artifacts/execution.md','artifacts/validation.json','closing-report.md','ledger.md']}\nfor h,parent in [(source,'88b184f999d4fde13e59b736dbd3a32896afd425')]+list(zip(ch,[pre]+ch[:-1])):\n assert git('rev-parse',h+'^').decode().strip()==parent;paths=git('diff-tree','--no-commit-id','--name-only','-r',h).decode().splitlines();body=git('show','-s','--format=%B',h).decode().splitlines();assert body.count('Co-authored-by: Codex <noreply@openai.com>')==body.count('Co-authored-by: Billo AI <ai-engineering@billo.systems>')==1;assert paths==['crates/nms-copilot/tests/mcp_live_integration.rs'] if h==source else set(paths)<=allowed;commits[h]={'parent':parent,'paths':paths,'trailers_once':True}\nr={'source':source,'parent':'88b184f999d4fde13e59b736dbd3a32896afd425','planning_intake':git('rev-parse','HEAD').decode().strip(),'all_old_JSON_root_values_and_markdown_prefixes_preserved':True,'initial_primary_attempts':counts[0],'iteration_primary_attempts':counts[1],'total_primary_attempts':sum(counts),'all_primary_channels_validated':sum(counts)*2,'metadata':metadata,'unchanged_retry_pairs':pairs,'CC_final_harnesses':harness,'CC_nominal16_and_controlled_success_from_raw':cases,'CC_forced_bind_stage_from_raw':stage,'commits':commits,'held_pins':held,'criteria_statuses_and_protected28_preserved':True,'sole_source_delta_allowed_test':True,'source_sha256':{f:sha((C/f).read_bytes()) for f in prior['source_sha256']}}\n(O/'audit.json').write_text(json.dumps(r,indent=2)+'\\n');print(json.dumps({k:r[k] for k in ['source','planning_intake','initial_primary_attempts','iteration_primary_attempts','total_primary_attempts','all_primary_channels_validated']},indent=2))\n",
       "gates.py": "from pathlib import Path\nimport os,sys,subprocess,json,hashlib,base64,time,re,datetime\nO=Path('/private/tmp/nms-s14-i01-cdc-20261017'); C=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup'); P=C.parent/'planning'; out=O/'gates.json'\ngates=[(['make','format'],C,{}),(['make','lint'],C,{}),(['cargo','test','-p','nms-cache'],C,{}),(['cargo','test','-p','nms-copilot','--all-features','--test','route_cache_integration'],C,{}),(['cargo','test','-p','nms-copilot','--all-features','--test','mcp_live_integration','--','--test-threads=1','--nocapture'],C,{}),(['cargo','test','--all-features','-p','nms-graph','-p','nms-watch','-p','nms-cache','-p','nms-query','-p','nms-copilot','-p','nms-cli'],C,{}),(['cargo','test','-p','nms-copilot','--no-default-features','--lib'],C,{}),(['make','test'],C,{}),(['cargo','build','--workspace','--all-features'],C,{}),(['cargo','test','--workspace','--all-features','--doc'],C,{}),(['cargo','doc','--no-deps','--all-features','-p','nms-core','-p','nms-graph','-p','nms-query','-p','nms-cache','-p','nms-watch','-p','nms-copilot'],C,{}),(['cargo','doc','--no-deps','--all-features','-p','nms-cache'],C,{'RUSTDOCFLAGS':'-D rustdoc::broken_intra_doc_links'}),(['git','diff','--check'],C,{}),(['git','diff','--check'],P,{})]\nfor index in map(int,sys.argv[2:]):\n argv,cwd,over=gates[index-1];env=os.environ.copy(); overrides={'CARGO_NET_OFFLINE':'true',**over};env.update(overrides)\n records=json.loads(out.read_text()) if out.exists() else []\n record={'gate':index,'host_context':sys.argv[1],'argv':argv,'cwd':str(cwd),'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'observed_environment':{k:env.get(k) for k in ['RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR']},'command_overrides':overrides,'state':'started'}\n records.append(record);out.write_text(json.dumps(records,indent=2)+'\\n');t=time.monotonic();p=subprocess.run(argv,cwd=cwd,env=env,capture_output=True)\n def channel(b):return {'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}\n stdout=p.stdout.decode(errors='replace'); stderr=p.stderr.decode(errors='replace');h=[dict(zip(['passed','failed','ignored','measured','filtered_out'],map(int,m))) for m in re.findall(r'test result: \\w+\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored; (\\d+) measured; (\\d+) filtered out',stdout)]\n record.update(state='complete',exit_code=p.returncode,elapsed_seconds=time.monotonic()-t,stdout=channel(p.stdout),stderr=channel(p.stderr),harnesses=h)\n out.write_text(json.dumps(records,indent=2)+'\\n');print(json.dumps({'gate':index,'host_context':sys.argv[1],'exit_code':p.returncode,'harness_count':len(h),'passed':sum(x['passed'] for x in h),'failed':sum(x['failed'] for x in h),'ignored':sum(x['ignored'] for x in h),'stdout_tail':stdout[-500:],'stderr_tail':stderr[-500:]}),flush=True)\n if p.returncode: sys.exit(p.returncode)\n"
+    },
+    "closure_commit": {
+      "commit": "5c1c88e28f39b749833e042488caf44d7d7b9047",
+      "parent": "2aed2dabde3132cb7cf62c8700f7fe5be2a17a24",
+      "operations": [
+        {
+          "argv": [
+            "git",
+            "commit",
+            "--only",
+            "-F",
+            "/private/tmp/nms-s11-review-stop-20261016/s14-i01-close-20261017-message.txt",
+            "--",
+            "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+            "project01-mvp/arc06-fit-and-finish/ledger.md",
+            "project01-mvp/project-plan.md",
+            "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/slice-plan.md",
+            "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/ledger.md",
+            "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cdc-verification.md",
+            "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/cdc-review-receipts.json"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "W3BsYW5uaW5nIDVjMWM4OGVdIEFjY2VwdCBoZWFkbGVzcyBjYWNoZSByZXRyeSBjb3JyZWN0aW9uIGFuZCBjbG9zZSBTbGljZTE0CiA3IGZpbGVzIGNoYW5nZWQsIDU0NDUgaW5zZXJ0aW9ucygrKSwgMTIgZGVsZXRpb25zKC0pCg==",
+            "bytes": 130,
+            "sha256": "8f1e83966c98a8137c092c7d795e85be16c955b64ac9b5f4a7166dc0d091fa4f"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.05830787494778633
+        },
+        {
+          "argv": [
+            "git",
+            "show",
+            "--format=full",
+            "--stat",
+            "HEAD"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "Y29tbWl0IDVjMWM4OGUyOGYzOWI3NDk4MzNlMDQyNDg4Y2FmNDRkN2Q3YjkwNDcKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIEFjY2VwdCBoZWFkbGVzcyBjYWNoZSByZXRyeSBjb3JyZWN0aW9uIGFuZCBjbG9zZSBTbGljZTE0CiAgICAKICAgIENvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgogICAgQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPgoKIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQgICAgIHwgICAgOSArLQogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQgICAgICAgfCAgICA0ICstCiAuLi4vYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbiAgICAgICAgICAgICB8IDUzNzkgKysrKysrKysrKysrKysrKysrKysKIC4uLi9jZGMtdmVyaWZpY2F0aW9uLm1kICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAzMyArCiAuLi4vc2xpY2UxNC1oZWFkbGVzcy1jYWNoZS1zdGFydHVwL2xlZGdlci5tZCAgICAgICB8ICAgMTYgKy0KIC4uLi9zbGljZTE0LWhlYWRsZXNzLWNhY2hlLXN0YXJ0dXAvc2xpY2UtcGxhbi5tZCAgIHwgICAgNyArLQogcHJvamVjdDAxLW12cC9wcm9qZWN0LXBsYW4ubWQgICAgICAgICAgICAgICAgICAgICAgfCAgICA5ICstCiA3IGZpbGVzIGNoYW5nZWQsIDU0NDUgaW5zZXJ0aW9ucygrKSwgMTIgZGVsZXRpb25zKC0pCg==",
+            "bytes": 820,
+            "sha256": "178c57f2480403267fcf9f53c496d5a94cf9c83e16822c6388c23d3692489b92"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.021461124997586012
+        },
+        {
+          "argv": [
+            "git",
+            "status",
+            "--porcelain"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "exit_code": 0,
+          "stdout": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "base64": "",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "seconds": 0.019628167152404785
+        }
+      ]
     }
   }
 }

@@ -9,7 +9,7 @@ updated: 2026-10-17
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.40
+version: 1.41
 project: project01-mvp
 status: active
 depends-on: []
@@ -860,3 +860,10 @@ Active arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01
 All seven HC rows accepted at130034e (direct parent88b184f), CC e373cd2/fb8f6a4/2aed2da. Required absent preconditions and fresh HTTP retry ownership corrected; actual occupied-port stale rewrite/new stale retry plus16 nominal cases independently pass. All14 fresh CDC gates38/4/7/747/220/943, restricted failure/unchanged host retry,59 CC attempts/118 channels and exact history/source/commit fences checked. Runtime/README unchanged, no waiver. R06-S14 done:32 arc rows/14 done/18 open; project25 open.
 
 Planned15/CDC retains normal startup/full both-mode live-cache C04/write-through, unknown placeholders/promotion, duplicate producer/settings ownership, broader history and final-baseline semantic transitions after raw repair. Source inspection shows normal REPL and MCP independently produce/apply deltas, only REPL drain persists cache, and current watch snapshot/delta omits complete player state and save version. A complete write-through design therefore requires ownership/state-authority decisions before issuing affected implementation; next15 remains planned/unissued pending CDC/Operator design resolution, without commissioning an inquiry. Main/dependencies/Project02 held, candidate unintegrated/uninstalled; later authorized integration/final-baseline composition/release and every original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator gate retained. Version1.40 records child closure and explicit next design gate, no architecture adopted.
+
+
+## Planned15 ownership decision proposal — 2026-10-17
+
+Slice14 is independently closed at130034e/5c1c88e; arc32/14 done/18 open, project25 open. Arc06 arc-plan.md “Proposed Slice15 ownership design — awaiting Operator” records CDC's concrete recommendation: one app-owned save watcher/update coordinator and serialized live cache writer shared by REPL/MCP, carrying complete supported PlayerState and save_version from each accepted parse. Current two producers/REPL-only writer and position-only snapshot/delta cannot establish that full composition by adding a write call. Existing APIs/settings/selection/manual anchors/atlas data/error recovery/valid-cache behavior and native gates remain preservation obligations.
+
+The recommendation is unapproved; Operator decides that ownership/state-authority direction before dependent CC implementation. No source or future prompt/terminal/dependency/cache-layout choice adopted, no investigation commissioned. All normal startup/both-mode live C04/write-through/unknown promotion/duplicate settings/history and original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release owners remain. Main/dependency/Project02 held. Version1.41 records proposed next design and pending authority only, without silently changing scope/architecture/acceptance.

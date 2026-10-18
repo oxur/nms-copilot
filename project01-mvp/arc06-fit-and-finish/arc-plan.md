@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.49, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.50, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -393,3 +393,38 @@ Active arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01
 All seven HC rows accepted at130034e (direct parent88b184f), CC e373cd2/fb8f6a4/2aed2da. Required absent preconditions and fresh HTTP retry ownership corrected; actual occupied-port stale rewrite/new stale retry plus16 nominal cases independently pass. All14 fresh CDC gates38/4/7/747/220/943, restricted failure/unchanged host retry,59 CC attempts/118 channels and exact history/source/commit fences checked. Runtime/README unchanged, no waiver. R06-S14 done:32 arc rows/14 done/18 open; project25 open.
 
 Planned15/CDC retains normal startup/full both-mode live-cache C04/write-through, unknown placeholders/promotion, duplicate producer/settings ownership, broader history and final-baseline semantic transitions after raw repair. Source inspection shows normal REPL and MCP independently produce/apply deltas, only REPL drain persists cache, and current watch snapshot/delta omits complete player state and save version. A complete write-through design therefore requires ownership/state-authority decisions before issuing affected implementation; next15 remains planned/unissued pending CDC/Operator design resolution, without commissioning an inquiry. Main/dependencies/Project02 held, candidate unintegrated/uninstalled; later authorized integration/final-baseline composition/release and every original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator gate retained. Version1.49 records child closure and explicit next design gate, no architecture adopted.
+
+
+## Proposed Slice15 ownership design — awaiting Operator, 2026-10-17
+
+**Status: recommendation, not an adopted architecture or issued CC assignment.** Slice14 is closed at130034e/5c1c88e. The existing planned15 remainder includes normal REPL startup composition, both-mode live-cache/write-through, duplicate producers/settings, unknown-system/promotion and broader historical-state correctness. Before a responsible implementation prompt, decide which component owns a live save update. This is routine design from existing approved source inspection, not a new inquiry; no external save survey, experiment or source change commissioned.
+
+### Current source facts and why a write call alone is insufficient
+
+At130034e main.rs starts a REPL WatchHandle and independently calls spawn_mcp_background_with_watch_config, whose configured body starts a second watcher. Both apply deltas to one Arc<RwLock<GalaxyModel>>; the REPL drains around prompts and writes through from drain_watch_events, while MCP apply_deltas_loop applies asynchronously and notifies without persisting. Two independent source baselines/queues can be consumed in different orders; the shared lock protects memory but does not establish one save-event owner. Headless has no REPL drain, hence no live cache write-through. Existing owned watcher/DeltaTaskGuard and lock-before-notification behavior from11/13 must survive.
+
+nms-watch/src/snapshot.rs SaveSnapshot contains discovery maps, bases and player_address, not full PlayerState or save_version. nms-watch/src/delta.rs compute_delta reports movement/additions/base changes only; core SaveDelta has no complete player/currency/version update. Graph apply_delta updates current address/reality but preserves other PlayerState fields. Simply serializing that model after movement could persist old currencies/previous-address/version, and currency-only source changes currently produce no delta. Full supported live state and source version need an explicit authority/data path. Do not claim cache parity by testing positions alone.
+
+### Recommended binding direction if approved
+
+Use **one application-owned live-update coordinator per selected save** in both normal and headless modes. It owns the single configured WatchHandle, applies each accepted parsed update once, and is the sole in-process live cache writer. REPL and MCP observe that shared model and receive change notifications; neither independently watches, reapplies nor writes that event. Config enabled/debounce/no_cache behavior and existing CLI/config/public API compatibility remain requirements. Legacy library wrappers can remain adapters when the implementation recipe is detailed; do not silently remove them.
+
+For each successful parsed source update, carry the existing discovery/base delta together with the complete already-supported PlayerState and source save_version from the same parse. Reconcile that supported source state into the shared model while retaining non-source/imported atlas data and independently selected query galaxy. Preserve existing selection behavior: same-reality movement/state changes retain selected view; a known physical galaxy crossing selects the new physical galaxy. Manual/base query anchors remain session state, not overwritten physical position. An absent prior player state must not be used to infer that a manually selected view should be replaced. No new creature/expedition/raw-field interpretation or save editing.
+
+Publish model changes under the existing short write lock, extract an owned cache snapshot, release the model lock, then attempt ordered write-through through one serialized writer outside that lock. When caching is disabled, bypass reads/writes as now. Cache failures remain warning/best-effort while the accepted model update remains available to queries. Source parse failure leaves the prior good model/cache intact, preserving existing five-failure warning/recovery behavior. Notifications follow an accepted model update even if its cache write fails. Do not equate debounced notifications with exactly-once OS events: the guarantee is one application path applying/persisting an accepted parsed update.
+
+Keep watcher/updater/writer owners explicit through serving/UI lifetime; stop the producer and finish/cancel/join owned work coherently on shutdown, preserving EOF/error cleanup and protocol stdout. Keep a single writer sequence so older snapshots cannot finish after newer ones. Detailed task/error/backpressure/signature/shutdown choices and source/feature allowlists must be resolved in the eventual prompt, not delegated as open policy to CC.
+
+### Alternative and tradeoff
+
+Keeping both producers while centralizing only cache writes is a smaller local diff, but leaves duplicate update application, independent baselines and event ordering to solve. It does not itself establish authoritative shared model state or supported-field freshness. Recommended single ownership is a larger app-lifecycle refactor with a clearer invariant and fewer competing update paths. Source state must be completed under either approach; another file-write call does not resolve that problem.
+
+### Preservation, proof and remaining work
+
+The approved implementation must retain the accepted headless8x2 cache matrix and controlled bind-retry witness, watcher enabled/disabled/137ms behavior, actual native stdio/HTTP subscriptions/recovery/stdout discipline, typed query/session/manual-anchor behavior and current valid cache compatibility. Add normal-mode actual startup/live composition with a verified terminal method, complete player/version-only updates, malformed recovery, sole application/persistence observation, cold/warm/no_cache and cache-write-failure checks, and correct shutdown ownership. No terminal method or new dependency has been selected/adopted. A local script usage/man-page inspection alone is not a PTY verification or permission to introduce a new harness.
+
+Unknown-system placeholder identity/promotion must be designed explicitly and proved before parent closure; do not guess that every unnamed/empty imported system is a placeholder. Any persisted marker/layout or model-meaning change requires cache compatibility/revision assessment plus real prior-cache fallback proofs. This proposal does not adopt those representation choices or waive their subsequent decision/proof gates. Broader history, raw-field repair and final-baseline semantic transitions, export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator/integration/release obligations stay with planned15/CDC and original owners. Do not silently narrow their scope when splitting implementation for context headroom.
+
+**Requested Operator decision:** approve the single application-owned watcher/update/cache-writer direction and complete supported PlayerState/source-version event authority for both interfaces, or discuss the alternative before implementation is issued. Approval authorizes detailing the first coherent implementation increment under this direction; it is not acceptance of an unimplemented API, cache migration, terminal tool or whole parent capability. Until then15 remains planned/unissued; no slice15 directory/prompt or source branch is created, main/dependencies/Project02 stay held.
+
+Version1.50 records a reviewable, source-grounded architecture proposal and explicit pending decision after Slice14 closure, not an adopted plan amendment or a new investigation.
