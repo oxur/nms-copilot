@@ -9,7 +9,7 @@ updated: 2026-10-17
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.33
+version: 1.34
 project: project01-mvp
 status: active
 depends-on: []
@@ -807,3 +807,10 @@ After accepted11 source239313 and closuread552d4, open arc06-fit-and-finish/slic
 Was: broad planned12 full startup/cache C04, old/current/warm/write-through in both modes, unknown-system placeholder/promotion, historical-state diagnosis/disposition and watch configuration/duplicate-producer composition. Routine source inspection now details ready cache-integrity recovery as12 and assigns **all remainder explicitly to planned13/CDC**, before raw-field repair and original parent acceptance: full startup/live-cache old/current/warm/write-through across both modes; unknown placeholders/promotion; watcher enabled/debounce and duplicate producers; historical questions beyond this precisely contradictory-field case.13 is a named required owner, not issued work or a new investigation. No original capability/criterion is deferred, removed or accepted by this sizing refinement; no new architecture/public API or empirical user-save survey. Any inquiry or consequential policy change retains CDC/Operator authority and prior agreement.
 
 Separate CC implements, Sofie/CDC reviews; Expedited Mode. Actual prerequisite239313, candidate .worktrees/cache-player-state-integrity/codex/cache-player-state-integrity; main6d183bde/accepted11/dependencies/Project02 held. Wired/documented/tested isolated candidate, not main integration/installed release; later authorized integration/final-baseline composition stays CDC/Operator-owned. Seven child CI rows open; new R06-S12 open;30 arc rows/11 done/19 open, all25 project rows open. Original R06-R02/R03/M7.4/C04, raw-field repair/export/import/format/docs/distribution/coverage/parent independent/Operator gates remain. Version1.33 records child11 closure/source inspection and a bounded next implementation/remainder mapping, preserving scope, architecture and quality floor.
+
+
+## Slice12 initial review / bounded test-and-doc correction — 2026-10-17
+
+CDC independently reproduced all required gates at88c5980:38 cache/4 route/2 native/737 focused/219 no-default/933 workspace, format/lint/build/docs/strict-cache/diff. Initial restricted native failure and unchanged host retry retained. Runtime invariant implementation is correct against the assigned contract; CI-04/05 accepted. Five child rows remain open for specific required test oracles (no temp artifact, full original state/maps, source9 and cached view7 recovery), omitted direct rebuild boundary documentation and current42-attempt inventory clarification. No runtime defect or missing raw channel reproduced;84 CC channels audited.
+
+Current assignment arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md, first refinement of five; initial prompt returned/reviewed/preserved. Two existing test/doc paths only, all production frozen; complete current gate/evidence and independent review remain. R06-S12 stays open:30 arc rows/11 done/19 open, all25 project rows open. Planned13 full startup/live/cache/unknown-state/watch configuration/duplicate-producer and broader historical-state ownership remains before raw repair and original parent acceptance. Main/dependency/Project02 held; candidate unintegrated/uninstalled, later authorized integration/composition/release remains CDC/Operator-owned. Version1.34: routine child review/correction status, no scope/architecture/criterion/sequence change, inquiry or waiver.
