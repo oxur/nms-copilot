@@ -27,7 +27,7 @@ use nms_copilot::session::SessionState;
 use nms_copilot::watch::drain_watch_events;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
-use nms_watch::{WatchConfig, WatchHandle, start_watching};
+use nms_watch::{WatchConfig, start_watching};
 
 const DEFAULT_MCP_HTTP_ADDR: &str = "127.0.0.1:5099";
 
@@ -138,6 +138,7 @@ fn main() {
 
     let mut model = model;
     model.ensure_player_system();
+    let watch_config = configured_watcher(&config, save_path.as_deref());
 
     // ── Headless mode: MCP server only ──────────────────────────
     if cli.headless {
@@ -149,7 +150,7 @@ fn main() {
             model.blocking_read().planet_count(),
             model.blocking_read().bases.len(),
         );
-        mcp::run_headless(model, transport, save_path);
+        mcp::run_headless_with_watch_config(model, transport, watch_config);
         return;
     }
 
@@ -170,20 +171,19 @@ fn main() {
     );
 
     // Start file watcher (optional)
-    let watch_handle = if config.watch_enabled() {
-        match start_watcher(&config, save_path.clone()) {
-            Ok(handle) => {
-                println!("Watching save file for live updates.\n");
-                Some(handle)
-            }
-            Err(e) => {
-                eprintln!("Warning: could not start file watcher: {e}\n");
-                None
-            }
+    let watch_handle = match watch_config.clone().map(start_watching).transpose() {
+        Ok(Some(handle)) => {
+            println!("Watching save file for live updates.\n");
+            Some(handle)
         }
-    } else {
-        println!();
-        None
+        Ok(None) => {
+            println!();
+            None
+        }
+        Err(e) => {
+            eprintln!("Warning: could not start file watcher: {e}\n");
+            None
+        }
     };
 
     let cache_for_watcher = if no_cache {
@@ -197,10 +197,10 @@ fn main() {
 
     // Start MCP HTTP server on background thread (shares the model)
     let mcp_addr = mcp_http_addr(&cli, &config);
-    mcp::spawn_mcp_background(
+    mcp::spawn_mcp_background_with_watch_config(
         Arc::clone(&model),
         mcp::Transport::Http(mcp_addr),
-        save_path,
+        watch_config,
     );
     let mcp_base = format!("http://{mcp_addr}");
     eprintln!("MCP server listening on {mcp_base}");
@@ -360,26 +360,15 @@ fn load_model(
     Ok((result.model, result.was_cached, result.save_version))
 }
 
-fn start_watcher(
-    config: &Config,
-    save_path: Option<PathBuf>,
-) -> Result<WatchHandle, Box<dyn std::error::Error>> {
-    let path = match save_path {
-        Some(p) => p,
-        None => match config.save_path() {
-            Some(p) => p,
-            None => nms_save::locate::find_most_recent_save()?
-                .path()
-                .to_path_buf(),
-        },
-    };
+fn configured_watcher(config: &Config, save_path: Option<&Path>) -> Option<WatchConfig> {
+    if !config.watch_enabled() {
+        return None;
+    }
 
-    let watch_config = WatchConfig {
-        save_path: path,
+    Some(WatchConfig {
+        save_path: save_path?.to_path_buf(),
         debounce: config.watch_debounce(),
-    };
-
-    Ok(start_watching(watch_config)?)
+    })
 }
 
 /// Parse MCP transport for headless mode.
@@ -836,6 +825,45 @@ impl std::error::Error for SmokeError {}
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_configured_watcher_missing_path_returns_none() {
+        assert!(configured_watcher(&Config::default(), None).is_none());
+    }
+
+    #[test]
+    fn test_configured_watcher_disabled_ignores_present_path_without_io() {
+        let mut config = Config::default();
+        config.watch.enabled = false;
+        let path = Path::new("a/path/that/does/not/exist/save.hg");
+
+        assert!(configured_watcher(&config, Some(path)).is_none());
+    }
+
+    #[test]
+    fn test_configured_watcher_default_preserves_exact_path_and_debounce() {
+        let config = Config::default();
+        let path = Path::new("relative/../save.hg");
+
+        let watch = configured_watcher(&config, Some(path)).expect("default watch enabled");
+
+        assert_eq!(watch.save_path, path);
+        assert_eq!(watch.debounce, Duration::from_millis(500));
+    }
+
+    #[test]
+    fn test_configured_watcher_nondefault_and_zero_debounce_are_literal() {
+        let path = Path::new("relative/../save.hg");
+        for (debounce_ms, expected) in [(137, 137), (0, 0)] {
+            let mut config = Config::default();
+            config.watch.debounce_ms = debounce_ms;
+
+            let watch = configured_watcher(&config, Some(path)).expect("watch enabled");
+
+            assert_eq!(watch.save_path, path);
+            assert_eq!(watch.debounce, Duration::from_millis(expected));
+        }
+    }
 
     #[test]
     fn test_cli_help_parses_before_startup() {
