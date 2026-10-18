@@ -38,7 +38,10 @@ pub enum Transport {
 /// the MCP server runs concurrently with the REPL. Stdio transport should only
 /// be used in headless mode.
 ///
-/// Optionally starts a file watcher that applies deltas to the shared model.
+/// Starts a default-debounce watcher when `save_path` is `Some`.
+///
+/// This compatibility wrapper uses a 500ms debounce; use
+/// [`spawn_mcp_background_with_watch_config`] to supply explicit settings.
 ///
 /// For HTTP transport, blocks the caller until the server is listening
 /// (TCP bind succeeded) so the REPL doesn't start before the MCP endpoint
@@ -48,6 +51,19 @@ pub fn spawn_mcp_background(
     transport: Transport,
     save_path: Option<std::path::PathBuf>,
 ) {
+    spawn_mcp_background_with_watch_config(model, transport, default_watch_config(save_path));
+}
+
+/// Start the MCP server on a background thread with an explicit watcher setting.
+///
+/// `Some(config)` is forwarded unchanged to the save watcher and its owned
+/// handle remains alive while the server runs. `None` disables file watching
+/// while the server continues to use the supplied in-memory model.
+pub fn spawn_mcp_background_with_watch_config(
+    model: Arc<RwLock<GalaxyModel>>,
+    transport: Transport,
+    watch_config: Option<nms_watch::WatchConfig>,
+) {
     let mcp_service = ServiceHandle::new("mcp-http");
     let (ready_tx, ready_rx) = std::sync::mpsc::sync_channel::<Result<(), String>>(1);
 
@@ -55,7 +71,7 @@ pub fn spawn_mcp_background(
     thread::spawn(move || {
         let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
         rt.block_on(async {
-            let watcher = start_watcher(save_path.as_deref());
+            let watcher = start_watcher(watch_config);
 
             if let Err(e) = run_mcp_server(
                 model,
@@ -85,18 +101,32 @@ pub fn spawn_mcp_background(
     }
 }
 
-/// Run the MCP server in headless mode (blocking, on the current thread).
+/// Run the MCP server in headless mode with a default-debounce watcher.
 ///
-/// Creates a tokio runtime and blocks until the server shuts down.
+/// This compatibility wrapper uses a 500ms debounce when `save_path` is
+/// `Some`; use [`run_headless_with_watch_config`] for explicit settings.
 pub fn run_headless(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
     save_path: Option<std::path::PathBuf>,
 ) {
+    run_headless_with_watch_config(model, transport, default_watch_config(save_path));
+}
+
+/// Run the MCP server in headless mode with an explicit watcher setting.
+///
+/// `Some(config)` is forwarded unchanged to the save watcher and its owned
+/// handle remains alive while the server runs. `None` disables file watching
+/// while the server continues to use the supplied in-memory model.
+pub fn run_headless_with_watch_config(
+    model: Arc<RwLock<GalaxyModel>>,
+    transport: Transport,
+    watch_config: Option<nms_watch::WatchConfig>,
+) {
     let mcp_service = ServiceHandle::new("mcp");
     let rt = tokio::runtime::Runtime::new().expect("tokio runtime");
     rt.block_on(async {
-        let watcher = start_watcher(save_path.as_deref());
+        let watcher = start_watcher(watch_config);
 
         if let Err(e) = run_mcp_server(model, transport, watcher, None, mcp_service).await {
             eprintln!("MCP server error: {e}");
@@ -104,15 +134,19 @@ pub fn run_headless(
     });
 }
 
-/// Start the file watcher if a save path is provided.
+fn default_watch_config(save_path: Option<std::path::PathBuf>) -> Option<nms_watch::WatchConfig> {
+    save_path.map(|save_path| nms_watch::WatchConfig {
+        save_path,
+        ..Default::default()
+    })
+}
+
+/// Start the watcher with the caller's exact configuration, if enabled.
 ///
 /// Returns the owned watcher handle if watching started successfully.
-fn start_watcher(save_path: Option<&std::path::Path>) -> Option<nms_watch::WatchHandle> {
-    let path = save_path?;
-    let watch_config = nms_watch::WatchConfig {
-        save_path: path.to_path_buf(),
-        ..Default::default()
-    };
+fn start_watcher(watch_config: Option<nms_watch::WatchConfig>) -> Option<nms_watch::WatchHandle> {
+    let watch_config = watch_config?;
+    let path = watch_config.save_path.clone();
     match nms_watch::start_watching(watch_config) {
         Ok(handle) => {
             log::info!("File watcher started for {}", path.display());
@@ -539,6 +573,13 @@ mod watcher_lifecycle_tests {
     use super::*;
     use std::time::{Duration, Instant};
 
+    fn watch_config(save_path: std::path::PathBuf) -> nms_watch::WatchConfig {
+        nms_watch::WatchConfig {
+            save_path,
+            debounce: Duration::from_millis(500),
+        }
+    }
+
     fn save_bytes(reality_index: u8, voxel_x: i16) -> Vec<u8> {
         serde_json::to_vec(&serde_json::json!({
             "Version": 4720,
@@ -600,11 +641,22 @@ mod watcher_lifecycle_tests {
 
         let dir = tempfile::tempdir().expect("temporary directory");
         let missing = dir.path().join("missing.json");
-        assert!(start_watcher(Some(&missing)).is_none());
+        assert!(start_watcher(Some(watch_config(missing))).is_none());
 
         let malformed = dir.path().join("malformed.json");
         std::fs::write(&malformed, b"not a save").expect("write malformed save");
-        assert!(start_watcher(Some(&malformed)).is_none());
+        assert!(start_watcher(Some(watch_config(malformed))).is_none());
+    }
+
+    #[test]
+    fn test_legacy_watch_config_preserves_path_and_default_debounce() {
+        assert!(default_watch_config(None).is_none());
+        let path = std::path::PathBuf::from("relative/../save.hg");
+
+        let config = default_watch_config(Some(path.clone())).expect("path enables default watch");
+
+        assert_eq!(config.save_path, path);
+        assert_eq!(config.debounce, Duration::from_millis(500));
     }
 
     #[test]
@@ -613,7 +665,7 @@ mod watcher_lifecycle_tests {
         let path = dir.path().join("save.json");
         std::fs::write(&path, save_bytes(0, 0)).expect("write initial save");
 
-        let mut owner = start_watcher(Some(&path)).expect("watcher starts");
+        let mut owner = start_watcher(Some(watch_config(path.clone()))).expect("watcher starts");
         let receiver = std::mem::replace(&mut owner.receiver, std::sync::mpsc::channel().1);
         std::fs::write(&path, save_bytes(9, 0)).expect("write later save contents");
 

@@ -127,6 +127,19 @@ fn temp_save() -> (TempDir, PathBuf) {
     (dir, path)
 }
 
+#[cfg(unix)]
+fn isolated_watch_home(enabled: bool, debounce_ms: u64) -> TempDir {
+    let home = tempfile::tempdir().expect("isolated child home directory");
+    let config_dir = home.path().join(".nms-copilot");
+    std::fs::create_dir_all(&config_dir).expect("create isolated config directory");
+    std::fs::write(
+        config_dir.join("config.toml"),
+        format!("[watch]\nenabled = {enabled}\ndebounce_ms = {debounce_ms}\n"),
+    )
+    .expect("write isolated watcher configuration");
+    home
+}
+
 fn assert_location(location: &Value, phase: Phase) -> String {
     assert_eq!(
         location["galaxy"], phase.galaxy,
@@ -232,7 +245,8 @@ fn call_where_am_i_stdio(
     let contents = &resource["result"]["contents"][0]["text"];
     let value: Value = serde_json::from_str(contents.as_str().expect("location text exists"))
         .expect("location resource text is JSON");
-    let _ = assert_location(&value, phase);
+    let resource_system = assert_location(&value, phase);
+    assert_eq!(resource_system, system, "tool and resource system labels");
     eprintln!(
         "MCP_LIVE_OBSERVATION transport=stdio phase={} tool={} resource={}",
         phase.label,
@@ -288,7 +302,8 @@ fn call_where_am_i_http(
     let contents = &response["result"]["contents"][0]["text"];
     let value: Value = serde_json::from_str(contents.as_str().expect("location text exists"))
         .expect("location resource text is JSON");
-    let _ = assert_location(&value, phase);
+    let resource_system = assert_location(&value, phase);
+    assert_eq!(resource_system, system, "tool and resource system labels");
     eprintln!(
         "MCP_LIVE_OBSERVATION transport=http phase={} tool={} resource={}",
         phase.label,
@@ -377,6 +392,53 @@ fn test_stdio_child_tracks_real_save_and_recovers_after_parse_failures() {
 #[test]
 fn test_stdio_mcp_child_observes_atomic_save_replacements_and_recovers() {
     test_stdio_child_tracks_real_save_and_recovers_after_parse_failures();
+}
+
+#[cfg(unix)]
+#[test]
+fn test_stdio_mcp_child_disabled_watcher_keeps_initial_model_after_save_change() {
+    let (_dir, save) = temp_save();
+    let mut process = StdioProcess::spawn_with_watch_settings(&save, false, 137);
+
+    process.send(initialize_request());
+    let initialized = process.response(1, RPC_TIMEOUT);
+    assert_initialized(&initialized["result"]);
+    process.send(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    process.send(rpc("tools/list", 2));
+    let tools = process.response(2, RPC_TIMEOUT);
+    process.send(rpc("resources/list", 3));
+    let resources = process.response(3, RPC_TIMEOUT);
+    assert_lists(&tools["result"], &resources["result"]);
+    let initial_system =
+        call_where_am_i_stdio(&mut process, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
+
+    atomic_replace(&save, &save_bytes(PHASE_C));
+    let observation_ends = Instant::now() + Duration::from_millis(1500);
+    let mut observed_before_end = false;
+    let mut observed_after_end = false;
+    let mut id = 30;
+    while !observed_after_end {
+        let sample_started = Instant::now();
+        let system = call_where_am_i_stdio(&mut process, id, PHASE_A, Instant::now() + RPC_TIMEOUT);
+        let sample_finished = Instant::now();
+        assert_eq!(
+            system, initial_system,
+            "disabled watcher keeps phase A system"
+        );
+        observed_before_end |= sample_finished < observation_ends;
+        observed_after_end |= sample_started >= observation_ends;
+        id += 2;
+        if !observed_after_end {
+            thread::sleep(Duration::from_millis(100));
+        }
+    }
+    assert!(
+        observed_before_end,
+        "sampled tool and resource before 1500ms"
+    );
+    assert!(observed_after_end, "sampled tool and resource after 1500ms");
+    assert!(process.stdout_is_json_only());
+    process.close_stdin_and_wait(Duration::from_secs(5));
 }
 
 #[cfg(feature = "http")]
@@ -515,6 +577,101 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
     process.kill_and_wait();
 }
 
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_http_mcp_child_disabled_watcher_keeps_initial_model_after_save_change() {
+    let (_dir, save) = temp_save();
+    let mut last_error = String::new();
+    let mut client = None;
+    let mut process = None;
+
+    // Retry only when this child's actual startup diagnostic identifies a bind collision.
+    for _attempt in 0..3 {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve loopback port");
+        let addr = listener.local_addr().expect("reserved socket address");
+        drop(listener);
+        let mut child = HttpChild::spawn_with_watch_settings(&save, addr, false, 137);
+        match wait_health(addr, &mut child) {
+            Ok(()) => {
+                process = Some(child);
+                client = Some(HttpClient::new(addr));
+                break;
+            }
+            Err(message) if message.contains("bind") => last_error = message,
+            Err(message) => panic!("HTTP child did not become healthy: {message}"),
+        }
+    }
+    let mut process =
+        process.unwrap_or_else(|| panic!("three loopback bind collisions: {last_error}"));
+    let mut client = client.expect("HTTP client established after health readiness");
+
+    let initialized = client.post_without_session(initialize_request());
+    assert_eq!(
+        initialized.status,
+        200,
+        "initialize: {}",
+        initialized.body_text()
+    );
+    let session = initialized
+        .header("mcp-session-id")
+        .expect("server returned an MCP session ID")
+        .to_owned();
+    let response = http_json_messages(&initialized.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 1)
+        .expect("initialize response ID");
+    assert_initialized(&response["result"]);
+    let initialized = client.post(json!({
+        "jsonrpc":"2.0", "method":"notifications/initialized", "params":{}
+    }));
+    assert_eq!(initialized.status, 202, "initialized notification");
+    assert_eq!(client.session.as_deref(), Some(session.as_str()));
+
+    let tools = client.post(rpc("tools/list", 2));
+    assert_eq!(tools.status, 200);
+    let tools = http_json_messages(&tools.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 2)
+        .expect("tools/list response ID");
+    let resources = client.post(rpc("resources/list", 3));
+    assert_eq!(resources.status, 200);
+    let resources = http_json_messages(&resources.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 3)
+        .expect("resources/list response ID");
+    assert_lists(&tools["result"], &resources["result"]);
+    let initial_system =
+        call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
+
+    atomic_replace(&save, &save_bytes(PHASE_C));
+    let observation_ends = Instant::now() + Duration::from_millis(1500);
+    let mut observed_before_end = false;
+    let mut observed_after_end = false;
+    let mut id = 30;
+    while !observed_after_end {
+        let sample_started = Instant::now();
+        let system = call_where_am_i_http(&mut client, id, PHASE_A, Instant::now() + RPC_TIMEOUT);
+        let sample_finished = Instant::now();
+        assert_eq!(
+            system, initial_system,
+            "disabled watcher keeps phase A system"
+        );
+        observed_before_end |= sample_finished < observation_ends;
+        observed_after_end |= sample_started >= observation_ends;
+        id += 2;
+        if !observed_after_end {
+            thread::sleep(Duration::from_millis(100));
+        }
+    }
+    assert!(
+        observed_before_end,
+        "sampled tool and resource before 1500ms"
+    );
+    assert!(observed_after_end, "sampled tool and resource after 1500ms");
+    assert!(process.stdout_is_empty(), "HTTP child stdout remains empty");
+    process.kill_and_wait();
+}
+
 struct StdioProcess {
     child: Child,
     stdin: Option<ChildStdin>,
@@ -523,11 +680,32 @@ struct StdioProcess {
     stderr_lines: Vec<String>,
     pending: Vec<Value>,
     last_id: u64,
+    _home: Option<TempDir>,
 }
 
 impl StdioProcess {
     fn spawn(save: &Path) -> Self {
-        let mut child = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"))
+        #[cfg(unix)]
+        {
+            Self::spawn_with_watch_settings(save, true, 137)
+        }
+        #[cfg(not(unix))]
+        {
+            Self::spawn_with_home(save, None)
+        }
+    }
+
+    #[cfg(unix)]
+    fn spawn_with_watch_settings(save: &Path, enabled: bool, debounce_ms: u64) -> Self {
+        Self::spawn_with_home(save, Some(isolated_watch_home(enabled, debounce_ms)))
+    }
+
+    fn spawn_with_home(save: &Path, home: Option<TempDir>) -> Self {
+        let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
+        if let Some(home) = &home {
+            command.env("HOME", home.path());
+        }
+        let mut child = command
             .args(["--headless", "--no-cache", "--save"])
             .arg(save)
             .stdin(Stdio::piped())
@@ -546,6 +724,7 @@ impl StdioProcess {
             stderr_lines: Vec::new(),
             pending: Vec::new(),
             last_id: 100,
+            _home: home,
         }
     }
 
@@ -689,11 +868,37 @@ struct HttpChild {
     stderr: Receiver<Result<String, String>>,
     stdout_lines: Vec<String>,
     stderr_lines: Vec<String>,
+    _home: Option<TempDir>,
 }
 
 impl HttpChild {
     fn spawn(save: &Path, addr: SocketAddr) -> Self {
-        let mut child = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"))
+        #[cfg(unix)]
+        {
+            Self::spawn_with_watch_settings(save, addr, true, 137)
+        }
+        #[cfg(not(unix))]
+        {
+            Self::spawn_with_home(save, addr, None)
+        }
+    }
+
+    #[cfg(unix)]
+    fn spawn_with_watch_settings(
+        save: &Path,
+        addr: SocketAddr,
+        enabled: bool,
+        debounce_ms: u64,
+    ) -> Self {
+        Self::spawn_with_home(save, addr, Some(isolated_watch_home(enabled, debounce_ms)))
+    }
+
+    fn spawn_with_home(save: &Path, addr: SocketAddr, home: Option<TempDir>) -> Self {
+        let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
+        if let Some(home) = &home {
+            command.env("HOME", home.path());
+        }
+        let mut child = command
             .args(["--headless", "--no-cache", "--save"])
             .arg(save)
             .args(["--http", &addr.to_string()])
@@ -710,6 +915,7 @@ impl HttpChild {
             stderr,
             stdout_lines: Vec::new(),
             stderr_lines: Vec::new(),
+            _home: home,
         }
     }
 
