@@ -7,8 +7,12 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, ChildStdin, Command, Stdio};
 use std::sync::mpsc::{self, Receiver, RecvTimeoutError, Sender};
 use std::thread;
-use std::time::{Duration, Instant};
+use std::time::{Duration, Instant, SystemTime};
 
+use nms_core::address::GalacticAddress;
+use nms_core::player::PlayerState;
+use nms_core::system::System;
+use nms_graph::GalaxyModel;
 use serde_json::{Value, json};
 use tempfile::TempDir;
 
@@ -137,6 +141,32 @@ fn isolated_watch_home(enabled: bool, debounce_ms: u64) -> TempDir {
         format!("[watch]\nenabled = {enabled}\ndebounce_ms = {debounce_ms}\n"),
     )
     .expect("write isolated watcher configuration");
+    home
+}
+
+#[cfg(unix)]
+fn isolated_cache_home(cache_path: &Path) -> TempDir {
+    let home = isolated_watch_home(false, 137);
+    let config_path = home.path().join(".nms-copilot/config.toml");
+    let quoted_path = serde_json::to_string(
+        cache_path
+            .to_str()
+            .expect("temporary cache path is valid UTF-8"),
+    )
+    .expect("serialize cache path as a TOML-compatible string");
+    let mut config = std::fs::read_to_string(&config_path).expect("read isolated config");
+    config.push_str(&format!(
+        "\n[cache]\nenabled = true\npath = {quoted_path}\n"
+    ));
+    let value: toml::Value = toml::from_str(&config).expect("parse complete child config");
+    assert_eq!(value["cache"]["enabled"].as_bool(), Some(true));
+    assert_eq!(
+        value["cache"]["path"].as_str(),
+        Some(cache_path.to_str().unwrap())
+    );
+    assert_eq!(value["watch"]["enabled"].as_bool(), Some(false));
+    assert_eq!(value["watch"]["debounce_ms"].as_integer(), Some(137));
+    std::fs::write(config_path, config).expect("write verified isolated cache config");
     home
 }
 
@@ -701,12 +731,25 @@ impl StdioProcess {
     }
 
     fn spawn_with_home(save: &Path, home: Option<TempDir>) -> Self {
+        Self::spawn_with_cache_policy(save, home, true)
+    }
+
+    #[cfg(unix)]
+    fn spawn_cached_startup(save: &Path, cache_path: &Path, no_cache: bool) -> Self {
+        Self::spawn_with_cache_policy(save, Some(isolated_cache_home(cache_path)), no_cache)
+    }
+
+    fn spawn_with_cache_policy(save: &Path, home: Option<TempDir>, no_cache: bool) -> Self {
         let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
         if let Some(home) = &home {
             command.env("HOME", home.path());
         }
+        command.args(["--headless"]);
+        if no_cache {
+            command.arg("--no-cache");
+        }
         let mut child = command
-            .args(["--headless", "--no-cache", "--save"])
+            .arg("--save")
             .arg(save)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
@@ -894,12 +937,35 @@ impl HttpChild {
     }
 
     fn spawn_with_home(save: &Path, addr: SocketAddr, home: Option<TempDir>) -> Self {
+        Self::spawn_with_cache_policy(save, addr, home, true)
+    }
+
+    #[cfg(all(unix, feature = "http"))]
+    fn spawn_cached_startup(
+        save: &Path,
+        cache_path: &Path,
+        addr: SocketAddr,
+        no_cache: bool,
+    ) -> Self {
+        Self::spawn_with_cache_policy(save, addr, Some(isolated_cache_home(cache_path)), no_cache)
+    }
+
+    fn spawn_with_cache_policy(
+        save: &Path,
+        addr: SocketAddr,
+        home: Option<TempDir>,
+        no_cache: bool,
+    ) -> Self {
         let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
         if let Some(home) = &home {
             command.env("HOME", home.path());
         }
+        command.args(["--headless"]);
+        if no_cache {
+            command.arg("--no-cache");
+        }
         let mut child = command
-            .args(["--headless", "--no-cache", "--save"])
+            .arg("--save")
             .arg(save)
             .args(["--http", &addr.to_string()])
             .stdin(Stdio::null())
@@ -1357,5 +1423,486 @@ fn emit_complete_sse_events(buffer: &mut Vec<u8>, message_tx: &Sender<Value>) {
             }
         }
         buffer.drain(..end + delimiter);
+    }
+}
+
+#[cfg(unix)]
+#[derive(Clone, Copy, Debug)]
+enum StartupCacheCase {
+    ColdMissing,
+    FreshCurrent,
+    StaleCurrent,
+    FreshSchema1,
+    FreshSemantic1,
+    FreshCorrupt,
+    BypassExisting,
+    BypassMissing,
+}
+
+#[cfg(unix)]
+impl StartupCacheCase {
+    const ALL: [Self; 8] = [
+        Self::ColdMissing,
+        Self::FreshCurrent,
+        Self::StaleCurrent,
+        Self::FreshSchema1,
+        Self::FreshSemantic1,
+        Self::FreshCorrupt,
+        Self::BypassExisting,
+        Self::BypassMissing,
+    ];
+
+    fn label(self) -> &'static str {
+        match self {
+            Self::ColdMissing => "cold_missing",
+            Self::FreshCurrent => "fresh_current",
+            Self::StaleCurrent => "stale_current",
+            Self::FreshSchema1 => "fresh_schema1",
+            Self::FreshSemantic1 => "fresh_semantic1",
+            Self::FreshCorrupt => "fresh_corrupt",
+            Self::BypassExisting => "bypass_existing",
+            Self::BypassMissing => "bypass_missing",
+        }
+    }
+
+    fn source(self) -> Phase {
+        match self {
+            Self::ColdMissing | Self::FreshSchema1 | Self::FreshCorrupt | Self::BypassMissing => {
+                PHASE_C
+            }
+            Self::FreshCurrent
+            | Self::StaleCurrent
+            | Self::FreshSemantic1
+            | Self::BypassExisting => PHASE_A,
+        }
+    }
+
+    fn no_cache(self) -> bool {
+        matches!(self, Self::BypassExisting | Self::BypassMissing)
+    }
+
+    fn served(self) -> Phase {
+        if matches!(self, Self::FreshCurrent) {
+            PHASE_B
+        } else {
+            self.source()
+        }
+    }
+
+    fn served_system(self) -> &'static str {
+        if matches!(self, Self::FreshCurrent) {
+            "Cached-9"
+        } else {
+            "-"
+        }
+    }
+
+    fn rebuilds_cache(self) -> bool {
+        matches!(
+            self,
+            Self::ColdMissing
+                | Self::StaleCurrent
+                | Self::FreshSchema1
+                | Self::FreshSemantic1
+                | Self::FreshCorrupt
+        )
+    }
+}
+
+#[cfg(unix)]
+struct StartupCaseFiles {
+    _dir: TempDir,
+    save: PathBuf,
+    cache: PathBuf,
+    source_bytes: Vec<u8>,
+    source_model: GalaxyModel,
+    initial_cache: Option<Vec<u8>>,
+}
+
+#[cfg(unix)]
+fn literal_player(phase: Phase) -> PlayerState {
+    let address = GalacticAddress::new(phase.voxel_x, 0, 0, 1, 0, phase.reality_index);
+    PlayerState::new(address, phase.reality_index, None, None, 7, 8, 9)
+}
+
+#[cfg(unix)]
+fn assert_source_model_literals(model: &GalaxyModel, phase: Phase) {
+    assert_eq!(model.active_galaxy, phase.reality_index);
+    assert_eq!(model.player_state.as_ref(), Some(&literal_player(phase)));
+    assert!(model.systems.is_empty(), "source fixture has no systems");
+    assert!(model.planets.is_empty(), "source fixture has no planets");
+    assert!(model.bases.is_empty(), "source fixture has no bases");
+}
+
+#[cfg(unix)]
+fn sentinel_model() -> GalaxyModel {
+    let address = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+    let mut model = GalaxyModel::new();
+    model.insert_system(System::new(
+        address,
+        Some("Cached-9".into()),
+        None,
+        None,
+        vec![],
+    ));
+    model.player_state = Some(PlayerState::new(address, 9, None, None, 700, 800, 900));
+    model.set_active_galaxy(7);
+    model
+}
+
+#[cfg(unix)]
+fn sentinel_bytes() -> Vec<u8> {
+    let model = sentinel_model();
+    let data = nms_cache::extract_cache_data(&model, 9999);
+    let bytes = nms_cache::serialize::serialize(&data).expect("serialize current sentinel");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+    let dir = tempfile::tempdir().expect("sentinel verification directory");
+    let path = dir.path().join("sentinel.rkyv");
+    nms_cache::write_cache(&data, &path).expect("write sentinel through cache API");
+    assert_eq!(
+        std::fs::read(&path).expect("read written sentinel bytes"),
+        bytes
+    );
+    let checked = nms_cache::read_cache(&path).expect("checked-read current sentinel");
+    let rebuilt = nms_cache::rebuild_model(&checked);
+    assert_eq!(
+        checked.player_state,
+        Some(PlayerState::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 9),
+            9,
+            None,
+            None,
+            700,
+            800,
+            900,
+        ))
+    );
+    assert_eq!(checked.active_galaxy, 7);
+    assert_eq!(checked.save_version, 9999);
+    assert_eq!(rebuilt.systems, model.systems);
+    assert_eq!(rebuilt.planets, model.planets);
+    assert_eq!(rebuilt.bases, model.bases);
+    assert_eq!(rebuilt.player_state, model.player_state);
+    assert_eq!(rebuilt.active_galaxy, 7);
+    assert_eq!(
+        rebuilt
+            .systems
+            .values()
+            .next()
+            .and_then(|system| system.name.as_deref()),
+        Some("Cached-9")
+    );
+    bytes
+}
+
+#[cfg(unix)]
+fn set_mtime(path: &Path, time: SystemTime) {
+    std::fs::File::options()
+        .write(true)
+        .open(path)
+        .expect("open fixture to set mtime")
+        .set_times(std::fs::FileTimes::new().set_modified(time))
+        .expect("set exact fixture mtime");
+}
+
+#[cfg(unix)]
+fn source_mtime() -> SystemTime {
+    SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_000)
+}
+
+#[cfg(unix)]
+fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
+    let dir = tempfile::tempdir().expect("case save/cache directory");
+    let save = dir.path().join("save.json");
+    let cache = if matches!(case, StartupCacheCase::BypassMissing) {
+        dir.path().join("absent/cache.rkyv")
+    } else {
+        dir.path().join("cache.rkyv")
+    };
+    let source_bytes = save_bytes(case.source());
+    std::fs::write(&save, &source_bytes).expect("write literal source fixture");
+    set_mtime(&save, source_mtime());
+    let parsed = nms_save::parse_save(&source_bytes).expect("parse literal source fixture");
+    let source_model = GalaxyModel::from_save(&parsed);
+    assert_source_model_literals(&source_model, case.source());
+
+    let initial_cache = match case {
+        StartupCacheCase::ColdMissing | StartupCacheCase::BypassMissing => None,
+        StartupCacheCase::FreshCurrent
+        | StartupCacheCase::StaleCurrent
+        | StartupCacheCase::BypassExisting => {
+            let bytes = sentinel_bytes();
+            std::fs::write(&cache, &bytes).expect("write healthy current sentinel");
+            let cache_time = if matches!(case, StartupCacheCase::StaleCurrent) {
+                source_mtime() - Duration::from_secs(100)
+            } else {
+                source_mtime() + Duration::from_secs(100)
+            };
+            set_mtime(&cache, cache_time);
+            assert_eq!(
+                nms_cache::is_cache_fresh(&cache, &save),
+                !matches!(case, StartupCacheCase::StaleCurrent),
+                "{} actual freshness precondition",
+                case.label()
+            );
+            Some(bytes)
+        }
+        StartupCacheCase::FreshSchema1 => {
+            let bytes =
+                include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema1-semantic1.rkyv")
+                    .to_vec();
+            assert_eq!(bytes.len(), 216);
+            assert_eq!(&bytes[..16], b"NMSCACHE\x01\0\0\0\x01\0\0\0");
+            std::fs::write(&cache, &bytes).expect("write immutable schema1 predecessor fixture");
+            set_mtime(&cache, source_mtime() + Duration::from_secs(100));
+            assert!(nms_cache::is_cache_fresh(&cache, &save));
+            assert!(matches!(
+                nms_cache::read_cache(&cache),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
+                        found: 1,
+                        expected: 2
+                    }
+                ))
+            ));
+            Some(bytes)
+        }
+        StartupCacheCase::FreshSemantic1 => {
+            let mut bytes = sentinel_bytes();
+            bytes[12..16].copy_from_slice(&1_u32.to_le_bytes());
+            std::fs::write(&cache, &bytes).expect("write synthetic semantic1 witness");
+            set_mtime(&cache, source_mtime() + Duration::from_secs(100));
+            assert!(nms_cache::is_cache_fresh(&cache, &save));
+            assert!(matches!(
+                nms_cache::read_cache(&cache),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                        found: 1,
+                        expected: 2
+                    }
+                ))
+            ));
+            Some(bytes)
+        }
+        StartupCacheCase::FreshCorrupt => {
+            let bytes = b"NMSCACHE\x02\0\0\0\x02\0\0\0".to_vec();
+            std::fs::write(&cache, &bytes).expect("write literal empty current archive");
+            set_mtime(&cache, source_mtime() + Duration::from_secs(100));
+            assert!(nms_cache::is_cache_fresh(&cache, &save));
+            assert!(matches!(
+                nms_cache::read_cache(&cache),
+                Err(nms_cache::CacheError::Deserialize(_))
+            ));
+            Some(bytes)
+        }
+    };
+    StartupCaseFiles {
+        _dir: dir,
+        save,
+        cache,
+        source_bytes,
+        source_model,
+        initial_cache,
+    }
+}
+
+#[cfg(unix)]
+fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &StartupCaseFiles) {
+    if files.initial_cache.is_some() {
+        assert_eq!(
+            nms_cache::is_cache_fresh(&files.cache, &files.save),
+            !matches!(case, StartupCacheCase::StaleCurrent),
+            "{} freshness immediately before child launch",
+            case.label()
+        );
+    }
+}
+
+#[cfg(unix)]
+fn assert_cache_effect(case: StartupCacheCase, files: &StartupCaseFiles) -> &'static str {
+    if case.rebuilds_cache() {
+        let bytes = std::fs::read(&files.cache).expect("startup wrote current cache");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+        let data = nms_cache::read_cache(&files.cache).expect("checked-read rebuilt cache");
+        assert_eq!(data.save_version, 4720, "{} source version", case.label());
+        assert_eq!(data.active_galaxy, case.source().reality_index);
+        assert_eq!(data.player_state, Some(literal_player(case.source())));
+        assert!(
+            data.systems.is_empty(),
+            "persisted source systems stay empty"
+        );
+        assert!(data.bases.is_empty(), "persisted source bases stay empty");
+        let rebuilt = nms_cache::rebuild_model(&data);
+        assert_eq!(rebuilt.systems, files.source_model.systems);
+        assert_eq!(rebuilt.planets, files.source_model.planets);
+        assert_eq!(rebuilt.bases, files.source_model.bases);
+        assert_eq!(rebuilt.player_state, files.source_model.player_state);
+        assert_eq!(rebuilt.active_galaxy, files.source_model.active_galaxy);
+        assert_eq!(rebuilt.biome_index, files.source_model.biome_index);
+        assert_eq!(rebuilt.name_index, files.source_model.name_index);
+        assert_eq!(rebuilt.address_to_id, files.source_model.address_to_id);
+        "rewritten_current"
+    } else if matches!(case, StartupCacheCase::BypassMissing) {
+        assert!(!files.cache.exists(), "bypass leaves absent cache absent");
+        assert!(
+            !files.cache.parent().unwrap().exists(),
+            "bypass creates no cache parent"
+        );
+        "absent_preserved"
+    } else {
+        assert_eq!(
+            std::fs::read(&files.cache).expect("existing cache remains present"),
+            files
+                .initial_cache
+                .as_deref()
+                .expect("case starts with cache"),
+            "{} existing cache bytes",
+            case.label()
+        );
+        "exact_bytes_preserved"
+    }
+}
+
+#[cfg(unix)]
+fn assert_source_bytes_unchanged(files: &StartupCaseFiles) {
+    assert_eq!(
+        std::fs::read(&files.save).expect("read source after startup"),
+        files.source_bytes,
+        "startup must not modify source save"
+    );
+}
+
+#[cfg(unix)]
+fn run_stdio_cache_case(case: StartupCacheCase) {
+    let files = prepare_startup_case(case);
+    assert_startup_freshness_precondition(case, &files);
+    let mut process =
+        StdioProcess::spawn_cached_startup(&files.save, &files.cache, case.no_cache());
+    process.send(initialize_request());
+    let initialized = process.response(1, RPC_TIMEOUT);
+    assert_initialized(&initialized["result"]);
+    process.send(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    process.send(rpc("tools/list", 2));
+    let tools = process.response(2, RPC_TIMEOUT);
+    process.send(rpc("resources/list", 3));
+    let resources = process.response(3, RPC_TIMEOUT);
+    assert_lists(&tools["result"], &resources["result"]);
+    let system = call_where_am_i_stdio(
+        &mut process,
+        10,
+        case.served(),
+        Instant::now() + RPC_TIMEOUT,
+    );
+    assert_eq!(
+        system,
+        case.served_system(),
+        "{} actual system",
+        case.label()
+    );
+    let effect = assert_cache_effect(case, &files);
+    eprintln!(
+        "MCP_CACHE_STARTUP transport=stdio case={} source={} served={} cache_effect={}",
+        case.label(),
+        case.source().label,
+        case.served().label,
+        effect
+    );
+    assert!(process.stdout_is_json_only());
+    process.close_stdin_and_wait(Duration::from_secs(5));
+    assert_cache_effect(case, &files);
+    assert_source_bytes_unchanged(&files);
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_cache_case(case: StartupCacheCase) {
+    let files = prepare_startup_case(case);
+    let mut last_error = String::new();
+    let mut client = None;
+    let mut process = None;
+    for _attempt in 0..3 {
+        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve loopback port");
+        let addr = listener.local_addr().expect("reserved socket address");
+        drop(listener);
+        assert_startup_freshness_precondition(case, &files);
+        let mut child =
+            HttpChild::spawn_cached_startup(&files.save, &files.cache, addr, case.no_cache());
+        match wait_health(addr, &mut child) {
+            Ok(()) => {
+                process = Some(child);
+                client = Some(HttpClient::new(addr));
+                break;
+            }
+            Err(message) if message.contains("bind") => last_error = message,
+            Err(message) => panic!(
+                "{} HTTP child did not become healthy: {message}",
+                case.label()
+            ),
+        }
+    }
+    let mut process =
+        process.unwrap_or_else(|| panic!("{} HTTP bind collisions: {last_error}", case.label()));
+    let mut client = client.expect("HTTP client after health readiness");
+    let initialized = client.post_without_session(initialize_request());
+    assert_eq!(initialized.status, 200, "{} initialize", case.label());
+    let session = initialized
+        .header("mcp-session-id")
+        .expect("HTTP initialize returns session")
+        .to_owned();
+    let response = http_json_messages(&initialized.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 1)
+        .expect("HTTP initialize response ID");
+    assert_initialized(&response["result"]);
+    let notification =
+        client.post(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    assert_eq!(notification.status, 202);
+    assert_eq!(client.session.as_deref(), Some(session.as_str()));
+    let tools_response = client.post(rpc("tools/list", 2));
+    assert_eq!(tools_response.status, 200);
+    let tools = http_json_messages(&tools_response.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 2)
+        .expect("HTTP tools/list response ID");
+    let resources_response = client.post(rpc("resources/list", 3));
+    assert_eq!(resources_response.status, 200);
+    let resources = http_json_messages(&resources_response.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 3)
+        .expect("HTTP resources/list response ID");
+    assert_lists(&tools["result"], &resources["result"]);
+    let system = call_where_am_i_http(&mut client, 10, case.served(), Instant::now() + RPC_TIMEOUT);
+    assert_eq!(
+        system,
+        case.served_system(),
+        "{} actual system",
+        case.label()
+    );
+    let effect = assert_cache_effect(case, &files);
+    eprintln!(
+        "MCP_CACHE_STARTUP transport=http case={} source={} served={} cache_effect={}",
+        case.label(),
+        case.source().label,
+        case.served().label,
+        effect
+    );
+    assert!(process.stdout_is_empty(), "HTTP stdout stays empty");
+    process.kill_and_wait();
+    assert_cache_effect(case, &files);
+    assert_source_bytes_unchanged(&files);
+}
+
+#[cfg(unix)]
+#[test]
+fn test_headless_stdio_cache_startup_matrix() {
+    for case in StartupCacheCase::ALL {
+        run_stdio_cache_case(case);
+    }
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_headless_http_cache_startup_matrix() {
+    for case in StartupCacheCase::ALL {
+        run_http_cache_case(case);
     }
 }
