@@ -2233,7 +2233,16 @@
         "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/ledger.md"
       ],
       "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
-      "status": "pending"
+      "status": "passed",
+      "finished_at_utc": "2026-10-18T02:42:00.883883+00:00",
+      "exit_code": 0,
+      "stdout_base64": "W3BsYW5uaW5nIDY1ZGM1OTBdIGRvY3MocGxhbm5pbmcpOiByZWNvcmQgU2xpY2UxMyB3YXRjaCBzZXR0aW5ncyBleGVjdXRpb24KIDQgZmlsZXMgY2hhbmdlZCwgMjM4OCBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxMy1tY3Atd2F0Y2gtc2V0dGluZ3MvYXJ0aWZhY3RzL2V4ZWN1dGlvbi5tZAogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxMy1tY3Atd2F0Y2gtc2V0dGluZ3MvYXJ0aWZhY3RzL3ZhbGlkYXRpb24uanNvbgogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxMy1tY3Atd2F0Y2gtc2V0dGluZ3MvY2xvc2luZy1yZXBvcnQubWQK",
+      "stdout_bytes": 441,
+      "stdout_sha256": "dcac6456b7491a11b982b7612a9170696a607a8cea03c5ed6cadc59252588aea",
+      "stderr_base64": "",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "commit": "65dc59010ae2ab2fb74449a3992929700709d760"
     }
   ],
   "source_commit": {
@@ -2320,5 +2329,28 @@
     "source_candidate_clean": true,
     "all_held_pins_match_and_clean": true,
     "diff_check_gate14_passed": true
+  },
+  "planning_commit": {
+    "commit": "65dc59010ae2ab2fb74449a3992929700709d760",
+    "parent": "b32da856757009e2c893873535f4b867551e4f76",
+    "branch": "planning",
+    "worktree": ".worktrees/planning",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/ledger.md"
+    ],
+    "pathset_exact": true,
+    "trailers": {
+      "Co-authored-by: Codex <noreply@openai.com>": 1,
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
+    },
+    "rows_open": 7
+  },
+  "planning_close_receipt": {
+    "preceding_close_commit": "65dc59010ae2ab2fb74449a3992929700709d760",
+    "receipt_path": "project01-mvp/arc06-fit-and-finish/slice13-mcp-watch-settings/artifacts/validation.json",
+    "receipt_commit_hash": "intentionally_not_self_recorded"
   }
 }
