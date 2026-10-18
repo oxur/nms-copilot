@@ -3,8 +3,8 @@ use std::time::{Duration, SystemTime};
 
 use nms_cache::serialize::{deserialize, serialize};
 use nms_cache::{
-    CacheError, extract_cache_data, is_cache_fresh, load_or_rebuild, read_cache, rebuild_model,
-    write_cache,
+    CacheData, CacheError, extract_cache_data, is_cache_fresh, load_or_rebuild, read_cache,
+    rebuild_model, write_cache,
 };
 use nms_graph::GalaxyModel;
 
@@ -131,11 +131,22 @@ fn dual_galaxy_model(reverse: bool, with_player: bool) -> GalaxyModel {
 }
 
 fn assert_dual_galaxy_model(actual: &GalaxyModel, with_player: bool) {
+    assert_dual_galaxy_model_with_selected(actual, with_player, 9);
+    if with_player {
+        assert_eq!(actual.player_position().unwrap().reality_index, 0);
+    }
+}
+
+fn assert_dual_galaxy_model_with_selected(
+    actual: &GalaxyModel,
+    with_player: bool,
+    selected_galaxy: u8,
+) {
     let address0 = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 0);
     let address9 = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9);
     let id0 = nms_core::system::SystemId::from_address(&address0);
     let id9 = nms_core::system::SystemId::from_address(&address9);
-    assert_eq!(actual.active_galaxy, 9);
+    assert_eq!(actual.active_galaxy, selected_galaxy);
     assert_eq!(actual.system_count(), 2);
     assert_eq!(actual.planet_count(), 2);
     assert_eq!(actual.spatial_for(0).unwrap().size(), 1);
@@ -161,9 +172,6 @@ fn assert_dual_galaxy_model(actual: &GalaxyModel, with_player: bool) {
         Some(nms_core::biome::Biome::Toxic)
     );
     assert_eq!(actual.player_state.is_some(), with_player);
-    if with_player {
-        assert_eq!(actual.player_position().unwrap().reality_index, 0);
-    }
 }
 
 fn set_mtime(path: &std::path::Path, time: SystemTime) {
@@ -202,6 +210,30 @@ fn current_cache_with_revision(schema: u32, semantic: u32) -> Vec<u8> {
     bytes
 }
 
+fn mismatched_cache_data(current_reality: u8, address_reality: u8) -> CacheData {
+    let mut data = extract_cache_data(&source_model(), 9999);
+    data.save_version = 9999;
+    let player = data.player_state.as_mut().unwrap();
+    player.current_address = nms_core::address::GalacticAddress::from_packed(
+        player.current_address.packed(),
+        address_reality,
+    );
+    player.current_reality = current_reality;
+    player.units = 7;
+    player.nanites = 8;
+    player.quicksilver = 9;
+    data
+}
+
+/// Build a valid rkyv payload inside the literal current envelope, bypassing
+/// the public writer so reader tests can represent contradictory persisted data.
+fn unchecked_current_envelope(data: &CacheData) -> Vec<u8> {
+    let payload = rkyv::to_bytes::<rkyv::rancor::Error>(data).unwrap();
+    let mut bytes = b"NMSCACHE\x02\0\0\0\x02\0\0\0".to_vec();
+    bytes.extend_from_slice(&payload);
+    bytes
+}
+
 fn assert_rebuilt_and_warm(cache_path: &std::path::Path, save_path: &std::path::Path) {
     let result = load_or_rebuild(cache_path, save_path, false).unwrap();
     assert!(!result.was_cached);
@@ -213,6 +245,227 @@ fn assert_rebuilt_and_warm(cache_path: &std::path::Path, save_path: &std::path::
     assert!(warm.was_cached);
     assert_eq!(warm.save_version, 4720);
     assert_source_semantics(&warm.model);
+}
+
+#[test]
+fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() {
+    let matching = mismatched_cache_data(9, 9);
+    let matching_bytes = serialize(&matching).unwrap();
+    let matching_decoded = deserialize(&matching_bytes).unwrap();
+    let matching_player = matching_decoded.player_state.unwrap();
+    assert_eq!(matching_player.current_reality, 9);
+    assert_eq!(matching_player.current_address.reality_index, 9);
+
+    for (current_reality, address_reality) in [(0, 9), (9, 0)] {
+        let data = mismatched_cache_data(current_reality, address_reality);
+        let bytes = unchecked_current_envelope(&data);
+        assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+
+        let mut aligned = rkyv::util::AlignedVec::<16>::with_capacity(bytes.len() - HEADER_LEN);
+        aligned.extend_from_slice(&bytes[HEADER_LEN..]);
+        let decoded_payload = rkyv::from_bytes::<CacheData, rkyv::rancor::Error>(&aligned).unwrap();
+        let contradictory_player = decoded_payload.player_state.unwrap();
+        assert_eq!(contradictory_player.current_reality, current_reality);
+        assert_eq!(
+            contradictory_player.current_address.reality_index,
+            address_reality
+        );
+
+        let error = deserialize(&bytes).unwrap_err();
+        match error {
+            CacheError::Deserialize(message) => {
+                assert!(message.contains("current_reality"));
+                assert!(message.contains("current_address.reality_index"));
+                assert!(message.contains(&current_reality.to_string()));
+                assert!(message.contains(&address_reality.to_string()));
+            }
+            other => panic!("expected player-state deserialize error, got {other:?}"),
+        }
+
+        let dir = tempfile::tempdir().unwrap();
+        let cache_path = dir.path().join("bad.rkyv");
+        fs::write(&cache_path, &bytes).unwrap();
+        assert!(matches!(
+            read_cache(&cache_path),
+            Err(CacheError::Deserialize(_))
+        ));
+
+        let error = serialize(&data).unwrap_err();
+        match error {
+            CacheError::Serialize(message) => {
+                assert!(message.contains("current_reality"));
+                assert!(message.contains("current_address.reality_index"));
+                assert!(message.contains(&current_reality.to_string()));
+                assert!(message.contains(&address_reality.to_string()));
+            }
+            other => panic!("expected player-state serialize error, got {other:?}"),
+        }
+
+        let existing_path = dir.path().join("existing.rkyv");
+        let sentinel = b"existing cache must remain byte-for-byte";
+        fs::write(&existing_path, sentinel).unwrap();
+        assert!(matches!(
+            write_cache(&data, &existing_path),
+            Err(CacheError::Serialize(_))
+        ));
+        assert_eq!(fs::read(&existing_path).unwrap(), sentinel);
+
+        let missing_parent_path = dir.path().join("missing/nested/cache.rkyv");
+        assert!(matches!(
+            write_cache(&data, &missing_parent_path),
+            Err(CacheError::Serialize(_))
+        ));
+        assert!(!missing_parent_path.parent().unwrap().exists());
+
+        let mut wrong_schema = bytes.clone();
+        wrong_schema[8..12].copy_from_slice(&3_u32.to_le_bytes());
+        assert!(matches!(
+            deserialize(&wrong_schema),
+            Err(CacheError::Incompatible(
+                nms_cache::CacheCompatibilityError::SchemaMismatch {
+                    found: 3,
+                    expected: 2
+                }
+            ))
+        ));
+        let mut wrong_semantic = bytes.clone();
+        wrong_semantic[12..16].copy_from_slice(&1_u32.to_le_bytes());
+        assert!(matches!(
+            deserialize(&wrong_semantic),
+            Err(CacheError::Incompatible(
+                nms_cache::CacheCompatibilityError::SemanticMismatch {
+                    found: 1,
+                    expected: 2
+                }
+            ))
+        ));
+    }
+}
+
+#[test]
+fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
+    for (current_reality, address_reality) in [(0, 9), (9, 0)] {
+        let dir = tempfile::tempdir().unwrap();
+        let (save_path, cache_path) = paths(&dir);
+        fs::write(&save_path, test_save_json()).unwrap();
+        let data = mismatched_cache_data(current_reality, address_reality);
+        let invalid_bytes = unchecked_current_envelope(&data);
+        fs::write(&cache_path, &invalid_bytes).unwrap();
+        set_fresh(&cache_path, &save_path);
+        assert!(is_cache_fresh(&cache_path, &save_path));
+        assert_eq!(data.save_version, 9999);
+        let cached_player = data.player_state.as_ref().unwrap();
+        assert_eq!(
+            (
+                cached_player.units,
+                cached_player.nanites,
+                cached_player.quicksilver
+            ),
+            (7, 8, 9)
+        );
+        assert!(matches!(
+            read_cache(&cache_path),
+            Err(CacheError::Deserialize(_))
+        ));
+
+        let expected = source_model();
+        let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+        assert!(!rebuilt.was_cached);
+        assert_eq!(rebuilt.save_version, 4720);
+        assert_source_semantics_against(&rebuilt.model, &expected);
+        let rewritten_bytes = fs::read(&cache_path).unwrap();
+        assert_eq!(
+            &rewritten_bytes[..HEADER_LEN],
+            b"NMSCACHE\x02\0\0\0\x02\0\0\0"
+        );
+        let rewritten = read_cache(&cache_path).unwrap();
+        assert_eq!(rewritten.save_version, 4720);
+        assert_eq!(rebuild_model(&rewritten).systems, expected.systems);
+        assert_eq!(rebuild_model(&rewritten).planets, expected.planets);
+        assert_eq!(rebuild_model(&rewritten).bases, expected.bases);
+        assert_eq!(
+            rebuild_model(&rewritten).player_state,
+            expected.player_state
+        );
+        assert_eq!(rewritten.active_galaxy, expected.active_galaxy);
+
+        set_fresh(&cache_path, &save_path);
+        let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+        assert!(warm.was_cached);
+        assert_eq!(warm.save_version, 4720);
+        assert_source_semantics_against(&warm.model, &expected);
+    }
+}
+
+#[test]
+fn malformed_source_and_no_cache_preserve_contradictory_cache_bytes() {
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    let bytes = unchecked_current_envelope(&mismatched_cache_data(0, 9));
+    fs::write(&save_path, "not a save").unwrap();
+    fs::write(&cache_path, &bytes).unwrap();
+    set_fresh(&cache_path, &save_path);
+
+    assert!(load_or_rebuild(&cache_path, &save_path, false).is_err());
+    assert_eq!(fs::read(&cache_path).unwrap(), bytes);
+    assert!(load_or_rebuild(&cache_path, &save_path, true).is_err());
+    assert_eq!(fs::read(&cache_path).unwrap(), bytes);
+
+    fs::write(&save_path, test_save_json()).unwrap();
+    set_fresh(&cache_path, &save_path);
+    let no_cache = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    assert!(!no_cache.was_cached);
+    assert_eq!(no_cache.save_version, 4720);
+    assert_source_semantics(&no_cache.model);
+    assert_eq!(fs::read(&cache_path).unwrap(), bytes);
+}
+
+#[test]
+fn valid_independent_player_and_selected_galaxies_roundtrip_with_or_without_player() {
+    for with_player in [true, false] {
+        let mut model = dual_galaxy_model(false, false);
+        model.set_active_galaxy(7);
+        if with_player {
+            let address = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9);
+            let previous = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 4);
+            let freighter = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 6);
+            model.player_state = Some(nms_core::player::PlayerState::new(
+                address,
+                9,
+                Some(previous),
+                Some(freighter),
+                7,
+                8,
+                9,
+            ));
+        }
+
+        let data = extract_cache_data(&model, 4720);
+        assert_eq!(data.active_galaxy, 7);
+        let bytes = serialize(&data).unwrap();
+        let decoded = deserialize(&bytes).unwrap();
+        let rebuilt = rebuild_model(&decoded);
+        assert_dual_galaxy_model_with_selected(&rebuilt, with_player, 7);
+        if with_player {
+            let player = rebuilt.player_state.as_ref().unwrap();
+            assert_eq!(player.current_reality, 9);
+            assert_eq!(player.current_address.reality_index, 9);
+            assert_eq!(player.previous_address.unwrap().reality_index, 4);
+            assert_eq!(player.freighter_address.unwrap().reality_index, 6);
+            assert_eq!(
+                (player.units, player.nanites, player.quicksilver),
+                (7, 8, 9)
+            );
+        }
+
+        let dir = tempfile::tempdir().unwrap();
+        let cache_path = dir.path().join("valid.rkyv");
+        write_cache(&data, &cache_path).unwrap();
+        let file_data = read_cache(&cache_path).unwrap();
+        let file_model = rebuild_model(&file_data);
+        assert_dual_galaxy_model_with_selected(&file_model, with_player, 7);
+        assert_eq!(file_data.player_state, decoded.player_state);
+    }
 }
 
 #[test]

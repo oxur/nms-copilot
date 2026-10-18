@@ -26,6 +26,12 @@
 //! envelope or model semantics. With caching enabled, [`load_or_rebuild`]
 //! checks a fresh cache and, when reading it fails, reparses the source and
 //! writes a current envelope.
+//! Persisted player state is accepted only when its duplicated physical reality
+//! fields agree: `current_reality` must equal
+//! `current_address.reality_index`. The independently selected galaxy, previous
+//! address, and freighter address are not constrained by this check. The cache
+//! reader rejects contradictory state and lets the existing loader rebuild from
+//! the source save; it never guesses which cached field should be corrected.
 //! Direct [`serialize::deserialize`] and [`serialize::read_cache`] calls return
 //! errors for legacy or incompatible caches and do not rebuild them.
 //!
