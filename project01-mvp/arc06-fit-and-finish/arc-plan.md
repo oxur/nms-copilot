@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.46, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.47, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -370,3 +370,12 @@ Seven WS rows open, R06-S13 open:31 arc rows/12 done/19 open; all25 project rows
 Seven WS rows accepted at16c0787 (direct parenta101bd44), CC close65dc590/receiptsb3556a7/753023a. Fresh CDC format/lint/cache38/route4/native4/focused744/no-default220/workspace940/build/docs/strict-cache/diffs pass; restricted native failure and unchanged original-TMPDIR host retry retained. Existing settings honored in both main MCP calls; default public wrappers preserved, actual enabled137/disabled child tests and docs pass. All23 CC primary attempts/46 channels and protected26/frozen3 scope/history/commit fences verified. No waiver or new structural design finding.
 
 R06-S13 done:31 arc rows/13 done/18 open, project25 open. Detail planned14/CDC next; all startup/live-cache C04/old-current/warm/write-through both modes, unknown placeholders/promotion, duplicate producer ownership/settings composition and broader historical questions remain required before raw-field repair and original parent acceptance. Main/dependencies/Project02 held; candidate isolated/unintegrated/uninstalled, later authorized integration/final-baseline composition/release stays CDC/Operator-owned. Original export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator gates preserved. Version1.46 records child closure and bubble-up only.
+
+
+## Slice14 native headless cache startup / complete remaining ownership — 2026-10-17
+
+After Slice13 accepted16c0787/closure320de77, issue arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt.md. Existing native tests always pass --no-cache; component/static loader checks do not prove real cached startup. Detail ready native headless startup part of existing C04 owner: eight literal cold/warm/stale/schema1/semantic1/corrupt/bypass-existing/bypass-absent cases per real stdio/HTTP transport. Opposed source0/cache9 identities, exact full state/file effects, real cache freshness and synthetic/literal field authority make the check discriminating. Existing runtime already defines the expected behavior; no new inquiry, production policy or source repair delegated. Two test/doc source paths only; runtime/config/API/dependencies/fixtures frozen. Candidate .worktrees/headless-cache-startup/codex/headless-cache-startup starts at accepted16c0787, isolated/wired test suite and docs, not installed/integrated. CC implements, Sofie/CDC independently reviews, Expedited Mode.
+
+Was: broad planned14 full startup/live-cache C04 old/current/warm/write-through both modes, unknown placeholders/promotion, duplicate producers/settings and historical-state questions.14 now details native headless INITIAL startup composition; ALL remainder explicitly required planned15/CDC: normal-mode startup/cache; full both-mode live-cache C04/write-through; unknown-system placeholders/promotion; duplicate producer ownership/settings; broader historical-state questions and final-baseline semantic transition composition once raw-field repair lands. No full C04/R06-R02/R03/M7.4, normal REPL PTY, live-cache or single-producer acceptance inferred. No capability removed or moved out of Project01; remainder remains required before raw repair/original parent acceptance as applicable. Unresolved policy/inquiry still requires CDC/Operator authority and prior agreement. Original export/import/format/docs/distribution/coverage/parent independent/Operator gates unchanged.
+
+Seven HC rows/R06-S14 open:32 arc rows/13 done/19 open, project25 open. Main6d183bde/dependencies/accepted13/Project02 held, later authorized integration/final-baseline drift/composition/release stays CDC/Operator-owned. Version1.47 records Slice13 closure and routine sizing/source-grounded native test delivery plus complete next-owner mapping, with no original scope/criterion/architecture reduction or waiver.

@@ -107,3 +107,12 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 2026-10-17:31 arc rows/12 done/19 open; seven WS child rows open, project25 open.
 
 2026-10-17 Slice13 closed:31 arc rows/13 done/18 open; all original composition gates remain.
+
+
+## Slice14 — native headless cache startup increment
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S14 | Initial headless startup cache composition independently accepted through real transports | Seven HC rows, eight literal cases per stdio/HTTP, opposed source/cache identity and exact persisted effects, independent CDC review | correctness-grade | Existing C04/startup cache composition owner after Slice13 | open | Slice14 slice-plan.md / cc-prompt.md / ledger.md | Full remaining normal/live/write-through/unknown/duplicate-producer/history/parent composition required planned15/CDC |
+
+2026-10-17:32 arc rows/13 done/19 open; seven HC rows open; project25 open.
