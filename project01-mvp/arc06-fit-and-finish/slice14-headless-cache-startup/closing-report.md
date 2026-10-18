@@ -40,3 +40,32 @@ HC-01 through HC-07 remain **open**. This is CC proposed-done evidence; it is no
 ## Required remaining ownership
 
 This slice proves native headless initial cache startup composition only. Planned15/CDC still owns normal REPL startup composition and complete live-cache write-through behavior in both modes, unknown-system resolution/promotion, duplicate normal-mode producer/settings composition, broader historical-state questions, and final-baseline semantic transitions when raw-field repair lands. The original export/import/format/docs/distribution/coverage and R06-R02/R03/M7.4/C04/parent independent/Operator/integration/release gates remain required. No full C04 or parent acceptance is claimed.
+
+
+## Iteration01 corrective pass — proposed-done
+
+Assignment `arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md`, issued by `e5ff6c1094316455f2be38eb7de36024fe624075` and received at planning HEAD `3d632af40f25483171a115794c9bab213365d970`. Initial prompt and prior close remain preserved. Source commit `130034e8a6f2e77605058620fea2fb0cae43c608` directly parents `88b184f999d4fde13e59b736dbd3a32896afd425` and changes only `crates/nms-copilot/tests/mcp_live_integration.rs`; required trailers occur once each. The candidate remains clean, isolated and unintegrated. Planning packet commit is pending until committed and is limited to the four return paths.
+
+### Correction evidence
+
+Prelaunch checks now explicitly assert destination absence for both missing cases and absent parent for `bypass_missing`. Every HTTP launch attempt prepares a new source/cache/home and carries successful fixture/child/client ownership together; failed bind attempts are dropped before the next files are made. The focused regression holds a real loopback listener on the first `stale_current` address. It observes the actual bind diagnostic after the first child rewrites the stale source cache; the checked cache and newly fresh mtime pass before that child and fixture are dropped. The second launch starts from newly reconstructed original stale input in a distinct TempDir and succeeds through full actual tool/resource and cleanup checks.
+
+The final native gate passed seven tests. It contains 16 nominal successful matrix cases, plus one controlled successful stale retry witness and one expected failed-bind stage. The controlled failure is not a nominal case and does not prescribe a child exit code. The actual `Address already in use` diagnostic, all per-case tool/resource observations and cache effects, and complete command channels are in `artifacts/validation.json` under `iteration01`.
+
+### Gate and row disposition
+
+Gates 1–13 passed on final attempts. Sandbox restrictions on gates 5–8 and unchanged authorized-host retries are retained, using original TMPDIR. Gate14 planning `git diff --check` remains pending. HC-01/02/03/06 remain independently accepted at `88b184f`; HC-04/05/07 remain open with current CC evidence proposed for CDC review. This report is not independent acceptance.
+
+### Iteration row walk
+
+- **HC-01 done (prior CDC acceptance retained):** Actual headless stdio/HTTP composition and nominal matrix rerun.
+- **HC-02 done (prior CDC acceptance retained):** Cold and opposed fresh sentinel/source behavior rerun in both transports.
+- **HC-03 done (prior CDC acceptance retained):** Stale/schema/semantic/corrupt recovery cases rerun; controlled retry adds the stale-input reset witness.
+- **HC-04 open:** Missing cache and bypass-parent prelaunch assertions now pass; bypass effects rerun. Proposed for CDC disposition.
+- **HC-05 open:** Prior live-watch/native behavior and all gates rerun; fresh HTTP fixture ownership and controlled collision regression pass. Proposed for CDC disposition.
+- **HC-06 done (prior CDC acceptance retained):** README is unchanged; prior documentation acceptance is preserved.
+- **HC-07 open:** Fresh intake, exact source commit, gate/case channels and held-fence evidence appended; planning close receipt remains pending. Proposed for CDC review.
+
+Artifact inventory: existing author baseline and CDC receipt are unchanged; `artifacts/execution.md` and `artifacts/validation.json` are append-only, with all new run data under `iteration01`; this closing report and only HC-04/05/07 Evidence/Notes in `ledger.md` are updated. No additional artifacts were created.
+
+Candidate remains isolated, unintegrated and uninstalled. Planned15/CDC still owns normal-mode startup, complete both-mode live-cache write-through/C04 composition, unknown placeholders/promotion, duplicate producer/settings composition, broader history and future semantic transitions after raw-field repair. Original export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator/integration/release gates remain. Slice14/Arc06/Project01 stay open.
