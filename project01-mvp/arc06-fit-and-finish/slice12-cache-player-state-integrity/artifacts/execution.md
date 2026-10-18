@@ -171,3 +171,8 @@ The arrays now contain62 distinct primary invocations and124 raw stdout/stderr o
 ## Final count after last planning diff check
 
 After the final planning diff check (attempt21), the arrays contain63 distinct primary invocations and126 raw channels:42 preserved historical attempts plus21 Iteration01 attempts. Every raw channel validates. This supersedes the prior62/124 estimate; the actual count is calculated from the arrays. The final planning diff check passed in `.worktrees/planning`. No validation command remains outstanding.
+
+
+## Iteration01 planning commit receipt
+
+- Planning close-set commit `b857ff9ff8e46e88748f8b7fe84bda9b06117e7d` directly parents intake `c5aa19c5f60787e05ec0937f1b25ec3adbed41a0`. It contains exactly the four allowed planning paths: execution record, validation JSON, closing report, and ledger Evidence/Notes. Both required co-author trailers occur once. Validation records the receipt; the source candidate remains `a101bd44b277f06c75ed7260b470b31cd5510130`, isolated and clean.

@@ -10227,5 +10227,21 @@
       "CI-05": "done",
       "other_rows": "open"
     }
+  },
+  "iteration01_planning_close_receipt": {
+    "role": "iteration01-planning-close-set-receipt",
+    "commit": "b857ff9ff8e46e88748f8b7fe84bda9b06117e7d",
+    "parent": "c5aa19c5f60787e05ec0937f1b25ec3adbed41a0",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md"
+    ],
+    "trailers": {
+      "Co-authored-by: Codex <noreply@openai.com>": 1,
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
+    },
+    "clean_after_commit": true
   }
 }
