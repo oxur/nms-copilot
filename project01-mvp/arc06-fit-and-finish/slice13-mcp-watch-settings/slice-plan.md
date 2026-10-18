@@ -1,6 +1,6 @@
 # Slice13 — honor MCP watcher settings
 
-Version:1.0. Created2026-10-17. Status:open, seven WS rows. Two contributors: CC implementation and Sofie/CDC independent review; Expedited Mode. Supporting artifacts: artifacts/. Current assignment arc06-fit-and-finish/slice13-mcp-watch-settings/cc-prompt.md, initial issuance2026-10-17 (actual commit receipt follows). No previous assignment or executed refinement; five-refinement budget.
+Version:1.1. Created2026-10-17. Status:closed, all seven WS rows CDC-accepted at16c0787. Two contributors: CC implementation and Sofie/CDC independent review; Expedited Mode. Supporting artifacts: artifacts/. Current assignment arc06-fit-and-finish/slice13-mcp-watch-settings/cc-prompt.md, initial issuance2026-10-17 (actual commit receipt follows). No previous assignment or executed refinement; five-refinement budget.
 
 ## Useful increment and dependency
 
@@ -26,3 +26,8 @@ Read PM wayfinder/scales/layout/top-down/closing/change and complete prompt-auth
 
 
 Actual initial issuance `fad379d9692964db4ef0a9e922d4d7752fedd9f5`, direct parentae9bd82. Exact ten named planning paths, both required trailers once and prompt SHA256455a3e9c2586fa6826b66a8cde8615da2af3df3c85773d1c3669d483732bf454 verified; clean source/main/dependency/planning fences. Raw issuance receipt in artifacts/author-baseline.json. This follow-up records metadata only, issued prompt immutable and seven rows open.
+
+
+## Independent acceptance — 2026-10-17
+
+Version1.1: all seven rows accepted at16c0787; cc-prompt.md returned/reviewed/accepted and preserved, no active CC assignment. Fresh CDC38/4/4/744/220/940 and all14 gates pass, restricted native failure plus unchanged host retry retained. CC23 primary attempts/46 channels, exact source/planning parents/pathsets/trailers, frozen/protected/history/fences checked. Full walk/inventory/bubble-up in cdc-verification.md. R06-S13 done; arc31/13 done/18 open, project25 open. Every planned14 and original parent/integration/release owner remains.

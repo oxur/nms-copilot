@@ -102,6 +102,8 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S13 | Existing watcher enabled/debounce settings applied in actual MCP startup modes with default API compatibility | Seven WS rows, actual main configured wiring, typed forwarding, disabled/enabled native children and independent CDC review | correctness-grade | Existing configuration/composition owner after Slice12 | open | Slice13 slice-plan.md / cc-prompt.md / ledger.md | All full startup/live-cache/unknown-system/duplicate-producer/broader history remainder required planned14/CDC; no parent acceptance |
+| R06-S13 | Existing watcher enabled/debounce settings applied in actual MCP startup modes with default API compatibility | Seven WS rows, actual main configured wiring, typed forwarding, disabled/enabled native children and independent CDC review | correctness-grade | Existing configuration/composition owner after Slice12 | done | Slice13 cdc-verification.md / artifacts/cdc-review-receipts.json — reproduced at16c0787 | All full startup/live-cache/unknown-system/duplicate-producer/broader history remainder required planned14/CDC; no parent acceptance  Superseding2026-10-17 seven child rows independently accepted; no parent composition acceptance. |
 
 2026-10-17:31 arc rows/12 done/19 open; seven WS child rows open, project25 open.
+
+2026-10-17 Slice13 closed:31 arc rows/13 done/18 open; all original composition gates remain.

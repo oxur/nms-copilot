@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.45, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.46, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -363,3 +363,10 @@ Following Slice12 acceptancea101bd44/closureae9bd82, open arc06-fit-and-finish/s
 Was: broad planned13 combined full startup/live-cache C04 old/current/warm/write-through both modes, unknown placeholders/promotion, settings/duplicate producers and broader historical-state questions. Routine source inspection details13 settings correctness; ALL remainder is explicitly required planned14/CDC: full startup/live-cache C04 old/current/warm/write-through both modes; unknown placeholders/promotion; duplicate producer ownership and settings composition; broader historical-state questions beyond contradictory cache physical fields. Normal mode still has two producers in13, both obey settings. No single-producer, live cache-write-through, full REPL PTY or final lifecycle composition claim.14 is not yet issued; unanswered policy/inquiry remains CDC/Operator-owned with prior agreement where required. Original raw-field repair/export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator gates retained before parent acceptance. This sizing refinement removes no capability or criterion.
 
 Seven WS rows open, R06-S13 open:31 arc rows/12 done/19 open; all25 project rows open. Main6d183bde, accepted12/11/dependencies and Project02 held; CDC/Operator retain later authorized integration/final-baseline drift/composition/release. Version1.45 records Slice12 closure/source-grounded detailing of existing settings work and complete next-owner mapping, without scope reduction or acceptance amendment.
+
+
+## Slice13 independent closure — 2026-10-17
+
+Seven WS rows accepted at16c0787 (direct parenta101bd44), CC close65dc590/receiptsb3556a7/753023a. Fresh CDC format/lint/cache38/route4/native4/focused744/no-default220/workspace940/build/docs/strict-cache/diffs pass; restricted native failure and unchanged original-TMPDIR host retry retained. Existing settings honored in both main MCP calls; default public wrappers preserved, actual enabled137/disabled child tests and docs pass. All23 CC primary attempts/46 channels and protected26/frozen3 scope/history/commit fences verified. No waiver or new structural design finding.
+
+R06-S13 done:31 arc rows/13 done/18 open, project25 open. Detail planned14/CDC next; all startup/live-cache C04/old-current/warm/write-through both modes, unknown placeholders/promotion, duplicate producer ownership/settings composition and broader historical questions remain required before raw-field repair and original parent acceptance. Main/dependencies/Project02 held; candidate isolated/unintegrated/uninstalled, later authorized integration/final-baseline composition/release stays CDC/Operator-owned. Original export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator gates preserved. Version1.46 records child closure and bubble-up only.
