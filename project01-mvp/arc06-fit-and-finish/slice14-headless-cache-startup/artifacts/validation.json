@@ -5206,6 +5206,65 @@
               "base64": ""
             },
             "harness_count_lines": []
+          },
+          {
+            "attempt": 2,
+            "prelaunch_utc": "2026-10-18T04:18:57.123600+00:00",
+            "argv": [
+              "git",
+              "diff",
+              "--check"
+            ],
+            "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+            "inherited_environment": {
+              "RUSTDOCFLAGS": null,
+              "CARGO_TARGET_DIR": null,
+              "CARGO_NET_OFFLINE": null,
+              "RUSTUP_TOOLCHAIN": null,
+              "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+              "RUSTFLAGS": null,
+              "CARGO_ENCODED_RUSTFLAGS": null,
+              "CARGO_HOME": null
+            },
+            "environment_overrides": {},
+            "effective_flags": {
+              "RUSTFLAGS": null,
+              "RUSTDOCFLAGS": null,
+              "CARGO_ENCODED_RUSTFLAGS": null
+            },
+            "cargo_config": {
+              "workspace": {
+                "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup/.cargo/config.toml",
+                "present": false,
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "content_base64": ""
+              },
+              "global": {
+                "path": "/Users/oubiwann/.cargo/config.toml",
+                "present": false,
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "content_base64": "",
+                "net_offline": null
+              }
+            },
+            "execution_context": "sandbox",
+            "status": "passed",
+            "completed_utc": "2026-10-18T04:18:57.162378+00:00",
+            "elapsed_seconds": 0.032461542170494795,
+            "exit_code": 0,
+            "stdout": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "base64": ""
+            },
+            "stderr": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "base64": ""
+            },
+            "harness_count_lines": []
           }
         ]
       }
@@ -5856,11 +5915,11 @@
     "commits": [],
     "gate_rollup": {
       "gates": 14,
-      "attempts_so_far": 17,
-      "raw_channels_so_far": 34,
+      "attempts_so_far": 19,
+      "raw_channels_so_far": 38,
       "raw_integrity_errors": [],
       "gate1_to_13_final_passed": true,
-      "gate14_pending": true,
+      "gate14_pending": false,
       "native_test_final_harness": [
         "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.59s"
       ],
@@ -5870,7 +5929,23 @@
       "nominal_successful_cases": 16,
       "extra_controlled_successful_stale_retry": 1,
       "controlled_expected_bind_failure_stages": 1,
-      "all_primary_gates_passed": false
+      "all_primary_gates_passed": true,
+      "final_gate_statuses": [
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed"
+      ]
     },
     "rows": {
       "HC-01": "done",
@@ -5882,14 +5957,17 @@
       "HC-07": "open"
     },
     "planning_packet_commit": {
-      "commit": "pending until this report packet is committed",
+      "commit": "e373cd2d29db5692139a07613b8a76f2f29a96ce",
+      "parent": "3d632af40f25483171a115794c9bab213365d970",
       "paths": [
         "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/execution.md",
         "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/validation.json",
         "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/closing-report.md",
         "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/ledger.md"
       ],
-      "trailers_once": null
+      "trailers_once": true,
+      "clean_before_receipt": true,
+      "receipt_policy": "This metadata follow-up records the preceding four-path planning packet commit and does not self-reference its own future hash."
     }
   }
 }

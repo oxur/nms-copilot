@@ -44,7 +44,7 @@ This slice proves native headless initial cache startup composition only. Planne
 
 ## Iteration01 corrective pass — proposed-done
 
-Assignment `arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md`, issued by `e5ff6c1094316455f2be38eb7de36024fe624075` and received at planning HEAD `3d632af40f25483171a115794c9bab213365d970`. Initial prompt and prior close remain preserved. Source commit `130034e8a6f2e77605058620fea2fb0cae43c608` directly parents `88b184f999d4fde13e59b736dbd3a32896afd425` and changes only `crates/nms-copilot/tests/mcp_live_integration.rs`; required trailers occur once each. The candidate remains clean, isolated and unintegrated. Planning packet commit is pending until committed and is limited to the four return paths.
+Assignment `arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md`, issued by `e5ff6c1094316455f2be38eb7de36024fe624075` and received at planning HEAD `3d632af40f25483171a115794c9bab213365d970`. Initial prompt and prior close remain preserved. Source commit `130034e8a6f2e77605058620fea2fb0cae43c608` directly parents `88b184f999d4fde13e59b736dbd3a32896afd425` and changes only `crates/nms-copilot/tests/mcp_live_integration.rs`; required trailers occur once each. The candidate remains clean, isolated and unintegrated. Planning packet commit `e373cd2` directly follows `3d632af` and contains exactly the four allowed return paths with both trailers once.
 
 ### Correction evidence
 
@@ -54,7 +54,7 @@ The final native gate passed seven tests. It contains 16 nominal successful matr
 
 ### Gate and row disposition
 
-Gates 1–13 passed on final attempts. Sandbox restrictions on gates 5–8 and unchanged authorized-host retries are retained, using original TMPDIR. Gate14 planning `git diff --check` remains pending. HC-01/02/03/06 remain independently accepted at `88b184f`; HC-04/05/07 remain open with current CC evidence proposed for CDC review. This report is not independent acceptance.
+Gates 1–13 passed on final attempts. Sandbox restrictions on gates 5–8 and unchanged authorized-host retries are retained, using original TMPDIR. Gate14 planning `git diff --check` passed from the planning worktree before close commit. HC-01/02/03/06 remain independently accepted at `88b184f`; HC-04/05/07 remain open with current CC evidence proposed for CDC review. This report is not independent acceptance.
 
 ### Iteration row walk
 
