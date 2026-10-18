@@ -39,6 +39,21 @@ const CACHE_SCHEMA_REVISION: u32 = 2;
 const CACHE_SEMANTIC_REVISION: u32 = 2;
 const CACHE_HEADER_LEN: usize = 16;
 
+/// Validate duplicated physical reality fields without changing cache data.
+fn validate_player_state(data: &CacheData) -> Result<(), String> {
+    if let Some(player) = &data.player_state {
+        let address_reality = player.current_address.reality_index;
+        if player.current_reality != address_reality {
+            return Err(format!(
+                "player state reality mismatch: current_reality={} but current_address.reality_index={address_reality}",
+                player.current_reality
+            ));
+        }
+    }
+
+    Ok(())
+}
+
 /// Extract cache data from a GalaxyModel.
 pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
     let systems: Vec<CachedSystem> = model
@@ -78,8 +93,10 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
 ///
 /// # Errors
 ///
-/// Returns [`CacheError::Serialize`] if rkyv cannot encode the cache data.
+/// Returns [`CacheError::Serialize`] if the duplicated player reality fields
+/// disagree or rkyv cannot encode the cache data.
 pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
+    validate_player_state(data).map_err(CacheError::Serialize)?;
     let payload =
         rkyv::to_bytes::<RkyvError>(data).map_err(|e| CacheError::Serialize(e.to_string()))?;
     let mut bytes = Vec::with_capacity(CACHE_HEADER_LEN + payload.len());
@@ -103,7 +120,7 @@ pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
 /// Returns [`CacheError::Incompatible`] for a truncated header, invalid magic,
 /// unsupported schema revision, or unsupported semantic revision. Returns
 /// [`CacheError::Deserialize`] when the current envelope contains an invalid
-/// rkyv payload.
+/// rkyv payload or contradictory player reality fields.
 pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     if bytes.len() < CACHE_HEADER_LEN {
         return Err(CacheError::Incompatible(
@@ -143,8 +160,10 @@ pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     // alignment requirements. Copy into aligned storage before checked decode.
     let mut aligned = AlignedVec::<16>::with_capacity(bytes.len() - CACHE_HEADER_LEN);
     aligned.extend_from_slice(&bytes[CACHE_HEADER_LEN..]);
-    rkyv::from_bytes::<CacheData, RkyvError>(&aligned)
-        .map_err(|e| CacheError::Deserialize(e.to_string()))
+    let data = rkyv::from_bytes::<CacheData, RkyvError>(&aligned)
+        .map_err(|e| CacheError::Deserialize(e.to_string()))?;
+    validate_player_state(&data).map_err(CacheError::Deserialize)?;
+    Ok(data)
 }
 
 /// Write cache data to a file.

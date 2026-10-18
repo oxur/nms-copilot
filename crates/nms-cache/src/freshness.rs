@@ -43,7 +43,11 @@ pub struct LoadResult {
 ///
 /// Freshness is determined only by file modification times. A fresh cache is
 /// still checked for a supported envelope and model semantic revision; if its
-/// read or decode fails, startup warns and rebuilds from the save file.
+/// read, decode, or duplicated player reality consistency check fails, startup
+/// warns and rebuilds from the save file. This check requires
+/// `player.current_reality == player.current_address.reality_index`; it does not
+/// compare the independently selected galaxy or previous/freighter addresses.
+/// If parsing the source save fails, no replacement cache is written.
 pub fn load_or_rebuild(
     cache_path: &Path,
     save_path: &Path,
