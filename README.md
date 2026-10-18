@@ -288,7 +288,7 @@ No encryption on modern saves (format 2002+, post-Frontiers). The only crypto is
 
 ### MCP Server
 
-The REPL includes a built-in MCP server for AI co-exploration. It starts automatically on `http://127.0.0.1:5099` and shares the same live model as the REPL. The server watches the selected save file and updates its in-memory location as the player moves.
+The REPL includes a built-in MCP server for AI co-exploration. It starts automatically on `http://127.0.0.1:5099` and shares the same in-memory model as the REPL. When watching is enabled, the server follows changes to the selected save file.
 
 For headless operation (e.g., Claude Desktop integration):
 
@@ -297,10 +297,29 @@ nms-copilot --headless --save /path/to/save.hg                         # stdio t
 nms-copilot --headless --http 127.0.0.1:5099 --save /path/to/save.hg  # HTTP transport
 ```
 
+For stdio transport, stdout carries MCP protocol messages and diagnostics go to stderr. HTTP transport serves MCP over the configured address.
 
 The MCP server exposes all query capabilities as tools — your AI copilot can search planets, plan routes, convert coordinates, and track your position as you play. The save file is read only; NMS Copilot does not edit it.
 
-For the current location, call the `where_am_i` tool or read `nms://player/location`. A client can subscribe to that resource with `resources/subscribe`; when the watched save changes, the server sends `notifications/resources/updated` for the location URI. Read the resource again to fetch the current location. This describes movement observed after the watcher starts; full startup/cache composition, unknown-system resolution, and watch configuration policy are outside this behavior description.
+For the current location, call the `where_am_i` tool or read `nms://player/location`. A client can subscribe to that resource with `resources/subscribe`; when an enabled watcher ingests a save change, the server sends `notifications/resources/updated` for the location URI. Read the resource again to fetch the current location.
+
+Save watching is controlled by `~/.nms-copilot/config.toml` and takes effect at startup:
+
+```toml
+[watch]
+enabled = true       # default: true
+debounce_ms = 500    # default: 500
+```
+
+Set `enabled = false` to disable later save-file ingestion:
+
+```toml
+[watch]
+enabled = false
+debounce_ms = 500
+```
+
+The setting applies to headless stdio and HTTP servers and to both normal-mode file watchers. The selected save still loads at startup and MCP serves that in-memory model when watching is disabled. Full startup-cache/live-update behavior, unknown-system resolution, and composition when both normal-mode producers are active remain planned follow-up work.
 
 ---
 
