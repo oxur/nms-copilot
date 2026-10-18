@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.44, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.45, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -354,3 +354,12 @@ Current assignment arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-
 All seven CI rows independently accepted at a101bd44 (direct parent88c5980), current assignment cc-prompt-iteration01.md returned/reviewed/closed, immutable initial and iteration prompts preserved. Fresh CDC38 cache/4 route/format/lint/strict-cache/diff proof resolves full original-state, exact temp-effect and source9/0/view7 oracles; direct rebuild boundary docs correct. Unchanged prior88c5980 broader independent proof retained with explicit applicability; current CC14 gates and63 attempts/126 raw channels audited. No waiver or runtime correction. R06-S12 done;30 arc rows/12 done/18 open, all25 project rows open.
 
 Final child correction reveals no structural/scope/architecture/criterion/sequence amendment. Detail planned13/CDC next: full startup/live-cache C04 old/current/warm/write-through in both modes, unknown placeholders/promotion, watcher enabled/debounce and duplicate producers, broader historical questions beyond this exact duplicate-field contradiction. Every original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator gate retained. Main6d183bde/dependencies/Project02 held, candidate isolated/unintegrated/uninstalled; later authorized integration/final-baseline composition/release remains CDC/Operator-owned. Version1.44 records child closure and bubble-up only.
+
+
+## Slice13 existing watcher settings / explicit composition remainder — 2026-10-17
+
+Following Slice12 acceptancea101bd44/closureae9bd82, open arc06-fit-and-finish/slice13-mcp-watch-settings/cc-prompt.md. Source main honors existing watch.enabled/debounce for its REPL producer, while MCP startup constructors independently use default500ms whenever a path exists. Ready useful correction: resolve existing settings once, wire both main MCP modes and normal producer, preserve public default wrappers via additive configured entrypoints; actual disabled stdio/HTTP and enabled nondefault native checks, lifecycle preservation and user/API documentation together. No new config schema/architecture/notify/cache/model policy. Actual dependency is accepteda101bd44; candidate .worktrees/mcp-watch-settings/codex/mcp-watch-settings is isolated, not integrated/installed. CC implements; Sofie/CDC independently reviews, Expedited Mode.
+
+Was: broad planned13 combined full startup/live-cache C04 old/current/warm/write-through both modes, unknown placeholders/promotion, settings/duplicate producers and broader historical-state questions. Routine source inspection details13 settings correctness; ALL remainder is explicitly required planned14/CDC: full startup/live-cache C04 old/current/warm/write-through both modes; unknown placeholders/promotion; duplicate producer ownership and settings composition; broader historical-state questions beyond contradictory cache physical fields. Normal mode still has two producers in13, both obey settings. No single-producer, live cache-write-through, full REPL PTY or final lifecycle composition claim.14 is not yet issued; unanswered policy/inquiry remains CDC/Operator-owned with prior agreement where required. Original raw-field repair/export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator gates retained before parent acceptance. This sizing refinement removes no capability or criterion.
+
+Seven WS rows open, R06-S13 open:31 arc rows/12 done/19 open; all25 project rows open. Main6d183bde, accepted12/11/dependencies and Project02 held; CDC/Operator retain later authorized integration/final-baseline drift/composition/release. Version1.45 records Slice12 closure/source-grounded detailing of existing settings work and complete next-owner mapping, without scope reduction or acceptance amendment.

@@ -96,3 +96,12 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 | R06-S12 | Cached physical player-state integrity and authoritative recovery independently accepted | Slice12 seven CI rows, byte/file codec rejection, genuine fresh-cache fallback/warm and preservation controls, CDC review | correctness-grade | Existing historical-state/cache composition owner after Slice11 | done | Slice12 cdc-verification.md / artifacts/cdc-review-receipts.json — all seven rows accepted at a101bd44 | Remaining full startup/live C04/unknown/watch configuration/duplicate-producer composition explicitly planned13 before parent acceptance. ; 2026-10-17 two child rows accepted/five open, iteration01 test/doc/evidence correction; no parent acceptance.  Superseding2026-10-17: Iteration01 independently accepted, no parent composition acceptance. |
 
 2026-10-17 Slice12 final child closure:30 rows/12 done/18 open; original parent and planned13 obligations remain.
+
+
+## Slice13 — existing watcher settings increment
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S13 | Existing watcher enabled/debounce settings applied in actual MCP startup modes with default API compatibility | Seven WS rows, actual main configured wiring, typed forwarding, disabled/enabled native children and independent CDC review | correctness-grade | Existing configuration/composition owner after Slice12 | open | Slice13 slice-plan.md / cc-prompt.md / ledger.md | All full startup/live-cache/unknown-system/duplicate-producer/broader history remainder required planned14/CDC; no parent acceptance |
+
+2026-10-17:31 arc rows/12 done/19 open; seven WS child rows open, project25 open.
