@@ -3326,6 +3326,47 @@
         "ignored": 0,
         "filtered": 0
       }
+    },
+    {
+      "label": "final-commit-history-diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "command_overrides": {},
+      "environment_snapshot_before_launch": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "cargo_offline_config": [],
+      "state": "complete",
+      "index": 42,
+      "started_utc": "2026-10-18T00:17:48.887257+00:00",
+      "exit_code": 0,
+      "seconds": 0.028316,
+      "finished_utc": "2026-10-18T00:17:48.920951+00:00",
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_harnesses": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
     }
   ],
   "gate_results": [
@@ -3664,6 +3705,35 @@
         "Co-authored-by: Codex <noreply@openai.com>": 1,
         "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
       }
+    },
+    {
+      "role": "planning-close-set-receipt-followup",
+      "commit": "3d7e04cd5b8b7b53a352816553888a1cf654080d",
+      "parent": "cb57370e12d006e8af45859cfca2365e3b9822e4",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md"
+      ],
+      "trailers": {
+        "Co-authored-by: Codex <noreply@openai.com>": 1,
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
+      }
+    },
+    {
+      "role": "planning-attempt-inventory-correction",
+      "commit": "a610828ea6ba90b5c565f78602c535dfd4855f15",
+      "parent": "3d7e04cd5b8b7b53a352816553888a1cf654080d",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md"
+      ],
+      "trailers": {
+        "Co-authored-by: Codex <noreply@openai.com>": 1,
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
+      },
+      "note": "Subset of four-path planning allowlist; corrects complete attempt count from36 gate attempts to40 total command attempts."
     }
   ],
   "scope": {
