@@ -93,4 +93,10 @@ The source diff contains exactly the four authorized paths. All21 protected path
 | CI-06 | `# Errors`, crate and loader docs updated; error order, 2/2 revisions, APIs/types/data shape, protected hashes and sealed fixture hashes verified | open |
 | CI-07 | Preflight/readback, complete raw attempt inventory, exact source allowlist, gates, fences and row walk retained | open |
 
-No row is accepted or closed by CC. The candidate remains unintegrated and uninstalled. The closing report and commit receipts follow after final path/trailer checks.
+No row is accepted or closed by CC. The candidate remains unintegrated and uninstalled.
+
+## Commit receipt
+
+- Source commit `88c5980a0c0540c06790ca9d218c91c34dded606` directly parents `239313cc109ca908f43f34ae5e04ba7e5487161f`; exact four-path allowlist and trailers verified. Candidate is clean.
+- Planning close-set commit `cb57370e12d006e8af45859cfca2365e3b9822e4` directly parents intake `72b23fb78848d9e231b423971cb11df9528e2404`; exact four named planning paths and trailers verified. A first `git commit --only` attempt occurred before untracked artifacts were staged and exited1 with pathspec errors; no files changed. Staging only the four named paths and repeating the exact commit succeeded. This failure and recovery are recorded in validation.
+- A metadata-only follow-up updates these same four allowlisted planning paths with the close-set receipt and commit-operation chronology. All seven rows remain open for CDC; no integration or release occurred.

@@ -3244,6 +3244,47 @@
         "ignored": 0,
         "filtered": 0
       }
+    },
+    {
+      "label": "final-metadata-followup-diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "command_overrides": {},
+      "environment_snapshot_before_launch": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "cargo_offline_config": [],
+      "state": "complete",
+      "index": 40,
+      "started_utc": "2026-10-18T00:16:52.850828+00:00",
+      "exit_code": 0,
+      "seconds": 0.025854,
+      "finished_utc": "2026-10-18T00:16:52.881978+00:00",
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_harnesses": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
     }
   ],
   "gate_results": [
@@ -3567,6 +3608,21 @@
         "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
       },
       "candidate_clean_after_commit": true
+    },
+    {
+      "role": "planning-close-set",
+      "commit": "cb57370e12d006e8af45859cfca2365e3b9822e4",
+      "parent": "72b23fb78848d9e231b423971cb11df9528e2404",
+      "paths": [
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md",
+        "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md"
+      ],
+      "trailers": {
+        "Co-authored-by: Codex <noreply@openai.com>": 1,
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>": 1
+      }
     }
   ],
   "scope": {
@@ -3630,8 +3686,17 @@
     "unresolved_owner": "planned13/CDC and original parent acceptance gates"
   },
   "final_planning_diff_check_after_close_artifact_edits": {
-    "attempt_index": 38,
+    "attempt_index": 39,
     "exit_code": 0,
     "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning"
-  }
+  },
+  "commit_operations": [
+    {
+      "label": "planning-close-set-initial-attempt",
+      "command": "git commit --only <four allowed planning paths> -m \"docs(planning): record Slice12 cache integrity CC return\"",
+      "exit_code": 1,
+      "stderr": "pathspec for untracked named paths did not match any file known to git; no commit or file modification occurred",
+      "recovery": "git add of the exact four allowed paths, followed by the identical git commit --only command succeeded as cb57370e12d006e8af45859cfca2365e3b9822e4"
+    }
+  ]
 }

@@ -71,4 +71,4 @@ Arc06 remains30 rows/11 done/19 open; all25 Project01 rows remain open. Slice12'
 
 ## Planning artifact commit
 
-Pending commit of exactly these four planning paths: `project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md`, `.../artifacts/validation.json`, `.../closing-report.md`, and `.../ledger.md` (Evidence cells only). The final planning commit identity and clean-fence receipt will be appended after commit.
+The planning close-set commit is `cb57370e12d006e8af45859cfca2365e3b9822e4`, direct parent `72b23fb78848d9e231b423971cb11df9528e2404`. It changes exactly the four paths listed above; each required co-author trailer occurs once. The first `git commit --only` attempt preceded staging of untracked artifacts and failed with pathspec errors without changing files; staging only the allowlisted paths and retrying succeeded. Validation retains both outcomes. This report and its three companion planning files receive a metadata-only receipt follow-up within the same four-path allowlist.
