@@ -4194,5 +4194,119 @@
     "reviewer_authored_rust_or_executed_forced_collision": false,
     "readiness": "Actual main/cache-before-bind/HTTP retry/readiness/Drop/exit shape inspected. Fresh attempt fixture ownership, original oracle preservation, real controlled first stale rewrite and second stale inputs plus explicit absence checks resolved; no API/runtime/inquiry decision left open."
   },
-  "review_inspection_diagnostic": "Initial metadata projection assumed prior slice attempts-at-root schema; actual Slice14 gates[].attempts[] inspected and whole population flattened39/78. No validation record/source changed."
+  "review_inspection_diagnostic": "Initial metadata projection assumed prior slice attempts-at-root schema; actual Slice14 gates[].attempts[] inspected and whole population flattened39/78. No validation record/source changed.",
+  "review_and_iteration01_issuance_commit": {
+    "commit": "e5ff6c1094316455f2be38eb7de36024fe624075",
+    "parent": "c3d1f87443a33bf95c71816efdc5e8310a22f152",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+      "project01-mvp/arc06-fit-and-finish/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/cdc-review-receipts.json",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cdc-verification.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/ledger.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/slice-plan.md",
+      "project01-mvp/project-plan.md"
+    ],
+    "trailers_once": true,
+    "prompt_sha256": "a1a2d15e011bff623c542c4130b1883e9c53437eed9e6575290fc69ccff6089e",
+    "operations": [
+      {
+        "argv": [
+          "git",
+          "add",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cdc-verification.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.026551583781838417
+      },
+      {
+        "argv": [
+          "git",
+          "commit",
+          "--only",
+          "-F",
+          "/private/tmp/nms-s11-review-stop-20261016/s14-review-i01-20261017-message.txt",
+          "--",
+          "project01-mvp/arc06-fit-and-finish/arc-plan.md",
+          "project01-mvp/arc06-fit-and-finish/ledger.md",
+          "project01-mvp/project-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/slice-plan.md",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/ledger.md",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cdc-verification.md",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/cdc-review-receipts.json",
+          "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "W3BsYW5uaW5nIGU1ZmY2YzFdIFJldmlldyBoZWFkbGVzcyBzdGFydHVwIG1hdHJpeCBhbmQgaXNzdWUgcmV0cnktZml4dHVyZSBjb3JyZWN0aW9uCiA4IGZpbGVzIGNoYW5nZWQsIDQzNTEgaW5zZXJ0aW9ucygrKSwgMTIgZGVsZXRpb25zKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9zbGljZTE0LWhlYWRsZXNzLWNhY2hlLXN0YXJ0dXAvYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbgogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxNC1oZWFkbGVzcy1jYWNoZS1zdGFydHVwL2NjLXByb21wdC1pdGVyYXRpb24wMS5tZAogY3JlYXRlIG1vZGUgMTAwNjQ0IHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvc2xpY2UxNC1oZWFkbGVzcy1jYWNoZS1zdGFydHVwL2NkYy12ZXJpZmljYXRpb24ubWQK",
+          "bytes": 477,
+          "sha256": "143a51a2011679704100b108f8df0a5faabd7fb9d7aa0cdefb09c661c8368241"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.055863999761641026
+      },
+      {
+        "argv": [
+          "git",
+          "show",
+          "--format=full",
+          "--stat",
+          "HEAD"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "Y29tbWl0IGU1ZmY2YzEwOTQzMTY0NTVmMmJlMzhlYjdkZTM2MDI0ZmU2MjQwNzUKQXV0aG9yOiBEdW5jYW4gTWNHcmVnZ29yIDxvdWJpd2FubkBnbWFpbC5jb20+CkNvbW1pdDogRHVuY2FuIE1jR3JlZ2dvciA8b3ViaXdhbm5AZ21haWwuY29tPgoKICAgIFJldmlldyBoZWFkbGVzcyBzdGFydHVwIG1hdHJpeCBhbmQgaXNzdWUgcmV0cnktZml4dHVyZSBjb3JyZWN0aW9uCiAgICAKICAgIENvLWF1dGhvcmVkLWJ5OiBDb2RleCA8bm9yZXBseUBvcGVuYWkuY29tPgogICAgQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPgoKIHByb2plY3QwMS1tdnAvYXJjMDYtZml0LWFuZC1maW5pc2gvYXJjLXBsYW4ubWQgICAgIHwgICAgOSArLQogcHJvamVjdDAxLW12cC9hcmMwNi1maXQtYW5kLWZpbmlzaC9sZWRnZXIubWQgICAgICAgfCAgICAyICstCiAuLi4vYXJ0aWZhY3RzL2NkYy1yZXZpZXctcmVjZWlwdHMuanNvbiAgICAgICAgICAgICB8IDQxOTggKysrKysrKysrKysrKysrKysrKysKIC4uLi9jYy1wcm9tcHQtaXRlcmF0aW9uMDEubWQgICAgICAgICAgICAgICAgICAgICAgIHwgICA4MSArCiAuLi4vY2RjLXZlcmlmaWNhdGlvbi5tZCAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMzkgKwogLi4uL3NsaWNlMTQtaGVhZGxlc3MtY2FjaGUtc3RhcnR1cC9sZWRnZXIubWQgICAgICAgfCAgIDE2ICstCiAuLi4vc2xpY2UxNC1oZWFkbGVzcy1jYWNoZS1zdGFydHVwL3NsaWNlLXBsYW4ubWQgICB8ICAgIDkgKy0KIHByb2plY3QwMS1tdnAvcHJvamVjdC1wbGFuLm1kICAgICAgICAgICAgICAgICAgICAgIHwgICAgOSArLQogOCBmaWxlcyBjaGFuZ2VkLCA0MzUxIGluc2VydGlvbnMoKyksIDEyIGRlbGV0aW9ucygtKQo=",
+          "bytes": 890,
+          "sha256": "1a0d3467bb285a4eea31530b5d84e6afd30c5f848326cdd3a6e69df5004ba090"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.020786999724805355
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--porcelain"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "exit_code": 0,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "seconds": 0.019210791680961847
+      }
+    ]
+  }
 }
