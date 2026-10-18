@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.43, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.44, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -347,3 +347,10 @@ Separate CC implements, Sofie/CDC reviews; Expedited Mode. Actual prerequisite23
 CDC independently reproduced all required gates at88c5980:38 cache/4 route/2 native/737 focused/219 no-default/933 workspace, format/lint/build/docs/strict-cache/diff. Initial restricted native failure and unchanged host retry retained. Runtime invariant implementation is correct against the assigned contract; CI-04/05 accepted. Five child rows remain open for specific required test oracles (no temp artifact, full original state/maps, source9 and cached view7 recovery), omitted direct rebuild boundary documentation and current42-attempt inventory clarification. No runtime defect or missing raw channel reproduced;84 CC channels audited.
 
 Current assignment arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md, first refinement of five; initial prompt returned/reviewed/preserved. Two existing test/doc paths only, all production frozen; complete current gate/evidence and independent review remain. R06-S12 stays open:30 arc rows/11 done/19 open, all25 project rows open. Planned13 full startup/live/cache/unknown-state/watch configuration/duplicate-producer and broader historical-state ownership remains before raw repair and original parent acceptance. Main/dependency/Project02 held; candidate unintegrated/uninstalled, later authorized integration/composition/release remains CDC/Operator-owned. Version1.43: routine child review/correction status, no scope/architecture/criterion/sequence change, inquiry or waiver.
+
+
+## Slice12 Iteration01 independent closure — 2026-10-17
+
+All seven CI rows independently accepted at a101bd44 (direct parent88c5980), current assignment cc-prompt-iteration01.md returned/reviewed/closed, immutable initial and iteration prompts preserved. Fresh CDC38 cache/4 route/format/lint/strict-cache/diff proof resolves full original-state, exact temp-effect and source9/0/view7 oracles; direct rebuild boundary docs correct. Unchanged prior88c5980 broader independent proof retained with explicit applicability; current CC14 gates and63 attempts/126 raw channels audited. No waiver or runtime correction. R06-S12 done;30 arc rows/12 done/18 open, all25 project rows open.
+
+Final child correction reveals no structural/scope/architecture/criterion/sequence amendment. Detail planned13/CDC next: full startup/live-cache C04 old/current/warm/write-through in both modes, unknown placeholders/promotion, watcher enabled/debounce and duplicate producers, broader historical questions beyond this exact duplicate-field contradiction. Every original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator gate retained. Main6d183bde/dependencies/Project02 held, candidate isolated/unintegrated/uninstalled; later authorized integration/final-baseline composition/release remains CDC/Operator-owned. Version1.44 records child closure and bubble-up only.

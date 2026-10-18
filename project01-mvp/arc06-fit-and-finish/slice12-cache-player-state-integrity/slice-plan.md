@@ -1,6 +1,6 @@
 # Slice12 — cached player-state integrity
 
-Version:1.1. Created2026-10-17. Status:active correction; CI-04/05 accepted, CI-01/02/03/06/07 open. Two contributors (CC implements, Sofie/CDC independently accepts), Expedited Mode. Current assignment: arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md. Initial cc-prompt.md returned/reviewed and preserved as superseded. Supporting artifacts: artifacts/. No close/review record precreated.
+Version:1.2. Created2026-10-17. Status:closed; all seven CI rows CDC-accepted at a101bd44. Two contributors (CC implements, Sofie/CDC independently accepts), Expedited Mode. Current assignment: arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md. Initial cc-prompt.md returned/reviewed and preserved as superseded. Supporting artifacts: artifacts/. No close/review record precreated.
 
 ## Useful increment and accepted dependency
 
@@ -42,3 +42,8 @@ Initial prompt returned/reviewed; active arc06-fit-and-finish/slice12-cache-play
 Author readiness: full current source/test delta and contract inspected, literal source0/9 inputs, selected7 and physical/source identities resolved, temporary pathname verified against write_cache, full PlayerState and complete system/planet/base maps grounded in current fixture types. Applies testing Behavior/Contracts and Proportionate Proof plus Rust existing error/borrow contract; no new runtime/library/policy/fixture framework or inquiry delegated. Concrete test repairs use existing APIs/factories, frozen code and explicit comparands; current codec/load/natives/gates independently replayed. Prompt packet stays bounded to current contract/source/evidence and mandatory Rust material with correction headroom. CI-04/05 prior independent applicability must be reassessed under the delta; required CC current gates retained. Parent counts/13 and every original owner/gate unchanged.
 
 Initial review / Iteration01 issuance committed as `afaffc450becb5c1a7ab30cdae5e94fd4b7369ce`, direct parentae8ac5f. Exact eight named planning paths, both required trailers once, immutable prompt SHA256d85d6dd54aa8ca765c2fdccf4fd3a9ed07e9c9859b10e872a49cebebfb6f6b20 and clean planning/source/main/dependency fences verified. Raw commit receipt in artifacts/cdc-review-receipts.json. This metadata followup leaves the issued prompt and source untouched; five rows/parent acceptance remain open.
+
+
+## Iteration01 acceptance and closure — 2026-10-17
+
+Version1.2: all seven CI rows accepted at a101bd44, direct parent88c5980. Current cc-prompt-iteration01.md returned/reviewed/accepted and preserved; no active CC assignment. Fresh CDC38 cache/4 route/strict cache docs/format/lint/diffs pass, prior unaffected88c5980 broader proof retained with applicability; current CC63 attempts/126 raw channels and exact commit/source/history fences audited. Detailed final walk, artifacts, what-worked and bubble-up in cdc-verification.md. R06-S12 done, arc30/12 done/18 open, project25 open. Planned13 and every original remaining capability/independent/Operator/integration/release owner unchanged; no source integration or waiver.

@@ -1801,5 +1801,2151 @@
         "seconds": 0.01823450019583106
       }
     ]
+  },
+  "iteration01_independent_review": {
+    "date": "2026-10-17",
+    "reviewer": "Sofie/CDC, separate from implementing CC",
+    "assignment": "arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md",
+    "audit": {
+      "source": "a101bd44b277f06c75ed7260b470b31cd5510130",
+      "parent": "88c5980a0c0540c06790ca9d218c91c34dded606",
+      "planning_intake": "7198b61e4298ab8c1d3aef55d10e56f83ade8411",
+      "immutable_prompts_and_review": true,
+      "all_old_JSON_values_and_markdown_prefixes_preserved": true,
+      "primary_attempts": 63,
+      "primary_channel_objects_validated": 126,
+      "iteration_attempts": 21,
+      "unchanged_host_retry_pairs": [
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          11,
+          12
+        ]
+      ],
+      "all_primary_metadata": [
+        {
+          "index": 1,
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 2,
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 3,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 4,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "route_cache_integration"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 5,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 6,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 7,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 8,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 9,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 10,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 11,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 2
+        },
+        {
+          "index": 12,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 13,
+          "argv": [
+            "cargo",
+            "build",
+            "--workspace",
+            "--all-features"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 14,
+          "argv": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--all-features",
+            "--doc"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 15,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-core",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-copilot"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 16,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {
+            "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+          },
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 17,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 18,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 19,
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 20,
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 21,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 22,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "route_cache_integration"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 23,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 24,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 25,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 26,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 27,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 28,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 29,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 2
+        },
+        {
+          "index": 30,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 31,
+          "argv": [
+            "cargo",
+            "build",
+            "--workspace",
+            "--all-features"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 32,
+          "argv": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--all-features",
+            "--doc"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 33,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-core",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-copilot"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 34,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {
+            "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+          },
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 35,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 36,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 37,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 38,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 39,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 40,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 41,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 42,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 1,
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 2,
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 3,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 4,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "route_cache_integration"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 5,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 6,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 7,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 8,
+          "argv": [
+            "cargo",
+            "test",
+            "--all-features",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-copilot",
+            "-p",
+            "nms-cli"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 9,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 101
+        },
+        {
+          "index": 10,
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 11,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 2
+        },
+        {
+          "index": 12,
+          "argv": [
+            "make",
+            "test"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 13,
+          "argv": [
+            "cargo",
+            "build",
+            "--workspace",
+            "--all-features"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 14,
+          "argv": [
+            "cargo",
+            "test",
+            "--workspace",
+            "--all-features",
+            "--doc"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 15,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-core",
+            "-p",
+            "nms-graph",
+            "-p",
+            "nms-query",
+            "-p",
+            "nms-cache",
+            "-p",
+            "nms-watch",
+            "-p",
+            "nms-copilot"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 16,
+          "argv": [
+            "cargo",
+            "doc",
+            "--no-deps",
+            "--all-features",
+            "-p",
+            "nms-cache"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {
+            "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+          },
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 17,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 18,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 19,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 20,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        },
+        {
+          "index": 21,
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+          "command_overrides": {},
+          "environment_snapshot_before_launch": {
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+          },
+          "cargo_offline_config": [],
+          "exit_code": 0
+        }
+      ],
+      "current_CC_harnesses": {
+        "3": {
+          "passed": 38,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 3,
+          "active_harnesses": 2
+        },
+        "4": {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 1,
+          "active_harnesses": 1
+        },
+        "6": {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 1,
+          "active_harnesses": 1
+        },
+        "8": {
+          "passed": 737,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 26,
+          "active_harnesses": 21
+        },
+        "10": {
+          "passed": 219,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 1,
+          "active_harnesses": 1
+        },
+        "12": {
+          "passed": 933,
+          "failed": 0,
+          "ignored": 0,
+          "harnesses": 34,
+          "active_harnesses": 24
+        }
+      },
+      "CC_actual_native_observations": [
+        {
+          "transport": "http",
+          "phase": "A",
+          "tool": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "http",
+          "phase": "B",
+          "tool": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "http",
+          "phase": "C",
+          "tool": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a",
+            "portal_glyphs_hex": "000100000001",
+            "signal_booster": "0800:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 1,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a",
+            "portal_glyphs_hex": "000100000001",
+            "signal_booster": "0800:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 1,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "http",
+          "phase": "D",
+          "tool": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "stdio",
+          "phase": "A",
+          "tool": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "stdio",
+          "phase": "B",
+          "tool": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "stdio",
+          "phase": "B",
+          "tool": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "stdio",
+          "phase": "C",
+          "tool": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a",
+            "portal_glyphs_hex": "000100000001",
+            "signal_booster": "0800:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 1,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Eissentam",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a",
+            "portal_glyphs_hex": "000100000001",
+            "signal_booster": "0800:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "(unknown)",
+            "voxel_x": 1,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        },
+        {
+          "transport": "stdio",
+          "phase": "D",
+          "tool": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          },
+          "resource": {
+            "galaxy": "Euclid",
+            "planets_in_system": 0,
+            "portal_glyphs_emoji": "\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83d\udd4a\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05\ud83c\udf05",
+            "portal_glyphs_hex": "000100000000",
+            "signal_booster": "07FF:007F:07FF:0001",
+            "solar_system_index": 1,
+            "system": "-",
+            "voxel_x": 0,
+            "voxel_y": 0,
+            "voxel_z": 0
+          }
+        }
+      ],
+      "commits": {
+        "a101bd44b277f06c75ed7260b470b31cd5510130": {
+          "parent": "88c5980a0c0540c06790ca9d218c91c34dded606",
+          "paths": [
+            "crates/nms-cache/src/lib.rs",
+            "crates/nms-cache/tests/load_integration.rs"
+          ],
+          "trailers_once": true
+        },
+        "b857ff9ff8e46e88748f8b7fe84bda9b06117e7d": {
+          "parent": "c5aa19c5f60787e05ec0937f1b25ec3adbed41a0",
+          "paths": [
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md",
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md",
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/ledger.md"
+          ],
+          "trailers_once": true
+        },
+        "7198b61e4298ab8c1d3aef55d10e56f83ade8411": {
+          "parent": "b857ff9ff8e46e88748f8b7fe84bda9b06117e7d",
+          "paths": [
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/execution.md",
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/artifacts/validation.json",
+            "project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/closing-report.md"
+          ],
+          "trailers_once": true
+        }
+      },
+      "held_pins": {
+        ".": {
+          "head": "6d183bde79dd7328c32d4739dca249f5f1f9cd6c",
+          "clean": true
+        },
+        ".worktrees/cache-semantic-compatibility": {
+          "head": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+          "clean": true
+        },
+        ".worktrees/galaxy-qualified-identity": {
+          "head": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+          "clean": true
+        },
+        ".worktrees/galaxy-scoped-queries": {
+          "head": "7118a486ea43a776aa2451ec0807d43384fb954f",
+          "clean": true
+        },
+        ".worktrees/galaxy-scoped-routing": {
+          "head": "f71d607e27e18d7266855a2708449f9d6b90c632",
+          "clean": true
+        },
+        ".worktrees/galaxy-scoped-session": {
+          "head": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+          "clean": true
+        },
+        ".worktrees/galaxy-scoped-repl": {
+          "head": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+          "clean": true
+        },
+        ".worktrees/mcp-live-watch": {
+          "head": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+          "clean": true
+        }
+      },
+      "source_sha256": {
+        "Cargo.toml": "e45d1a29a52e43851b00a28132186a334e500bb5175ed3d532178776249cf32b",
+        "Cargo.lock": "a5f8511e470cdf8b8431f0c3ccea9c00badbcd34d8b34ded38c557827bd21bb0",
+        "crates/nms-cache/Cargo.toml": "3716bf3de9676b6f220649a3ce6377b82fb61a58fde6c87f70d66203e9e1287b",
+        "crates/nms-cache/src/data.rs": "df8c472f180dfa330ff60d478ba079e124f9ab421fd1ef8a5b82676c34673b9c",
+        "crates/nms-cache/src/error.rs": "d5fe28e15b9b5318184b312290f42c7788481ea957954aa8a5f4fe45b66f3e43",
+        "crates/nms-cache/tests/fixtures/predecessor-schema1-semantic1.rkyv": "76ca0089af76621b5e8002828c2d0f4cea1b814bca33aced82a507357883389a",
+        "crates/nms-copilot/tests/fixtures/predecessor-schema2-semantic2.rkyv": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7",
+        "crates/nms-copilot/tests/route_cache_integration.rs": "4cc034f60aa38dadc15aa7628d47d91724a15ae6d0737045be491c1b7116fd09",
+        "crates/nms-copilot/src/main.rs": "0e7a877e97da9efc1f26a31b3207e29248be79461cfed1bd0a944eabd4719ffe",
+        "crates/nms-copilot/src/session.rs": "882c8ffa2c6ab836257e29847538391f4147aacc30aacb839bdbffdf9ea320b8",
+        "crates/nms-copilot/src/watch.rs": "94b98379e6256daabe300067216727dfea0cbc50d7b36db9585539ff382a7c54",
+        "crates/nms-copilot/src/mcp/mod.rs": "f3398ed46875adb6ff05ef6ee8d51ad174ba0288741ab1adab08b124ebe49f9c",
+        "crates/nms-copilot/src/mcp/tools.rs": "402abe9411e4bafd4b1b34180cfdf5f55394177babf4b627a11b89601df11604",
+        "crates/nms-copilot/src/mcp/resources.rs": "264505d2dbc60b368bfdb1ac15edf28da1df7f91a21b1e5c9f97af400b7d9746",
+        "crates/nms-copilot/tests/mcp_live_integration.rs": "d426c80a59ff05258a2ed7983d8f4e95a3a565b4e487ce11113bb43f18ec3110",
+        "crates/nms-watch/src/watcher.rs": "4a853fd9c775cbfb36754695ca83918caa70e4cfd4ede5abd85f392ae1373717",
+        "crates/nms-watch/src/snapshot.rs": "fc580e8fe38916c9c5d86f7a1e3919673c7fc20a970ab72e93777cd1fa19e901",
+        "crates/nms-watch/src/delta.rs": "cdb4981f5abe644939e99b5e2224d115a5ddf8634c349051b515504d8e687260",
+        "crates/nms-graph/src/model.rs": "c9c5e5e9fdc5ad84318720d00b7f6db835e5249b236f205a222c37a046697d85",
+        "crates/nms-core/src/player.rs": "02806b772983d988fc8cba37b75ecd432d26a73b0c514ad1afe2b085ba90354e",
+        "crates/nms-save/src/model.rs": "8295307ae79e7c5c3bb7532f57f3691e692dcc67b8702df2acd69e76c5283df9",
+        "crates/nms-cache/src/serialize.rs": "7c8ff51f86788eabd66fce0279fe793bde2573d1500cbf100cc743ea5a9ce4fc",
+        "crates/nms-cache/src/lib.rs": "4e711666e7988a67d8ea6e9a61150e626f33dea596197abb41c6cb2b6f030493",
+        "crates/nms-cache/src/freshness.rs": "0f1aa617d2695ef34c1f359333f07a2d6708d88cd51ebb61571ef58e3750c990",
+        "crates/nms-cache/tests/load_integration.rs": "409b58306e95d7c8a859d70541c50a9504e16997049de20c6437bed5c80e99d4"
+      },
+      "protected21_unchanged": true,
+      "frozen23_unchanged": true,
+      "crate_non_doc_declarations_unchanged": true,
+      "criteria_and_statuses_preserved": true,
+      "ledger_surplus_trailing_separators": [
+        "CI-01",
+        "CI-02",
+        "CI-03",
+        "CI-06",
+        "CI-07"
+      ],
+      "minor_review_disposition": "CDC normalizes extra trailing table separators in five Evidence/Notes rows; first six acceptance cells preserved, no missing behavior or raw evidence."
+    },
+    "fresh_replays": [
+      {
+        "gate": 1,
+        "host_context": "sandbox",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:03.588152+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.5921649592928588,
+        "stdout": {
+          "base64": "G1sxOzM0bUZvcm1hdHRpbmcgY29kZS4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIHJ1c3RmbXQgb24gYWxsIGZpbGVzLi4uG1swbQobWzE7MzJt4pyTIENvZGUgZm9ybWF0dGVkG1swbQo=",
+          "bytes": 107,
+          "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "harnesses": []
+      },
+      {
+        "gate": 2,
+        "host_context": "sandbox",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:04.181762+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 1.258341749664396,
+        "stdout": {
+          "base64": "G1sxOzM0bVJ1bm5pbmcgbGludGVyIGNoZWNrcy4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIGNsaXBweS4uLhtbMG0KG1sxOzMybeKckyBDbGlwcHkgcGFzc2VkG1swbQobWzE7MzZt4oCiIENoZWNraW5nIGNvZGUgZm9ybWF0dGluZy4uLhtbMG0KG1sxOzMybeKckyBGb3JtYXQgY2hlY2sgcGFzc2VkG1swbQo=",
+          "bytes": 176,
+          "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+        },
+        "stderr": {
+          "base64": "ICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMC43N3MKd2FybmluZzogdGhlIGZvbGxvd2luZyBwYWNrYWdlcyBjb250YWluIGNvZGUgdGhhdCB3aWxsIGJlIHJlamVjdGVkIGJ5IGEgZnV0dXJlIHZlcnNpb24gb2YgUnVzdDogcHJvYy1tYWNyby1lcnJvcjIgdjIuMC4xCm5vdGU6IHRvIHNlZSB3aGF0IHRoZSBwcm9ibGVtcyB3ZXJlLCB1c2UgdGhlIG9wdGlvbiBgLS1mdXR1cmUtaW5jb21wYXQtcmVwb3J0YCwgb3IgcnVuIGBjYXJnbyByZXBvcnQgZnV0dXJlLWluY29tcGF0aWJpbGl0aWVzIC0taWQgMWAK",
+          "bytes": 327,
+          "sha256": "790eed90f2c81ef16a66b2305334c651dc6dffbc608aace6ffd48ecf8e08ba53"
+        },
+        "harnesses": []
+      },
+      {
+        "gate": 3,
+        "host_context": "sandbox",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cache"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:05.440694+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.7636822499334812,
+        "stdout": {
+          "base64": "CnJ1bm5pbmcgMTkgdGVzdHMKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X2Rlc2VyaWFsaXplX2NvbXBhdGliaWxpdHlfZXJyb3JfcHJlY2VkZW5jZSAuLi4gb2sKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X2NvbXBhdGliaWxpdHlfZXJyb3JfZGlzcGxheV9hbmRfc291cmNlX2FyZV9vYnNlcnZhYmxlIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfY3VycmVudF9oZWFkZXJfd2l0aF9iYWRfcGF5bG9hZF9pc19kZXNlcmlhbGl6ZV9lcnJvciAuLi4gb2sKdGVzdCBmcmVzaG5lc3M6OnRlc3RzOjp0ZXN0X21pc3NpbmdfY2FjaGVfcmV0dXJuc19mYWxzZSAuLi4gb2sKdGVzdCBmcmVzaG5lc3M6OnRlc3RzOjp0ZXN0X21pc3Npbmdfc2F2ZV9yZXR1cm5zX2ZhbHNlIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfZXh0cmFjdF9jYWNoZV9kYXRhIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfZW52ZWxvcGVfaGFzX2xpdGVyYWxfaGVhZGVyX2FuZF9yb3VuZHRyaXBzIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfZGVzZXJpYWxpemVfaGFuZGxlc19taXNhbGlnbmVkX2JvcnJvd2VkX2VudmVsb3BlIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfaGVhZGVybGVzc19hcmNoaXZlX2lzX25vdF9hX2NvbXBhdGlibGVfY2FjaGUgLi4uIG9rCnRlc3Qgc2VyaWFsaXplOjp0ZXN0czo6dGVzdF9yZWFkX25vbmV4aXN0ZW50X2NhY2hlX2Vycm9ycyAuLi4gb2sKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X3JlYnVpbGRfbW9kZWxfcHJlc2VydmVzX2NvdW50cyAuLi4gb2sKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X3JlYnVpbGRfcHJlc2VydmVzX2Jhc2VfbG9va3VwIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3RfcmVidWlsZF9wcmVzZXJ2ZXNfcGxheWVyX3N0YXRlIC4uLiBvawp0ZXN0IHNlcmlhbGl6ZTo6dGVzdHM6OnRlc3Rfc2VyaWFsaXplX2Rlc2VyaWFsaXplX3JvdW5kdHJpcCAuLi4gb2sKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X3JlYWRfbWlzc2luZ19jYWNoZV9wcmVzZXJ2ZXNfaW9fZXJyb3IgLi4uIG9rCnRlc3Qgc2VyaWFsaXplOjp0ZXN0czo6dGVzdF9kaXJlY3RfY2FjaGVfdHJhbnNwb3J0X3ByZXNlcnZlc190d29fZ2FsYXhpZXNfYW5kX3NlbGVjdGVkX2dhbGF4eSAuLi4gb2sKdGVzdCBzZXJpYWxpemU6OnRlc3RzOjp0ZXN0X3dyaXRlX2FuZF9yZWFkX2NhY2hlX2ZpbGUgLi4uIG9rCnRlc3QgZnJlc2huZXNzOjp0ZXN0czo6dGVzdF9zdGFsZV9jYWNoZV9yZXR1cm5zX2ZhbHNlIC4uLiBvawp0ZXN0IGZyZXNobmVzczo6dGVzdHM6OnRlc3RfZnJlc2hfY2FjaGVfcmV0dXJuc190cnVlIC4uLiBvawoKdGVzdCByZXN1bHQ6IG9rLiAxOSBwYXNzZWQ7IDAgZmFpbGVkOyAwIGlnbm9yZWQ7IDAgbWVhc3VyZWQ7IDAgZmlsdGVyZWQgb3V0OyBmaW5pc2hlZCBpbiAwLjA2cwoKCnJ1bm5pbmcgMTkgdGVzdHMKdGVzdCBjYWNoZV9mcmVzaG5lc3NfdXNlc19kZXRlcm1pbmlzdGljX2ZpbGVfdGltZXMgLi4uIG9rCnRlc3QgY2FjaGVfd3JpdGVfZmFpbHVyZV9yZXR1cm5zX3BhcnNlZF9zb3VyY2VfbW9kZWwgLi4uIG9rCnRlc3QgZGlyZWN0X2ZpbGVfcm91bmR0cmlwX2hhc19oZWFkZXJfYW5kX3NvdXJjZV92ZXJzaW9uX2lzX25vdF9oZWFkZXJfdmVyc2lvbiAuLi4gb2sKdGVzdCBjb21wYXRpYmxlX2NhY2hlX3ByZXNlcnZlc19wb3B1bGF0ZWRfbW9kZWxfd2l0aF9pbmRlcGVuZGVudF9zYXZlX3ZlcnNpb24gLi4uIG9rCnRlc3QgaW5jb21wYXRpYmxlX2ZyZXNoX2NhY2hlX2FuZF9tYWxmb3JtZWRfc2F2ZV9wcmVzZXJ2ZV9jYWNoZV9ieXRlcyAuLi4gb2sKdGVzdCBhY3R1YWxfc2NoZW1hMV9zZW1hbnRpYzFfcHJlZGVjZXNzb3JfcmVidWlsZHNfYWN0aXZlX2dhbGF4eV9zb3VyY2VfdGhlbl93YXJtX2hpdHMgLi4uIG9rCnRlc3QgY29ycnVwdF9jdXJyZW50X3BheWxvYWRfcmVidWlsZHNfdGhlbl93YXJtX2hpdHMgLi4uIG9rCnRlc3QgbG9hZF9vcl9yZWJ1aWxkX3NraXBzX2NhY2hlX3dpdGhfbm9fY2FjaGVfZmxhZyAuLi4gb2sKdGVzdCBoZWFkZXJsZXNzX2xlZ2FjeV9hcmNoaXZlX3JlYnVpbGRzX3RoZW5fd2FybV9oaXRzIC4uLiBvawp0ZXN0IGxvYWRfb3JfcmVidWlsZF9mcm9tX3NhdmVfd2hlbl9ub19jYWNoZSAuLi4gb2sKdGVzdCBsb2FkX29yX3JlYnVpbGRfdXNlc19jYWNoZV93aGVuX2ZyZXNoIC4uLiBvawp0ZXN0IGNvbnRyYWRpY3RvcnlfcGxheWVyX3JlYWxpdHlfaXNfcmVqZWN0ZWRfYnlfYnl0ZV9maWxlX2FuZF93cml0ZV9ib3VuZGFyaWVzIC4uLiBvawp0ZXN0IG1hbGZvcm1lZF9zb3VyY2VfYW5kX25vX2NhY2hlX3ByZXNlcnZlX2NvbnRyYWRpY3RvcnlfY2FjaGVfYnl0ZXMgLi4uIG9rCnRlc3Qgbm9fY2FjaGVfaWdub3Jlc19pbmNvbXBhdGlibGVfZXhpc3RpbmdfY2FjaGVfYW5kX3ByZXNlcnZlc19pdCAuLi4gb2sKdGVzdCBzdGFsZV9jb21wYXRpYmxlX3NlbnRpbmVsX2NhY2hlX3JlYnVpbGRzX2Zyb21fc291cmNlIC4uLiBvawp0ZXN0IGZyZXNoX2NvbnRyYWRpY3RvcnlfY2FjaGVfcmVidWlsZHNfYXV0aG9yaXRhdGl2ZV9zb3VyY2VfdGhlbl93YXJtX2hpdHMgLi4uIG9rCnRlc3QgdmFsaWRfaW5kZXBlbmRlbnRfcGxheWVyX2FuZF9zZWxlY3RlZF9nYWxheGllc19yb3VuZHRyaXBfd2l0aF9vcl93aXRob3V0X3BsYXllciAuLi4gb2sKdGVzdCBjdXJyZW50X3NjaGVtYV9zZW1hbnRpYzFfY2FjaGVfcmVidWlsZHNfYW5kX2R1YWxfZ2FsYXh5X3RyYW5zcG9ydF93YXJtX2hpdHMgLi4uIG9rCnRlc3Qgc2NoZW1hX2FuZF9zZW1hbnRpY19yZXZpc2lvbl9taXNtYXRjaGVzX3JlYnVpbGRfdGhlbl93YXJtX2hpdCAuLi4gb2sKCnRlc3QgcmVzdWx0OiBvay4gMTkgcGFzc2VkOyAwIGZhaWxlZDsgMCBpZ25vcmVkOyAwIG1lYXN1cmVkOyAwIGZpbHRlcmVkIG91dDsgZmluaXNoZWQgaW4gMC4wMnMKCgpydW5uaW5nIDAgdGVzdHMKCnRlc3QgcmVzdWx0OiBvay4gMCBwYXNzZWQ7IDAgZmFpbGVkOyAwIGlnbm9yZWQ7IDAgbWVhc3VyZWQ7IDAgZmlsdGVyZWQgb3V0OyBmaW5pc2hlZCBpbiAwLjAwcwoK",
+          "bytes": 3087,
+          "sha256": "4fc8b9410aebefb69961d676593f75b580230054c5ab5acab01465fc4864f2e9"
+        },
+        "stderr": {
+          "base64": "ICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDAuMTdzCiAgICAgUnVubmluZyB1bml0dGVzdHMgc3JjL2xpYi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvbm1zX2NhY2hlLTlmOGY4MjQ5MWJiMmM4ZDQpCiAgICAgUnVubmluZyB0ZXN0cy9sb2FkX2ludGVncmF0aW9uLnJzICh0YXJnZXQvZGVidWcvZGVwcy9sb2FkX2ludGVncmF0aW9uLTJkMjkyNDM1OTUwZDE5MTMpCiAgIERvYy10ZXN0cyBubXNfY2FjaGUK",
+          "bytes": 270,
+          "sha256": "91b3088298e8e5418043122af5e3bbf412aea614a070d870951eb7b4bf70d766"
+        },
+        "harnesses": [
+          {
+            "passed": 19,
+            "failed": 0,
+            "ignored": 0,
+            "measured": 0,
+            "filtered_out": 0
+          },
+          {
+            "passed": 19,
+            "failed": 0,
+            "ignored": 0,
+            "measured": 0,
+            "filtered_out": 0
+          },
+          {
+            "passed": 0,
+            "failed": 0,
+            "ignored": 0,
+            "measured": 0,
+            "filtered_out": 0
+          }
+        ]
+      },
+      {
+        "gate": 4,
+        "host_context": "sandbox",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--all-features",
+          "--test",
+          "route_cache_integration"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:06.205201+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.42470445903018117,
+        "stdout": {
+          "base64": "CnJ1bm5pbmcgNCB0ZXN0cwp0ZXN0IHByZWRlY2Vzc29yX2ZpeHR1cmVfc3BhdGlhbF9hbmRfZXJyb3Jfc2VtYW50aWNzX21hdGNoX3R5cGVkX2xpdGVyYWxfZXhwZWN0YXRpb25zIC4uLiBvawp0ZXN0IHByZWRlY2Vzc29yX2ZpeHR1cmVfcmVidWlsZF9tYXRjaGVzX2luZGVwZW5kZW50X2ZyZXNoX2FuZF9jdXJyZW50X3JvdW5kX3RyaXAgLi4uIG9rCnRlc3QgY3VycmVudF9yb3V0ZV9jYWNoZV9tYXRjaGVzX2V4YWN0X29wZW5fYW5kX2Nsb3NlZF90eXBlZF9wcm9qZWN0aW9uIC4uLiBvawp0ZXN0IGN1cnJlbnRfdGhyZWVfc3lzdGVtX25pbmVfZ2FsYXh5X3JvdXRlX21hdGNoZXNfZnJlc2hfYW5kX2NoZWNrZWRfY2FjaGUgLi4uIG9rCgp0ZXN0IHJlc3VsdDogb2suIDQgcGFzc2VkOyAwIGZhaWxlZDsgMCBpZ25vcmVkOyAwIG1lYXN1cmVkOyAwIGZpbHRlcmVkIG91dDsgZmluaXNoZWQgaW4gMC4wMHMKCg==",
+          "bytes": 457,
+          "sha256": "4132cd17afd16b3564aaca4f4f1d149782a645b17bafe2cebde387424bb22342"
+        },
+        "stderr": {
+          "base64": "ICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDAuMzNzCndhcm5pbmc6IHRoZSBmb2xsb3dpbmcgcGFja2FnZXMgY29udGFpbiBjb2RlIHRoYXQgd2lsbCBiZSByZWplY3RlZCBieSBhIGZ1dHVyZSB2ZXJzaW9uIG9mIFJ1c3Q6IHByb2MtbWFjcm8tZXJyb3IyIHYyLjAuMQpub3RlOiB0byBzZWUgd2hhdCB0aGUgcHJvYmxlbXMgd2VyZSwgdXNlIHRoZSBvcHRpb24gYC0tZnV0dXJlLWluY29tcGF0LXJlcG9ydGAsIG9yIHJ1biBgY2FyZ28gcmVwb3J0IGZ1dHVyZS1pbmNvbXBhdGliaWxpdGllcyAtLWlkIDFgCiAgICAgUnVubmluZyB0ZXN0cy9yb3V0ZV9jYWNoZV9pbnRlZ3JhdGlvbi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvcm91dGVfY2FjaGVfaW50ZWdyYXRpb24tMjg1NmE0MjIzOWY4ZWRmNykK",
+          "bytes": 435,
+          "sha256": "6835c11a298dacf39d0ec9e2ab2e0eaed8c8c383137bc49af01cbcfd96e1e96a"
+        },
+        "harnesses": [
+          {
+            "passed": 4,
+            "failed": 0,
+            "ignored": 0,
+            "measured": 0,
+            "filtered_out": 0
+          }
+        ]
+      },
+      {
+        "gate": 12,
+        "host_context": "sandbox",
+        "argv": [
+          "cargo",
+          "doc",
+          "--no-deps",
+          "--all-features",
+          "-p",
+          "nms-cache"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:06.630799+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links",
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.12038950016722083,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "ICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMC4wOXMKICAgR2VuZXJhdGVkIC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL2NhY2hlLXBsYXllci1zdGF0ZS1pbnRlZ3JpdHkvdGFyZ2V0L2RvYy9ubXNfY2FjaGUvaW5kZXguaHRtbAo=",
+          "bytes": 194,
+          "sha256": "4350db444030588cc1296753ef2f6017275f0d7b5f424b6f52db00385da86163"
+        },
+        "harnesses": []
+      },
+      {
+        "gate": 13,
+        "host_context": "sandbox",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "started_utc": "2026-10-18T01:06:06.752104+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.015805999748408794,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "harnesses": []
+      },
+      {
+        "gate": 14,
+        "host_context": "sandbox",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "started_utc": "2026-10-18T01:06:06.768793+00:00",
+        "observed_environment": {
+          "RUSTDOCFLAGS": null,
+          "CARGO_TARGET_DIR": null,
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTUP_TOOLCHAIN": null,
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+        },
+        "command_overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        },
+        "state": "complete",
+        "exit_code": 0,
+        "elapsed_seconds": 0.04422937519848347,
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "harnesses": []
+      }
+    ],
+    "fresh_channel_count": 14,
+    "retention": {
+      "CI-04": "Prior88c5980 malformed/no_cache proof retained; test body/runtime frozen, helper selected7 change additionally rerun in current cache suite.",
+      "CI-05": "Prior88c5980 full fourteen-gate independent replay retained for wiring/native/downstream consumers: exact source delta only three cache test bodies/helper and crate doc comments; all runtime, manifests, dependencies, consumer/test inputs unchanged; current CC required full gates audited separately. Not a fresh CDC native/workspace replay.",
+      "other": "CI-02 sealed route proof rerun currently; API/layout/error/order/runtime/revisions and protected files unchanged. Current full CI-01/02/03 cache and CI-06 strict doc proof reproduced."
+    },
+    "findings": {
+      "PI-F01": "resolved",
+      "PI-F02": "resolved",
+      "PI-F03": "resolved",
+      "PI-F04": "resolved",
+      "PI-F05": "resolved"
+    },
+    "row_dispositions": {
+      "CI-01": "done",
+      "CI-02": "done",
+      "CI-03": "done",
+      "CI-04": "done",
+      "CI-05": "done",
+      "CI-06": "done",
+      "CI-07": "done"
+    },
+    "verdict": "Slice12 accepted/closed at a101bd44; no parent or integration acceptance.",
+    "minor_ledger_format_correction": "Five CC rows appended a ninth cell without closing delimiter. CDC merges surplus Evidence/Notes prose into Notes, preserving all acceptance cells and historical text; no additional CC pass required.",
+    "helper_sources": {
+      "audit.py": "from pathlib import Path\nimport json,hashlib,base64,subprocess,re\nR=Path('/Users/oubiwann/lab/oxur/nms-copilot');C=R/'.worktrees/cache-player-state-integrity';P=R/'.worktrees/planning';S=P/'project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity';O=Path('/private/tmp/nms-s12-i01-cdc-20261017');rel=str(S.relative_to(P));pre='c5aa19c5f60787e05ec0937f1b25ec3adbed41a0'\ndef git(*a,cwd=P):return subprocess.check_output(['git',*a],cwd=cwd)\ndef sha(b):return hashlib.sha256(b).hexdigest()\nv=json.loads((S/'artifacts/validation.json').read_text());old=json.loads(git('show',pre+':'+rel+'/artifacts/validation.json'))\nassert all(v[k]==value for k,value in old.items())\nfor f in ['artifacts/execution.md','closing-report.md']:assert (S/f).read_bytes().startswith(git('show',pre+':'+rel+'/'+f))\nfor f in ['cc-prompt.md','cc-prompt-iteration01.md','slice-plan.md','artifacts/author-baseline.json','cdc-verification.md','artifacts/cdc-review-receipts.json']:assert (S/f).read_bytes()==git('show',pre+':'+rel+'/'+f)\na=v['attempts']+v['iteration01']['attempts'];assert len(a)==63;channels=0;meta=[]\nfor x in a:\n for n in ['stdout','stderr']:\n  c=x[n];b=base64.b64decode(c['base64'],validate=True);assert len(b)==c['bytes'] and sha(b)==c['sha256'];channels+=1\n assert {'RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR'}<=x['environment_snapshot_before_launch'].keys()\n meta.append({k:x[k] for k in ['index','argv','cwd','command_overrides','environment_snapshot_before_launch','cargo_offline_config','exit_code']})\ni=v['iteration01']['attempts'];assert [x['index'] for x in i]==list(range(1,22)) and [x['absolute_primary_index'] for x in i]==list(range(43,64))\npairs=[]\nfor x,y in [(5,6),(7,8),(9,10),(11,12)]:\n first,second=i[x-1],i[y-1];assert first['exit_code']!=0 and second['exit_code']==0\n assert all(first[k]==second[k] for k in ['argv','cwd','command_overrides','environment_snapshot_before_launch','cargo_offline_config'])\n pairs.append([x,y])\nassert {**i[15]['environment_snapshot_before_launch'],**i[15]['command_overrides']}['RUSTDOCFLAGS']=='-D rustdoc::broken_intra_doc_links'\nharness={}\nfor idx in [3,4,6,8,10,12]:\n out=base64.b64decode(i[idx-1]['stdout']['base64']).decode();h=re.findall(r'test result: \\w+\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored; (\\d+) measured; (\\d+) filtered out',out);harness[idx]={'passed':sum(int(x[0]) for x in h),'failed':sum(int(x[1]) for x in h),'ignored':sum(int(x[2]) for x in h),'harnesses':len(h),'active_harnesses':sum(int(x[0])>0 for x in h)}\nassert [harness[x]['passed'] for x in [3,4,6,8,10,12]]==[38,4,2,737,219,933]\nfor idx in [3,4,6,8,10,12]:assert not harness[idx]['failed'] and not harness[idx]['ignored']\n# Exact existing instructions and criterion cells, independent of surplus trailing evidence separators.\noldrows=[l.split('|')[1:-1] for l in git('show',pre+':'+rel+'/ledger.md').decode().splitlines() if l.startswith('| CI-')];rows=[l.split('|')[1:-1] for l in (S/'ledger.md').read_text().splitlines() if l.startswith('| CI-')];assert len(rows)==7 and all(x[:6]==y[:6] for x,y in zip(oldrows,rows));surplus=[l.split('|')[1].strip() for l in (S/'ledger.md').read_text().splitlines() if l.startswith('| CI-') and len(l.strip().strip('|').split('|'))>8]\ncommits={};source='a101bd44b277f06c75ed7260b470b31cd5510130';chain=[(source,'88c5980a0c0540c06790ca9d218c91c34dded606'),('b857ff9ff8e46e88748f8b7fe84bda9b06117e7d',pre),('7198b61e4298ab8c1d3aef55d10e56f83ade8411','b857ff9ff8e46e88748f8b7fe84bda9b06117e7d')]\nsource_allowed=['crates/nms-cache/src/lib.rs','crates/nms-cache/tests/load_integration.rs'];planning_allowed=[rel+'/'+f for f in ['artifacts/execution.md','artifacts/validation.json','closing-report.md','ledger.md']]\nfor h,parent in chain:\n assert git('rev-parse',h+'^').decode().strip()==parent\n paths=git('diff-tree','--no-commit-id','--name-only','-r',h).decode().splitlines();body=git('show','-s','--format=%B',h).decode().splitlines();assert body.count('Co-authored-by: Codex <noreply@openai.com>')==body.count('Co-authored-by: Billo AI <ai-engineering@billo.systems>')==1\n assert set(paths)==set(source_allowed) if h==source else set(paths)<=set(planning_allowed)\n commits[h]={'parent':parent,'paths':paths,'trailers_once':True}\nassert set(git('diff','--name-only','88c5980',source).decode().splitlines())==set(source_allowed)\nlib=(C/source_allowed[0]).read_text();oldlib=git('show','88c5980:'+source_allowed[0]).decode();assert '\\n'.join(l for l in lib.splitlines() if not l.startswith('//!'))=='\\n'.join(l for l in oldlib.splitlines() if not l.startswith('//!'))\nb=json.loads((S/'artifacts/author-baseline.json').read_text());protected={f:sha((C/f).read_bytes()) for f in b['protected_source_sha256']};assert protected==b['protected_source_sha256'];held={}\nfor f,info in b['held_pins'].items():\n head=git('rev-parse','HEAD',cwd=R/f).decode().strip();assert head==info['head'] and not git('status','--porcelain',cwd=R/f);held[f]={'head':head,'clean':True}\nassert git('rev-parse','HEAD',cwd=C).decode().strip()==source and not git('status','--porcelain',cwd=C)\nassert not git('status','--porcelain',cwd=P)\nprior=json.loads((S/'artifacts/cdc-review-receipts.json').read_text());oldhash=prior['audit']['source_sha256'];changed=[f for f,h in oldhash.items() if sha((C/f).read_bytes())!=h];assert sorted(changed)==source_allowed\n# Read whole non-base64 output for the affected proof/strict docs and actual native observations.\nobs=[]\nfor line in base64.b64decode(i[5]['stderr']['base64']).decode().splitlines():\n if 'MCP_LIVE_OBSERVATION' in line:\n  m=re.search(r'transport=(\\w+) phase=(\\w+) tool=(\\{.*\\}) resource=(\\{.*\\})',line);t,phase,tool,res=m.groups();assert json.loads(tool)==json.loads(res);obs.append({'transport':t,'phase':phase,'tool':json.loads(tool),'resource':json.loads(res)})\nassert len(obs)==9\nresult={'source':source,'parent':chain[0][1],'planning_intake':git('rev-parse','HEAD').decode().strip(),'immutable_prompts_and_review':True,'all_old_JSON_values_and_markdown_prefixes_preserved':True,'primary_attempts':63,'primary_channel_objects_validated':channels,'iteration_attempts':21,'unchanged_host_retry_pairs':pairs,'all_primary_metadata':meta,'current_CC_harnesses':harness,'CC_actual_native_observations':obs,'commits':commits,'held_pins':held,'source_sha256':{f:sha((C/f).read_bytes()) for f in oldhash},'protected21_unchanged':True,'frozen23_unchanged':True,'crate_non_doc_declarations_unchanged':True,'criteria_and_statuses_preserved':True,'ledger_surplus_trailing_separators':surplus,'minor_review_disposition':'CDC normalizes extra trailing table separators in five Evidence/Notes rows; first six acceptance cells preserved, no missing behavior or raw evidence.'}\n(O/'audit.json').write_text(json.dumps(result,indent=2)+'\\n');print(json.dumps({k:result[k] for k in ['source','planning_intake','primary_attempts','primary_channel_objects_validated','current_CC_harnesses','ledger_surplus_trailing_separators']},indent=2))\n",
+      "gates.py": "from pathlib import Path\nimport os,sys,subprocess,json,hashlib,base64,time,re,datetime\nO=Path('/private/tmp/nms-s12-i01-cdc-20261017'); C=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity'); P=C.parent/'planning'; out=O/'gates.json'\ngates=[(['make','format'],C,{}),(['make','lint'],C,{}),(['cargo','test','-p','nms-cache'],C,{}),(['cargo','test','-p','nms-copilot','--all-features','--test','route_cache_integration'],C,{}),(['cargo','test','-p','nms-copilot','--all-features','--test','mcp_live_integration','--','--test-threads=1','--nocapture'],C,{}),(['cargo','test','--all-features','-p','nms-graph','-p','nms-watch','-p','nms-cache','-p','nms-query','-p','nms-copilot','-p','nms-cli'],C,{}),(['cargo','test','-p','nms-copilot','--no-default-features','--lib'],C,{}),(['make','test'],C,{}),(['cargo','build','--workspace','--all-features'],C,{}),(['cargo','test','--workspace','--all-features','--doc'],C,{}),(['cargo','doc','--no-deps','--all-features','-p','nms-core','-p','nms-graph','-p','nms-query','-p','nms-cache','-p','nms-watch','-p','nms-copilot'],C,{}),(['cargo','doc','--no-deps','--all-features','-p','nms-cache'],C,{'RUSTDOCFLAGS':'-D rustdoc::broken_intra_doc_links'}),(['git','diff','--check'],C,{}),(['git','diff','--check'],P,{})]\nfor index in map(int,sys.argv[2:]):\n argv,cwd,over=gates[index-1];env=os.environ.copy(); overrides={'CARGO_NET_OFFLINE':'true',**over};env.update(overrides)\n records=json.loads(out.read_text()) if out.exists() else []\n record={'gate':index,'host_context':sys.argv[1],'argv':argv,'cwd':str(cwd),'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'observed_environment':{k:env.get(k) for k in ['RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TMPDIR']},'command_overrides':overrides,'state':'started'}\n records.append(record);out.write_text(json.dumps(records,indent=2)+'\\n');t=time.monotonic();p=subprocess.run(argv,cwd=cwd,env=env,capture_output=True)\n def channel(b):return {'base64':base64.b64encode(b).decode(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}\n stdout=p.stdout.decode(errors='replace'); stderr=p.stderr.decode(errors='replace');h=[dict(zip(['passed','failed','ignored','measured','filtered_out'],map(int,m))) for m in re.findall(r'test result: \\w+\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored; (\\d+) measured; (\\d+) filtered out',stdout)]\n record.update(state='complete',exit_code=p.returncode,elapsed_seconds=time.monotonic()-t,stdout=channel(p.stdout),stderr=channel(p.stderr),harnesses=h)\n out.write_text(json.dumps(records,indent=2)+'\\n');print(json.dumps({'gate':index,'host_context':sys.argv[1],'exit_code':p.returncode,'harness_count':len(h),'passed':sum(x['passed'] for x in h),'failed':sum(x['failed'] for x in h),'ignored':sum(x['ignored'] for x in h),'stdout_tail':stdout[-500:],'stderr_tail':stderr[-500:]}),flush=True)\n if p.returncode: sys.exit(p.returncode)\n"
+    },
+    "review_edit_diagnostics": [
+      "Closure writer stopped on case-sensitive project YAML version header after writing six records. Corrected header spelling and applied only remaining project update; no duplicate replay/source impact.",
+      "First closure count check filtered only R06 prefix and omitted15 original recovered rows. Corrected verifier to all status-bearing ledger rows: slice7/7 done, arc30/12 done/18 open, project25 open."
+    ]
   }
 }
