@@ -3656,5 +3656,18 @@
       "attempts": 2,
       "final_exit_code": 0
     }
-  ]
+  ],
+  "planning_close_commit": {
+    "commit": "ad71c793ac7ce9f49c994b4c2865c8c7cba198d6",
+    "parent": "3c91b9bb47293f2a416311a4cc5ae7cd7285d158",
+    "paths": [
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/execution.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/artifacts/validation.json",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/closing-report.md",
+      "project01-mvp/arc06-fit-and-finish/slice14-headless-cache-startup/ledger.md"
+    ],
+    "trailers_once": true,
+    "clean_before_receipt": true,
+    "receipt_policy": "This metadata follow-up records the preceding close commit and does not self-reference its future hash."
+  }
 }
