@@ -34,6 +34,11 @@
 //! the source save; it never guesses which cached field should be corrected.
 //! Direct [`serialize::deserialize`] and [`serialize::read_cache`] calls return
 //! errors for legacy or incompatible caches and do not rebuild them.
+//! Direct [`rebuild_model`] calls are infallible and consume caller-supplied
+//! [`CacheData`] without persisted-byte validation or source fallback; callers
+//! constructing that data are responsible for its consistency. The checked
+//! persisted-data entrypoints validate their input, while [`load_or_rebuild`]
+//! additionally reparses the source save after a cache read failure.
 //!
 //! Adding [`CacheError::Incompatible`] can require updates to external code
 //! that exhaustively matches `CacheError`. The nested

@@ -212,6 +212,7 @@ fn current_cache_with_revision(schema: u32, semantic: u32) -> Vec<u8> {
 
 fn mismatched_cache_data(current_reality: u8, address_reality: u8) -> CacheData {
     let mut data = extract_cache_data(&source_model(), 9999);
+    data.active_galaxy = 7;
     data.save_version = 9999;
     let player = data.player_state.as_mut().unwrap();
     player.current_address = nms_core::address::GalacticAddress::from_packed(
@@ -302,20 +303,29 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
         }
 
         let existing_path = dir.path().join("existing.rkyv");
+        let existing_temp_path = existing_path.with_extension("rkyv.tmp");
         let sentinel = b"existing cache must remain byte-for-byte";
         fs::write(&existing_path, sentinel).unwrap();
+        assert!(!existing_temp_path.exists());
         assert!(matches!(
             write_cache(&data, &existing_path),
             Err(CacheError::Serialize(_))
         ));
         assert_eq!(fs::read(&existing_path).unwrap(), sentinel);
+        assert!(!existing_temp_path.exists());
 
         let missing_parent_path = dir.path().join("missing/nested/cache.rkyv");
+        let missing_parent_temp_path = missing_parent_path.with_extension("rkyv.tmp");
+        assert!(!missing_parent_path.parent().unwrap().exists());
+        assert!(!missing_parent_path.exists());
+        assert!(!missing_parent_temp_path.exists());
         assert!(matches!(
             write_cache(&data, &missing_parent_path),
             Err(CacheError::Serialize(_))
         ));
         assert!(!missing_parent_path.parent().unwrap().exists());
+        assert!(!missing_parent_path.exists());
+        assert!(!missing_parent_temp_path.exists());
 
         let mut wrong_schema = bytes.clone();
         wrong_schema[8..12].copy_from_slice(&3_u32.to_le_bytes());
@@ -344,17 +354,25 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
 
 #[test]
 fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
-    for (current_reality, address_reality) in [(0, 9), (9, 0)] {
+    for (current_reality, address_reality, source_reality) in [(0, 9, 9), (9, 0, 0)] {
         let dir = tempfile::tempdir().unwrap();
         let (save_path, cache_path) = paths(&dir);
-        fs::write(&save_path, test_save_json()).unwrap();
+        let source_json = if source_reality == 9 {
+            source_json_active_galaxy_9()
+        } else {
+            test_save_json().to_owned()
+        };
+        fs::write(&save_path, &source_json).unwrap();
         let data = mismatched_cache_data(current_reality, address_reality);
         let invalid_bytes = unchecked_current_envelope(&data);
         fs::write(&cache_path, &invalid_bytes).unwrap();
         set_fresh(&cache_path, &save_path);
         assert!(is_cache_fresh(&cache_path, &save_path));
         assert_eq!(data.save_version, 9999);
+        assert_eq!(data.active_galaxy, 7);
         let cached_player = data.player_state.as_ref().unwrap();
+        assert_eq!(cached_player.current_reality, current_reality);
+        assert_eq!(cached_player.current_address.reality_index, address_reality);
         assert_eq!(
             (
                 cached_player.units,
@@ -368,11 +386,26 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
             Err(CacheError::Deserialize(_))
         ));
 
-        let expected = source_model();
+        let expected = source_model_from_json(&source_json);
         let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
         assert!(!rebuilt.was_cached);
         assert_eq!(rebuilt.save_version, 4720);
         assert_source_semantics_against(&rebuilt.model, &expected);
+        let rebuilt_player = rebuilt.model.player_state.as_ref().unwrap();
+        assert_eq!(
+            rebuilt_player.current_address,
+            nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, source_reality)
+        );
+        assert_eq!(rebuilt_player.current_reality, source_reality);
+        assert_eq!(rebuilt.model.active_galaxy, source_reality);
+        assert_eq!(
+            (
+                rebuilt_player.units,
+                rebuilt_player.nanites,
+                rebuilt_player.quicksilver
+            ),
+            (5_000_000, 10_000, 500)
+        );
         let rewritten_bytes = fs::read(&cache_path).unwrap();
         assert_eq!(
             &rewritten_bytes[..HEADER_LEN],
@@ -380,20 +413,45 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         );
         let rewritten = read_cache(&cache_path).unwrap();
         assert_eq!(rewritten.save_version, 4720);
-        assert_eq!(rebuild_model(&rewritten).systems, expected.systems);
-        assert_eq!(rebuild_model(&rewritten).planets, expected.planets);
-        assert_eq!(rebuild_model(&rewritten).bases, expected.bases);
+        assert_eq!(rewritten.active_galaxy, source_reality);
+        let rewritten_model = rebuild_model(&rewritten);
+        assert_source_semantics_against(&rewritten_model, &expected);
+        let rewritten_player = rewritten_model.player_state.as_ref().unwrap();
         assert_eq!(
-            rebuild_model(&rewritten).player_state,
-            expected.player_state
+            rewritten_player.current_address,
+            nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, source_reality)
         );
-        assert_eq!(rewritten.active_galaxy, expected.active_galaxy);
+        assert_eq!(rewritten_player.current_reality, source_reality);
+        assert_eq!(rewritten_model.active_galaxy, source_reality);
+        assert_eq!(
+            (
+                rewritten_player.units,
+                rewritten_player.nanites,
+                rewritten_player.quicksilver
+            ),
+            (5_000_000, 10_000, 500)
+        );
 
         set_fresh(&cache_path, &save_path);
         let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
         assert!(warm.was_cached);
         assert_eq!(warm.save_version, 4720);
         assert_source_semantics_against(&warm.model, &expected);
+        let warm_player = warm.model.player_state.as_ref().unwrap();
+        assert_eq!(
+            warm_player.current_address,
+            nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, source_reality)
+        );
+        assert_eq!(warm_player.current_reality, source_reality);
+        assert_eq!(warm.model.active_galaxy, source_reality);
+        assert_eq!(
+            (
+                warm_player.units,
+                warm_player.nanites,
+                warm_player.quicksilver
+            ),
+            (5_000_000, 10_000, 500)
+        );
     }
 }
 
@@ -425,27 +483,36 @@ fn valid_independent_player_and_selected_galaxies_roundtrip_with_or_without_play
     for with_player in [true, false] {
         let mut model = dual_galaxy_model(false, false);
         model.set_active_galaxy(7);
-        if with_player {
-            let address = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9);
-            let previous = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 4);
-            let freighter = nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 6);
-            model.player_state = Some(nms_core::player::PlayerState::new(
-                address,
+        let expected_player = with_player.then(|| {
+            nms_core::player::PlayerState::new(
+                nms_core::address::GalacticAddress::from_packed(0x150003AB8C07, 9),
                 9,
-                Some(previous),
-                Some(freighter),
+                Some(nms_core::address::GalacticAddress::from_packed(
+                    0x150003AB8C07,
+                    4,
+                )),
+                Some(nms_core::address::GalacticAddress::from_packed(
+                    0x150003AB8C07,
+                    6,
+                )),
                 7,
                 8,
                 9,
-            ));
-        }
+            )
+        });
+        model.player_state = expected_player.clone();
 
         let data = extract_cache_data(&model, 4720);
         assert_eq!(data.active_galaxy, 7);
         let bytes = serialize(&data).unwrap();
         let decoded = deserialize(&bytes).unwrap();
+        assert_eq!(decoded.player_state, expected_player);
         let rebuilt = rebuild_model(&decoded);
         assert_dual_galaxy_model_with_selected(&rebuilt, with_player, 7);
+        assert_eq!(rebuilt.systems, model.systems);
+        assert_eq!(rebuilt.planets, model.planets);
+        assert_eq!(rebuilt.bases, model.bases);
+        assert_eq!(rebuilt.player_state, expected_player);
         if with_player {
             let player = rebuilt.player_state.as_ref().unwrap();
             assert_eq!(player.current_reality, 9);
@@ -464,7 +531,11 @@ fn valid_independent_player_and_selected_galaxies_roundtrip_with_or_without_play
         let file_data = read_cache(&cache_path).unwrap();
         let file_model = rebuild_model(&file_data);
         assert_dual_galaxy_model_with_selected(&file_model, with_player, 7);
-        assert_eq!(file_data.player_state, decoded.player_state);
+        assert_eq!(file_data.player_state, expected_player);
+        assert_eq!(file_model.player_state, expected_player);
+        assert_eq!(file_model.systems, model.systems);
+        assert_eq!(file_model.planets, model.planets);
+        assert_eq!(file_model.bases, model.bases);
     }
 }
 
