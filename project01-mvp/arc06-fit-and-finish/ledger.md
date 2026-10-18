@@ -113,6 +113,6 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S14 | Initial headless startup cache composition independently accepted through real transports | Seven HC rows, eight literal cases per stdio/HTTP, opposed source/cache identity and exact persisted effects, independent CDC review | correctness-grade | Existing C04/startup cache composition owner after Slice13 | open | Slice14 slice-plan.md / cc-prompt.md / ledger.md | Full remaining normal/live/write-through/unknown/duplicate-producer/history/parent composition required planned15/CDC |
+| R06-S14 | Initial headless startup cache composition independently accepted through real transports | Seven HC rows, eight literal cases per stdio/HTTP, opposed source/cache identity and exact persisted effects, independent CDC review | correctness-grade | Existing C04/startup cache composition owner after Slice13 | open | Slice14 cdc-verification.md / artifacts/cdc-review-receipts.json | Full remaining normal/live/write-through/unknown/duplicate-producer/history/parent composition required planned15/CDC  2026-10-17 four HC rows accepted/three open; iteration01 test/evidence correction, no parent acceptance. |
 
 2026-10-17:32 arc rows/13 done/19 open; seven HC rows open; project25 open.

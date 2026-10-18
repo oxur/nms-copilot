@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.47, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.48, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -379,3 +379,10 @@ After Slice13 accepted16c0787/closure320de77, issue arc06-fit-and-finish/slice14
 Was: broad planned14 full startup/live-cache C04 old/current/warm/write-through both modes, unknown placeholders/promotion, duplicate producers/settings and historical-state questions.14 now details native headless INITIAL startup composition; ALL remainder explicitly required planned15/CDC: normal-mode startup/cache; full both-mode live-cache C04/write-through; unknown-system placeholders/promotion; duplicate producer ownership/settings; broader historical-state questions and final-baseline semantic transition composition once raw-field repair lands. No full C04/R06-R02/R03/M7.4, normal REPL PTY, live-cache or single-producer acceptance inferred. No capability removed or moved out of Project01; remainder remains required before raw repair/original parent acceptance as applicable. Unresolved policy/inquiry still requires CDC/Operator authority and prior agreement. Original export/import/format/docs/distribution/coverage/parent independent/Operator gates unchanged.
 
 Seven HC rows/R06-S14 open:32 arc rows/13 done/19 open, project25 open. Main6d183bde/dependencies/accepted13/Project02 held, later authorized integration/final-baseline drift/composition/release stays CDC/Operator-owned. Version1.47 records Slice13 closure and routine sizing/source-grounded native test delivery plus complete next-owner mapping, with no original scope/criterion/architecture reduction or waiver.
+
+
+## Slice14 initial review / bounded fixture correction — 2026-10-17
+
+CDC reproduces all16 nominal startup witnesses and all14 gates at88b184f:38 cache/4 route/6 native/746 focused/220 no-default/942 workspace; sandbox failure/unchanged host retry and current39 CC attempts/78 channels retained. HC-01/02/03/06 accepted; HC-04/05/07 open. Explicit missing-input prelaunch absence checks are omitted, and HTTP bind retries reuse a cache fixture potentially rewritten before the failed bind. Runtime unchanged/correct against reviewed startup contract, no production repair assigned.
+
+Active arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md, first refinement of five; initial prompt returned/reviewed/preserved. One existing test path/current evidence only; fresh per-attempt fixture ownership and one controlled first-bind-collision stale-cache regression plus absent preconditions, full gates/independent review retained. No scope/architecture/criterion/sequence change, inquiry or waiver. R06-S14 open:32 arc rows/13 done/19 open; project25 open. Planned15/full original composition/independent/Operator/integration/release owners unchanged, main/dependencies/Project02 held. Version1.48 records child review/correction status only.

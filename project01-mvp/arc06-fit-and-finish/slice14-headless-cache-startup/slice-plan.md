@@ -1,6 +1,6 @@
 # Slice14 — native headless cache startup composition
 
-Version:1.0. Created2026-10-17. Status:open, seven HC rows. Two contributors, CC implementation / Sofie CDC independent acceptance; Expedited Mode. Supporting artifacts: artifacts/. Current assignment arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt.md, initial issued2026-10-17 (actual introducing commit follows). No refinement yet; five-refinement budget. Close-set files not precreated.
+Version:1.1. Created2026-10-17. Status:active correction; four HC rows accepted, HC-04/05/07 open. Two contributors, CC implementation / Sofie CDC independent acceptance; Expedited Mode. Supporting artifacts: artifacts/. Current assignment arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md, issued2026-10-17 (actual introducing commit follows). Initial cc-prompt.md returned/reviewed/preserved; first refinement of five. Close-set files not precreated.
 
 ## Useful delivery and exact dependency
 
@@ -24,3 +24,10 @@ Required packet roughly40–55k tokens including full Rust/anti-patterns and nee
 
 
 Actual initial issuance `d333d5518999dc242b4eac89e3902b6c4d84b5c7`, direct parent320de77. Exact ten named planning paths, both trailers once, immutable prompt SHA2561ab0abba4768262aecdb94dbaac1088baea48366244a4c7f53e755146bdbb61b and clean source/main/dependency/planning fences verified. Raw receipt in artifacts/author-baseline.json. Metadata follow-up leaves issued prompt/source unchanged; seven HC rows open for CC implementation and CDC review.
+
+
+## Initial CDC review and Iteration01 — 2026-10-17
+
+Version1.1: current88b184f nominal16 native startup cases and all14 independent gates pass (38/4/6/746/220/942), original sandbox failure/unchanged host retry preserved. HC-01/02/03/06 accepted, HC-04/05/07 open. Required explicit absence preconditions omitted; HTTP bind retries reuse files which an earlier failed-bind child may already rebuild. Concrete current review/source/39 primary attempts/78 channels and full case observations in CDC records. Runtime and README correct/frozen.
+
+Iteration01 changes one existing integration-test path only: prelaunch missing assertions, fresh case fixture per HTTP attempt and one real controlled first-bind-collision stale-cache regression. Four return paths preserve all prior JSON root values/gates/observations and Markdown byte prefixes, accepted statuses protected. Owner/fixture lifetime and expected first-child cache effect/possible0 bind-failure exit resolved in prompt; no inquiry or runtime policy delegated. Full gates unchanged. Author inspected actual constructor/loader-before-bind/readiness/drop APIs and applied OB-17/EH-01/AP-09 plus test behavior/proportionate proof; sketch not executed. Required packet scoped to current correction/source with full mandated Rust/anti-pattern reading, implementation/recovery headroom. R06-S14/parent counts and all15/original independent/Operator/integration owners unchanged.
