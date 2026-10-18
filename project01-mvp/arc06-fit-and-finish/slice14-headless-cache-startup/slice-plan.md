@@ -1,6 +1,6 @@
 # Slice14 — native headless cache startup composition
 
-Version:1.1. Created2026-10-17. Status:active correction; four HC rows accepted, HC-04/05/07 open. Two contributors, CC implementation / Sofie CDC independent acceptance; Expedited Mode. Supporting artifacts: artifacts/. Current assignment arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md, issued2026-10-17 (actual introducing commit follows). Initial cc-prompt.md returned/reviewed/preserved; first refinement of five. Close-set files not precreated.
+Version:1.2. Created2026-10-17. Status:closed; all seven HC rows CDC-accepted at130034e. Two contributors, CC implementation / Sofie CDC independent acceptance; Expedited Mode. Supporting artifacts: artifacts/. Latest assignment arc06-fit-and-finish/slice14-headless-cache-startup/cc-prompt-iteration01.md accepted/closed; no active CC assignment. Initial cc-prompt.md returned/reviewed/preserved; first refinement of five. Close-set files not precreated.
 
 ## Useful delivery and exact dependency
 
@@ -34,3 +34,8 @@ Iteration01 changes one existing integration-test path only: prelaunch missing a
 
 
 Initial independent review / Iteration01 issued in `e5ff6c1094316455f2be38eb7de36024fe624075`, direct parentc3d1f87; exact eight named planning paths and both trailers once verified. Prompt SHA256a1a2d15e011bff623c542c4130b1883e9c53437eed9e6575290fc69ccff6089e immutable. Raw issuance receipt in artifacts/cdc-review-receipts.json. Clean source/main/dependency/planning fences; metadata follow-up changes no source or prompt, four accepted/three open dispositions retained.
+
+
+## Iteration01 acceptance — 2026-10-17
+
+Version1.2: all seven HC rows accepted at130034e (direct parent88b184f); initial/Iteration01 prompts preserved and accepted, no active correction. Fresh full CDC gates38/4/7/747/220/943,16 nominal+controlled failed-bind/stale retry and all59 CC primary attempts/118 channels confirm both findings resolved. Exact source/planning/historical/frozen/held fences checked; final walk/inventory/what-worked/bubble-up in cdc-verification.md. R06-S14 done, arc32/14 done/18 open, project25 open. Planned15 full remainder remains, with consequential owner/complete-state architecture decision held for Operator before dependent implementation. No integration/install/release.

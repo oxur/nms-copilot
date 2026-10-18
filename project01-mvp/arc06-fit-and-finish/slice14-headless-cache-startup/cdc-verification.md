@@ -40,3 +40,36 @@ Supporting artifacts: author-baseline.json, execution.md, validation.json, cdc-r
 
 
 Initial independent review / Iteration01 issued in `e5ff6c1094316455f2be38eb7de36024fe624075`, direct parentc3d1f87; exact eight named planning paths and both trailers once verified. Prompt SHA256a1a2d15e011bff623c542c4130b1883e9c53437eed9e6575290fc69ccff6089e immutable. Raw issuance receipt in artifacts/cdc-review-receipts.json. Clean source/main/dependency/planning fences; metadata follow-up changes no source or prompt, four accepted/three open dispositions retained.
+
+
+## Iteration01 independent review and formal closure — 2026-10-17
+
+**All seven HC rows independently accepted; Slice14 closed at130034e8a6f2e77605058620fea2fb0cae43c608**, direct parent88b184f. Reviewed immutable cc-prompt-iteration01.md SHA256a1a2d15e011bff623c542c4130b1883e9c53437eed9e6575290fc69ccff6089e; issuancee5ff6c1/intake3d632af, CC packete373cd2 and receiptsfb8f6a4/2aed2da. Separate CC implemented; CDC authored no Rust. No waiver/criterion amendment.
+
+### Fresh gates and actual controlled witness
+
+All14 gates freshly independently pass after one restricted native failure and unchanged original-TMPDIR host retry. Fifteen invocations/30 complete raw channel objects, explicit offline override and actual strict cache RUSTDOCFLAGS retained in artifacts/cdc-review-receipts.json iteration01_independent_review. Cache38, route4, native7, focused747 across26 harnesses, no-default220, workspace943 across34 harnesses, format/lint/build/doctests/ordinary docs/strict cache docs/separate source/planning diffs pass. No failed/ignored test in successful gates. Sandbox native2 passed/5 failed (loopback/notify), unchanged host7/0. Existing docs/dependency warnings retained; no hidden timeout change.
+
+Fresh native output independently confirms16 nominal successful cases and one additional controlled successful stale retry, plus one expected first-bind failure stage. Held actual port produces Address already in use; first stale cache has been rewritten to source/current/fresh before bind failure. The next attempt reconstructs original stale input in a different TempDir and succeeds through full real tool/resource/cache/source/cleanup checks. Failure readiness does not rely on child nonzero exit. Actual output/case/effect/stage captured separately from failed primary gate attempts; no extra nominal case or production failure inferred.
+
+### Final seven-row walk
+
+| Row | Final CDC evidence/disposition |
+|---|---|
+|HC-01|done retained and freshly reproduced: actual binary/headless stdio/HTTP/config/readiness/session/tool/resource wiring,16 nominal case coverage; no replacement loader.|
+|HC-02|done retained and current cold sourceC9 versus warm sourceA/cacheB9/Cached-9 exact-byte behavior and complete literal state/file effects pass.|
+|HC-03|done retained and current stale/schema1/semantic1/corrupt literal/error/freshness/source0/9 recovery pass; stale retry now preserves the intended input too.|
+|HC-04|done; explicit absent destination for both missing cases and absent bypass parent before every launch, preserved post-RPC/post-cleanup bytes/absence; HS-F01 resolved.|
+|HC-05|done; per-attempt prepare_startup_case inside HTTP loop, successful complete ownership tuple, failed child/files dropped before new attempt; controlled stale rewrite/new distinct stale retry passes, all existing watcher scenarios/gates intact; HS-F02 resolved.|
+|HC-06|done retained: README byte-identical to88b184f, accurately describes tested existing cache behavior and limits; fresh docs pass.|
+|HC-07|done; original JSON root values/all39 attempts/78 channels and Markdown prefixes preserved; iteration20 attempts/40 channels, combined59/118 all validate, nominal16+one controlled-success/one expected-failure accounting agrees with raw output. Exact source/planning parents/pathsets/trailers/fences and full remainder checked.|
+
+Four prior accepted rows have unchanged production/docs/fixture dependencies and their independent proof remains applicable; fresh full fourteen-gate/nominal native proof now also covers current candidate. Source130034e directly parents88b184f and changes only named integration test. README/other29 current source hashes, all28 protected files and sealed216/360 fixtures unchanged. Planninge373cd2→fb8f6a4→2aed2da directly follows3d632af with only allowed return paths and both trailers once. All old values/criteria/statuses preserved by CC, four accepted rows retained and three open until this CDC disposition. Intake/readback is attestation checked against actual source/test behavior; initial intake prior_rows describes archived initial CC rows, not current ledger, while explicit contract_readback and actual ledger correctly preserve four accepted statuses. No missing evidence/exception needed.
+
+Supporting artifacts: author-baseline.json, execution.md, validation.json, cdc-review-receipts.json. First-class slice plan/ledger/preserved initial and Iteration01 prompts/CC close/this reviewer record remain in slice root. What worked: observe original absent/stale inputs immediately before actual launch, keep successful fixture/client/child owners together, use a real occupied port to prove intermediate cache effects and reset retry inputs, retain honest complete evidence and previous positive controls.
+
+### Bubble-up and current owner
+
+Seven original rows equal seven final accepted rows; initial and Iteration01 assignments returned/reviewed/accepted and preserved, no active CC correction. Slice14 delivers the assigned native headless initial startup cache composition tests and docs as an isolated candidate, with no production change. No silent drop, waiver, architecture or criterion amendment from final correction. R06-S14 done:32 arc rows/14 done/18 open; all25 project rows remain open.
+
+Planned15/CDC still owns normal REPL startup composition, full both-mode live-cache write-through/C04, unknown placeholders/promotion, duplicate producer/settings ownership, broader historical-state questions and future final-baseline semantic transitions after raw repair. Original raw-field/export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04/parent independent/Operator gates remain; main/dependency/Project02 held, candidate unintegrated/uninstalled, later authorized integration/composition/release CDC/Operator-owned. Before implementation of remaining ownership changes, resolve consequential architecture with Operator; source inspection identifies dual producers and incomplete live player-state events, which a cache-write call alone cannot settle. No next implementation prompt is issued by this closure alone.

@@ -113,6 +113,8 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S14 | Initial headless startup cache composition independently accepted through real transports | Seven HC rows, eight literal cases per stdio/HTTP, opposed source/cache identity and exact persisted effects, independent CDC review | correctness-grade | Existing C04/startup cache composition owner after Slice13 | open | Slice14 cdc-verification.md / artifacts/cdc-review-receipts.json | Full remaining normal/live/write-through/unknown/duplicate-producer/history/parent composition required planned15/CDC  2026-10-17 four HC rows accepted/three open; iteration01 test/evidence correction, no parent acceptance. |
+| R06-S14 | Initial headless startup cache composition independently accepted through real transports | Seven HC rows, eight literal cases per stdio/HTTP, opposed source/cache identity and exact persisted effects, independent CDC review | correctness-grade | Existing C04/startup cache composition owner after Slice13 | done | Slice14 cdc-verification.md / artifacts/cdc-review-receipts.json — all seven HC rows accepted at130034e | Full remaining normal/live/write-through/unknown/duplicate-producer/history/parent composition required planned15/CDC  2026-10-17 four HC rows accepted/three open; iteration01 test/evidence correction, no parent acceptance.  Superseding2026-10-17 child closed; no full C04 or parent acceptance. |
 
 2026-10-17:32 arc rows/13 done/19 open; seven HC rows open; project25 open.
+
+2026-10-17 Slice14 closed:32 arc rows/14 done/18 open; every original remaining owner/gate preserved.
