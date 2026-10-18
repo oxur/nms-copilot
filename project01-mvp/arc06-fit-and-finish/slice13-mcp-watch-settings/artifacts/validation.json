@@ -1730,7 +1730,7 @@
     },
     {
       "attempt_index": 15,
-      "gate_index": 6,
+      "gate_index": 11,
       "argv": [
         "cargo",
         "doc",
@@ -2004,7 +2004,8 @@
       "stderr_base64": "",
       "stderr_bytes": 0,
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "harness_counts": []
+      "harness_counts": [],
+      "execution_context": "sandbox"
     },
     {
       "attempt_index": 22,
@@ -2036,7 +2037,8 @@
       "stderr_base64": "",
       "stderr_bytes": 0,
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "harness_counts": []
+      "harness_counts": [],
+      "execution_context": "sandbox"
     },
     {
       "attempt_index": 23,
@@ -2068,7 +2070,8 @@
       "stderr_base64": "",
       "stderr_bytes": 0,
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "harness_counts": []
+      "harness_counts": [],
+      "execution_context": "sandbox"
     }
   ],
   "gate_recipe": [
