@@ -301,6 +301,23 @@ For stdio transport, stdout carries MCP protocol messages and diagnostics go to 
 
 The MCP server exposes all query capabilities as tools — your AI copilot can search planets, plan routes, convert coordinates, and track your position as you play. The save file is read only; NMS Copilot does not edit it.
 
+Headless stdio and HTTP startup use the configured cache for the selected save. Caching is enabled by default, with a separate cache for each save. By default, the cache is stored at `~/.nms-copilot/<account>/<save-name>/galaxy.rkyv`; set `cache.path` to use an explicit path:
+
+```toml
+[cache]
+enabled = true
+path = "/path/to/copilot-cache.rkyv"
+```
+
+The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. A stale, incompatible, or corrupt cache is rebuilt from the save. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
+
+```bash
+nms-copilot --headless --no-cache --save /path/to/save.hg
+nms-copilot --headless --no-cache --http 127.0.0.1:5099 --save /path/to/save.hg
+```
+
+The cache preserves the selected galaxy separately from the player's physical location. The `where_am_i` tool and `nms://player/location` resource describe the physical player system. At startup, an unnamed system may be added to the in-memory model when the save has no discovery record for that location; this does not establish unknown-system resolution or later promotion behavior.
+
 For the current location, call the `where_am_i` tool or read `nms://player/location`. A client can subscribe to that resource with `resources/subscribe`; when an enabled watcher ingests a save change, the server sends `notifications/resources/updated` for the location URI. Read the resource again to fetch the current location.
 
 Save watching is controlled by `~/.nms-copilot/config.toml` and takes effect at startup:
@@ -319,7 +336,7 @@ enabled = false
 debounce_ms = 500
 ```
 
-The setting applies to headless stdio and HTTP servers and to both normal-mode file watchers. The selected save still loads at startup and MCP serves that in-memory model when watching is disabled. Full startup-cache/live-update behavior, unknown-system resolution, and composition when both normal-mode producers are active remain planned follow-up work.
+The setting applies to headless stdio and HTTP servers and to both normal-mode file watchers. The selected save still loads at startup and MCP serves that in-memory model when watching is disabled. The startup cache behavior described above is covered for headless stdio and HTTP. Equivalent end-to-end coverage for normal REPL mode and live-cache write-through, unknown-system resolution or promotion, and composition when both normal-mode producers are active remain planned follow-up work.
 
 ---
 
