@@ -100,3 +100,74 @@ No row is accepted or closed by CC. The candidate remains unintegrated and unins
 - Source commit `88c5980a0c0540c06790ca9d218c91c34dded606` directly parents `239313cc109ca908f43f34ae5e04ba7e5487161f`; exact four-path allowlist and trailers verified. Candidate is clean.
 - Planning close-set commit `cb57370e12d006e8af45859cfca2365e3b9822e4` directly parents intake `72b23fb78848d9e231b423971cb11df9528e2404`; exact four named planning paths and trailers verified. A first `git commit --only` attempt occurred before untracked artifacts were staged and exited1 with pathspec errors; no files changed. Staging only the four named paths and repeating the exact commit succeeded. This failure and recovery are recorded in validation.
 - Planning receipt follow-up `3d7e04cd5b8b7b53a352816553888a1cf654080d` directly parents `cb57370e12d006e8af45859cfca2365e3b9822e4` and changes the same four allowed paths. Planning inventory correction `a610828ea6ba90b5c565f78602c535dfd4855f15` directly parents `3d7e04cd5b8b7b53a352816553888a1cf654080d` and changes only validation plus the close report, a subset of the same allowlist. Each commit carries both required trailers once. All seven rows remain open for CDC; no integration or release occurred.
+
+
+## Iteration01 coherent intake and contract readback — before source edits
+
+- Active assignment `project01-mvp/arc06-fit-and-finish/slice12-cache-player-state-integrity/cc-prompt-iteration01.md`, SHA-256 `d85d6dd54aa8ca765c2fdccf4fd3a9ed07e9c9859b10e872a49cebebfb6f6b20`; issued by `afaffc450becb5c1a7ab30cdae5e94fd4b7369ce` (parent `ae8ac5f9483ab3819251f6cddf37643a979a0fc1`). Actual planning intake HEAD is `c5aa19c5f60787e05ec0937f1b25ec3adbed41a0`, directly after the issuance commit; its receipt-only delta does not alter the prompt/source. Candidate `.worktrees/cache-player-state-integrity` / `codex/cache-player-state-integrity` is clean at `88c5980a0c0540c06790ca9d218c91c34dded606`, direct parent `239313cc109ca908f43f34ae5e04ba7e5487161f`.
+- Required full/section text and pinned source extents are enumerated in `validation.json.iteration01.reading_coverage`. All specified reading and structured queries are complete before source edits.
+- All 21 original protected baseline hashes and all 25 current CDC source hashes match `88c5980`; the four original author-allowed hashes are historical and legitimately differ after the initial implementation. Both sealed fixture lengths/digests match, and all eight held worktrees are clean at their recorded heads.
+- The existing CC archive contains **42** attempts / **84** byte- and SHA-verified channel objects: 36 ordered gate attempts (including retries) and six supplemental diff checks. Its old summary says 40; this correction will supersede that claim without rewriting prior values. CDC receipt contains 15 complete replays / 30 validated channels. Every replay's argv, cwd, UTC, five-variable environment, override, exit and harness metadata was inspected; complete cache, route, and successful native gate outputs were decoded. Native sandbox failure and unchanged authorized-host success remain separate.
+- Prior planning chain: `cb57370` → `3d7e04c` → `a610828` → `ae8ac5f`; issuance `afaffc4` and actual intake HEAD `c5aa19c` are separately identified.
+
+### Contract readback before source edits
+
+1. PI-F01 adds only the exact `.rkyv.tmp` absence observations around rejected writes, including missing parent/destination/temp; keep both mismatch directions, rejections, and sentinel equality.
+2. PI-F02 uses an untouched literal expected `PlayerState` and original fixture system/planet/base maps for each codec/rebuild and file/rebuild result. A codec output cannot validate another codec output because both may lose the same fields. Keep physical/current9, selected7, previous4, freighter6, funds7/8/9, `None`, and existing qualified/index controls.
+3. PI-F03 sets bad cached selection7 and pairs `(current,address)=(0,9)` with source reality9, `(9,0)` with source reality0. Assert actual freshness and `read_cache` rejection first. Rebuilt, rewritten and deterministic warm results each match complete source model/maps and literal source physical/current/selected reality, version4720 and funds.
+4. Serialize continues returning existing `Serialize` before encoding/filesystem effects. Deserialize order remains envelope/revision checks, aligned checked decode, then logical player duplicate validation as existing `Deserialize`. The test-only unchecked rkyv envelope is required to exercise a valid contradictory archive through readers while public serialize rejects it. Runtime is frozen.
+5. Freshness remains an mtime test; existing loader reparses source on read rejection. Parse failure preserves rejected bytes; `no_cache` skips cache I/O. Direct `rebuild_model(&CacheData)` remains infallible over caller-supplied data and outside persisted-byte validation; document that boundary in `lib.rs`. Schema/semantic remain2/2 and sealed controls stay unchanged.
+6. CI-04/05 retain CDC acceptance at `88c5980`; CI-01/02/03/06/07 remain open. Planned13 and original parent/raw-field/export/import/format/docs/distribution/coverage/independent/Operator owners stay in force. No investigation, waiver, policy change, integration or release is authorized.
+7. Correct prior inventory is42 attempts/84 channels, not40. New validation entries append; every attempt is recorded before launch with exact environment/overrides and separate raw channels.
+
+`source_edit_started` is false at this pre-edit record.
+
+
+## Iteration01 implementation and proof — 2026-10-17
+
+The assigned delta changes exactly `crates/nms-cache/tests/load_integration.rs` and `crates/nms-cache/src/lib.rs`; the source commit `a101bd44b277f06c75ed7260b470b31cd5510130` directly parents `88c5980a0c0540c06790ca9d218c91c34dded606` and has the two required co-author trailers once each. The candidate is clean after commit. All21 protected baseline hashes still match; of the review's current25 source hashes,23 remain byte-identical and the two prescribed paths are the only changed hashes. `serialize.rs`, `freshness.rs`, CacheData, errors/APIs, schema2/semantic2 and all other source remain frozen.
+
+PI-F01 now asserts the exact `.rkyv.tmp` path absent before/after a rejected existing-destination write and asserts the missing parent, destination and temporary path absent before/after failure. Existing byte-for-byte sentinel, both mismatch directions, reader errors and precedence controls remain. PI-F02 keeps the literal expected optional PlayerState separate from codec results and compares decoded/file data and both rebuilt models against it; complete systems/planets/bases maps compare to the original fixture model. PI-F03 gives bad caches selected galaxy7 and uses source reality9 for bad `(current,address)=(0,9)`, source reality0 for `(9,0)`. It verifies fresh status and direct rejection before fallback, then compares rebuild, rewritten cache and deterministic warm model to full source semantics and explicit address/reality/view/currency/version literals. PI-F04 adds the direct infallible `rebuild_model(&CacheData)` caller-owned consistency boundary in crate docs.
+
+## Iteration01 validation and inventory correction
+
+All14 prescribed gates passed on the candidate. Attempts are in `validation.json.iteration01.attempts` with exact child argv/cwd, five-variable environment, separate overrides/effective flag, offline-config observation, separate stdout/stderr base64, byte lengths, SHA-256, exit, elapsed time and parsed harness counts. Three sandbox-only native failures (gate5 loopback/notify, focused gate6 watcher, no-default gate7 watcher, and make-test gate8 watcher) were preserved; each was retried with unchanged child argv/cwd/environment/overrides and original `TMPDIR`, and each authorized-host retry passed. Strict cache documentation used the actual `RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links`. Ordinary workspace documentation warnings and the existing proc-macro dependency advisory remain in stderr. No ignored tests, timeout changes or gate reductions.
+
+| Gate | Result |
+|---:|---|
+|1 `make format`|pass|
+|2 `make lint`|pass|
+|3 cache tests|38 passed|
+|4 route-cache integration|4 passed|
+|5 native MCP integration|2 passed on unchanged host retry; sandbox failure retained|
+|6 focused six-package suite|737 passed across21 active /26 total harnesses on unchanged host retry|
+|7 copilot no-default library|219 passed on unchanged host retry|
+|8 `make test`|933 passed across24 active /34 total harnesses on unchanged host retry|
+|9 workspace all-feature build|pass|
+|10 workspace doc tests|pass, zero tests across nine harnesses|
+|11 selected workspace docs|pass; existing warnings disclosed|
+|12 strict nms-cache docs|pass with actual strict flag|
+|13 candidate `git diff --check`|pass|
+|14 planning `git diff --check`|pass|
+
+The predecessor archive has42 primary command attempts and84 valid raw channel objects:36 ordered gate attempts including retries and six supplemental diff checks. Earlier report/root return/row evidence saying40 is retained as history and superseded here. Iteration01 currently adds18 prompt-gate invocations (14 ordered gates plus four unchanged host retries); the final post-close-record planning diff check is recorded as a further invocation before the return is committed. The final total is calculated from the preserved attempt arrays below, counting distinct commands and not duplicate summaries.
+
+
+## Iteration01 inventory correction
+
+The prior attempts array remains42 invocations/84 channels. The Iteration01 array contains18 already completed attempts/36 channels, followed by this final post-close-artifact planning diff check as attempt19. The resulting actual total is61 distinct primary attempts and122 raw channel objects. All previous failures/retries remain separate objects; no summary duplicate is counted.
+
+
+## Superseding diff-check routing correction
+
+The invocation labeled `gate19-final-planning-diff-check` used the candidate source worktree because the temporary runner routed only the original gate14 label to planning. Its actual command/cwd/raw channels are preserved in validation and prove an additional clean source diff check. It does not count as the final planning diff check. The corrected runner now targets `.worktrees/planning`; that separate invocation is attempt20. The resulting total is computed from arrays:42 prior +20 Iteration01 =62 primary invocations and124 raw channel objects. This supersedes the preceding61/122 estimate, preserving its text and command record.
+
+
+## Final superseding inventory
+
+The arrays now contain62 distinct primary invocations and124 raw stdout/stderr objects:42 historical plus20 Iteration01. All124 primary objects pass base64 decoding, exact byte-length and SHA-256 checks. The historical reviewer population is separate:15 replays/30 valid raw channels. The prior40 summary remains untouched as historical and is superseded by this actual array count. Gate19 is an additional successful source-worktree diff check caused by the runner-routing correction; gate20 is the successful final planning-worktree diff check.
+
+
+## Final count after last planning diff check
+
+After the final planning diff check (attempt21), the arrays contain63 distinct primary invocations and126 raw channels:42 preserved historical attempts plus21 Iteration01 attempts. Every raw channel validates. This supersedes the prior62/124 estimate; the actual count is calculated from the arrays. The final planning diff check passed in `.worktrees/planning`. No validation command remains outstanding.
