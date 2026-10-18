@@ -26,7 +26,7 @@ The positive transport control uses same-packed systems in realities0/9, physica
 
 ## Final validation
 
-All14 required gates passed against the final source. The complete 36-attempt history, exact launch metadata, separate stdout/stderr channels as base64/byte count/SHA-256, and per-harness counts are in `artifacts/validation.json`.
+All14 required gates passed against the final source. The complete 40-command-attempt history (two ordered gate passes, sandbox retries, and final planning diff-check receipts), exact launch metadata, separate stdout/stderr channels as base64/byte count/SHA-256, and per-harness counts are in `artifacts/validation.json`.
 
 | Gate | Final result |
 |---:|---|

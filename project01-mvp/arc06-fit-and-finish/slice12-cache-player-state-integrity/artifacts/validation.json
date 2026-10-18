@@ -3285,6 +3285,47 @@
         "ignored": 0,
         "filtered": 0
       }
+    },
+    {
+      "label": "final-artifact-count-diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "command_overrides": {},
+      "environment_snapshot_before_launch": {
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"
+      },
+      "cargo_offline_config": [],
+      "state": "complete",
+      "index": 41,
+      "started_utc": "2026-10-18T00:17:20.085841+00:00",
+      "exit_code": 0,
+      "seconds": 0.024689,
+      "finished_utc": "2026-10-18T00:17:20.115819+00:00",
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "test_harnesses": [],
+      "test_totals": {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
     }
   ],
   "gate_results": [
@@ -3667,7 +3708,7 @@
     "CI-04": "Malformed source leaves contradictory bytes unchanged for cache-enabled and no_cache paths. Existing no-cache, stale-cache and write-failure tests pass.",
     "CI-05": "Static existing main::load_model caller is shared before mode branching. Component, route, live native, focused, no-default and workspace gates pass. Native cached transport remains unclaimed.",
     "CI-06": "Existing Serialize/Deserialize errors, compatibility precedence, 2/2 revisions, public signatures/types/layout, protected hashes and sealed fixture hashes preserved; docs and strict cache docs pass.",
-    "CI-07": "Prompt/readback, all36 gate attempts and raw channels, source/planning allowlists, exact source parent/pathset/trailers and held worktrees recorded."
+    "CI-07": "Prompt/readback, all40 command attempts and raw channels, gate order, source/planning allowlists, exact parents/pathsets/trailers and held worktrees recorded."
   },
   "return": {
     "cc_disposition": "proposed-done for independent CDC review",
@@ -3683,7 +3724,8 @@
     },
     "parent_acceptance_claimed": false,
     "integration_install_release": "not performed",
-    "unresolved_owner": "planned13/CDC and original parent acceptance gates"
+    "unresolved_owner": "planned13/CDC and original parent acceptance gates",
+    "validation_attempt_count": 40
   },
   "final_planning_diff_check_after_close_artifact_edits": {
     "attempt_index": 39,
