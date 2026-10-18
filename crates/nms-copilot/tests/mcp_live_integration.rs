@@ -1708,13 +1708,26 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
 
 #[cfg(unix)]
 fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &StartupCaseFiles) {
-    if files.initial_cache.is_some() {
-        assert_eq!(
+    match files.initial_cache.as_ref() {
+        Some(_) => assert_eq!(
             nms_cache::is_cache_fresh(&files.cache, &files.save),
             !matches!(case, StartupCacheCase::StaleCurrent),
             "{} freshness immediately before child launch",
             case.label()
-        );
+        ),
+        None => {
+            assert!(
+                !files.cache.exists(),
+                "{} cache is absent immediately before child launch",
+                case.label()
+            );
+            if matches!(case, StartupCacheCase::BypassMissing) {
+                assert!(
+                    !files.cache.parent().unwrap().exists(),
+                    "bypass_missing cache parent is absent immediately before child launch"
+                );
+            }
+        }
     }
 }
 
@@ -1815,33 +1828,95 @@ fn run_stdio_cache_case(case: StartupCacheCase) {
 
 #[cfg(all(unix, feature = "http"))]
 fn run_http_cache_case(case: StartupCacheCase) {
-    let files = prepare_startup_case(case);
+    run_http_cache_case_with_first_addr(case, None);
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_cache_case_with_first_addr(
+    case: StartupCacheCase,
+    first_addr: Option<SocketAddr>,
+) -> bool {
     let mut last_error = String::new();
-    let mut client = None;
-    let mut process = None;
-    for _attempt in 0..3 {
-        let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve loopback port");
-        let addr = listener.local_addr().expect("reserved socket address");
-        drop(listener);
+    let mut winning = None;
+    let mut failed_attempt_path: Option<PathBuf> = None;
+    let mut forced_collision_seen = false;
+    for attempt in 0..3 {
+        let files = prepare_startup_case(case);
+        let attempt_path = files._dir.path().to_path_buf();
+        if let Some(failed_path) = &failed_attempt_path {
+            assert_ne!(
+                &attempt_path,
+                failed_path,
+                "{} bind retry owns newly prepared case files",
+                case.label()
+            );
+        }
+        let addr = if attempt == 0 {
+            if let Some(addr) = first_addr {
+                addr
+            } else {
+                let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve loopback port");
+                let addr = listener.local_addr().expect("reserved socket address");
+                drop(listener);
+                addr
+            }
+        } else {
+            let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve loopback port");
+            let addr = listener.local_addr().expect("reserved socket address");
+            drop(listener);
+            addr
+        };
         assert_startup_freshness_precondition(case, &files);
         let mut child =
             HttpChild::spawn_cached_startup(&files.save, &files.cache, addr, case.no_cache());
         match wait_health(addr, &mut child) {
             Ok(()) => {
-                process = Some(child);
-                client = Some(HttpClient::new(addr));
+                winning = Some((files, child, HttpClient::new(addr)));
                 break;
             }
-            Err(message) if message.contains("bind") => last_error = message,
+            Err(message) if message.contains("bind") => {
+                if attempt == 0 && first_addr.is_some() {
+                    assert!(
+                        matches!(case, StartupCacheCase::StaleCurrent),
+                        "controlled first-bind collision uses stale_current"
+                    );
+                    assert!(
+                        message.contains("bind"),
+                        "forced first-bind attempt reports actual bind diagnostic: {message}"
+                    );
+                    let effect = assert_cache_effect(case, &files);
+                    assert!(
+                        nms_cache::is_cache_fresh(&files.cache, &files.save),
+                        "failed first-bind child rewrote stale cache before listener bind"
+                    );
+                    assert_source_bytes_unchanged(&files);
+                    eprintln!(
+                        "MCP_CACHE_BIND_RETRY transport=http case={} stage=forced_collision diagnostic={:?} cache_effect={} rewritten_cache_fresh=true",
+                        case.label(),
+                        message,
+                        effect
+                    );
+                    failed_attempt_path = Some(attempt_path);
+                    forced_collision_seen = true;
+                }
+                last_error = message;
+                drop(child);
+                drop(files);
+            }
             Err(message) => panic!(
                 "{} HTTP child did not become healthy: {message}",
                 case.label()
             ),
         }
     }
-    let mut process =
-        process.unwrap_or_else(|| panic!("{} HTTP bind collisions: {last_error}", case.label()));
-    let mut client = client.expect("HTTP client after health readiness");
+    let (files, mut process, mut client) =
+        winning.unwrap_or_else(|| panic!("{} HTTP bind collisions: {last_error}", case.label()));
+    assert_eq!(
+        forced_collision_seen,
+        first_addr.is_some(),
+        "{} forced first-bind collision observed before successful startup",
+        case.label()
+    );
     let initialized = client.post_without_session(initialize_request());
     assert_eq!(initialized.status, 200, "{} initialize", case.label());
     let session = initialized
@@ -1889,6 +1964,7 @@ fn run_http_cache_case(case: StartupCacheCase) {
     process.kill_and_wait();
     assert_cache_effect(case, &files);
     assert_source_bytes_unchanged(&files);
+    forced_collision_seen
 }
 
 #[cfg(unix)]
@@ -1905,4 +1981,20 @@ fn test_headless_http_cache_startup_matrix() {
     for case in StartupCacheCase::ALL {
         run_http_cache_case(case);
     }
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_headless_http_stale_cache_retries_with_original_inputs_after_bind_collision() {
+    let occupied = TcpListener::bind(("127.0.0.1", 0)).expect("occupy controlled MCP port");
+    let addr = occupied
+        .local_addr()
+        .expect("read controlled occupied MCP address");
+    let collision_seen =
+        run_http_cache_case_with_first_addr(StartupCacheCase::StaleCurrent, Some(addr));
+    assert!(
+        collision_seen,
+        "controlled first-bind failure occurred before successful stale-cache retry"
+    );
+    drop(occupied);
 }
