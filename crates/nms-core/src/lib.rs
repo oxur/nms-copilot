@@ -11,7 +11,7 @@ pub mod system;
 
 pub use address::{AddressParseError, GalacticAddress, PortalAddress, PortalParseError};
 pub use biome::{Biome, BiomeParseError, BiomeSubType};
-pub use delta::{PlayerMoved, SaveDelta};
+pub use delta::{PlayerMoved, SaveDelta, SaveUpdate};
 pub use discovery::{Discovery, DiscoveryParseError, DiscoveryRecord};
 pub use galaxy::{Galaxy, GalaxyType, GalaxyTypeParseError};
 pub use glyph::{Glyph, GlyphParseError};

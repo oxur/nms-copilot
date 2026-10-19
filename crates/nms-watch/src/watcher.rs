@@ -4,14 +4,18 @@
 //! Includes robustness features: file stability checks, consecutive
 //! failure counting, and graceful error recovery.
 
+use std::io::Write;
 use std::path::{Path, PathBuf};
-use std::sync::mpsc;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, mpsc};
 use std::thread;
+use std::thread::JoinHandle;
 use std::time::Duration;
 
-use notify_debouncer_mini::{DebouncedEventKind, new_debouncer};
+use notify_debouncer_mini::{DebouncedEventKind, Debouncer, new_debouncer};
 
-use nms_core::delta::SaveDelta;
+use nms_core::delta::{SaveDelta, SaveUpdate};
+use nms_core::player::PlayerState;
 
 use crate::delta::compute_delta;
 use crate::error::WatchError;
@@ -29,8 +33,37 @@ const FILE_STABILITY_CHECK_MS: u64 = 100;
 pub struct WatchHandle {
     /// Receive deltas from the watcher thread.
     pub receiver: mpsc::Receiver<SaveDelta>,
-    /// Keep the debouncer alive (dropping it stops watching).
-    _debouncer: notify_debouncer_mini::Debouncer<notify::RecommendedWatcher>,
+    /// Owns the debouncer and joined worker lifetime.
+    _owner: WatchOwner,
+}
+
+/// Handle to a watcher that emits complete parsed save updates.
+pub struct WatchUpdateHandle {
+    /// Receive complete parsed updates in source order.
+    pub receiver: mpsc::Receiver<SaveUpdate>,
+    /// Owns the debouncer and joined worker lifetime.
+    _owner: WatchOwner,
+}
+
+struct WatchOwner {
+    debouncer: Option<Debouncer<notify::RecommendedWatcher>>,
+    shutdown: Arc<AtomicBool>,
+    worker: Option<JoinHandle<()>>,
+}
+
+impl Drop for WatchOwner {
+    fn drop(&mut self) {
+        drop(self.debouncer.take());
+        self.shutdown.store(true, Ordering::Release);
+        if let Some(worker) = self.worker.take()
+            && worker.join().is_err()
+        {
+            let _ = writeln!(
+                std::io::stderr().lock(),
+                "Warning: save watcher worker panicked during shutdown"
+            );
+        }
+    }
 }
 
 /// Configuration for the file watcher.
@@ -78,6 +111,49 @@ fn event_matches_save_path(event_path: &Path, save_path: &Path) -> bool {
     }
 }
 
+/// Complete supported state derived from one parse of the selected save.
+struct SourceSnapshot {
+    snapshot: SaveSnapshot,
+    player_state: PlayerState,
+    save_version: u32,
+}
+
+impl SourceSnapshot {
+    fn from_file(path: &Path) -> Result<Self, Box<dyn std::error::Error>> {
+        let save = nms_save::parse_save_file(path)?;
+        Ok(Self {
+            snapshot: SaveSnapshot::from_save(&save),
+            player_state: save.to_core_player_state(),
+            save_version: save.version,
+        })
+    }
+}
+
+enum UpdateSender {
+    Delta(mpsc::Sender<SaveDelta>),
+    Full(mpsc::SyncSender<SaveUpdate>),
+}
+
+fn send_full_update(
+    sender: &mpsc::SyncSender<SaveUpdate>,
+    shutdown: &AtomicBool,
+    mut update: SaveUpdate,
+) -> bool {
+    loop {
+        if shutdown.load(Ordering::Acquire) {
+            return false;
+        }
+        match sender.try_send(update) {
+            Ok(()) => return true,
+            Err(mpsc::TrySendError::Disconnected(_)) => return false,
+            Err(mpsc::TrySendError::Full(pending)) => {
+                update = pending;
+                thread::sleep(Duration::from_millis(10));
+            }
+        }
+    }
+}
+
 /// Start watching a save file for changes.
 ///
 /// Returns a `WatchHandle` whose `receiver` yields `SaveDelta` values
@@ -89,16 +165,48 @@ fn event_matches_save_path(event_path: &Path, save_path: &Path) -> bool {
 /// `WatchError::ParseError` if the initial parse fails, or
 /// `WatchError::NotifyError` if the file watcher cannot be created.
 pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
+    let (sender, receiver) = mpsc::channel();
+    let owner = start_watching_inner(config, UpdateSender::Delta(sender))?;
+    Ok(WatchHandle {
+        receiver,
+        _owner: owner,
+    })
+}
+
+/// Start watching a save and emit complete supported player updates.
+///
+/// Each event pairs the existing additive atlas delta with the complete
+/// supported player state and source version from one parse. The capacity-one
+/// queue preserves source order during normal operation and retains a pending
+/// event while the receiver catches up. Dropping this handle stops and joins
+/// the worker. This library API does not coordinate application cache writers.
+///
+/// # Errors
+///
+/// Returns [`WatchError::SaveNotFound`] when the path is missing,
+/// [`WatchError::ParseError`] when the initial save cannot be parsed, or
+/// [`WatchError::NotifyError`] when notification or worker setup fails.
+pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle, WatchError> {
+    let (sender, receiver) = mpsc::sync_channel(1);
+    let owner = start_watching_inner(config, UpdateSender::Full(sender))?;
+    Ok(WatchUpdateHandle {
+        receiver,
+        _owner: owner,
+    })
+}
+
+fn start_watching_inner(
+    config: WatchConfig,
+    sender: UpdateSender,
+) -> Result<WatchOwner, WatchError> {
     if !config.save_path.exists() {
         return Err(WatchError::SaveNotFound(config.save_path));
     }
 
-    let (delta_tx, delta_rx) = mpsc::channel();
     let save_path = config.save_path.clone();
 
-    // Take an initial snapshot for diffing
-    let initial_snapshot =
-        SaveSnapshot::from_file(&save_path).map_err(|e| WatchError::ParseError(e.to_string()))?;
+    let initial_source =
+        SourceSnapshot::from_file(&save_path).map_err(|e| WatchError::ParseError(e.to_string()))?;
 
     // Channel for notify events (internal)
     let (notify_tx, notify_rx) = mpsc::channel();
@@ -121,66 +229,106 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
         .watch(&watch_dir, notify::RecursiveMode::NonRecursive)
         .map_err(|e| WatchError::NotifyError(e.to_string()))?;
 
-    // Background thread: receive notify events, re-parse, diff, send deltas
+    // Background worker owns the parse baseline and all event processing.
+    let shutdown = Arc::new(AtomicBool::new(false));
+    let shutdown_worker = Arc::clone(&shutdown);
     let save_path_bg = save_path.clone();
-    thread::spawn(move || {
-        let mut snapshot = initial_snapshot;
-        let mut consecutive_failures: usize = 0;
+    let worker = thread::Builder::new()
+        .name("nms-save-watch".into())
+        .spawn(move || {
+            let mut source = initial_source;
+            let mut consecutive_failures: usize = 0;
 
-        for events in notify_rx {
-            let events = match events {
-                Ok(evts) => evts,
-                Err(_) => continue,
-            };
+            while !shutdown_worker.load(Ordering::Acquire) {
+                let events = match notify_rx.recv_timeout(Duration::from_millis(100)) {
+                    Ok(events) => events,
+                    Err(mpsc::RecvTimeoutError::Timeout) => continue,
+                    Err(mpsc::RecvTimeoutError::Disconnected) => break,
+                };
+                let events = match events {
+                    Ok(evts) => evts,
+                    Err(_) => continue,
+                };
 
-            // Only react if our save file was modified
-            let relevant = events.iter().any(|e| {
-                e.kind == DebouncedEventKind::Any && event_matches_save_path(&e.path, &save_path_bg)
-            });
-            if !relevant {
-                continue;
-            }
-
-            // File stability check: ensure file size is stable before parsing
-            if !is_file_stable(&save_path_bg) {
-                continue;
-            }
-
-            // Re-parse save file
-            match SaveSnapshot::from_file(&save_path_bg) {
-                Ok(new_snapshot) => {
-                    consecutive_failures = 0;
-                    let delta = compute_delta(&snapshot, &new_snapshot);
-
-                    if !delta.is_empty() && delta_tx.send(delta).is_err() {
-                        break;
-                    }
-
-                    snapshot = new_snapshot;
+                // Only react if our save file was modified
+                let relevant = events.iter().any(|e| {
+                    e.kind == DebouncedEventKind::Any
+                        && event_matches_save_path(&e.path, &save_path_bg)
+                });
+                if !relevant {
+                    continue;
                 }
-                Err(e) => {
-                    consecutive_failures += 1;
-                    if consecutive_failures == MAX_CONSECUTIVE_FAILURES {
-                        eprintln!(
-                            "Warning: {MAX_CONSECUTIVE_FAILURES} consecutive parse failures. \
+
+                // File stability check: ensure file size is stable before parsing
+                if !is_file_stable(&save_path_bg) {
+                    continue;
+                }
+
+                // Re-parse save file
+                match SourceSnapshot::from_file(&save_path_bg) {
+                    Ok(new_source) => {
+                        consecutive_failures = 0;
+                        let delta = compute_delta(&source.snapshot, &new_source.snapshot);
+                        let changed = !delta.is_empty()
+                            || source.player_state != new_source.player_state
+                            || source.save_version != new_source.save_version;
+
+                        let sent = match &sender {
+                            UpdateSender::Delta(delta_tx) if !delta.is_empty() => {
+                                delta_tx.send(delta).is_ok()
+                            }
+                            UpdateSender::Delta(_) => true,
+                            UpdateSender::Full(update_tx) if changed => send_full_update(
+                                update_tx,
+                                &shutdown_worker,
+                                SaveUpdate {
+                                    delta,
+                                    player_state: new_source.player_state.clone(),
+                                    save_version: new_source.save_version,
+                                },
+                            ),
+                            UpdateSender::Full(_) => true,
+                        };
+                        if !sent {
+                            break;
+                        }
+
+                        source = new_source;
+                    }
+                    Err(e) => {
+                        consecutive_failures += 1;
+                        if consecutive_failures == MAX_CONSECUTIVE_FAILURES {
+                            eprintln!(
+                                "Warning: {MAX_CONSECUTIVE_FAILURES} consecutive parse failures. \
                              Save file may be corrupt or format changed: {e}"
-                        );
+                            );
+                        }
+                        // Keep watching -- the next save might succeed
                     }
-                    // Keep watching -- the next save might succeed
                 }
             }
-        }
-    });
+        })
+        .map_err(|e| WatchError::NotifyError(format!("failed to start watcher worker: {e}")))?;
 
-    Ok(WatchHandle {
-        receiver: delta_rx,
-        _debouncer: debouncer,
+    Ok(WatchOwner {
+        debouncer: Some(debouncer),
+        shutdown,
+        worker: Some(worker),
     })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::sync::Mutex;
+
+    static NATIVE_WATCH_TEST_LOCK: Mutex<()> = Mutex::new(());
+
+    fn native_watch_test_guard() -> std::sync::MutexGuard<'static, ()> {
+        NATIVE_WATCH_TEST_LOCK
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+    }
 
     fn save_bytes(reality_index: u8, voxel_x: i16) -> Vec<u8> {
         format!(
@@ -239,6 +387,34 @@ mod tests {
         .into_bytes()
     }
 
+    fn save_bytes_with_state(
+        reality_index: u8,
+        voxel_x: i16,
+        version: u32,
+        units: u64,
+        nanites: u64,
+        quicksilver: u64,
+        previous: Option<(u8, i16)>,
+    ) -> Vec<u8> {
+        let mut json =
+            String::from_utf8(save_bytes(reality_index, voxel_x)).expect("fixture is UTF-8 JSON");
+        json = json.replace("\"Version\": 4720", &format!("\"Version\": {version}"));
+        json = json.replace("\"Units\": 7,", &format!("\"Units\": {units},"));
+        json = json.replace("\"Nanites\": 8,", &format!("\"Nanites\": {nanites},"));
+        json = json.replace("\"Specials\": 9,", &format!("\"Specials\": {quicksilver},"));
+        if let Some((previous_reality, previous_x)) = previous {
+            let previous_json = format!(
+                "\"PreviousUniverseAddress\": {{\"RealityIndex\": {previous_reality}, \"GalacticAddress\": {{\"VoxelX\": {previous_x}, \"VoxelY\": 3, \"VoxelZ\": 4, \"SolarSystemIndex\": 5, \"PlanetIndex\": 1}}}},"
+            );
+            json = json.replacen(
+                "\"Units\":",
+                &format!("{previous_json}\n                        \"Units\":"),
+                1,
+            );
+        }
+        json.into_bytes()
+    }
+
     fn receive_movement(handle: &WatchHandle, reality_index: u8, voxel_x: i16) {
         let delta = handle
             .receiver
@@ -247,6 +423,266 @@ mod tests {
         let moved = delta.player_moved.expect("player movement is detected");
         assert_eq!(moved.to.reality_index, reality_index);
         assert_eq!(moved.to.voxel_x(), voxel_x);
+    }
+
+    fn receive_update(handle: &WatchUpdateHandle) -> SaveUpdate {
+        handle
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("watcher observes a real save-file update")
+    }
+
+    #[test]
+    fn test_start_watching_updates_observes_state_and_version_only_changes() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 7, 8, 9, None))
+            .expect("write initial save");
+        let handle = start_watching_updates(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start full update watcher");
+
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 70, 80, 90, None))
+            .expect("write currency-only save");
+        let currency_update = receive_update(&handle);
+        assert!(currency_update.delta.is_empty());
+        assert_eq!(currency_update.player_state.units, 70);
+        assert_eq!(currency_update.player_state.nanites, 80);
+        assert_eq!(currency_update.player_state.quicksilver, 90);
+        assert_eq!(currency_update.player_state.freighter_address, None);
+        assert_eq!(currency_update.save_version, 4720);
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(0, 0, 4720, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write previous-address-only save");
+        let previous_update = receive_update(&handle);
+        assert!(previous_update.delta.is_empty());
+        assert_eq!(previous_update.player_state.units, 70);
+        assert_eq!(
+            previous_update
+                .player_state
+                .previous_address
+                .unwrap()
+                .voxel_x(),
+            3
+        );
+        assert_eq!(previous_update.save_version, 4720);
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(0, 0, 4721, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write version-only save");
+        let version_update = receive_update(&handle);
+        assert!(version_update.delta.is_empty());
+        assert_eq!(version_update.player_state.units, 70);
+        assert_eq!(version_update.save_version, 4721);
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(0, 0, 4721, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("rewrite identical supported state");
+        assert!(matches!(
+            handle.receiver.recv_timeout(Duration::from_millis(400)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        let other_path = dir.path().join("different.json");
+        std::fs::write(
+            &other_path,
+            save_bytes_with_state(9, 9, 4721, 700, 800, 900, Some((9, 3))),
+        )
+        .expect("write another file beside selected save");
+        assert!(matches!(
+            handle.receiver.recv_timeout(Duration::from_millis(400)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(9, 1, 4721, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write movement save");
+        let movement_update = receive_update(&handle);
+        let moved = movement_update
+            .delta
+            .player_moved
+            .expect("movement is included");
+        assert_eq!(
+            moved.from,
+            nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0)
+        );
+        assert_eq!(moved.to.reality_index, 9);
+        assert_eq!(moved.to.voxel_x(), 1);
+        assert_eq!(movement_update.player_state.units, 70);
+        assert_eq!(movement_update.player_state.nanites, 80);
+        assert_eq!(movement_update.player_state.quicksilver, 90);
+        assert_eq!(movement_update.save_version, 4721);
+    }
+
+    #[test]
+    fn test_start_watching_keeps_state_only_changes_out_of_legacy_stream() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 7, 8, 9, None))
+            .expect("write initial save");
+        let handle = start_watching(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start legacy watcher");
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(0, 0, 4720, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write state-only save");
+        assert!(matches!(
+            handle.receiver.recv_timeout(Duration::from_millis(400)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(9, 1, 4721, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write movement save");
+        let delta = handle
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("legacy stream retains movement");
+        let moved = delta.player_moved.expect("movement");
+        assert_eq!(moved.to.reality_index, 9);
+        assert_eq!(moved.to.voxel_x(), 1);
+    }
+
+    #[test]
+    fn test_send_full_update_cancellation_releases_full_queue_worker() {
+        let address = nms_core::address::GalacticAddress::new(0, 0, 0, 0, 0, 0);
+        let update = move |save_version| SaveUpdate {
+            delta: SaveDelta::empty(),
+            player_state: PlayerState::new(address, 0, None, None, 7, 8, 9),
+            save_version,
+        };
+        let (sender, receiver) = mpsc::sync_channel(1);
+        sender
+            .send(update(4721))
+            .expect("fill capacity-one channel");
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let worker_shutdown = Arc::clone(&shutdown);
+        let worker_sender = sender.clone();
+        let worker =
+            thread::spawn(move || send_full_update(&worker_sender, &worker_shutdown, update(4722)));
+        thread::sleep(Duration::from_millis(30));
+        shutdown.store(true, Ordering::Release);
+        assert!(!worker.join().expect("worker exits after cancellation"));
+        assert_eq!(
+            receiver.recv().expect("queued event remains").save_version,
+            4721
+        );
+    }
+
+    #[test]
+    fn test_send_full_update_preserves_source_order() {
+        let address = nms_core::address::GalacticAddress::new(0, 0, 0, 0, 0, 0);
+        let update = move |save_version| SaveUpdate {
+            delta: SaveDelta::empty(),
+            player_state: PlayerState::new(address, 0, None, None, 7, 8, 9),
+            save_version,
+        };
+        let (sender, receiver) = mpsc::sync_channel(1);
+        let shutdown = AtomicBool::new(false);
+        assert!(send_full_update(&sender, &shutdown, update(4721)));
+        let second_sender = sender.clone();
+        let second =
+            thread::spawn(move || send_full_update(&second_sender, &shutdown, update(4722)));
+        assert_eq!(
+            receiver.recv().expect("first queued event").save_version,
+            4721
+        );
+        assert!(second.join().expect("second event is enqueued"));
+        assert_eq!(
+            receiver.recv().expect("second queued event").save_version,
+            4722
+        );
+    }
+
+    #[test]
+    fn test_full_watcher_malformed_input_does_not_advance_baseline() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 7, 8, 9, None))
+            .expect("write initial valid save");
+        let handle = start_watching_updates(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start full update watcher");
+
+        for attempt in 0..5 {
+            let malformed = format!("{{{}", " ".repeat(attempt + 1));
+            std::fs::write(&path, malformed).expect("write malformed JSON attempt");
+            assert!(nms_save::parse_save_file(&path).is_err());
+            assert!(matches!(
+                handle.receiver.recv_timeout(Duration::from_millis(400)),
+                Err(mpsc::RecvTimeoutError::Timeout)
+            ));
+        }
+
+        std::fs::write(&path, save_bytes_with_state(9, 1, 4721, 70, 80, 90, None))
+            .expect("restore valid save");
+        let update = receive_update(&handle);
+        let moved = update
+            .delta
+            .player_moved
+            .expect("movement from retained baseline");
+        assert_eq!(moved.from.reality_index, 0);
+        assert_eq!(moved.from.voxel_x(), 0);
+        assert_eq!(moved.to.reality_index, 9);
+        assert_eq!(moved.to.voxel_x(), 1);
+        assert_eq!(update.player_state.units, 70);
+        assert_eq!(update.save_version, 4721);
+    }
+
+    #[test]
+    fn test_full_watcher_drop_joins_idle_and_after_update_workers() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 7, 8, 9, None))
+            .expect("write initial save");
+        let idle = start_watching_updates(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start idle full watcher");
+        drop(idle);
+
+        std::fs::write(&path, save_bytes_with_state(0, 0, 4721, 70, 80, 90, None))
+            .expect("write state-only update");
+        let mut handle = start_watching_updates(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start watcher for real update");
+        std::fs::write(&path, save_bytes_with_state(9, 1, 4722, 70, 80, 90, None))
+            .expect("write movement update");
+        let queued = receive_update(&handle);
+        assert_eq!(queued.save_version, 4722);
+        let receiver = std::mem::replace(&mut handle.receiver, mpsc::channel().1);
+        drop(handle);
+        assert!(matches!(
+            receiver.recv_timeout(Duration::from_secs(1)),
+            Err(mpsc::RecvTimeoutError::Disconnected)
+        ));
     }
 
     #[test]
@@ -316,6 +752,7 @@ mod tests {
 
     #[test]
     fn test_start_watching_relative_directory_and_bare_filename() {
+        let _guard = native_watch_test_guard();
         let cwd = std::env::current_dir().expect("current directory");
         let relative_dir = tempfile::Builder::new()
             .prefix("nms-watch-relative-")
@@ -356,6 +793,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn test_start_watching_directory_symlink_alias_for_write_and_replacement() {
+        let _guard = native_watch_test_guard();
         use std::os::unix::fs::symlink;
 
         let parent = tempfile::tempdir().expect("temporary parent directory");

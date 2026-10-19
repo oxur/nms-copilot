@@ -275,6 +275,19 @@ save file → parser → galaxy model → query engine → CLI / REPL / MCP
 
 The galaxy model is the core: a petgraph of systems with an R-tree spatial index, incrementally updated as the game auto-saves. All three interfaces share the same query engine — no duplicated logic.
 
+The `nms-watch` library provides both the compatible `start_watching` delta
+subscription and the additive `start_watching_updates` complete update stream.
+Each `SaveUpdate` pairs atlas changes with the supported `PlayerState` and save
+version from one parse. Its bounded one-event queue retains updates in order
+while a consumer catches up; dropping its handle stops and joins the watcher
+worker. `GalaxyModel::apply_save_update` applies the atlas delta and replaces
+the complete player state while preserving imported atlas data and the selected
+galaxy view when the physical galaxy has not changed. The conversion currently
+does not extract a freighter address, so the update carries the existing `None`
+value. These APIs provide a library capability; the normal application still
+has separate REPL and MCP watcher producers, and complete live-cache writing
+and application ownership remain planned work.
+
 ### How Save Parsing Works
 
 NMS saves are **LZ4 block-compressed JSON** (not a proprietary binary format). The pipeline:
