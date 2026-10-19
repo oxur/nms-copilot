@@ -8,7 +8,7 @@ use rstar::RTree;
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
-use nms_core::delta::SaveDelta;
+use nms_core::delta::{SaveDelta, SaveUpdate};
 use nms_core::player::{PlayerBase, PlayerState};
 use nms_core::system::{Planet, System};
 use nms_save::model::SaveRoot;
@@ -378,6 +378,30 @@ impl GalaxyModel {
         for base in &delta.modified_bases {
             self.insert_base(base.clone());
         }
+    }
+
+    /// Apply a complete parsed save update while preserving imported atlas data.
+    ///
+    /// The event's player state is authoritative for physical location and
+    /// selection decisions; its delta remains the additive source for atlas
+    /// changes. A prior physical galaxy change selects the incoming galaxy.
+    /// When the prior player state is absent, or the physical galaxy is
+    /// unchanged, the caller's selected view is retained.
+    pub fn apply_save_update(&mut self, update: &SaveUpdate) {
+        let previous_reality = self
+            .player_state
+            .as_ref()
+            .map(|player| player.current_address.reality_index);
+        let selected_galaxy = self.active_galaxy;
+
+        self.apply_delta(&update.delta);
+        self.player_state = Some(update.player_state.clone());
+        self.active_galaxy = match previous_reality {
+            Some(reality) if reality != update.player_state.current_address.reality_index => {
+                update.player_state.current_address.reality_index
+            }
+            _ => selected_galaxy,
+        };
     }
 }
 
@@ -1050,6 +1074,133 @@ mod tests {
                 .as_deref(),
             Some("Leaf-1")
         );
+    }
+
+    #[test]
+    fn test_apply_save_update_uses_full_state_and_preserves_imported_atlas() {
+        let address_zero = GalacticAddress::new(10, 2, 30, 4, 0, 0);
+        let address_nine = GalacticAddress::new(20, 3, 40, 5, 0, 9);
+        let system_nine = System::new(
+            address_nine,
+            Some("Imported Nine".into()),
+            None,
+            None,
+            vec![],
+        );
+        let system_nine_id = SystemId::from_address(&address_nine);
+        let imported_planet = Planet::new(
+            1,
+            Some(Biome::Lush),
+            None,
+            false,
+            Some("Imported leaf".into()),
+            None,
+        );
+        let imported_base = PlayerBase::new(
+            "Imported Base".into(),
+            nms_core::player::BaseType::HomePlanetBase,
+            address_nine,
+            [1.0, 2.0, 3.0],
+            Some("import-owner".into()),
+        );
+        let mut model = GalaxyModel::new();
+        model.insert_system(system_nine);
+        model
+            .planets
+            .insert((system_nine_id, 1), imported_planet.clone());
+        model.insert_base(imported_base.clone());
+        model.player_state = Some(PlayerState::new(address_zero, 0, None, None, 1, 2, 3));
+        model.active_galaxy = 7;
+
+        let incoming = PlayerState::new(
+            address_zero,
+            0,
+            Some(GalacticAddress::new(90, 1, 2, 3, 0, 9)),
+            Some(address_nine),
+            70,
+            80,
+            90,
+        );
+        let update = SaveUpdate {
+            delta: SaveDelta {
+                player_moved: Some(nms_core::delta::PlayerMoved {
+                    from: address_zero,
+                    to: address_nine,
+                }),
+                ..SaveDelta::empty()
+            },
+            player_state: incoming.clone(),
+            save_version: 4721,
+        };
+        model.apply_save_update(&update);
+
+        assert_eq!(model.player_state, Some(incoming));
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(
+            model.system(&system_nine_id).unwrap().name.as_deref(),
+            Some("Imported Nine")
+        );
+        assert_eq!(
+            model.planets.get(&(system_nine_id, 1)),
+            Some(&imported_planet)
+        );
+        assert_eq!(model.bases.get("imported base"), Some(&imported_base));
+    }
+
+    #[test]
+    fn test_apply_save_update_selection_tracks_only_known_physical_transition() {
+        let address_zero = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let address_nine = GalacticAddress::new(0, 0, 0, 2, 0, 9);
+        let state_nine = PlayerState::new(address_nine, 9, None, None, 70, 80, 90);
+        let contradictory = SaveDelta {
+            player_moved: Some(nms_core::delta::PlayerMoved {
+                from: address_zero,
+                to: address_zero,
+            }),
+            ..SaveDelta::empty()
+        };
+
+        let mut model = GalaxyModel::new();
+        model.active_galaxy = 7;
+        model.player_state = Some(PlayerState::new(address_zero, 0, None, None, 1, 2, 3));
+        model.apply_save_update(&SaveUpdate {
+            delta: contradictory.clone(),
+            player_state: state_nine.clone(),
+            save_version: 4721,
+        });
+        assert_eq!(model.player_state, Some(state_nine.clone()));
+        assert_eq!(model.active_galaxy, 9);
+
+        model.active_galaxy = 7;
+        let state_nine_same_reality = PlayerState::new(
+            GalacticAddress::new(1, 0, 0, 2, 0, 9),
+            9,
+            Some(address_zero),
+            None,
+            71,
+            81,
+            91,
+        );
+        model.apply_save_update(&SaveUpdate {
+            delta: SaveDelta::empty(),
+            player_state: state_nine_same_reality.clone(),
+            save_version: 4722,
+        });
+        assert_eq!(model.player_state, Some(state_nine_same_reality));
+        assert_eq!(model.active_galaxy, 7);
+
+        let mut absent = GalaxyModel::new();
+        absent.active_galaxy = 7;
+        absent.apply_save_update(&SaveUpdate {
+            delta: SaveDelta::empty(),
+            player_state: state_nine,
+            save_version: 4723,
+        });
+        assert_eq!(
+            absent.player_state,
+            Some(PlayerState::new(address_nine, 9, None, None, 70, 80, 90))
+        );
+        assert_eq!(absent.active_galaxy, 7);
     }
 
     #[test]

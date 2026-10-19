@@ -4,7 +4,7 @@
 //! (produce) can use them without creating a dependency cycle.
 
 use crate::address::GalacticAddress;
-use crate::player::PlayerBase;
+use crate::player::{PlayerBase, PlayerState};
 use crate::system::{Planet, System, SystemId};
 
 /// A typed description of what changed between two save file snapshots.
@@ -20,6 +20,25 @@ pub struct SaveDelta {
     pub new_bases: Vec<PlayerBase>,
     /// Modified bases (name exists but content differs).
     pub modified_bases: Vec<PlayerBase>,
+}
+
+/// A complete supported player save update paired with its atlas delta.
+///
+/// This runtime event carries the discovery/base/movement changes in
+/// [`SaveDelta`] together with the complete [`PlayerState`] conversion and the
+/// source save version observed from the same parsed save. The state and
+/// version are authoritative for the player snapshot even if a synthetic
+/// delta contains a contradictory movement. This type is not a persisted or
+/// archive format, and the delta does not promise that removed source records
+/// will be reported.
+#[derive(Debug, Clone)]
+pub struct SaveUpdate {
+    /// Additive atlas changes detected between the previous and current save.
+    pub delta: SaveDelta,
+    /// Complete supported player state from the same parse as `delta`.
+    pub player_state: PlayerState,
+    /// Version field from the same parsed source save.
+    pub save_version: u32,
 }
 
 /// Player position change.
