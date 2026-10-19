@@ -427,6 +427,8 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
     let active9_json = source_json_active_galaxy_9();
     fs::write(&save_path, &active9_json).unwrap();
     fs::write(&cache_path, PREDECESSOR_SCHEMA1_SEMANTIC1).unwrap();
+    // A fresh incompatible cache must rebuild even when consecutive writes share an mtime.
+    set_fresh(&cache_path, &save_path);
     assert!(matches!(
         read_cache(&cache_path),
         Err(CacheError::Incompatible(
@@ -482,6 +484,8 @@ fn current_schema_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits()
         ))
     ));
     fs::write(&cache_path, &semantic1).unwrap();
+    // Exercise semantic rejection, rather than relying on write timing to establish freshness.
+    set_fresh(&cache_path, &save_path);
     assert!(is_cache_fresh(&cache_path, &save_path));
 
     let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
