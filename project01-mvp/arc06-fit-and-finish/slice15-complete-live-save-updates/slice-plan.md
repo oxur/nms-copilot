@@ -1,6 +1,6 @@
 # Slice15 — complete parsed live save updates
 
-Version:1.0. Created2026-10-19. Status:open; initial CC implementation assignment prepared. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC to be launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`; initial implementation, zero executed refinements of five.
+Version:1.0. Created2026-10-19. Status:open; initial CC implementation assignment active. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`; initial implementation, zero executed refinements of five.
 
 ## Useful increment, dependency and ownership
 
@@ -41,4 +41,7 @@ Was broad planned15: normal startup, both-mode complete live cache/write-through
 
 ## Assignment history
 
-- 2026-10-19 initial `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`, predecessor none; additive complete event/graph foundation of adopted ownership design. Status:prepared for initial dispatch after issuance commit. CC source owner; CDC next-action owner through dispatch, then independent review.
+- 2026-10-19 initial `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`, predecessor none; additive complete event/graph foundation of adopted ownership design. Status:issued/active in aec768f; dispatched and acknowledged by CC `/root/cdc_arc06/cc_slice15`. CC source owner; CDC next-action owner through dispatch, then independent review.
+
+
+Initial issuance `aec768f` (direct parentaebef82) committed six exact planning paths, both trailers once. CC `/root/cdc_arc06/cc_slice15` requested `gpt-6-luna`/High and tool accepted launch; backend identity beyond launch configuration is not independently reported. CC acknowledged the durable assignment and source ownership before work. Source baseline remained130034e at handoff. Current intake/source checks and complete required reading are CC duties before dependent edits; CDC does not infer comprehension from the acknowledgment.
