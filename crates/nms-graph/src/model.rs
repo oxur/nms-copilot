@@ -1080,13 +1080,6 @@ mod tests {
     fn test_apply_save_update_uses_full_state_and_preserves_imported_atlas() {
         let address_zero = GalacticAddress::new(10, 2, 30, 4, 0, 0);
         let address_nine = GalacticAddress::new(20, 3, 40, 5, 0, 9);
-        let system_nine = System::new(
-            address_nine,
-            Some("Imported Nine".into()),
-            None,
-            None,
-            vec![],
-        );
         let system_nine_id = SystemId::from_address(&address_nine);
         let imported_planet = Planet::new(
             1,
@@ -1095,6 +1088,13 @@ mod tests {
             false,
             Some("Imported leaf".into()),
             None,
+        );
+        let system_nine = System::new(
+            address_nine,
+            Some("Imported Nine".into()),
+            None,
+            None,
+            vec![imported_planet.clone()],
         );
         let imported_base = PlayerBase::new(
             "Imported Base".into(),
@@ -1105,12 +1105,12 @@ mod tests {
         );
         let mut model = GalaxyModel::new();
         model.insert_system(system_nine);
-        model
-            .planets
-            .insert((system_nine_id, 1), imported_planet.clone());
         model.insert_base(imported_base.clone());
         model.player_state = Some(PlayerState::new(address_zero, 0, None, None, 1, 2, 3));
         model.active_galaxy = 7;
+        let systems_before = model.systems.clone();
+        let planets_before = model.planets.clone();
+        let bases_before = model.bases.clone();
 
         let incoming = PlayerState::new(
             address_zero,
@@ -1136,6 +1136,9 @@ mod tests {
 
         assert_eq!(model.player_state, Some(incoming));
         assert_eq!(model.active_galaxy, 7);
+        assert_eq!(model.systems, systems_before);
+        assert_eq!(model.planets, planets_before);
+        assert_eq!(model.bases, bases_before);
         assert_eq!(
             model.system(&system_nine_id).unwrap().name.as_deref(),
             Some("Imported Nine")
@@ -1163,6 +1166,9 @@ mod tests {
         let mut model = GalaxyModel::new();
         model.active_galaxy = 7;
         model.player_state = Some(PlayerState::new(address_zero, 0, None, None, 1, 2, 3));
+        let systems_before = model.systems.clone();
+        let planets_before = model.planets.clone();
+        let bases_before = model.bases.clone();
         model.apply_save_update(&SaveUpdate {
             delta: contradictory.clone(),
             player_state: state_nine.clone(),
@@ -1170,6 +1176,9 @@ mod tests {
         });
         assert_eq!(model.player_state, Some(state_nine.clone()));
         assert_eq!(model.active_galaxy, 9);
+        assert_eq!(model.systems, systems_before);
+        assert_eq!(model.planets, planets_before);
+        assert_eq!(model.bases, bases_before);
 
         model.active_galaxy = 7;
         let state_nine_same_reality = PlayerState::new(
@@ -1188,9 +1197,15 @@ mod tests {
         });
         assert_eq!(model.player_state, Some(state_nine_same_reality));
         assert_eq!(model.active_galaxy, 7);
+        assert_eq!(model.systems, systems_before);
+        assert_eq!(model.planets, planets_before);
+        assert_eq!(model.bases, bases_before);
 
         let mut absent = GalaxyModel::new();
         absent.active_galaxy = 7;
+        let absent_systems_before = absent.systems.clone();
+        let absent_planets_before = absent.planets.clone();
+        let absent_bases_before = absent.bases.clone();
         absent.apply_save_update(&SaveUpdate {
             delta: SaveDelta::empty(),
             player_state: state_nine,
@@ -1201,6 +1216,9 @@ mod tests {
             Some(PlayerState::new(address_nine, 9, None, None, 70, 80, 90))
         );
         assert_eq!(absent.active_galaxy, 7);
+        assert_eq!(absent.systems, absent_systems_before);
+        assert_eq!(absent.planets, absent_planets_before);
+        assert_eq!(absent.bases, absent_bases_before);
     }
 
     #[test]
