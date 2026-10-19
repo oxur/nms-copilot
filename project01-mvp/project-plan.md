@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-17
+updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.41
+version: 1.42
 project: project01-mvp
 status: active
 depends-on: []
@@ -867,3 +867,10 @@ Planned15/CDC retains normal startup/full both-mode live-cache C04/write-through
 Slice14 is independently closed at130034e/5c1c88e; arc32/14 done/18 open, project25 open. Arc06 arc-plan.md “Proposed Slice15 ownership design — awaiting Operator” records CDC's concrete recommendation: one app-owned save watcher/update coordinator and serialized live cache writer shared by REPL/MCP, carrying complete supported PlayerState and save_version from each accepted parse. Current two producers/REPL-only writer and position-only snapshot/delta cannot establish that full composition by adding a write call. Existing APIs/settings/selection/manual anchors/atlas data/error recovery/valid-cache behavior and native gates remain preservation obligations.
 
 The recommendation is unapproved; Operator decides that ownership/state-authority direction before dependent CC implementation. No source or future prompt/terminal/dependency/cache-layout choice adopted, no investigation commissioned. All normal startup/both-mode live C04/write-through/unknown promotion/duplicate settings/history and original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release owners remain. Main/dependency/Project02 held. Version1.41 records proposed next design and pending authority only, without silently changing scope/architecture/acceptance.
+
+
+## Arc06 Autonomous authorization — 2026-10-19
+
+The Operator adopted the single app-owned watcher/update/cache-writer direction and explicitly selected one-arc Autonomous Mode with OpenAI/Codex CDC `gpt-6.1-sol` High and CC `gpt-6-luna` High. The governing record is [Arc06 authorization and current preflight](arc06-fit-and-finish/arc-plan.md#autonomous-arc06-authorization-and-current-preflight--2026-10-19), version1.51. Scope ends at Arc06; no next arc or Project02 advancement, fallback model, release or external action is authorized. CDC owns planning/index and independent CC review; CC receives a dedicated source worktree and a preserved author-ready assignment. Direct in-scope subagent transport replaces human relay only.
+
+Original scope, all25 project rows, arc32/14 done/18 open, full normal/live/cache/unknown/history/raw-field/format/export/import/docs/distribution/coverage and higher-scale independent/Operator gates remain. The prior pending direction wording is historical and superseded only for the adopted direction; unimplemented details and consequential policy choices remain gated. Version1.42 records this narrower arc-level execution selection and links its authority without propagating it to other arcs or projects.

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.50, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.51, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -395,9 +395,9 @@ All seven HC rows accepted at130034e (direct parent88b184f), CC e373cd2/fb8f6a4/
 Planned15/CDC retains normal startup/full both-mode live-cache C04/write-through, unknown placeholders/promotion, duplicate producer/settings ownership, broader history and final-baseline semantic transitions after raw repair. Source inspection shows normal REPL and MCP independently produce/apply deltas, only REPL drain persists cache, and current watch snapshot/delta omits complete player state and save version. A complete write-through design therefore requires ownership/state-authority decisions before issuing affected implementation; next15 remains planned/unissued pending CDC/Operator design resolution, without commissioning an inquiry. Main/dependencies/Project02 held, candidate unintegrated/uninstalled; later authorized integration/final-baseline composition/release and every original raw-field/export/import/format/docs/distribution/coverage/parent independent/Operator gate retained. Version1.49 records child closure and explicit next design gate, no architecture adopted.
 
 
-## Proposed Slice15 ownership design — awaiting Operator, 2026-10-17
+## Slice15 ownership direction — proposed 2026-10-17, adopted 2026-10-19
 
-**Status: recommendation, not an adopted architecture or issued CC assignment.** Slice14 is closed at130034e/5c1c88e. The existing planned15 remainder includes normal REPL startup composition, both-mode live-cache/write-through, duplicate producers/settings, unknown-system/promotion and broader historical-state correctness. Before a responsible implementation prompt, decide which component owns a live save update. This is routine design from existing approved source inspection, not a new inquiry; no external save survey, experiment or source change commissioned.
+**Current status: direction adopted by the Operator on 2026-10-19; implementation details and subsequent policy gates remain unissued.** The proposal and original decision request below are preserved as design history; the current authorization section supersedes their pending direction status. Slice14 is closed at130034e/5c1c88e. The existing planned15 remainder includes normal REPL startup composition, both-mode live-cache/write-through, duplicate producers/settings, unknown-system/promotion and broader historical-state correctness. Before a responsible implementation prompt, decide which component owns a live save update. This is routine design from existing approved source inspection, not a new inquiry; no external save survey, experiment or source change commissioned.
 
 ### Current source facts and why a write call alone is insufficient
 
@@ -428,3 +428,25 @@ Unknown-system placeholder identity/promotion must be designed explicitly and pr
 **Requested Operator decision:** approve the single application-owned watcher/update/cache-writer direction and complete supported PlayerState/source-version event authority for both interfaces, or discuss the alternative before implementation is issued. Approval authorizes detailing the first coherent implementation increment under this direction; it is not acceptance of an unimplemented API, cache migration, terminal tool or whole parent capability. Until then15 remains planned/unissued; no slice15 directory/prompt or source branch is created, main/dependencies/Project02 stay held.
 
 Version1.50 records a reviewable, source-grounded architecture proposal and explicit pending decision after Slice14 closure, not an adopted plan amendment or a new investigation.
+
+
+## Autonomous Arc06 authorization and current preflight — 2026-10-19
+
+The Operator approved the preceding single-owner coordinator/full supported PlayerState and source-version direction (“yeah, I think that’s a good approach”), then explicitly authorized: “perfect!! Let’s try out the new Autonomous Mode with CDC using GPT 6.1 Sol High and CC using 6 Luna High ... let’s limit it to one arc at a time, though :-D”. This adopts the direction, not unimplemented APIs, terminal tooling, placeholder representation or every downstream policy. Apply collaboration-framework3.0.1 canonical Autonomous Mode, shared invariants, PM execution rules and implementation-prompt author readiness.
+
+**Scope and endpoint:** Project01 Arc06 fit-and-finish only, including applicable child slices, review/remediation within their existing five-refinement limits, scoped local commits, bottom-up reconciliation and CDC closing retrospectives. Stop and report at the Arc06 endpoint; do not open another arc or Project02. Existing independent higher-scale and Operator acceptance gates remain pending until actually performed. No investigation-only work is commissioned.
+
+| Role / actual context | Requested and applied launch settings | Authority / ownership |
+|---|---|---|
+| CDC / assigned Codex subagent `cdc_arc06` | OpenAI/Codex; `gpt-6.1-sol`, `high`; requested launch accepted by tool, no separate backend identity asserted | Planning, design, coordination and independent review of CC; sole planning worktree/index mutation owner |
+| CC / to be dispatched after durable author-ready assignment | OpenAI/Codex; `gpt-6-luna`, `high`; explicit Operator selection, availability/application checked at dispatch | Sole dedicated source worktree/index mutation owner while implementing; proposes completion, cannot self-accept |
+
+No fallback/substitution is authorized. Root chat is transport/status only, not a claim its model changed. Default Two-Contributor arrangement uses one CC and CDC as independent slice reviewer, with `cdc-verification.md`; no CRC or extra context is assigned. Direct durable subagent handoffs are authorized inside this scope. Planning evidence transfer is serialized: CC returns source/evidence for CDC reconciliation, or CDC explicitly hands over named planning paths and index ownership before any CC mutation.
+
+Revalidated on lappy.local: main clean `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`; planning clean `2f3a36741011f1c354787d6f3cc469b639b77e18` before this update; latest independently accepted Slice14 source `.worktrees/headless-cache-startup`, branch `codex/headless-cache-startup`, `130034e8a6f2e77605058620fea2fb0cae43c608`. All earlier held worktrees/pins remain protected. Slice15 will branch from that accepted source on a dedicated non-default branch; exact path/owner will be recorded before implementation. No Slice15 prompt yet exists or is active. Bash/current repository tools and dependencies are rechecked during source-grounded author readiness.
+
+Local scope commits are authorized, with exact named paths and both required trailers once each. No push, merge, publication, install, release, held-pin movement or external message is authorized; no external pipeline is triggered. Native filesystem/loopback sandbox failures must retain their original attempt then retry the identical authorized host command with original TMPDIR; changed-input diagnostics cannot replace acceptance.
+
+**Current owners and gates:** CDC details the adopted coordinator increment. Normal startup and full both-mode live-cache C04/write-through, single producer/settings/lifecycle, unknown placeholders/promotion, broader history, raw-field repair/final semantic transition, original export/import/format/docs/distribution/coverage, R06-R02/R03/M7.4/C04 and parent independent/Operator gates all remain required. Unknown placeholder marker/layout/compatibility policy and consequential ambiguity/material architecture remain explicit Operator decisions; never classify every unnamed/empty system as a placeholder. No terminal method or new dependency is adopted by this authorization. Preserve every issued prompt and prior failed/blocked/retried witness; fresh proof does not recover historical missing channels.
+
+Version1.51 records the adopted direction, explicit one-arc Autonomous authorization, approved role/model/settings, ownership and preserved gates before dependent implementation. Arc ledger remains32 rows/14 done/18 open, project25 rows open; no acceptance or source integration is implied.
