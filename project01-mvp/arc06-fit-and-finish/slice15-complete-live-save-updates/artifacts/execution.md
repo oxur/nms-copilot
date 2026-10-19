@@ -1,0 +1,70 @@
+# Slice15 execution record
+
+## Intake and contract readback
+
+Assignment: `Project01 Arc06 Slice15 complete parsed live save updates`, initial assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`, predecessor none, refinements used 0/5. The exact prompt is the immutable authority; its issuance is planning commit `aec768f4c82a084fbd9150b61bc0a02a53f8c11f` (parent `aebef82393cff80600a5b49407d676663e1a903a`). Planning worktree HEAD at intake is `aa04d859ea71811d8ff5e15bf20ae84bce62195d`; it is clean and owned by CDC. Source worktree is `.worktrees/complete-live-save-updates`, branch `codex/complete-live-save-updates`, exact baseline `130034e8a6f2e77605058620fea2fb0cae43c608`; clean at intake, owned by CC. Main was clean at `6d183bde79dd7328c32d4739dca249f5f1f9cd6c`.
+
+The exact permitted tracked paths are `crates/nms-core/src/delta.rs`, `crates/nms-core/src/lib.rs`, `crates/nms-graph/src/model.rs`, `crates/nms-watch/src/lib.rs`, `crates/nms-watch/src/watcher.rs`, and `README.md`. Inline tests only in these paths. All other tracked source, manifests, dependencies, fixtures, cache schema/semantics, parsing, `compute_delta`, `SaveSnapshot`, main/MCP/REPL code, and accepted tests are frozen. No source edits outside that allowlist, no planning edits, and no push/merge/install/release/external message are authorized. Source commit must use exact paths and both prescribed trailers. Return files are staged only in this ignored candidate workbench for CDC's byte-preserving transfer.
+
+The arc plan at planning HEAD `aa04d859` states in “Autonomous Arc06 authorization and current preflight” and “Slice15 complete-state API increment and remainder”: Operator-authorized Arc06-only Autonomous Mode; CC `gpt-6-luna` High; CDC `gpt-6.1-sol` High; no fallback; CDC owns planning and independent review, CC owns source; no CRC; main/held dependencies/Project02 remain protected. Arc opening rows R06-R02 and R06-R03 remain open; Slice14 is accepted at `130034e8`. Arc is 33 rows/14 done/19 open; Project01 has 25 open rows. Slice ledger has CU-01 through CU-07, all open at intake. The follow-on application coordinator, single watcher/apply path, ordered cache writer, normal/headless composition, notifications, placeholder policy, broader history/raw-field repair/final transitions, original format/export/import/docs/distribution/coverage and higher-scale/Operator/integration/release gates remain outside this increment and open.
+
+Baseline source readback: `SaveSnapshot::from_file` parses a file then discards everything except extracted systems/planets/bases/current address. `SaveRoot::to_core_player_state()` includes current and supported previous address, reality, currencies, and currently `freighter_address: None`; `SaveRoot.version` is available on the same parsed root. Therefore the new watcher must pair snapshot, full converted state, and version from exactly one parse. The new event is additive runtime data and must not alter or persist `SaveDelta`, `SaveSnapshot`, or cache layouts. The legacy watch stream remains delta-only and keeps its public signature and event filter.
+
+The worker needs owned lifetime with debouncer teardown, cancellation, and join; otherwise a returned receiver can outlive detached parsing. Full updates use a capacity-one synchronous channel with ordered retry/cancel behavior; the legacy channel remains unbounded. Parse/stability errors cannot move the baseline, while a successfully parsed unchanged input does. Five consecutive parse failures retain the existing warning threshold and success resets it. The subtle invalidating case is a contradictory synthetic `delta.player_moved`: graph physical state and selection must come from the event's complete PlayerState. Apply the additive delta first, replace complete PlayerState second, switch selected galaxy only when a prior physical reality exists and differs, otherwise preserve the user's selected view. Imported atlas maps survive. This library API does not establish application-level single ownership or full live-cache correctness.
+
+Acceptance remains proposed until CDC independently checks the diff and reproduces evidence. Required tests distinguish full state-only/version-only/previous-only updates from legacy events, unchanged suppression, same-parse authority, malformed recovery/baseline, filtering/atomic replace, bounded queue ordering/cancellation, worker lifetime, and exact graph state/selection/import preservation. Run the prompt's full ordered gates without skipped failures; preserve each attempt and channels. Do not claim normal/headless application composition, unknown-system promotion, performance, cache migration, or parent closure.
+
+## Intake coverage
+
+Required-full local text received completely: source `AGENTS.md`; active `cc-prompt.md` (91 lines); `slice-plan.md` (44 lines); `ledger.md` (13 lines). Required sections loaded: arc-plan “Autonomous Arc06 authorization and current preflight” and “Slice15 complete-state API increment and remainder”; project-plan “Arc06 Autonomous authorization” and current Slice15 status. Required structured data: seven CU rows/statuses read in full; arc source confirms R06-R02/R03 and S14/S15 summary/status counts; all 12 registered worktrees were enumerated at intake with branch, HEAD, and dirty status (all clean). Issuance commit and parent verified with Git.
+
+Required domain-source files were read at baseline: all six allowed paths; `crates/nms-watch/src/snapshot.rs`, `delta.rs`, `error.rs`; core `player.rs`; graph `extract.rs` (source paths confirmed; relevant extraction flow inspected); watch and root Cargo manifests; save conversion and save model definitions; main watcher setup, REPL drain and MCP watcher/apply locations; Make validation targets. Focused sections verified: `SaveRoot.version`, `PlayerStateData`, `UniverseAddress`, `to_core_player_state`, `start_watching`, `WatchConfig`, `apply_delta`, selected galaxy logic, current normal/headless watcher ownership and README's explicitly planned normal-mode/cache limitations.
+
+Required guidance in the manifest: collaboration-framework, project-management wayfinder, work-verification, testing, engineering-methodology, prompt-authoring, and Rust guidelines. Loaded the collaboration-framework and Rust-guidelines entrypoints, project-management README, row-closure, testing discipline/validation gates, methodology shared invariants and Autonomous Mode, prompt intake/readiness, and Rust concurrency/ownership/error/documentation rules relevant to the prescribed design. Any captured output truncation was followed by bounded targeted reads for the governing rules used here; this record distinguishes these sections from the complete source/assignment reads. Conditional sandbox-retry material is not triggered at intake. Reference-only predecessor archives are not required.
+
+## Repository/worktree preflight
+
+Intake inventory (`git worktree list --porcelain`, HEAD, branch and `git status --short`) at assignment start:
+
+| Worktree | Branch | HEAD | Dirty |
+|---|---|---|---|
+| `.` | `main` | `6d183bde79dd7328c32d4739dca249f5f1f9cd6c` | no |
+| `.worktrees/cache-player-state-integrity` | `codex/cache-player-state-integrity` | `a101bd44b277f06c75ed7260b470b31cd5510130` | no |
+| `.worktrees/cache-semantic-compatibility` | `codex/cache-semantic-compatibility` | `decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a` | no |
+| `.worktrees/complete-live-save-updates` | `codex/complete-live-save-updates` | `130034e8a6f2e77605058620fea2fb0cae43c608` | no |
+| `.worktrees/galaxy-qualified-identity` | `codex/galaxy-qualified-identity` | `f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8` | no |
+| `.worktrees/galaxy-scoped-queries` | `codex/galaxy-scoped-queries` | `7118a486ea43a776aa2451ec0807d43384fb954f` | no |
+| `.worktrees/galaxy-scoped-repl` | `codex/galaxy-scoped-repl` | `e615f25419cc68e367c07eda6ef73d26c4e4839c` | no |
+| `.worktrees/galaxy-scoped-routing` | `codex/galaxy-scoped-routing` | `f71d607e27e18d7266855a2708449f9d6b90c632` | no |
+| `.worktrees/galaxy-scoped-session` | `codex/galaxy-scoped-session` | `e9cabd5fe63f19e9fe2e6da840845315d2ee2d18` | no |
+| `.worktrees/headless-cache-startup` | `codex/headless-cache-startup` | `130034e8a6f2e77605058620fea2fb0cae43c608` | no |
+| `.worktrees/mcp-live-watch` | `codex/mcp-live-watch` | `239313cc109ca908f43f34ae5e04ba7e5487161f` | no |
+| `.worktrees/mcp-watch-settings` | `codex/mcp-watch-settings` | `16c078725492744db22bae837d87c89489a6add5` | no |
+| `.worktrees/planning` | `planning` | `aa04d859ea71811d8ff5e15bf20ae84bce62195d` | no |
+
+No material conflict or unresolved implementation policy was found in the complete assignment/plan/ledger. Source changes may now proceed under the recorded authority.
+
+
+## Implementation and final evidence status
+
+Implemented the additive `SaveUpdate` value, same-parse `SourceSnapshot`, shared legacy/full watcher engine, owner/join lifecycle, capacity-one full-update stream, and `GalaxyModel::apply_save_update`. Added watcher/graph inline coverage for currency-, previous-address-, and version-only updates, identical-state suppression, malformed recovery, selected-file filtering, legacy behavior, queue ordering/cancellation, worker shutdown, full PlayerState authority, selected-view preservation, contradictory synthetic movement, and imported atlas retention. README and public rustdoc describe the library capability and explicitly preserve the planned application/coordinator/cache work. No parser/raw-field, dependency, cache schema, main/MCP/REPL or placeholder policy change was made. Tracked diff is limited to the exact six-path allowlist.
+
+The latest 13-command required wave ran sequentially on the authorized host against the final stable source with the original inherited `TMPDIR`; all 13 exited 0. Its complete per-command stdout/stderr, cwd, timestamps, inherited/effective environment, explicit overrides, and parsed counts are in `validation.json` root `attempts`. The focused aggregate was 87 core, 171 graph, and 32 watch unit tests passed; each of the three doc-test outputs selected 0. Cache was 19 tests (the harness prints the same library count twice), route integration 4, MCP live integration 7, no-default-feature copilot lib 220. `make test` and its component summaries are retained exactly in JSON; workspace all-feature build, doctests, docs, cache broken-link-deny docs, and diff check passed. No ignored tests are reported in the latest wave.
+
+Historical attempt evidence is incomplete and is not represented as complete. `validation.json` retains two superseded complete 13-gate waves and the captured initial wave's format/lint passes plus failed focused aggregate (exit 101); that failed stderr contains six native watcher timeout messages. It also explicitly inventories uncaptured reports: two earlier lint/compiler failures (exact commands/source/environment/channels unknown), standalone watcher and isolated diagnostics (reported outcomes but incomplete attempt metadata/channels), and later sandbox aggregate failures (the precise population/source metadata and separate channels are unavailable). A fresh passing run is not historical recovery. The unchanged authorized-host retry is captured as latest `attempts[2]`. Do not infer CU-07 completion.
+
+## Row witnesses and proposed dispositions
+
+- CU-01 — proposed-done, open pending CDC: public `SaveUpdate` and watch handle/re-export preserve legacy public delta/snapshot/start signatures; `nms-core`/`nms-watch` focused compilation/tests and source inspection.
+- CU-02 — proposed-done, open pending CDC: full watcher tests exercise currency-only, previous-only and version-only changes, exact unchanged suppression, movement carrying full state/version, and single parsed source snapshot; focused watch tests and aggregate gate.
+- CU-03 — proposed-done, open pending CDC: graph tests assert complete incoming PlayerState and retained imported maps under same/cross/absent-prior and contradictory-movement cases; focused graph tests.
+- CU-04 — proposed-done, open pending CDC: actual selected-save native tests cover malformed→valid baseline, other basename filtering, atomic replacement and legacy state-only suppression; retained existing alias/path tests; latest focused watcher aggregate passes. Historical sandbox failures remain in evidence.
+- CU-05 — proposed-done, open pending CDC: deterministic private enqueue ordering/cancellation and native idle/post-update drop/disconnect tests pass; implementation owns and joins worker.
+- CU-06 — proposed-done, open pending CDC: API rustdoc/README scope review; focused docs and complete required docs/doc-test gates pass.
+- CU-07 — open, not proposed-done: latest and two superseded full gate waves are captured, but the attempt population includes known uncaptured lint/compiler and standalone/sandbox attempts. Validation JSON and this record enumerate known evidence and unknown fields; no historical outputs were reconstructed. CDC must disposition after independent review.
+
+These are CC proposals only; all seven ledger rows were open at intake and remain for CDC's independent disposition.
+
+## Required source commit and handback
+
+Committed exact six-path source set as `e254466ffc0e2ab7c2a6ed23f355c3cf6d5bc8ee`, parent `130034e8a6f2e77605058620fea2fb0cae43c608`, subject `Add complete parsed live save updates`. The two required trailers each occur once. Post-commit `git status --short --branch` was clean on `codex/complete-live-save-updates`; `git diff-tree --name-only` showed exactly the six allowlisted paths. No planning path was edited. CC returns stable source mutation/index ownership to CDC for independent review; no CU status is accepted here.

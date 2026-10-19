@@ -1,6 +1,6 @@
 # Slice15 — complete parsed live save updates
 
-Version:1.0. Created2026-10-19. Status:open; initial CC implementation assignment active. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`; initial implementation, zero executed refinements of five.
+Version:1.1. Created2026-10-19. Status:open; initial CC implementation assignment active. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md`; first refinement of five, initial returned/reviewed.
 
 ## Useful increment, dependency and ownership
 
@@ -45,3 +45,14 @@ Was broad planned15: normal startup, both-mode complete live cache/write-through
 
 
 Initial issuance `aec768f` (direct parentaebef82) committed six exact planning paths, both trailers once. CC `/root/cdc_arc06/cc_slice15` requested `gpt-6-luna`/High and tool accepted launch; backend identity beyond launch configuration is not independently reported. CC acknowledged the durable assignment and source ownership before work. Source baseline remained130034e at handoff. Current intake/source checks and complete required reading are CC duties before dependent edits; CDC does not infer comprehension from the acknowledgment.
+
+
+## Initial independent review and Iteration01 — 2026-10-19
+
+CDC inspected e254466 and reproduced all13 required gates plus committed-diff check:87/171/32 focused,38 cache,4 route,7 native,220 no-default,951 workspace; existing warnings only. No runtime defect found. CU05 accepted; six rows open. F1/F2 missing complete native PlayerState/file→graph and full imported-map tests, F3 new public handle Debug/docs, F4 denominator/intake/index/evidence fidelity are in cdc-verification.md. Historical capture gap remains separately held for Operator only after reviewable correction. Initial report/execution/validation transferred byte-preserved with their recorded digests; source/index clean after scoped un-staging of three ignored transport files.
+
+Iteration01 permits two existing source paths only: new watcher/graph tests, new handle Debug and public docs; all runtime producer/graph apply bodies and legacy behavior frozen. Source e254466; same CC/model/settings and source owner on dispatch, CDC planning owner/reviewer. Prompt defines exact full literal oracles, coherent imports, real native atomic-replacement→graph boundary and current evidence reporting. Author applied API06/19/20 and existing test/ownership guides; partial old-position/wrong-reality witnesses demonstrate test gaps by source inspection (no unrun mutation claimed). Fresh format/lint/focused/docs/strict-watch/diff covers changes; broader independent e254466 gates retain applicability only after reviewer delta inspection. No redundant broad rerun for prose-only edits.
+
+Required current complete reads/intake explicitly include full anti-pattern chapter and actual extents; prior coverage is not inferred from current reads. Return files remain filesystem-only staged; no Git force-add of workbench. Every initial JSON top-level value and full Markdown prefix preserved, iteration01 append only. No historical waiver or new inquiry. Scope/remainder/original gates unchanged, no Slice16 through incomplete15.
+
+Assignment history addition: initial cc-prompt.md issued aec768f, returned e254466, independently reviewed; `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md` prepared for issuance, predecessor initial, reason F1–F4 bounded correction, first refinement0 executed so far. Current owner CDC through issuance then same assigned CC implementation and CDC independent review.

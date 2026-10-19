@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.53, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.54, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -468,3 +468,10 @@ CDC verified the existing exec tool’s native PTY route as routine preparation 
 Exact launch, both attempts: `HOME=/private/tmp/nms-arc06-pty-preflight-p2jdqdn5/home TERM=xterm-256color .worktrees/headless-cache-startup/target/debug/nms-copilot --save /private/tmp/nms-arc06-pty-preflight-p2jdqdn5/save.json --no-cache --http 127.0.0.1:0`, from repository root, tty=true; inherited TMPDIR unchanged. Restricted attempt returned1: `MCP server failed to start: bind 127.0.0.1:0 failed: Operation not permitted (os error 1)` (tool chunkd798b0). Identical authorized-host retry reached real Reedline prompt (chunk7e72d1/session84328). `status` plus carriage return produced literal Galaxy Euclid(0; Normal), Model2 systems/1 planets, player-position Euclid0, no biome/warp filter (chunk11e06d). `quit` plus carriage return produced Goodbye and exit0 (chunk4b46cf). PTY stream is terminal-multiplexed stdout/stderr, not fabricated separate channels. Port0 suffices only for terminal preflight; it does not prove a discoverable HTTP endpoint or live composition.
 
 This resolves that existing-tool method’s feasibility; required Slice16 candidate must be built/identified and actually exercise normal startup, shared HTTP observations, live state/cache/error/recovery and shutdown before acceptance. No application feature, full REPL lifecycle, timing/performance or C04 claim follows. Version1.53 records a useful independently prepared prerequisite and its original negative/host-retry observations; no scope/architecture/acceptance gate change.
+
+
+## Slice15 initial independent review / bounded correction — 2026-10-19
+
+CDC at e254466 independently passes all13 required gates plus committed diff:87 core/171 graph/32 watch,38 cache/4 route/7 native/220 no-default/951 workspace, build/docs/format/lint/strict-cache; existing warnings only. Runtime same-parse/full-state/legacy/selection/owned lifetime implementation matches binding design. CU05 done; six rows open for complete native full-state/file→graph, coherent full atlas-map oracles, new public handle Debug/docs and faithful evidence/reporting. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md`, first refinement of five, runtime algorithms frozen, two source paths only. New focused verification covers changed tests/trait/docs; unaffected broader independent gates may be explicitly retained after delta review. No redundant broad rerun for evidence-only edits.
+
+Known historical attempts lack separate channels/env/times/source identity; current full captures cannot recover them. CU07 remains Operator-gated, without a waiver proposal/decision before code/test/doc correction is independently reviewable. Full gap table, exact42 unique/48 stored capture populations and corrected cache38 denominator are in child cdc-verification.md. CC return/index clean claim corrected by scoped un-staging of three ignored transport files after byte-preserving canonical transfer; source commit remains intact. All original required gates/history retained. No Slice16 dispatch through incomplete15, source integration or parent acceptance; arc33/14 done/19 open and project25 open. Version1.54 records routine review/correction and concrete reserved evidence authority; adopted architecture/original scope unchanged.
