@@ -55,4 +55,7 @@ Iteration01 permits two existing source paths only: new watcher/graph tests, new
 
 Required current complete reads/intake explicitly include full anti-pattern chapter and actual extents; prior coverage is not inferred from current reads. Return files remain filesystem-only staged; no Git force-add of workbench. Every initial JSON top-level value and full Markdown prefix preserved, iteration01 append only. No historical waiver or new inquiry. Scope/remainder/original gates unchanged, no Slice16 through incomplete15.
 
-Assignment history addition: initial cc-prompt.md issued aec768f, returned e254466, independently reviewed; `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md` prepared for issuance, predecessor initial, reason F1–F4 bounded correction, first refinement0 executed so far. Current owner CDC through issuance then same assigned CC implementation and CDC independent review.
+Assignment history addition: initial cc-prompt.md issued aec768f, returned e254466, independently reviewed; `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md` issued in b479971 and active, predecessor initial, reason F1–F4 bounded correction, first refinement executing (one of five). Current owner CDC through issuance then same assigned CC implementation and CDC independent review.
+
+
+Iteration01 dispatch acknowledged by the same `/root/cdc_arc06/cc_slice15`; approved model/settings unchanged. CC verified clean source/index e254466 before edits and owns source/index during the refinement. CDC retains planning/index. Source packet’s 'stage return' ambiguity is resolved: filesystem-only transport, no ignored files in Git staging. No waiver, independent acceptance or held-pin movement.
