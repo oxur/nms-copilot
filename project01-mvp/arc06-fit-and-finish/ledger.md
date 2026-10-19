@@ -118,3 +118,12 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 2026-10-17:32 arc rows/13 done/19 open; seven HC rows open; project25 open.
 
 2026-10-17 Slice14 closed:32 arc rows/14 done/18 open; every original remaining owner/gate preserved.
+
+
+## Slice15 — complete parsed live save update API
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S15 | Complete same-parse supported source-state/version watch→graph API independently accepted with legacy compatibility and owned producer lifetime | Seven CU rows, native full-state/state-only/version-only/failure/recovery/legacy checks, graph authority/selection/atlas tests and independent CDC review | correctness-grade | Operator-adopted complete-state ownership direction; source-grounded bounded API increment | open | | Application coordinator/full both-mode live cache and all normal/unknown/history/original parent gates remain planned16/CDC or their recorded Operator owners |
+
+2026-10-19 Slice15 open:33 arc rows/14 done/19 open; parent capabilities remain open.

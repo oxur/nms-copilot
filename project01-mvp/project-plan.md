@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.42
+version: 1.43
 project: project01-mvp
 status: active
 depends-on: []
@@ -874,3 +874,8 @@ The recommendation is unapproved; Operator decides that ownership/state-authorit
 The Operator adopted the single app-owned watcher/update/cache-writer direction and explicitly selected one-arc Autonomous Mode with OpenAI/Codex CDC `gpt-6.1-sol` High and CC `gpt-6-luna` High. The governing record is [Arc06 authorization and current preflight](arc06-fit-and-finish/arc-plan.md#autonomous-arc06-authorization-and-current-preflight--2026-10-19), version1.51. Scope ends at Arc06; no next arc or Project02 advancement, fallback model, release or external action is authorized. CDC owns planning/index and independent CC review; CC receives a dedicated source worktree and a preserved author-ready assignment. Direct in-scope subagent transport replaces human relay only.
 
 Original scope, all25 project rows, arc32/14 done/18 open, full normal/live/cache/unknown/history/raw-field/format/export/import/docs/distribution/coverage and higher-scale independent/Operator gates remain. The prior pending direction wording is historical and superseded only for the adopted direction; unimplemented details and consequential policy choices remain gated. Version1.42 records this narrower arc-level execution selection and links its authority without propagating it to other arcs or projects.
+
+
+## Arc06 Slice15 additive complete live update increment — 2026-10-19
+
+Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md` adds same-parse complete supported PlayerState/source-version event and public watch→graph API with legacy compatibility and stoppable owned producer. Dedicated source `.worktrees/complete-live-save-updates`/`codex/complete-live-save-updates` starts accepted130034e; planned16/CDC owns application single coordinator/full normal/headless cache and lifetime composition. Arc1.52 records complete remainder: unknown placeholder representation/promotion/compatibility remains Operator-gated, history/raw-field/final transition and every original export/import/format/docs/distribution/coverage/higher-scale independent/Operator/integration/release obligation remains. Arc33 rows/14 done/19 open, all25 project rows open. Version1.43 records routine source-grounded detailing and complete next-owner mapping within the adopted direction and Arc06-only Autonomous authorization; no original scope or evidence reduction.

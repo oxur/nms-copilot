@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.51, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.52, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -450,3 +450,12 @@ Local scope commits are authorized, with exact named paths and both required tra
 **Current owners and gates:** CDC details the adopted coordinator increment. Normal startup and full both-mode live-cache C04/write-through, single producer/settings/lifecycle, unknown placeholders/promotion, broader history, raw-field repair/final semantic transition, original export/import/format/docs/distribution/coverage, R06-R02/R03/M7.4/C04 and parent independent/Operator gates all remain required. Unknown placeholder marker/layout/compatibility policy and consequential ambiguity/material architecture remain explicit Operator decisions; never classify every unnamed/empty system as a placeholder. No terminal method or new dependency is adopted by this authorization. Preserve every issued prompt and prior failed/blocked/retried witness; fresh proof does not recover historical missing channels.
 
 Version1.51 records the adopted direction, explicit one-arc Autonomous authorization, approved role/model/settings, ownership and preserved gates before dependent implementation. Arc ledger remains32 rows/14 done/18 open, project25 rows open; no acceptance or source integration is implied.
+
+
+## Slice15 complete-state API increment and remainder — 2026-10-19
+
+Within the adopted direction, source reconnaissance resolves compatibility by adding a complete runtime SaveUpdate and new watch→graph path while preserving legacy public SaveDelta/SaveSnapshot/WatchHandle/start_watching. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt.md`, initial implementation on dedicated `.worktrees/complete-live-save-updates`, branch `codex/complete-live-save-updates`, accepted base130034e. CC `gpt-6-luna` High owns that source/index; CDC `cdc_arc06` `gpt-6.1-sol` High owns planning/index and independent review. CC stages three return files in ignored candidate workbench/slice15-return; CDC transfers them byte-preserved into canonical records after return. Complete binding API, same-parse source authority, full-state selection, bounded queue/cancellable join and discriminating tests are in the Slice15 open set; no implementation policy is left for CC. No new dependency, persisted layout/semantic revision or terminal method selected.
+
+Was broad planned15 containing all normal/live/cache/duplicate/settings/unknown/history remainder.15 now delivers usable complete parsed-update public library capability and graph application; planned16/CDC must detail and deliver the single application coordinator, sole watcher/apply path and serialized cache writer outside short model lock, normal/headless lifetime, notifications/session/no_cache/best-effort failures and actual normal terminal composition. This sizing keeps compatibility and lifecycle work in separate coherent contexts. ALL unknown-system placeholders/promotion/representation/compatibility decisions remain explicit CDC/Operator gates; broader history, raw-field repair/final-baseline semantic transition, original export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04 and parent independent/Operator/integration/release obligations stay required. No silent drop, new inquiry or acceptance waiver.
+
+Seven CU rows/new R06-S15 open:33 arc rows/14 done/19 open, project25 open. Main/held dependencies/Project02 remain protected; source candidate is unintegrated/uninstalled. Version1.52 records source-grounded detailing of adopted complete-state direction into a useful additive increment and complete follow-on ownership, without narrowing original requirements.
