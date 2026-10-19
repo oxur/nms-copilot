@@ -4,6 +4,7 @@
 //! Includes robustness features: file stability checks, consecutive
 //! failure counting, and graceful error recovery.
 
+use std::fmt;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -38,11 +39,48 @@ pub struct WatchHandle {
 }
 
 /// Handle to a watcher that emits complete parsed save updates.
+///
+/// The receiver starts empty; starting a watcher does not emit an initial
+/// update. Supported state/version changes arrive in source order, while an
+/// unchanged parsed save is suppressed. The bounded queue holds one event and
+/// the worker may retain one additional parsed event while waiting to enqueue
+/// it. Dropping this handle stops and joins the worker, so a pending unsent
+/// event may be discarded during shutdown; an event already in the queue
+/// remains readable before the receiver disconnects. File I/O and parsing are
+/// not subject to a hard shutdown deadline.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::path::PathBuf;
+/// use std::time::Duration;
+/// use nms_watch::{WatchConfig, WatchError, start_watching_updates};
+///
+/// fn watch(path: PathBuf) -> Result<(), WatchError> {
+///     let handle = start_watching_updates(WatchConfig {
+///         save_path: path,
+///         debounce: Duration::from_millis(500),
+///     })?;
+///     if let Ok(update) = handle.receiver.recv_timeout(Duration::from_secs(30)) {
+///         let _complete_state = update.player_state;
+///     }
+///     Ok(())
+/// }
+/// ```
 pub struct WatchUpdateHandle {
     /// Receive complete parsed updates in source order.
     pub receiver: mpsc::Receiver<SaveUpdate>,
     /// Owns the debouncer and joined worker lifetime.
     _owner: WatchOwner,
+}
+
+impl fmt::Debug for WatchUpdateHandle {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        formatter
+            .debug_struct("WatchUpdateHandle")
+            .field("receiver", &self.receiver)
+            .finish_non_exhaustive()
+    }
 }
 
 struct WatchOwner {
@@ -176,10 +214,15 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
 /// Start watching a save and emit complete supported player updates.
 ///
 /// Each event pairs the existing additive atlas delta with the complete
-/// supported player state and source version from one parse. The capacity-one
-/// queue preserves source order during normal operation and retains a pending
-/// event while the receiver catches up. Dropping this handle stops and joins
-/// the worker. This library API does not coordinate application cache writers.
+/// supported player state and source version from one parse. No initial event
+/// is sent. Events are emitted when supported state, source version, or atlas
+/// delta changes; unchanged parsed saves are suppressed. The capacity-one
+/// queue preserves source order and the worker can hold one additional parsed
+/// event while waiting for capacity. Dropping the returned handle stops and
+/// joins the worker. A pending unsent event may be discarded on shutdown, but
+/// a queued event remains readable before disconnection. File I/O and parsing
+/// have no hard shutdown deadline. This library API does not coordinate
+/// application cache writers.
 ///
 /// # Errors
 ///
@@ -404,7 +447,7 @@ mod tests {
         json = json.replace("\"Specials\": 9,", &format!("\"Specials\": {quicksilver},"));
         if let Some((previous_reality, previous_x)) = previous {
             let previous_json = format!(
-                "\"PreviousUniverseAddress\": {{\"RealityIndex\": {previous_reality}, \"GalacticAddress\": {{\"VoxelX\": {previous_x}, \"VoxelY\": 3, \"VoxelZ\": 4, \"SolarSystemIndex\": 5, \"PlanetIndex\": 1}}}},"
+                "\"PreviousUniverseAddress\": {{\"RealityIndex\": {previous_reality}, \"GalacticAddress\": {{\"VoxelX\": {previous_x}, \"VoxelY\": 3, \"VoxelZ\": 4, \"SolarSystemIndex\": 1, \"PlanetIndex\": 1}}}},"
             );
             json = json.replacen(
                 "\"Units\":",
@@ -444,15 +487,24 @@ mod tests {
             debounce: Duration::from_millis(20),
         })
         .expect("start full update watcher");
+        assert!(format!("{handle:?}").starts_with("WatchUpdateHandle"));
 
         std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 70, 80, 90, None))
             .expect("write currency-only save");
         let currency_update = receive_update(&handle);
         assert!(currency_update.delta.is_empty());
-        assert_eq!(currency_update.player_state.units, 70);
-        assert_eq!(currency_update.player_state.nanites, 80);
-        assert_eq!(currency_update.player_state.quicksilver, 90);
-        assert_eq!(currency_update.player_state.freighter_address, None);
+        assert_eq!(
+            currency_update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                70,
+                80,
+                90,
+            )
+        );
         assert_eq!(currency_update.save_version, 4720);
 
         std::fs::write(
@@ -462,14 +514,17 @@ mod tests {
         .expect("write previous-address-only save");
         let previous_update = receive_update(&handle);
         assert!(previous_update.delta.is_empty());
-        assert_eq!(previous_update.player_state.units, 70);
         assert_eq!(
-            previous_update
-                .player_state
-                .previous_address
-                .unwrap()
-                .voxel_x(),
-            3
+            previous_update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                Some(nms_core::address::GalacticAddress::new(3, 3, 4, 1, 1, 9)),
+                None,
+                70,
+                80,
+                90,
+            )
         );
         assert_eq!(previous_update.save_version, 4720);
 
@@ -480,7 +535,18 @@ mod tests {
         .expect("write version-only save");
         let version_update = receive_update(&handle);
         assert!(version_update.delta.is_empty());
-        assert_eq!(version_update.player_state.units, 70);
+        assert_eq!(
+            version_update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                Some(nms_core::address::GalacticAddress::new(3, 3, 4, 1, 1, 9)),
+                None,
+                70,
+                80,
+                90,
+            )
+        );
         assert_eq!(version_update.save_version, 4721);
 
         std::fs::write(
@@ -506,7 +572,7 @@ mod tests {
 
         std::fs::write(
             &path,
-            save_bytes_with_state(9, 1, 4721, 70, 80, 90, Some((9, 3))),
+            save_bytes_with_state(9, 1, 4722, 700, 800, 900, Some((0, 2))),
         )
         .expect("write movement save");
         let movement_update = receive_update(&handle);
@@ -518,12 +584,23 @@ mod tests {
             moved.from,
             nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0)
         );
-        assert_eq!(moved.to.reality_index, 9);
-        assert_eq!(moved.to.voxel_x(), 1);
-        assert_eq!(movement_update.player_state.units, 70);
-        assert_eq!(movement_update.player_state.nanites, 80);
-        assert_eq!(movement_update.player_state.quicksilver, 90);
-        assert_eq!(movement_update.save_version, 4721);
+        assert_eq!(
+            moved.to,
+            nms_core::address::GalacticAddress::new(1, 0, 0, 1, 0, 9)
+        );
+        assert_eq!(
+            movement_update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(1, 0, 0, 1, 0, 9),
+                9,
+                Some(nms_core::address::GalacticAddress::new(2, 3, 4, 1, 1, 0)),
+                None,
+                700,
+                800,
+                900,
+            )
+        );
+        assert_eq!(movement_update.save_version, 4722);
     }
 
     #[test]
@@ -551,7 +628,17 @@ mod tests {
 
         std::fs::write(
             &path,
-            save_bytes_with_state(9, 1, 4721, 70, 80, 90, Some((9, 3))),
+            save_bytes_with_state(0, 0, 4721, 70, 80, 90, Some((9, 3))),
+        )
+        .expect("write version-only save");
+        assert!(matches!(
+            handle.receiver.recv_timeout(Duration::from_millis(400)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(
+            &path,
+            save_bytes_with_state(9, 1, 4722, 70, 80, 90, Some((9, 3))),
         )
         .expect("write movement save");
         let delta = handle
@@ -621,6 +708,37 @@ mod tests {
         let path = dir.path().join("save.json");
         std::fs::write(&path, save_bytes_with_state(0, 0, 4720, 7, 8, 9, None))
             .expect("write initial valid save");
+        let initial_save = nms_save::parse_save_file(&path).expect("parse initial save");
+        let mut model = nms_graph::GalaxyModel::from_save(&initial_save);
+        let imported_address = nms_core::address::GalacticAddress::new(12, 4, 5, 3, 0, 4);
+        let imported_system_id = nms_graph::SystemId::from_address(&imported_address);
+        let imported_planet = nms_core::system::Planet::new(
+            1,
+            Some(nms_core::biome::Biome::Lush),
+            None,
+            false,
+            Some("Imported leaf".into()),
+            None,
+        );
+        model.insert_system(nms_core::system::System::new(
+            imported_address,
+            Some("Imported system".into()),
+            None,
+            None,
+            vec![imported_planet],
+        ));
+        model.insert_base(nms_core::player::PlayerBase::new(
+            "Imported base".into(),
+            nms_core::player::BaseType::HomePlanetBase,
+            imported_address,
+            [1.0, 2.0, 3.0],
+            Some("import-owner".into()),
+        ));
+        model.set_active_galaxy(7);
+        let original_player_state = model.player_state.clone();
+        let original_systems = model.systems.clone();
+        let original_planets = model.planets.clone();
+        let original_bases = model.bases.clone();
         let handle = start_watching_updates(WatchConfig {
             save_path: path.clone(),
             debounce: Duration::from_millis(20),
@@ -635,21 +753,75 @@ mod tests {
                 handle.receiver.recv_timeout(Duration::from_millis(400)),
                 Err(mpsc::RecvTimeoutError::Timeout)
             ));
+            assert_eq!(model.player_state, original_player_state);
+            assert_eq!(model.systems, original_systems);
+            assert_eq!(model.planets, original_planets);
+            assert_eq!(model.bases, original_bases);
+            assert_eq!(model.active_galaxy, 7);
         }
 
-        std::fs::write(&path, save_bytes_with_state(9, 1, 4721, 70, 80, 90, None))
-            .expect("restore valid save");
+        let replacement = dir.path().join("replacement.json");
+        std::fs::write(
+            &replacement,
+            save_bytes_with_state(9, 1, 4721, 70, 80, 90, None),
+        )
+        .expect("write valid replacement save");
+        std::fs::rename(&replacement, &path).expect("atomically replace selected save");
         let update = receive_update(&handle);
         let moved = update
             .delta
             .player_moved
+            .as_ref()
             .expect("movement from retained baseline");
-        assert_eq!(moved.from.reality_index, 0);
-        assert_eq!(moved.from.voxel_x(), 0);
-        assert_eq!(moved.to.reality_index, 9);
-        assert_eq!(moved.to.voxel_x(), 1);
-        assert_eq!(update.player_state.units, 70);
+        assert_eq!(
+            moved.from,
+            nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0)
+        );
+        assert_eq!(
+            moved.to,
+            nms_core::address::GalacticAddress::new(1, 0, 0, 1, 0, 9)
+        );
+        assert_eq!(
+            update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(1, 0, 0, 1, 0, 9),
+                9,
+                None,
+                None,
+                70,
+                80,
+                90,
+            )
+        );
         assert_eq!(update.save_version, 4721);
+        model.apply_save_update(&update);
+        assert_eq!(model.player_state, Some(update.player_state));
+        assert_eq!(model.active_galaxy, 9);
+        assert_eq!(model.systems, original_systems);
+        assert_eq!(model.planets, original_planets);
+        assert_eq!(model.bases, original_bases);
+        assert_eq!(
+            model.system(&imported_system_id).unwrap().name.as_deref(),
+            Some("Imported system")
+        );
+        assert_eq!(
+            model
+                .planets
+                .get(&(imported_system_id, 1))
+                .unwrap()
+                .name
+                .as_deref(),
+            Some("Imported leaf")
+        );
+        assert_eq!(
+            model
+                .bases
+                .get("imported base")
+                .unwrap()
+                .owner_uid
+                .as_deref(),
+            Some("import-owner")
+        );
     }
 
     #[test]
