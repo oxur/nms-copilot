@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.44
+version: 1.45
 project: project01-mvp
 status: active
 depends-on: []
@@ -884,3 +884,8 @@ Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-p
 ## Arc06 Slice15 independent review / Iteration01 — 2026-10-19
 
 CDC independently verifies current e254466 gates (focused87/171/32, cache38, route4, native7, no-default220, workspace951 and all build/docs/format/lint/strict-cache/diffs); runtime contract matches. CU05 accepted, six child rows open. Bounded first refinement corrects complete native state/file→graph/map test oracles, new handle Debug/docs and reporting fidelity, preserving runtime algorithms. Historical incomplete attempt fields remain unknown and CU07 remains Operator-held after current correction/review, not a unilateral evidence waiver. Arc33/14 done/19 open, project25 open; no dependent Slice16 or other arc/Project02 advancement past the child gate. Version1.44 records routine child review/correction and preserved remaining authority; no scope/architecture/acceptance reduction.
+
+
+## Arc06 Slice15 current correction acceptance / sole evidence gate — 2026-10-19
+
+CDC accepts CU01–06 at78d436a after full two-file test/Debug/docs delta review and seven fresh focused gates; runtime unchanged and applicable prior broad e254466 proof explicitly retained. CU07 alone remains open for initial disclosed uncaptured observations/unknown fields. The reviewable bounded exception recommendation/alternative is in child closing-report.md and exact table in cdc-verification.md; Operator is next-action owner, no waiver applied. First refinement returned/reviewed; no active CC implementation or Slice16 dispatch through this gate. Slice/arc/project stay open (arc33/14 done/19 open; project25 open). Stable source/planning now CDC-owned; main/dependencies/external pr-stack-ci/Project02 preserved. All remainder/original acceptance, final independent/Operator and integration/release obligations persist; closing retrospectives remain due at actual endpoints. Version1.45 records routine partial acceptance/bubble-up, not an evidence-contract amendment or arc completion.

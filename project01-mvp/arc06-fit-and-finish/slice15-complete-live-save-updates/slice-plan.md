@@ -1,6 +1,6 @@
 # Slice15 — complete parsed live save updates
 
-Version:1.1. Created2026-10-19. Status:open; initial CC implementation assignment active. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md`; first refinement of five, initial returned/reviewed.
+Version:1.2. Created2026-10-19. Status:open; CU01–06 independently accepted, CU07 awaiting Operator evidence disposition. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration01.md`; first refinement of five executed/returned/independently reviewed; no active CC implementation. Next-action owner Operator for CU07; CDC owns stable source/planning and subsequent recorded disposition.
 
 ## Useful increment, dependency and ownership
 
@@ -31,7 +31,7 @@ Author readiness: source grounded, consequential decisions resolved, guidelines 
 
 ## Verification and exit
 
-Seven CU rows in ledger.md, all open until independent CDC review. Add exact full-state, nochange/state-only/version-only/legacy, graph selected-view/absent/contradiction/imported-data and actual native malformed/recovery/lifecycle tests. Validate format then lint before focused and workspace/feature/doc gates in prompt. Native sandbox failures retain then identical original-TMPDIR authorized-host retry. No skipped/weakened validation, invented historical evidence or test ignore.
+Seven CU rows in ledger.md; CU01–06 now independently accepted and CU07 alone open for the historical evidence disposition below. Add exact full-state, nochange/state-only/version-only/legacy, graph selected-view/absent/contradiction/imported-data and actual native malformed/recovery/lifecycle tests. Validate format then lint before focused and workspace/feature/doc gates in prompt. Native sandbox failures retain then identical original-TMPDIR authorized-host retry. No skipped/weakened validation, invented historical evidence or test ignore.
 
 CC commits only six named source paths with both trailers, returns actual source revision and proposed row walk/evidence. CDC independently inspects/reproduces before acceptance; CDC repairs would need another verifier. Dedicated source candidate is wired/tested/documented library capability, unintegrated/uninstalled; later authorized integration/composition remains CDC/Operator-owned.
 
@@ -59,3 +59,10 @@ Assignment history addition: initial cc-prompt.md issued aec768f, returned e2544
 
 
 Iteration01 dispatch acknowledged by the same `/root/cdc_arc06/cc_slice15`; approved model/settings unchanged. CC verified clean source/index e254466 before edits and owns source/index during the refinement. CDC retains planning/index. Source packet’s 'stage return' ambiguity is resolved: filesystem-only transport, no ignored files in Git staging. No waiver, independent acceptance or held-pin movement.
+
+
+## Iteration01 reviewed / concrete Operator gate — 2026-10-19
+
+Source78d436ad6f20aa9466424103fcabd630c718b904, direct parente254466, exactly two authorized paths/both trailers once/clean source and index. CC explicitly returned ownership; CDC independently inspects complete diff and passes seven fresh focused gates (87/171/32 unit plus1 doc, workspace doc1, format/lint/strict-watch/diffs). Runtime prefixes equal baseline after approved docs/Debug exclusions; unaffected broader e254466 proof retained explicitly, not reported fresh. All three returns transferred byte-preserved; initial Markdown prefixes/all8 JSON values preserved. Current12 new command observations capture failures/retry as well as passes; original missing history stays unknown. Details/current verdict in cdc-verification.md; bounded decision proposal in closing-report.md.
+
+Six CU rows done/one open; R06-S15 remains open. Immutable iteration01 is executed/returned/reviewed, first of five refinements; no new prompt or CC source assignment. CU07 alone needs Operator's bounded historical-capture disposition before acceptance-contract amendment, retrospective/formal closure or dependent Slice16. No waiver inferred from Autonomous authorization. Final slice/arc/project CDC retrospectives remain due at their respective actual closes; current observations are in existing verification record. All original capability/remainder/approval fences above persist. Version1.2 records partial independent acceptance and the reviewable decision, without applying the proposed exception.
