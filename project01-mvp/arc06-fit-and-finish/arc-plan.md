@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.52, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.53, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -459,3 +459,12 @@ Within the adopted direction, source reconnaissance resolves compatibility by ad
 Was broad planned15 containing all normal/live/cache/duplicate/settings/unknown/history remainder.15 now delivers usable complete parsed-update public library capability and graph application; planned16/CDC must detail and deliver the single application coordinator, sole watcher/apply path and serialized cache writer outside short model lock, normal/headless lifetime, notifications/session/no_cache/best-effort failures and actual normal terminal composition. This sizing keeps compatibility and lifecycle work in separate coherent contexts. ALL unknown-system placeholders/promotion/representation/compatibility decisions remain explicit CDC/Operator gates; broader history, raw-field repair/final-baseline semantic transition, original export/import/format/docs/distribution/coverage/R06-R02/R03/M7.4/C04 and parent independent/Operator/integration/release obligations stay required. No silent drop, new inquiry or acceptance waiver.
 
 Seven CU rows/new R06-S15 open:33 arc rows/14 done/19 open, project25 open. Main/held dependencies/Project02 remain protected; source candidate is unintegrated/uninstalled. Version1.52 records source-grounded detailing of adopted complete-state direction into a useful additive increment and complete follow-on ownership, without narrowing original requirements.
+
+
+## Normal-terminal method preflight — 2026-10-19
+
+CDC verified the existing exec tool’s native PTY route as routine preparation for already-required normal-mode composition, without adopting `/usr/bin/script`, a new dependency or a repository harness. `exec_command(tty=true)` reported `/dev/ttys022`,24x80. Disposable HOME/config/save under `/private/tmp/nms-arc06-pty-preflight-p2jdqdn5` disabled cache/watch/banner and used a copy of data/test/minimal_save.json; no user data/save or held source changed. The held headless-cache-startup checkout has HEAD130034e and an existing target/debug/nms-copilot executable; executable provenance was not rebuilt/re-proven for this tool-method check, so this is not source-revision acceptance.
+
+Exact launch, both attempts: `HOME=/private/tmp/nms-arc06-pty-preflight-p2jdqdn5/home TERM=xterm-256color .worktrees/headless-cache-startup/target/debug/nms-copilot --save /private/tmp/nms-arc06-pty-preflight-p2jdqdn5/save.json --no-cache --http 127.0.0.1:0`, from repository root, tty=true; inherited TMPDIR unchanged. Restricted attempt returned1: `MCP server failed to start: bind 127.0.0.1:0 failed: Operation not permitted (os error 1)` (tool chunkd798b0). Identical authorized-host retry reached real Reedline prompt (chunk7e72d1/session84328). `status` plus carriage return produced literal Galaxy Euclid(0; Normal), Model2 systems/1 planets, player-position Euclid0, no biome/warp filter (chunk11e06d). `quit` plus carriage return produced Goodbye and exit0 (chunk4b46cf). PTY stream is terminal-multiplexed stdout/stderr, not fabricated separate channels. Port0 suffices only for terminal preflight; it does not prove a discoverable HTTP endpoint or live composition.
+
+This resolves that existing-tool method’s feasibility; required Slice16 candidate must be built/identified and actually exercise normal startup, shared HTTP observations, live state/cache/error/recovery and shutdown before acceptance. No application feature, full REPL lifecycle, timing/performance or C04 claim follows. Version1.53 records a useful independently prepared prerequisite and its original negative/host-retry observations; no scope/architecture/acceptance gate change.
