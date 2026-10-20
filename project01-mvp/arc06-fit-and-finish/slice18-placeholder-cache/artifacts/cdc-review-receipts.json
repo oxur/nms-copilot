@@ -1068,5 +1068,34 @@
       "cdc_follow_through": "Same exact two finite-helper wait substitutions applied to own inherited driver before its first native launch; SHA f6bd378d9ab64973b20f48b821c6205624795017eba83413b53f3405b4238d4b. No CDC native launched yet.",
       "limits": "Supporting/controller observations, not independent native behavior reproduction. Original raw-first and status/source contract unchanged."
     }
+  ],
+  "source_handbacks": [
+    {
+      "recorded_utc": "2026-10-20T23:31:35.710896+00:00",
+      "head": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+      "parent": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+      "tree": "7ac91549ba8841c2dc0345d0e6a6eb116474fac9",
+      "status": "",
+      "index": "",
+      "file_sha256": {
+        "README.md": "124b424c74ac990521e0dc32b933f5f867fddded988a5fa9a9941f7cee8b1d35",
+        "crates/nms-cache/src/data.rs": "8c04483d2f22d14500f54902d04b41e6b9d0e0c19f7990f8892cfb9b19ffe5fb",
+        "crates/nms-cache/src/lib.rs": "5e06027fa0874b8237894cc07edb5219dc5c99e947928cf1e374b18a7caf9ecd",
+        "crates/nms-cache/src/serialize.rs": "2422c9eaf1f72d2364e78f6bdf1c3799bfbe7bfb650e78d1e3a51ef566ff50a3",
+        "crates/nms-cache/tests/fixtures/predecessor-schema2-semantic2.rkyv": "291b283d06db222bf355c259269328d23fef34d0d020c89012fb922bdf4d31c7",
+        "crates/nms-cache/tests/load_integration.rs": "68ac538f518ad5b9367148e1055a251aaf2ae7810c9bb85def7e5d2fead18cf6",
+        "crates/nms-copilot/examples/repl_live_probe.rs": "ec3db1132f95af9a4c523f89ed517138d68b908733dbdaccec8ade84756e342c",
+        "crates/nms-copilot/tests/mcp_live_integration.rs": "caea628c3e388794a4c6d2939d05143721d0b441ab20ecefeee9b6a00db28c79",
+        "crates/nms-copilot/tests/owned_mcp_integration.rs": "921405b20e322bea5031ce458c4ba1592c62b10e95c8896a18f6a15a5a71dcb8",
+        "crates/nms-copilot/tests/query_cache_integration.rs": "e731d57a93d757add0d1a8cf25c7da32022307263b3657553cee8d75bee8a720",
+        "crates/nms-copilot/tests/route_cache_integration.rs": "997576db47185870e73fc72e0b0b410cf8a57bd00211967b8d77f9a5675b089b",
+        "crates/nms-copilot/tests/support/live_mcp.rs": "e9958935545c5cb18d43d0b0b36aca9b42f4025ba4e74756f9b2a4716d63e55c",
+        "crates/nms-graph/src/import.rs": "f0f1a51ced4f1b6fffb1f0e5401bdbeddfb5e8a7e18955471fc19c79e63ba750",
+        "crates/nms-graph/src/model.rs": "55f5770e90535d743df43cc02f058ba17a4ed8a1425abbaf92b7d0aca9bd0707"
+      },
+      "parsed_trailers": "Co-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n",
+      "ownership": "CC explicitly handed source/index/product gates to CDC; CC retains ONLY three ignored returns until stable transfer",
+      "verification": "actual exact14 paths, source/index clean and correct consecutive parsed trailers; final source contents remain applicable to completed static review. New independent gates not yet launched."
+    }
   ]
 }
