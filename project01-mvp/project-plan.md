@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.45
+version: 1.46
 project: project01-mvp
 status: active
 depends-on: []
@@ -889,3 +889,8 @@ CDC independently verifies current e254466 gates (focused87/171/32, cache38, rou
 ## Arc06 Slice15 current correction acceptance / sole evidence gate — 2026-10-19
 
 CDC accepts CU01–06 at78d436a after full two-file test/Debug/docs delta review and seven fresh focused gates; runtime unchanged and applicable prior broad e254466 proof explicitly retained. CU07 alone remains open for initial disclosed uncaptured observations/unknown fields. The reviewable bounded exception recommendation/alternative is in child closing-report.md and exact table in cdc-verification.md; Operator is next-action owner, no waiver applied. First refinement returned/reviewed; no active CC implementation or Slice16 dispatch through this gate. Slice/arc/project stay open (arc33/14 done/19 open; project25 open). Stable source/planning now CDC-owned; main/dependencies/external pr-stack-ci/Project02 preserved. All remainder/original acceptance, final independent/Operator and integration/release obligations persist; closing retrospectives remain due at actual endpoints. Version1.45 records routine partial acceptance/bubble-up, not an evidence-contract amendment or arc completion.
+
+
+## Arc06 Slice15 Operator decision / latest-main integration — 2026-10-19
+
+Operator explicitly approved the bounded initial historical-capture exception (“I agree”); exact unknown bounds remain recorded/unrecovered in the child and arc1.56. Operator also authorizes active Slice15 candidate rebase onto clean local mainb616ab2 before continuing Arc06. CDC will preserve78d436a and replay ONLY two commits above130034e; prior rebased predecessor stack is not replayed. Existing captures retained, fresh integrated validation/close/retrospective pending. External pr-stack-ci03e8d04 and every held pin/planning protected; no external action/other arc/Project02. Same selected models/workflow; all future capture/original gates retained. Version1.46 records explicit bounded acceptance amendment and source-baseline authority, without premature child closure.
