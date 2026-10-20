@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.68, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.69, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -560,3 +560,8 @@ Current status under Version1.67: complete independent static readiness walk at 
 ## Slice17 current handback / bounded evidence completion — 2026-10-20 UTC
 
 Version1.68: current CC gates/native9 attested, source static clear. Metadata-only eea7135→61f1d98 preserves original backup/exact tree/parent; proper parsed coauthors verified, code unchanged. CDC owns source/index for independent runtime/native reproduction, CC iteration04 FOURTHof5 only three ignored returns to finish missing row/bubble-up/recipe/inventory and append honest corrections/limits. All8RC/R06-S17open/35arcrows16done19open/project25open. Historical old native-capture and absent current-wave pre-matrix digest observations remain unexcepted; current proof before disposition. No new role/model/policy/terminal/dependency/inquiry; protected main/held pins and every original remaining gate/Arc06-only endpoint persist.
+
+
+## Slice17 independent disposition / Operator boundary — 2026-10-20 UTC
+
+Version1.69: CDC independently accepts RC01–07 on61f1d98 after full8-path/helper review,19 ordinary groups exit0 and all9 native cases; workspace977+doc5. RC08 only remains open for the concrete historical old native receipt/observations and two absent CC pre-matrix executable digests. Current full raw captures/prelaunch digests do not recreate history; no16waiver extension. Byte-preserved fourth return/full durable capture bundle and CDC retrospective/decision packet are canonical. Operator owns specific bounded exception or hold; no next unit before disposition/closure. R06-S17open/35arcrows16done19open/project25open. Source candidate unintegrated/uninstalled, protected main9-line working edit/external/accepted dependencies/held pins intact. Same selected roles/models/ownership/four-of-five budget/Arc06-only endpoint; every original unknown-placeholder/history/raw/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release gate preserved. No new implementation/inquiry/terminal/dependency/acceptance waiver.

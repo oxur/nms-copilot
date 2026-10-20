@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.58
+version: 1.59
 project: project01-mvp
 status: active
 depends-on: []
@@ -959,3 +959,8 @@ Current status under Version1.57: complete independent static readiness walk at 
 ## Arc06 Slice17 handback and evidence completion — 2026-10-20 UTC
 
 Version1.58: source61f1d98 (metadata-only map from preserved eea7135) retains exact reviewed code/current CC gates/native9 attested. Independent CDC runtime proof pending; iteration04 fourth-of-five completes only actual return obligations/corrections, no Rust/source/Git/test mutation. All8RC/R06-S17open/35arcrows16done19open/project25open; historical capture limits unexcepted pending concrete review. Same authorized models/ownership/Arc06-only scope, protected main/held history and all original parent/Operator/integration/release gates retained.
+
+
+## Arc06 Slice17 independent disposition / Operator boundary — 2026-10-20 UTC
+
+Version1.59: CDC independently accepts RC01–07 on61f1d98 after full8-path/helper review,19 ordinary groups exit0 and all9 native cases; workspace977+doc5. RC08 only remains open for the concrete historical old native receipt/observations and two absent CC pre-matrix executable digests. Current full raw captures/prelaunch digests do not recreate history; no16waiver extension. Byte-preserved fourth return/full durable capture bundle and CDC retrospective/decision packet are canonical. Operator owns specific bounded exception or hold; no next unit before disposition/closure. R06-S17open/35arcrows16done19open/project25open. Source candidate unintegrated/uninstalled, protected main9-line working edit/external/accepted dependencies/held pins intact. Same selected roles/models/ownership/four-of-five budget/Arc06-only endpoint; every original unknown-placeholder/history/raw/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release gate preserved. No new implementation/inquiry/terminal/dependency/acceptance waiver.

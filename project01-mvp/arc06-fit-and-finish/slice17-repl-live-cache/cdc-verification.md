@@ -73,3 +73,79 @@ CC handed back exact8paths at eea7135 with clean source/index and full current a
 Actual git parser returned ONLY Billo because Codex was separated by a blank paragraph; original return claim of both parsed trailers was false. Under existing authority CDC made mechanical unpublished message-only correction eea7135→61f1d98fcb7f5cad4b8eef0477a62bf000599f6a with exact8namedpaths, preserving eea at codex/slice17-before-trailer-repair-20261020. Treec42d570012a01f349924ce1f08d391cf95a00935 and parente093 are identical, source/index clean and both required lines now parse once each. Root separately reports raw mechanical preflight only, not a new substantive reviewer role. No production repair/self-acceptance, no gate rerun solely for message.
 
 Complete initial return review found missing explicit eight-row proposals, named three-question bubble-up, usable native/run recipe and full attempt inventory/old native-capture table; validation transcribed one hex character in precommit diff digest. Immutable iteration04 FOURTHof5 completes ONLY three ignored returns, Markdown prefix and every original JSON value preserved with append-only corrections. CDC owns source/index and planning/current independent execution; CC cannot edit source/index/Git or run tests/native. Original artifact byte identities/data retained in existing receipts. Current-wave pre-matrix candidate/probe digests are two absent observations, not a newly invented per-child requirement; older f42/8da belong only iteration01/7ae/zIJPeM and later45f8/3612 only current post-build. Existing old native UUID/time/raw-result gap remains unexcepted; current code/proof completes before Operator disposition. All8RCopen; no next unit/external action or original parent gate reduction.
+
+
+## Current independent verdict — 2026-10-20 UTC
+
+CDC /root/cdc_arc06 independently accepts RC-01–07 on source **61f1d98fcb7f5cad4b8eef0477a62bf000599f6a**. **RC-08 remains OPEN; Slice17 and R06-S17 remain open.** No code finding remains. This is the two-contributor independent review under the unchanged requested/applied OpenAI/Codex gpt-6.1-sol High CDC /gpt-6-luna High CC settings. Initial and iterations01–04 remain immutable; fourth of five was evidence-only, not another implementation change. CC closing-report.md is copied byte-for-byte and its pending-review statements are historical handback, superseded only by this CDC verdict.
+
+All eight source files and every changed production/test/probe helper were reviewed against the issued full-map, independent literal, negative-control, lifecycle and file-effect contract. Native field observations were checked through EOF, not only pending SSE messages. Normal owns one coordinator and its serialized cache writer; both normal and MCP observers are read-only. Same model guard synchronizes before first dispatch/prompt; explicit Base/Address and Toxic/2500 options survive. The public worker uses typed errors, actual-port readiness and explicit cancellation/join; tests bound possible broken shutdown in owned subprocesses. “Bounded readiness” in the CC return describes test/controller deadlines, not a newly imposed production startup deadline. Modal map's existing held readguard remains documented; this does not claim background progress inside that modal view.
+
+### Fresh current verification
+
+All19 ordinary verification groups exit0, plus the independent9-case native population. Full separate ordinary channels/raw exit/endUTC/source before+after are in artifacts/cdc-review-receipts.json. Native PTY channels are honestly multiplexed; complete tool objects, manifests and separate probe stdout/stderr are retained in capture-bundle.zip. Original TMPDIR was retained and actual native/loopback work used the authorized host; no fresh sandbox failure was manufactured. Source/index stayed clean61f throughout. No tests reran for evidence-only return/decision edits.
+
+| Group | Attempt UUID | Exit |
+|---|---|---|
+| cdc-format | 061c2a34302e4041a50dbe3075948963 | 0 |
+| cdc-lint | 5c97d4b4c33748329fc216981459d3f8 | 0 |
+| cdc-focused | 08a4c2477af14f03890dfc13862617a8 | 0 |
+| cdc-cache | 121227e30c504aee99ae35a66f135bc1 | 0 |
+| cdc-route | 4299bc0f3a574bb7bcb91bf2b769a5ce | 0 |
+| cdc-frozen-native | d02f79a299a143b083b86017554137cb | 0 |
+| cdc-owned | e5456cf2fe744306998d18d5c8565d45 | 0 |
+| cdc-no-default-lib | 50a156a9a4c84a1ba7f42b78fd05a26d | 0 |
+| cdc-bin-units | 93cf1757b53d41e4bcbdc1a99d8f629c | 0 |
+| cdc-bin-probe-build | dc2c8e3a99a9493589d90d2302e4c68a | 0 |
+| cdc-self-check | c18ee9ce45934f89829a25e9e10eb9aa | 0 |
+| cdc-workspace-test | a1a7ee6e3e8a46269e2c6646084ddc32 | 0 |
+| cdc-workspace-build | 86a7185484234612ad7a9e28c90bc293 | 0 |
+| cdc-doc-tests | f5b5923df7f2489895ae738549665c4e | 0 |
+| cdc-doc-build | cdd8440725f945b18476100b8daacf61 | 0 |
+| cdc-strict-cache | d561b5b4efd2484fa0ac4c922b0467cb | 0 |
+| cdc-strict-watch | d1abe15f77f7492e84504975a874cab6 | 0 |
+| cdc-working-diff | c80978d5f1b64eacaa526557c31c06a1 | 0 |
+| cdc-committed-diff | 003ffc6af6ff419d99b50b5f44fd90de | 0 |
+
+Counts: focused521 (copilot231/core87/graph171/watch32), cache38 (19unit+19integration), route4, retained headless native15, owned5, no-default LIB230, affected BIN16. Probe self-check uses three actual checked cache files, ten independent negative controls (five wrong raw with golden model; five wrong derived with golden raw) and reversed-order positive. Workspace a1a7ee6e contains977unit/integration plus5doc=982combined, with zero failures/ignored; separate doc gate rechecks5. These overlapping checks are not summed into a fictitious distinct-test population. Builds/six-crate docs/strict cache+watch docs/diffs pass. Existing docs warnings remain in untouched query/table (2 HTML), graph/extract (3 bracket links), core/address (4 links), copilot/config (1 link), plus existing proc-macro-error2 future incompatibility warning. No new owned API/drain docs warning; all four copilot and one watch examples compile.
+
+| Native row | Mode | Independent case UUID | Result |
+|---|---|---|---|
+| 1 | warm | 0e74940edd044346b8bbbc7990280b19 | pass |
+| 2 | warm | 58a08f0f2fb043898b40a6c72d33d361 | pass |
+| 3 | warm | 94a832ac4dcc4d0a8998c2a4124652bb | pass |
+| 4 | cold | 1343d5f8e8c34184bf94c7b677c61faf | pass |
+| 5 | sentinel | 3e0e580cec84427d9fd1a7c9a640d669 | pass |
+| 6 | bypass-missing | 79a910e3e10e4d9cb3a40083f6fd37fa | pass |
+| 7 | warm | d2337f4486ac47969ee10e87a26fa2c7 | pass |
+| 8 | blocker | 426f638ffaf44adab79ea8c17baa2ccf | pass |
+| 9 | warm | 7beb6d46916446d79d1f69a8613f236f | pass |
+
+Rows1–3 are warm full/quit, CtrlD and CtrlC respectively; row7 watch disabled; row9 occupied bind. Every applicable row checks initial/config/source bytes+mtime/cache bytes+mtime/parent/temp, exact semantic maps/full player/version/selection, actual RPC/resource/SSE, pre-exit and post-EOF boundaries. Row1 verifies phases1–4, FIRST exact Eissentam status/Base-0/Toxic/2500, phase5→five malformed writes→phase6→identical, FIRST Euclid(0;Normal) return status, one outward and one return note, one five-failure warning, fixed cachemtime1700000777 through EOF, remote SSE close and exact-address reuse. Rows5/6 preserve sentinel or absent parent under actual --no-cache/configtrue. Row8 retains distinct startup/live cache warnings and blocker bytes/mtime with no temp file. Row9 naturally exits1 with concrete AddrInUse, no actual rocket prompt/MCP-ready line, unchanged initial files and helper release0.
+
+One CDC row1 controller attempt26716ffb was noncounting: wrong expected Euclid type Lush conflicted with actual reference Normal. The controller—not production—was corrected from source; a fresh full row1 then passed. Original output/failure/cleanup remains. Natural failed-trial REPL exit0/Goodbye, exact owned monitor TERM completion143 and subsequent redundant already-finished-session API error are recorded separately. No invented raw result for a tool call that threw; ordinary metadata/API errors are not new SUT receipt or waiver obligations. CC's two failed current row1 trials and all earlier failures/retries remain distinct and noncounting.
+
+### Durable return and artifact accounting
+
+Byte-preserved CC closing10772bytes SHA21d757ae, execution205172 SHA fbe3faef, validation314041 SHA81b6efc8: initial Markdown prefixes and every original JSON value verified unchanged. Corrections are additive, including original trailer claim and diff-digest one-character typo. CDC rehashed all1,168 files in the CC inventory. One need-driven artifacts/capture-bundle.zip (1,968,242bytes SHA e04c73d4bf8cd26aa14db814080ce1d3dee2c2b577a95bcb720b01ef4c7f40b4) preserves2,052 payload files: actual CC attempt channels, CDC native before/raw/post/tool-error records, controller/helper versions and27 marker-owned synthetic fixture directories (including complete probe stdout/stderr). Internal manifest.json records original path/length/SHA/mtime for each member; all members and zip integrity verified after creation. Ordinary CDC gate complete channels remain embedded in existing cdc-review-receipts.json, not duplicated as an artifact forest. Existing initial-execution.md remains unchanged. No user home/profile/save data is included.
+
+### Exact remaining historical decision — RC-08 only
+
+The following observations remain unknown. Current green results do not recover them. The prior Slice16 exception is not applied here.
+
+| Affected historical attempt | Retained observations | Unavailable or never captured |
+|---|---|---|
+| First iteration01 warm native launch, fixturezIJPeM/PID27924 | Preregistered actual argv; old candidate f42b145e/probe8da0edc5 hashes; source709bytes/mtime1700000000 and warmcache520/1700000100; prepare-only UUIDba040abf with04:14:22.170113→04:14:22.669075Z/e093+7ae37fcc; actual TextEncoder failure; exact PID/argv verification, TERM and bounded exit observation | Native-specific UUID/startUTC never captured; original raw exec result/store key/session/chunk/PTY output unavailable; natural child completion status and contemporaneous native post-source/end observation unavailable. Original literal JS handler source is no longer recoverable. Prepare metadata is only precursor evidence; cleanup is not natural completion. No readiness/input/SSE/cache success assertion followed;0/9 acceptance credit. |
+| CC iteration03 current native matrix (all9 successful rows and its two failed row1 trials on6112f4ed) | Source identity, exact per-case argv/fixtures/raw terminal and probe channels, actual current passes and failures; later post-build candidate45f8bb6f/probe3612ded3 hashes | Two observations absent: candidate and probe SHA256 measured BEFORE that CC matrix. Old iteration01 hashes were mistakenly relabelled and corrected append-only; later hashes remain later. No invented per-child digest requirement. |
+
+The absence of original literal handler text is a recovery limit, not an additional mandated acceptance field. The receipt gap concerns the launch/raw/output/completion/source observations expressly required by the issued capture contract. The two pre-matrix digest observations are separately mandated by initial prompt line61. No other current validation/channel gap or source finding remains. Our independent successful9-case matrix measured both current executable digests before fixture preparation and every native call, persisted exact raw objects before postprocessing, and checked clean source61f before/after. That is fresh proof only.
+
+**Recommendation for Operator:** accept ONLY these bounded historical capture exceptions under RC-08, keep unavailable observations unknown and failed/noncounting attempts failed/noncounting, then allow evidence-only final retrospective/closure and next authorized Arc06 work. This does not waive future capture, any code/negative test, other rows or original parent/policy/integration/release gates. Alternative: hold Slice17 open without accepting the historical criterion exception. Repeating current tests cannot recreate historical missing observations, so no redundant rerun is proposed for this decision.
+
+Authority boundary: work-verification/guides/05-independent-verification.md point9 says “Escalate changes outside delegated authority rather than editing the acceptance contract to fit the implementation.” It continues that CDC needs the required Operator decision in the two-contributor workflow. project-management/guides/04-closing-slices.md says “A failed review keeps the slice open.” Both are under /Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills. The issued initial cc-prompt.md line93 requires “Before FIRST compiler/format/lint/test/nativeprobe/diagnostic: robust UUIDattempt capture with immutablecomplete separate stdout/stderr” plus the listed exact argv/cwd/startUTC/source/env/exit/endUTC/post-source and raw-before-postprocessing fields; line61 requires “Build actual candidate nms-copilot ANDprobe and record hashes before matrix.” CDC cannot silently change those issued obligations. No new implementation prompt is needed merely to seek this concrete decision; no fifth refinement consumed.
+
+### Revision/fence/bubble-up disposition
+
+Exact8-path source61f retains treec42d570012a01f349924ce1f08d391cf95a00935/parente093; eea7135 backup codex/slice17-before-trailer-repair-20261020 preserved. Both consecutive coauthors parse once each. Requested latest-main integration already fulfilled: only Slice15's two commits rebased cleanly onto b616ab2, e254466→98dc56a9 and78d436a→11cf7e6a, original78d at codex/slice15-before-main-rebase-20261019, range-diff equivalent/no conflicts; b616/11cf/e093 are ancestors61f. No repeat rebase/fetch/remote action. Accepted15/16/external03e8d04/earlier held worktrees clean at original pins. Main remains b616 with protected unstaged native-test9-line edit; root HEAD/index553622 and working2cd450 differ from frozen source73d79d, all preserved. Full observed pins/status are in receipts.
+
+Capability bubble-up: Slice17 delivers the normal usable single-owner composition, documented/readable/currently reproduced on a dedicated local candidate. It is not merged/installed/released and not yet formally closed solely due RC-08. New learning is the concrete historical capture/authoring/controller/trailer failure pattern recorded in cdc-retrospective.md; no new product architecture/terminal dependency or investigation adopted. The arc must update status/decision ownership before any next unit, not drop original obligations: RC7/8, R06-S17open,35arcrows16done19open, project25open. Unknown-placeholder representation/promotion/cachecompatibility, broader history/raw-field/final semantic transition, strict-mtime identical-rewrite stale import/history question, original C04/export/import/format/docs/distribution/coverage/M7.4/R06-R02/R03, parent independent/Operator/integration/release gates all remain. Stop at the specific Operator decision; no Slice18/other arc/Project02 work.
