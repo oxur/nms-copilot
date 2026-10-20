@@ -139,3 +139,12 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 2026-10-19 Slice16 opened:34 arc rows/15 done/19 open; all original parent capabilities remain open.
 
 2026-10-20 Slice16 final closure:34 arc rows/16 done/18 open; all original criteria and required17/parent obligations preserved.
+
+
+## Required normal composition child — 2026-10-20 UTC
+
+Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all25projectrows remainopen.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S17 | Normal REPL and shared background MCP use SAME accepted coordinator with owned lifecycle/current session/full native cache composition | Eight RC rows, actual normalPTY/HTTP/cache boundary matrix, retained headless/legacy and independent CDC review | correctness-grade | Adopted one-owner direction / required remainder from accepted16 | open | [initial assignment](slice17-repl-live-cache/cc-prompt.md) | Source e093-based dedicated worktree; no parent/unknownpolicy/Operator acceptance inferred |

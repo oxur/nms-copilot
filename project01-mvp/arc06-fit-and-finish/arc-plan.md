@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.63, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.64, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -530,3 +530,8 @@ Final e0939229 resolves all F1–F7 source/oracle findings; ALL15 fresh CDC gate
 ## Slice16 approved final closure / required17 continuation — 2026-10-20 UTC
 
 Operator: “yes, I agree — accept it and move on to17!” ONLY the exact five original completion fields of ONE first iteration03 format attempt UUIDefc40dcb44b14a0c8f00f08fa6b4f0bc are excepted for LC08; fields stayunknown, exactstdout107/stderr0/prelaunch records retained, no future/general waiver. All8LC/R06-S16done at e0939229 with prior15 independent gates520/38/4/15/229/workspace968+doc1/build/docs/stricts/diffs and finalized CDC retrospective. No approval-only code rerun or recast17 evidence.34arcrows/16done/18open/project25open. CDC now details17 normal SAME-coordinator REPL/shared background MCP/read-only notifications/owned shutdown/session refresh/actual existing-tool nativePTY full startup-live-cache/config/teardown; all unknown-placeholder/cache policy/history/raw/finaltransition/strictmtime-identicalrewrite import-history question/original parent/independent/Operator/integration/release gates preserved. Mainb616 protected rootnative-test9line edit/external03e8d04/held pins unchanged. Same explicitly selected model/settings, singlearc endpoint and dedicated ownership; no nextarc/Project02/remote actions. Version1.63 records approved bounded amendment, completed child/retrospective and existing-scope continuation.
+
+
+## Slice17 author-ready normal integration issuance — 2026-10-20 UTC
+
+Version1.64: accepted16 closed04b3255/e093 with ONLY explicitly approved historical five-field exception. Open [slice17-repl-live-cache/cc-prompt.md](slice17-repl-live-cache/cc-prompt.md),8RC/newR06-S17open:35arcrows/16done/19open/project25open. Dedicated repl-live-cache clean e093; fresh sole CC context at SAME selected gpt-6-luna High requested for implementation headroom, CDC gpt-6.1-sol High/planning/independent review unchanged. Actual accepted launch recorded ondispatch, previousCCidle. Sourcegrounded owned observer-only server typed readiness/cancel/join and same-coordinator normal wiring/pre-first-action sessionrefresh/anchor preservation fullyresolved; nine real nativePTY boundaries via existing terminaltools +Rustfixture/HTTP/cache probe, no new dependency/terminaladapter/policy/inquiry. Complete literal atlas/player/version/selection oracles/negativecontrols/failure-safe SSE/process teardown/capture-before-firstgate and rawcompletion-beforepostprocessing apply16retrospective. No Operator decision blocks17; main protectednine-line native-test workingedit/external03e8d04/accepted15/16/held pins unchanged. Every unknown/history/raw/finalsemantic/strictmtime-identicalrewrite import-history/original parent/independent/Operator/integration/release owner remains, no nextarc/Project02/externalaction. Routine detailed existing-scope issuance, no acceptance reduction or new waiver.
