@@ -10,10 +10,14 @@ pub mod resources;
 pub mod tools;
 
 #[cfg(feature = "http")]
+use std::io::Write;
+#[cfg(feature = "http")]
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::sync::mpsc::Receiver;
 use std::thread;
+#[cfg(feature = "http")]
+use std::thread::JoinHandle;
 use std::time::Duration;
 
 use fabryk_mcp::{
@@ -33,6 +37,302 @@ pub enum Transport {
     Stdio,
     #[cfg(feature = "http")]
     Http(SocketAddr),
+}
+
+/// Failure while starting or stopping an owned background MCP HTTP server.
+///
+/// Startup errors are returned before the readiness call succeeds. Errors
+/// observed after readiness are written to stderr; explicit shutdown reports
+/// worker panics.
+///
+/// # Examples
+///
+/// ```
+/// use std::error::Error as _;
+/// use nms_copilot::mcp::McpBackgroundError;
+///
+/// let error = McpBackgroundError::Runtime(std::io::Error::other("example"));
+/// assert!(error.source().is_some());
+/// ```
+#[cfg(feature = "http")]
+#[derive(Debug)]
+pub enum McpBackgroundError {
+    /// The worker operating-system thread could not be created.
+    Spawn(std::io::Error),
+    /// The worker could not construct its Tokio runtime.
+    Runtime(std::io::Error),
+    /// The requested listener address could not bind.
+    Bind {
+        /// Address the caller requested.
+        address: SocketAddr,
+        /// Error returned by the operating system.
+        source: std::io::Error,
+    },
+    /// The listener bound, but its actual local address could not be read.
+    LocalAddress {
+        /// Address the caller requested.
+        address: SocketAddr,
+        /// Error returned while reading the actual bound address.
+        source: std::io::Error,
+    },
+    /// The worker exited before sending its startup result.
+    ReadinessClosed,
+    /// The worker thread panicked while being joined.
+    WorkerPanicked,
+}
+
+#[cfg(feature = "http")]
+impl std::fmt::Display for McpBackgroundError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Spawn(error) => write!(f, "could not spawn MCP worker: {error}"),
+            Self::Runtime(error) => write!(f, "MCP runtime failed: {error}"),
+            Self::Bind { address, source } => write!(f, "bind {address} failed: {source}"),
+            Self::LocalAddress { address, source } => {
+                write!(f, "could not read bound address for {address}: {source}")
+            }
+            Self::ReadinessClosed => write!(f, "MCP worker closed readiness before binding"),
+            Self::WorkerPanicked => write!(f, "MCP worker panicked"),
+        }
+    }
+}
+
+#[cfg(feature = "http")]
+impl std::error::Error for McpBackgroundError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::Spawn(error) => Some(error),
+            Self::Runtime(error) => Some(error),
+            Self::Bind { source, .. } | Self::LocalAddress { source, .. } => Some(source),
+            Self::ReadinessClosed | Self::WorkerPanicked => None,
+        }
+    }
+}
+
+/// Owns an HTTP server worker and its stop signal.
+///
+/// Call [`Self::shutdown`] outside application model guards; it blocks until
+/// active requests and SSE connections are cancelled and the worker stops.
+/// Dropping the handle also requests stop and joins, but reports join errors
+/// to stderr rather than returning them.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::sync::Arc;
+/// use nms_copilot::mcp::{spawn_mcp_background_with_updates, McpBackgroundError};
+/// use nms_graph::GalaxyModel;
+/// use tokio::sync::RwLock;
+///
+/// # fn example() -> Result<(), McpBackgroundError> {
+/// let model = Arc::new(RwLock::new(GalaxyModel::new()));
+/// let address = "127.0.0.1:0".parse().expect("socket address");
+/// let (_sender, updates) = std::sync::mpsc::channel();
+/// let handle = spawn_mcp_background_with_updates(model, address, Some(updates))?;
+/// println!("listening at {}", handle.local_addr());
+/// handle.shutdown()?;
+/// # Ok(())
+/// # }
+/// ```
+#[cfg(feature = "http")]
+#[must_use = "dropping the handle stops and joins the MCP worker; call shutdown to observe failures"]
+pub struct McpBackgroundHandle {
+    address: SocketAddr,
+    stop: Option<tokio::sync::oneshot::Sender<()>>,
+    worker: Option<JoinHandle<()>>,
+}
+
+#[cfg(feature = "http")]
+impl std::fmt::Debug for McpBackgroundHandle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("McpBackgroundHandle")
+            .field("address", &self.address)
+            .field("running", &self.worker.is_some())
+            .finish()
+    }
+}
+
+#[cfg(feature = "http")]
+impl McpBackgroundHandle {
+    /// The actual local socket address selected by the listener.
+    ///
+    /// See the complete [`spawn_mcp_background_with_updates`] example for
+    /// obtaining and using the actual address after binding.
+    pub fn local_addr(&self) -> SocketAddr {
+        self.address
+    }
+
+    /// Cancel active connections (including SSE) and join the worker thread.
+    ///
+    /// # Errors
+    /// Returns [`McpBackgroundError::WorkerPanicked`] if the worker panicked
+    /// while joining. Startup failures are returned by
+    /// [`spawn_mcp_background_with_updates`]; post-ready serve errors are
+    /// written to stderr by the worker.
+    ///
+    /// # Examples
+    ///
+    /// See the complete [`spawn_mcp_background_with_updates`] example for
+    /// starting the owner and explicitly shutting it down.
+    pub fn shutdown(mut self) -> Result<(), McpBackgroundError> {
+        self.stop_worker();
+        self.join_worker()
+    }
+
+    fn stop_worker(&mut self) {
+        if let Some(stop) = self.stop.take() {
+            let _ = stop.send(());
+        }
+    }
+
+    fn join_worker(&mut self) -> Result<(), McpBackgroundError> {
+        match self.worker.take() {
+            Some(worker) => worker
+                .join()
+                .map_err(|_| McpBackgroundError::WorkerPanicked),
+            None => Ok(()),
+        }
+    }
+}
+
+#[cfg(feature = "http")]
+impl Drop for McpBackgroundHandle {
+    fn drop(&mut self) {
+        self.stop_worker();
+        if let Err(error) = self.join_worker() {
+            let _ = writeln!(
+                std::io::stderr().lock(),
+                "MCP background worker failed during drop: {error}"
+            );
+        }
+    }
+}
+
+#[derive(Default)]
+enum ServerControl {
+    #[default]
+    Unmanaged,
+    #[cfg(feature = "http")]
+    Owned {
+        ready: Option<std::sync::mpsc::SyncSender<Result<SocketAddr, McpBackgroundError>>>,
+        stop: tokio::sync::oneshot::Receiver<()>,
+    },
+}
+
+#[cfg(feature = "http")]
+impl ServerControl {
+    fn signal_ready(&mut self, address: SocketAddr) {
+        if let Self::Owned { ready, .. } = self
+            && let Some(ready) = ready.take()
+        {
+            let _ = ready.send(Ok(address));
+        }
+    }
+
+    fn signal_error(&mut self, error: McpBackgroundError) {
+        if let Self::Owned { ready, .. } = self
+            && let Some(ready) = ready.take()
+        {
+            let _ = ready.send(Err(error));
+        }
+    }
+}
+
+/// Start an owned HTTP observer for updates already applied by the application.
+///
+/// Shutdown cancels in-flight requests and SSE streams, drops queued observer
+/// events, and joins the worker. The server drains the receiver moved into it;
+/// other coordinator subscribers drain their own receivers. The standard
+/// observer queue is unbounded, so each subscriber must keep its receiver drained.
+/// Parser and filesystem work have no hard
+/// deadline. This handle's shutdown is blocking and must run outside model
+/// guards.
+///
+/// # Errors
+/// Returns thread-spawn, runtime-construction, bind, local-address, readiness,
+/// or worker-panic errors. I/O-backed variants retain their source. Errors
+/// after readiness are reported to stderr by the worker.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::sync::Arc;
+/// use nms_copilot::mcp::{spawn_mcp_background_with_updates, McpBackgroundError};
+/// use nms_graph::GalaxyModel;
+/// use tokio::sync::RwLock;
+/// # fn example() -> Result<(), McpBackgroundError> {
+/// let model = Arc::new(RwLock::new(GalaxyModel::new()));
+/// let address = "127.0.0.1:0".parse().expect("socket address");
+/// let (_sender, updates) = std::sync::mpsc::channel();
+/// let owner = spawn_mcp_background_with_updates(model, address, Some(updates))?;
+/// println!("listening at {}", owner.local_addr());
+/// owner.shutdown()?;
+/// # Ok(())
+/// # }
+/// ```
+#[cfg(feature = "http")]
+pub fn spawn_mcp_background_with_updates(
+    model: Arc<RwLock<GalaxyModel>>,
+    address: SocketAddr,
+    updates: Option<Receiver<AppliedSaveUpdate>>,
+) -> Result<McpBackgroundHandle, McpBackgroundError> {
+    let (ready_tx, ready_rx) = std::sync::mpsc::sync_channel(1);
+    let (stop_tx, stop_rx) = tokio::sync::oneshot::channel();
+    let service = ServiceHandle::new("mcp-http");
+    let worker = thread::Builder::new()
+        .name("nms-mcp-http".into())
+        .spawn(move || {
+            let runtime = match tokio::runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()
+            {
+                Ok(runtime) => runtime,
+                Err(error) => {
+                    let _ = ready_tx.send(Err(McpBackgroundError::Runtime(error)));
+                    return;
+                }
+            };
+            runtime.block_on(async move {
+                let control = ServerControl::Owned {
+                    ready: Some(ready_tx),
+                    stop: stop_rx,
+                };
+                if let Err(error) = run_mcp_server(
+                    model,
+                    Transport::Http(address),
+                    None,
+                    updates,
+                    None,
+                    control,
+                    service,
+                )
+                .await
+                {
+                    let _ = writeln!(std::io::stderr().lock(), "MCP server error: {error}");
+                }
+            })
+        })
+        .map_err(McpBackgroundError::Spawn)?;
+
+    match ready_rx.recv() {
+        Ok(Ok(bound_address)) => Ok(McpBackgroundHandle {
+            address: bound_address,
+            stop: Some(stop_tx),
+            worker: Some(worker),
+        }),
+        Ok(Err(error)) => {
+            worker
+                .join()
+                .map_err(|_| McpBackgroundError::WorkerPanicked)?;
+            Err(error)
+        }
+        Err(_) => {
+            worker
+                .join()
+                .map_err(|_| McpBackgroundError::WorkerPanicked)?;
+            Err(McpBackgroundError::ReadinessClosed)
+        }
+    }
 }
 
 /// Start the MCP server on a background thread with its own tokio runtime.
@@ -82,6 +382,7 @@ pub fn spawn_mcp_background_with_watch_config(
                 watcher,
                 None,
                 Some(ready_tx),
+                ServerControl::Unmanaged,
                 service_for_thread,
             )
             .await
@@ -132,7 +433,17 @@ pub fn run_headless_with_watch_config(
     rt.block_on(async {
         let watcher = start_watcher(watch_config);
 
-        if let Err(e) = run_mcp_server(model, transport, watcher, None, None, mcp_service).await {
+        if let Err(e) = run_mcp_server(
+            model,
+            transport,
+            watcher,
+            None,
+            None,
+            ServerControl::Unmanaged,
+            mcp_service,
+        )
+        .await
+        {
             eprintln!("MCP server error: {e}");
         }
     });
@@ -154,7 +465,17 @@ pub fn run_headless_with_updates(
         }
     };
     runtime.block_on(async {
-        if let Err(error) = run_mcp_server(model, transport, None, updates, None, service).await {
+        if let Err(error) = run_mcp_server(
+            model,
+            transport,
+            None,
+            updates,
+            None,
+            ServerControl::Unmanaged,
+            service,
+        )
+        .await
+        {
             eprintln!("MCP server error: {error}");
         }
     });
@@ -199,8 +520,13 @@ async fn run_mcp_server(
     mut watcher: Option<nms_watch::WatchHandle>,
     updates: Option<Receiver<AppliedSaveUpdate>>,
     ready_tx: Option<std::sync::mpsc::SyncSender<Result<(), String>>>,
+    control: ServerControl,
     service_handle: ServiceHandle,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    #[cfg(feature = "http")]
+    let mut control = control;
+    #[cfg(not(feature = "http"))]
+    let _ = control;
     service_handle.set_state(ServiceState::Starting);
 
     let nms_tools = NmsTools::new(Arc::clone(&model));
@@ -267,7 +593,31 @@ async fn run_mcp_server(
                     if let Some(tx) = ready_tx {
                         let _ = tx.send(Err(msg.clone()));
                     }
+                    control.signal_error(McpBackgroundError::Bind {
+                        address: addr,
+                        source: e,
+                    });
+                    drop(watcher);
+                    delta_task.abort_and_join().await;
                     return Err(msg.into());
+                }
+            };
+
+            let bound_address = match listener.local_addr() {
+                Ok(address) => address,
+                Err(error) => {
+                    let message = format!("local_addr for {addr} failed: {error}");
+                    service_handle.set_state(ServiceState::Failed(message.clone()));
+                    if let Some(tx) = ready_tx {
+                        let _ = tx.send(Err(message.clone()));
+                    }
+                    control.signal_error(McpBackgroundError::LocalAddress {
+                        address: addr,
+                        source: error,
+                    });
+                    drop(watcher);
+                    delta_task.abort_and_join().await;
+                    return Err(message.into());
                 }
             };
 
@@ -276,11 +626,21 @@ async fn run_mcp_server(
             if let Some(tx) = ready_tx {
                 let _ = tx.send(Ok(()));
             }
+            control.signal_ready(bound_address);
 
-            log::info!("NMS Copilot MCP server listening on http://{addr}");
-            fabryk_mcp::axum::serve(listener, router)
-                .await
-                .map_err(Into::into)
+            log::info!("NMS Copilot MCP server listening on http://{bound_address}");
+            let serve =
+                std::future::IntoFuture::into_future(fabryk_mcp::axum::serve(listener, router));
+            tokio::pin!(serve);
+            match &mut control {
+                ServerControl::Owned { stop, .. } => {
+                    tokio::select! {
+                        result = &mut serve => result.map_err(Into::into),
+                        _ = stop => Ok(()),
+                    }
+                }
+                ServerControl::Unmanaged => serve.await.map_err(Into::into),
+            }
         }
     };
 

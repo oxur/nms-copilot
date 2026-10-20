@@ -349,7 +349,7 @@ enabled = false
 debounce_ms = 500
 ```
 
-The setting applies to headless stdio and HTTP servers and to both normal-mode file watchers. The selected save still loads at startup and MCP serves that in-memory model when watching is disabled. The startup cache behavior described above is covered for headless stdio and HTTP. Equivalent end-to-end coverage for normal REPL mode and live-cache write-through, unknown-system resolution or promotion, and composition when both normal-mode producers are active remain planned follow-up work.
+The setting applies to headless stdio and HTTP servers and to normal REPL mode. In normal mode, one application-owned coordinator applies complete updates and writes the cache; the REPL and its background MCP server observe that shared state. Session position refreshes before each command after idle input while explicit Base or Address anchors remain in effect. Disabling watching leaves the startup model and cache unchanged. Unknown-system resolution or promotion remains a separate policy decision.
 
 ---
 
@@ -422,4 +422,8 @@ at your option.
 
 ### Headless live updates
 
-In headless MCP mode, an enabled save watcher feeds one application-owned coordinator. Each complete parsed update is applied to the shared model, then written through to the configured cache when caching is enabled; connected MCP clients receive location/resource invalidations after the update. A cache write failure is reported on stderr and does not stop model updates or notifications. `--no-cache` and disabled watching retain their configured behavior. Slow observer consumers do not block cache writes and should drain their update receiver. The interactive REPL retains its existing update path.
+In headless MCP and normal REPL modes, one application-owned coordinator handles enabled save watching, applies each complete parsed update to the shared model, and writes it through to the configured cache when caching is enabled. Connected MCP clients receive location/resource invalidations after each update, and the REPL refreshes session-derived prompt fields before each prompt. A cache write failure is reported on stderr and does not stop model updates or notifications. `--no-cache` and disabled watching retain their configured behavior. Slow observer consumers do not block cache writes and should drain their update receiver. The full-screen map holds a model read lock while open, so model updates wait until the map closes.
+
+### Normal REPL and MCP lifetime
+
+Normal REPL mode uses the same single coordinator for file watching, full-state model updates and serialized cache writes. The REPL and HTTP MCP server are observers; MCP notifications do not apply state or write a second cache. The server reports its actual bound address, including when `--http 127.0.0.1:0` selects an available port. On quit, Ctrl-D, Ctrl-C or input failure, the REPL explicitly stops and joins the server before dropping the coordinator. Shutdown cancels in-flight HTTP requests and open SSE streams, and queued observer notifications may be dropped. Observer channels are unbounded, so consumers must drain them; parser and filesystem work have no hard deadline. Shutdown blocks and must occur outside model locks.

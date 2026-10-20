@@ -10,6 +10,7 @@ use std::sync::mpsc;
 use nms_core::delta::SaveDelta;
 use nms_graph::GalaxyModel;
 
+use crate::coordinator::AppliedSaveUpdate;
 use crate::session::SessionState;
 use nms_core::system::SystemId;
 
@@ -40,6 +41,100 @@ pub fn drain_watch_events(
         if let Err(e) = nms_cache::write_cache(&data, path) {
             eprintln!("Warning: could not update cache: {e}");
         }
+    }
+}
+
+/// Drain already-applied update notifications into user-facing movement notes.
+///
+/// This observer has no access to the model, cache, or session, so consuming
+/// notifications cannot apply state or persist it a second time.
+///
+/// # Examples
+///
+/// ```
+/// use std::sync::mpsc;
+/// use nms_copilot::{coordinator::AppliedSaveUpdate, watch::drain_applied_notifications};
+/// use nms_core::{GalacticAddress, PlayerState, SaveDelta, SaveUpdate};
+///
+/// let (sender, receiver) = mpsc::channel();
+/// let first = AppliedSaveUpdate {
+///     update: SaveUpdate {
+///         delta: SaveDelta::empty(),
+///         player_state: PlayerState::new(
+///             GalacticAddress::new(0, 0, 0, 1, 0, 0), 0, None, None, 7, 8, 9,
+///         ),
+///         save_version: 4720,
+///     },
+///     notifications: vec!["Warped: Origin-0 -> Imported-9".to_owned()],
+/// };
+/// let second = AppliedSaveUpdate {
+///     update: SaveUpdate {
+///         delta: SaveDelta::empty(),
+///         player_state: PlayerState::new(
+///             GalacticAddress::new(0, 0, 0, 1, 0, 0), 0, None, None, 7, 8, 9,
+///         ),
+///         save_version: 4720,
+///     },
+///     notifications: vec!["New planet: Leaf-9".to_owned()],
+/// };
+/// sender.send(first)?;
+/// sender.send(second)?;
+/// assert_eq!(
+///     drain_applied_notifications(&receiver),
+///     ["Warped: Origin-0 -> Imported-9", "New planet: Leaf-9"]
+/// );
+/// assert!(drain_applied_notifications(&receiver).is_empty());
+/// drop(sender);
+/// assert!(drain_applied_notifications(&receiver).is_empty());
+/// Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+pub fn drain_applied_notifications(receiver: &mpsc::Receiver<AppliedSaveUpdate>) -> Vec<String> {
+    let mut notes = Vec::new();
+    while let Ok(event) = receiver.try_recv() {
+        notes.extend(event.notifications);
+    }
+    notes
+}
+
+#[cfg(test)]
+mod applied_notification_tests {
+    use super::*;
+    use nms_core::{PlayerState, SaveDelta, SaveUpdate};
+
+    fn event(note: &str) -> AppliedSaveUpdate {
+        AppliedSaveUpdate {
+            update: SaveUpdate {
+                delta: SaveDelta::empty(),
+                player_state: PlayerState::new(
+                    nms_core::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                    0,
+                    None,
+                    None,
+                    7,
+                    8,
+                    9,
+                ),
+                save_version: 4720,
+            },
+            notifications: vec![note.to_owned()],
+        }
+    }
+
+    #[test]
+    fn test_drain_applied_notifications_preserves_order_then_empty_and_disconnect() {
+        let (sender, receiver) = mpsc::channel();
+        sender
+            .send(event("Warped: Origin-0 -> Imported-9"))
+            .unwrap();
+        sender.send(event("New planet: Leaf-9")).unwrap();
+
+        assert_eq!(
+            drain_applied_notifications(&receiver),
+            ["Warped: Origin-0 -> Imported-9", "New planet: Leaf-9"]
+        );
+        assert!(drain_applied_notifications(&receiver).is_empty());
+        drop(sender);
+        assert!(drain_applied_notifications(&receiver).is_empty());
     }
 }
 

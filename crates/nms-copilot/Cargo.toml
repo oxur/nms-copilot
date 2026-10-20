@@ -16,6 +16,11 @@ categories.workspace = true
 name = "nms-copilot"
 path = "src/main.rs"
 
+[[example]]
+name = "repl_live_probe"
+path = "examples/repl_live_probe.rs"
+required-features = ["http"]
+
 [dependencies]
 nms-core = { workspace = true }
 nms-save = { workspace = true }
