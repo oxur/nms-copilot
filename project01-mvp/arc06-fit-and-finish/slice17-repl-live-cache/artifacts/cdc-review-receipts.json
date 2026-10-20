@@ -1002,5 +1002,186 @@
     "results": "no remaining static A-D finding; affected bin/ordered broad/native gates may proceed; all8RC open/native0of9/no CDC product gate yet",
     "preserved_fences": "source native73d79d; root protected working2cd450c/HEAD-index553622; held HEADs unchanged",
     "intermediate_attribution": "reported support2d8 hash was intermediate; later actual format e9926a30/lint62560b93 include literal-hex/galaxy change; final current format/lint after owned raw mutant fix supersede for current code; preserve all actual receipts"
+  },
+  "source_trailer_repair": {
+    "status": "complete; metadata-only",
+    "started_utc": "2026-10-20T05:37:13.125040+00:00",
+    "authority": "root delegated current unpublished metadata-only correction; source/index handed to CDC",
+    "old_head": "eea7135bfb3989390689b7290270f35e1a48fa86",
+    "old_tree": "c42d570012a01f349924ce1f08d391cf95a00935",
+    "parent": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+    "old_message": "Integrate live cache into the normal REPL\n\nCo-authored-by: Codex <noreply@openai.com>\n\nCo-authored-by: Billo AI <ai-engineering@billo.systems>",
+    "actual_parsed_trailers": "Co-authored-by: Billo AI <ai-engineering@billo.systems>\n",
+    "backup_ref": "codex/slice17-before-trailer-repair-20261020",
+    "source_policy": "exact eight named paths, identical tree/parent; no Rust edits or gate reruns solely for metadata",
+    "ended_utc": "2026-10-20T05:38:56.914769+00:00",
+    "new_head": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+    "new_tree": "c42d570012a01f349924ce1f08d391cf95a00935",
+    "new_parent": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+    "new_parsed_trailers": "Co-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n",
+    "source_status": "",
+    "root_mechanical_preflight": "root reports parser both once/tree diff exit0/clean; transport only, no new substantive reviewer role"
+  },
+  "initial_cc_return": {
+    "execution.md": {
+      "bytes": 184839,
+      "sha256": "bb69f7fa5ae1f138311ab08c00530e64d1a341f1800b9bf1fb23bdc127c3ddc8",
+      "original_json": null
+    },
+    "validation.json": {
+      "bytes": 5192,
+      "sha256": "51c4a93ca1403e328c24f7d10b83345ed80f626c60300e034d2fa7c71a250c3a",
+      "original_json": {
+        "slice": "Project01 Arc06 Slice17",
+        "cc_status": "proposed-done",
+        "cdc_status": "pending-independent-review-and-reproduction",
+        "source": {
+          "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+          "branch": "codex/repl-live-cache",
+          "head": "eea7135bfb3989390689b7290270f35e1a48fa86",
+          "parent": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+          "working_tree": "clean",
+          "index": "clean",
+          "working_identity_before_commit": "6112f4ed0d24dea94d7cd7a88e9aa89141ba74c9dbce6843d00596c9ca90e240",
+          "binary_diff_sha256_before_commit": "0e31146d8950af43694bf8d4d5885eb201028198a911713a01c25f9ce7b8f63c",
+          "commit_paths": [
+            "README.md",
+            "crates/nms-copilot/Cargo.toml",
+            "crates/nms-copilot/src/main.rs",
+            "crates/nms-copilot/src/mcp/mod.rs",
+            "crates/nms-copilot/src/watch.rs",
+            "crates/nms-copilot/examples/repl_live_probe.rs",
+            "crates/nms-copilot/tests/owned_mcp_integration.rs",
+            "crates/nms-copilot/tests/support/live_mcp.rs"
+          ],
+          "required_trailers": [
+            "Co-authored-by: Codex <noreply@openai.com>",
+            "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+          ],
+          "frozen_native_test_blob": "73d79d8206344901ae62d39ccf7131340b39fa47"
+        },
+        "source_sha256": {
+          "README.md": "e0fb03d21dbd9bffb2c25b054399558dac6cacadecfe7a4bb8e29a4fbfe890b5",
+          "crates/nms-copilot/Cargo.toml": "780de7eae7fdc563eba2232aae9e8b52f69b271e020857fa28cdbe75e1048e60",
+          "crates/nms-copilot/src/main.rs": "2d13e72b0762168109067233020c0cdaf6876b55cbd9701de8c9d3d6697bf47e",
+          "crates/nms-copilot/src/mcp/mod.rs": "476b5c2af6bd257db90cb54cbbb697624572e0d5275dedd11d7bbf74aa1a5c51",
+          "crates/nms-copilot/src/watch.rs": "e2a4d97e95cefa6c0e949db66764cf6440ff8a8a06909e3f7eda089f3eb7a87e",
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": "807f45642327e98c6e81a5df1d824927bde7d13f3d54c0e7127af7176acfb3c4",
+          "crates/nms-copilot/tests/support/live_mcp.rs": "447f79c430e406da53614b0ddc6825b09cf6d04a83800cd66c1fe57d48f1cbe2",
+          "crates/nms-copilot/examples/repl_live_probe.rs": "8321b5c7880b96b12c18480bfc6af6b4a67629c4986cf0e3f38211b6461a308f"
+        },
+        "final_gates": [
+          {
+            "name": "make test",
+            "uuid": "599c076c-0bdf-41c5-8413-542bc3627d5f",
+            "exit": 0,
+            "counts": "977 unit/integration + 5 doctests = 982"
+          },
+          {
+            "name": "cargo build --workspace --all-features",
+            "uuid": "c4cc75bc-5873-4b92-9097-ae0b46fb7e69",
+            "exit": 0
+          },
+          {
+            "name": "cargo test --workspace --all-features --doc",
+            "uuid": "b3c3160c-2e1f-46c4-8635-0c2e5dfe001b",
+            "exit": 0,
+            "counts": "5 doctests"
+          },
+          {
+            "name": "cargo doc --no-deps --all-features for six crates",
+            "uuid": "f6f38a79-32af-46ba-9038-dc7a8b38916e",
+            "exit": 0
+          },
+          {
+            "name": "strict broken intra-doc links nms-cache",
+            "uuid": "6de5e39e-44bf-41fb-b66a-fa16d33872bb",
+            "exit": 0
+          },
+          {
+            "name": "strict broken intra-doc links nms-watch",
+            "uuid": "bd5dc9ba-0408-4591-b534-56ba66a3b107",
+            "exit": 0
+          }
+        ],
+        "native_matrix": {
+          "cc_attested": "9/9",
+          "cases": [
+            {
+              "case": "warm_full_sequence",
+              "uuid": "bb464f05-625a-4407-844c-5ebd79c039c4",
+              "sidecar_uuid": "8d2c1a44-8b16-47fd-bf9b-664ce9dcaea4"
+            },
+            {
+              "case": "warm_ctrl_d",
+              "uuid": "1fa0105c-8c8f-4b2b-b8d2-719a65d73391"
+            },
+            {
+              "case": "warm_ctrl_c",
+              "uuid": "e165a288-1b2e-4a65-a9ea-e2aa36b8b313"
+            },
+            {
+              "case": "cold_cache",
+              "uuid": "7c6fa86e-561b-4c55-9cda-6ace40e2f009"
+            },
+            {
+              "case": "no_cache_existing",
+              "uuid": "65cfd8a7-3b70-49da-9c3d-0835d49e135a"
+            },
+            {
+              "case": "no_cache_missing_parent",
+              "uuid": "5b43ef4d-7750-41c6-a8de-ed0becfca3a2"
+            },
+            {
+              "case": "disabled_watcher",
+              "uuid": "c83ac867-fd34-44c9-a9fd-8f0dfca751ee"
+            },
+            {
+              "case": "cache_write_blocker",
+              "uuid": "9dd9d13f-2560-4f6a-8e03-0bbf451e396b"
+            },
+            {
+              "case": "occupied_bind",
+              "uuid": "144558da-f1c4-4416-a42b-b64fa0482953"
+            }
+          ],
+          "historical_noncounting_attempts": [
+            "ae1fbf18-17d6-400c-acff-28e49bd465fc",
+            "ae08a1b7-728e-4b43-9f63-4f4a12943ab1"
+          ],
+          "evidence_directory": "/private/tmp/slice17-attempts"
+        },
+        "hash_capture_limitation": {
+          "current_wave_prematrix_candidate_sha256": null,
+          "current_wave_prematrix_probe_sha256": null,
+          "affected_native_cases": "1-9",
+          "later_current_candidate_sha256": "45f8bb6f80b84c29318e546d5682fffd775ac2d8c64416560111d644cc06f369",
+          "later_current_probe_sha256": "3612ded3c5a4015920dccfb21691880e5e32c9b054fd404660fb44eafd4e8499",
+          "note": "No current-wave pre-matrix hash pair was found in the bounded existing-record search. Older iteration01 hashes are historical and not substituted. No per-child hash was backfilled; CDC independent reproduction remains pending."
+        },
+        "return_artifacts": [
+          "workbench/slice17-return/closing-report.md",
+          "workbench/slice17-return/execution.md",
+          "workbench/slice17-return/validation.json"
+        ]
+      }
+    },
+    "closing-report.md": {
+      "bytes": 2786,
+      "sha256": "35844de628fafcfac597a5f5a4dbb64150e911cd3fb30991b905a458c46a6d82",
+      "original_json": null
+    }
+  },
+  "cc_return_review": {
+    "source": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+    "status": "source static clear/current CC gates+native9 attested; independent runtime pending; iteration04 evidence only",
+    "findings": [
+      "false original parsed-trailer claim corrected by preserved metadata mapping",
+      "missing explicit eight-row proposals/bubble-up three questions/usable recipe/full attempts inventory",
+      "missing explicit old native-capture table in validation/closing summary",
+      "binary diff digest transcription original retained; append correction",
+      "older iteration01 executable digests must not be reattributed to current wave; current pre-matrix pair absent"
+    ],
+    "mutation_fence": "CC only three ignored returns; CDC owns source/index/planning and independent gates"
   }
 }

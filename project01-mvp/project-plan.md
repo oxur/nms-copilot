@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.57
+version: 1.58
 project: project01-mvp
 status: active
 depends-on: []
@@ -954,3 +954,8 @@ Version1.57: full pinned iteration02 review at uncommitted e093+39be573 preserve
 ## Arc06 Slice17 current proof after readiness — 2026-10-20 UTC
 
 Current status under Version1.57: complete independent static readiness walk at stable6112f4ed finds no remaining A–D omission after final owned raw-mutant correction; CC current format/lint pass. Affected BIN/ordered full gates/native9 now proceed on stable source, not yet runtime acceptance. All8RC/R06-S17open/native0of9/35arcrows16done19open/project25open. Same THIRDof5/selected roles/models/ownership/Arc06 endpoint; no new policy or historical waiver. Protected main/held pins and every original remaining parent gate persist.
+
+
+## Arc06 Slice17 handback and evidence completion — 2026-10-20 UTC
+
+Version1.58: source61f1d98 (metadata-only map from preserved eea7135) retains exact reviewed code/current CC gates/native9 attested. Independent CDC runtime proof pending; iteration04 fourth-of-five completes only actual return obligations/corrections, no Rust/source/Git/test mutation. All8RC/R06-S17open/35arcrows16done19open/project25open; historical capture limits unexcepted pending concrete review. Same authorized models/ownership/Arc06-only scope, protected main/held history and all original parent/Operator/integration/release gates retained.

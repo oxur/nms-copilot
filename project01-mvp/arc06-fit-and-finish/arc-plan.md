@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.67, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.68, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -555,3 +555,8 @@ Version1.67: complete eight-path/all-helper CDC static review on unchanged uncom
 ## Slice17 iteration03 readiness / current proof — 2026-10-20 UTC
 
 Current status under Version1.67: complete independent static readiness walk at stable6112f4ed finds no remaining A–D omission after final owned raw-mutant correction; CC current format/lint pass. Affected BIN/ordered full gates/native9 now proceed on stable source, not yet runtime acceptance. All8RC/R06-S17open/native0of9/35arcrows16done19open/project25open. Same THIRDof5/selected roles/models/ownership/Arc06 endpoint; no new policy or historical waiver. Protected main/held pins and every original remaining parent gate persist.
+
+
+## Slice17 current handback / bounded evidence completion — 2026-10-20 UTC
+
+Version1.68: current CC gates/native9 attested, source static clear. Metadata-only eea7135→61f1d98 preserves original backup/exact tree/parent; proper parsed coauthors verified, code unchanged. CDC owns source/index for independent runtime/native reproduction, CC iteration04 FOURTHof5 only three ignored returns to finish missing row/bubble-up/recipe/inventory and append honest corrections/limits. All8RC/R06-S17open/35arcrows16done19open/project25open. Historical old native-capture and absent current-wave pre-matrix digest observations remain unexcepted; current proof before disposition. No new role/model/policy/terminal/dependency/inquiry; protected main/held pins and every original remaining gate/Arc06-only endpoint persist.
