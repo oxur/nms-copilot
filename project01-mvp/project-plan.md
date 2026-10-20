@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.65
+version: 1.66
 project: project01-mvp
 status: active
 depends-on: []
@@ -994,3 +994,10 @@ Version1.64: CDC full14-path pinned review leaves8UP/R06-S18open and issues firs
 ## Arc06 Slice18 second test/documentation refinement — 2026-10-20 UTC
 
 Version1.65: complete pinned refinement01 review plus two actual focused CDC diagnostic failures exposes remaining marker/timestamp test-oracle contradictions and typed/spatial/API teaching omissions. Second-of-five three-path correction issued; algorithms unchanged, current format/lint green not runtime acceptance. All8UP/R06-S18open/36arcrows17done19open/project25open. Historical actual status gaps/support-only loss remain explicit and unexcepted pending concrete current proof; future capture helper directly inspected. Same selected roles/models, required19 and all broader raw/history/finalsemantic/original parent/independent/Operator/integration/release gates and protected main/heldpins/Project02 preserved.
+
+
+## Arc06 Slice18 current independent verdict / bounded decision — 2026-10-20 UTC
+
+Version1.66: explicit placeholder/promotion/cache3/3 model foundation on cleane592ecf independently reviewed; seven UP rows accepted, UP-08/Slice18/R06-S18 held for exactly twelve missing historical before/after Git statuses in six early format/lint attempts. Complete raw completions/composite source fingerprints survive; current all19 independent ordinary groups and fresh native9 pass (focused525/cache42/query2+route4/headless15/owned5/no-default230/binary16/workspace985+9; build/docs/stricts/diffs). Source/oracles/docs/actual artifact coverage reviewed, full decision and substantive retrospective in Arc06 Slice18 canonical records. No exception inferred, no19 dispatch or repeated unchanged-code tests. Arc36rows17done19open/project25open; no project capability row closes from child proof.
+
+Required19 actual application ensure/exact physical labels/unknown→promotion→restart, every original export/import/format/docs/distribution/coverage/history/raw/finalsemantic/freshness-import-history/parent independent/Operator/integration/release obligation retained. Selected CDC gpt-6.1-sol High/CC gpt-6-luna High and single-arc autonomy unchanged. Main9-line user edit/held pins/external worktree/Project02 protected; prior authorized rebase onto b616 already fulfilled, no push/merge/release.

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.75, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.76, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -639,3 +639,12 @@ Version1.74: initial14path candidate at61f+diff9309c1ce reviewed completely; for
 ## Slice18 complete refinement01 review / second bounded correction — 2026-10-20 UTC
 
 Version1.75: stable61f+diff6d4f4e39 finalformat/lint passed, but CDC direct full helper/sequence review and TWO focused actual diagnostics reproduce test-oracle marker/timestamp contradictions (each0passed/1failed/exit101). Smaller second-of-five cc-prompt-iteration02.md completes three test/doc paths: separate EMPTY promotion preserving principal other-marker control, exact whole typed state/spatial keys, dependency-free literal parsed timestamp and correctly attached public examples. Static codec/trusted/native-marker/capture repairs retained; broad/native18proof not yet run, all8UP/R06-S18open:36arcrows17done19open/project25open. Future helper/raw controls actually inspected before renewed product gates; old missing actual status observations and separate overwritten support-only channels remain unknown, no waiver/reconstruction. Same models/ownership/required19 and every broader raw/history/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gate retained. Main9-line edit/restored import/heldpins/Project02 protected; no external action or nextarc.
+
+
+## Slice18 independent current verdict / bounded Operator decision — 2026-10-20 UTC
+
+Version1.76: sourcee592ecf exact14paths clean; all five immutable refinements returned. Independent CDC complete source/oracle/docs review accepts UP-01–07 with reproduced proof: all19 ordinary groups pass, focused525/cache42/query2+route4/headless15/owned5/no-default230/binary16/workspace985+9, build/docs/stricts/diffs; fresh native9/9 with complete measured prelaunch hashes/full raw/source-status/EOF/file/lifetime boundaries. Known baseline doc warnings remain. No remaining implementation defect found; current native regressions do not prove unimplemented19 unknown-policy composition.
+
+UP-08/Slice18/R06-S18 remain open for ONLY twelve historical explicit Git statuses (before/after six early format/lint attempts). Original raw channels/exit/endUTC/composite working identities/untracked inventories survive; no extra standalone-diff-hash exception or lost-current-proof claim. Exact UUID/field table, recommended bounded acceptance vs hold, authority rule, available native evidence preservation and substantive retrospective are in slice18-placeholder-cache/cdc-verification.md and cdc-retrospective.md. No waiver inferred/previous exception extended; root obtains this concrete Operator decision before any19 dispatch. No source/test work remains for this decision; no record-only test reruns/sixth refinement.
+
+Arc36rows17done19open/project25open. Required19 retains common cold-start ensure before snapshot, accepted full-position ensure before cache/notifications, exact physical MCP/resource/movement labels and actual normal/stdio/HTTP unknown→real→restart. All original15 arc rows/three repair parents and broader raw/history/finalsemantic/strictmtime-identical-rewrite-stale-import-history/parent independent/Operator/integration/release gates remain. Same actual selected CDC gpt-6.1-sol High/CC gpt-6-luna High, Arc06 endpoint, protected main edit/held pins/external03e8d04/Project02 unchanged. Source rebasing requested by Operator was already fulfilled onto localmainb616; no new remote action.
