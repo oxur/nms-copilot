@@ -81,6 +81,7 @@ pub fn expected_cache(
                 Some("Leaf-0".into()),
                 None,
             )],
+            is_player_placeholder: false,
         },
         CachedSystem {
             address: GalacticAddress::new(0, 0, 0, 1, 0, 9),
@@ -95,6 +96,7 @@ pub fn expected_cache(
                 Some("Leaf-9".into()),
                 None,
             )],
+            is_player_placeholder: false,
         },
     ];
     let bases = [0, 9]
@@ -231,6 +233,7 @@ pub fn expected_cold_cross_cache() -> CacheData {
             discoverer: None,
             timestamp_secs: None,
             planets: vec![],
+            is_player_placeholder: true,
         }],
         bases: vec![],
         player_state: Some(PlayerState::new(
@@ -250,13 +253,7 @@ pub fn expected_cold_cross_cache() -> CacheData {
 
 pub fn expected_cold_cross_model() -> GalaxyModel {
     let mut model = GalaxyModel::new();
-    model.insert_system(System::new(
-        GalacticAddress::new(0, 0, 0, 1, 0, 0),
-        None,
-        None,
-        None,
-        vec![],
-    ));
+    model.insert_player_placeholder(GalacticAddress::new(0, 0, 0, 1, 0, 0));
     model.player_state = Some(PlayerState::new(
         GalacticAddress::new(0, 0, 0, 1, 0, 9),
         9,
@@ -323,12 +320,13 @@ fn system_rows(systems: &[CachedSystem]) -> Vec<String> {
         .iter()
         .map(|system| {
             format!(
-                "{:?}|{:?}|{:?}|{:?}|{:?}",
+                "{:?}|{:?}|{:?}|{:?}|{:?}|placeholder={}",
                 system.address,
                 system.name,
                 system.discoverer,
                 system.timestamp_secs,
-                system.planets
+                system.planets,
+                system.is_player_placeholder
             )
         })
         .collect()
@@ -343,6 +341,34 @@ fn base_rows(bases: &[PlayerBase]) -> Vec<String> {
             )
         })
         .collect()
+}
+
+pub fn expected_genuine_empty_cross_cache() -> CacheData {
+    let mut cache = expected_cold_cross_cache();
+    cache.systems[0].is_player_placeholder = false;
+    cache
+}
+
+pub fn expected_genuine_empty_cross_model() -> GalaxyModel {
+    let mut model = GalaxyModel::new();
+    model.insert_system(System::new(
+        GalacticAddress::new(0, 0, 0, 1, 0, 0),
+        None,
+        None,
+        None,
+        vec![],
+    ));
+    model.player_state = Some(PlayerState::new(
+        GalacticAddress::new(0, 0, 0, 1, 0, 9),
+        9,
+        None,
+        None,
+        700,
+        800,
+        900,
+    ));
+    model.set_active_galaxy(9);
+    model
 }
 
 pub fn assert_model_matches(actual: &GalaxyModel, expected: &GalaxyModel) -> Result<(), String> {
@@ -363,6 +389,17 @@ pub fn assert_model_matches(actual: &GalaxyModel, expected: &GalaxyModel) -> Res
     }
     if actual.address_to_id != expected.address_to_id {
         return Err("whole address index differs".into());
+    }
+    let placeholder_ids = |model: &GalaxyModel| {
+        model
+            .systems
+            .keys()
+            .filter(|id| model.is_player_placeholder(id))
+            .map(|id| format!("{id:?}"))
+            .collect::<BTreeSet<_>>()
+    };
+    if placeholder_ids(actual) != placeholder_ids(expected) {
+        return Err("whole explicit player-placeholder ID set differs".into());
     }
     let graph_ids = |model: &GalaxyModel| {
         model

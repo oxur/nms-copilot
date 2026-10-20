@@ -360,10 +360,17 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     let empty_model = live_mcp::expected_empty_model(0, 7, 8, 9, 0);
     let cold_cross = live_mcp::expected_cold_cross_cache();
     let cold_cross_model = live_mcp::expected_cold_cross_model();
+    let genuine_empty_cross = live_mcp::expected_genuine_empty_cross_cache();
+    let genuine_empty_cross_model = live_mcp::expected_genuine_empty_cross_model();
     for (name, cache, model) in [
         ("warm", &expected, &expected_model),
         ("empty", &empty, &empty_model),
         ("cold-cross", &cold_cross, &cold_cross_model),
+        (
+            "genuine-empty-cross",
+            &genuine_empty_cross,
+            &genuine_empty_cross_model,
+        ),
     ] {
         let path = checked_files.path().join(format!("{name}.rkyv"));
         nms_cache::write_cache(cache, &path)?;
@@ -399,8 +406,17 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
         discoverer: None,
         timestamp_secs: None,
         planets: vec![],
+        is_player_placeholder: false,
     });
     reject("extra named system", &extra, &expected, &expected_model)?;
+    let mut wrong_marker = live_mcp::expected_cold_cross_cache();
+    wrong_marker.systems[0].is_player_placeholder = false;
+    reject(
+        "cold-cross marker flag",
+        &wrong_marker,
+        &cold_cross,
+        &cold_cross_model,
+    )?;
     let rebuilt = nms_cache::rebuild_model(&expected);
     live_mcp::compare_cache_model(&expected, &rebuilt, &expected, &expected_model)?;
     let mut reversed = expected_cache(4720, 0, 7, 8, 9, None, 7);
@@ -446,7 +462,13 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
         &expected,
         &expected_model,
     )?;
-    println!("golden=pass checked-files=3 negatives=10 (5 raw + 5 derived); reversed-order=pass");
+    reject_model(
+        "cold-cross derived placeholder provenance",
+        &genuine_empty_cross_model,
+        &cold_cross,
+        &cold_cross_model,
+    )?;
+    println!("golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); reversed-order=pass");
     Ok(())
 }
 

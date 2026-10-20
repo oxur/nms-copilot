@@ -4,7 +4,7 @@
 //! archive. Bytes 0–7 are the ASCII magic `NMSCACHE`, bytes 8–11 are the
 //! little-endian archive schema revision, and bytes 12–15 are the little-endian
 //! model semantic revision. The checked payload begins at byte 16.
-//! The current schema and semantic revision values are both 2.
+//! The current schema and semantic revision values are both 3.
 //!
 //! Readers require both revisions to equal the values they support. Headerless
 //! legacy caches and caches with mismatched revisions are rejected. The schema
@@ -15,8 +15,14 @@
 //!
 //! Schema 2 adds the independently selected galaxy to `CacheData`; semantic 2
 //! stores the galaxy-qualified system identity and restores that selection.
-//! Older 1/1 archives are rejected and rebuilt from the source save. Public
-//! `CacheData` struct literals must now provide `active_galaxy`. These revisions
+//! Schema 3 adds `CachedSystem::is_player_placeholder`; semantic 3 preserves
+//! explicit synthetic player-location provenance. Only marked planet-zero
+//! records with no discovery metadata or planets are valid placeholders. A
+//! genuine empty record remains unmarked. Inserting genuine data at a marked
+//! key promotes it while preserving graph and spatial identity. Public
+//! `CacheData` and `CachedSystem` struct literals must provide their fields.
+//! Older 1/1 and 2/2 archives are rejected and rebuilt from the source save.
+//! These revisions
 //! do not establish game-format authority or universal nonzero-galaxy
 //! extraction correctness. Future semantic repairs must reject their
 //! predecessor cache, rebuild from source, and demonstrate a compatible warm
