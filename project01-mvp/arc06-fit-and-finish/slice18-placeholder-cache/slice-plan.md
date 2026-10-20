@@ -1,6 +1,6 @@
 # Slice18 — explicit placeholder/cache foundation
 
-Version:1.8. Created2026-10-20 UTC. Status: refinement03 cache correction passes; refinement04 two-doc pass intake pending, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration04.md; FOURTH of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
+Version:1.9. Created2026-10-20 UTC. Status: refinement04 two docs/format/lint complete; final refinement05 README attribution intake pending, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration05.md; FIFTH and final permitted refinement. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
 
 Dedicated source .worktrees/placeholder-cache/codex/placeholder-cache created clean61f1d98; CDC owns until coherent CC intake/ownership acknowledgement. CC then owns only source/index and three ignored workbench/slice18-return records; CDC owns planning and later serialized byte-preserving transfer/independent acceptance. Exact14paths/API/compatibility/error/test/capture/gates/readback/commit contract in full initial prompt. No source edit or gate has run for18 during author readiness; ordinary read/hash/preflight is not SUT proof.
 
@@ -95,4 +95,15 @@ Full affected new-public-doc/README walk consolidates TWO issues into immutable 
 
 | Assignment | Issue | Predecessor | Reason | Current disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration04.md |2026-10-20|cc-prompt-iteration03.md|Two public-documentation corrections|active; fourth-of-five, intake pending|
+| cc-prompt-iteration04.md |2026-10-20|cc-prompt-iteration03.md|Two public-documentation corrections|returned; fourth-of-five two-doc corrections/format/lint passed|
+
+
+## Refinement05 — final inherited README policy sentence / 2026-10-20 UTC
+
+Coherent04readback inspected/source-index released; its two exact doc blocks now correct, actual format54fbcc65/lint475a0982 pass at diff97bb5504/CC7b8bd855. Before pending doctests/build/native, CDC caught an inherited policy sentence at README352 beyond its earlier section cutoff. The previous claimed complete README policy review was incomplete; preserve that review omission rather than erase it. All429 README lines now loaded, including appended lifetime sections; sole remaining policyA conflict is “Unknown-system resolution or promotion remains a separate policy decision.” Final cc-prompt-iteration05.md replaces that sentence with available library provenance/promotion vs required19 common startup/live/labels. No other source changes permitted, no runtime design flaw or new policy/inquiry. Fifth-of-five; another substantive correction requires explicit re-scope/Operator disposition, never automatic sixth or model substitution.
+
+Source/index held pending coherent05intake; CDC planning/index retained. All original pending doctests/BIN/build/selfcheck/native9/workspace/docs/strict/diff gates continue after captured format/lint. Unaffected completed CC behavior evidence remains at original inputs, no independent acceptance or blanket rerun. All8UP/required19/broader raw/history/finalsemantic/parent/Operator/external/one-arc boundaries unchanged.
+
+| Assignment | Issue | Predecessor | Reason | Current disposition |
+|---|---|---|---|---|
+| cc-prompt-iteration05.md |2026-10-20|cc-prompt-iteration04.md|One inherited README policy sentence|active; fifth-of-five, intake pending|
