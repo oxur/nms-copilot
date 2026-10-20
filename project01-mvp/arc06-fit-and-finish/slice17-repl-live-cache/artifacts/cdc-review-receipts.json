@@ -94,6 +94,222 @@
         "status": "",
         "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
+    },
+    {
+      "id": "b3a14408fa144a8781c9ebc60cfd00f1",
+      "label": "preflight-v2-known7",
+      "kind": "wrapper preflight, not product gate",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys; print(\"cdc-v2-known-out\"); print(\"cdc-v2-known-err\",file=sys.stderr); sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "started_utc": "2026-10-20T04:02:26.150560+00:00",
+      "before": {
+        "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+        "working_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+        "untracked_files": {
+          "crates/nms-copilot/examples/repl_live_probe.rs": {
+            "bytes": 19738,
+            "sha256": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+          },
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+            "bytes": 21056,
+            "sha256": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977"
+          },
+          "crates/nms-copilot/tests/support/live_mcp.rs": {
+            "bytes": 26557,
+            "sha256": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617"
+          }
+        },
+        "working_identity_sha256": "3f29e9206c897a1d3a70ec52582736d783fd5c9295bba4eb80b0d4570536085c"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 7,
+        "ended_utc": "2026-10-20T04:02:26.237689+00:00",
+        "stdout": {
+          "base64": "Y2RjLXYyLWtub3duLW91dAo=",
+          "bytes": 17,
+          "sha256": "45f91c95e1ecd8f0c591e69a946618d90806e165d39ab5a9d9bde6ad70db700a"
+        },
+        "stderr": {
+          "base64": "Y2RjLXYyLWtub3duLWVycgo=",
+          "bytes": 17,
+          "sha256": "0ab189641546fe9b30b9767aeb6fec669d527c89aaf04f0f50aefbe2e78d7326"
+        }
+      },
+      "after": {
+        "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+        "working_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+        "untracked_files": {
+          "crates/nms-copilot/examples/repl_live_probe.rs": {
+            "bytes": 19738,
+            "sha256": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+          },
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+            "bytes": 21056,
+            "sha256": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977"
+          },
+          "crates/nms-copilot/tests/support/live_mcp.rs": {
+            "bytes": 26557,
+            "sha256": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617"
+          }
+        },
+        "working_identity_sha256": "3f29e9206c897a1d3a70ec52582736d783fd5c9295bba4eb80b0d4570536085c"
+      }
+    },
+    {
+      "id": "d0087aee1cb44d28a447ea631135d903",
+      "label": "preflight-v2-known0",
+      "kind": "wrapper preflight, not product gate",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys; print(\"cdc-v2-zero-out\"); print(\"cdc-v2-zero-err\",file=sys.stderr)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "started_utc": "2026-10-20T04:02:26.481322+00:00",
+      "before": {
+        "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+        "working_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+        "untracked_files": {
+          "crates/nms-copilot/examples/repl_live_probe.rs": {
+            "bytes": 19738,
+            "sha256": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+          },
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+            "bytes": 21056,
+            "sha256": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977"
+          },
+          "crates/nms-copilot/tests/support/live_mcp.rs": {
+            "bytes": 26557,
+            "sha256": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617"
+          }
+        },
+        "working_identity_sha256": "3f29e9206c897a1d3a70ec52582736d783fd5c9295bba4eb80b0d4570536085c"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-20T04:02:26.564737+00:00",
+        "stdout": {
+          "base64": "Y2RjLXYyLXplcm8tb3V0Cg==",
+          "bytes": 16,
+          "sha256": "28c795f1651c8f6b6eb53cbb58c6fb8b2acd8f7753321de1751c60f4730c7c26"
+        },
+        "stderr": {
+          "base64": "Y2RjLXYyLXplcm8tZXJyCg==",
+          "bytes": 16,
+          "sha256": "664eece6a91c644330940716195dc20848c40fa35bcbe5bd06b9850093c38380"
+        }
+      },
+      "after": {
+        "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+        "working_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+        "untracked_files": {
+          "crates/nms-copilot/examples/repl_live_probe.rs": {
+            "bytes": 19738,
+            "sha256": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+          },
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+            "bytes": 21056,
+            "sha256": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977"
+          },
+          "crates/nms-copilot/tests/support/live_mcp.rs": {
+            "bytes": 26557,
+            "sha256": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617"
+          }
+        },
+        "working_identity_sha256": "3f29e9206c897a1d3a70ec52582736d783fd5c9295bba4eb80b0d4570536085c"
+      }
+    },
+    {
+      "id": "bc6691b96418447fb5a9fb90154a36b3",
+      "label": "preflight-v2-post-fault",
+      "kind": "wrapper post-metadata fault preflight, not product gate",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys; print(\"cdc-v2-fault-out\"); print(\"cdc-v2-fault-err\",file=sys.stderr)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "started_utc": "2026-10-20T04:02:36.770573+00:00",
+      "before": {
+        "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+        "working_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+        "untracked_files": {
+          "crates/nms-copilot/examples/repl_live_probe.rs": {
+            "bytes": 19738,
+            "sha256": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+          },
+          "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+            "bytes": 21056,
+            "sha256": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977"
+          },
+          "crates/nms-copilot/tests/support/live_mcp.rs": {
+            "bytes": 26557,
+            "sha256": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617"
+          }
+        },
+        "working_identity_sha256": "3f29e9206c897a1d3a70ec52582736d783fd5c9295bba4eb80b0d4570536085c"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "child-complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-20T04:02:36.866326+00:00",
+        "stdout": {
+          "base64": "Y2RjLXYyLWZhdWx0LW91dAo=",
+          "bytes": 17,
+          "sha256": "9767fc89b3eb59b525ee8819c1b28d86ac6f3c414a085129acef69882e9f2773"
+        },
+        "stderr": {
+          "base64": "Y2RjLXYyLWZhdWx0LWVycgo=",
+          "bytes": 17,
+          "sha256": "5572bdf3e60f475fed59fda16ac109b2bf2b617fb8e3c487a207b2dd5e3ff65e"
+        }
+      },
+      "post_metadata_exception": {
+        "type": "RuntimeError",
+        "message": "deliberate CDC v2 post-metadata fault preflight",
+        "utc": "2026-10-20T04:02:36.867683+00:00"
+      }
     }
   ],
   "capture_order_review_during_implementation": {
@@ -498,5 +714,18 @@
       "F7": "bounded mode-aware nine-case controller/full file effects",
       "F8": "complete attributable gates/stable exact-path return"
     }
+  },
+  "cdc_capture_helper_v2": {
+    "path": "/private/tmp/nms-slice17-cdc-capture.py",
+    "sha256": "a8743ba074120d5968f42372d0487a6744c6ac8787789a19bcea6082360a0b91",
+    "pre_product_gate": true,
+    "reason": "Include untracked path bytes plus combined working identity before first independent SUT gate. Earlier wrapper-only records retain original fields; no SUT history gap.",
+    "preflight_ids": [
+      "b3a14408fa144a8781c9ebc60cfd00f1",
+      "d0087aee1cb44d28a447ea631135d903",
+      "bc6691b96418447fb5a9fb90154a36b3"
+    ],
+    "actual_check": "known stdout/stderr exits7/0, actual untracked byte manifests present, deliberately failed post-metadata leaves full actual exit0/raw channels/endUTC durable and after absent",
+    "not_product_acceptance": true
   }
 }
