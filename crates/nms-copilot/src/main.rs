@@ -6,7 +6,7 @@
 
 use std::collections::BTreeMap;
 use std::fmt;
-use std::io::{Read, Write};
+use std::io::{self, Read, Write};
 use std::net::{SocketAddr, TcpStream, ToSocketAddrs};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -25,10 +25,10 @@ use nms_copilot::coordinator::LiveSaveCoordinator;
 use nms_copilot::mcp;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
-use nms_copilot::watch::drain_watch_events;
+use nms_copilot::watch::drain_applied_notifications;
 use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
-use nms_watch::{WatchConfig, start_watching};
+use nms_watch::WatchConfig;
 
 const DEFAULT_MCP_HTTP_ADDR: &str = "127.0.0.1:5099";
 
@@ -128,7 +128,7 @@ fn main() {
     let no_cache = cli.no_cache || !config.cache_enabled();
     let cache_path = config.cache_path_for(save_path.as_deref());
 
-    let (model, was_cached, save_version) =
+    let (model, was_cached, _save_version) =
         match load_model(save_path.clone(), &cache_path, no_cache) {
             Ok(result) => result,
             Err(e) => {
@@ -168,7 +168,32 @@ fn main() {
     }
 
     // ── REPL mode ───────────────────────────────────────────────
+    let mcp_addr = mcp_http_addr(&cli, &config);
+    if let Err(error) = run_repl(
+        model,
+        config,
+        was_cached,
+        watch_config,
+        cache_path,
+        no_cache,
+        mcp_addr,
+    ) {
+        eprintln!("MCP server failed: {error}");
+        std::process::exit(1);
+    }
+}
 
+/// Own normal-mode resources in a scope that unwinds on startup errors.
+#[cfg(feature = "http")]
+fn run_repl(
+    model: GalaxyModel,
+    config: Config,
+    was_cached: bool,
+    watch_config: Option<WatchConfig>,
+    cache_path: PathBuf,
+    no_cache: bool,
+    mcp_addr: SocketAddr,
+) -> Result<(), mcp::McpBackgroundError> {
     let source = if was_cached {
         "from cache"
     } else {
@@ -183,38 +208,33 @@ fn main() {
         source,
     );
 
-    // Start file watcher (optional)
-    let watch_handle = match watch_config.clone().map(start_watching).transpose() {
-        Ok(Some(handle)) => {
-            println!("Watching save file for live updates.\n");
-            Some(handle)
-        }
-        Ok(None) => {
-            println!();
-            None
-        }
-        Err(e) => {
-            eprintln!("Warning: could not start file watcher: {e}\n");
-            None
-        }
-    };
-
-    let cache_for_watcher = if no_cache {
-        None
-    } else {
-        Some(cache_path.as_path())
-    };
-
     // Wrap model in Arc<RwLock> for sharing with MCP server
     let model = Arc::new(RwLock::new(model));
 
-    // Start MCP HTTP server on background thread (shares the model)
-    let mcp_addr = mcp_http_addr(&cli, &config);
-    mcp::spawn_mcp_background_with_watch_config(
-        Arc::clone(&model),
-        mcp::Transport::Http(mcp_addr),
-        watch_config,
-    );
+    // One coordinator owns watching, full-state apply and serialized cache
+    // persistence. REPL and MCP receive read-only observer subscriptions.
+    let coordinator = watch_config.and_then(|watch| {
+        let live_cache = (!no_cache).then(|| cache_path.clone());
+        match LiveSaveCoordinator::start(Arc::clone(&model), watch, live_cache) {
+            Ok(coordinator) => Some(coordinator),
+            Err(error) => {
+                eprintln!("Warning: live save coordinator unavailable: {error}");
+                None
+            }
+        }
+    });
+    let repl_updates = coordinator.as_ref().map(LiveSaveCoordinator::subscribe);
+    let mcp_updates = coordinator.as_ref().map(LiveSaveCoordinator::subscribe);
+    if coordinator.is_some() {
+        println!("Watching save file for live updates.\n");
+    } else {
+        println!();
+    }
+
+    // Start an owned MCP HTTP observer on the same model and coordinator.
+    let mcp_server =
+        mcp::spawn_mcp_background_with_updates(Arc::clone(&model), mcp_addr, mcp_updates)?;
+    let mcp_addr = mcp_server.local_addr();
     let mcp_base = format!("http://{mcp_addr}");
     eprintln!("MCP server listening on {mcp_base}");
     eprintln!("MCP endpoint: {mcp_base}/mcp");
@@ -225,24 +245,20 @@ fn main() {
     let completer = Box::new(CopilotCompleter::new(completions));
     let mut editor = build_editor(completer);
     let mut session = SessionState::from_model(&model.blocking_read());
+    session.sync_from_model(&model.blocking_read());
     if let Some(warp_range) = config.defaults.warp_range {
         session.set_warp_range(warp_range);
     }
     let mut prompt = CopilotPrompt::new(PromptState::from_session(&session));
 
     loop {
-        // Drain any pending watch events before showing prompt
-        if let Some(ref handle) = watch_handle {
-            let mut guard = model.blocking_write();
-            drain_watch_events(
-                &handle.receiver,
-                &mut guard,
-                &mut session,
-                cache_for_watcher,
-                save_version,
-            );
+        if let Some(ref receiver) = repl_updates {
+            for note in drain_applied_notifications(receiver) {
+                println!("{note}");
+            }
         }
 
+        sync_session_before_prompt(&model, &mut session);
         prompt.update(PromptState::from_session(&session));
         match editor.read_line(&prompt) {
             Ok(Signal::Success(line)) => match commands::parse_line(&line) {
@@ -252,33 +268,20 @@ fn main() {
                     }
                     if matches!(action, commands::Action::Map) {
                         let guard = model.blocking_read();
+                        session.sync_from_model(&guard);
                         if let Err(e) = nms_copilot::map::run_map(&guard, &session) {
                             eprintln!("Map error: {e}");
                         }
                         continue;
                     }
-                    {
+                    let result = {
                         let mut guard = model.blocking_write();
-                        match dispatch::dispatch(&action, &mut guard, &mut session) {
-                            Ok(output) => {
-                                if !output.is_empty() {
-                                    print!("{output}");
-                                }
-                            }
-                            Err(e) => eprintln!("Error: {e}"),
-                        }
-                    }
-
-                    // Also drain after command execution
-                    if let Some(ref handle) = watch_handle {
-                        let mut guard = model.blocking_write();
-                        drain_watch_events(
-                            &handle.receiver,
-                            &mut guard,
-                            &mut session,
-                            cache_for_watcher,
-                            save_version,
-                        );
+                        dispatch_repl_action(&action, &mut guard, &mut session)
+                    };
+                    match result {
+                        Ok(output) if !output.is_empty() => print!("{output}"),
+                        Ok(_) => {}
+                        Err(error) => eprintln!("Error: {error}"),
                     }
                 }
                 Ok(None) => {}
@@ -294,7 +297,26 @@ fn main() {
         }
     }
 
+    if let Err(error) = mcp_server.shutdown() {
+        let _ = writeln!(io::stderr().lock(), "Warning: MCP shutdown failed: {error}");
+    }
+    drop(coordinator);
     println!("Goodbye!");
+    Ok(())
+}
+
+fn dispatch_repl_action(
+    action: &commands::Action,
+    model: &mut GalaxyModel,
+    session: &mut SessionState,
+) -> Result<String, String> {
+    session.sync_from_model(model);
+    dispatch::dispatch(action, model, session)
+}
+
+fn sync_session_before_prompt(model: &RwLock<GalaxyModel>, session: &mut SessionState) {
+    let guard = model.blocking_read();
+    session.sync_from_model(&guard);
 }
 
 fn build_editor(completer: Box<CopilotCompleter>) -> Reedline {
@@ -838,6 +860,11 @@ impl std::error::Error for SmokeError {}
 #[cfg(test)]
 mod tests {
     use super::*;
+    use nms_copilot::session::PositionContext;
+    use nms_core::address::GalacticAddress;
+    use nms_core::biome::Biome;
+    use nms_core::player::{BaseType, PlayerBase, PlayerState};
+    use nms_core::system::{Planet, System};
 
     #[test]
     fn test_configured_watcher_missing_path_returns_none() {
@@ -943,6 +970,264 @@ mod tests {
             mcp_http_url(config.mcp_http_addr(), "/mcp"),
             "http://127.0.0.1:5055/mcp"
         );
+    }
+
+    fn repl_live_model() -> GalaxyModel {
+        let mut model = GalaxyModel::new();
+        for (reality, system_name, biome, planet_name) in [
+            (0, "Origin-0", Biome::Lush, "Leaf-0"),
+            (9, "Imported-9", Biome::Toxic, "Leaf-9"),
+        ] {
+            let address = GalacticAddress::new(0, 0, 0, 1, 0, reality);
+            model.insert_system(System::new(
+                address,
+                Some(system_name.into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(biome),
+                    None,
+                    false,
+                    Some(planet_name.into()),
+                    None,
+                )],
+            ));
+            model.insert_base(PlayerBase::new(
+                format!("Base-{reality}"),
+                BaseType::HomePlanetBase,
+                address,
+                [0.0; 3],
+                Some("fixture-owner".into()),
+            ));
+        }
+        model.player_state = Some(PlayerState::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+            0,
+            None,
+            None,
+            7,
+            8,
+            9,
+        ));
+        model.set_active_galaxy(7);
+        model
+    }
+
+    #[test]
+    fn test_dispatch_repl_action_refreshes_stale_session_and_preserves_manual_anchor() {
+        let mut model = repl_live_model();
+        let mut anchored = SessionState::from_model(&model);
+        anchored.set_position_address(GalacticAddress::new(0, 0, 0, 1, 0, 0));
+        anchored.set_biome_filter(Biome::Toxic);
+        anchored.set_warp_range(2500.0);
+
+        model.player_state = Some(PlayerState::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 9),
+            9,
+            Some(GalacticAddress::new(3, 3, 4, 1, 1, 9)),
+            None,
+            700,
+            800,
+            900,
+        ));
+        model.set_active_galaxy(9);
+
+        let status = dispatch_repl_action(&commands::Action::Status, &mut model, &mut anchored)
+            .expect("status after idle sync");
+        assert_eq!(
+            status,
+            "Galaxy:      Eissentam (9; Lush)\nModel:       2 systems, 2 planets\nPosition:    0x000100000000 (Euclid, galaxy 0)\nBiome:       Toxic\nWarp range:  2500 ly\n"
+        );
+        assert!(matches!(
+            anchored.position,
+            Some(PositionContext::Address(address))
+                if address == GalacticAddress::new(0, 0, 0, 1, 0, 0)
+        ));
+        assert_eq!(
+            (
+                anchored.galaxy.index,
+                anchored.system_count,
+                anchored.planet_count
+            ),
+            (9, 2, 2)
+        );
+        assert_eq!(
+            model.player_state,
+            Some(PlayerState::new(
+                GalacticAddress::new(0, 0, 0, 1, 0, 9),
+                9,
+                Some(GalacticAddress::new(3, 3, 4, 1, 1, 9)),
+                None,
+                700,
+                800,
+                900,
+            ))
+        );
+
+        let mut base_control = SessionState::from_model(&repl_live_model());
+        base_control.set_position_base("Base-0", &model).unwrap();
+        base_control.set_biome_filter(Biome::Toxic);
+        base_control.set_warp_range(2500.0);
+        let base_status =
+            dispatch_repl_action(&commands::Action::Status, &mut model, &mut base_control)
+                .expect("Base anchor remains supported");
+        assert_eq!(
+            base_status,
+            "Galaxy:      Eissentam (9; Lush)\nModel:       2 systems, 2 planets\nPosition:    Base-0 (Euclid, galaxy 0)\nBiome:       Toxic\nWarp range:  2500 ly\n"
+        );
+        assert!(matches!(
+            base_control.position,
+            Some(PositionContext::Base { ref name, address })
+                if name == "Base-0" && address == GalacticAddress::new(0, 0, 0, 1, 0, 0)
+        ));
+        assert_eq!(
+            (
+                base_control.galaxy.index,
+                base_control.system_count,
+                base_control.planet_count
+            ),
+            (9, 2, 2)
+        );
+        assert_eq!(base_control.biome_filter, Some(Biome::Toxic));
+        assert_eq!(base_control.warp_range, Some(2500.0));
+
+        let mut following = SessionState::from_model(&repl_live_model());
+        following.set_biome_filter(Biome::Toxic);
+        let find = commands::Action::Find {
+            biome: None,
+            infested: false,
+            within: None,
+            nearest: None,
+            named: true,
+            discoverer: None,
+            from: None,
+        };
+        let found = dispatch_repl_action(&find, &mut model, &mut following)
+            .expect("current-position find uses the refreshed galaxy and position");
+        assert!(found.contains("Leaf-9"));
+        assert!(!found.contains("Leaf-0"));
+        assert_eq!(following.galaxy.index, 9);
+        assert_eq!(
+            *following.position.unwrap().address(),
+            GalacticAddress::new(0, 0, 0, 1, 0, 9)
+        );
+    }
+
+    #[test]
+    fn test_prompt_sync_includes_new_named_galaxy_and_latest_player_state() {
+        let model = tokio::sync::RwLock::new(repl_live_model());
+        let mut manual = SessionState::from_model(&model.blocking_read());
+        manual
+            .set_position_base("Base-0", &model.blocking_read())
+            .unwrap();
+        manual.set_biome_filter(Biome::Toxic);
+        manual.set_warp_range(2500.0);
+        let mut following = SessionState::from_model(&model.blocking_read());
+        {
+            let mut latest = model.blocking_write();
+            latest.insert_system(System::new(
+                GalacticAddress::new(12, 13, 14, 5, 0, 9),
+                Some("Third-9".into()),
+                None,
+                None,
+                vec![Planet::new(
+                    0,
+                    Some(Biome::Frozen),
+                    None,
+                    false,
+                    Some("Frost-9".into()),
+                    None,
+                )],
+            ));
+            latest.player_state = Some(PlayerState::new(
+                GalacticAddress::new(12, 13, 14, 5, 0, 9),
+                9,
+                None,
+                None,
+                70,
+                80,
+                90,
+            ));
+            latest.set_active_galaxy(9);
+        }
+
+        sync_session_before_prompt(&model, &mut manual);
+        sync_session_before_prompt(&model, &mut following);
+        let manual_prompt = PromptState::from_session(&manual);
+        let following_prompt = PromptState::from_session(&following);
+        assert_eq!(manual_prompt.galaxy_name, "Eissentam");
+        assert_eq!(manual_prompt.biome_filter, Some("Toxic".to_owned()));
+        assert_eq!(manual_prompt.planet_count, 3);
+        assert_eq!(following_prompt.galaxy_name, "Eissentam");
+        assert_eq!(following_prompt.planet_count, 3);
+        assert_eq!(
+            (
+                manual.system_count,
+                manual.planet_count,
+                manual.galaxy.index
+            ),
+            (3, 3, 9)
+        );
+        assert!(
+            matches!(manual.position, Some(PositionContext::Base { ref name, address })
+            if name == "Base-0" && address == GalacticAddress::new(0, 0, 0, 1, 0, 0))
+        );
+        assert_eq!(manual.biome_filter, Some(Biome::Toxic));
+        assert_eq!(manual.warp_range, Some(2500.0));
+        assert_eq!(
+            (
+                following.system_count,
+                following.planet_count,
+                following.galaxy.index
+            ),
+            (3, 3, 9)
+        );
+        assert!(matches!(
+            following.position,
+            Some(PositionContext::PlayerPosition(address))
+                if address == GalacticAddress::new(12, 13, 14, 5, 0, 9)
+        ));
+        assert_eq!(
+            model.blocking_read().player_state,
+            Some(PlayerState::new(
+                GalacticAddress::new(12, 13, 14, 5, 0, 9),
+                9,
+                None,
+                None,
+                70,
+                80,
+                90,
+            ))
+        );
+    }
+
+    #[test]
+    fn test_prompt_sync_preserves_typed_address_anchor() {
+        let model = tokio::sync::RwLock::new(repl_live_model());
+        let mut session = SessionState::from_model(&model.blocking_read());
+        let anchor = GalacticAddress::new(-8, 12, 4, 3, 1, 9);
+        session.set_position_address(anchor);
+        {
+            let mut latest = model.blocking_write();
+            latest.player_state = Some(PlayerState::new(
+                GalacticAddress::new(1, 2, 3, 4, 0, 0),
+                0,
+                None,
+                None,
+                70,
+                80,
+                90,
+            ));
+            latest.set_active_galaxy(0);
+        }
+
+        sync_session_before_prompt(&model, &mut session);
+        assert!(
+            matches!(session.position, Some(PositionContext::Address(address)) if address == anchor)
+        );
+        assert_eq!(session.galaxy.index, 0);
+        assert_eq!(session.system_count, 2);
     }
 
     #[test]
