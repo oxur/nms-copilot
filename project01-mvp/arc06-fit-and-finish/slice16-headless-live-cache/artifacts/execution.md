@@ -219,3 +219,28 @@ All LC-01 through LC-08 ledger rows remain `OPEN`. CC proposes done for each for
 ### Bubble-up to Arc06
 
 **BU-16-01 — Complete-stream transport oracle.** Checking only currently queued messages misses late child output. The test-only tee now validates every stdio line through EOF and requires HTTP stdout to stay empty through child exit while preserving the existing request/response consumer.
+
+
+## Refinement03 execution addendum
+
+The immutable third correction, `cc-prompt-iteration03.md` (planning issuance `997e6d9`), began from clean `856775df80e7585aa5cedc03219fe56976acf679`, directly above `db77e07612601ffa1bf275b4df1acd87a1787975`. I read all 3,612 lines of the current native integration test and made changes only to `crates/nms-copilot/tests/mcp_live_integration.rs`; production, coordinator tests, other native tests, and planning stayed untouched. The eight-row boundary table and exact readback are preserved under validation `iteration03`.
+
+The complete A–D list is implemented: each warm HTTP attempt snapshots exact initial source/cache bytes and mtimes, full checked cache state/maps, freshness, and temp absence before spawn; health success rechecks those before any live write; an observed bind collision waits for natural exit and stdout EOF before asserting exact source/cache bytes and mtimes, full initial cache/maps/state, no temp, concrete bind/address stderr, and no readiness line, then retains the failed fixture. Warm stdio now repeats source/cache bytes, fixed cache mtime, temp absence and full final checked state/maps after EOF. Stdio DisabledCurrent retains exact cache bytes/mtime through EOF alongside the full typed state check. Both transports assert temp absence immediately after Cold initial-cache checks, before teardown and after teardown for all five controls, preserving existing absent-parent/cache, sentinel, blocker, and state assertions.
+
+### Refinement03 captured gates
+
+| Attempt | Result | Detail |
+|---|---:|---|
+| First `make format` | Child exit unknown | The process launched and its exact raw channels are retained (stdout 107 bytes, SHA-256 `1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57`; stderr 0 bytes). Capture postprocessing failed at `capture_gate_iteration03.py` line 49 with `IndexError: list assignment index out of range` after `subprocess.run` returned. The child exit code was not persisted and is explicitly unknown. The later successful retry does not repair that historical field. |
+| `make format` retry | Exit 0 | 107-byte stdout; stable source diff identity `337d14e854bfa7cae11e025a5f8412c0345b08254bf069661d9738aaaf7e9707`. |
+| `make lint` | Exit 0 | 176-byte stdout and 448-byte stderr; same stable source diff identity. |
+| Required native integration command in sandbox | Exit 101; 4 passed, 11 failed | Six HTTP cases failed on loopback `PermissionDenied: Operation not permitted`; five watcher cases timed out without notifications. Exact separate channels are retained. |
+| Identical native integration command on authorized host | Exit 0; 15 passed, 0 failed | Same argv and inherited `TMPDIR=/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`; stdout 1,214 bytes / SHA-256 `329a8e120c0402328369ab51090efdaf504a9f2ede0dd74c75a7c92eb3fc72b3`; stderr 75,612 bytes / `dabb7b59da7202c40c3f6e6e2d57c4ba3ca90840d5aea921a14c0303d1637ef8`. Source identity was stable. |
+| Pre-commit `git diff --check` | Exit 0 | Empty stdout/stderr, stable source. |
+| Post-commit `git diff 11cf7e6a8e2a7549a223880820c0bf4543381459..HEAD --check` | Exit 0 | Empty stdout/stderr; exact captured attempt follows the one-path commit. |
+
+All seven attempts, UUIDs, argv, environment, source identities, populations, full separate channels, hashes and base64 are embedded in validation `iteration03`; raw channels use unique names in the existing ignored capture directory. The first format wrapper issue remains marked incomplete with unknown child exit. Six subsequent attempts completed with known exits.
+
+The final commit is `e0939229b38e46cab7dd0dd6c5381278029ea1bf`, parent `856775df80e7585aa5cedc03219fe56976acf679`; it contains exactly the one allowed test path. The parsed final trailer block has each required co-author line once and consecutively. Worktree status and index are clean. The three ignored filesystem return records are the only returned records; no ignored artifact was committed. I have stopped source/index mutation and handed stable ownership to CDC.
+
+All LC-01 through LC-08 remain `OPEN`; CC proposes done for independent CDC disposition. No acceptance is inferred.

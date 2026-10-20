@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.61, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.62, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -520,3 +520,8 @@ Stable db77e07 (parent4404f37) has reviewed fallible runtime/apply-snapshot fixe
 ## Slice16 refinement02 review / third native-only boundary pass — 2026-10-20 UTC
 
 Source856775d reviewed exact two test paths/production frozen: golden whole-map/checked-cache, all barriers and full stdout through EOF repaired. ALL13 current JSON roots/prefixes and42new raw channels preserved exactly. CC9/229/15 green on actual applicable bytes; remaining F4 narrow warm-retry byte/mtime and post-EOF/no-temp effects require immutable cc-prompt-iteration03.md, THIRD of five, ONE native-test path only. Complete helper walk supplies all concrete boundaries before further testing; no Operator gate or new criterion/architecture/policy. Broad final CDC gates wait for complete candidate. All8LC/R06-S16 open:34arcrows/15done/19open, project25open; required17 normal/full both-mode/lifetime/terminal and all unknown/history/raw/finaltransition/original parent/Operator/integration/release gates preserved. Mainb616ab2/external03e8d04/accepted15/held pins unchanged. Version1.61 records routine bounded correction/review only.
+
+
+## Slice16 current implementation accepted / narrow historical Operator gate — 2026-10-20 UTC
+
+Final e0939229 resolves all F1–F7 source/oracle findings; ALL15 fresh CDC gates520/38/4/15/229/workspace968+doc1/build/docs/strictchecks/diffs pass with clean unchanged source. LC01–07 accepted reproduced; LC08 alone open: first iteration03 actual format wrapper IndexError left original exit/endUTC/three post-run source fields unavailable, exact stdout107/stderr0/prelaunch records retained. Complete bounded existing-record lookup/current proof and proposed ONLY-one-attempt historical exception vs hold are in child close/review; no waiver adopted or prior15 exception extended. Third-of-five executed/reviewed, no activeCC; Operator next-action owner, stop before17. Interim CDC retrospective prepared, final closing duty pending. R06-S16 open:34arcrows/15done/19open, all25projectrows open; required17 normal/both-mode/lifetime/native terminal, unknown/history/raw/finaltransition/original parent/Operator/integration/release owners preserved. MainHEADb616 unchanged but now protected native-test working modification; candidate/accepted15/held pins/external03e8d04 clean and unchanged. Rebase request remains fulfilled with backup/mapping verified, no new integration. Version1.62 is truthful partial acceptance/decision bubble-up, not child/arc closure.

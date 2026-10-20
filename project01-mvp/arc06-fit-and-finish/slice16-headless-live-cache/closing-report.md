@@ -90,3 +90,23 @@ The three filesystem return records are `workbench/slice16-return/closing-report
 ## Bubble-up to Arc06
 
 **BU-16-01 — Validate complete transport streams through EOF.** A reader that checks only currently queued messages cannot detect output emitted after the last expected response. The new tee preserves the protocol reader while an independent observer validates every stdio line through EOF and confirms HTTP stdout stays empty through process exit.
+
+
+## Refinement03 closeout
+
+The third bounded correction is committed as `e0939229b38e46cab7dd0dd6c5381278029ea1bf`, directly above `856775df80e7585aa5cedc03219fe56976acf679`. It changes only `crates/nms-copilot/tests/mcp_live_integration.rs`. Warm HTTP startup now proves full exact source/cache effects and checked state through successful health or failed-bind natural exit; warm stdio repeats its final cache oracle after EOF; DisabledCurrent proves its exact bytes and mtime persist through EOF; and both transports check temp absence at each assigned control boundary.
+
+`make format`, `make lint`, the authorized-host native integration matrix (15/15), pre-commit diff check, and post-commit baseline diff check passed. The sandbox native attempt remains separately recorded (4/15) with loopback permission and notification-substrate failures; its identical host retry passed. The first format attempt has complete raw channels but an unknown child exit because the capture wrapper failed after the child returned; the successful retry is a distinct observation.
+
+All eight LC rows remain `OPEN`; CC proposes done for CDC review, with no acceptance inferred. Stable source/index ownership is returned to CDC.
+
+
+## CDC current independent disposition / bounded Operator decision — 2026-10-20 UTC
+
+CDC independently reviewed final e0939229 and ran ALL15 required gates: focused520/cache38/route4/native15/no-default229/workspace968+doc1/build/docs/strictcache+watch/diffs, complete captures and stable clean source. LC01–07 are accepted reproduced; LC08 alone remains OPEN. See cdc-verification.md “Refinement03 final current independent review / LC08 Operator decision” for the exact per-row walk, original-field table and full scope/history/pin accounting.
+
+The sole remaining issue is ONE first iteration03 real make-format attempt (UUID efc40dcb44b14a0c8f00f08fa6b4f0bc): exact stdout107bytes/stderr0 and prelaunch metadata survive, but wrapper IndexError lost original child exit, endUTC and three post-run source observations. Existing-index/raw/visible-wrapper lookup found no completed alternate receipt. All other current gates and channels are retained; reruns prove current behavior, not those historical fields. Inventory reads are metadata and create no separate evidence exception obligation.
+
+CDC recommends Operator approve ONLY that bounded historical LC08 exception, retaining five unavailable fields unknown and all current/future obligations intact; alternative hold LC08/Slice16 open for exact original evidence or an accepted amendment. This is a proposed disposition, NOT an adopted exception; prior Slice15 approval does not cover it. Source e093 remains built/tested/documented and unintegrated/uninstalled; stop before17 until decision. Current main HEADb616ab2 has a protected native-test working modification, untouched; candidate/held dependencies/external03e8d04 stay clean. Requested rebase was fulfilled by exact two-commit mapping onto b616 and backup78d preserved; all source ancestry remains verified.
+
+Canonical supporting inventory is exactly artifacts/execution.md, validation.json and cdc-review-receipts.json. CDC retrospective is prepared in cdc-retrospective.md with final closure pending; arc/project bubble-up records7/8 accepted, R06-S16 open,34arcrows/15done/19open/project25open. Required normal17/full both-mode C04 and all unknown/history/raw/finaltransition/original parent/Operator/integration/release gates remain. No next arc/Project02 or remote action.

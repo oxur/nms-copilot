@@ -1,0 +1,27 @@
+# Slice16 CDC retrospective — current review cutoff, closure pending
+
+CDC /root/cdc_arc06, actual requested/applied OpenAI/Codex gpt-6.1-sol High; same CC /root/cdc_arc06/cc_slice15 gpt-6-luna High. Cutoff2026-10-20UTC at source e0939229 /planning997e6d9 plus this packet. This is substantive pre-close analysis; final slice closing duty remains pending LC08 Operator disposition. It is not independent implementation acceptance.
+
+## Outcome and inspection
+
+The promised usable headless increment is implemented: one coordinator owns watcher/apply/serialized cache work, complete supported player state/version persist outside the model lock, and real stdio/HTTP observe it. CDC accepted LC01–07 after reviewing the complete initial seven-path change, both production fixes, complete later test diffs/affected helpers, raw-history recovery and current15-gate wave. All15 pass, including actual native15 and workspace968+doc1. Normal shared REPL/background lifetime remains required17; no full C04/parent/unknown-placeholder claim. LC08 is held solely for one original format completion-metadata gap, with exact surviving channels/current successful retry and independent proof preserved. Source remains unintegrated/uninstalled.
+
+## Observations
+
+Initial and first-correction green tests did not establish every assigned oracle. Partial atlas membership checks missed whole-map completeness; a position-focused phase changed currencies despite being labelled previous-only, and address constructor parameters needed explicit planet/reality expectations. CDC found these by comparing the actual consumed fixtures/assertions with the issued table. The second refinement independently built the full golden atlas and checked actual cache write/read/rebuild; current tests now prove these claims. Complete-output validation needed a tee and late-noise/non-RPC negative witness because the old pending-message checker could miss later output.
+
+CDC also contributed avoidable late discoveries: the complete lifecycle-boundary walk happened after the second return. Several already-issued exact post-EOF/file-mtime requirements remained omitted despite green15. A closed eight-row boundary worksheet with exact source/case/mtime/temp/teardown expectations preceded the third refinement; that delta now covers the full listed boundaries and passes current independent review. This is an observed correction, not controlled evidence that greater prompt detail or a model choice improves outcomes.
+
+Capture results include a successful recovery and a real limit. Initial compile-stderr raw filename collision did not destroy the exact original data: CC located its existing embedded bytes, and CDC verified all108 original channel hashes. Later UUID paths prevented that collision. Third-refinement capture postprocessing nevertheless lost the first real format child completion fields after an IndexError. Exact stdout/stderr and prelaunch records survived; reruns cannot recover exit/endUTC/post-source metadata. The explicit narrow decision packet prevents current green tests from silently laundering that gap. Available observations do not establish bad intent, an unread guide or a model limitation.
+
+CDC's absolute “every diagnostic” wording also prompted capture wrappers around ordinary source reads. Root and CDC clarified that inventory/read/hash checks are metadata, not SUT gates or automatic waiver obligations. Those existing receipts remain proportionately preserved. This confusion and repeated wrapper modifications consumed review attention, but unobserved total effort/cost and causality are unknown.
+
+## Recommendations and follow-through
+
+For the next authorized implementation, CDC should put complete independently expected maps/full fields and the lifecycle-boundary worksheet into initial author readiness; review the actual checker through a plausible wrong output, not only a successful specimen. Check next time whether these exact omissions are absent while preserving the same acceptance floor; do not claim a comparative improvement from this single unfinished baseline.
+
+For future captures, persist the completed child result to the existing index before any fragile report merge; reuse a working capture path rather than coupling subprocess completion to a later list mutation. This is a scoped local preparation recommendation, not an enacted framework change or authorization for new research/artifact machinery. A harmless wrapper self-check can validate that completion/error persistence works before the next real SUT command. The current missing observations stay unknown regardless of future repairs.
+
+Slice15's decomposition into complete event API, coordinator/headless16 and normal17 remains useful: current headless cache is testable without claiming normal ownership/lifetime is fixed. The explicit full-state/source-version direction survived all repairs. Earlier exact-oracle recommendations were adopted only after bounded correction; future follow-through must inspect consumed assertions, not count guide reads. The evidence-economy clarification is adopted locally: preserve every actual failure and required gate, keep ordinary reads proportionate, and avoid new files where existing canonical records serve the need.
+
+Final closure requires the Operator's LC08 disposition, then updating this outcome and the child/arc/project bubble-up. No model substitution, new contributor, next arc or Project02 work is recommended or authorized here.
