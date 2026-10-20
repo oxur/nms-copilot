@@ -2696,6 +2696,23 @@ fn test_live_update_case_phase() {
     process.close_stdin_and_wait(Duration::from_secs(5));
     validate_complete_stdio_stdout(stdout_capture, Instant::now() + Duration::from_secs(5))
         .expect("complete stdio stdout remains JSON-RPC through EOF");
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        final_source,
+        "warm stdio source bytes remain exact through EOF"
+    );
+    assert_eq!(
+        std::fs::read(&cache).unwrap(),
+        final_cache,
+        "warm stdio cache bytes remain exact through EOF"
+    );
+    assert_eq!(
+        std::fs::metadata(&cache).unwrap().modified().unwrap(),
+        final_mtime,
+        "warm stdio fixed cache mtime remains exact through EOF"
+    );
+    assert!(!cache.with_extension("rkyv.tmp").exists());
+    assert_live_cache_state(&cache, *live_phases().last().expect("final live phase"));
 }
 
 #[cfg(unix)]
@@ -2722,6 +2739,46 @@ fn run_headless_http_complete_live_update_matrix(first_addr: Option<SocketAddr>)
         attempts += 1;
         let (dir, save, cache, initial_source) = prepare_live_cache_fixture();
         let fixture_path = dir.path().to_path_buf();
+        assert_eq!(
+            std::fs::read(&save).unwrap(),
+            initial_source,
+            "warm HTTP fixture starts with its exact authored source"
+        );
+        assert_eq!(
+            std::fs::metadata(&save).unwrap().modified().unwrap(),
+            source_mtime(),
+            "warm HTTP fixture starts with its exact source mtime"
+        );
+        assert_live_cache_state(
+            &cache,
+            LiveStatePhase {
+                version: 4720,
+                reality: 0,
+                voxel_x: 0,
+                units: 7,
+                nanites: 8,
+                specials: 9,
+                previous: None,
+                selected: 7,
+            },
+        );
+        let initial_cache_bytes = std::fs::read(&cache).expect("initial warm HTTP cache bytes");
+        let initial_source_mtime = std::fs::metadata(&save)
+            .expect("initial warm HTTP source metadata")
+            .modified()
+            .expect("initial warm HTTP source mtime");
+        let initial_cache_mtime = std::fs::metadata(&cache)
+            .expect("initial warm HTTP cache metadata")
+            .modified()
+            .expect("initial warm HTTP cache mtime");
+        assert_eq!(initial_source_mtime, source_mtime());
+        assert_eq!(
+            initial_cache_mtime,
+            source_mtime() + Duration::from_secs(100),
+            "warm HTTP cache begins with the authored fresh-cache mtime"
+        );
+        assert!(nms_cache::is_cache_fresh(&cache, &save));
+        assert!(!cache.with_extension("rkyv.tmp").exists());
         let home = isolated_live_cache_home(&cache);
         let addr = if failed_fixture.is_none() {
             if let Some(addr) = first_addr {
@@ -2745,20 +2802,15 @@ fn run_headless_http_complete_live_update_matrix(first_addr: Option<SocketAddr>)
         match wait_health(addr, &mut process) {
             Ok(()) => {
                 assert_eq!(std::fs::read(&save).unwrap(), initial_source);
-                if let Some(previous) = &failed_fixture {
-                    assert_ne!(&fixture_path, previous, "HTTP retry uses a fresh fixture");
-                }
-                break (dir, save, cache, addr, process, stdout_capture);
-            }
-            Err(error) => {
-                let evidence = format!("{error}\n{}", process.stderr_text());
-                if !evidence
-                    .to_ascii_lowercase()
-                    .contains("address already in use")
-                {
-                    panic!("HTTP startup failed without a bind collision: {evidence}");
-                }
-                assert_eq!(std::fs::read(&save).unwrap(), initial_source);
+                assert_eq!(std::fs::read(&cache).unwrap(), initial_cache_bytes);
+                assert_eq!(
+                    std::fs::metadata(&save).unwrap().modified().unwrap(),
+                    initial_source_mtime
+                );
+                assert_eq!(
+                    std::fs::metadata(&cache).unwrap().modified().unwrap(),
+                    initial_cache_mtime
+                );
                 assert_live_cache_state(
                     &cache,
                     LiveStatePhase {
@@ -2773,15 +2825,83 @@ fn run_headless_http_complete_live_update_matrix(first_addr: Option<SocketAddr>)
                     },
                 );
                 assert!(!cache.with_extension("rkyv.tmp").exists());
+                if let Some(previous) = &failed_fixture {
+                    assert_ne!(&fixture_path, previous, "HTTP retry uses a fresh fixture");
+                }
+                break (dir, save, cache, addr, process, stdout_capture);
+            }
+            Err(error) => {
+                let observed_stderr = process.stderr_text();
+                let evidence = format!("{error}\n{observed_stderr}");
+                if !evidence
+                    .to_ascii_lowercase()
+                    .contains("address already in use")
+                {
+                    panic!("HTTP startup failed without a bind collision: {evidence}");
+                }
                 process.wait_after_startup_failure();
                 assert_http_stdout_empty_to_eof(
                     stdout_capture,
                     Instant::now() + Duration::from_secs(5),
                 );
+                let stderr = process.stderr_text();
+                assert!(
+                    stderr.contains(&format!("MCP server error: bind {addr} failed:")),
+                    "bind stderr identifies exact listener/address: {stderr:?}"
+                );
+                assert!(
+                    stderr.contains("Address already in use"),
+                    "bind stderr includes the operating system collision: {stderr:?}"
+                );
+                assert!(
+                    !stderr.contains("MCP server listening on http://"),
+                    "failed bind emitted no HTTP readiness line: {stderr:?}"
+                );
+                assert_eq!(
+                    std::fs::read(&save).unwrap(),
+                    initial_source,
+                    "failed warm HTTP child leaves exact authored source through exit"
+                );
+                assert_eq!(
+                    std::fs::read(&cache).unwrap(),
+                    initial_cache_bytes,
+                    "failed warm HTTP child leaves exact initial cache through exit"
+                );
+                assert_eq!(
+                    std::fs::metadata(&save).unwrap().modified().unwrap(),
+                    initial_source_mtime,
+                    "failed warm HTTP child leaves exact source mtime through exit"
+                );
+                assert_eq!(
+                    std::fs::metadata(&cache).unwrap().modified().unwrap(),
+                    initial_cache_mtime,
+                    "failed warm HTTP child leaves exact cache mtime through exit"
+                );
+                assert_live_cache_state(
+                    &cache,
+                    LiveStatePhase {
+                        version: 4720,
+                        reality: 0,
+                        voxel_x: 0,
+                        units: 7,
+                        nanites: 8,
+                        specials: 9,
+                        previous: None,
+                        selected: 7,
+                    },
+                );
+                assert!(!cache.with_extension("rkyv.tmp").exists());
                 let preserved = dir.keep();
                 if let Some(previous) = &failed_fixture {
                     assert_ne!(&preserved, previous, "each retry preserves a fresh fixture");
                 }
+                eprintln!(
+                    "SLICE16_WARM_HTTP_BIND_RETRY attempt={} address={} stderr={:?} preserved_fixture={}",
+                    attempts,
+                    addr,
+                    stderr,
+                    preserved.display()
+                );
                 failed_fixture = Some(preserved);
             }
         }
@@ -3066,6 +3186,7 @@ fn run_stdio_live_control(case: LiveStartupCase) {
     process.send(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
     if matches!(case, LiveStartupCase::Cold) {
         assert_cold_source_cache(&cache);
+        assert!(!cache.with_extension("rkyv.tmp").exists());
     } else if matches!(case, LiveStartupCase::DisabledCurrent) {
         assert_live_cache_state(
             &cache,
@@ -3157,6 +3278,7 @@ fn run_stdio_live_control(case: LiveStartupCase) {
     if let Some((path, expected)) = blocker.as_ref() {
         assert_eq!(std::fs::read(path).unwrap(), *expected);
     }
+    assert!(!cache.with_extension("rkyv.tmp").exists());
     assert!(process.stdout_is_json_only());
     process.close_stdin_and_wait(Duration::from_secs(5));
     validate_complete_stdio_stdout(stdout_capture, Instant::now() + Duration::from_secs(5))
@@ -3172,7 +3294,10 @@ fn run_stdio_live_control(case: LiveStartupCase) {
             "blocker remains through EOF"
         );
     }
-    if matches!(case, LiveStartupCase::BypassExisting) {
+    if matches!(
+        case,
+        LiveStartupCase::BypassExisting | LiveStartupCase::DisabledCurrent
+    ) {
         assert_eq!(
             std::fs::read(&cache).unwrap(),
             *initial_bytes.as_ref().unwrap()
@@ -3216,6 +3341,7 @@ fn run_stdio_live_control(case: LiveStartupCase) {
             assert!(warnings.matches("could not update cache").count() >= 1);
         }
     }
+    assert!(!cache.with_extension("rkyv.tmp").exists());
 }
 
 #[cfg(all(unix, feature = "http"))]
@@ -3372,6 +3498,7 @@ fn run_http_live_control_attempt(
                 stdout_capture,
                 Instant::now() + Duration::from_secs(5),
             );
+            assert!(!cache.with_extension("rkyv.tmp").exists());
             let preserved_path = _directory.keep();
             return Err((preserved_path, evidence));
         }
@@ -3395,6 +3522,7 @@ fn run_http_live_control_attempt(
     );
     if matches!(case, LiveStartupCase::Cold) {
         assert_cold_source_cache(&cache);
+        assert!(!cache.with_extension("rkyv.tmp").exists());
     } else if matches!(case, LiveStartupCase::DisabledCurrent) {
         assert_live_cache_state(
             &cache,
@@ -3487,6 +3615,7 @@ fn run_http_live_control_attempt(
     if let Some((path, expected)) = blocker.as_ref() {
         assert_eq!(std::fs::read(path).unwrap(), *expected);
     }
+    assert!(!cache.with_extension("rkyv.tmp").exists());
     assert!(process.stdout_is_empty());
     process.kill_and_wait();
     assert_http_stdout_empty_to_eof(stdout_capture, Instant::now() + Duration::from_secs(5));
@@ -3569,6 +3698,7 @@ fn run_http_live_control_attempt(
     ) {
         assert!(!cache.with_extension("rkyv.tmp").exists());
     }
+    assert!(!cache.with_extension("rkyv.tmp").exists());
     Ok(fixture_path)
 }
 
