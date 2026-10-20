@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.52
+version: 1.53
 project: project01-mvp
 status: active
 depends-on: []
@@ -924,3 +924,8 @@ Version1.51: bounded third-of-five Slice16 test-only pass at856775d, exact warm-
 ### Arc06 Slice16 implementation review / historical capture decision — 2026-10-20 UTC
 
 Version1.52: final isolated e0939229 independently passes15gates (workspace968+doc1), LC01–07 accepted/LC08open for one original format completion-metadata gap; narrow exception proposed only, Operator decision pending, no17 dispatch. CDC retrospective prepared/final duty pending;34arcrows/15done/19open/project25open. Current mainb616 root native-test modification protected, source/dependency/external pins preserved. Existing normal17/unknown/history/raw/finaltransition/original acceptance/independent/Operator/integration/release and Arc06-only boundary unchanged.
+
+
+### Arc06 Slice16 approved close / required normal17 — 2026-10-20 UTC
+
+Version1.53: Operator explicitly approved ONLY pending16 single-format five-field historical exception and directed17. All8LC/R06-S16close at e093 with retained15 independent gates and finalized CDC retrospective; no recovered-history/new17-proof claim.34arcrows/16done/18open/project25open; requirednormal17 and every unknown/history/raw/finalsemantic/original parent/Operator/integration/release gate remain. Arc06-only unchanged models/ownership, protected main working edit/held pins; no new project/arc or external action.

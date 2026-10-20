@@ -134,6 +134,8 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S16 | Common app-owned full-update apply/cache coordinator and actual headless stdio/HTTP live-cache composition independently accepted | Eight LC rows, lock/order/error/no_cache/lifetime controls and native full-state/cache/observer matrix plus CDC review | correctness-grade | Adopted single-owner direction / source-grounded headless increment | open | | Normal same-owner REPL/background/PTY composition remains required17/CDC; unknown/history/original parent gates retained |
+| R06-S16 | Common app-owned full-update apply/cache coordinator and actual headless stdio/HTTP live-cache composition independently accepted | Eight LC rows, lock/order/error/no_cache/lifetime controls and native full-state/cache/observer matrix plus CDC review | correctness-grade | Adopted single-owner direction / source-grounded headless increment | done | [Final CDC closure](slice16-headless-live-cache/cdc-verification.md#operator-approved-lc08-exception-and-final-slice16-closure--2026-10-20-utc) at e0939229 — all8LC accepted, explicit bounded LC08 amendment | Normal SAME-owner REPL/background/PTY remains required17; unknown/history/original parent gates retained |
 
 2026-10-19 Slice16 opened:34 arc rows/15 done/19 open; all original parent capabilities remain open.
+
+2026-10-20 Slice16 final closure:34 arc rows/16 done/18 open; all original criteria and required17/parent obligations preserved.

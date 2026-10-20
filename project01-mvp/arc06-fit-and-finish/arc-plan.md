@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.62, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.63, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -525,3 +525,8 @@ Source856775d reviewed exact two test paths/production frozen: golden whole-map/
 ## Slice16 current implementation accepted / narrow historical Operator gate — 2026-10-20 UTC
 
 Final e0939229 resolves all F1–F7 source/oracle findings; ALL15 fresh CDC gates520/38/4/15/229/workspace968+doc1/build/docs/strictchecks/diffs pass with clean unchanged source. LC01–07 accepted reproduced; LC08 alone open: first iteration03 actual format wrapper IndexError left original exit/endUTC/three post-run source fields unavailable, exact stdout107/stderr0/prelaunch records retained. Complete bounded existing-record lookup/current proof and proposed ONLY-one-attempt historical exception vs hold are in child close/review; no waiver adopted or prior15 exception extended. Third-of-five executed/reviewed, no activeCC; Operator next-action owner, stop before17. Interim CDC retrospective prepared, final closing duty pending. R06-S16 open:34arcrows/15done/19open, all25projectrows open; required17 normal/both-mode/lifetime/native terminal, unknown/history/raw/finaltransition/original parent/Operator/integration/release owners preserved. MainHEADb616 unchanged but now protected native-test working modification; candidate/accepted15/held pins/external03e8d04 clean and unchanged. Rebase request remains fulfilled with backup/mapping verified, no new integration. Version1.62 is truthful partial acceptance/decision bubble-up, not child/arc closure.
+
+
+## Slice16 approved final closure / required17 continuation — 2026-10-20 UTC
+
+Operator: “yes, I agree — accept it and move on to17!” ONLY the exact five original completion fields of ONE first iteration03 format attempt UUIDefc40dcb44b14a0c8f00f08fa6b4f0bc are excepted for LC08; fields stayunknown, exactstdout107/stderr0/prelaunch records retained, no future/general waiver. All8LC/R06-S16done at e0939229 with prior15 independent gates520/38/4/15/229/workspace968+doc1/build/docs/stricts/diffs and finalized CDC retrospective. No approval-only code rerun or recast17 evidence.34arcrows/16done/18open/project25open. CDC now details17 normal SAME-coordinator REPL/shared background MCP/read-only notifications/owned shutdown/session refresh/actual existing-tool nativePTY full startup-live-cache/config/teardown; all unknown-placeholder/cache policy/history/raw/finaltransition/strictmtime-identicalrewrite import-history question/original parent/independent/Operator/integration/release gates preserved. Mainb616 protected rootnative-test9line edit/external03e8d04/held pins unchanged. Same explicitly selected model/settings, singlearc endpoint and dedicated ownership; no nextarc/Project02/remote actions. Version1.63 records approved bounded amendment, completed child/retrospective and existing-scope continuation.

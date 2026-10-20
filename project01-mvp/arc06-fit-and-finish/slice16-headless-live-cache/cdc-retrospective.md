@@ -1,4 +1,4 @@
-# Slice16 CDC retrospective — current review cutoff, closure pending
+# Slice16 CDC retrospective — finalized at approved closure
 
 CDC /root/cdc_arc06, actual requested/applied OpenAI/Codex gpt-6.1-sol High; same CC /root/cdc_arc06/cc_slice15 gpt-6-luna High. Cutoff2026-10-20UTC at source e0939229 /planning997e6d9 plus this packet. This is substantive pre-close analysis; final slice closing duty remains pending LC08 Operator disposition. It is not independent implementation acceptance.
 
@@ -25,3 +25,8 @@ For future captures, persist the completed child result to the existing index be
 Slice15's decomposition into complete event API, coordinator/headless16 and normal17 remains useful: current headless cache is testable without claiming normal ownership/lifetime is fixed. The explicit full-state/source-version direction survived all repairs. Earlier exact-oracle recommendations were adopted only after bounded correction; future follow-through must inspect consumed assertions, not count guide reads. The evidence-economy clarification is adopted locally: preserve every actual failure and required gate, keep ordinary reads proportionate, and avoid new files where existing canonical records serve the need.
 
 Final closure requires the Operator's LC08 disposition, then updating this outcome and the child/arc/project bubble-up. No model substitution, new contributor, next arc or Project02 work is recommended or authorized here.
+
+
+## Final closure and follow-through — 2026-10-20 UTC
+
+The Operator approved ONLY the exact five unavailable completion fields of the one original iteration03 format attempt and directed continuation to17. All8 rows close at e093 with the already-complete15 independent gates; unknowns stayunknown, no new run is claimed. The CDC closing retrospective duty is fulfilled with this final outcome and bottom-up bubble-up. For17 author readiness, carry the full boundary worksheet and independent literal map/state expectations into the initial assignment; preserve a raw completed subprocess result before report postprocessing, and test wrapper error persistence before actual gates. These are local follow-through requirements, not evidence of comparative effectiveness or an enacted framework revision. All normal/unknown/history/raw/original parent gates remain.
