@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.62
+version: 1.63
 project: project01-mvp
 status: active
 depends-on: []
@@ -979,3 +979,8 @@ Version1.61: accepted17 source61f1d98/f3c6f228 closes its8rows and R06-S17; unch
 ## Arc06 policy A adopted — 2026-10-20 UTC
 
 Version1.62: Operator explicitly selected A (“yeah, I’m with you on A :-)”) from committed76144ff2. Persist explicitly marked unknown locations/inclusive model counts, promote only marked records on real insert/discovery/import, and reject/rebuild2/2 to3/3 with disclosed cache-only-import loss/re-import limit. This closes only that consequential policy gate; routine18authoring/implementation may proceed under unchanged selected models/Arc06-only authority. All source/planning ownership, protected main edit/held pins/Project02 and broader raw/history/finalsemantic/parent/independent/Operator/integration/release gates retained; no prompt/source assignment yet, no external action.
+
+
+## Arc06 Slice18 foundation issued / required19 remainder — 2026-10-20 UTC
+
+Version1.63: approved policyA now has initial arc06-fit-and-finish/slice18-placeholder-cache/cc-prompt.md with resolved14-path model/cache/import foundation from accepted61f1d98. Eight UP/newR06-S18open;36arcrows17done19open/project25open. Required19explicitly retains common startup/full-live ensure ordering, exact physical label lookup and real normal/stdio/HTTP unknown→promotion→restart composition. Current old regressions stay required18, not counted as19proof. Same selected CDC6.1SolHigh/CC6LunaHigh/context headroom/ownership; all protected pins/main9-line edit/Project02 and every broader raw/history/finalsemantic/original parent/independent/Operator/integration/release obligation preserved. No SUT18gate/source edit yet, no new inquiry/dependency/terminal/remote action.

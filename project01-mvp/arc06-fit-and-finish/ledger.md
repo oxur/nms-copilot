@@ -150,3 +150,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 | R06-S17 | Normal REPL and shared background MCP use SAME accepted coordinator with owned lifecycle/current session/full native cache composition | Eight RC rows, actual normalPTY/HTTP/cache boundary matrix, retained headless/legacy and independent CDC review | correctness-grade | Adopted one-owner direction / required remainder from accepted16 | done | [approved final closure](slice17-repl-live-cache/cdc-verification.md#operator-approved-rc-08-historical-exceptions-and-final-closure--2026-10-20-utc) | All8 child rows done on61f1d98: RC01–07 independently reproduced; RC08 exact Operator-approved historical exceptions only. Unintegrated/uninstalled; parent/policy gates retained. |
 
 2026-10-20 Slice17 closed:35 arc rows/17 done/18 open; project25 open. Exact approved child capture exceptions do not close original parent/policy/integration/release obligations.
+
+
+## Slice18 explicit placeholder/cache foundation
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S18 | Explicit model synthetic provenance/promotion/import and3/3 checked cache foundation independently accepted | Eight UP rows, exact whole-index/cache/raw negatives/old predecessor fallback/current regressions/CDC review | correctness-grade | Operator-approved policy A | open | [initial assignment](slice18-placeholder-cache/cc-prompt.md) | Dedicated61f-based source; required19application ensure/exact physical labels/native unknown composition remains, no parent acceptance |
+
+36arcrows17done19open/project25open; all previous35entire rows and criteria/dispositions retained.

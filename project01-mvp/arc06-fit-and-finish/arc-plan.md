@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.72, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.73, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -622,3 +622,10 @@ Version1.71 records completed17's next source-grounded policy packet and recomme
 The Operator explicitly selects the concrete76144ff2 policy: “yeah, I’m with you on A :-)”. Adopt A only: explicitly marked unknown physical-system locations persist across compatible restarts; system counts remain inclusive model-entry counts; only marked entries promote on genuine discovery/ordinary insert/community import, with synchronized indexes and exact physical identity. Proposed schema3/semantic3 rejects predecessor2/2 and rebuilds from selected source; disclosed cache-only imports absent that save may need re-import. No empty/name heuristic, genuine duplicate-policy change, automatic old-cache migration or raw-field validity claim. The preceding proposal/choice/hold text remains historical; this section discharges its specific policy gate, not remaining parent gates.
 
 CDC may now detail author-ready bounded18 (or a coherent explicitly accounted split) from accepted61f1d98 under unchanged gpt-6.1-sol High CDC /gpt-6-luna High CC, Arc06-only. Resolve routine types/API/cache-invariant/index/error/test mechanics without further policy question, preserve issued prompts/readback/raw-first captures/five-refinement limits and independent acceptance. Keep single coordinator/writer/short locks, manual anchors, genuine unnamed/empty and duplicate behavior, strict freshness/no_cache/parse-failure/best-effort errors. Every broader history/raw-field/final-semantic/freshness-import-history/original parent/independent/Operator/integration/release obligation remains. No18assignment yet; source/planning ownership handoff follows complete durable readiness. Protected main9-line edit/held pins/Project02 unchanged; no merge/push/install/release/nextarc. Version1.72 records exact policy approval before dependent work; arc35rows17done18open/project25open.
+
+
+## Slice18 foundation assignment and required19 composition — 2026-10-20 UTC
+
+Version1.73: adopted policyA is detailed into usable explicit model/cache/import foundation18 from accepted61f1d98, dedicated .worktrees/placeholder-cache/codex/placeholder-cache clean at author readiness. Initial assignment arc06-fit-and-finish/slice18-placeholder-cache/cc-prompt.md, eight UP/newR06-S18open:36arcrows17done19open/project25open. Same selected CDC/CC contexts/settings and serialized source/planning ownership; CC confirmed usable context after compaction.14namedpaths/private origin+exact promotion/3/3cache/checked marker vs trusted-data/no-emptyheuristic/full raw+derived/oldfixture/queryroute/header/native regressions/readback/raw-firstcaptures resolved before issue. No SUT18gate or source edit yet.
+
+Required19/CDC retains cold-start ensure before snapshot, ensure every accepted full live position before snapshot/notifications, exact physical MCP/resource/movement labels and actual normal/stdio/HTTP unknown→promotion→restart. These application bodies are frozen18;18's nine inherited normal cases prove regression, not new full unknown-policy composition. Existing broader history/raw-field/finalsemantic/strictfreshness-identicalrewrite-import-history and every original parent/integration/release owner retained. README stale double-producer paragraph missed in17 is explicitly remediated18 without rewriting17history. Context-sized split changes implementation detail only, preserves adoptedA/scope/quality/parent gates. Protected main9-line edit/allheldpins/Project02 remain; no nextarc/remote action.
