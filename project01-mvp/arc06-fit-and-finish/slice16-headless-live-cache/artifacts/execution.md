@@ -150,3 +150,72 @@ Current row witnesses are recorded in the matching validation appendix. CC propo
 ## Exact-path commit and stable handback
 
 Committed `db77e07612601ffa1bf275b4df1acd87a1787975` on `codex/headless-live-cache`, parent `4404f37f70df62177689d6108e68b3685ea422a1`. The commit contains exactly the three assigned source paths and has both consecutive co-author trailers in one parsed final block, once each. Captured post-commit baseline-range diff check passed (attempt `d6bde07b97754369b47c3e385bbe320e`). `git status --porcelain=v1 --untracked-files=all` and `git diff --cached --name-only` are empty. The three canonical return records remain ignored filesystem-only files. I hand stable source and index mutation ownership back to CDC for independent review; all eight ledger rows remain open pending CDC disposition.
+
+## Refinement02 intake/readback before source edits
+
+Issued assignment: `cc-prompt-iteration02.md`, planning issuance `06e2fa8`; source/index ownership is CC for the dedicated worktree only after the intake acknowledgment, CDC retains planning. Source begins at clean `db77e07612601ffa1bf275b4df1acd87a1787975`, parent of the prior candidate; this pass allows only `coordinator.rs` `cfg(test)` sections and `tests/mcp_live_integration.rs`. All production coordinator text before `#[cfg(test)]`, `mcp/mod.rs`, main/watch/lib/README, dependencies, schema, raw-field handling, placeholder policy, and prior tests remain frozen. No source edit has occurred for refinement02 at this intake checkpoint.
+
+Actual read extent: the full 50-line iteration02 prompt and full original binding `cc-prompt.md`; current 37-line slice plan, 14-line ledger, and 44-line CDC review; the complete 1,075-line coordinator and 3,290-line native integration test source (including all helper, legacy, startup, warm, control, collision, EOF and test sections). Existing retained Rust-guidelines reading covers the full `SKILL.md` and all AP01–AP70 (2,188-line anti-pattern guide), with ownership/concurrency/lifecycle/channels/cancellation/atomic, typed errors, API and docs sections; no new guidance claims are inferred. The three current return files match the canonical iteration02 prefixes exactly: closing 11,868 bytes/SHA-256 `003eea3fd8f07cfaa17688d3c030881a88b940e94f4dd359d71bc572776d7ef2`; execution 26,223 bytes/`8f6001855904f552c40bbc445a5e99358037b51b2452981221d8c7e5f0b39daa`; validation 1,641,490 bytes/`cdd5ae97d166e41f3f184efdbc2336ed1ecf7e73c62a3a2fdce274cd49e21008`. Existing validation has 12 top-level values; they will remain intact while appending only `iteration02`. The prior 196 embedded channel records and all prior Markdown prefixes are frozen.
+
+Contract readback: (A) replace the typed-update subset/count test with a separate constructor-built three-system/four-planet/three-base golden atlas and compare every primary/index/node map after same-reality and cross-reality updates, then write/read/rebuild real cache and compare against that independent atlas. (B) both injected writers need a release RAII guard declared immediately after coordinator construction and before any channel expectation/assertion; writer barriers use bounded waits mapped to `CacheError::Io`, and the Drop helper thread is joined after acknowledgment. (C) Warm HTTP must be a per-attempt fixture builder/retry that retains failed cache/source observations, includes controlled first-bind collision, verifies every case's exact file effects after teardown, and preserves legacy tests. (D) new Slice16 stdio paths tee every stdout line both to protocol handling and capture; after EOF drain to actual disconnect under one deadline, reject any non-JSON-RPC line/object, and include positive and literal late-noise/non-RPC negative checker controls. The final native all-tests gate exercises all old and new controls. I understand all rows remain open and CDC will independently run the broad final wave; this pass proposes evidence only.
+
+A pre-capture intake compound shell invocation included one successful read-only `git diff HEAD --check` alongside status and file hashes. It was not run through the new iteration02 capture helper, and the tool returned merged stdout rather than separate command channels; I will record it as an uncaptured preflight diagnostic with this limitation, not reconstruct it as a captured gate. No tests or Rust diagnostics have run. From this point the new UUID capture helper persists attempt metadata before dispatch and retains separate full channels.
+
+
+## Refinement02 execution addendum
+
+### Intake and preservation
+
+Assignment: immutable `cc-prompt-iteration02.md`, planning issuance `06e2fa8`. Source started at clean `db77e07612601ffa1bf275b4df1acd87a1787975`, parent `4404f37f70df62177689d6108e68b3685ea422a1`, branch `codex/headless-live-cache`. CDC retained planning/index ownership; CC held source/index ownership until this stable handback. The scope was limited to test code in `crates/nms-copilot/src/coordinator.rs` and `crates/nms-copilot/tests/mcp_live_integration.rs`; no production algorithm or normal-mode source was changed.
+
+The exact source intake readback, binding contract, eight open LC rows, Rust guidance and required anti-pattern set were completed in the preceding assigned context and retained. Complete `coordinator.rs` and `mcp_live_integration.rs` were read for this pass. The pre-edit read-only inventory combined status, HEAD, prompt/line reads, diff whitespace and hashes into one shell receipt; known status was clean, baseline was `db77e07`, and `git diff HEAD --check` returned 0. The command returned merged output, so per-command stdout/stderr splits and timing remain unknown. It was metadata only, not a Rust gate or acceptance evidence. A later read-only source-location lookup had a merged stdout receipt and exit 0; it did not launch a SUT. A mistaken capture-helper `--label` invocation is separately recorded as wrapper-failed-before-SUT-launch with empty reserved channels.
+
+Return-prefix anchors from the canonical seed remain: closing report 11,868 bytes / `003eea3fd8f07cfaa17688d3c030881a88b940e94f4dd359d71bc572776d7ef2`; execution 26,223 bytes / `8f6001855904f552c40bbc445a5e99358037b51b2452981221d8c7e5f0b39daa`; validation 1,641,490 bytes / `cdd5ae97d166e41f3f184efdbc2336ed1ecf7e73c62a3a2fdce274cd49e21008`. The prior Markdown prefixes remain byte-identical. The original 12 pre-iteration02 validation root values and existing iteration01 value are preserved and hash-checked; only the already appended `iteration02` value was completed.
+
+### Changes and test oracles
+
+The coordinator component test now constructs a literal three-system/three-base expected atlas, including exact planets and indexes, and compares full model maps, node keys/values where applicable, graph count, spatial partitions, player state and selection. Both resulting cache snapshots are compared against independently extracted expected data, written through the real cache writer, checked-read, and rebuilt before the full map comparison. The expectation does not call the update/apply path to manufacture expected results.
+
+The second blocked-writer lifecycle test now has a bounded writer release receive. A release guard is established immediately after coordinator creation and releases before any timeout assertion; the Drop thread is joined. This mirrors the already safe first barrier test and ensures a failed expectation does not strand a writer or Drop.
+
+For the native integration test additions, new-only spawn paths tee every stdout line to both the existing protocol consumer and a complete-output observer. Stdio tests validate every JSON-RPC 2.0 object through EOF; the helper has literal valid, late non-JSON, and non-RPC JSON controls. HTTP checks drain stdout to EOF and require it to remain empty. The warm HTTP live-matrix startup retries only an observed address-in-use failure, preserves the failed fixture, then creates a distinct source/cache/HOME fixture for retry. A controlled occupied listener proves this path. Cold, BypassExisting, BypassMissing, DisabledCurrent and WriteError controls retain and recheck their exact source/cache bytes, fixed mtime, missing parent/temporary paths, blocker bytes, full disabled cache state, and warnings after teardown on both transports.
+
+### Captured attempts and applicability
+
+The independent capture helper/index is `workbench/slice16-return/capture_gate_iteration02.py` and `workbench/slice16-return/gate-attempts-iteration02.json`; raw stdout/stderr are UUID-named under `raw-gates-iteration02/`. Every captured gate records argv, cwd, inherited selected environment (including the original TMPDIR), explicit overrides, start/end source identity, separate channel lengths/hashes/base64, exit, and parsed harness populations.
+
+The first `make lint` (exit 2) exposed missing sibling cache-snapshot visibility, an unused value, and two Clippy issues. The corrected second lint (exit 2) exposed a private-interface issue and returned tuple binding; those were fixed. The subsequent formatted/linted candidate passed `make format` and `make lint`. A later single post-teardown assertion was added to the DisabledCurrent HTTP control; `make format` and `make lint` both passed again on the final candidate.
+
+| Attempt | Result | Population / applicability |
+|---|---:|---|
+| `gate_make_format` | 0 | Initial formatter pass; changed only formatting in the two authorized test files. |
+| `gate_make_lint` | 2 | Retained compile/Clippy diagnostics; corrected. |
+| `gate_make_format_repair` | 0 | Formatter after first correction. |
+| `gate_make_lint_repair` | 2 | Retained private-interface and unused tuple diagnostics; corrected. |
+| `gate_make_format_repair2`, `gate_make_lint_repair2` | 0 / 0 | Green on candidate fingerprint `dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f`. |
+| `gate_coordinator_tests` | 101 | Sandbox attempt 3 passed / 6 failed; watcher events timed out. |
+| `gate_coordinator_tests_serial` | 101 | Same selector serialized: 3 passed / 6 failed; native watcher failures persisted. |
+| `gate_coordinator_tests_host` | 0 | Identical required command on authorized host: 9 passed / 0 failed. |
+| `gate_no_default_lib` | 101 | Sandbox attempt 222 passed / 7 failed; all seven were native watcher timeouts. |
+| `gate_no_default_lib_host` | 0 | Identical required command on authorized host: 229 passed / 0 failed. |
+| `gate_native_integration_host` | 0 | Authorized host, candidate before the last DisabledCurrent post-teardown assertion: 15 passed / 0 failed. |
+| `gate_make_format_final`, `gate_make_lint_final` | 0 / 0 | Final source candidate fingerprint `7067fc92c7bf` (full identity is retained in capture index). |
+| `gate_native_integration_host_final` | 0 | Final source candidate including DisabledCurrent teardown oracle: 15 passed / 0 failed. |
+| `gate_final_git_diff_check` | 0 | Final pre-commit working diff, stable source. |
+| `gate_postcommit_diff_check` | 0 | `git diff db77e07612601ffa1bf275b4df1acd87a1787975..HEAD --check`, stable committed source. |
+
+The sandbox failures are retained as actual attempts; the host commands preserve identical cargo argv and inherited `TMPDIR=/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`. The final no-default and coordinator host results apply to unchanged coordinator/library production bytes; the only later change before the final native run was an integration-test-only assertion. The final native denominator is 15, not the predecessor's 13. No broad workspace/doc/build gates were rerun because this refinement changed test-only files; CDC owns the independent full final wave.
+
+### Source preservation, commit and handback
+
+At final candidate review, `git diff --name-only` listed exactly the two authorized paths. The coordinator production prefix stayed byte-identical to the seed (`803f85245bba9f92eaf8e822c96682f034a453e068f638583edb221c1af9f6f1`, 7,556 bytes). Frozen hashes matched the initial values for `mcp/mod.rs` (`08e902bf994919c77b5e7f57ed9236d2903ce778b0b73b3e7264a540a08cd198`), `main.rs` (`585108f15b939701461159a49c397f6b3611a20460c1e6abcc5f5b0c7e94a590`), `watch.rs` (`6b161d9e2b6f99ed934b8fd52bfa4b7d5fd0986a490f9e8708e722b96dfd3510`), `lib.rs` (`368871ac2ec7322444f1c4845e4270c11454782dcd1f031df6521c602a690fdb`), and README (`8d07e99bbf9a77b17094e1d911afd4928b39394931171a4c82c311fa64449b61`). `coordinator.rs` full candidate SHA-256 was `8d1168899b6f4220325422ad2856a6495f48fa749ed1773c420874647c07f891`.
+
+The first exact-path local commit attempt was denied when the sandbox could not create the shared worktree `index.lock`; it changed no source or index bytes. The prompt-authorized exact-path escalation succeeded. Commit `856775df80e7585aa5cedc03219fe56976acf679` has direct parent `db77e07612601ffa1bf275b4df1acd87a1787975` and exactly the two permitted test paths. `git log -1 --format='%(trailers:only)'` contains `Co-authored-by: Codex <noreply@openai.com>` and `Co-authored-by: Billo AI <ai-engineering@billo.systems>` consecutively, each once. Captured post-commit diff check passed. `git status --porcelain=v1 --untracked-files=all` and `git diff --cached --name-only` are empty. No ignored workbench record entered Git. Stable source/index mutation ownership is returned to CDC for independent review.
+
+### Row proposal and artifact inventory
+
+All LC-01 through LC-08 ledger rows remain `OPEN`. CC proposes done for each for CDC disposition; no accepted status is inferred. Artifacts returned as filesystem records: `closing-report.md`, `execution.md`, and `validation.json` under `workbench/slice16-return/`. Capture index, raw channel files, and helper remain ignored transport evidence alongside them.
+
+### Bubble-up to Arc06
+
+**BU-16-01 — Complete-stream transport oracle.** Checking only currently queued messages misses late child output. The test-only tee now validates every stdio line through EOF and requires HTTP stdout to stay empty through child exit while preserving the existing request/response consumer.

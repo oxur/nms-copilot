@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.60, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.61, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -515,3 +515,8 @@ Stable source4404f37, exact seven allowed paths/parsed coauthors/clean index, in
 ## Slice16 refinement01 review / second test-only pass — 2026-10-19 local /20UTC
 
 Stable db77e07 (parent4404f37) has reviewed fallible runtime/apply-snapshot fixes; original prefixes/ALL11 JSON roots preserved,196 embedded channel objects validated. Existing original stderr recovered exactly, no exception or new Operator gate. Current CC520libs/cache38/route4/native13/no-default229/workspace966+doc1/build/docs/strictchecks green remain attributable to actual inputs. EightLC/R06-S16 still open pending final independent gates and bounded F1/F4/F7 test repairs: complete golden maps+checked cache, failure-safe all barriers, warm HTTP fresh retry, all teardown effects and full stdout through EOF. Immutable cc-prompt-iteration02.md second of five supplies exact literal/code shapes; production byte-frozen at db77e07. Same models, source/planning ownership serialized. Arc34/15done/19open/project25open; no next17 through incomplete16. Mainb616ab2/external03e8d04/accepted15/held pins/Project02 protected. All original normal17/unknown/history/raw/finaltransition/export/import/format/docs/distribution/coverage/C04/R06-R02/R03/M7.4/parent independent/Operator/integration/release gates retained. Routine correction/readiness only, no material scope/criterion/architecture/sequence amendment.
+
+
+## Slice16 refinement02 review / third native-only boundary pass — 2026-10-20 UTC
+
+Source856775d reviewed exact two test paths/production frozen: golden whole-map/checked-cache, all barriers and full stdout through EOF repaired. ALL13 current JSON roots/prefixes and42new raw channels preserved exactly. CC9/229/15 green on actual applicable bytes; remaining F4 narrow warm-retry byte/mtime and post-EOF/no-temp effects require immutable cc-prompt-iteration03.md, THIRD of five, ONE native-test path only. Complete helper walk supplies all concrete boundaries before further testing; no Operator gate or new criterion/architecture/policy. Broad final CDC gates wait for complete candidate. All8LC/R06-S16 open:34arcrows/15done/19open, project25open; required17 normal/full both-mode/lifetime/terminal and all unknown/history/raw/finaltransition/original parent/Operator/integration/release gates preserved. Mainb616ab2/external03e8d04/accepted15/held pins unchanged. Version1.61 records routine bounded correction/review only.

@@ -7307,5 +7307,979 @@
       },
       "acceptance": "CC proposal only. All eight LC rows remain OPEN until independent CDC review/disposition. No acceptance inferred from green CC gates."
     }
+  },
+  "iteration02": {
+    "assignment": "Slice16 refinement02, planning issuance 06e2fa8; predecessor source db77e07612601ffa1bf275b4df1acd87a1787975",
+    "readback": "F1 exact independent whole golden atlas/cache roundtrip; B failure-safe release guard in both test writer modules; C fresh per-attempt Warm HTTP retry, collision witness and exact post-teardown effects; D tee all new stdio stdout through EOF with literal discriminating negatives. Production bytes frozen. All8 LC rows open.",
+    "canonical_return_prefixes": {
+      "closing-report.md": {
+        "bytes": 11868,
+        "sha256": "003eea3fd8f07cfaa17688d3c030881a88b940e94f4dd359d71bc572776d7ef2"
+      },
+      "execution.md": {
+        "bytes": 26223,
+        "sha256": "8f6001855904f552c40bbc445a5e99358037b51b2452981221d8c7e5f0b39daa"
+      },
+      "validation.json": {
+        "bytes": 1641490,
+        "sha256": "cdd5ae97d166e41f3f184efdbc2336ed1ecf7e73c62a3a2fdce274cd49e21008"
+      }
+    },
+    "preserved_prior_validation_root_value_sha256": {
+      "assignment": "3c63e23433507d5468886fedfbb2638bef2e17fdabc819c318f1fde01fc0f205",
+      "source": "242c5fdb8a4177f49ed0a40f8125a467dd13e3466b4f14d867de61b4e55a92fd",
+      "scope": "76f1d4db5c5e9256f2c110cefa575a0ad69e81bd67af918f67c18a9cfff73f15",
+      "final_candidate_attempts": "ec4c0847ab95566133a2d76a4a9a26e7d2a8d8bf69d641a5cb64bbad5b75710e",
+      "capture_index_file": "3796a5c196bd81367cba2d495b18950e77acaca6233fea67e6cd8158432a3f96",
+      "raw_capture_directory": "0180acd27118cc232e7ab4f4cdb3c88765ae17df8035761b29aa40c37d826012",
+      "attempts": "c6c0aa94dc0a2601eb77c53b79b924d83cd1b5d3ac89e3ca55df1993043c0b44",
+      "metadata_only_wrapper_error": "51f6629cadd68382003015da498488264a2a5d8c48e245ba43f814c26bf88a86",
+      "cc_proposal_only": "6a803614211768cb943f02314c0801c206caf86708854c501cec5d64886c73ac",
+      "limitations": "bf7cb0dc21ed96bcc4d03d171e5f726ce8264bd3bb9188025f3f0635968c0e2e",
+      "commit_proof": "2e618f7e5c52147d6b6b58c9e598dff6cc2fffee4f7393617a15a95a317a4047",
+      "iteration01": "cb565060e0656d791297fb1e92e4f6dbd5a255ac2ee0984284eac8e5a4fe1127"
+    },
+    "source_start": {
+      "head": "db77e07612601ffa1bf275b4df1acd87a1787975",
+      "parent": "4404f37f70df62177689d6108e68b3685ea422a1",
+      "branch": "codex/headless-live-cache",
+      "clean_status_observed": true,
+      "production_identity_sha256": {
+        "coordinator_full": "0015f5d67f7bbfcdd0549f4d60cef7015024455d3ca86134e6e4a59957417e5b",
+        "coordinator_production_prefix": "803f85245bba9f92eaf8e822c96682f034a453e068f638583edb221c1af9f6f1",
+        "mcp_mod": "08e902bf994919c77b5e7f57ed9236d2903ce778b0b73b3e7264a540a08cd198",
+        "main": "585108f15b939701461159a49c397f6b3611a20460c1e6abcc5f5b0c7e94a590",
+        "watch": "6b161d9e2b6f99ed934b8fd52bfa4b7d5fd0986a490f9e8708e722b96dfd3510",
+        "lib": "368871ac2ec7322444f1c4845e4270c11454782dcd1f031df6521c602a690fdb",
+        "README": "8d07e99bbf9a77b17094e1d911afd4928b39394931171a4c82c311fa64449b61"
+      }
+    },
+    "pre_capture_intake_observation": {
+      "command": "git status --short && git rev-parse HEAD && sed -n .../cc-prompt-iteration02.md && wc -l ... && git status --porcelain=v1 --untracked-files=all && git diff HEAD --check && sha256sum coordinator.rs mcp/mod.rs main.rs watch.rs lib.rs README.md",
+      "known_facts": {
+        "head": "db77e07612601ffa1bf275b4df1acd87a1787975",
+        "working_tree": "clean at intake",
+        "git_diff_HEAD_check_exit": 0,
+        "source_hashes": {
+          "coordinator_full": "0015f5d67f7bbfcdd0549f4d60cef7015024455d3ca86134e6e4a59957417e5b",
+          "coordinator_production_prefix": "803f85245bba9f92eaf8e822c96682f034a453e068f638583edb221c1af9f6f1",
+          "mcp_mod": "08e902bf994919c77b5e7f57ed9236d2903ce778b0b73b3e7264a540a08cd198",
+          "main": "585108f15b939701461159a49c397f6b3611a20460c1e6abcc5f5b0c7e94a590",
+          "watch": "6b161d9e2b6f99ed934b8fd52bfa4b7d5fd0986a490f9e8708e722b96dfd3510",
+          "lib": "368871ac2ec7322444f1c4845e4270c11454782dcd1f031df6521c602a690fdb",
+          "README": "8d07e99bbf9a77b17094e1d911afd4928b39394931171a4c82c311fa64449b61"
+        }
+      },
+      "receipt": "merged shell output in the tool receipt; per-command stdout/stderr channels and individual timing were not captured and are unknown",
+      "classification": "read-only inventory/whitespace preflight, not a test or compile gate; it does not substitute for the required captured final git diff checks"
+    },
+    "capture": {
+      "helper": "workbench/slice16-return/capture_gate_iteration02.py",
+      "index": "workbench/slice16-return/gate-attempts-iteration02.json",
+      "raw_directory": "workbench/slice16-return/raw-gates-iteration02",
+      "prelaunch_metadata": true,
+      "separate_stdout_stderr": true,
+      "attempts_before_source_edit": 2,
+      "pre_edit_attempt_ids": [
+        "intake_production_identity",
+        "intake_coordinator_production_prefix"
+      ],
+      "retained_incorrect_identity_attempt": "The first captured helper invocation used literal escaped-newline split and mislabeled full coordinator hash as prefix; separate corrected prefix attempt is exact, both command receipts retained."
+    },
+    "row_status": "All8 LC rows remain OPEN; only CC proposal after evidence, CDC independent disposition pending.",
+    "final_candidate": {
+      "commit": "856775df80e7585aa5cedc03219fe56976acf679",
+      "parent": "db77e07612601ffa1bf275b4df1acd87a1787975",
+      "branch": "codex/headless-live-cache",
+      "changed_paths": [
+        "crates/nms-copilot/src/coordinator.rs",
+        "crates/nms-copilot/tests/mcp_live_integration.rs"
+      ],
+      "coordinator_full_sha256": "8d1168899b6f4220325422ad2856a6495f48fa749ed1773c420874647c07f891",
+      "coordinator_production_prefix_sha256": "803f85245bba9f92eaf8e822c96682f034a453e068f638583edb221c1af9f6f1",
+      "coordinator_production_prefix_bytes": 7556,
+      "frozen_source_hashes": {
+        "crates/nms-copilot/src/mcp/mod.rs": "08e902bf994919c77b5e7f57ed9236d2903ce778b0b73b3e7264a540a08cd198",
+        "crates/nms-copilot/src/main.rs": "585108f15b939701461159a49c397f6b3611a20460c1e6abcc5f5b0c7e94a590",
+        "crates/nms-copilot/src/watch.rs": "6b161d9e2b6f99ed934b8fd52bfa4b7d5fd0986a490f9e8708e722b96dfd3510",
+        "crates/nms-copilot/src/lib.rs": "368871ac2ec7322444f1c4845e4270c11454782dcd1f031df6521c602a690fdb",
+        "README.md": "8d07e99bbf9a77b17094e1d911afd4928b39394931171a4c82c311fa64449b61"
+      },
+      "tracked_status_clean": true,
+      "index_clean": true,
+      "diff_tree_exact_paths": true,
+      "parsed_trailers": [
+        "Co-authored-by: Codex <noreply@openai.com>",
+        "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+      ],
+      "postcommit_diff_check_attempt": "gate_postcommit_diff_check"
+    },
+    "scope": {
+      "production_runtime_changed": false,
+      "final_source_paths": [
+        "crates/nms-copilot/src/coordinator.rs",
+        "crates/nms-copilot/tests/mcp_live_integration.rs"
+      ],
+      "prior_12_root_values_and_iteration01_preserved": true,
+      "all_eight_ledger_rows": "OPEN; CC proposes done for independent CDC review only"
+    },
+    "row_proposals": {
+      "LC-01": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-02": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-03": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-04": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-05": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-06": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-07": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      },
+      "LC-08": {
+        "cc_proposal": "proposed done",
+        "ledger_status": "OPEN"
+      }
+    },
+    "attempt_capture": {
+      "index": "workbench/slice16-return/gate-attempts-iteration02.json",
+      "raw_directory": "workbench/slice16-return/raw-gates-iteration02/",
+      "attempt_count": 21,
+      "channels_separate": true,
+      "attempts": [
+        {
+          "id": "intake_production_identity",
+          "attempt_uuid": "901a4a8257d14876b6e20f65f8052851",
+          "argv": [
+            "python3",
+            "-c",
+            "import pathlib,hashlib,json; names=[\"crates/nms-copilot/src/coordinator.rs\",\"crates/nms-copilot/src/mcp/mod.rs\",\"crates/nms-copilot/src/main.rs\",\"crates/nms-copilot/src/watch.rs\",\"crates/nms-copilot/src/lib.rs\",\"README.md\"]; out={}; [out.update({n:hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest()}) for n in names]; text=pathlib.Path(names[0]).read_text(); prefix=text.split(\"\\\\n#[cfg(test)]\\\\n\",1)[0]; out[\"coordinator_pre_cfg_test_sha256\"]=hashlib.sha256(prefix.encode()).hexdigest(); print(json.dumps(out,sort_keys=True))"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:11:43.619326+00:00",
+          "ended_utc": "2026-10-20T02:11:43.707618+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "source_working_diff_identity_sha256_at_end": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/intake_production_identity-901a4a8257d14876b6e20f65f8052851.stdout",
+            "bytes": 705,
+            "sha256": "62c89bcfad6639f5d41a3ee02227f4b327dec2ee3beca74056a4d3cb8b14ca6d"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/intake_production_identity-901a4a8257d14876b6e20f65f8052851.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "intake_coordinator_production_prefix",
+          "attempt_uuid": "68831070086144eaa9477b54b5dd5244",
+          "argv": [
+            "python3",
+            "-c",
+            "import pathlib,hashlib; p=pathlib.Path(\"crates/nms-copilot/src/coordinator.rs\").read_text(); prefix=p.split(chr(10)+\"#[cfg(test)]\"+chr(10),1)[0]; print(hashlib.sha256(prefix.encode()).hexdigest(),len(prefix.encode()))"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:11:51.790547+00:00",
+          "ended_utc": "2026-10-20T02:11:51.859876+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "source_working_diff_identity_sha256_at_end": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/intake_coordinator_production_prefix-68831070086144eaa9477b54b5dd5244.stdout",
+            "bytes": 70,
+            "sha256": "f53f3e3a46fcca565b30496ecf5b5fdf5ba8abbc5016c2aa60b6d2c1c182554e"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/intake_coordinator_production_prefix-68831070086144eaa9477b54b5dd5244.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "--label",
+          "attempt_uuid": "c333518b422e4a3e801fa3dcf38d0699",
+          "argv": [
+            "inspect-capture-helper",
+            "--",
+            "cat",
+            "workbench/slice16-return/capture_gate_iteration02.py"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "wrapper_failed_before_sut_launch",
+          "exit_code": null,
+          "started_utc": "2026-10-20T02:13:47.453954+00:00",
+          "ended_utc": "2026-10-20T02:13:47.514565+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "da8e3af67a0c2df88dc1ef70901c855db58771b2618a1cbc1b12d2ed579dec62",
+          "source_working_diff_identity_sha256_at_end": "da8e3af67a0c2df88dc1ef70901c855db58771b2618a1cbc1b12d2ed579dec62",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/--label-c333518b422e4a3e801fa3dcf38d0699.stdout",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/--label-c333518b422e4a3e801fa3dcf38d0699.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": {
+            "type": "FileNotFoundError",
+            "message": "[Errno 2] No such file or directory: 'inspect-capture-helper'",
+            "sut_process_launched": false,
+            "stdout_stderr": "no child process channels; reserved files remain empty"
+          }
+        },
+        {
+          "id": "inspect-barrier-source",
+          "attempt_uuid": "3adee6d7eb174ccc934c8fa8c950976b",
+          "argv": [
+            "sed",
+            "-n",
+            "790,900p",
+            "crates/nms-copilot/src/coordinator.rs"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:13:55.164542+00:00",
+          "ended_utc": "2026-10-20T02:13:55.214651+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "da8e3af67a0c2df88dc1ef70901c855db58771b2618a1cbc1b12d2ed579dec62",
+          "source_working_diff_identity_sha256_at_end": "da8e3af67a0c2df88dc1ef70901c855db58771b2618a1cbc1b12d2ed579dec62",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/inspect-barrier-source-3adee6d7eb174ccc934c8fa8c950976b.stdout",
+            "bytes": 3889,
+            "sha256": "6bc18105499aacf5fbe3a1f9e786fcf2272ee726276172b8e345a61c4422ba0b"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/inspect-barrier-source-3adee6d7eb174ccc934c8fa8c950976b.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_format",
+          "attempt_uuid": "fdf052e79be644eb98482ee730e4c37e",
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:15:45.788993+00:00",
+          "ended_utc": "2026-10-20T02:15:46.474803+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "4cef9774916fbacf0897773435d85991dbc65c525535f0bfc1ca885aba7e16e7",
+          "source_working_diff_identity_sha256_at_end": "110e3742eafd574520f422b53f59b09b23e972c83a85cf0855fb16954b9c6962",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format-fdf052e79be644eb98482ee730e4c37e.stdout",
+            "bytes": 107,
+            "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format-fdf052e79be644eb98482ee730e4c37e.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_lint",
+          "attempt_uuid": "f41fe1126b5043d3976530e5c0a470ff",
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 2,
+          "started_utc": "2026-10-20T02:15:48.521899+00:00",
+          "ended_utc": "2026-10-20T02:15:51.487542+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "110e3742eafd574520f422b53f59b09b23e972c83a85cf0855fb16954b9c6962",
+          "source_working_diff_identity_sha256_at_end": "110e3742eafd574520f422b53f59b09b23e972c83a85cf0855fb16954b9c6962",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint-f41fe1126b5043d3976530e5c0a470ff.stdout",
+            "bytes": 69,
+            "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint-f41fe1126b5043d3976530e5c0a470ff.stderr",
+            "bytes": 4375,
+            "sha256": "9d27901572d861702028977cd36cf1a7f69e8d3d09290b919d9cd6f11ae3b758"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_format_repair",
+          "attempt_uuid": "faebc565ba724e30a6b834195ccd4a28",
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:16:21.012836+00:00",
+          "ended_utc": "2026-10-20T02:16:21.652136+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "e4feee5ef9e8154a18bb2b67d870aea3ce7483070ab9769104095d6532d40d0a",
+          "source_working_diff_identity_sha256_at_end": "b699a08778b9c798d9ef0689a58e88e6e46eea1daae89b7f44a4d8e33f6c166a",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_repair-faebc565ba724e30a6b834195ccd4a28.stdout",
+            "bytes": 107,
+            "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_repair-faebc565ba724e30a6b834195ccd4a28.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_lint_repair",
+          "attempt_uuid": "214fa40e057043fbb4e1b02361559825",
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 2,
+          "started_utc": "2026-10-20T02:16:23.725272+00:00",
+          "ended_utc": "2026-10-20T02:16:26.003829+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "b699a08778b9c798d9ef0689a58e88e6e46eea1daae89b7f44a4d8e33f6c166a",
+          "source_working_diff_identity_sha256_at_end": "b699a08778b9c798d9ef0689a58e88e6e46eea1daae89b7f44a4d8e33f6c166a",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_repair-214fa40e057043fbb4e1b02361559825.stdout",
+            "bytes": 69,
+            "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_repair-214fa40e057043fbb4e1b02361559825.stderr",
+            "bytes": 2263,
+            "sha256": "63b409d379bde8a991115ad4e63b98288d78f43c7daa23202d7427b60eec945f"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_format_repair2",
+          "attempt_uuid": "1913d83e8bdd48a8b385cd4aa8e9f7d0",
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:16:51.189701+00:00",
+          "ended_utc": "2026-10-20T02:16:51.881275+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "f183f582dd44a42b88b13017c8b67da9c70925361c46bd642c91ca483b245991",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_repair2-1913d83e8bdd48a8b385cd4aa8e9f7d0.stdout",
+            "bytes": 107,
+            "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_repair2-1913d83e8bdd48a8b385cd4aa8e9f7d0.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_lint_repair2",
+          "attempt_uuid": "4c9785b85e224b84ae7c6a290c1e1ec0",
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:16:53.448574+00:00",
+          "ended_utc": "2026-10-20T02:16:55.955668+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_repair2-4c9785b85e224b84ae7c6a290c1e1ec0.stdout",
+            "bytes": 176,
+            "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_repair2-4c9785b85e224b84ae7c6a290c1e1ec0.stderr",
+            "bytes": 448,
+            "sha256": "6c45694f3dfc919c609d4cadc5136e3218785063c3d27793715e412c9851a8f2"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_coordinator_tests",
+          "attempt_uuid": "8e44e26eadf545fa9fb682d823a21d08",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--lib",
+            "coordinator::",
+            "--",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 101,
+          "started_utc": "2026-10-20T02:16:58.618073+00:00",
+          "ended_utc": "2026-10-20T02:17:06.948557+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests-8e44e26eadf545fa9fb682d823a21d08.stdout",
+            "bytes": 1672,
+            "sha256": "9596fbbf8fa455e0a017327f67433cea90800f10158f232767b0c5ab815ceb0a"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests-8e44e26eadf545fa9fb682d823a21d08.stderr",
+            "bytes": 1957,
+            "sha256": "622b230c5543bc2271722a5e00a160378cc9342b0006331ca5e4abb99bc419e0"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 3,
+              "failed": 6,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 221
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_coordinator_tests_serial",
+          "attempt_uuid": "c75e64a0f11a4e679d4cdde9000c2d2b",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--lib",
+            "coordinator::",
+            "--",
+            "--nocapture",
+            "--test-threads=1"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 101,
+          "started_utc": "2026-10-20T02:17:25.042160+00:00",
+          "ended_utc": "2026-10-20T02:17:56.649424+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests_serial-c75e64a0f11a4e679d4cdde9000c2d2b.stdout",
+            "bytes": 1673,
+            "sha256": "79c636a5607e71bea62115d1d6554949d4244eb92f86b1b2e038a895c6a0957b"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests_serial-c75e64a0f11a4e679d4cdde9000c2d2b.stderr",
+            "bytes": 1836,
+            "sha256": "77f6b41dfb96b118331bc70b56c899eaec14bb3f2338cbe6601203d33088696e"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 3,
+              "failed": 6,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 221
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_coordinator_tests_host",
+          "attempt_uuid": "92d0b7c82f3140ddb3ec97c83fb31969",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--lib",
+            "coordinator::",
+            "--",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:18:29.498958+00:00",
+          "ended_utc": "2026-10-20T02:18:31.111750+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests_host-92d0b7c82f3140ddb3ec97c83fb31969.stdout",
+            "bytes": 1057,
+            "sha256": "4ee5822892dafc6996d296b4953ed264eaf025dc119e26138d587e7b9f814603"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_coordinator_tests_host-92d0b7c82f3140ddb3ec97c83fb31969.stderr",
+            "bytes": 490,
+            "sha256": "923961f718f57d2eacb85580803efa41b23416ab54c2cb6c198db297883d6989"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 9,
+              "failed": 0,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 221
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_no_default_lib",
+          "attempt_uuid": "76923ab2a7114cdb9f3e74ffa4087c41",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 101,
+          "started_utc": "2026-10-20T02:18:38.959890+00:00",
+          "ended_utc": "2026-10-20T02:18:47.933671+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_no_default_lib-76923ab2a7114cdb9f3e74ffa4087c41.stdout",
+            "bytes": 18046,
+            "sha256": "94e437b31b17dcfdc625c5abf2497ad82dc5f0b34c515f75673918bb11a1dcd5"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_no_default_lib-76923ab2a7114cdb9f3e74ffa4087c41.stderr",
+            "bytes": 589,
+            "sha256": "cfd6361b4bc163493237c21264bbff6872e8fe4a72961c9812ba100057476c9c"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 222,
+              "failed": 7,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 0
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_no_default_lib_host",
+          "attempt_uuid": "cc2486ce2fb34d0ca0ff4fc758e61ef3",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--no-default-features",
+            "--lib"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:19:06.954824+00:00",
+          "ended_utc": "2026-10-20T02:19:08.288492+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_no_default_lib_host-cc2486ce2fb34d0ca0ff4fc758e61ef3.stdout",
+            "bytes": 14958,
+            "sha256": "bccb288bb2b838ae5014c0d8158b42ebf6a4b608c3ea5aa63317064d530e8bb3"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_no_default_lib_host-cc2486ce2fb34d0ca0ff4fc758e61ef3.stderr",
+            "bytes": 411,
+            "sha256": "ddf296297b7c7d0f931536afe111979d32e66d29b51ef97702dbe80265067195"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 229,
+              "failed": 0,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 0
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_native_integration_host",
+          "attempt_uuid": "01473d8562b34e2493ceecb5e66d981b",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:19:17.669476+00:00",
+          "ended_utc": "2026-10-20T02:20:31.274004+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "source_working_diff_identity_sha256_at_end": "dfe5aaecf1ce6e82472f6c863d7925dfce251a0cadd53123682afc381a27f75f",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_native_integration_host-01473d8562b34e2493ceecb5e66d981b.stdout",
+            "bytes": 1214,
+            "sha256": "a70f9e26bb53cec4ab34cc90434b9dc73ab4f1dab102156e68030d071d9f5db9"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_native_integration_host-01473d8562b34e2493ceecb5e66d981b.stderr",
+            "bytes": 74221,
+            "sha256": "387a730655337eaa50a83991f55e222207c80e1313a2439427cadc4f99135507"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 15,
+              "failed": 0,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 0
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_format_final",
+          "attempt_uuid": "b8d73d9beb48473797327e0efec2646c",
+          "argv": [
+            "make",
+            "format"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:21:21.978007+00:00",
+          "ended_utc": "2026-10-20T02:21:22.635415+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "source_working_diff_identity_sha256_at_end": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_final-b8d73d9beb48473797327e0efec2646c.stdout",
+            "bytes": 107,
+            "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_format_final-b8d73d9beb48473797327e0efec2646c.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_make_lint_final",
+          "attempt_uuid": "614477103f4e4ded865342425b1fc0dc",
+          "argv": [
+            "make",
+            "lint"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:21:25.014535+00:00",
+          "ended_utc": "2026-10-20T02:21:26.886621+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "source_working_diff_identity_sha256_at_end": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_final-614477103f4e4ded865342425b1fc0dc.stdout",
+            "bytes": 176,
+            "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_make_lint_final-614477103f4e4ded865342425b1fc0dc.stderr",
+            "bytes": 448,
+            "sha256": "81cc6f92580e9c06be171c2fb49c925ad69f9c48aae1f5a4b42e950f7db90b20"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_native_integration_host_final",
+          "attempt_uuid": "a2a0bb0372ec4d8b98314b206774b7a9",
+          "argv": [
+            "cargo",
+            "test",
+            "-p",
+            "nms-copilot",
+            "--all-features",
+            "--test",
+            "mcp_live_integration",
+            "--",
+            "--test-threads=1",
+            "--nocapture"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:21:34.187643+00:00",
+          "ended_utc": "2026-10-20T02:22:45.461598+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "source_working_diff_identity_sha256_at_end": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_native_integration_host_final-a2a0bb0372ec4d8b98314b206774b7a9.stdout",
+            "bytes": 1214,
+            "sha256": "4a96185b0685490f8586cedcf07b3b374d7dec4d962e72f05abba2269b84cf92"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_native_integration_host_final-a2a0bb0372ec4d8b98314b206774b7a9.stderr",
+            "bytes": 74221,
+            "sha256": "98f1125e399c37919029fb0c2129fe7a2f86e37285b2fefe05bcc15c3bf675a7"
+          },
+          "observed_harness_populations": [
+            {
+              "passed": 15,
+              "failed": 0,
+              "ignored": 0,
+              "measured": 0,
+              "filtered_out": 0
+            }
+          ],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_final_git_diff_check",
+          "attempt_uuid": "358a3a40448e45d3a9f0f80439181ee5",
+          "argv": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:22:52.554059+00:00",
+          "ended_utc": "2026-10-20T02:22:52.622053+00:00",
+          "source_head_at_start": "db77e07612601ffa1bf275b4df1acd87a1787975",
+          "source_working_diff_identity_sha256_at_start": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "source_working_diff_identity_sha256_at_end": "7067fc92c7bf24aaeeeee13689d0276b86db82e2e989755e08d9d6d6ed6959b4",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_final_git_diff_check-358a3a40448e45d3a9f0f80439181ee5.stdout",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_final_git_diff_check-358a3a40448e45d3a9f0f80439181ee5.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        },
+        {
+          "id": "gate_postcommit_diff_check",
+          "attempt_uuid": "4f0716ac74ef4af2813c7c96435063dc",
+          "argv": [
+            "git",
+            "diff",
+            "db77e07612601ffa1bf275b4df1acd87a1787975..HEAD",
+            "--check"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+          "status": "completed",
+          "exit_code": 0,
+          "started_utc": "2026-10-20T02:23:24.053742+00:00",
+          "ended_utc": "2026-10-20T02:23:24.176927+00:00",
+          "source_head_at_start": "856775df80e7585aa5cedc03219fe56976acf679",
+          "source_working_diff_identity_sha256_at_start": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "source_working_diff_identity_sha256_at_end": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "inherited_selected_environment": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "HOME": "/Users/oubiwann"
+          },
+          "explicit_environment_overrides": {},
+          "stdout": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_postcommit_diff_check-4f0716ac74ef4af2813c7c96435063dc.stdout",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "path": "workbench/slice16-return/raw-gates-iteration02/gate_postcommit_diff_check-4f0716ac74ef4af2813c7c96435063dc.stderr",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_harness_populations": [],
+          "wrapper_error": null
+        }
+      ]
+    },
+    "capture_limitations": [
+      "Pre-capture compound read-only inventory returned merged output; individual command channels and timing are unknown. Known facts and command are recorded above. This is metadata, not a test/compile gate.",
+      "One mistaken --label capture-helper invocation is recorded as wrapper_failed_before_sut_launch with no child process channels; it did not launch the SUT.",
+      "Initial sandbox coordinator/no-default attempts failed native watcher notifications; identical host commands with original inherited TMPDIR passed. Failures remain in the attempt manifest.",
+      "The exact-path commit first failed to create shared index.lock in the sandbox; authorized escalation then committed the exact two named paths."
+    ],
+    "source_handoff": "Stable source/index mutation ownership returned to CDC after commit and clean status/index proof."
   }
 }

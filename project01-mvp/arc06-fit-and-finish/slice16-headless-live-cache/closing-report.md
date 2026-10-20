@@ -64,3 +64,29 @@ All eight rows remain OPEN; green CC gates are evidence for independent review, 
 ## Exact-path commit and stable handback
 
 Committed `db77e07612601ffa1bf275b4df1acd87a1787975` with parent `4404f37f70df62177689d6108e68b3685ea422a1`. `git diff-tree` reports exactly: `crates/nms-copilot/src/coordinator.rs`, `crates/nms-copilot/src/mcp/mod.rs`, and `crates/nms-copilot/tests/mcp_live_integration.rs`. The parsed final trailer block contains each required co-author line exactly once. The captured post-commit `git diff 11cf7e6a8e2a7549a223880820c0bf4543381459..HEAD --check` passed. Source status and index are clean; no return/workbench file entered Git. Stable source/index ownership is handed back to CDC for independent review. All eight LC rows remain open pending that disposition.
+
+
+## Refinement02 closeout
+
+The bounded test-only refinement is committed as `856775df80e7585aa5cedc03219fe56976acf679` on `codex/headless-live-cache`, directly above `db77e07612601ffa1bf275b4df1acd87a1787975`. It changes only the coordinator and native integration test files. The complete golden atlas/cache oracle now checks all imported system, planet, base, name, biome, address, node, spatial, selected-galaxy, player-state, version, and checked-cache results. The two blocked-writer tests release safely on assertion failure. New transport cases drain captured output through EOF, test trailing stdout rejection, retry a warm HTTP startup only after an observed bind collision using a fresh fixture, and recheck file/cache state after process teardown.
+
+The final gates pass on the final candidate: `make format`, `make lint`, and the full authorized-host native integration binary (15/15). The coordinator-focused host suite passed 9/9 and no-default copilot library passed 229/229 on the same production/library bytes; preceding sandbox attempts timed out on native filesystem notifications and remain recorded. An earlier native 15/15 run preceded one added post-teardown assertion; the final 15/15 run includes that assertion. Final pre-commit and post-commit diff checks passed. The final commit has exactly the two authorized paths and both required parsed co-author trailers exactly once. Source/index are clean and handed back to CDC.
+
+All eight LC rows remain `OPEN`; this is a CC proposal for independent CDC review, not acceptance. The proposed row statuses remain: LC-01 through LC-08 proposed done, with evidence applicability and failed attempts documented in `execution.md` and `validation.json`.
+
+| Row | CC proposal | Ledger status |
+|---|---|---|
+| LC-01 | Proposed done | OPEN |
+| LC-02 | Proposed done | OPEN |
+| LC-03 | Proposed done | OPEN |
+| LC-04 | Proposed done | OPEN |
+| LC-05 | Proposed done | OPEN |
+| LC-06 | Proposed done | OPEN |
+| LC-07 | Proposed done | OPEN |
+| LC-08 | Proposed done | OPEN |
+
+The three filesystem return records are `workbench/slice16-return/closing-report.md`, `workbench/slice16-return/execution.md`, and `workbench/slice16-return/validation.json`. Capture support remains in the ignored `gate-attempts-iteration02.json` index and its UUID-named raw channels; no workbench artifact was committed.
+
+## Bubble-up to Arc06
+
+**BU-16-01 — Validate complete transport streams through EOF.** A reader that checks only currently queued messages cannot detect output emitted after the last expected response. The new tee preserves the protocol reader while an independent observer validates every stdio line through EOF and confirms HTTP stdout stays empty through process exit.
