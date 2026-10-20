@@ -95,5 +95,367 @@
         "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     }
-  ]
+  ],
+  "capture_order_review_during_implementation": {
+    "observed_utc": "2026-10-20T03:29:10.642205+00:00",
+    "kind": "capture source/result inspection during active CC implementation, not independent product acceptance",
+    "old_helper_observation": "UUID allocated after child return; source_state evaluated before durable exit/end completion. Actual complete existing receipts retained all required child fields, so no unavailable-field exception claimed.",
+    "new_helper_sha256_at_inspection": "a5c1e9d212437fffcfe6803763587c98641fffcd05c993be56d83cec463812dc",
+    "original_inventory_observation": {
+      "utc": "2026-10-20T03:26:00.978013+00:00",
+      "kind": "metadata-only current capture integrity observation; not independent product gate",
+      "records": [
+        {
+          "directory": "/private/tmp/slice17-attempts/048d6e64-0178-4365-9f76-f08655156400-gate-make-lint-probe-fixture",
+          "completion_sha256": "e2fce6450e2de1b8dfb28b77923323199f4eb2aa7b244a4129b315955869756b",
+          "label": "gate-make-lint-probe-fixture",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/048d6e64-0178-4365-9f76-f08655156400-gate-make-lint-probe-fixture/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/048d6e64-0178-4365-9f76-f08655156400-gate-make-lint-probe-fixture/stderr.raw",
+              "bytes": 1841,
+              "sha256": "e758052e822da620666a1246b706c7dbf109f1527c611d253fedfe3d56914456"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/25fce7c5-c1c8-4c9d-a945-1b0583ff60ca-wrapper-preflight-0",
+          "completion_sha256": "cdca1e6f555e9674420bc11f4a27f47a780fb1b0cb2cef8bd182f8de937b4353",
+          "label": "wrapper-preflight-0",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/25fce7c5-c1c8-4c9d-a945-1b0583ff60ca-wrapper-preflight-0/stdout.raw",
+              "bytes": 23,
+              "sha256": "4522a82ba1e3e2ee7f4f4cb5e0636f8194ad4d965fd98dfba270073fb9157fdd"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/25fce7c5-c1c8-4c9d-a945-1b0583ff60ca-wrapper-preflight-0/stderr.raw",
+              "bytes": 27,
+              "sha256": "0157bc9e1cd838432d6d27fe5a5b2495f564021a1d07d2125febe8901c64d81d"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/27550d8f-ad2c-4651-a8e7-cf9d03dc5f71-gate-make-format-second",
+          "completion_sha256": "d4eee43bae161ea1eba0e903c27022b406c47973c6270c8f8d5d43070e7d7156",
+          "label": "gate-make-format-second",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/27550d8f-ad2c-4651-a8e7-cf9d03dc5f71-gate-make-format-second/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/27550d8f-ad2c-4651-a8e7-cf9d03dc5f71-gate-make-format-second/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/394921b3-b1a9-4b35-8cf7-9679c7d9c626-gate-make-lint-clippy-fix",
+          "completion_sha256": "87ea6ce4925e54e68b9f01b912c37b8e9de440faa6698114b186ec1bc00acd94",
+          "label": "gate-make-lint-clippy-fix",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/394921b3-b1a9-4b35-8cf7-9679c7d9c626-gate-make-lint-clippy-fix/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/394921b3-b1a9-4b35-8cf7-9679c7d9c626-gate-make-lint-clippy-fix/stderr.raw",
+              "bytes": 7133,
+              "sha256": "22097459283c12595e091c70f6894b7a497a0b7caaba589f181a62a9366aaff0"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/3c986449-b919-4e6c-863e-c16a48ccda95-gate-make-format-probe-fixture",
+          "completion_sha256": "e47707e0f38b6d0bc0240cfda87e3140df3cf46deee819be8090da39d9aafa33",
+          "label": "gate-make-format-probe-fixture",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/3c986449-b919-4e6c-863e-c16a48ccda95-gate-make-format-probe-fixture/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/3c986449-b919-4e6c-863e-c16a48ccda95-gate-make-format-probe-fixture/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/3f921d69-fda9-4385-b9b3-080285496f73-gate-make-format-compilefix",
+          "completion_sha256": "1ca50ef3e7ddafd166e309a1150de22f55293e2064d56e45baaeed9b24aedbc5",
+          "label": "gate-make-format-compilefix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/3f921d69-fda9-4385-b9b3-080285496f73-gate-make-format-compilefix/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/3f921d69-fda9-4385-b9b3-080285496f73-gate-make-format-compilefix/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/4bae587b-dbea-4cdf-b2a3-272691655d52-gate-make-format-clippy-fix",
+          "completion_sha256": "987e0168860432ab6dd7432018c8ef849addad39c6c4ef36619b778ada5c91ce",
+          "label": "gate-make-format-clippy-fix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/4bae587b-dbea-4cdf-b2a3-272691655d52-gate-make-format-clippy-fix/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/4bae587b-dbea-4cdf-b2a3-272691655d52-gate-make-format-clippy-fix/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/541d38f0-e661-4786-88bc-00c6da2dc7f7-gate-make-format-probe-typefix",
+          "completion_sha256": "fc59dfd97ed1ccec05ac04ba5c4fc62c122720d693d05a1e357c23f99554dcac",
+          "label": "gate-make-format-probe-typefix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/541d38f0-e661-4786-88bc-00c6da2dc7f7-gate-make-format-probe-typefix/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/541d38f0-e661-4786-88bc-00c6da2dc7f7-gate-make-format-probe-typefix/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/5623816d-a0a6-44af-8378-d2ec37ec3201-gate-make-format-repair",
+          "completion_sha256": "b2e3d237f9d0f23f566efe1522a8a4828b3cef6e0e50a08f89548a30d39db8ae",
+          "label": "gate-make-format-repair",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/5623816d-a0a6-44af-8378-d2ec37ec3201-gate-make-format-repair/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/5623816d-a0a6-44af-8378-d2ec37ec3201-gate-make-format-repair/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/720e38f0-1c6b-40f5-952f-d3e30e44465d-gate-make-lint-typefix",
+          "completion_sha256": "e0e66dfc63d19b74ae758a31189ee0738cf0e75453a2f3dec8d00fe9bb13d630",
+          "label": "gate-make-lint-typefix",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/720e38f0-1c6b-40f5-952f-d3e30e44465d-gate-make-lint-typefix/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/720e38f0-1c6b-40f5-952f-d3e30e44465d-gate-make-lint-typefix/stderr.raw",
+              "bytes": 7668,
+              "sha256": "efbe72b5c8294dbe6a24b9227a59d3cbe3f8c033b7b8e849669c4aa3333f7b6e"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/81b4d244-5dbb-4e74-9252-09c9efe32273-gate-make-lint-probe-typefix",
+          "completion_sha256": "f2e2702926f3aa59e1ee9f22c7459bf0f8265653754020252481dfeabad60c94",
+          "label": "gate-make-lint-probe-typefix",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/81b4d244-5dbb-4e74-9252-09c9efe32273-gate-make-lint-probe-typefix/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/81b4d244-5dbb-4e74-9252-09c9efe32273-gate-make-lint-probe-typefix/stderr.raw",
+              "bytes": 2584,
+              "sha256": "c9575e145b680bdde5240712e5a6740dc1b45e4751b797640290557125a53c44"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/9b4d3cff-4204-4842-aa5f-400cf633c2a4-gate-make-lint",
+          "completion_sha256": "fff1b46e85079632483c1dd23c484d4f8f9f0c9436f1698e8306130c71f783c7",
+          "label": "gate-make-lint",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/9b4d3cff-4204-4842-aa5f-400cf633c2a4-gate-make-lint/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/9b4d3cff-4204-4842-aa5f-400cf633c2a4-gate-make-lint/stderr.raw",
+              "bytes": 19442,
+              "sha256": "4a08463228993a3d3c6ad7f0505ec68e000e60b0de06279c39f0ecd41435633a"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/9b538658-40df-4272-b070-df794d1b10b9-gate-make-format-idfix",
+          "completion_sha256": "95d53f6d11d77ca622ed6513f077ec312ad3dc63c29f9dd0a2d81efadf5a746a",
+          "label": "gate-make-format-idfix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/9b538658-40df-4272-b070-df794d1b10b9-gate-make-format-idfix/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/9b538658-40df-4272-b070-df794d1b10b9-gate-make-format-idfix/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/a1da594f-14b9-4d2c-9559-fc2ba23d6bf1-gate-make-format-probe-inferencefix",
+          "completion_sha256": "aaa69eed35285b7df5505822fbcaa5847ea202c510aa3f0327f67be4cdff6171",
+          "label": "gate-make-format-probe-inferencefix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/a1da594f-14b9-4d2c-9559-fc2ba23d6bf1-gate-make-format-probe-inferencefix/stdout.raw",
+              "bytes": 107,
+              "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/a1da594f-14b9-4d2c-9559-fc2ba23d6bf1-gate-make-format-probe-inferencefix/stderr.raw",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/af715523-c281-42a4-a722-dc2355b3ad3b-gate-make-lint-probe-inferencefix",
+          "completion_sha256": "bf07646212c99d0fdb979c5f4ed6fd6d1eb24ea464ce18bf2f98425bdbe69af9",
+          "label": "gate-make-lint-probe-inferencefix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/af715523-c281-42a4-a722-dc2355b3ad3b-gate-make-lint-probe-inferencefix/stdout.raw",
+              "bytes": 176,
+              "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/af715523-c281-42a4-a722-dc2355b3ad3b-gate-make-lint-probe-inferencefix/stderr.raw",
+              "bytes": 444,
+              "sha256": "2cd4e38169e64141c0cb91a50fb67d054c979c9b96b1ba09f94ed916f544843a"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/b4e43d17-94f2-4437-a908-6494e9e1d99c-gate-make-lint-repair",
+          "completion_sha256": "35396627a68c5c95d80e50400119ef903388bb016f5555c5bdba54152d2de7e7",
+          "label": "gate-make-lint-repair",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/b4e43d17-94f2-4437-a908-6494e9e1d99c-gate-make-lint-repair/stdout.raw",
+              "bytes": 69,
+              "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/b4e43d17-94f2-4437-a908-6494e9e1d99c-gate-make-lint-repair/stderr.raw",
+              "bytes": 4218,
+              "sha256": "2d798ee31613bc22c6d3001105668036a537026bed7682923b136898f6d239cc"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/c3a353e4-1ba5-46ea-8ec0-688e28f8b1fc-gate-make-lint-idfix",
+          "completion_sha256": "a7e5d075b9b28788b027f7e46014173e7270aa1e23f646a8b2d5ad212469d246",
+          "label": "gate-make-lint-idfix",
+          "exit_code": 0,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/c3a353e4-1ba5-46ea-8ec0-688e28f8b1fc-gate-make-lint-idfix/stdout.raw",
+              "bytes": 176,
+              "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/c3a353e4-1ba5-46ea-8ec0-688e28f8b1fc-gate-make-lint-idfix/stderr.raw",
+              "bytes": 444,
+              "sha256": "aecd428dd0d0b8644814090f6d1e327e5c854d22cbac946891af9b1aa09625ee"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/e235529b-864c-4997-8080-8326b1957d6c-wrapper-preflight-7",
+          "completion_sha256": "fd4f805e2a2c55086b6c4c7f59544b6bbaf560758efe9d761c4daeb761509b37",
+          "label": "wrapper-preflight-7",
+          "exit_code": 7,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/e235529b-864c-4997-8080-8326b1957d6c-wrapper-preflight-7/stdout.raw",
+              "bytes": 25,
+              "sha256": "dc56eb3d6b15cbe80c04f02aff9db34ef5925358559eb42d95f703f74bdb4567"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/e235529b-864c-4997-8080-8326b1957d6c-wrapper-preflight-7/stderr.raw",
+              "bytes": 25,
+              "sha256": "c67895542ca05302174c3f1dde47b5eb1b7ffb9ea66ec9e5cb38b4407363e377"
+            }
+          }
+        },
+        {
+          "directory": "/private/tmp/slice17-attempts/ff17b58a-a769-4886-bf5b-20ee5def983f-gate-make-format",
+          "completion_sha256": "cb08b5a6236acbbaa050f2d46d4fd843f21bfb052728a3cf7c916cfcc1e35589",
+          "label": "gate-make-format",
+          "exit_code": 2,
+          "channels": {
+            "stdout_path": {
+              "path": "/private/tmp/slice17-attempts/ff17b58a-a769-4886-bf5b-20ee5def983f-gate-make-format/stdout.raw",
+              "bytes": 77,
+              "sha256": "b540b947e80380539608ec7682dd91c0808aedaa7b1bfdf953cd4cb77f16d95e"
+            },
+            "stderr_path": {
+              "path": "/private/tmp/slice17-attempts/ff17b58a-a769-4886-bf5b-20ee5def983f-gate-make-format/stderr.raw",
+              "bytes": 167,
+              "sha256": "143b638e7b206d794dd9da379e61bb9af8905da22dd28462e1297a93c8359e50"
+            }
+          }
+        }
+      ]
+    },
+    "original_inventory_verified_unchanged": 19,
+    "corrected_wrapper_preflight_uuids": [
+      "a37e7cb2-2080-4efd-90c9-b1a9581da84e",
+      "2a4972e4-bce0-4e62-93dc-db72528bdc5c",
+      "fa4452c7-a7da-45e0-bc66-2d083ca3c337"
+    ],
+    "new_helper_observation": "Launch durable before spawn; fsynced separate raw channels and raw exit/end completion before separate post metadata; injected post-metadata-failure retains actual exit0 and both channels. Executed by CC, source/results inspected by CDC.",
+    "product_verdict": "All eight RC rows remain open; no stable source handback or independent product gates yet."
+  }
 }
