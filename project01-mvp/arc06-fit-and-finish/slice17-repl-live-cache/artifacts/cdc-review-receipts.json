@@ -951,5 +951,56 @@
         }
       }
     }
+  },
+  "iteration03_pre_test_readiness_review": {
+    "kind": "CDC independent static review; not product gate or acceptance",
+    "input": {
+      "utc": "2026-10-20T05:08:39.333735+00:00",
+      "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+      "index_diff": "",
+      "tracked_diff_sha256": "0e31146d8950af43694bf8d4e5885eb201028198a911713a01c25f9ce7b8f63c",
+      "files": {
+        "README.md": {
+          "bytes": 20174,
+          "sha256": "e0fb03d21dbd9bffb2c25b054399558dac6cacadecfe7a4bb8e29a4fbfe890b5"
+        },
+        "crates/nms-copilot/Cargo.toml": {
+          "bytes": 1524,
+          "sha256": "780de7eae7fdc563eba2232aae9e8b52f69b271e020857fa28cdbe75e1048e60"
+        },
+        "crates/nms-copilot/src/main.rs": {
+          "bytes": 40843,
+          "sha256": "2d13e72b0762168109067233020c0cdaf6876b55cbd9701de8c9d3d6697bf47e"
+        },
+        "crates/nms-copilot/src/mcp/mod.rs": {
+          "bytes": 43180,
+          "sha256": "476b5c2af6bd257db90cb54cbbb697624572e0d5275dedd11d7bbf74aa1a5c51"
+        },
+        "crates/nms-copilot/src/watch.rs": {
+          "bytes": 30077,
+          "sha256": "e2a4d97e95cefa6c0e949db66764cf6440ff8a8a06909e3f7eda089f3eb7a87e"
+        },
+        "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+          "bytes": 14791,
+          "sha256": "807f45642327e98c6e81a5df1d824927bde7d13f3d54c0e7127af7176acfb3c4"
+        },
+        "crates/nms-copilot/tests/support/live_mcp.rs": {
+          "bytes": 33616,
+          "sha256": "447f79c430e406da53614b0ddc6825b09cf6d04a83800cd66c1fe57d48f1cbe2"
+        },
+        "crates/nms-copilot/examples/repl_live_probe.rs": {
+          "bytes": 46176,
+          "sha256": "8321b5c7880b96b12c18480bfc6af6b4a67629c4986cf0e3f38211b6461a308f"
+        }
+      },
+      "final_reviewed_utc": "2026-10-20T05:10:40.652907+00:00"
+    },
+    "final_cc_working_identity": "6112f4ed0d24dea94d7cd7a88e9aa89141ba74c9dbce6843d00596c9ca90e240",
+    "coverage": "all five changed production/test diffs plus complete probe1-end and full changed helper/callsite walk; final one-line owned raw-mutant delta rechecked",
+    "final_cc_format_id": "c8677727-f6b6-4540-a3b0-20873e40ab65",
+    "final_cc_lint_id": "5930da7a-5ffd-47a9-9937-3876c1a74846",
+    "results": "no remaining static A-D finding; affected bin/ordered broad/native gates may proceed; all8RC open/native0of9/no CDC product gate yet",
+    "preserved_fences": "source native73d79d; root protected working2cd450c/HEAD-index553622; held HEADs unchanged",
+    "intermediate_attribution": "reported support2d8 hash was intermediate; later actual format e9926a30/lint62560b93 include literal-hex/galaxy change; final current format/lint after owned raw mutant fix supersede for current code; preserve all actual receipts"
   }
 }
