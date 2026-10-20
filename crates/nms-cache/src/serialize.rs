@@ -13,10 +13,11 @@
 //! decoded model data. Future address-decoder or galaxy-identity changes must
 //! assess and bump the semantic revision when meaning changes, even if archive
 //! shape stays the same. One change may require both revisions to advance.
-//! The current schema and semantic revisions are both 2. Schema 2 adds the
-//! selected galaxy to the archive; semantic 2 preserves the qualified system
-//! identity and selected galaxy when rebuilding a model. Both revisions are
-//! separate from game save version, crate version, and `cached_at`.
+//! The current schema and semantic revisions are both 3. Schema 2 adds the
+//! selected galaxy; schema 3 adds explicit player-placeholder provenance.
+//! Semantic 3 preserves that distinction when rebuilding a model. Both
+//! revisions are separate from game save version, crate version, and
+//! `cached_at`.
 
 use std::fs;
 use std::path::Path;
@@ -35,18 +36,33 @@ use crate::error::{CacheCompatibilityError, CacheError};
 // Bump the schema revision when the archive layout or codec changes. Bump the
 // semantic revision when the meaning or identity rules of CacheData change.
 const CACHE_MAGIC: &[u8; 8] = b"NMSCACHE";
-const CACHE_SCHEMA_REVISION: u32 = 2;
-const CACHE_SEMANTIC_REVISION: u32 = 2;
+const CACHE_SCHEMA_REVISION: u32 = 3;
+const CACHE_SEMANTIC_REVISION: u32 = 3;
 const CACHE_HEADER_LEN: usize = 16;
 
 /// Validate duplicated physical reality fields without changing cache data.
-fn validate_player_state(data: &CacheData) -> Result<(), String> {
+fn validate_cache_data(data: &CacheData) -> Result<(), String> {
     if let Some(player) = &data.player_state {
         let address_reality = player.current_address.reality_index;
         if player.current_reality != address_reality {
             return Err(format!(
                 "player state reality mismatch: current_reality={} but current_address.reality_index={address_reality}",
                 player.current_reality
+            ));
+        }
+    }
+
+    for system in &data.systems {
+        if system.is_player_placeholder
+            && (system.address.planet_index() != 0
+                || system.name.is_some()
+                || system.discoverer.is_some()
+                || system.timestamp_secs.is_some()
+                || !system.planets.is_empty())
+        {
+            let id = nms_core::system::SystemId::from_address(&system.address);
+            return Err(format!(
+                "player placeholder {id} must have a planet-zero address and no discovery metadata or planets"
             ));
         }
     }
@@ -65,6 +81,8 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
             discoverer: system.discoverer.clone(),
             timestamp_secs: system.timestamp.map(|ts| ts.timestamp()),
             planets: system.planets.clone(),
+            is_player_placeholder: model
+                .is_player_placeholder(&nms_core::system::SystemId::from_address(&system.address)),
         })
         .collect();
 
@@ -93,10 +111,10 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
 ///
 /// # Errors
 ///
-/// Returns [`CacheError::Serialize`] if the duplicated player reality fields
-/// disagree or rkyv cannot encode the cache data.
+/// Returns [`CacheError::Serialize`] if player state or placeholder provenance
+/// is inconsistent, or rkyv cannot encode the cache data.
 pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
-    validate_player_state(data).map_err(CacheError::Serialize)?;
+    validate_cache_data(data).map_err(CacheError::Serialize)?;
     let payload =
         rkyv::to_bytes::<RkyvError>(data).map_err(|e| CacheError::Serialize(e.to_string()))?;
     let mut bytes = Vec::with_capacity(CACHE_HEADER_LEN + payload.len());
@@ -120,7 +138,8 @@ pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
 /// Returns [`CacheError::Incompatible`] for a truncated header, invalid magic,
 /// unsupported schema revision, or unsupported semantic revision. Returns
 /// [`CacheError::Deserialize`] when the current envelope contains an invalid
-/// rkyv payload or contradictory player reality fields.
+/// rkyv payload, contradictory player reality fields, or invalid placeholder
+/// provenance.
 pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     if bytes.len() < CACHE_HEADER_LEN {
         return Err(CacheError::Incompatible(
@@ -162,7 +181,7 @@ pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     aligned.extend_from_slice(&bytes[CACHE_HEADER_LEN..]);
     let data = rkyv::from_bytes::<CacheData, RkyvError>(&aligned)
         .map_err(|e| CacheError::Deserialize(e.to_string()))?;
-    validate_player_state(&data).map_err(CacheError::Deserialize)?;
+    validate_cache_data(&data).map_err(CacheError::Deserialize)?;
     Ok(data)
 }
 
@@ -192,6 +211,11 @@ pub fn read_cache(path: &Path) -> Result<CacheData, CacheError> {
 /// Rebuild a GalaxyModel from cache data.
 ///
 /// Reconstructs the graph, R-tree, and all HashMap indices.
+///
+/// This infallible function accepts trusted in-memory [`CacheData`]. Valid
+/// placeholder flags restore provenance. A malformed marked record is retained
+/// with its original fields as an ordinary, unmarked system; persisted archives
+/// must instead pass the checked codec, which rejects malformed flags.
 pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
     let mut model = GalaxyModel::new();
 
@@ -207,7 +231,20 @@ pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
             timestamp,
             cached.planets.clone(),
         );
-        model.insert_system(system);
+        if cached.is_player_placeholder
+            && cached.address.planet_index() == 0
+            && cached.name.is_none()
+            && cached.discoverer.is_none()
+            && cached.timestamp_secs.is_none()
+            && cached.planets.is_empty()
+        {
+            model.insert_player_placeholder(cached.address);
+        } else {
+            // This infallible API accepts trusted in-memory data. Preserve
+            // malformed marked records as genuine systems instead of dropping
+            // metadata or panicking; checked persisted entrypoints reject them.
+            model.insert_system(system);
+        }
     }
 
     for base in &data.bases {
@@ -421,7 +458,7 @@ mod tests {
         assert_eq!(
             &bytes[..CACHE_HEADER_LEN],
             &[
-                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 2, 0, 0, 0, 2, 0, 0, 0
+                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 3, 0, 0, 0, 3, 0, 0, 0
             ]
         );
         assert_eq!(data.save_version, 4720);
@@ -465,41 +502,41 @@ mod tests {
             ))
         ));
 
-        for schema in [0_u32, 1, 3] {
+        for schema in [0_u32, 1, 2, 4] {
             bytes[..8].copy_from_slice(CACHE_MAGIC);
             bytes[8..12].copy_from_slice(&schema.to_le_bytes());
-            bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
+            bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SchemaMismatch {
                     found,
-                    expected: 2
+                    expected: 3
                 })) if found == schema
             ));
         }
 
-        for semantic in [0_u32, 1, 3] {
-            bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
+        for semantic in [0_u32, 1, 2, 4] {
+            bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
             bytes[12..16].copy_from_slice(&semantic.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
                     found,
-                    expected: 2
+                    expected: 3
                 })) if found == semantic
             ));
         }
 
         // Mismatches are returned before inspecting an invalid payload, with
         // schema precedence when both revision fields differ.
-        bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
-        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
+        bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
+        bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Incompatible(
                 CacheCompatibilityError::SchemaMismatch {
-                    found: 3,
-                    expected: 2
+                    found: 2,
+                    expected: 3
                 }
             ))
         ));
@@ -508,8 +545,8 @@ mod tests {
     #[test]
     fn test_current_header_with_bad_payload_is_deserialize_error() {
         let mut bytes = CACHE_MAGIC.to_vec();
-        bytes.extend_from_slice(&2_u32.to_le_bytes());
-        bytes.extend_from_slice(&2_u32.to_le_bytes());
+        bytes.extend_from_slice(&3_u32.to_le_bytes());
+        bytes.extend_from_slice(&3_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Deserialize(_))
@@ -532,13 +569,13 @@ mod tests {
     fn test_compatibility_error_display_and_source_are_observable() {
         let error = CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
             found: 9,
-            expected: 2,
+            expected: 3,
         });
         assert!(error.to_string().contains("semantic revision 9"));
-        assert!(error.to_string().contains("expected 2"));
+        assert!(error.to_string().contains("expected 3"));
         assert_eq!(
             std::error::Error::source(&error).unwrap().to_string(),
-            "cache model semantic revision 9 is incompatible (expected 2)"
+            "cache model semantic revision 9 is incompatible (expected 3)"
         );
     }
 

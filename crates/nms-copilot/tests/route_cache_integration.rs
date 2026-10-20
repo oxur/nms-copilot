@@ -208,22 +208,30 @@ fn rich_projection(model: &GalaxyModel, round_trip: bool, algorithm: RoutingAlgo
 }
 
 #[test]
-fn predecessor_fixture_rebuild_matches_independent_fresh_and_current_round_trip() {
+fn schema2_fixture_is_rejected_and_current_cache_matches_independent_route_literals() {
     // This computed checksum is over the actual fixture bytes; length/header
     // checks below fence the sealed predecessor artifact itself.
     assert_eq!(PREDECESSOR_ARCHIVE.len(), 360);
     assert_eq!(fnv1a64(PREDECESSOR_ARCHIVE), 0x80aafdbcef32c297);
     assert_eq!(&PREDECESSOR_ARCHIVE[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+    assert!(matches!(
+        nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE),
+        Err(nms_cache::CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 2,
+                expected: 3
+            }
+        ))
+    ));
 
     let expected = predecessor_fresh_model();
-    let fixture_data = nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap();
-    let fixture = nms_cache::rebuild_model(&fixture_data);
     let current_bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&expected, 4720)).unwrap();
+    assert_eq!(&current_bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
     let current_data = nms_cache::serialize::deserialize(&current_bytes).unwrap();
     let current = nms_cache::rebuild_model(&current_data);
 
-    for model in [&expected, &fixture, &current] {
+    for model in [&expected, &current] {
         assert_eq!(model.system_count(), 2);
         assert_eq!(model.planet_count(), 2);
         assert_eq!(model.active_galaxy, 9);
@@ -251,7 +259,7 @@ fn current_three_system_nine_galaxy_route_matches_fresh_and_checked_cache() {
     let fresh = rich_route_model();
     let bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
-    assert_eq!(&bytes[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
     let rebuilt = nms_cache::rebuild_model(&nms_cache::serialize::deserialize(&bytes).unwrap());
     for model in [&fresh, &rebuilt] {
         let direct = rich_projection(model, false, RoutingAlgorithm::NearestNeighbor);
@@ -467,12 +475,20 @@ fn typed_rich_projection(
 }
 
 #[test]
-fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectations() {
+fn schema2_archive_is_rejected_and_current_cache_matches_typed_literal_expectations() {
+    assert!(matches!(
+        nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE),
+        Err(nms_cache::CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 2,
+                expected: 3
+            }
+        ))
+    ));
     let fresh = predecessor_fresh_model();
-    let fixture_data = nms_cache::serialize::deserialize(PREDECESSOR_ARCHIVE).unwrap();
-    let fixture = nms_cache::rebuild_model(&fixture_data);
     let bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
+    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
     let current_data = nms_cache::serialize::deserialize(&bytes).unwrap();
     let current = nms_cache::rebuild_model(&current_data);
     let zero = GalacticAddress::new(0, 0, 0, 1, 0, 0);
@@ -513,7 +529,7 @@ fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectati
         ],
         reachable_nine: [nine_id].into_iter().collect(),
     };
-    for data in [&fixture_data, &current_data] {
+    for data in [&current_data] {
         assert_eq!(data.save_version, 4720);
         assert_eq!(data.bases.len(), 0);
         assert_eq!(data.active_galaxy, 9);
@@ -545,7 +561,7 @@ fn predecessor_fixture_spatial_and_error_semantics_match_typed_literal_expectati
             );
         }
     }
-    for model in [&fresh, &fixture, &current] {
+    for model in [&fresh, &current] {
         assert_eq!(typed_predecessor_projection(model), expected);
         for (address, key, planet_name, infested) in [
             (zero, (zero_id, 1), "Zero", false),

@@ -297,18 +297,42 @@ fn assert_live_cache_state(cache: &Path, phase: LiveStatePhase) {
     let mut identities: Vec<_> = data
         .systems
         .iter()
-        .map(|s| (s.address.reality_index, s.name.as_deref(), s.planets.len()))
+        .map(|s| {
+            (
+                s.address.reality_index,
+                s.name.as_deref(),
+                s.planets.len(),
+                s.is_player_placeholder,
+            )
+        })
         .collect();
     identities.sort_by_key(|entry| entry.0);
     assert_eq!(
         identities,
-        vec![(0, Some("Origin-0"), 1), (9, Some("Imported-9"), 1)]
+        vec![
+            (0, Some("Origin-0"), 1, false),
+            (9, Some("Imported-9"), 1, false)
+        ]
     );
     let mut base_names: Vec<_> = data.bases.iter().map(|base| base.name.as_str()).collect();
     base_names.sort();
     assert_eq!(base_names, vec!["Base-0", "Base-9"]);
     let rebuilt = nms_cache::rebuild_model(&data);
     let expected_model = imported_live_model();
+    let marker_ids = rebuilt
+        .systems
+        .keys()
+        .copied()
+        .filter(|id| rebuilt.is_player_placeholder(id))
+        .collect::<std::collections::HashSet<_>>();
+    assert!(marker_ids.is_empty());
+    for address in [
+        GalacticAddress::new(0, 0, 0, 1, 0, 0),
+        GalacticAddress::new(0, 0, 0, 1, 0, 9),
+    ] {
+        let id = nms_core::system::SystemId::from_address(&address);
+        assert!(!rebuilt.is_player_placeholder(&id));
+    }
     assert_eq!(rebuilt.systems, expected_model.systems);
     assert_eq!(rebuilt.planets, expected_model.planets);
     assert_eq!(rebuilt.bases, expected_model.bases);
@@ -364,7 +388,19 @@ fn assert_cold_live_cache(cache: &Path) {
     assert_eq!(system.discoverer, None);
     assert_eq!(system.timestamp_secs, None);
     assert!(system.planets.is_empty());
+    assert!(system.is_player_placeholder);
     assert!(data.bases.is_empty());
+    let rebuilt = nms_cache::rebuild_model(&data);
+    let marker_id = nms_core::system::SystemId::from_address(&system.address);
+    assert!(rebuilt.is_player_placeholder(&marker_id));
+    assert_eq!(
+        rebuilt
+            .systems
+            .keys()
+            .copied()
+            .collect::<std::collections::HashSet<_>>(),
+        std::collections::HashSet::from([marker_id])
+    );
 }
 
 #[cfg(unix)]
@@ -2103,7 +2139,7 @@ fn sentinel_bytes() -> Vec<u8> {
     let model = sentinel_model();
     let data = nms_cache::extract_cache_data(&model, 9999);
     let bytes = nms_cache::serialize::serialize(&data).expect("serialize current sentinel");
-    assert_eq!(&bytes[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
     let dir = tempfile::tempdir().expect("sentinel verification directory");
     let path = dir.path().join("sentinel.rkyv");
     nms_cache::write_cache(&data, &path).expect("write sentinel through cache API");
@@ -2209,7 +2245,7 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SchemaMismatch {
                         found: 1,
-                        expected: 2
+                        expected: 3
                     }
                 ))
             ));
@@ -2226,14 +2262,14 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 1,
-                        expected: 2
+                        expected: 3
                     }
                 ))
             ));
             Some(bytes)
         }
         StartupCacheCase::FreshCorrupt => {
-            let bytes = b"NMSCACHE\x02\0\0\0\x02\0\0\0".to_vec();
+            let bytes = b"NMSCACHE\x03\0\0\0\x03\0\0\0".to_vec();
             std::fs::write(&cache, &bytes).expect("write literal empty current archive");
             set_mtime(&cache, source_mtime() + Duration::from_secs(100));
             assert!(nms_cache::is_cache_fresh(&cache, &save));
@@ -2283,7 +2319,7 @@ fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &Startup
 fn assert_cache_effect(case: StartupCacheCase, files: &StartupCaseFiles) -> &'static str {
     if case.rebuilds_cache() {
         let bytes = std::fs::read(&files.cache).expect("startup wrote current cache");
-        assert_eq!(&bytes[..16], b"NMSCACHE\x02\0\0\0\x02\0\0\0");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
         let data = nms_cache::read_cache(&files.cache).expect("checked-read rebuilt cache");
         assert_eq!(data.save_version, 4720, "{} source version", case.label());
         assert_eq!(data.active_galaxy, case.source().reality_index);

@@ -19,9 +19,10 @@ use crate::spatial::SystemId;
 /// Statistics from a CSV import operation.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct ImportStats {
-    /// Number of new systems added to the model.
+    /// Number of accepted catalog contributions, including marked-placeholder
+    /// promotions. Promotion does not increase [`GalaxyModel::system_count`].
     pub added: usize,
-    /// Number of rows that matched an existing system (skipped).
+    /// Number of rows that matched an existing genuine system and were skipped.
     pub duplicates: usize,
     /// Number of rows that could not be parsed (skipped).
     pub skipped: usize,
@@ -152,7 +153,7 @@ pub fn import_csv(
         let sys_id = SystemId::from_address(&addr);
 
         // Check for duplicate
-        if model.systems.contains_key(&sys_id) {
+        if model.systems.contains_key(&sys_id) && !model.is_player_placeholder(&sys_id) {
             stats.duplicates += 1;
             continue;
         }
@@ -224,6 +225,165 @@ Alpha Duplicate,Euclid,01717D8A4EA2,Toxic
         assert_eq!(stats.added, 1);
         assert_eq!(stats.duplicates, 1);
         assert_eq!(model.system_count(), 1);
+    }
+
+    #[test]
+    fn test_import_csv_promotes_only_explicit_placeholder_and_counts_one_addition() {
+        let address = GalacticAddress::from_packed(0x0001_0000_0000, 0);
+        let id = SystemId::from_address(&address);
+        let mut model = GalaxyModel::new();
+        let player = nms_core::player::PlayerState::new(
+            GalacticAddress::new(4, 5, 6, 7, 8, 9),
+            9,
+            None,
+            None,
+            11,
+            12,
+            13,
+        );
+        model.player_state = Some(player.clone());
+        model.set_active_galaxy(7);
+        model.insert_player_placeholder(address);
+        assert!(model.is_player_placeholder(&id));
+
+        let first = csv_file(
+            "System Name,Galaxy,Portal Glyphs,Biome\nPromoted,Euclid,000100000000,Toxic\n",
+        );
+        let first_stats = import_csv(&mut model, first.path(), "test").unwrap();
+        assert_eq!(
+            (
+                first_stats.added,
+                first_stats.duplicates,
+                first_stats.skipped
+            ),
+            (1, 0, 0)
+        );
+        assert_eq!(model.system_count(), 1);
+        assert!(!model.is_player_placeholder(&id));
+        let expected = System::new(
+            address,
+            Some("Promoted".into()),
+            None,
+            None,
+            vec![Planet::new(0, Some(Biome::Toxic), None, false, None, None)],
+        );
+        assert_eq!(
+            model.systems,
+            std::collections::HashMap::from([(id, expected.clone())])
+        );
+        assert_eq!(
+            model.planets,
+            std::collections::HashMap::from([((id, 0), expected.planets[0].clone())])
+        );
+        assert_eq!(
+            model.name_index,
+            std::collections::HashMap::from([((0, "promoted".into()), id)])
+        );
+        assert_eq!(
+            model.biome_index,
+            std::collections::HashMap::from([(Biome::Toxic, vec![(id, 0)])])
+        );
+        assert_eq!(
+            model.address_to_id,
+            std::collections::HashMap::from([(id, id)])
+        );
+        assert_eq!(model.graph.node_count(), 1);
+        assert_eq!(model.node_map.len(), 1);
+        assert_eq!(model.graph.node_weight(model.node_map[&id]), Some(&id));
+        assert_eq!(
+            model
+                .spatial_for(0)
+                .unwrap()
+                .iter()
+                .map(|point| (point.id, point.point))
+                .collect::<Vec<_>>(),
+            vec![(id, [0.0, 0.0, 0.0])]
+        );
+        assert_eq!(model.player_state, Some(player.clone()));
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(model.system_count(), 1);
+
+        let duplicate =
+            csv_file("System Name,Galaxy,Portal Glyphs,Biome\nLater,Euclid,000100000000,Lush\n");
+        let duplicate_stats = import_csv(&mut model, duplicate.path(), "test").unwrap();
+        assert_eq!(
+            (
+                duplicate_stats.added,
+                duplicate_stats.duplicates,
+                duplicate_stats.skipped
+            ),
+            (0, 1, 0)
+        );
+        assert_eq!(
+            model.systems,
+            std::collections::HashMap::from([(id, expected.clone())])
+        );
+        assert_eq!(
+            model.planets,
+            std::collections::HashMap::from([((id, 0), expected.planets[0].clone())])
+        );
+        assert_eq!(
+            model.name_index,
+            std::collections::HashMap::from([((0, "promoted".into()), id)])
+        );
+        assert_eq!(
+            model.biome_index,
+            std::collections::HashMap::from([(Biome::Toxic, vec![(id, 0)])])
+        );
+        assert_eq!(
+            model.address_to_id,
+            std::collections::HashMap::from([(id, id)])
+        );
+        assert_eq!(model.player_state, Some(player.clone()));
+        assert_eq!(model.active_galaxy, 7);
+        assert_eq!(model.system_count(), 1);
+
+        let mut genuine_empty = GalaxyModel::new();
+        let genuine_system = System::new(address, None, None, None, vec![]);
+        genuine_empty.insert_system(genuine_system.clone());
+        let genuine_player = nms_core::player::PlayerState::new(address, 0, None, None, 21, 22, 23);
+        genuine_empty.player_state = Some(genuine_player.clone());
+        genuine_empty.set_active_galaxy(9);
+        let empty_row =
+            csv_file("System Name,Galaxy,Portal Glyphs,Biome\nIgnored,Euclid,000100000000,Toxic\n");
+        let empty_stats = import_csv(&mut genuine_empty, empty_row.path(), "test").unwrap();
+        assert_eq!(
+            (
+                empty_stats.added,
+                empty_stats.duplicates,
+                empty_stats.skipped
+            ),
+            (0, 1, 0)
+        );
+        assert_eq!(
+            genuine_empty.systems,
+            std::collections::HashMap::from([(id, genuine_system)])
+        );
+        assert!(genuine_empty.planets.is_empty());
+        assert!(genuine_empty.name_index.is_empty());
+        assert!(genuine_empty.biome_index.is_empty());
+        assert_eq!(
+            genuine_empty.address_to_id,
+            std::collections::HashMap::from([(id, id)])
+        );
+        assert_eq!(genuine_empty.graph.node_count(), 1);
+        assert_eq!(
+            genuine_empty.graph.node_weight(genuine_empty.node_map[&id]),
+            Some(&id)
+        );
+        assert_eq!(
+            genuine_empty
+                .spatial_for(0)
+                .unwrap()
+                .iter()
+                .map(|point| (point.id, point.point))
+                .collect::<Vec<_>>(),
+            vec![(id, [0.0, 0.0, 0.0])]
+        );
+        assert_eq!(genuine_empty.player_state, Some(genuine_player));
+        assert_eq!(genuine_empty.active_galaxy, 9);
+        assert_eq!(genuine_empty.system_count(), 1);
+        assert!(!genuine_empty.is_player_placeholder(&id));
     }
 
     #[test]

@@ -1,6 +1,6 @@
 //! The GalaxyModel -- central in-memory representation of the player's galaxy.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use petgraph::Undirected;
 use petgraph::stable_graph::{NodeIndex, StableGraph};
@@ -25,6 +25,11 @@ pub type PlanetKey = (SystemId, u8);
 /// 1. petgraph -- topology (pathfinding, routing)
 /// 2. R-tree -- spatial (nearest-neighbor, radius queries)
 /// 3. HashMaps -- associative (name, biome, address lookups)
+///
+/// The model owns private placeholder provenance, so downstream crates should
+/// construct it with [`Self::new`] or [`Self::from_save`] rather than a struct
+/// literal. [`system_count`](Self::system_count) includes both discoveries and
+/// explicitly marked player-location placeholders.
 #[derive(Debug)]
 pub struct GalaxyModel {
     /// Graph topology: nodes are systems, edge weights are distance in ly.
@@ -64,6 +69,12 @@ pub struct GalaxyModel {
 
     /// Current player state (position, currencies).
     pub player_state: Option<PlayerState>,
+
+    /// System IDs explicitly inserted as synthetic player-location placeholders.
+    ///
+    /// This provenance is private so callers use [`Self::new`] or
+    /// [`Self::from_save`] rather than constructing an incomplete model.
+    player_placeholders: HashSet<SystemId>,
 }
 
 impl Default for GalaxyModel {
@@ -87,6 +98,7 @@ impl GalaxyModel {
             address_to_id: HashMap::new(),
             node_map: HashMap::new(),
             player_state: None,
+            player_placeholders: HashSet::new(),
         }
     }
 
@@ -165,6 +177,7 @@ impl GalaxyModel {
             address_to_id,
             node_map,
             player_state,
+            player_placeholders: HashSet::new(),
         };
 
         model.build_edges(crate::edges::EdgeStrategy::default());
@@ -172,8 +185,89 @@ impl GalaxyModel {
     }
 
     /// Number of systems in the model.
+    ///
+    /// This includes known-location placeholders as well as discovered systems.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_graph::GalaxyModel;
+    /// use nms_core::address::GalacticAddress;
+    /// use nms_core::system::SystemId;
+    ///
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let mut model = GalaxyModel::new();
+    /// let address = GalacticAddress::new(0, 0, 0, 1, 5, 9);
+    /// model.insert_player_placeholder(address);
+    /// let id = SystemId::from_address(&address);
+    /// assert!(model.is_player_placeholder(&id));
+    /// let system = model.system(&id).ok_or("inserted placeholder is missing")?;
+    /// assert_eq!(system.address.planet_index(), 0);
+    /// assert_eq!(model.system_count(), 1);
+    /// model.insert_player_placeholder(address);
+    /// assert_eq!(model.system_count(), 1);
+    /// # Ok(())
+    /// # }
+    /// ```
     pub fn system_count(&self) -> usize {
         self.systems.len()
+    }
+
+    /// Return whether `id` was explicitly inserted as a synthetic player placeholder.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_graph::GalaxyModel;
+    /// use nms_core::address::GalacticAddress;
+    /// use nms_core::system::SystemId;
+    ///
+    /// let mut model = GalaxyModel::new();
+    /// let address = GalacticAddress::new(0, 0, 0, 1, 5, 9);
+    /// let id = SystemId::from_address(&address);
+    /// model.insert_player_placeholder(address);
+    /// assert!(model.is_player_placeholder(&id));
+    /// ```
+    pub fn is_player_placeholder(&self, id: &SystemId) -> bool {
+        self.player_placeholders.contains(id)
+    }
+
+    /// Insert a planet-zero placeholder for a player's system when it is absent.
+    ///
+    /// A genuine system with the same ID is left unchanged and is never marked
+    /// as synthetic. Explicit provenance distinguishes a placeholder from a
+    /// genuinely empty discovery record.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::address::GalacticAddress;
+    /// use nms_core::system::SystemId;
+    /// use nms_graph::GalaxyModel;
+    ///
+    /// let mut model = GalaxyModel::new();
+    /// let address = GalacticAddress::new(0, 0, 0, 1, 5, 9);
+    /// let id = SystemId::from_address(&address);
+    /// model.insert_player_placeholder(address);
+    /// let system_count = model.system_count();
+    /// assert!(model.is_player_placeholder(&id));
+    /// assert_eq!(
+    ///     model.system(&id).map(|system| system.address.planet_index()),
+    ///     Some(0)
+    /// );
+    /// model.insert_player_placeholder(address);
+    /// assert_eq!(model.system_count(), system_count);
+    /// ```
+    pub fn insert_player_placeholder(&mut self, address: GalacticAddress) {
+        let id = SystemId::from_address(&address);
+        if self.systems.contains_key(&id) {
+            return;
+        }
+
+        let placeholder_address =
+            GalacticAddress::from_packed(id.system_address(), id.reality_index());
+        self.insert_system(System::new(placeholder_address, None, None, None, vec![]));
+        self.player_placeholders.insert(id);
     }
 
     /// Number of planets in the model.
@@ -269,12 +363,25 @@ impl GalaxyModel {
             .unwrap_or_default()
     }
 
-    /// Insert a new system into all indexes.
+    /// Insert a genuine system into the model and its indexes.
+    ///
+    /// If the key is an explicitly marked player placeholder, this promotes
+    /// it by replacing its contents and discovery indexes while preserving its
+    /// graph node, address mapping, and spatial point. A genuine system that
+    /// already has the same key remains unchanged, including a genuinely empty
+    /// system.
     pub fn insert_system(&mut self, system: System) {
         let sys_id = SystemId::from_address(&system.address);
 
+        if self.player_placeholders.remove(&sys_id) {
+            self.remove_system_indexes(sys_id);
+            self.index_system_contents(sys_id, &system);
+            self.systems.insert(sys_id, system);
+            return;
+        }
+
         if self.systems.contains_key(&sys_id) {
-            return; // Already exists
+            return; // Genuine system already exists.
         }
 
         let node_idx = self.graph.add_node(sys_id);
@@ -286,6 +393,12 @@ impl GalaxyModel {
 
         self.address_to_id.insert(sys_id, sys_id);
 
+        self.index_system_contents(sys_id, &system);
+
+        self.systems.insert(sys_id, system);
+    }
+
+    fn index_system_contents(&mut self, sys_id: SystemId, system: &System) {
         if let Some(ref name) = system.name {
             self.name_index
                 .insert((system.address.reality_index, name.to_lowercase()), sys_id);
@@ -298,8 +411,30 @@ impl GalaxyModel {
             }
             self.planets.insert(key, planet.clone());
         }
+    }
 
-        self.systems.insert(sys_id, system);
+    fn remove_system_indexes(&mut self, sys_id: SystemId) {
+        if let Some(system) = self.systems.get(&sys_id) {
+            if let Some(name) = &system.name {
+                self.name_index
+                    .remove(&(system.address.reality_index, name.to_lowercase()));
+            }
+            for planet in &system.planets {
+                let key = (sys_id, planet.index);
+                self.planets.remove(&key);
+                if let Some(biome) = planet.biome {
+                    let remove_entry = if let Some(keys) = self.biome_index.get_mut(&biome) {
+                        keys.retain(|indexed| *indexed != key);
+                        keys.is_empty()
+                    } else {
+                        false
+                    };
+                    if remove_entry {
+                        self.biome_index.remove(&biome);
+                    }
+                }
+            }
+        }
     }
 
     /// Ensure the player's current system exists in the model.
@@ -308,13 +443,12 @@ impl GalaxyModel {
     /// placeholder system at the player's address so that distance queries
     /// correctly return 0.0 for in-system results.
     pub fn ensure_player_system(&mut self) {
-        if let Some(ref ps) = self.player_state {
-            let player_addr = ps.current_address;
-            let player_sys_id = SystemId::from_address(&player_addr);
-            if !self.systems.contains_key(&player_sys_id) {
-                let sentinel = System::new(player_addr, None, None, None, vec![]);
-                self.insert_system(sentinel);
-            }
+        let current_address = self
+            .player_state
+            .as_ref()
+            .map(|player| player.current_address);
+        if let Some(address) = current_address {
+            self.insert_player_placeholder(address);
         }
     }
 
@@ -346,10 +480,15 @@ impl GalaxyModel {
                 self.planets.insert(key, planet.clone());
 
                 // Also add to the system's planet list
+                let mut promoted = false;
                 if let Some(system) = self.systems.get_mut(sys_id)
                     && !system.planets.iter().any(|p| p.index == planet.index)
                 {
                     system.planets.push(planet.clone());
+                    promoted = true;
+                }
+                if promoted {
+                    self.player_placeholders.remove(sys_id);
                 }
             }
         }
@@ -408,6 +547,7 @@ impl GalaxyModel {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use petgraph::visit::IntoEdgeReferences;
 
     /// Helper: build a minimal SaveRoot JSON and parse it.
     fn minimal_save() -> SaveRoot {
@@ -1448,5 +1588,654 @@ mod tests {
         let nearest = model.nearest_systems(&player_pos, 1);
         assert!(!nearest.is_empty());
         assert_eq!(nearest[0].1, 0.0);
+    }
+
+    #[test]
+    fn test_explicit_placeholders_promote_without_replacing_topology_or_genuine_empty() {
+        let address0 = GalacticAddress::new(0, 0, 0, 1, 5, 0);
+        let address9 = GalacticAddress::new(0, 0, 0, 1, 3, 9);
+        let empty_address = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+        let id0 = SystemId::from_address(&address0);
+        let id9 = SystemId::from_address(&address9);
+        let empty_id = SystemId::from_address(&empty_address);
+
+        for reverse in [false, true] {
+            let mut model = GalaxyModel::new();
+            model.insert_system(System::new(empty_address, None, None, None, vec![]));
+            let addresses = if reverse {
+                [address9, address0]
+            } else {
+                [address0, address9]
+            };
+            for address in addresses {
+                model.insert_player_placeholder(address);
+                model.insert_player_placeholder(address);
+            }
+
+            model.player_state = Some(PlayerState::new(address0, 0, None, None, 7, 8, 9));
+            model.set_active_galaxy(7);
+            model.ensure_player_system();
+
+            assert!(model.is_player_placeholder(&id0));
+            assert!(model.is_player_placeholder(&id9));
+            assert!(!model.is_player_placeholder(&empty_id));
+            assert_eq!(model.system_count(), 3);
+            assert_eq!(model.graph.node_count(), 3);
+            assert_eq!(model.node_map.len(), 3);
+            assert_eq!(
+                model
+                    .node_map
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([id0, id9, empty_id])
+            );
+            assert_eq!(
+                model.address_to_id,
+                std::collections::HashMap::from([(id0, id0), (id9, id9), (empty_id, empty_id)])
+            );
+            assert_eq!(model.spatial_size(), 3);
+            assert_eq!(
+                model
+                    .spatial
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([0_u8, 9_u8])
+            );
+            assert_eq!(model.spatial_for(0).unwrap().size(), 2);
+            assert_eq!(model.spatial_for(9).unwrap().size(), 1);
+            assert_eq!(model.systems[&id0].address.planet_index(), 0);
+            assert_eq!(model.systems[&id9].address.planet_index(), 0);
+            assert_eq!(model.systems[&empty_id].address, empty_address);
+            assert!(model.planets.is_empty());
+            assert!(model.name_index.is_empty());
+            assert!(model.biome_index.is_empty());
+            assert_eq!(
+                model.player_state,
+                Some(PlayerState::new(address0, 0, None, None, 7, 8, 9))
+            );
+            assert_eq!(model.active_galaxy, 7);
+            assert_eq!(
+                model.player_placeholders,
+                std::collections::HashSet::from([id0, id9])
+            );
+            assert_eq!(
+                model.systems,
+                std::collections::HashMap::from([
+                    (
+                        id0,
+                        System::new(
+                            GalacticAddress::from_packed(id0.system_address(), 0),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                    ),
+                    (
+                        id9,
+                        System::new(
+                            GalacticAddress::from_packed(id9.system_address(), 9),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                    ),
+                    (
+                        empty_id,
+                        System::new(empty_address, None, None, None, vec![]),
+                    ),
+                ])
+            );
+            assert!(model.planets.is_empty());
+            assert!(model.bases.is_empty());
+            assert!(model.name_index.is_empty());
+            assert!(model.biome_index.is_empty());
+            assert_eq!(
+                model.address_to_id,
+                std::collections::HashMap::from([(id0, id0), (id9, id9), (empty_id, empty_id)])
+            );
+            for (id, index) in &model.node_map {
+                assert_eq!(model.graph.node_weight(*index), Some(id));
+            }
+            for galaxy in [0, 9] {
+                let mut points: Vec<_> = model
+                    .spatial_for(galaxy)
+                    .unwrap()
+                    .iter()
+                    .map(|point| (point.id, point.point))
+                    .collect();
+                points.sort_by_key(|(id, _)| id.system_address());
+                let expected = if galaxy == 0 {
+                    vec![(id0, [0.0, 0.0, 0.0]), (empty_id, [0.0, 0.0, 0.0])]
+                } else {
+                    vec![(id9, [0.0, 0.0, 0.0])]
+                };
+                assert_eq!(points, expected);
+            }
+
+            let node0 = model.node_map[&id0];
+            let node9 = model.node_map[&id9];
+            let node_empty = model.node_map[&empty_id];
+            let edge = model.graph.add_edge(node9, node_empty, 321.0);
+            let promoted = System::new(
+                GalacticAddress::from_packed(id9.system_address(), 9),
+                Some("Promoted-9".into()),
+                Some("Explorer".into()),
+                Some(chrono::DateTime::from_timestamp(1_700_000_000, 0).unwrap()),
+                vec![Planet::new(
+                    2,
+                    Some(Biome::Toxic),
+                    None,
+                    true,
+                    Some("Leaf-9".into()),
+                    Some(0xAB),
+                )],
+            );
+            model.insert_system(promoted.clone());
+
+            assert!(!model.is_player_placeholder(&id9));
+            assert!(model.is_player_placeholder(&id0));
+            assert_eq!(model.system_count(), 3);
+            assert_eq!(model.planet_count(), 1);
+            assert_eq!(model.graph.node_count(), 3);
+            assert_eq!(model.graph.edge_count(), 1);
+            assert_eq!(model.graph.edge_weight(edge), Some(&321.0));
+            let (edge_a, edge_b) = model.graph.edge_endpoints(edge).unwrap();
+            assert_eq!(
+                std::collections::HashSet::from([
+                    *model.graph.node_weight(edge_a).unwrap(),
+                    *model.graph.node_weight(edge_b).unwrap(),
+                ]),
+                std::collections::HashSet::from([id9, empty_id])
+            );
+            assert_eq!(model.node_map[&id0], node0);
+            assert_eq!(model.node_map[&id9], node9);
+            assert_eq!(model.node_map[&empty_id], node_empty);
+            assert_eq!(
+                model
+                    .spatial
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([0_u8, 9_u8])
+            );
+            assert_eq!(model.address_to_id[&id9], id9);
+            assert_eq!(
+                model.player_state,
+                Some(PlayerState::new(address0, 0, None, None, 7, 8, 9))
+            );
+            assert_eq!(model.active_galaxy, 7);
+            assert_eq!(model.systems[&id9], promoted);
+            assert_eq!(
+                model.systems,
+                std::collections::HashMap::from([
+                    (
+                        id0,
+                        System::new(
+                            GalacticAddress::from_packed(id0.system_address(), 0),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        ),
+                    ),
+                    (id9, promoted.clone()),
+                    (
+                        empty_id,
+                        System::new(empty_address, None, None, None, vec![])
+                    ),
+                ])
+            );
+            assert_eq!(
+                model.player_placeholders,
+                std::collections::HashSet::from([id0])
+            );
+            assert_eq!(model.systems[&empty_id].address, empty_address);
+            assert_eq!(model.planets[&(id9, 2)], model.systems[&id9].planets[0]);
+            assert_eq!(
+                model.planets,
+                std::collections::HashMap::from([((id9, 2), promoted.planets[0].clone())])
+            );
+            assert_eq!(model.biome_index[&Biome::Toxic], vec![(id9, 2)]);
+            assert_eq!(
+                model.biome_index,
+                std::collections::HashMap::from([(Biome::Toxic, vec![(id9, 2)])])
+            );
+            assert_eq!(model.name_index[&(9, "promoted-9".into())], id9);
+            assert_eq!(
+                model.name_index,
+                std::collections::HashMap::from([((9, "promoted-9".into()), id9)])
+            );
+            assert_eq!(
+                model.address_to_id,
+                std::collections::HashMap::from([(id0, id0), (id9, id9), (empty_id, empty_id)])
+            );
+            assert_eq!(model.node_map.len(), 3);
+            assert_eq!(model.node_map[&id0], node0);
+            assert_eq!(model.node_map[&id9], node9);
+            assert_eq!(model.node_map[&empty_id], node_empty);
+            assert_eq!(
+                model
+                    .node_map
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([id0, id9, empty_id])
+            );
+            assert_eq!(
+                model
+                    .spatial
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([0_u8, 9_u8])
+            );
+            for (id, index) in &model.node_map {
+                assert_eq!(model.graph.node_weight(*index), Some(id));
+            }
+            let point_ids_after: std::collections::HashSet<_> = [0, 9]
+                .into_iter()
+                .flat_map(|galaxy| {
+                    model
+                        .spatial_for(galaxy)
+                        .unwrap()
+                        .iter()
+                        .map(|point| point.id)
+                        .collect::<Vec<_>>()
+                })
+                .collect();
+            assert_eq!(point_ids_after.len(), 3);
+            let mut spatial_rows: Vec<_> = [0, 9]
+                .into_iter()
+                .flat_map(|galaxy| {
+                    model
+                        .spatial_for(galaxy)
+                        .unwrap()
+                        .iter()
+                        .map(|point| (point.id, point.point))
+                        .collect::<Vec<_>>()
+                })
+                .collect();
+            spatial_rows.sort_by_key(|(id, _)| (id.reality_index(), id.system_address()));
+            assert_eq!(
+                spatial_rows,
+                vec![
+                    (id0, [0.0, 0.0, 0.0]),
+                    (empty_id, [0.0, 0.0, 0.0]),
+                    (id9, [0.0, 0.0, 0.0]),
+                ]
+            );
+
+            // A later ordinary duplicate remains a no-op and cannot replace metadata.
+            model.insert_system(System::new(
+                promoted.address,
+                Some("Ignored".into()),
+                None,
+                None,
+                vec![],
+            ));
+            assert_eq!(model.systems[&id9], promoted);
+            assert_eq!(
+                model.systems[&id0],
+                System::new(
+                    GalacticAddress::from_packed(id0.system_address(), 0),
+                    None,
+                    None,
+                    None,
+                    vec![]
+                )
+            );
+            assert_eq!(
+                model.systems[&empty_id],
+                System::new(empty_address, None, None, None, vec![])
+            );
+            assert_eq!(
+                model.planets,
+                std::collections::HashMap::from([((id9, 2), promoted.planets[0].clone())])
+            );
+            assert_eq!(
+                model.name_index,
+                std::collections::HashMap::from([((9, "promoted-9".into()), id9)])
+            );
+            assert_eq!(
+                model.biome_index,
+                std::collections::HashMap::from([(Biome::Toxic, vec![(id9, 2)])])
+            );
+            assert_eq!(
+                model.address_to_id,
+                std::collections::HashMap::from([(id0, id0), (id9, id9), (empty_id, empty_id)])
+            );
+            assert_eq!(model.node_map.len(), 3);
+            assert_eq!(model.node_map[&id0], node0);
+            assert_eq!(model.node_map[&id9], node9);
+            assert_eq!(model.node_map[&empty_id], node_empty);
+            for (id, index) in &model.node_map {
+                assert_eq!(model.graph.node_weight(*index), Some(id));
+            }
+            let (edge_a, edge_b) = model.graph.edge_endpoints(edge).unwrap();
+            assert_eq!(
+                std::collections::HashSet::from([
+                    *model.graph.node_weight(edge_a).unwrap(),
+                    *model.graph.node_weight(edge_b).unwrap(),
+                ]),
+                std::collections::HashSet::from([id9, empty_id])
+            );
+            assert!(!model.is_player_placeholder(&empty_id));
+            assert_eq!(
+                model.graph.edge_references().next().unwrap().weight(),
+                &321.0
+            );
+            assert_eq!(
+                model.player_state,
+                Some(PlayerState::new(address0, 0, None, None, 7, 8, 9))
+            );
+            assert_eq!(model.active_galaxy, 7);
+            assert_eq!(
+                model.player_placeholders,
+                std::collections::HashSet::from([id0])
+            );
+            assert_eq!(
+                model
+                    .node_map
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([id0, id9, empty_id])
+            );
+            assert_eq!(
+                model
+                    .spatial
+                    .keys()
+                    .copied()
+                    .collect::<std::collections::HashSet<_>>(),
+                std::collections::HashSet::from([0_u8, 9_u8])
+            );
+            let mut duplicate_spatial_rows = [0, 9]
+                .into_iter()
+                .flat_map(|galaxy| {
+                    model
+                        .spatial_for(galaxy)
+                        .unwrap()
+                        .iter()
+                        .map(|point| (point.id, point.point))
+                        .collect::<Vec<_>>()
+                })
+                .collect::<Vec<_>>();
+            duplicate_spatial_rows.sort_by_key(|(id, _)| (id.reality_index(), id.system_address()));
+            assert_eq!(
+                duplicate_spatial_rows,
+                vec![
+                    (id0, [0.0, 0.0, 0.0]),
+                    (empty_id, [0.0, 0.0, 0.0]),
+                    (id9, [0.0, 0.0, 0.0]),
+                ]
+            );
+        }
+
+        let genuine_player_address = GalacticAddress::new(0, 0, 0, 2, 5, 0);
+        let genuine_id = SystemId::from_address(&genuine_player_address);
+        let mut genuine_model = GalaxyModel::new();
+        let genuine_empty = System::new(
+            GalacticAddress::from_packed(genuine_id.system_address(), 0),
+            None,
+            None,
+            None,
+            vec![],
+        );
+        genuine_model.insert_system(genuine_empty.clone());
+        genuine_model.player_state = Some(PlayerState::new(
+            genuine_player_address,
+            0,
+            None,
+            None,
+            31,
+            32,
+            33,
+        ));
+        genuine_model.set_active_galaxy(7);
+        genuine_model.insert_player_placeholder(genuine_player_address);
+        genuine_model.ensure_player_system();
+        let genuine_node = genuine_model.node_map[&genuine_id];
+        assert_eq!(
+            genuine_model.systems,
+            std::collections::HashMap::from([(genuine_id, genuine_empty)])
+        );
+        assert!(!genuine_model.is_player_placeholder(&genuine_id));
+        assert_eq!(
+            genuine_model.player_state,
+            Some(PlayerState::new(
+                genuine_player_address,
+                0,
+                None,
+                None,
+                31,
+                32,
+                33
+            ))
+        );
+        assert_eq!(genuine_model.active_galaxy, 7);
+        assert_eq!(genuine_model.system_count(), 1);
+        assert_eq!(genuine_model.planet_count(), 0);
+        assert!(genuine_model.player_placeholders.is_empty());
+        assert!(genuine_model.planets.is_empty());
+        assert!(genuine_model.name_index.is_empty());
+        assert!(genuine_model.biome_index.is_empty());
+        assert!(genuine_model.bases.is_empty());
+        assert_eq!(genuine_model.graph.node_count(), 1);
+        assert_eq!(genuine_model.graph.edge_count(), 0);
+        assert_eq!(
+            genuine_model
+                .node_map
+                .keys()
+                .copied()
+                .collect::<std::collections::HashSet<_>>(),
+            std::collections::HashSet::from([genuine_id])
+        );
+        assert_eq!(
+            genuine_model.graph.node_weight(genuine_node),
+            Some(&genuine_id)
+        );
+        assert_eq!(
+            genuine_model
+                .spatial
+                .keys()
+                .copied()
+                .collect::<std::collections::HashSet<_>>(),
+            std::collections::HashSet::from([0_u8])
+        );
+        assert_eq!(
+            genuine_model.address_to_id,
+            std::collections::HashMap::from([(genuine_id, genuine_id)])
+        );
+        assert_eq!(
+            genuine_model
+                .spatial_for(0)
+                .unwrap()
+                .iter()
+                .map(|point| (point.id, point.point))
+                .collect::<Vec<_>>(),
+            vec![(genuine_id, [0.0, 0.0, 0.0])]
+        );
+    }
+
+    #[test]
+    fn test_genuine_empty_system_promotes_placeholder_and_preserves_state() {
+        let player_address = GalacticAddress::new(0, 0, 0, 1, 5, 0);
+        let placeholder_id = SystemId::from_address(&player_address);
+        let empty_address = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+        let empty_id = SystemId::from_address(&empty_address);
+        let canonical_player = GalacticAddress::from_packed(placeholder_id.system_address(), 0);
+        let player_state = PlayerState::new(player_address, 0, None, None, 7, 8, 9);
+
+        let mut model = GalaxyModel::new();
+        model.insert_player_placeholder(player_address);
+        model.insert_system(System::new(empty_address, None, None, None, vec![]));
+        model.player_state = Some(player_state.clone());
+        model.set_active_galaxy(7);
+        let player_node = model.node_map[&placeholder_id];
+        let empty_node = model.node_map[&empty_id];
+        let edge = model.graph.add_edge(player_node, empty_node, 321.0);
+
+        model.insert_system(System::new(canonical_player, None, None, None, vec![]));
+
+        assert_eq!(model.system_count(), 2);
+        assert_eq!(model.planet_count(), 0);
+        assert_eq!(
+            model.systems,
+            std::collections::HashMap::from([
+                (
+                    placeholder_id,
+                    System::new(canonical_player, None, None, None, vec![])
+                ),
+                (
+                    empty_id,
+                    System::new(empty_address, None, None, None, vec![])
+                ),
+            ])
+        );
+        assert!(model.player_placeholders.is_empty());
+        assert!(model.planets.is_empty());
+        assert!(model.name_index.is_empty());
+        assert!(model.biome_index.is_empty());
+        assert!(model.bases.is_empty());
+        assert_eq!(
+            model.address_to_id,
+            std::collections::HashMap::from([
+                (placeholder_id, placeholder_id),
+                (empty_id, empty_id),
+            ])
+        );
+        assert_eq!(
+            model.node_map,
+            std::collections::HashMap::from([
+                (placeholder_id, player_node),
+                (empty_id, empty_node),
+            ])
+        );
+        assert_eq!(model.graph.node_count(), 2);
+        assert_eq!(model.graph.edge_count(), 1);
+        assert_eq!(model.graph.edge_weight(edge), Some(&321.0));
+        let (edge_a, edge_b) = model.graph.edge_endpoints(edge).unwrap();
+        assert_eq!(
+            std::collections::HashSet::from([
+                *model.graph.node_weight(edge_a).unwrap(),
+                *model.graph.node_weight(edge_b).unwrap(),
+            ]),
+            std::collections::HashSet::from([placeholder_id, empty_id])
+        );
+        assert_eq!(model.graph.node_weight(player_node), Some(&placeholder_id));
+        assert_eq!(model.graph.node_weight(empty_node), Some(&empty_id));
+        assert_eq!(
+            model
+                .spatial
+                .keys()
+                .copied()
+                .collect::<std::collections::HashSet<_>>(),
+            std::collections::HashSet::from([0_u8])
+        );
+        let mut points = model
+            .spatial_for(0)
+            .unwrap()
+            .iter()
+            .map(|point| (point.id, point.point))
+            .collect::<Vec<_>>();
+        points.sort_by_key(|(id, _)| (id.reality_index(), id.system_address()));
+        assert_eq!(
+            points,
+            vec![
+                (placeholder_id, [0.0, 0.0, 0.0]),
+                (empty_id, [0.0, 0.0, 0.0]),
+            ]
+        );
+        assert_eq!(model.player_state, Some(player_state));
+        assert_eq!(model.active_galaxy, 7);
+    }
+
+    #[test]
+    fn test_apply_delta_planet_promotes_existing_player_placeholder() {
+        let address = GalacticAddress::new(0, 0, 0, 1, 5, 0);
+        let id = SystemId::from_address(&address);
+        let mut model = GalaxyModel::new();
+        model.player_state = Some(PlayerState::new(address, 0, None, None, 7, 8, 9));
+        model.set_active_galaxy(7);
+        model.ensure_player_system();
+        assert!(model.is_player_placeholder(&id));
+        let original_node = model.node_map[&id];
+
+        let planet = Planet::new(
+            2,
+            Some(Biome::Toxic),
+            None,
+            true,
+            Some("Leaf".into()),
+            Some(171),
+        );
+        model.apply_delta(&nms_core::delta::SaveDelta {
+            new_planets: vec![(id, planet.clone())],
+            ..nms_core::delta::SaveDelta::empty()
+        });
+
+        assert!(!model.is_player_placeholder(&id));
+        assert_eq!(model.system_count(), 1);
+        assert_eq!(model.planet_count(), 1);
+        assert_eq!(model.node_map[&id], original_node);
+        assert_eq!(
+            model.systems,
+            std::collections::HashMap::from([(
+                id,
+                System::new(
+                    GalacticAddress::from_packed(id.system_address(), 0),
+                    None,
+                    None,
+                    None,
+                    vec![planet.clone()],
+                ),
+            )])
+        );
+        assert_eq!(
+            model.planets,
+            std::collections::HashMap::from([((id, 2), planet.clone())])
+        );
+        assert_eq!(
+            model.biome_index,
+            std::collections::HashMap::from([(Biome::Toxic, vec![(id, 2)])])
+        );
+        assert!(model.name_index.is_empty());
+        assert!(model.bases.is_empty());
+        assert_eq!(
+            model.address_to_id,
+            std::collections::HashMap::from([(id, id)])
+        );
+        assert_eq!(
+            model.node_map,
+            std::collections::HashMap::from([(id, original_node)])
+        );
+        assert_eq!(model.graph.node_weight(original_node), Some(&id));
+        assert_eq!(model.graph.edge_count(), 0);
+        assert_eq!(
+            model
+                .spatial
+                .keys()
+                .copied()
+                .collect::<std::collections::HashSet<_>>(),
+            std::collections::HashSet::from([0_u8])
+        );
+        assert_eq!(
+            model
+                .spatial_for(0)
+                .unwrap()
+                .iter()
+                .map(|point| (point.id, point.point))
+                .collect::<Vec<_>>(),
+            vec![(id, [0.0, 0.0, 0.0])]
+        );
+        assert_eq!(
+            model.player_state,
+            Some(PlayerState::new(address, 0, None, None, 7, 8, 9))
+        );
+        assert_eq!(model.active_galaxy, 7);
     }
 }

@@ -54,8 +54,28 @@ fn test_literal_cache_validator_accepts_golden_and_rejects_discriminating_mutati
         discoverer: None,
         timestamp_secs: None,
         planets: vec![],
+        is_player_placeholder: false,
     });
     assert!(reject_raw(&extra_named));
+
+    let marker_data = live_mcp::expected_cold_cross_cache();
+    let marker_model = live_mcp::expected_cold_cross_model();
+    let mut wrong_marker_flag = live_mcp::expected_cold_cross_cache();
+    wrong_marker_flag.systems[0].is_player_placeholder = false;
+    assert!(
+        live_mcp::compare_cache_model(
+            &wrong_marker_flag,
+            &marker_model,
+            &marker_data,
+            &marker_model
+        )
+        .is_err()
+    );
+    let genuine_empty = live_mcp::expected_genuine_empty_cross_model();
+    assert!(
+        live_mcp::compare_cache_model(&marker_data, &genuine_empty, &marker_data, &marker_model)
+            .is_err()
+    );
 
     let mut wrong_name_index = live_mcp::golden_model();
     wrong_name_index.name_index.clear();
@@ -112,6 +132,10 @@ fn test_literal_cache_model_oracles_cover_empty_and_cold_cross_states() {
         (
             live_mcp::expected_cold_cross_cache(),
             live_mcp::expected_cold_cross_model(),
+        ),
+        (
+            live_mcp::expected_genuine_empty_cross_cache(),
+            live_mcp::expected_genuine_empty_cross_model(),
         ),
     ];
     let directory = tempfile::tempdir().expect("temporary cache directory");

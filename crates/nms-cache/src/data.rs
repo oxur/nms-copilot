@@ -15,7 +15,7 @@ use nms_core::system::Planet;
 /// Indices (graph, R-tree, HashMaps) are rebuilt on load.
 #[derive(Archive, Serialize, Deserialize, Debug)]
 pub struct CacheData {
-    /// All discovered systems.
+    /// All model systems, including discoveries and marked player-location placeholders.
     pub systems: Vec<CachedSystem>,
 
     /// All player bases.
@@ -41,10 +41,36 @@ pub struct CacheData {
 /// stored as Unix seconds and converted on load.
 #[derive(Archive, Serialize, Deserialize, Debug)]
 pub struct CachedSystem {
+    /// Galactic address of this system.
     pub address: GalacticAddress,
+    /// Discovered system name, when known.
     pub name: Option<String>,
+    /// Discoverer name, when known.
     pub discoverer: Option<String>,
     /// Timestamp as Unix seconds (converted from `DateTime<Utc>`).
     pub timestamp_secs: Option<i64>,
+    /// Discovered planets belonging to this system.
     pub planets: Vec<Planet>,
+    /// Whether this entry is the explicit synthetic player-location placeholder.
+    ///
+    /// Checked cache boundaries validate this flag; an ordinary empty discovery
+    /// record must set it to `false`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use nms_cache::data::CachedSystem;
+    /// use nms_core::address::GalacticAddress;
+    ///
+    /// let known_empty_discovery = CachedSystem {
+    ///     address: GalacticAddress::new(0, 0, 0, 1, 0, 0),
+    ///     name: None,
+    ///     discoverer: None,
+    ///     timestamp_secs: None,
+    ///     planets: vec![],
+    ///     is_player_placeholder: false,
+    /// };
+    /// assert!(!known_empty_discovery.is_player_placeholder);
+    /// ```
+    pub is_player_placeholder: bool,
 }

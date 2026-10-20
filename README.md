@@ -284,9 +284,9 @@ worker. `GalaxyModel::apply_save_update` applies the atlas delta and replaces
 the complete player state while preserving imported atlas data and the selected
 galaxy view when the physical galaxy has not changed. The conversion currently
 does not extract a freighter address, so the update carries the existing `None`
-value. These APIs provide a library capability; the normal application still
-has separate REPL and MCP watcher producers, and complete live-cache writing
-and application ownership remain planned work.
+value. In normal REPL mode, one application-owned coordinator applies complete
+updates and writes the cache; the REPL and background MCP server observe that
+shared state.
 
 ### How Save Parsing Works
 
@@ -322,14 +322,14 @@ enabled = true
 path = "/path/to/copilot-cache.rkyv"
 ```
 
-The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. A stale, incompatible, or corrupt cache is rebuilt from the save. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
+The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. The current cache envelope is schema 3 / semantic 3: it stores an explicit marker for a synthetic player-location placeholder, separate from an ordinary empty discovery record. A marked record must have a planet-zero address, no discovery metadata, and no planets. When genuine system or planet data arrives for that exact key, the model promotes the placeholder while retaining its graph and spatial identity. A stale, incompatible, or corrupt cache is rebuilt from the save; schema 2 / semantic 2 files are incompatible and use the source save rather than being relabelled. A cache-only imported atlas absent from the source save must be re-imported after this rebuild. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
 
 ```bash
 nms-copilot --headless --no-cache --save /path/to/save.hg
 nms-copilot --headless --no-cache --http 127.0.0.1:5099 --save /path/to/save.hg
 ```
 
-The cache preserves the selected galaxy separately from the player's physical location. The `where_am_i` tool and `nms://player/location` resource describe the physical player system. At startup, an unnamed system may be added to the in-memory model when the save has no discovery record for that location; this does not establish unknown-system resolution or later promotion behavior.
+The cache preserves the selected galaxy separately from the player's physical location. The `where_am_i` tool and `nms://player/location` resource describe the physical player system. Library callers can explicitly insert a synthetic player placeholder for an undiscovered location; a genuinely empty system remains ordinary data, and genuine data promotes only an explicitly marked key. `GalaxyModel` owns private placeholder provenance, so downstream callers construct models with `GalaxyModel::new` or `GalaxyModel::from_save` rather than struct literals. Its system count includes both discovered systems and marked placeholders. `ImportStats.added` counts accepted catalog contributions, including promotion of an existing placeholder; promotion does not add another system. Public `CacheData` and `CachedSystem` struct literals must supply the current fields, including `active_galaxy` and `is_player_placeholder`. The infallible trusted-data `rebuild_model` restores valid markers but preserves malformed marked entries as ordinary systems; checked persisted cache codecs reject malformed markers. Normal application startup and every accepted live position do not yet ensure placeholders before publishing the model; that common startup/live composition and exact physical-location labels are Slice19 work.
 
 For the current location, call the `where_am_i` tool or read `nms://player/location`. A client can subscribe to that resource with `resources/subscribe`; when an enabled watcher ingests a save change, the server sends `notifications/resources/updated` for the location URI. Read the resource again to fetch the current location.
 
@@ -349,7 +349,7 @@ enabled = false
 debounce_ms = 500
 ```
 
-The setting applies to headless stdio and HTTP servers and to normal REPL mode. In normal mode, one application-owned coordinator applies complete updates and writes the cache; the REPL and its background MCP server observe that shared state. Session position refreshes before each command after idle input while explicit Base or Address anchors remain in effect. Disabling watching leaves the startup model and cache unchanged. Unknown-system resolution or promotion remains a separate policy decision.
+The setting applies to headless stdio and HTTP servers and to normal REPL mode. In normal mode, one application-owned coordinator applies complete updates and writes the cache; the REPL and its background MCP server observe that shared state. Session position refreshes before each command after idle input while explicit Base or Address anchors remain in effect. Disabling watching leaves the startup model and cache unchanged. Explicit placeholder provenance and promotion are available through the model/cache APIs; common startup/live placeholder insertion and exact physical-location labels remain Slice19 work.
 
 ---
 
