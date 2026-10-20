@@ -1,6 +1,6 @@
 # Slice16 — app-owned coordinator and headless live cache
 
-Version:1.1. Created2026-10-19 local. Status:open, initial return reviewed/corrections required. Current assignment arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt-iteration01.md, first of five refinements. Same Arc06-only Autonomous Mode: CDC /root/cdc_arc06 gpt-6.1-sol High owns planning/index/independent review; CC /root/cdc_arc06/cc_slice15 gpt-6-luna High owns dedicated source/index after acknowledgement, both OpenAI/Codex, no fallback/extra context. Actual contributor name persists across slices; it is not a claim this is still Slice15.
+Version:1.2. Created2026-10-19 local. Status:open, first refinement reviewed/test-only omissions remain. Current assignment arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt-iteration02.md, second of five refinements. Same Arc06-only Autonomous Mode: CDC /root/cdc_arc06 gpt-6.1-sol High owns planning/index/independent review; CC /root/cdc_arc06/cc_slice15 gpt-6-luna High owns dedicated source/index after acknowledgement, both OpenAI/Codex, no fallback/extra context. Actual contributor name persists across slices; it is not a claim this is still Slice15.
 
 ## Useful delivery and dependency
 
@@ -32,3 +32,6 @@ CC filesystem-stages ONLY closing-report.md/execution.md/validation.json in igno
 - cc-prompt-iteration01.md issued2026-10-19 local/20UTC, predecessor cc-prompt.md; active first refinement of five for F1–F6 required oracles/fallible new entrypoint/capture fidelity. Eight LC rows remain open; no scope/criteria reduction or waiver. Independent initial format/lint/focused519/native11 green do not close missing oracle/evidence requirements. Source ownership returns to CC only after acknowledgement; planning stays CDC.
 
 Routine version1.1 records review/correction. Exact findings/capture mismatch and initial return hashes are in cdc-verification.md. The Slice15-only approved exception does not apply; actual unavailable historical fields remain pending, no recovery invented.
+
+- Refinement01 returned db77e07, complete current captures preserved; reviewed production fixes valid, F1/F4 still partial and new F7 complete-stdout witness required. Superseded for bounded test-only correction.
+- cc-prompt-iteration02.md issued2026-10-19 local/20UTC, predecessor iteration01; active second of five. Exact golden whole maps/cache roundtrip, all-barrier release, warm HTTP fresh retry and complete EOF/file effects. Production byte-frozen at db77e07; no criterion/scope/architecture change or Operator decision. Full broad CDC gates deferred to final repaired tree; CC scoped affected gates retain current valid evidence.

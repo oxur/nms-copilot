@@ -103,3 +103,50 @@ Committed `4404f37f70df62177689d6108e68b3685ea422a1` on `codex/headless-live-cac
 | Post-commit attempt | Exit | Source HEAD | stdout/stderr |
 |---|---:|---|---|
 | `postcommit_diff_check` | 0 | `4404f37f70df62177689d6108e68b3685ea422a1` | separate empty channels under `raw-gates/` |
+
+
+## Iteration01 intake and capture correction
+
+Active assignment: `cc-prompt-iteration01.md`, issued planning `9092834`; initial source HEAD `4404f37f70df62177689d6108e68b3685ea422a1`, clean tracked/index state, parent `11cf7e6a8e2a7549a223880820c0bf4543381459`, branch `codex/headless-live-cache`. CDC owns planning; CC owns only this source/index until stable handback. The six required findings F1–F6 and their affected rows were read in full; all eight ledger rows remain open. The original complete binding recipe/oracles/capture contract, current slice plan/ledger, and `cdc-verification.md` were read.
+
+Pre-edit source readback covered complete `coordinator.rs` (651 lines), `mcp/mod.rs` (801 lines), and `mcp_live_integration.rs` (2,824 lines). Also reloaded the live graph `apply_save_update` authority and insertion/index methods, `SaveUpdate`/`SaveDelta`/`PlayerState`/system/planet/base definitions, and cache extraction/version API. The initial behavior remains one owned producer/worker and observer-only headless wiring; no normal-mode, parser/core/graph/watch-crate/cache-implementation/config/schema/raw/placeholder/dependency changes are authorized. The complete Rust-guidelines `SKILL.md` and AP01–AP70 anti-pattern corpus (2,188 lines) were read in the prior assignment and retained for this refinement; required ownership, channel, cancellation, typed-error, API, docs, and failure-teardown sections were revisited. Repository AGENTS, the complete original assignment/history and CDC review, all three canonical return hashes, and the complete original 54-attempt capture index were read before source edits.
+
+Exact attempt-0 stderr recovery was verified from the existing JSON base64: 12,317 decoded bytes with SHA-256 `cc8520fa47c9a0ffcb50d6f1d3463c337e7ab68c0fde61abca2e6e36bb845892`. The same-name raw file now holds attempt 1's 1,061-byte stderr. CDC's bounded recovery audit independently confirms all 108 original embedded channels across 54 attempts match their original validation metadata. Both stdout channels and every other raw-path channel are preserved; the overwritten path mismatch remains explicitly described. No historical bytes were reconstructed. The original 54 attempt objects and every original validation root value remain unchanged; the appendix adds only `iteration01`. Exact embedded channels include bytes/length/hash/base64 and whether the original raw path still matches.
+
+Before any new validation or diagnostic, `capture_gate_iteration01.py` was added with independent `gate-attempts-iteration01.json` and `raw-gates-iteration01/` paths. Each attempt reserves UUID-suffixed stdout/stderr files exclusively and durably writes argv, cwd, UTC, source HEAD/diff/status, inherited environment/explicit overrides and running status before dispatch; it refuses to overwrite channel paths and captures end-source identity, separate full channels, exit and all harness populations after completion. Original inherited TMPDIR is retained.
+
+
+## Refinement01 final gate and evidence addendum
+
+This addendum supersedes the earlier preliminary gate summary for the corrected final native test candidate while preserving every earlier attempt and its recorded source identity. Final source changes remain the three named paths: `crates/nms-copilot/src/coordinator.rs`, `crates/nms-copilot/src/mcp/mod.rs`, and `crates/nms-copilot/tests/mcp_live_integration.rs`.
+
+The final correction moved stdio cold-cache inspection after initialization and made the bind-collision child reaper require the exact observed/source-grounded status 0. The expected cache values are independently specified at each boundary: initial persisted source cache before startup physical-system insertion, then live state/cache after startup and update. The cold helpers no longer use `nms_cache::rebuild_model` to manufacture expected assertions. The native collision receipt confirms an actual bind/address-in-use error, no readiness, and natural successful child exit as `run_headless_with_updates` logs the startup error and returns.
+
+Final settled sequence and results:
+
+| Gate | Result |
+|---|---|
+| `make format`; `make lint` | Both pass on the corrected test source. |
+| Focused all-feature libraries | 520 pass: copilot 230, core 87, graph 171, watcher 32. |
+| Cache tests | Retained applicable prior run: 19 + 19 = 38 pass; current native test-only delta does not touch cache implementation. |
+| Route integration | Retained applicable prior run: 4 pass; current native test-only delta does not touch graph/route implementation. |
+| Focused cold bind collision | 1 pass, 12 filtered; actual address-in-use and natural exit status asserted. |
+| Complete native MCP integration | 13 pass, 0 failed on authorized host, inherited `TMPDIR=/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`. |
+| No-default copilot library | 229 pass. |
+| `make test` | All captured harnesses pass, including copilot lib 230 and native MCP 13. |
+| Workspace all-features build | Pass. |
+| Workspace doctests | Pass; one non-empty doctest passed, other harnesses empty. |
+| Standard six-package docs | Pass. |
+| Strict cache and watch docs | Both pass with explicit `RUSTDOCFLAGS=-D rustdoc::broken_intra_doc_links`. |
+| Working diff check | Pass. |
+
+The first corrected full native run remains recorded at 12/13. Its sole failure was the mistaken nonzero child-exit expectation. The initial stdio timing failure from the preceding run is preserved. The focused collision rerun and complete 13/13 native pass establish the correction. A wrapper invocation passed the literal one-token argv `['make format']` and failed before `make`/SUT launch with `FileNotFoundError`; empty reserved channels are explicitly identified as metadata-only, and the proper two-argument format invocation passed. A separate mistyped `cargo make test` command failed before tests and remains distinct from the required successful `make test` attempt.
+
+`gate-attempts-iteration01.json` has 43 entries: 42 completed subprocess attempts with separate stdout/stderr files, hashes, base64, source identities, selected environment, argv, UTC and population counts; one prelaunch wrapper failure with empty channels and its available error metadata. All available channels for these entries are embedded in the appended `validation.json.iteration01.final_execution.all_attempt_captures` records. The original 54 attempts and 108 exact channels remain in the prior validation prefix; CDC independently recovered attempt-0 compile-only stderr from existing embedded base64. No historical output was reconstructed, no SUT was relabeled for a wrapper-only error, and no accepted status is inferred.
+
+Current row witnesses are recorded in the matching validation appendix. CC proposes all eight rows for CDC review; they remain OPEN until CDC independently reviews and dispositions them. Source ownership returns to CDC only after exact-path commit and clean index proof.
+
+
+## Exact-path commit and stable handback
+
+Committed `db77e07612601ffa1bf275b4df1acd87a1787975` on `codex/headless-live-cache`, parent `4404f37f70df62177689d6108e68b3685ea422a1`. The commit contains exactly the three assigned source paths and has both consecutive co-author trailers in one parsed final block, once each. Captured post-commit baseline-range diff check passed (attempt `d6bde07b97754369b47c3e385bbe320e`). `git status --porcelain=v1 --untracked-files=all` and `git diff --cached --name-only` are empty. The three canonical return records remain ignored filesystem-only files. I hand stable source and index mutation ownership back to CDC for independent review; all eight ledger rows remain open pending CDC disposition.
