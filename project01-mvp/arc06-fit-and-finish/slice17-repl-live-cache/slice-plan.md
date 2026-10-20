@@ -1,6 +1,6 @@
 # Slice17 — normal REPL and owned shared MCP live cache
 
-Version:1.8. Created2026-10-20 UTC. Status: RC01–07 independently accepted; RC08 open solely for two bounded historical capture issues; all current independent gates/native9 pass, Operator decision pending. Initial/iteration01–03 prompts preserved; fourth of five formal refinements. Arc06-only Autonomous Mode unchanged: CDC /root/cdc_arc06 OpenAI/Codex gpt-6.1-sol High owns planning/index/design/independent review; fresh sole active CC /root/cdc_arc06/cc_slice17 launched through collaboration.spawn_agent with requested/applied OpenAI/Codex gpt-6-luna High, fork_turns=none, for context headroom. The tool accepted that exact model/reasoning selection; no separate hidden-backend identity is claimed. Previous16 CC idle, no CRC/fallback/extra active contributor.
+Version:1.9. Created2026-10-20 UTC. Status: closed; all eight RC rows done on61f1d98, including exact Operator-approved RC08 historical exceptions. Initial/iteration01–03 prompts preserved; fourth of five formal refinements. Arc06-only Autonomous Mode unchanged: CDC /root/cdc_arc06 OpenAI/Codex gpt-6.1-sol High owns planning/index/design/independent review; fresh sole active CC /root/cdc_arc06/cc_slice17 launched through collaboration.spawn_agent with requested/applied OpenAI/Codex gpt-6-luna High, fork_turns=none, for context headroom. The tool accepted that exact model/reasoning selection; no separate hidden-backend identity is claimed. Previous16 CC idle, no CRC/fallback/extra active contributor.
 
 ## Delivery and dependencies
 
@@ -44,3 +44,7 @@ Main b616ab2 protected rootnative-test nine-line workingedit, external03e8d04/ac
 ## Current independent disposition — 2026-10-20 UTC
 
 Version1.8: exact8-path source61f1d98 independently reviewed/reproduced:19 ordinary groups exit0, native9/9, workspace977+doc5. RC7done/1open; R06-S17 remains open. Complete byte-preserved fourth return and2,052-file durable capture bundle verified; substantive CDC retrospective/current decision packet in cdc-verification.md. Only historical old warm-native receipt/observation gap and two missing CC pre-matrix executable digests await specific Operator exception or hold; fresh proof does not recover history, prior16waiver not extended. Source/planning ownership/selected roles/models, four-of-five budget and every original parent/policy gate retained. No code finding or further test required for evidence-only decision edits; stop before next unit pending decision.
+
+## Final closure — 2026-10-20 UTC
+
+Version1.9: explicit Operator approval of the two committed historical exceptions permits RC08 acceptance; all eight original rows and R06-S17 closed on unchanged61f1d98. Final CDC retrospective and named bottom-up bubble-up complete; no unchanged-code rerun. Both unknown historical observations/failures/current proof and all original parent/policy/integration/release gates retained. Current assignment iteration04 is complete, no further refinement; Autonomous Arc06-only next source-grounded planning continues under unchanged selected settings.

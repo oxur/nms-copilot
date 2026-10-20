@@ -1,4 +1,4 @@
-# Slice17 CDC retrospective — decision cutoff, final closure pending
+# Slice17 CDC retrospective — finalized at approved closure
 
 CDC /root/cdc_arc06, requested/applied OpenAI/Codex gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High. Cutoff2026-10-20UTC/source61f1d98; initial and four formal refinements preserved. This substantive retrospective accompanies seven-row independent acceptance; final closing duty remains pending the RC-08 Operator decision. It does not replace implementation review or claim Slice17 closed.
 
@@ -15,3 +15,10 @@ Literal coauthor lines were insufficient: blank paragraphs meant Git parsed only
 For subsequent authorized work: finish the whole oracle/callsite/mode worksheet before the first handoff; review actual plausible wrong data through the consumed predicate; preflight capture before first SUT and persist raw completion independently of report merging; stage the complete native controller sequence before live timeout windows; check reference literals and actual parsed trailers. Observe whether the same concrete omissions recur, without claiming causality or commissioning an unapproved inquiry. Ordinary metadata/API mistakes remain proportionate records rather than invented validation requirements. No methodology/framework installation or new terminal dependency is proposed.
 
 Bottom-up disposition: bounded normal capability is delivered/currently independently reproduced, but RC-08 historical criterion requires Operator exception or hold. Arc/project plans retain the decision owner, unintegrated candidate and all original remaining gates. After an explicit decision, complete this retrospective's final disposition and formal slice closure; until then stop here, no next unit.
+
+
+## Final disposition and follow-through — 2026-10-20 UTC
+
+The Operator's explicit “yes, I approve!” adopts exactly the two historical exceptions in the committed4bff721 packet. RC08 is accepted under that bounded amendment; all eight child rows/R06-S17 close on unchanged61f1d98. Earlier decision-cutoff paragraphs above retain their original pending state as history; final closing duty is now complete. No tests rerun for record-only approval/closure; complete source/current gate evidence stays unchanged. Missing observations stay unknown and failed native launches remain noncounting.
+
+The retrospective's concrete recommendations remain local follow-through for CDC's next author readiness: full consumed oracle/callsite review early; reusable raw-first wrapper with pre-SUT preflight; all native steps staged before live deadlines; actual reference literals and parsed trailers. They have not been established by comparative testing, installed as framework policy or used to reduce scope. Next source inspection should resolve actual remaining engineering questions and surface consequential policy decisions before dependent implementation. Arc/project bubble-up records the closed normal capability and retains all original unresolved obligations and the one-arc endpoint.

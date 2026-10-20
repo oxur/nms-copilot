@@ -3634,5 +3634,21 @@
       "11cf7e6a",
       "e0939229"
     ]
+  },
+  "operator_approved_final_closure": {
+    "recorded_utc": "2026-10-20T21:40:58.954671+00:00",
+    "operator_exact_reply": "yes, I approve!",
+    "approved_decision_packet": "4bff7216c190e5c6d62d3ac9572f01342f8006e9",
+    "scope": [
+      "A: first failed iteration01 warm native launch unavailable native receipt/output/completion/source observations; retain preparation/argv/hash/PID cleanup distinctly; no failed launch credit",
+      "B: exactly two missing executable hashes measured before CC iteration03 native matrix"
+    ],
+    "unknowns_remain_unknown": true,
+    "all_failures_and_current_evidence_preserved": true,
+    "source": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+    "row_disposition": "all8done; RC01\u201307 independent; RC08 exact approved exception",
+    "record_only_no_test_rerun": true,
+    "closing_report_append_only_after_byte_preserved_transfer": true,
+    "closing_report_final_sha256": "408f445962418c7f200753138d9bce7baa65e7ae53ed70f929eb45d021dfb89e"
   }
 }

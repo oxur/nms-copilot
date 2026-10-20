@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.59
+version: 1.60
 project: project01-mvp
 status: active
 depends-on: []
@@ -964,3 +964,8 @@ Version1.58: source61f1d98 (metadata-only map from preserved eea7135) retains ex
 ## Arc06 Slice17 independent disposition / Operator boundary — 2026-10-20 UTC
 
 Version1.59: CDC independently accepts RC01–07 on61f1d98 after full8-path/helper review,19 ordinary groups exit0 and all9 native cases; workspace977+doc5. RC08 only remains open for the concrete historical old native receipt/observations and two absent CC pre-matrix executable digests. Current full raw captures/prelaunch digests do not recreate history; no16waiver extension. Byte-preserved fourth return/full durable capture bundle and CDC retrospective/decision packet are canonical. Operator owns specific bounded exception or hold; no next unit before disposition/closure. R06-S17open/35arcrows16done19open/project25open. Source candidate unintegrated/uninstalled, protected main9-line working edit/external/accepted dependencies/held pins intact. Same selected roles/models/ownership/four-of-five budget/Arc06-only endpoint; every original unknown-placeholder/history/raw/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release gate preserved. No new implementation/inquiry/terminal/dependency/acceptance waiver.
+
+
+## Slice17 approved closure and next ownership — 2026-10-20 UTC
+
+Version1.60: Operator explicitly approved ONLY the two Slice17 historical capture exceptions in4bff721 (“yes, I approve!”). RC08 now accepted; all8 child rows/R06-S17 closed on unchanged61f1d98, full independent19 ordinary groups/native9 retained, workspace977+doc5. No record-only test reruns. Final CDC retrospective and slice bubble-up complete. Arc35rows17done18open/project25open. Missing facts remain unknown and failed launch noncounting; prior/future requirements unchanged. CDC now inspects remaining arc/project obligations/current source and resolves next bounded unit before issuance; consequential unknown-placeholder representation/promotion/cachecompatibility policy remains Operator-gated, as do material ambiguities. Broader history/raw-field/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release scope retained. Same CDC gpt-6.1-sol High / CC gpt-6-luna High, protected main9-line edit/held pins/Project02, source/planning ownership and Arc06-only endpoint. No merge/push/install/release/external action.
