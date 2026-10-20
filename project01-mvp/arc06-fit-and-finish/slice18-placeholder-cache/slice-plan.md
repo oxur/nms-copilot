@@ -1,6 +1,6 @@
 # Slice18 — explicit placeholder/cache foundation
 
-Version:1.7. Created2026-10-20 UTC. Status: refinement03 issued for one CDC-prescribed rich-edge oracle error; CC intake pending, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration03.md; THIRD of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
+Version:1.8. Created2026-10-20 UTC. Status: refinement03 cache correction passes; refinement04 two-doc pass intake pending, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration04.md; FOURTH of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
 
 Dedicated source .worktrees/placeholder-cache/codex/placeholder-cache created clean61f1d98; CDC owns until coherent CC intake/ownership acknowledgement. CC then owns only source/index and three ignored workbench/slice18-return records; CDC owns planning and later serialized byte-preserving transfer/independent acceptance. Exact14paths/API/compatibility/error/test/capture/gates/readback/commit contract in full initial prompt. No source edit or gate has run for18 during author readiness; ordinary read/hash/preflight is not SUT proof.
 
@@ -84,4 +84,15 @@ CC observations on unchanged inputs: focused525, query2/route4, headless15 and o
 | cc-prompt.md |2026-10-20|none|Approved policyA model/cache foundation|returned; initial history retained|
 | cc-prompt-iteration01.md |2026-10-20|cc-prompt.md|F1–F6 existing-contract completion|returned; first-of-five|
 | cc-prompt-iteration02.md |2026-10-20|cc-prompt-iteration01.md|B1–B4 oracle/docs correction|returned; second-of-five, current runtime failure retained|
-| cc-prompt-iteration03.md |2026-10-20|cc-prompt-iteration02.md|One SSI-aware rich-edge expected literal|active; third-of-five, intake pending|
+| cc-prompt-iteration03.md |2026-10-20|cc-prompt-iteration02.md|One SSI-aware rich-edge expected literal|returned; third-of-five, cache42passed|
+
+
+## Refinement04 — consolidated public-teaching review / 2026-10-20 UTC
+
+Iteration03 coherent intake inspected and source/index released for one literal; actual post-change diff2cbcd943/CC0dfd73fc, only cache helper changed. Captured format5395f9ed/lint67fe8eac pass, affected cache d00b7f61 passes19unit+22integration+1doctest. Old red zero-distance expectation remains retained and CDC-owned as an author error. No-default host65a077ac passes230 after restricted0fb930c1 watcher failures; no independent acceptance.
+
+Full affected new-public-doc/README walk consolidates TWO issues into immutable cc-prompt-iteration04.md, fourth-of-five: inserter's new example uses unwrap against actual API20 example guidance; CacheData.systems old summary excludes explicitly stored marked locations. Exact Option-map Some(0) canonical-presence assertion and inclusive archive-field summary supplied; only doc blocks in graph/model and cache/data may change. No production/test algorithm change, new scope/policy/inquiry or Operator decision. All other public teaching/compatibility/import/trusted-cache/README18–19 limits reviewed as coherent; existing examples/idempotence/full test oracles retained. Source/index held after current no-default completion pending coherent intake; native/build still unstarted. Previously executed unaffected CC groups remain attributable, final original gate contract unchanged.
+
+| Assignment | Issue | Predecessor | Reason | Current disposition |
+|---|---|---|---|---|
+| cc-prompt-iteration04.md |2026-10-20|cc-prompt-iteration03.md|Two public-documentation corrections|active; fourth-of-five, intake pending|
