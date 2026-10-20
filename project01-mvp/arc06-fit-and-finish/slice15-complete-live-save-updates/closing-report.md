@@ -80,3 +80,43 @@ The Operator explicitly answered “I agree” to the proposed Slice15-only hist
 The Operator also reports external branch merge maintenance and updated/pulled/rebased local main, and asks “Can you rebase off of main so that you too have the latest, before you continue with the arc?” Authority covers ONLY the active Slice15 source candidate onto current clean local main b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc. No fetch/push/merge/release, orphan-planning rebase or old held-branch rewrite. All14 worktrees/indexes clean and no Git operation active at preflight. Candidate remains78d436a; exactly e254466 then78d436a lie above original accepted130034e. Main history has equivalent rebased predecessors: common ancestora800950; inspected130034e..main tree delta is CI trigger changes, README v2 logo links/two new logo assets and two cache-test freshness setup calls (five paths,8 insertions/4 deletions plus images). Therefore replay ONLY the two Slice15 commits via explicit --onto b616ab2 130034e, not the original predecessor stack. Preserve original tip under codex/slice15-before-main-rebase-20261019, capture command attempts/range-diff/mapping before validation. Any Rust content conflict requires a durable CC correction and independent review; no CDC self-acceptance. CDC owns stable source/planning for integration and independent verification. Original captures stay intact; fresh rebased counts will be attributed to the new tree.
 
 External pr-stack-ci now03e8d04b11d1899f2d66cdca3f26763c406dd275 is protected, as are latest main/all earlier held pins. Same Arc06-only Autonomous authority and CDC gpt-6.1-sol High / CC gpt-6-luna High, OpenAI/Codex, no fallback/extra context. Resume within this arc after child closure; all unknown-placeholder/new-dependency/policy/original parent gates persist.
+
+
+## Iteration02 final evidence closeout — 2026-10-20
+
+This is the first-party CC closeout for `cc-prompt-iteration02.md`, second refinement of five, after the initial implementation and Iteration01 were independently reviewed. This iteration only records evidence and reporting; CC changed no source/index/planning and ran no tests. The Operator’s exact “I agree” approval in planning `69928e5` covers only the previously disclosed CU07 historical-capture exception. It does not reconstruct the original missing fields.
+
+Current candidate `11cf7e6a8e2a7549a223880820c0bf4543381459` is on `codex/complete-live-save-updates`, direct parent `98dc56a94cbbaf7dc6d3ce7b9df50e28fd3b0354`, above latest local main `b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc`. Mapping is original `e254466→98dc56a` and `78d436a→11cf7e6`; both patches compare `=` with no conflict/content repair. Original tip remains protected by `codex/slice15-before-main-rebase-20261019`. The first rebased commit contains the six initially allowed paths; the second contains graph model and watcher only; both commits carry both required co-author trailers. Whole candidate diff is exactly the six-path allowlist. Source/planning worktrees and indexes are clean; all14 protected worktrees remain clean at their queried pins.
+
+### Final CU row proposals for CDC review
+
+- **CU-01 — done; retain CDC’s independent acceptance:** additive full-update API and legacy public compatibility survive exact replay.
+- **CU-02 — done; retain CDC’s independent acceptance:** same-parse full state/version, state/version-only observability, unchanged suppression and full-state test oracles accepted at Iteration01; current rebased focused checks pass in CDC’s receipt.
+- **CU-03 — done; retain CDC’s independent acceptance:** complete state/maps/selection and contradictory-movement graph proof accepted at Iteration01; current rebased focused checks pass.
+- **CU-04 — done; retain CDC’s independent acceptance:** watched-file filtering/replacement, malformed recovery and legacy behavior accepted at Iteration01; current rebased focused watch tests pass.
+- **CU-05 — done; retain CDC’s independent acceptance from e254466:** owned join, enqueue order/cancellation and native lifetime evidence are unchanged by exact replay.
+- **CU-06 — done; retain CDC’s independent acceptance:** public docs/example and library/application boundary accepted at Iteration01; current workspace and strict cache/watch docs pass.
+- **CU-07 — CC proposes done only under the explicitly approved historical exception, pending CDC’s final fence review:** all15 current CDC gates and four rebase/identity operations pass; rebased commits, path/trailer/index fences and canonical captures are recorded. The two reported early lint/compiler failures, standalone watcher32/32, isolated diagnostic pass and at-least-two later sandbox aggregates remain unrecovered. Original unavailable commands/source/cwd/time/env/exit/separate channels and the complete later population remain unknown. No current run recovers this history.
+
+These are CC’s proposals; CC does not edit the ledger or independently accept its own close.
+
+### Validation attribution
+
+CDC’s complete independent evidence is `artifacts/cdc-review-receipts.json` under `latest_main_rebase`. Its four Git operations and15 fresh rebased-source gates all exited0 with complete separate channels and actual populations: focused core87/graph171/watch32 plus the doc example; cache38 as two distinct19-test harnesses; route4; native MCP7; no-default220; workspace `make test` 951 unit/integration plus doc1; workspace doctests1; build/docs; strict cache/watch broken-link docs with explicit deny flag; working and committed-base diff checks. This is CDC execution, not a CC rerun. Existing earlier attempts and their incomplete historical groups stay unchanged.
+
+### Supporting artifact inventory
+
+The complete durable supporting inventory is `artifacts/execution.md`, `artifacts/validation.json`, and `artifacts/cdc-review-receipts.json`. There are no other durable supporting outputs. `closing-report.md` and all three preserved assignment prompts are first-class close-set documents, not supporting artifacts. Return only these existing ignored candidate files: `workbench/slice15-return/closing-report.md`, `workbench/slice15-return/execution.md`, and `workbench/slice15-return/validation.json`; transfer byte-preserved and never add them to Git.
+
+### Bubble-up to the arc
+
+1. **Assigned capability:** Yes. Slice15 delivered the arc-plan’s additive complete parsed-save event and public watch→graph application. Rebased commit `11cf7e6` preserves supported state/version-only updates while keeping legacy delta subscriptions and imported atlas data intact. CDC’s current gates pass on latest local main. This remains an isolated, uninstalled candidate, not application-integrated or merged into main.
+2. **Plan feedback:** No missing library capability or new structural arc dependency surfaced. Iteration01 fixed incomplete test witnesses and the narrowly bounded historical exception is already Operator-approved. Planned16’s application coordinator/cache/lifetime work remains correctly sequenced; no arc-plan amendment is proposed.
+3. **Scope diff / silent-drop check:** Both source patches replay exactly and no delivered capability or accepted criterion was dropped. Only the specifically approved historical attempts remain unavailable, with unknown fields/population left unknown. Single application owner/full normal and headless cache, notifications/session/terminal composition, unknown placeholder representation/promotion/compatibility, broader history/raw-field/final semantic transitions and original C04/R06-R02/R03/M7.4/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release gates remain explicit planned16/CDC/Operator work. No integration, installation, release, parent closure or new arc work is authorized by this return.
+
+CDC owns clean source/planning state and will independently verify the final evidence, record the required slice retrospective before closure, and update final row status.
+
+
+## CDC formal close and retrospective link — 2026-10-19 local / 2026-10-20 UTC
+
+CDC independently accepts all7 CU rows at11cf7e6 under the specifically approved initial historical-capture exception; exact unknowns remain unknown. Final source/rebase/current gate/commit/history/bubble-up checks are in cdc-verification.md “Final rebased independent closure”. [CDC retrospective](cdc-retrospective.md) is complete. Slice15 is CLOSED; arc/project remain open, no main integration/install/release. Next16/CDC delivers common application coordinator +headless live cache/observer; required17/CDC retains normal REPL/background-server/normal terminal startup/live composition. All other remainder/Operator/original parent gates persist.

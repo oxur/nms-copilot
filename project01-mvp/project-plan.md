@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.46
+version: 1.47
 project: project01-mvp
 status: active
 depends-on: []
@@ -894,3 +894,8 @@ CDC accepts CU01–06 at78d436a after full two-file test/Debug/docs delta review
 ## Arc06 Slice15 Operator decision / latest-main integration — 2026-10-19
 
 Operator explicitly approved the bounded initial historical-capture exception (“I agree”); exact unknown bounds remain recorded/unrecovered in the child and arc1.56. Operator also authorizes active Slice15 candidate rebase onto clean local mainb616ab2 before continuing Arc06. CDC will preserve78d436a and replay ONLY two commits above130034e; prior rebased predecessor stack is not replayed. Existing captures retained, fresh integrated validation/close/retrospective pending. External pr-stack-ci03e8d04 and every held pin/planning protected; no external action/other arc/Project02. Same selected models/workflow; all future capture/original gates retained. Version1.46 records explicit bounded acceptance amendment and source-baseline authority, without premature child closure.
+
+
+## Arc06 Slice15 rebased closure / next owners — 2026-10-19 local
+
+All7 CU rows independently accepted at11cf7e6 above current mainb616ab2; original two patches replay exactly/no conflict, fresh15 gates include951 workspace unit/integration +doc1,290 focused+doc1/cache38/route4/native7/no-default220/build/docs/strict checks. Operator-approved initial capture exception applied exactly69928e5; missing originals remain unknown, all future/original gates retained. CC final report reviewed, CDC slice retrospective and bubble-up complete. R06-S15 done; arc33/15 done/18 open, project25 open. Required16 common coordinator/headless full live cache/observer,17 same-coordinator normal REPL/background-server/PTY composition, and all unknown-placeholder/history/raw-field/final semantic/original parent obligations remain. Candidate uninstalled/unintegrated; current main/external worktree/dependencies/Project02 protected. Version1.47 records child closure and explicit sizing of the complete next composition, no scope reduction or other acceptance amendment.

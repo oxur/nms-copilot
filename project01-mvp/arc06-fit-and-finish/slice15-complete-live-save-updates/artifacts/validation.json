@@ -3358,5 +3358,118 @@
       "workbench/slice15-return/validation.json (filesystem-only)"
     ],
     "source_mutation_ownership": "handed back to CDC after commit 78d436a and clean tracked/index verification"
+  },
+  "iteration02": {
+    "assignment": {
+      "prompt_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration02.md",
+      "prompt_sha256": "d10f937bb9baa3cc2a79f9be8a844f8aaa5717a129a1669107f617fa12fe8b26",
+      "issued_in_planning_commit": "5793f2b3005c48d9bfc5f599410ada4db1d30a74",
+      "mode": "evidence-only closeout; no source/index/planning mutation and no tests run by CC",
+      "operator_exception_approval_commit": "69928e5",
+      "model": "OpenAI/Codex gpt-6-luna, reasoning high; no fallback or extra context"
+    },
+    "intake": {
+      "required_prompts_and_manifests_read_completely": true,
+      "current_ledger_state": "CU01-CU06 done and independently accepted; CU07 open pending rebase evidence and closure fences",
+      "source_ownership": "CDC retained source/index and planning ownership throughout this iteration",
+      "historical_capture_exception": "Operator approved the exact proposed narrow exception; this does not recover missing historical evidence or waive future evidence requirements"
+    },
+    "source_rebase_review": {
+      "baseline_source_commit": "e254466ffc0e2ab7c2a6ed23f355c3cf6d5bc8ee",
+      "pre_rebase_tip": "78d436ad6f20aa9466424103fcabd630c718b904",
+      "pre_rebase_tip_preserved_ref": "refs/heads/codex/slice15-before-main-rebase-20261019",
+      "latest_main": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+      "current_source_commit": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "current_source_parent": "98dc56a94cbbaf7dc6d3ce7b9df50e28fd3b0354",
+      "branch": "codex/complete-live-save-updates",
+      "range_diff": "Both source patches map with =; no conflict or content repair. e254466 maps to 98dc56a; 78d436a maps to 11cf7e6.",
+      "current_commit_paths": "First rebased source commit has exactly the six originally authorized paths; second has graph model and watcher. The total candidate diff remains the six-path allowlist: README.md, nms-core delta/lib, nms-graph model, nms-watch lib/watcher.",
+      "trailers": "Both commits retain Co-authored-by: Codex <noreply@openai.com> and Co-authored-by: Billo AI <ai-engineering@billo.systems>.",
+      "tracked_state": "Source/index clean at handback; planning clean at issuance commit. CDC owns both.",
+      "other_worktree_pins": "All 14 queried worktrees were clean, including main, current source, planning, and pr-stack-ci."
+    },
+    "cdc_rebase_and_gate_receipts": {
+      "canonical_receipt": "artifacts/cdc-review-receipts.json, latest_main_rebase section",
+      "attribution": "CDC-authored; these are not CC test runs and their command records were not copied into the prior CC attempt arrays.",
+      "rebase_identity_operations": {
+        "count": 4,
+        "complete_exit_zero": 4
+      },
+      "fresh_rebased_gates": {
+        "count": 15,
+        "complete_exit_zero": 15
+      },
+      "capture_validation": "Each of the 19 receipts has separately captured stdout and stderr; encoded lengths and SHA-256 values were validated against decoded channel bytes.",
+      "populations": {
+        "focused_core_graph_watch": "core 87 + graph 171 + watch 32 = 290 tests, plus one selected documentation example",
+        "cache": "38 tests across 19 unit and 19 distinct integration tests",
+        "route": 4,
+        "native_mcp": 7,
+        "no_default_features": 220,
+        "make_test": "951 unit/integration tests plus one documentation test",
+        "workspace_doctests": "1 across 9 harnesses",
+        "other_passing_gates": "workspace build, general docs, strict cache/watch broken-link docs, working-tree diff check, and committed-base diff check"
+      },
+      "cc_reruns_this_iteration": 0
+    },
+    "historical_capture_exception_and_limits": {
+      "covered_observations": "Only the exact initial historical capture gap named in the Operator-approved exception.",
+      "unknowns_preserved": "The two reported early lint/compiler failures and standalone/isolated/sandbox aggregate historical attempts remain as originally recorded. For each uncaptured attempt, unavailable command, source identity, cwd, timestamp, environment, exit code, and separate stdout/stderr remain unknown where they were unknown; no count is inferred for the aggregate family.",
+      "no_reconstruction": "CDC current receipts prove current rebased checks only; they do not reconstruct or replace missing historical channels."
+    },
+    "row_dispositions_proposed_by_cc": {
+      "CU-01": "done; retain prior independent CDC acceptance",
+      "CU-02": "done; retain prior independent CDC acceptance",
+      "CU-03": "done; retain prior independent CDC acceptance",
+      "CU-04": "done; retain prior independent CDC acceptance",
+      "CU-05": "done; retain prior independent CDC acceptance",
+      "CU-06": "done; retain prior independent CDC acceptance",
+      "CU-07": "CC proposes done solely under the exact Operator-approved historical exception and current CDC rebase evidence; CDC must independently verify fences and record disposition. CC does not edit the ledger or self-accept."
+    },
+    "supporting_artifact_inventory": [
+      "artifacts/execution.md",
+      "artifacts/validation.json",
+      "artifacts/cdc-review-receipts.json"
+    ],
+    "bubble_up_to_arc": {
+      "capability": "Delivered complete parsed-save live updates from watcher through graph, with full parsed state authority and legacy behavior preserved. Candidate is rebased and independently validated; it is not installed or integrated to main/application.",
+      "arc_change": "No missing library capability or new structural arc change identified. Iteration01 corrected the test witnesses. The exact historical evidence exception is already approved; Planned16 remains sequenced.",
+      "retained_scope": "No capability dropped. Ongoing single application coordinator, normal/headless cache, notifications/session/terminal, unknown placeholders and promotion, broader history/raw-field/final semantics, C04/R06-R02/R03/M7.4/export/import/format/docs/distribution/coverage, independent parent/Operator acceptance, integration and release remain open."
+    },
+    "append_only_preservation": {
+      "seeded_markdown_prefixes": {
+        "closing_report": {
+          "bytes": 17114,
+          "sha256": "a710c486e277909fcea2d1ed816932b0b49afe386f23bb484811b6263bb2e8b7"
+        },
+        "execution": {
+          "bytes": 21777,
+          "sha256": "52630bd5f81ff45824f0de9d7023fda3000b664516144cb783b44e3d56267441"
+        }
+      },
+      "seeded_validation_sha256": "2aea7fc96955a041b71bc2189287e5fc04f43921cb2d0330c6df1e6eac6a5ca1",
+      "original_validation_root_value_sha256": {
+        "assignment": "6822349af3835d2d3cc98b2e75211561179b37d21e0fc2370c2ab1bf06d4ddc4",
+        "source_baseline": "a343e4f8aef26979d3c74a76ba15116eb2ef99f8340a5bf2dc2c70f7eff6d828",
+        "cwd": "628677f124c5d0dfd7e323b74ece75d65fc14f3602187f78d007f15d97648cb3",
+        "prior_attempts": "a1c8953345285c57f86218c7e9b49039a98a0c872eccebb43f01a90f0e9b9ef6",
+        "previous_complete_capture": "62e3b83669f4dffbb6277055c0dde18f10e2072ed0e331778b618ee545d0929f",
+        "attempts": "8532ddfa026064858044af029390c6a59b0ae6b898d267efcab02b6071640b60",
+        "capture_completeness": "6891cf422769bf15ab4f61b5cb4912d528118e2ff852438de07e57a5c89fc25b",
+        "source_commit": "ccaf5a9c464a3f89dabeac1a83e9b38f7c587af50b49ae90e78b09f2bf42c359",
+        "iteration01": "aeeddb653136596c79364fe28422caff09dbece02f9ee7a6049cc7334f3ad23c"
+      },
+      "first_append_script_error": "Markdown appends succeeded and prefixes were checked, then a loop variable shadowed the validation Path and caused AttributeError before validation write. validation.json remained unchanged at nine roots. Corrected append is followed by root-value and prefix verification; no source/planning/index changes or gate effects."
+    },
+    "return_and_handoff": {
+      "filesystem_only_return_paths": [
+        "workbench/slice15-return/closing-report.md",
+        "workbench/slice15-return/execution.md",
+        "workbench/slice15-return/validation.json"
+      ],
+      "git_staging_or_commit": "none",
+      "ownership_handed_back_to": "CDC for source/index/planning and independent review/retrospective/closure",
+      "candidate_commit": "11cf7e6a8e2a7549a223880820c0bf4543381459"
+    }
   }
 }

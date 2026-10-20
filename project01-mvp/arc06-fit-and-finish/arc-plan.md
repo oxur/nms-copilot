@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.56, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.57, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -493,3 +493,10 @@ The Operator also reports external branch merge maintenance and updated/pulled/r
 External pr-stack-ci now03e8d04b11d1899f2d66cdca3f26763c406dd275 is protected, as are latest main/all earlier held pins. Same Arc06-only Autonomous authority and CDC gpt-6.1-sol High / CC gpt-6-luna High, OpenAI/Codex, no fallback/extra context. Resume within this arc after child closure; all unknown-placeholder/new-dependency/policy/original parent gates persist.
 
 Version1.56 records the specific approved evidence amendment and authorized current-main two-commit rebase before execution; not child/arc closure.
+
+
+## Slice15 rebased independent closure / next composition sizing — 2026-10-19 local
+
+All7 CU rows/R06-S15 done at11cf7e6 (parent98dc56a above current mainb616ab2). Only two Slice15 commits cleanly replayed; original78d436a preserved, both range-diff '='. All15 fresh gates independently pass:290 focused+doc1/cache38/route4/native7/no-default220/workspace951+doc1/build/docs/strict-cache+watch/diffs. Exact captures/failures/history preserved; Operator's explicit69928e5 initial-capture exception applied narrowly, no recovered-history claim. CC iteration02 report-only return reviewed; final CDC verification/bubble-up and cdc-retrospective.md complete. No runtime repair by CDC, no main integration/install/release. Arc33/15 done/18 open, project25 open.
+
+Was: planned16 all application coordinator/both-mode/cache/lifetime composition. Source-grounded useful sizing details next16 common app-owned full-update coordinator +serialized outside-model-lock writer +headless stdio/HTTP observer-only wiring/live cache/error/no_cache/failure-recovery; required17/CDC then consumes the SAME coordinator for normal REPL/shared MCP, owned background server shutdown, session/notifications and normal native-terminal startup/full-live cache matrix. This is decomposition of the adopted direction, preserving ALL remainder rather than claiming both modes complete in16. Existing normal native PTY preflight is a method prerequisite, not capability acceptance. Unknown placeholder representation/promotion/compatibility remains CDC/Operator-gated, history/raw-field/final semantic transitions and original export/import/format/docs/distribution/coverage/C04/R06-R02/R03/M7.4/parent independent/Operator/integration/release remain required. No inquiry commissioned or new policy/dependency adopted. CDC next authors16 from accepted11cf7e6 with same CC/model and explicit source ownership. Mainb616ab2/external pr-stack-ci03e8d04/earlier held pins/Project02 protected. Version1.57 records child closure/retrospective and complete routine remainder sizing; only evidence amendment is the explicitly approved one.

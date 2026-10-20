@@ -1,6 +1,6 @@
 # Slice15 — complete parsed live save updates
 
-Version:1.2. Created2026-10-19. Status:open; CU01–06 independently accepted, CU07 awaiting Operator evidence disposition. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration02.md`; second refinement of five, evidence-only final return; prior implementation assignments returned/reviewed. CDC owns stable rebased source/planning; same CC owns only three ignored return files during report closeout.
+Version:1.3. Created2026-10-19. Status:CLOSED; all7 CU rows independently accepted at11cf7e6 under the exact approved initial historical-capture exception. Two contributors in Operator-authorized Autonomous Mode: CDC `cdc_arc06` requested/applied `gpt-6.1-sol` High, CC launched `gpt-6-luna` High, both OpenAI/Codex. No fallback. Current assignment `arc06-fit-and-finish/slice15-complete-live-save-updates/cc-prompt-iteration02.md`; second refinement of five executed/returned/independently reviewed/closed; prior prompts preserved. CDC owns stable accepted source/planning and next16 authoring; no active CC assignment.
 
 ## Useful increment, dependency and ownership
 
@@ -80,3 +80,8 @@ External pr-stack-ci now03e8d04b11d1899f2d66cdca3f26763c406dd275 is protected, a
 ## Rebased verification and final evidence assignment — 2026-10-19
 
 Clean two-commit replay onto mainb616ab2: e254466→98dc56a,78d436a→11cf7e6; original tip preserved under codex/slice15-before-main-rebase-20261019. Both patches '=' in range-diff, no conflicts/repair; main’s five-path delta intact. All15 fresh integrated gates pass (290 focused+doc1/cache38/route4/native7/no-default220/workspace951+doc1/build/docs/strictcache+watch/diffs), fully captured in existing receipts.latest_main_rebase along with4 Git operations. This is fresh11cf7e6 evidence; old captures remain unchanged. Current first-party CC final report needed under recorded exception: immutable iteration02, evidence-only/no source mutation/no repeated gates. Second refinement of five, predecessor iteration01, ready for dispatch after this issuance commit; CDC reviews then writes retrospective/formally closes.
+
+
+## Final close — 2026-10-19 local / 2026-10-20 UTC
+
+All7 CU rows independently done at11cf7e6 after clean two-commit latest-main replay and15 fresh real gates. Operator approval69928e5 amends ONLY initial missing-capture bounds; histories preserved, no recovered claim. CC evidence-only iteration02 returned/prefix/root preservation and complete per-row/inventory/bubble-up independently verified. Final CDC review and closing retrospective complete; no source changes/repeated source gates for evidence-only final edits. Arc33/15 done/18 open, project25 open; CDC immediately authors16 common coordinator/headless full-live-cache/observer, while required17 retains normal REPL/background-server/PTY composition. Existing unknown/policy/history/raw/original closeout gates remain. Version1.3 records actual closure and complete next-owner sizing.
