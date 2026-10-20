@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.55
+version: 1.56
 project: project01-mvp
 status: active
 depends-on: []
@@ -939,3 +939,8 @@ Version1.54: required normal SAME-coordinator REPL/owned shared background MCP/p
 ## Arc06 Slice17 initial review / bounded correction — 2026-10-20 UTC
 
 Version1.55: initial normal candidate on e093 remains uncommitted eight paths; CDC full production/new-helper review issued first-of-five immutable correction F1–F8 and complete native9 boundaries. All8RC/R06-S17open,35arcrows/16done/19open/project25open; prior partial gates are not final acceptance. Same selected roles/models/one-arc endpoint/serialized ownership; no new Operator gate or policy. Source and protected main/held history retained; all original parent independent/Operator/integration/release and unresolved unknown/history/raw/finalsemantic/freshness obligations unchanged.
+
+
+## Arc06 Slice17 complete code review / second correction — 2026-10-20 UTC
+
+Version1.56: full pinned eight-path/new-helper review returned remaining existing-contract gaps to immutable iteration02 (second of five), six editing paths, correct current README/Cargo frozen. Uncommitted e093+7ae37fcc, all8RC/R06-S17open/native0of9,35arcrows/16done/19open/project25open. Actual first native-launch capture gap retained without inferred16waiver; complete current proof precedes Operator disposition. Same authorized models/ownership/Arc06-only boundary and protected main/held history; all original parent/policy/independent/Operator/integration/release obligations retained.

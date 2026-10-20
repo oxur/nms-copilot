@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.65, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.66, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -540,3 +540,8 @@ Version1.64: accepted16 closed04b3255/e093 with ONLY explicitly approved histori
 ## Slice17 initial review / bounded first correction — 2026-10-20 UTC
 
 Version1.65: source still initial eight-path uncommitted candidate on e093, index empty, pinned hashes. CDC complete production/new-helper review found existing-contract F1–F8 omissions; immutable slice17-repl-live-cache/cc-prompt-iteration01.md FIRST of five supplies one closed batch plus unfinished native9. Existing partial green gates remain attributable to actual inputs, not acceptance; all8RC/R06-S17open,35arcrows/16done/19open/project25open. No new Operator gate, policy, dependency, role/model or terminal method. Source paused for issued readback; ownership remains sole CCsource/index and CDCplanning/independent review. All original unknown/history/raw/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gates and protected main workingedit/held pins remain unchanged.
+
+
+## Slice17 full iteration01 review / second bounded correction — 2026-10-20 UTC
+
+Version1.66: complete eight-path/all-helper CDC static review on unchanged uncommitted e093+7ae37fcc found remaining normal-shutdown/API/docs/compound-oracle/SSE/failed-child-output/native mode+file-boundary omissions. Immutable iteration02 SECOND of five supplies concrete closed-list six-path correction; README/Cargo current bytes frozen, no source commit/row acceptance. Native9 remains0/9; CC held for issued readback. First warm native launch lost raw object and never recorded native UUID/startUTC; exact available precursor/preregistration/cleanup retained, no history reconstructed or16waiver extended. Finish concrete current proof before disposition. All8RC/R06-S17open,35arcrows/16done/19open/project25open; same selected roles/models/ownership/one-arc endpoint. All unknown/history/raw/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gates and protected main workingedit/held pins unchanged.
