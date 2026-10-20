@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.60
+version: 1.61
 project: project01-mvp
 status: active
 depends-on: []
@@ -969,3 +969,8 @@ Version1.59: CDC independently accepts RC01–07 on61f1d98 after full8-path/help
 ## Slice17 approved closure and next ownership — 2026-10-20 UTC
 
 Version1.60: Operator explicitly approved ONLY the two Slice17 historical capture exceptions in4bff721 (“yes, I approve!”). RC08 now accepted; all8 child rows/R06-S17 closed on unchanged61f1d98, full independent19 ordinary groups/native9 retained, workspace977+doc5. No record-only test reruns. Final CDC retrospective and slice bubble-up complete. Arc35rows17done18open/project25open. Missing facts remain unknown and failed launch noncounting; prior/future requirements unchanged. CDC now inspects remaining arc/project obligations/current source and resolves next bounded unit before issuance; consequential unknown-placeholder representation/promotion/cachecompatibility policy remains Operator-gated, as do material ambiguities. Broader history/raw-field/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release scope retained. Same CDC gpt-6.1-sol High / CC gpt-6-luna High, protected main9-line edit/held pins/Project02, source/planning ownership and Arc06-only endpoint. No merge/push/install/release/external action.
+
+
+## Arc06 next unknown-system policy choice — 2026-10-20 UTC
+
+Version1.61: accepted17 source61f1d98/f3c6f228 closes its8rows and R06-S17; unchanged35arcrows17done18open/project25open. CDC inspected remaining obligations/current model/cache/import/location source and prepared the concrete next unknown-system lifecycle recommendation in arc-plan.md Version1.71. A proposes explicit persisted synthetic origin, stable inclusive model-system counts/unknown-location history, exact-key real-record promotion and schema3/semantic3 predecessor rebuild; cache-only imported data absent source may require re-import. B instead keeps unknown entries session-only and omits them from cache, still requiring semantic rejection and promotion fixes. Existing Operator marker/layout/compatibility/promotion gate requires the choice before a Slice18 assignment; no prompt/worktree/dispatch or new inquiry. Routine engineering types remain CDC-owned. All broader history/raw-field/final-semantic/freshness-import-history/original parent/independent/Operator/integration/release obligations, same selected roles/models, protected worktrees and Arc06-only endpoint retained.
