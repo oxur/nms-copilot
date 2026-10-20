@@ -12,7 +12,9 @@ pub mod tools;
 #[cfg(feature = "http")]
 use std::net::SocketAddr;
 use std::sync::Arc;
+use std::sync::mpsc::Receiver;
 use std::thread;
+use std::time::Duration;
 
 use fabryk_mcp::{
     CompositeRegistry, DiscoverableRegistry, FabrykMcpServer, HealthTools, Notifier,
@@ -20,6 +22,7 @@ use fabryk_mcp::{
 };
 use tokio::sync::RwLock;
 
+use crate::coordinator::AppliedSaveUpdate;
 use nms_graph::GalaxyModel;
 
 use resources::{BASES_URI, GALAXY_STATS_URI, NmsResources, PLAYER_LOCATION_URI};
@@ -77,6 +80,7 @@ pub fn spawn_mcp_background_with_watch_config(
                 model,
                 transport,
                 watcher,
+                None,
                 Some(ready_tx),
                 service_for_thread,
             )
@@ -128,8 +132,24 @@ pub fn run_headless_with_watch_config(
     rt.block_on(async {
         let watcher = start_watcher(watch_config);
 
-        if let Err(e) = run_mcp_server(model, transport, watcher, None, mcp_service).await {
+        if let Err(e) = run_mcp_server(model, transport, watcher, None, None, mcp_service).await {
             eprintln!("MCP server error: {e}");
+        }
+    });
+}
+
+/// Run headless MCP using already-applied updates from the application owner.
+/// This observer never starts a watcher, mutates the model, or writes cache.
+pub fn run_headless_with_updates(
+    model: Arc<RwLock<GalaxyModel>>,
+    transport: Transport,
+    updates: Option<Receiver<AppliedSaveUpdate>>,
+) {
+    let service = ServiceHandle::new("mcp");
+    let runtime = tokio::runtime::Runtime::new().expect("tokio runtime");
+    runtime.block_on(async {
+        if let Err(error) = run_mcp_server(model, transport, None, updates, None, service).await {
+            eprintln!("MCP server error: {error}");
         }
     });
 }
@@ -171,6 +191,7 @@ async fn run_mcp_server(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
     mut watcher: Option<nms_watch::WatchHandle>,
+    updates: Option<Receiver<AppliedSaveUpdate>>,
     ready_tx: Option<std::sync::mpsc::SyncSender<Result<(), String>>>,
     service_handle: ServiceHandle,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
@@ -203,8 +224,14 @@ async fn run_mcp_server(
     let mut delta_task = DeltaTaskGuard::default();
     if let Some(receiver) = watcher_rx {
         let model_for_watcher = Arc::clone(&model);
+        let notifier_for_watcher = notifier.clone();
         delta_task.0 = Some(tokio::spawn(async move {
-            apply_deltas_loop(receiver, model_for_watcher, notifier).await;
+            apply_deltas_loop(receiver, model_for_watcher, notifier_for_watcher).await;
+        }));
+    }
+    if let Some(receiver) = updates {
+        delta_task.1 = Some(tokio::spawn(async move {
+            observe_applied_updates(receiver, notifier).await;
         }));
     }
 
@@ -262,11 +289,14 @@ async fn run_mcp_server(
 
 /// Own the delta task so every early return cancels it instead of detaching it.
 #[derive(Default)]
-struct DeltaTaskGuard(Option<tokio::task::JoinHandle<()>>);
+struct DeltaTaskGuard(
+    Option<tokio::task::JoinHandle<()>>,
+    Option<tokio::task::JoinHandle<()>>,
+);
 
 impl DeltaTaskGuard {
     async fn abort_and_join(mut self) {
-        if let Some(task) = self.0.take() {
+        for task in [self.0.take(), self.1.take()].into_iter().flatten() {
             task.abort();
             let _ = task.await;
         }
@@ -275,7 +305,7 @@ impl DeltaTaskGuard {
 
 impl Drop for DeltaTaskGuard {
     fn drop(&mut self) {
-        if let Some(task) = &self.0 {
+        for task in [&self.0, &self.1].into_iter().flatten() {
             task.abort();
         }
     }
@@ -436,6 +466,87 @@ async fn apply_deltas_loop(
         if !delta.modified_bases.is_empty() {
             notifier.resource_updated(BASES_URI).await;
         }
+    }
+}
+
+async fn observe_applied_updates(receiver: Receiver<AppliedSaveUpdate>, notifier: Notifier) {
+    let mut interval = tokio::time::interval(Duration::from_millis(100));
+    loop {
+        interval.tick().await;
+        loop {
+            match receiver.try_recv() {
+                Ok(event) => {
+                    // Complete player state and source version can change even
+                    // when the atlas delta is empty, so location is invalidated
+                    // for every applied update.
+                    notifier.resource_updated(PLAYER_LOCATION_URI).await;
+                    notify_delta_resources(&notifier, &event.update.delta).await;
+                }
+                Err(std::sync::mpsc::TryRecvError::Empty) => break,
+                Err(std::sync::mpsc::TryRecvError::Disconnected) => return,
+            }
+        }
+    }
+}
+
+async fn notify_delta_resources(notifier: &Notifier, delta: &nms_core::SaveDelta) {
+    if let Some(moved) = &delta.player_moved {
+        log::info!("Live update: player moved");
+        notifier.log(fabryk_mcp::model::LoggingLevel::Info, "nms-copilot", serde_json::json!({
+            "event": "player_moved", "from": format!("{}", moved.from), "to": format!("{}", moved.to)
+        })).await;
+    }
+    if !delta.new_systems.is_empty() {
+        let names: Vec<&str> = delta
+            .new_systems
+            .iter()
+            .filter_map(|system| system.name.as_deref())
+            .collect();
+        log::info!("Live update: {} new system(s)", delta.new_systems.len());
+        notifier
+            .log(
+                fabryk_mcp::model::LoggingLevel::Info,
+                "nms-copilot",
+                serde_json::json!({
+                    "event": "new_systems", "count": delta.new_systems.len(), "names": names
+                }),
+            )
+            .await;
+    }
+    if !delta.new_planets.is_empty() {
+        log::info!("Live update: {} new planet(s)", delta.new_planets.len());
+        notifier
+            .log(
+                fabryk_mcp::model::LoggingLevel::Info,
+                "nms-copilot",
+                serde_json::json!({
+                    "event": "new_planets", "count": delta.new_planets.len()
+                }),
+            )
+            .await;
+    }
+    if !delta.new_bases.is_empty() {
+        let names: Vec<&str> = delta
+            .new_bases
+            .iter()
+            .map(|base| base.name.as_str())
+            .collect();
+        log::info!("Live update: {} new base(s)", delta.new_bases.len());
+        notifier
+            .log(
+                fabryk_mcp::model::LoggingLevel::Info,
+                "nms-copilot",
+                serde_json::json!({
+                    "event": "new_bases", "count": delta.new_bases.len(), "names": names
+                }),
+            )
+            .await;
+    }
+    if !delta.new_systems.is_empty() || !delta.new_planets.is_empty() {
+        notifier.resource_updated(GALAXY_STATS_URI).await;
+    }
+    if !delta.new_bases.is_empty() || !delta.modified_bases.is_empty() {
+        notifier.resource_updated(BASES_URI).await;
     }
 }
 

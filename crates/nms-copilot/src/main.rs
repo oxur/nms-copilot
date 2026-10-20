@@ -21,6 +21,7 @@ use tokio::sync::RwLock;
 use nms_copilot::banner;
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::config::Config;
+use nms_copilot::coordinator::LiveSaveCoordinator;
 use nms_copilot::mcp;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
@@ -150,7 +151,19 @@ fn main() {
             model.blocking_read().planet_count(),
             model.blocking_read().bases.len(),
         );
-        mcp::run_headless_with_watch_config(model, transport, watch_config);
+        let coordinator = watch_config.and_then(|watch| {
+            let live_cache = (!no_cache).then(|| cache_path.clone());
+            match LiveSaveCoordinator::start(Arc::clone(&model), watch, live_cache) {
+                Ok(coordinator) => Some(coordinator),
+                Err(error) => {
+                    eprintln!("Warning: live save coordinator unavailable: {error}");
+                    None
+                }
+            }
+        });
+        let updates = coordinator.as_ref().map(LiveSaveCoordinator::subscribe);
+        mcp::run_headless_with_updates(model, transport, updates);
+        drop(coordinator);
         return;
     }
 

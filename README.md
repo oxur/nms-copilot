@@ -419,3 +419,7 @@ at your option.
 [docs-badge]: https://img.shields.io/badge/rust-documentation-blue.svg
 [tag-badge]: https://img.shields.io/github/tag/oxur/nms-copilot.svg
 [tag]: https://github.com/oxur/nms-copilot/tags
+
+### Headless live updates
+
+In headless MCP mode, an enabled save watcher feeds one application-owned coordinator. Each complete parsed update is applied to the shared model, then written through to the configured cache when caching is enabled; connected MCP clients receive location/resource invalidations after the update. A cache write failure is reported on stderr and does not stop model updates or notifications. `--no-cache` and disabled watching retain their configured behavior. Slow observer consumers do not block cache writes and should drain their update receiver. The interactive REPL retains its existing update path.
