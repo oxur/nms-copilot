@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.71, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.72, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -572,7 +572,7 @@ Version1.69: CDC independently accepts RC01–07 on61f1d98 after full8-path/help
 Version1.70: Operator explicitly approved ONLY the two Slice17 historical capture exceptions in4bff721 (“yes, I approve!”). RC08 now accepted; all8 child rows/R06-S17 closed on unchanged61f1d98, full independent19 ordinary groups/native9 retained, workspace977+doc5. No record-only test reruns. Final CDC retrospective and slice bubble-up complete. Arc35rows17done18open/project25open. Missing facts remain unknown and failed launch noncounting; prior/future requirements unchanged. CDC now inspects remaining arc/project obligations/current source and resolves next bounded unit before issuance; consequential unknown-placeholder representation/promotion/cachecompatibility policy remains Operator-gated, as do material ambiguities. Broader history/raw-field/finalsemantic/freshness-import-history/C04/export/import/format/docs/distribution/coverage/parent independent/Operator/integration/release scope retained. Same CDC gpt-6.1-sol High / CC gpt-6-luna High, protected main9-line edit/held pins/Project02, source/planning ownership and Arc06-only endpoint. No merge/push/install/release/external action.
 
 
-## Next required unknown-system lifecycle — proposed, awaiting Operator — 2026-10-20 UTC
+## Next required unknown-system lifecycle — proposed2026-10-20, policy A adopted below
 
 **Current status:** Slice17 closed at61f1d98/f3c6f228. No Slice18 prompt, worktree or source assignment exists. CDC source inspection below is routine author preparation within the approved remaining identity/cache/live work, not a commissioned empirical inquiry. Unknown-placeholder representation/promotion/cachecompatibility was explicitly held for CDC/Operator in the adopted ownership design;17's historical capture approval does not adopt it. The recommended user-visible policy below is concrete but UNAPPROVED. Implementation types/methods remain CDC engineering responsibility after that choice, not questions delegated to the Operator.
 
@@ -615,3 +615,10 @@ Discriminating proof must include: repeated ensure idempotence; genuine unnamed+
 **Why pause:** the adopted plan already reserves persisted marker/layout/compatibility and unknown promotion decisions to the Operator. project-management/guides/README.md167–169 says, “When new evidence makes a plan choice too ambiguous to resolve confidently, pause affected work and surface the decision; record the resolution before resuming dependent work.” The skill is /Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/guides/README.md. This is the existing consequential product/cache policy gate, not routine Rust API approval or a new evidence waiver.
 
 Version1.71 records completed17's next source-grounded policy packet and recommendation before affected implementation. Arc35rows17done18open/project25open; all original R06-R01/R02/R03/M7.4/C04/history/raw/final-semantic/export/import/format/docs/distribution/coverage/independent/Operator/integration/release obligations stay open as applicable. Main b616 with protected9-line edit, external03e8d04, accepted15/16/17 and earlier held pins unchanged. No18prompt/worktree/CC dispatch, no nextarc/Project02/remote action. Operator next-action owner for this bounded policy choice; useful independent later work is not treated as authority to cross it.
+
+
+## Operator adopts policy A — 2026-10-20 UTC
+
+The Operator explicitly selects the concrete76144ff2 policy: “yeah, I’m with you on A :-)”. Adopt A only: explicitly marked unknown physical-system locations persist across compatible restarts; system counts remain inclusive model-entry counts; only marked entries promote on genuine discovery/ordinary insert/community import, with synchronized indexes and exact physical identity. Proposed schema3/semantic3 rejects predecessor2/2 and rebuilds from selected source; disclosed cache-only imports absent that save may need re-import. No empty/name heuristic, genuine duplicate-policy change, automatic old-cache migration or raw-field validity claim. The preceding proposal/choice/hold text remains historical; this section discharges its specific policy gate, not remaining parent gates.
+
+CDC may now detail author-ready bounded18 (or a coherent explicitly accounted split) from accepted61f1d98 under unchanged gpt-6.1-sol High CDC /gpt-6-luna High CC, Arc06-only. Resolve routine types/API/cache-invariant/index/error/test mechanics without further policy question, preserve issued prompts/readback/raw-first captures/five-refinement limits and independent acceptance. Keep single coordinator/writer/short locks, manual anchors, genuine unnamed/empty and duplicate behavior, strict freshness/no_cache/parse-failure/best-effort errors. Every broader history/raw-field/final-semantic/freshness-import-history/original parent/independent/Operator/integration/release obligation remains. No18assignment yet; source/planning ownership handoff follows complete durable readiness. Protected main9-line edit/held pins/Project02 unchanged; no merge/push/install/release/nextarc. Version1.72 records exact policy approval before dependent work; arc35rows17done18open/project25open.

@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.61
+version: 1.62
 project: project01-mvp
 status: active
 depends-on: []
@@ -974,3 +974,8 @@ Version1.60: Operator explicitly approved ONLY the two Slice17 historical captur
 ## Arc06 next unknown-system policy choice — 2026-10-20 UTC
 
 Version1.61: accepted17 source61f1d98/f3c6f228 closes its8rows and R06-S17; unchanged35arcrows17done18open/project25open. CDC inspected remaining obligations/current model/cache/import/location source and prepared the concrete next unknown-system lifecycle recommendation in arc-plan.md Version1.71. A proposes explicit persisted synthetic origin, stable inclusive model-system counts/unknown-location history, exact-key real-record promotion and schema3/semantic3 predecessor rebuild; cache-only imported data absent source may require re-import. B instead keeps unknown entries session-only and omits them from cache, still requiring semantic rejection and promotion fixes. Existing Operator marker/layout/compatibility/promotion gate requires the choice before a Slice18 assignment; no prompt/worktree/dispatch or new inquiry. Routine engineering types remain CDC-owned. All broader history/raw-field/final-semantic/freshness-import-history/original parent/independent/Operator/integration/release obligations, same selected roles/models, protected worktrees and Arc06-only endpoint retained.
+
+
+## Arc06 policy A adopted — 2026-10-20 UTC
+
+Version1.62: Operator explicitly selected A (“yeah, I’m with you on A :-)”) from committed76144ff2. Persist explicitly marked unknown locations/inclusive model counts, promote only marked records on real insert/discovery/import, and reject/rebuild2/2 to3/3 with disclosed cache-only-import loss/re-import limit. This closes only that consequential policy gate; routine18authoring/implementation may proceed under unchanged selected models/Arc06-only authority. All source/planning ownership, protected main edit/held pins/Project02 and broader raw/history/finalsemantic/parent/independent/Operator/integration/release gates retained; no prompt/source assignment yet, no external action.
