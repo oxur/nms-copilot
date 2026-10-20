@@ -16,6 +16,9 @@ use nms_graph::GalaxyModel;
 use serde_json::{Value, json};
 use tempfile::TempDir;
 
+type LineReceiver = Receiver<Result<String, String>>;
+type TeedLineReceivers = (LineReceiver, LineReceiver);
+
 const PLAYER_LOCATION_URI: &str = "nms://player/location";
 const PHASE_TIMEOUT: Duration = Duration::from_secs(8);
 const RPC_TIMEOUT: Duration = Duration::from_secs(5);
@@ -1044,6 +1047,24 @@ impl StdioProcess {
     }
 
     fn spawn_with_cache_policy(save: &Path, home: Option<TempDir>, no_cache: bool) -> Self {
+        Self::spawn_with_cache_policy_inner(save, home, no_cache, false).0
+    }
+
+    fn spawn_with_cache_policy_captured(
+        save: &Path,
+        home: Option<TempDir>,
+        no_cache: bool,
+    ) -> (Self, Receiver<Result<String, String>>) {
+        let (process, capture) = Self::spawn_with_cache_policy_inner(save, home, no_cache, true);
+        (process, capture.expect("stdout EOF capture enabled"))
+    }
+
+    fn spawn_with_cache_policy_inner(
+        save: &Path,
+        home: Option<TempDir>,
+        no_cache: bool,
+        capture_stdout: bool,
+    ) -> (Self, Option<Receiver<Result<String, String>>>) {
         let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
         if let Some(home) = &home {
             command.env("HOME", home.path());
@@ -1061,9 +1082,17 @@ impl StdioProcess {
             .spawn()
             .expect("spawn compiled nms-copilot child");
         let stdin = child.stdin.take().expect("piped stdin");
-        let stdout = lines_channel(child.stdout.take().expect("piped stdout"));
+        let (stdout, stdout_eof_capture) = if capture_stdout {
+            let (protocol, capture) = lines_channel_tee(child.stdout.take().expect("piped stdout"));
+            (protocol, Some(capture))
+        } else {
+            (
+                lines_channel(child.stdout.take().expect("piped stdout")),
+                None,
+            )
+        };
         let stderr = lines_channel(child.stderr.take().expect("piped stderr"));
-        Self {
+        let process = Self {
             child,
             stdin: Some(stdin),
             stdout,
@@ -1072,7 +1101,8 @@ impl StdioProcess {
             pending: Vec::new(),
             last_id: 100,
             _home: home,
-        }
+        };
+        (process, stdout_eof_capture)
     }
 
     fn send(&mut self, value: Value) {
@@ -1294,6 +1324,27 @@ impl HttpChild {
         home: Option<TempDir>,
         no_cache: bool,
     ) -> Self {
+        Self::spawn_with_cache_policy_inner(save, addr, home, no_cache, false).0
+    }
+
+    fn spawn_with_cache_policy_captured(
+        save: &Path,
+        addr: SocketAddr,
+        home: Option<TempDir>,
+        no_cache: bool,
+    ) -> (Self, Receiver<Result<String, String>>) {
+        let (process, capture) =
+            Self::spawn_with_cache_policy_inner(save, addr, home, no_cache, true);
+        (process, capture.expect("stdout EOF capture enabled"))
+    }
+
+    fn spawn_with_cache_policy_inner(
+        save: &Path,
+        addr: SocketAddr,
+        home: Option<TempDir>,
+        no_cache: bool,
+        capture_stdout: bool,
+    ) -> (Self, Option<Receiver<Result<String, String>>>) {
         let mut command = Command::new(assert_cmd::cargo::cargo_bin!("nms-copilot"));
         if let Some(home) = &home {
             command.env("HOME", home.path());
@@ -1311,16 +1362,25 @@ impl HttpChild {
             .stderr(Stdio::piped())
             .spawn()
             .expect("spawn compiled nms-copilot HTTP child");
-        let stdout = lines_channel(child.stdout.take().expect("piped stdout"));
+        let (stdout, stdout_eof_capture) = if capture_stdout {
+            let (protocol, capture) = lines_channel_tee(child.stdout.take().expect("piped stdout"));
+            (protocol, Some(capture))
+        } else {
+            (
+                lines_channel(child.stdout.take().expect("piped stdout")),
+                None,
+            )
+        };
         let stderr = lines_channel(child.stderr.take().expect("piped stderr"));
-        Self {
+        let process = Self {
             child,
             stdout,
             stderr,
             stdout_lines: Vec::new(),
             stderr_lines: Vec::new(),
             _home: home,
-        }
+        };
+        (process, stdout_eof_capture)
     }
 
     fn collect(&mut self) {
@@ -1420,6 +1480,94 @@ fn lines_channel<R: Read + Send + 'static>(reader: R) -> Receiver<Result<String,
         }
     });
     receiver
+}
+
+fn lines_channel_tee<R: Read + Send + 'static>(reader: R) -> TeedLineReceivers {
+    let (protocol_tx, protocol_rx) = mpsc::channel();
+    let (capture_tx, capture_rx) = mpsc::channel();
+    thread::spawn(move || {
+        for line in BufReader::new(reader).lines() {
+            let item = line.map_err(|error| error.to_string());
+            let _ = capture_tx.send(item.clone());
+            if protocol_tx.send(item).is_err() {
+                break;
+            }
+        }
+    });
+    (protocol_rx, capture_rx)
+}
+
+fn validate_complete_stdio_stdout(
+    capture: Receiver<Result<String, String>>,
+    deadline: Instant,
+) -> Result<Vec<Value>, String> {
+    let mut messages = Vec::new();
+    loop {
+        let remaining = deadline.saturating_duration_since(Instant::now());
+        if remaining.is_zero() {
+            return Err("stdout reader did not reach EOF before deadline".into());
+        }
+        match capture.recv_timeout(remaining) {
+            Ok(Ok(line)) => {
+                let value: Value = serde_json::from_str(&line)
+                    .map_err(|error| format!("invalid stdout JSON {line:?}: {error}"))?;
+                if !value.is_object() || value["jsonrpc"] != "2.0" {
+                    return Err(format!("stdout line is not a JSON-RPC 2.0 object: {value}"));
+                }
+                messages.push(value);
+            }
+            Ok(Err(error)) => return Err(format!("stdout read failed: {error}")),
+            Err(RecvTimeoutError::Timeout) => {
+                return Err("stdout reader did not reach EOF before deadline".into());
+            }
+            Err(RecvTimeoutError::Disconnected) => break,
+        }
+    }
+    if messages.is_empty() {
+        return Err("stdout contained no JSON-RPC messages".into());
+    }
+    Ok(messages)
+}
+
+fn assert_http_stdout_empty_to_eof(capture: Receiver<Result<String, String>>, deadline: Instant) {
+    let remaining = deadline.saturating_duration_since(Instant::now());
+    assert!(!remaining.is_zero(), "HTTP stdout reader did not reach EOF");
+    match capture.recv_timeout(remaining) {
+        Ok(Ok(line)) => panic!("HTTP child emitted stdout through EOF: {line:?}"),
+        Ok(Err(error)) => panic!("HTTP stdout read failed: {error}"),
+        Err(RecvTimeoutError::Timeout) => panic!("HTTP stdout reader did not reach EOF"),
+        Err(RecvTimeoutError::Disconnected) => {}
+    }
+}
+
+#[test]
+fn test_complete_stdio_stdout_validator_rejects_late_noise_and_non_rpc_json() {
+    let valid = json!({"jsonrpc":"2.0", "id":1, "result":{}}).to_string();
+    let (sender, receiver) = mpsc::channel();
+    sender.send(Ok(valid.clone())).unwrap();
+    drop(sender);
+    assert_eq!(
+        validate_complete_stdio_stdout(receiver, Instant::now() + Duration::from_secs(1))
+            .unwrap()
+            .len(),
+        1
+    );
+
+    let (sender, receiver) = mpsc::channel();
+    sender.send(Ok(valid.clone())).unwrap();
+    sender.send(Ok("late non-json noise".into())).unwrap();
+    drop(sender);
+    assert!(
+        validate_complete_stdio_stdout(receiver, Instant::now() + Duration::from_secs(1)).is_err()
+    );
+
+    let (sender, receiver) = mpsc::channel();
+    sender.send(Ok(valid)).unwrap();
+    sender.send(Ok(json!({"result":{}}).to_string())).unwrap();
+    drop(sender);
+    assert!(
+        validate_complete_stdio_stdout(receiver, Instant::now() + Duration::from_secs(1)).is_err()
+    );
 }
 
 fn is_location_update(message: &Value) -> bool {
@@ -2403,7 +2551,8 @@ fn test_headless_http_stale_cache_retries_with_original_inputs_after_bind_collis
 fn test_live_update_case_phase() {
     let (_dir, save, cache, initial_source) = prepare_live_cache_fixture();
     let home = isolated_live_cache_home(&cache);
-    let mut process = StdioProcess::spawn_with_cache_policy(&save, Some(home), false);
+    let (mut process, stdout_capture) =
+        StdioProcess::spawn_with_cache_policy_captured(&save, Some(home), false);
     process.send(initialize_request());
     let initialized = process.response(1, RPC_TIMEOUT);
     assert_initialized(&initialized["result"]);
@@ -2545,6 +2694,8 @@ fn test_live_update_case_phase() {
     assert!(!cache.with_extension("rkyv.tmp").exists());
     assert!(process.stdout_is_json_only());
     process.close_stdin_and_wait(Duration::from_secs(5));
+    validate_complete_stdio_stdout(stdout_capture, Instant::now() + Duration::from_secs(5))
+        .expect("complete stdio stdout remains JSON-RPC through EOF");
 }
 
 #[cfg(unix)]
@@ -2556,13 +2707,85 @@ fn test_headless_stdio_complete_live_update_matrix() {
 #[cfg(all(unix, feature = "http"))]
 #[test]
 fn test_headless_http_complete_live_update_matrix() {
-    let (_dir, save, cache, _initial_source) = prepare_live_cache_fixture();
-    let home = isolated_live_cache_home(&cache);
-    let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve live HTTP address");
-    let addr = listener.local_addr().unwrap();
-    drop(listener);
-    let mut process = HttpChild::spawn_with_cache_policy(&save, addr, Some(home), false);
-    wait_health(addr, &mut process).expect("HTTP coordinator child ready");
+    run_headless_http_complete_live_update_matrix(None);
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_headless_http_complete_live_update_matrix(first_addr: Option<SocketAddr>) {
+    let mut failed_fixture: Option<PathBuf> = None;
+    let mut attempts = 0;
+    let (_dir, save, cache, addr, mut process, stdout_capture) = loop {
+        assert!(
+            attempts < 3,
+            "HTTP warm retry exhausted three fresh attempts"
+        );
+        attempts += 1;
+        let (dir, save, cache, initial_source) = prepare_live_cache_fixture();
+        let fixture_path = dir.path().to_path_buf();
+        let home = isolated_live_cache_home(&cache);
+        let addr = if failed_fixture.is_none() {
+            if let Some(addr) = first_addr {
+                addr
+            } else {
+                let listener =
+                    TcpListener::bind(("127.0.0.1", 0)).expect("reserve live HTTP address");
+                let addr = listener.local_addr().unwrap();
+                drop(listener);
+                addr
+            }
+        } else {
+            let listener =
+                TcpListener::bind(("127.0.0.1", 0)).expect("reserve retry live HTTP address");
+            let addr = listener.local_addr().unwrap();
+            drop(listener);
+            addr
+        };
+        let (mut process, stdout_capture) =
+            HttpChild::spawn_with_cache_policy_captured(&save, addr, Some(home), false);
+        match wait_health(addr, &mut process) {
+            Ok(()) => {
+                assert_eq!(std::fs::read(&save).unwrap(), initial_source);
+                if let Some(previous) = &failed_fixture {
+                    assert_ne!(&fixture_path, previous, "HTTP retry uses a fresh fixture");
+                }
+                break (dir, save, cache, addr, process, stdout_capture);
+            }
+            Err(error) => {
+                let evidence = format!("{error}\n{}", process.stderr_text());
+                if !evidence
+                    .to_ascii_lowercase()
+                    .contains("address already in use")
+                {
+                    panic!("HTTP startup failed without a bind collision: {evidence}");
+                }
+                assert_eq!(std::fs::read(&save).unwrap(), initial_source);
+                assert_live_cache_state(
+                    &cache,
+                    LiveStatePhase {
+                        version: 4720,
+                        reality: 0,
+                        voxel_x: 0,
+                        units: 7,
+                        nanites: 8,
+                        specials: 9,
+                        previous: None,
+                        selected: 7,
+                    },
+                );
+                assert!(!cache.with_extension("rkyv.tmp").exists());
+                process.wait_after_startup_failure();
+                assert_http_stdout_empty_to_eof(
+                    stdout_capture,
+                    Instant::now() + Duration::from_secs(5),
+                );
+                let preserved = dir.keep();
+                if let Some(previous) = &failed_fixture {
+                    assert_ne!(&preserved, previous, "each retry preserves a fresh fixture");
+                }
+                failed_fixture = Some(preserved);
+            }
+        }
+    };
     let mut client = HttpClient::new(addr);
     let initialized = client.post_without_session(initialize_request());
     assert_eq!(initialized.status, 200);
@@ -2691,6 +2914,22 @@ fn test_headless_http_complete_live_update_matrix() {
     assert!(!cache.with_extension("rkyv.tmp").exists());
     assert!(process.stdout_is_empty());
     process.kill_and_wait();
+    assert_http_stdout_empty_to_eof(stdout_capture, Instant::now() + Duration::from_secs(5));
+    assert_eq!(std::fs::read(&save).unwrap(), final_source);
+    assert_eq!(std::fs::read(&cache).unwrap(), final_cache);
+    assert_eq!(
+        std::fs::metadata(&cache).unwrap().modified().unwrap(),
+        final_mtime
+    );
+    assert!(!cache.with_extension("rkyv.tmp").exists());
+    assert_live_cache_state(&cache, *live_phases().last().expect("final live phase"));
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_headless_http_complete_live_update_retries_after_first_bind_collision() {
+    let occupied = TcpListener::bind(("127.0.0.1", 0)).expect("occupy first warm HTTP address");
+    run_headless_http_complete_live_update_matrix(Some(occupied.local_addr().unwrap()));
 }
 
 #[cfg(unix)]
@@ -2804,7 +3043,8 @@ fn run_stdio_live_control(case: LiveStartupCase) {
         case,
         LiveStartupCase::BypassExisting | LiveStartupCase::BypassMissing
     );
-    let mut process = StdioProcess::spawn_with_cache_policy(&save, Some(home), no_cache);
+    let (mut process, stdout_capture) =
+        StdioProcess::spawn_with_cache_policy_captured(&save, Some(home), no_cache);
     if matches!(case, LiveStartupCase::WriteError) {
         assert!(
             process.wait_for_stderr(
@@ -2919,6 +3159,8 @@ fn run_stdio_live_control(case: LiveStartupCase) {
     }
     assert!(process.stdout_is_json_only());
     process.close_stdin_and_wait(Duration::from_secs(5));
+    validate_complete_stdio_stdout(stdout_capture, Instant::now() + Duration::from_secs(5))
+        .expect("complete stdio control stdout remains JSON-RPC through EOF");
     assert_eq!(
         std::fs::read(&save).unwrap(),
         live_save_bytes(4721, 9, 0, 700, 800, 900, None)
@@ -2939,6 +3181,40 @@ fn run_stdio_live_control(case: LiveStartupCase) {
             std::fs::metadata(&cache).unwrap().modified().unwrap(),
             *initial_mtime.as_ref().unwrap()
         );
+    }
+    match case {
+        LiveStartupCase::Cold => assert_cold_live_cache(&cache),
+        LiveStartupCase::BypassExisting => {
+            assert!(!cache.with_extension("rkyv.tmp").exists());
+        }
+        LiveStartupCase::BypassMissing => {
+            assert!(!cache.exists());
+            assert!(!cache.parent().unwrap().exists());
+            assert!(!cache.with_extension("rkyv.tmp").exists());
+        }
+        LiveStartupCase::DisabledCurrent => {
+            assert_live_cache_state(
+                &cache,
+                LiveStatePhase {
+                    version: 4720,
+                    reality: 0,
+                    voxel_x: 0,
+                    units: 7,
+                    nanites: 8,
+                    specials: 9,
+                    previous: None,
+                    selected: 7,
+                },
+            );
+            assert!(!cache.with_extension("rkyv.tmp").exists());
+        }
+        LiveStartupCase::WriteError => {
+            assert!(!cache.exists());
+            assert!(!cache.with_extension("rkyv.tmp").exists());
+            let warnings = process.stderr_text();
+            assert!(warnings.matches("could not write cache").count() >= 1);
+            assert!(warnings.matches("could not update cache").count() >= 1);
+        }
     }
 }
 
@@ -3049,7 +3325,8 @@ fn run_http_live_control_attempt(
         case,
         LiveStartupCase::BypassExisting | LiveStartupCase::BypassMissing
     );
-    let mut process = HttpChild::spawn_with_cache_policy(&save, addr, Some(home), no_cache);
+    let (mut process, stdout_capture) =
+        HttpChild::spawn_with_cache_policy_captured(&save, addr, Some(home), no_cache);
     if let Err(error) = wait_health(addr, &mut process) {
         let stderr = process.stderr_text();
         let evidence = format!("{error}\n{stderr}");
@@ -3091,6 +3368,10 @@ fn run_http_live_control_attempt(
                 assert_eq!(std::fs::read(path).unwrap(), *expected);
             }
             process.wait_after_startup_failure();
+            assert_http_stdout_empty_to_eof(
+                stdout_capture,
+                Instant::now() + Duration::from_secs(5),
+            );
             let preserved_path = _directory.keep();
             return Err((preserved_path, evidence));
         }
@@ -3208,6 +3489,7 @@ fn run_http_live_control_attempt(
     }
     assert!(process.stdout_is_empty());
     process.kill_and_wait();
+    assert_http_stdout_empty_to_eof(stdout_capture, Instant::now() + Duration::from_secs(5));
     assert_eq!(
         std::fs::read(&save).unwrap(),
         live_save_bytes(4721, 9, 0, 700, 800, 900, None)
@@ -3243,9 +3525,49 @@ fn run_http_live_control_attempt(
             std::fs::metadata(&cache).unwrap().modified().unwrap(),
             *initial_mtime.as_ref().unwrap()
         );
+        assert_live_cache_state(
+            &cache,
+            LiveStatePhase {
+                version: 4720,
+                reality: 0,
+                voxel_x: 0,
+                units: 7,
+                nanites: 8,
+                specials: 9,
+                previous: None,
+                selected: 7,
+            },
+        );
     }
     if matches!(case, LiveStartupCase::Cold) {
         assert_cold_live_cache(&cache);
+    }
+    if matches!(case, LiveStartupCase::WriteError) {
+        assert!(!cache.exists());
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+        assert!(
+            process
+                .stderr_text()
+                .matches("could not write cache")
+                .count()
+                >= 1
+        );
+        assert!(
+            process
+                .stderr_text()
+                .matches("could not update cache")
+                .count()
+                >= 1
+        );
+    }
+    if matches!(case, LiveStartupCase::BypassMissing) {
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+    }
+    if matches!(
+        case,
+        LiveStartupCase::BypassExisting | LiveStartupCase::DisabledCurrent
+    ) {
+        assert!(!cache.with_extension("rkyv.tmp").exists());
     }
     Ok(fixture_path)
 }

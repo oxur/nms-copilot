@@ -313,7 +313,11 @@ mod tests {
         }
     }
 
-    struct ReleaseBarrier(mpsc::Sender<()>);
+    pub(super) fn assert_cache_snapshot_eq(left: &CacheData, right: &CacheData) {
+        assert_eq!(cache_snapshot(left), cache_snapshot(right));
+    }
+
+    pub(super) struct ReleaseBarrier(pub(super) mpsc::Sender<()>);
 
     impl Drop for ReleaseBarrier {
         fn drop(&mut self) {
@@ -830,11 +834,18 @@ mod observer_and_drop_tests {
             Some(cache.clone()),
             move |data, target| {
                 started_tx.send(()).unwrap();
-                release_rx.recv().unwrap();
+                release_rx
+                    .recv_timeout(Duration::from_secs(5))
+                    .map_err(|error| {
+                        nms_cache::CacheError::Io(std::io::Error::other(format!(
+                            "test writer barrier release timed out: {error}"
+                        )))
+                    })?;
                 nms_cache::write_cache(data, target)
             },
         )
         .expect("start lifecycle coordinator");
+        let release_guard = super::tests::ReleaseBarrier(release_tx.clone());
         let events = coordinator.subscribe();
         std::thread::sleep(Duration::from_millis(100));
         std::fs::write(&path, super::tests::save_json(70)).unwrap();
@@ -843,13 +854,14 @@ mod observer_and_drop_tests {
             .expect("first writer entered barrier");
 
         let (drop_tx, drop_rx) = mpsc::channel();
-        std::thread::spawn(move || {
+        let drop_thread = std::thread::spawn(move || {
             drop(coordinator);
             drop_tx.send(()).unwrap();
         });
         let drop_before_release = drop_rx.recv_timeout(Duration::from_millis(100));
         // Release before any assertions, so this test cannot strand Drop.
         release_tx.send(()).unwrap();
+        drop(release_guard);
         assert!(
             matches!(drop_before_release, Err(mpsc::RecvTimeoutError::Timeout)),
             "coordinator drop joins the in-flight write"
@@ -857,6 +869,9 @@ mod observer_and_drop_tests {
         drop_rx
             .recv_timeout(Duration::from_secs(5))
             .expect("coordinator drop completes after writer release");
+        drop_thread
+            .join()
+            .expect("coordinator drop thread completes");
         assert_eq!(
             events
                 .recv_timeout(Duration::from_secs(1))
@@ -924,10 +939,78 @@ mod full_update_component_tests {
         )
     }
 
+    fn golden_atlas(player_state: PlayerState, selected: u8) -> GalaxyModel {
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(
+            address(1, 0),
+            Some("Old Euclid".into()),
+            None,
+            None,
+            vec![
+                Planet::new(0, None, None, false, Some("Old Euclid I".into()), None),
+                Planet::new(1, None, None, true, Some("New moon".into()), Some(55)),
+            ],
+        ));
+        model.insert_system(atlas_system("Old Eissentam", 2, 9));
+        model.insert_system(atlas_system("New Euclid", 5, 0));
+        model.insert_base(base("Euclid Base", 0));
+        model.insert_base(base("Eissentam Base", 9));
+        model.insert_base(base("New Base", 0));
+        model.player_state = Some(player_state);
+        model.set_active_galaxy(selected);
+        model
+    }
+
+    fn assert_whole_atlas(actual: &GalaxyModel, expected: &GalaxyModel, exact_node_ids: bool) {
+        assert_eq!(actual.systems, expected.systems);
+        assert_eq!(actual.planets, expected.planets);
+        assert_eq!(actual.bases, expected.bases);
+        assert_eq!(actual.name_index, expected.name_index);
+        assert_eq!(actual.biome_index, expected.biome_index);
+        assert_eq!(actual.address_to_id, expected.address_to_id);
+        assert_eq!(actual.node_map.len(), expected.node_map.len());
+        for id in expected.node_map.keys() {
+            assert!(actual.node_map.contains_key(id), "node-map key {id:?}");
+        }
+        if exact_node_ids {
+            assert_eq!(actual.node_map, expected.node_map);
+        }
+        assert_eq!(actual.graph.node_count(), 3);
+        assert_eq!(actual.spatial[&0].size(), 2);
+        assert_eq!(actual.spatial[&9].size(), 1);
+    }
+
+    fn assert_cache_roundtrip(data: &CacheData, expected: &GalaxyModel, version: u32, path: &Path) {
+        let expected_data = nms_cache::extract_cache_data(expected, version);
+        super::tests::assert_cache_snapshot_eq(data, &expected_data);
+        nms_cache::write_cache(data, path).expect("write actual coordinator cache snapshot");
+        let checked = nms_cache::read_cache(path).expect("checked-read written coordinator cache");
+        super::tests::assert_cache_snapshot_eq(&checked, &expected_data);
+        let rebuilt = nms_cache::rebuild_model(&checked);
+        assert_whole_atlas(&rebuilt, expected, false);
+        assert_eq!(rebuilt.player_state, expected.player_state);
+        assert_eq!(rebuilt.active_galaxy, expected.active_galaxy);
+        assert_eq!(checked.save_version, version);
+    }
+
     #[test]
     fn test_typed_full_update_adds_atlas_and_preserves_complete_state_and_selection() {
         let mut model = GalaxyModel::new();
-        model.insert_system(atlas_system("Old Euclid", 1, 0));
+        let old_euclid = System::new(
+            address(1, 0),
+            Some("Old Euclid".into()),
+            None,
+            None,
+            vec![Planet::new(
+                0,
+                None,
+                None,
+                false,
+                Some("Old Euclid I".into()),
+                None,
+            )],
+        );
+        model.insert_system(old_euclid);
         model.insert_system(atlas_system("Old Eissentam", 2, 9));
         model.insert_base(base("Euclid Base", 0));
         model.insert_base(base("Eissentam Base", 9));
@@ -942,13 +1025,6 @@ mod full_update_component_tests {
             30,
         ));
 
-        let prior_systems = model.systems.clone();
-        let prior_planets = model.planets.clone();
-        let prior_bases = model.bases.clone();
-        let prior_names = model.name_index.clone();
-        let prior_addresses = model.address_to_id.clone();
-        let prior_biomes = model.biome_index.clone();
-        let prior_nodes = model.node_map.clone();
         let added_system = atlas_system("New Euclid", 5, 0);
         let existing_id = SystemId::from_address(&address(1, 0));
         let added_planet = Planet::new(1, None, None, true, Some("New moon".into()), Some(55));
@@ -986,52 +1062,8 @@ mod full_update_component_tests {
             "same physical galaxy retains selection"
         );
         assert_eq!(model.player_state, Some(full_state.clone()));
-        let mut expected_existing_system = prior_systems[&existing_id].clone();
-        expected_existing_system.planets.push(added_planet.clone());
-        assert_eq!(
-            model.systems.get(&existing_id),
-            Some(&expected_existing_system)
-        );
-        assert!(
-            prior_systems
-                .iter()
-                .filter(|(key, _)| **key != existing_id)
-                .all(|(key, value)| model.systems.get(key) == Some(value))
-        );
-        assert!(
-            prior_planets
-                .iter()
-                .all(|(key, value)| model.planets.get(key) == Some(value))
-        );
-        assert!(
-            prior_bases
-                .iter()
-                .all(|(key, value)| model.bases.get(key) == Some(value))
-        );
-        assert!(
-            prior_names
-                .iter()
-                .all(|(key, value)| model.name_index.get(key) == Some(value))
-        );
-        assert!(
-            prior_addresses
-                .iter()
-                .all(|(key, value)| model.address_to_id.get(key) == Some(value))
-        );
-        assert!(
-            prior_biomes
-                .iter()
-                .all(|(key, value)| model.biome_index.get(key) == Some(value))
-        );
-        assert!(
-            prior_nodes
-                .iter()
-                .all(|(key, value)| model.node_map.get(key) == Some(value))
-        );
-        assert_eq!(model.graph.node_count(), 3);
-        assert_eq!(model.node_map.len(), 3);
-        assert_eq!(model.spatial[&0].size(), 2);
-        assert_eq!(model.spatial[&9].size(), 1);
+        let expected_first = golden_atlas(full_state.clone(), 7);
+        assert_whole_atlas(&model, &expected_first, true);
         assert_eq!(
             model
                 .systems
@@ -1041,10 +1073,9 @@ mod full_update_component_tests {
         assert_eq!(model.planets.get(&(existing_id, 1)), Some(&added_planet));
         assert_eq!(model.bases.get("new base"), Some(&added_base));
         let snapshot = snapshot.expect("cache snapshot requested");
-        assert_eq!(snapshot.save_version, 5011);
-        assert_eq!(snapshot.player_state, Some(full_state));
-        assert_eq!(snapshot.systems.len(), 3);
-        assert_eq!(snapshot.bases.len(), 3);
+        let directory = tempfile::tempdir().expect("isolated cache round-trip directory");
+        let cache_path = directory.path().join("first.rkyv");
+        assert_cache_roundtrip(&snapshot, &expected_first, 5011, &cache_path);
 
         let cross_state = PlayerState::new(
             address(2, 9),
@@ -1066,10 +1097,10 @@ mod full_update_component_tests {
             "cross-galaxy update selects incoming galaxy"
         );
         assert_eq!(model.player_state, Some(cross_state.clone()));
+        let expected_cross = golden_atlas(cross_state, 9);
+        assert_whole_atlas(&model, &expected_cross, true);
         let snapshot = snapshot.unwrap();
-        assert_eq!(snapshot.save_version, 5012);
-        assert_eq!(snapshot.player_state, Some(cross_state));
-        assert_eq!(snapshot.systems.len(), 3);
-        assert_eq!(snapshot.bases.len(), 3);
+        let cache_path = directory.path().join("cross.rkyv");
+        assert_cache_roundtrip(&snapshot, &expected_cross, 5012, &cache_path);
     }
 }
