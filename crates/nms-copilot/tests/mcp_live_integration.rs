@@ -317,6 +317,54 @@ fn assert_live_cache_state(cache: &Path, phase: LiveStatePhase) {
 }
 
 #[cfg(unix)]
+fn assert_cold_source_cache(cache: &Path) {
+    let data = nms_cache::read_cache(cache).expect("checked-read cache built from cold source");
+    assert_eq!(
+        data.player_state,
+        Some(PlayerState::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+            0,
+            None,
+            None,
+            7,
+            8,
+            9,
+        ))
+    );
+    assert_eq!(data.save_version, 4720);
+    assert_eq!(data.active_galaxy, 0);
+    assert!(data.systems.is_empty());
+    assert!(data.bases.is_empty());
+}
+
+#[cfg(unix)]
+fn assert_cold_live_cache(cache: &Path) {
+    let data = nms_cache::read_cache(cache).expect("checked-read cache after cold live update");
+    assert_eq!(
+        data.player_state,
+        Some(PlayerState::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 9),
+            9,
+            None,
+            None,
+            700,
+            800,
+            900,
+        ))
+    );
+    assert_eq!(data.save_version, 4721);
+    assert_eq!(data.active_galaxy, 9);
+    assert_eq!(data.systems.len(), 1);
+    let system = &data.systems[0];
+    assert_eq!(system.address, GalacticAddress::new(0, 0, 0, 1, 0, 0));
+    assert_eq!(system.name, None);
+    assert_eq!(system.discoverer, None);
+    assert_eq!(system.timestamp_secs, None);
+    assert!(system.planets.is_empty());
+    assert!(data.bases.is_empty());
+}
+
+#[cfg(unix)]
 fn live_phases() -> [LiveStatePhase; 6] {
     [
         LiveStatePhase {
@@ -333,20 +381,20 @@ fn live_phases() -> [LiveStatePhase; 6] {
             version: 4720,
             reality: 0,
             voxel_x: 0,
-            units: 7,
-            nanites: 8,
-            specials: 9,
-            previous: Some(GalacticAddress::new(3, 3, 4, 1, 9, 1)),
+            units: 70,
+            nanites: 80,
+            specials: 90,
+            previous: Some(GalacticAddress::new(3, 3, 4, 1, 1, 9)),
             selected: 7,
         },
         LiveStatePhase {
             version: 4721,
             reality: 0,
             voxel_x: 0,
-            units: 7,
-            nanites: 8,
-            specials: 9,
-            previous: Some(GalacticAddress::new(3, 3, 4, 1, 9, 1)),
+            units: 70,
+            nanites: 80,
+            specials: 90,
+            previous: Some(GalacticAddress::new(3, 3, 4, 1, 1, 9)),
             selected: 7,
         },
         LiveStatePhase {
@@ -356,7 +404,7 @@ fn live_phases() -> [LiveStatePhase; 6] {
             units: 700,
             nanites: 800,
             specials: 900,
-            previous: Some(GalacticAddress::new(2, 3, 4, 1, 0, 1)),
+            previous: Some(GalacticAddress::new(2, 3, 4, 1, 1, 0)),
             selected: 9,
         },
         LiveStatePhase {
@@ -366,7 +414,7 @@ fn live_phases() -> [LiveStatePhase; 6] {
             units: 701,
             nanites: 801,
             specials: 901,
-            previous: Some(GalacticAddress::new(2, 3, 4, 1, 0, 1)),
+            previous: Some(GalacticAddress::new(2, 3, 4, 1, 1, 0)),
             selected: 9,
         },
         LiveStatePhase {
@@ -376,10 +424,34 @@ fn live_phases() -> [LiveStatePhase; 6] {
             units: 900,
             nanites: 901,
             specials: 902,
-            previous: Some(GalacticAddress::new(0, 3, 4, 1, 9, 1)),
+            previous: Some(GalacticAddress::new(0, 3, 4, 1, 1, 9)),
             selected: 0,
         },
     ]
+}
+
+#[cfg(unix)]
+#[test]
+fn test_live_previous_address_fixtures_keep_planet_and_reality_fields_distinct() {
+    let phases = live_phases();
+    let expected = [
+        None,
+        Some((9, 1)),
+        Some((9, 1)),
+        Some((0, 1)),
+        Some((0, 1)),
+        Some((9, 1)),
+    ];
+    for (phase, expected) in phases.into_iter().zip(expected) {
+        let actual = phase
+            .previous
+            .map(|address| (address.reality_index, address.planet_index()));
+        assert_eq!(
+            actual, expected,
+            "phase {} previous reality/planet",
+            phase.version
+        );
+    }
 }
 
 #[cfg(unix)]
@@ -1297,6 +1369,32 @@ impl HttpChild {
         assert!(
             self.stdout_lines.is_empty(),
             "HTTP child stdout: {:?}",
+            self.stdout_lines
+        );
+    }
+
+    fn wait_after_startup_failure(&mut self) {
+        let deadline = Instant::now() + Duration::from_secs(5);
+        let status = loop {
+            if let Some(status) = self.child.try_wait().expect("poll failed HTTP child") {
+                break status;
+            }
+            assert!(
+                Instant::now() < deadline,
+                "HTTP child did not exit after startup failure; stderr: {}",
+                self.stderr_text()
+            );
+            thread::sleep(Duration::from_millis(20));
+        };
+        eprintln!("MCP_BIND_FAILURE_CHILD_EXIT status={status:?}");
+        assert!(
+            status.success(),
+            "failed HTTP server startup returns from headless run with status 0: {status}"
+        );
+        self.collect();
+        assert!(
+            self.stdout_lines.is_empty(),
+            "failed HTTP child stdout: {:?}",
             self.stdout_lines
         );
     }
@@ -2330,14 +2428,31 @@ fn test_live_update_case_phase() {
     for (index, phase) in live_phases().into_iter().enumerate() {
         if index == 5 {
             let retained_cache = std::fs::read(&cache).expect("cache after same-reality phase");
+            let fixed_mtime = SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_123);
+            set_mtime(&cache, fixed_mtime);
             let retained_mtime = std::fs::metadata(&cache)
                 .expect("cache metadata before malformed writes")
                 .modified()
                 .expect("cache mtime before malformed writes");
+            assert_eq!(
+                retained_mtime, fixed_mtime,
+                "fixed cache mtime is observable"
+            );
             for attempt in 1..=5 {
                 let invalid = format!("{{{{ invalid live cache retry {attempt} }}}}").into_bytes();
                 atomic_replace(&save, &invalid);
                 process.assert_no_location_update_for(Duration::from_millis(650));
+                assert_eq!(
+                    std::fs::read(&save).unwrap(),
+                    invalid,
+                    "malformed source remains exact"
+                );
+                call_where_am_i_stdio(
+                    &mut process,
+                    800 + (attempt as u64) * 2,
+                    PHASE_B,
+                    Instant::now() + RPC_TIMEOUT,
+                );
                 assert_eq!(std::fs::read(&cache).unwrap(), retained_cache);
                 assert_eq!(
                     std::fs::metadata(&cache).unwrap().modified().unwrap(),
@@ -2352,7 +2467,7 @@ fn test_live_update_case_phase() {
                         units: 701,
                         nanites: 801,
                         specials: 901,
-                        previous: Some(GalacticAddress::new(2, 3, 4, 1, 0, 1)),
+                        previous: Some(GalacticAddress::new(2, 3, 4, 1, 1, 0)),
                         selected: 9,
                     },
                 );
@@ -2412,7 +2527,13 @@ fn test_live_update_case_phase() {
         );
     }
     let final_cache = std::fs::read(&cache).expect("cache after recovery");
+    let recovery_control_mtime = SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_777);
+    set_mtime(&cache, recovery_control_mtime);
     let final_mtime = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    assert_eq!(
+        final_mtime, recovery_control_mtime,
+        "recovery-control mtime is distinct and observable"
+    );
     let final_source = std::fs::read(&save).expect("final recovered source");
     atomic_replace(&save, &final_source);
     process.assert_no_location_update_for(Duration::from_millis(650));
@@ -2468,6 +2589,17 @@ fn test_headless_http_complete_live_update_matrix() {
                 let invalid = format!("{{{{ invalid live cache retry {attempt} }}}}").into_bytes();
                 atomic_replace(&save, &invalid);
                 events.assert_no_location_update_for(Duration::from_millis(650));
+                assert_eq!(
+                    std::fs::read(&save).unwrap(),
+                    invalid,
+                    "malformed source remains exact"
+                );
+                call_where_am_i_http(
+                    &mut client,
+                    800 + (attempt as u64) * 2,
+                    PHASE_B,
+                    Instant::now() + RPC_TIMEOUT,
+                );
                 assert_eq!(std::fs::read(&cache).unwrap(), retained_cache);
                 assert_eq!(
                     std::fs::metadata(&cache).unwrap().modified().unwrap(),
@@ -2482,7 +2614,7 @@ fn test_headless_http_complete_live_update_matrix() {
                         units: 701,
                         nanites: 801,
                         specials: 901,
-                        previous: Some(GalacticAddress::new(2, 3, 4, 1, 0, 1)),
+                        previous: Some(GalacticAddress::new(2, 3, 4, 1, 1, 0)),
                         selected: 9,
                     },
                 );
@@ -2541,7 +2673,13 @@ fn test_headless_http_complete_live_update_matrix() {
         );
     }
     let final_cache = std::fs::read(&cache).expect("cache after recovery");
+    let recovery_control_mtime = SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_777);
+    set_mtime(&cache, recovery_control_mtime);
     let final_mtime = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    assert_eq!(
+        final_mtime, recovery_control_mtime,
+        "recovery-control mtime is distinct and observable"
+    );
     let final_source = std::fs::read(&save).expect("final recovered source");
     atomic_replace(&save, &final_source);
     events.assert_no_location_update_for(Duration::from_millis(650));
@@ -2579,11 +2717,32 @@ impl LiveStartupCase {
 }
 
 #[cfg(unix)]
-fn prepare_control_case(
-    case: LiveStartupCase,
-) -> (TempDir, PathBuf, PathBuf, Vec<u8>, TempDir, bool) {
+struct LiveControlFixture {
+    directory: TempDir,
+    save: PathBuf,
+    cache: PathBuf,
+    source: Vec<u8>,
+    home: TempDir,
+    cache_exists: bool,
+    blocker: Option<(PathBuf, Vec<u8>)>,
+}
+
+#[cfg(unix)]
+fn prepare_control_case(case: LiveStartupCase) -> LiveControlFixture {
     let (directory, save, mut cache, source) = prepare_live_cache_fixture();
-    let cache_exists = !matches!(case, LiveStartupCase::Cold | LiveStartupCase::BypassMissing);
+    if matches!(case, LiveStartupCase::BypassExisting) {
+        std::fs::write(&cache, sentinel_bytes()).expect("seed existing bypass sentinel bytes");
+        let fixed = SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_321);
+        set_mtime(&cache, fixed);
+        assert_eq!(
+            std::fs::metadata(&cache).unwrap().modified().unwrap(),
+            fixed
+        );
+    }
+    let cache_exists = !matches!(
+        case,
+        LiveStartupCase::Cold | LiveStartupCase::BypassMissing | LiveStartupCase::WriteError
+    );
     if matches!(case, LiveStartupCase::Cold | LiveStartupCase::BypassMissing) {
         std::fs::remove_file(&cache).expect("remove seeded cache for missing case");
     }
@@ -2594,18 +2753,43 @@ fn prepare_control_case(
             "bypass-missing parent starts absent"
         );
     }
+    let blocker = if matches!(case, LiveStartupCase::WriteError) {
+        let path = directory.path().join("cache-parent-is-a-file");
+        let bytes = b"slice16 cache parent blocker\n".to_vec();
+        std::fs::write(&path, &bytes).expect("create regular-file cache parent blocker");
+        cache = path.join("cache.rkyv");
+        Some((path, bytes))
+    } else {
+        None
+    };
     let enabled = !matches!(case, LiveStartupCase::DisabledCurrent);
     let home = if enabled {
         isolated_live_cache_home(&cache)
     } else {
         isolated_cache_home(&cache)
     };
-    (directory, save, cache, source, home, cache_exists)
+    LiveControlFixture {
+        directory,
+        save,
+        cache,
+        source,
+        home,
+        cache_exists,
+        blocker,
+    }
 }
 
 #[cfg(unix)]
 fn run_stdio_live_control(case: LiveStartupCase) {
-    let (_directory, save, cache, _source, home, cache_exists) = prepare_control_case(case);
+    let LiveControlFixture {
+        directory: _directory,
+        save,
+        cache,
+        source,
+        home,
+        cache_exists,
+        blocker,
+    } = prepare_control_case(case);
     let initial_bytes = if cache_exists {
         Some(std::fs::read(&cache).expect("initial cache bytes"))
     } else {
@@ -2621,18 +2805,46 @@ fn run_stdio_live_control(case: LiveStartupCase) {
         LiveStartupCase::BypassExisting | LiveStartupCase::BypassMissing
     );
     let mut process = StdioProcess::spawn_with_cache_policy(&save, Some(home), no_cache);
+    if matches!(case, LiveStartupCase::WriteError) {
+        assert!(
+            process.wait_for_stderr(
+                "could not write cache",
+                Instant::now() + Duration::from_secs(2)
+            ),
+            "startup cache write failure is best-effort and reported"
+        );
+        assert!(!cache.exists());
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+    }
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        source,
+        "control starts with exact authored source"
+    );
     process.send(initialize_request());
     assert_initialized(&process.response(1, RPC_TIMEOUT)["result"]);
     process.send(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    if matches!(case, LiveStartupCase::Cold) {
+        assert_cold_source_cache(&cache);
+    } else if matches!(case, LiveStartupCase::DisabledCurrent) {
+        assert_live_cache_state(
+            &cache,
+            LiveStatePhase {
+                version: 4720,
+                reality: 0,
+                voxel_x: 0,
+                units: 7,
+                nanites: 8,
+                specials: 9,
+                previous: None,
+                selected: 7,
+            },
+        );
+    }
     process.send(json!({"jsonrpc":"2.0", "id":20, "method":"resources/subscribe", "params":{"uri":PLAYER_LOCATION_URI}}));
     assert!(process.response(20, RPC_TIMEOUT).get("result").is_some());
     thread::sleep(Duration::from_millis(500));
 
-    if matches!(case, LiveStartupCase::WriteError) {
-        std::fs::remove_file(&cache).expect("remove startup cache before controlled write error");
-        std::fs::create_dir(&cache)
-            .expect("replace cache file with directory to reject atomic rename");
-    }
     let live_reality = 9;
     let bytes = live_save_bytes(4721, live_reality, 0, 700, 800, 900, None);
     atomic_replace(&save, &bytes);
@@ -2655,26 +2867,29 @@ fn run_stdio_live_control(case: LiveStartupCase) {
             "coordinator logs live cache failure: {}",
             process.stderr_text()
         );
-        assert!(
-            cache.is_dir(),
-            "failed cache target remains the controlled directory"
-        );
+        assert!(!cache.exists(), "blocked cache target remains absent");
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+        let (path, expected) = blocker.as_ref().expect("regular-file parent blocker");
+        assert_eq!(std::fs::read(path).unwrap(), *expected);
+        let warnings = process.stderr_text();
+        assert!(warnings.matches("could not write cache").count() >= 1);
+        assert!(warnings.matches("could not update cache").count() >= 1);
     } else if matches!(
         case,
         LiveStartupCase::BypassExisting
             | LiveStartupCase::BypassMissing
             | LiveStartupCase::DisabledCurrent
     ) {
-        if let Some(expected) = initial_bytes {
+        if let Some(expected) = initial_bytes.as_ref() {
             assert_eq!(
                 std::fs::read(&cache).unwrap(),
-                expected,
+                *expected,
                 "{} preserves existing cache bytes",
                 case.label()
             );
             assert_eq!(
                 std::fs::metadata(&cache).unwrap().modified().unwrap(),
-                initial_mtime.unwrap(),
+                *initial_mtime.as_ref().unwrap(),
                 "{} preserves cache mtime",
                 case.label()
             );
@@ -2692,19 +2907,134 @@ fn run_stdio_live_control(case: LiveStartupCase) {
             }
         }
     } else {
-        let data =
-            nms_cache::read_cache(&cache).expect("cold startup and live update create valid cache");
-        assert_eq!(data.player_state.as_ref().unwrap().units, 700);
-        assert_eq!(data.save_version, 4721);
+        assert_cold_live_cache(&cache);
     }
     eprintln!("SLICE16_CONTROL transport=stdio case={}", case.label());
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        live_save_bytes(4721, 9, 0, 700, 800, 900, None)
+    );
+    if let Some((path, expected)) = blocker.as_ref() {
+        assert_eq!(std::fs::read(path).unwrap(), *expected);
+    }
     assert!(process.stdout_is_json_only());
     process.close_stdin_and_wait(Duration::from_secs(5));
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        live_save_bytes(4721, 9, 0, 700, 800, 900, None)
+    );
+    if let Some((path, expected)) = blocker.as_ref() {
+        assert_eq!(
+            std::fs::read(path).unwrap(),
+            *expected,
+            "blocker remains through EOF"
+        );
+    }
+    if matches!(case, LiveStartupCase::BypassExisting) {
+        assert_eq!(
+            std::fs::read(&cache).unwrap(),
+            *initial_bytes.as_ref().unwrap()
+        );
+        assert_eq!(
+            std::fs::metadata(&cache).unwrap().modified().unwrap(),
+            *initial_mtime.as_ref().unwrap()
+        );
+    }
 }
 
 #[cfg(all(unix, feature = "http"))]
 fn run_http_live_control(case: LiveStartupCase) {
-    let (_directory, save, cache, _source, home, cache_exists) = prepare_control_case(case);
+    run_http_live_control_with_first_addr(case, None);
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_live_control_with_first_addr(case: LiveStartupCase, first_addr: Option<SocketAddr>) {
+    let mut failed_fixture: Option<PathBuf> = None;
+    let mut collision_seen = false;
+    for attempt in 0..3 {
+        let addr = if attempt == 0 {
+            if let Some(addr) = first_addr {
+                addr
+            } else {
+                let listener =
+                    TcpListener::bind(("127.0.0.1", 0)).expect("reserve live control HTTP port");
+                let addr = listener.local_addr().unwrap();
+                drop(listener);
+                addr
+            }
+        } else {
+            let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve retry HTTP port");
+            let addr = listener.local_addr().unwrap();
+            drop(listener);
+            addr
+        };
+        match run_http_live_control_attempt(case, addr) {
+            Ok(fixture) => {
+                if let Some(failed) = &failed_fixture {
+                    assert_ne!(
+                        &fixture, failed,
+                        "HTTP retry uses a fresh source/cache/HOME fixture"
+                    );
+                }
+                assert_eq!(
+                    collision_seen,
+                    first_addr.is_some(),
+                    "controlled bind witness observed"
+                );
+                return;
+            }
+            Err((fixture, evidence))
+                if evidence
+                    .to_ascii_lowercase()
+                    .contains("address already in use") =>
+            {
+                if let Some(previous) = &failed_fixture {
+                    assert_ne!(
+                        &fixture, previous,
+                        "each HTTP bind retry gets a fresh fixture"
+                    );
+                }
+                if attempt == 0 && first_addr.is_some() {
+                    assert!(
+                        matches!(case, LiveStartupCase::Cold),
+                        "forced live collision uses cache-mutating Cold case"
+                    );
+                    collision_seen = true;
+                }
+                eprintln!(
+                    "SLICE16_HTTP_BIND_RETRY case={} attempt={} fixture={} evidence={:?}",
+                    case.label(),
+                    attempt + 1,
+                    fixture.display(),
+                    evidence
+                );
+                failed_fixture = Some(fixture);
+            }
+            Err((fixture, evidence)) => panic!(
+                "{} HTTP control failed in fixture {}: {evidence}",
+                case.label(),
+                fixture.display()
+            ),
+        }
+    }
+    panic!("{} HTTP control exhausted bind retries", case.label());
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_live_control_attempt(
+    case: LiveStartupCase,
+    addr: SocketAddr,
+) -> Result<PathBuf, (PathBuf, String)> {
+    let LiveControlFixture {
+        directory: _directory,
+        save,
+        cache,
+        source,
+        home,
+        cache_exists,
+        blocker,
+    } = prepare_control_case(case);
+    let fixture_path = _directory.path().to_path_buf();
     let initial_bytes = if cache_exists {
         Some(std::fs::read(&cache).expect("initial cache bytes"))
     } else {
@@ -2719,11 +3049,86 @@ fn run_http_live_control(case: LiveStartupCase) {
         case,
         LiveStartupCase::BypassExisting | LiveStartupCase::BypassMissing
     );
-    let listener = TcpListener::bind(("127.0.0.1", 0)).expect("reserve live control HTTP port");
-    let addr = listener.local_addr().unwrap();
-    drop(listener);
     let mut process = HttpChild::spawn_with_cache_policy(&save, addr, Some(home), no_cache);
-    wait_health(addr, &mut process).expect("live control HTTP server ready");
+    if let Err(error) = wait_health(addr, &mut process) {
+        let stderr = process.stderr_text();
+        let evidence = format!("{error}\n{stderr}");
+        if evidence
+            .to_ascii_lowercase()
+            .contains("address already in use")
+        {
+            assert_eq!(
+                std::fs::read(&save).unwrap(),
+                source,
+                "failed bind leaves exact source intact"
+            );
+            if matches!(case, LiveStartupCase::Cold) {
+                assert_cold_source_cache(&cache);
+            }
+            if matches!(
+                case,
+                LiveStartupCase::BypassExisting | LiveStartupCase::DisabledCurrent
+            ) {
+                assert_eq!(
+                    std::fs::read(&cache).unwrap(),
+                    *initial_bytes.as_ref().unwrap()
+                );
+                assert_eq!(
+                    std::fs::metadata(&cache).unwrap().modified().unwrap(),
+                    *initial_mtime.as_ref().unwrap()
+                );
+            }
+            if matches!(case, LiveStartupCase::BypassMissing) {
+                assert!(!cache.exists());
+                assert!(!cache.parent().unwrap().exists());
+                assert!(!cache.with_extension("rkyv.tmp").exists());
+            }
+            if matches!(case, LiveStartupCase::WriteError) {
+                assert!(!cache.exists());
+                assert!(!cache.with_extension("rkyv.tmp").exists());
+            }
+            if let Some((path, expected)) = &blocker {
+                assert_eq!(std::fs::read(path).unwrap(), *expected);
+            }
+            process.wait_after_startup_failure();
+            let preserved_path = _directory.keep();
+            return Err((preserved_path, evidence));
+        }
+        panic!("live control HTTP server failed without a bind collision: {error}; {stderr}");
+    }
+    if matches!(case, LiveStartupCase::WriteError) {
+        assert!(
+            process.wait_for_stderr(
+                "could not write cache",
+                Instant::now() + Duration::from_secs(2)
+            ),
+            "startup cache write failure is best-effort and reported"
+        );
+        assert!(!cache.exists());
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+    }
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        source,
+        "control starts with exact authored source"
+    );
+    if matches!(case, LiveStartupCase::Cold) {
+        assert_cold_source_cache(&cache);
+    } else if matches!(case, LiveStartupCase::DisabledCurrent) {
+        assert_live_cache_state(
+            &cache,
+            LiveStatePhase {
+                version: 4720,
+                reality: 0,
+                voxel_x: 0,
+                units: 7,
+                nanites: 8,
+                specials: 9,
+                previous: None,
+                selected: 7,
+            },
+        );
+    }
     let mut client = HttpClient::new(addr);
     let initialized = client.post_without_session(initialize_request());
     assert_eq!(initialized.status, 200);
@@ -2740,11 +3145,6 @@ fn run_http_live_control(case: LiveStartupCase) {
     call_where_am_i_http(&mut client, 10, PHASE_A, Instant::now() + RPC_TIMEOUT);
     thread::sleep(Duration::from_millis(500));
 
-    if matches!(case, LiveStartupCase::WriteError) {
-        std::fs::remove_file(&cache).expect("remove startup cache before controlled write error");
-        std::fs::create_dir(&cache)
-            .expect("replace cache file with directory to reject atomic rename");
-    }
     let live_reality = 9;
     let bytes = live_save_bytes(4721, live_reality, 0, 700, 800, 900, None);
     atomic_replace(&save, &bytes);
@@ -2766,18 +3166,28 @@ fn run_http_live_control(case: LiveStartupCase) {
             ),
             "coordinator logs live cache failure"
         );
-        assert!(cache.is_dir());
+        assert!(!cache.exists());
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+        let (path, expected) = blocker.as_ref().expect("regular-file parent blocker");
+        assert_eq!(std::fs::read(path).unwrap(), *expected);
+        assert!(
+            process
+                .stderr_text()
+                .matches("could not update cache")
+                .count()
+                >= 1
+        );
     } else if matches!(
         case,
         LiveStartupCase::BypassExisting
             | LiveStartupCase::BypassMissing
             | LiveStartupCase::DisabledCurrent
     ) {
-        if let Some(expected) = initial_bytes {
-            assert_eq!(std::fs::read(&cache).unwrap(), expected);
+        if let Some(expected) = initial_bytes.as_ref() {
+            assert_eq!(std::fs::read(&cache).unwrap(), *expected);
             assert_eq!(
                 std::fs::metadata(&cache).unwrap().modified().unwrap(),
-                initial_mtime.unwrap()
+                *initial_mtime.as_ref().unwrap()
             );
         } else {
             assert!(!cache.exists());
@@ -2786,13 +3196,58 @@ fn run_http_live_control(case: LiveStartupCase) {
             }
         }
     } else {
-        let data = nms_cache::read_cache(&cache).expect("cold live cache");
-        assert_eq!(data.player_state.as_ref().unwrap().units, 700);
-        assert_eq!(data.save_version, 4721);
+        assert_cold_live_cache(&cache);
     }
     eprintln!("SLICE16_CONTROL transport=http case={}", case.label());
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        live_save_bytes(4721, 9, 0, 700, 800, 900, None)
+    );
+    if let Some((path, expected)) = blocker.as_ref() {
+        assert_eq!(std::fs::read(path).unwrap(), *expected);
+    }
     assert!(process.stdout_is_empty());
     process.kill_and_wait();
+    assert_eq!(
+        std::fs::read(&save).unwrap(),
+        live_save_bytes(4721, 9, 0, 700, 800, 900, None)
+    );
+    if let Some((path, expected)) = blocker.as_ref() {
+        assert_eq!(
+            std::fs::read(path).unwrap(),
+            *expected,
+            "blocker remains through HTTP teardown"
+        );
+    }
+    if matches!(case, LiveStartupCase::BypassExisting) {
+        assert_eq!(
+            std::fs::read(&cache).unwrap(),
+            *initial_bytes.as_ref().unwrap()
+        );
+        assert_eq!(
+            std::fs::metadata(&cache).unwrap().modified().unwrap(),
+            *initial_mtime.as_ref().unwrap()
+        );
+    }
+    if matches!(case, LiveStartupCase::BypassMissing) {
+        assert!(!cache.exists());
+        assert!(!cache.parent().unwrap().exists());
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+    }
+    if matches!(case, LiveStartupCase::DisabledCurrent) {
+        assert_eq!(
+            std::fs::read(&cache).unwrap(),
+            *initial_bytes.as_ref().unwrap()
+        );
+        assert_eq!(
+            std::fs::metadata(&cache).unwrap().modified().unwrap(),
+            *initial_mtime.as_ref().unwrap()
+        );
+    }
+    if matches!(case, LiveStartupCase::Cold) {
+        assert_cold_live_cache(&cache);
+    }
+    Ok(fixture_path)
 }
 
 #[cfg(unix)]
@@ -2821,4 +3276,15 @@ fn test_headless_http_live_cache_control_matrix() {
     ] {
         run_http_live_control(case);
     }
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_headless_http_live_cold_case_retries_after_first_bind_collision() {
+    let occupied = TcpListener::bind(("127.0.0.1", 0)).expect("occupy controlled live HTTP port");
+    let addr = occupied
+        .local_addr()
+        .expect("read occupied live HTTP address");
+    run_http_live_control_with_first_addr(LiveStartupCase::Cold, Some(addr));
+    drop(occupied);
 }

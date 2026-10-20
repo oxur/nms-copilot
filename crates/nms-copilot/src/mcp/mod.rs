@@ -146,7 +146,13 @@ pub fn run_headless_with_updates(
     updates: Option<Receiver<AppliedSaveUpdate>>,
 ) {
     let service = ServiceHandle::new("mcp");
-    let runtime = tokio::runtime::Runtime::new().expect("tokio runtime");
+    let runtime = match tokio::runtime::Runtime::new() {
+        Ok(runtime) => runtime,
+        Err(error) => {
+            eprintln!("MCP runtime initialization error: {error}");
+            return;
+        }
+    };
     runtime.block_on(async {
         if let Err(error) = run_mcp_server(model, transport, None, updates, None, service).await {
             eprintln!("MCP server error: {error}");
