@@ -1,6 +1,6 @@
 # Slice18 — explicit placeholder/cache foundation
 
-Version:1.1. Created2026-10-20 UTC. Status: CC-owned implementation after coherent full intake/readback; eight UP rows open, no product gate at ownership handoff. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt.md; initial0/5refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
+Version:1.2. Created2026-10-20 UTC. Status: pinned initial implementation reviewed; first bounded test/docs/capture refinement issued, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration01.md; FIRST of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
 
 Dedicated source .worktrees/placeholder-cache/codex/placeholder-cache created clean61f1d98; CDC owns until coherent CC intake/ownership acknowledgement. CC then owns only source/index and three ignored workbench/slice18-return records; CDC owns planning and later serialized byte-preserving transfer/independent acceptance. Exact14paths/API/compatibility/error/test/capture/gates/readback/commit contract in full initial prompt. No source edit or gate has run for18 during author readiness; ordinary read/hash/preflight is not SUT proof.
 
@@ -25,3 +25,21 @@ CDC new18 capture helper reuses actual tested17 raw-first implementation with on
 ## Coherent intake / source handoff — 2026-10-20 UTC
 
 CDC inspected actual complete CC intake/readback in source workbench/slice18-return/execution.md, preserved its exact initial prefix in existing receipts, and explicitly handed only dedicated18source/index to same selected CC at clean61f/codex/placeholder-cache. Required scopes, fixture sizes/digests, direct-vs-checked cache semantics, whole indexes/oracle negatives and18/19 boundary are coherent; source edits/product gates had not begun at handoff. CC now implements14paths; CDC planning/index remains sole-owned. Source pin/short ownership hold for pre-test full-helper walk follows actual format+lint readiness, no new Operator gate or formal refinement. Version1.1 records current ownership, not source acceptance.
+
+
+## Initial pinned review / refinement01 — 2026-10-20 UTC
+
+CDC inspected all14 changed paths and complete affected production/helper/caller bodies at pinned61f+binarydiff9309c1ce, CDC identity8513e22d/CC46169693 (different documented JSON algorithms, matching all14file hashes). CC final format/lint passed, two lint compile failures retained; broad tests/native unrun. No production algorithm repair found in this static pass. Eight rows remain open; initial changes are not independently accepted. The first correction cc-prompt-iteration01.md is immutable upon issuance and supplies a complete bounded F1–F6 recipe, literal expected state and viable public/inherent API shapes before further work.
+
+| Finding | Existing-contract completion | Rows |
+|---|---|---|
+| F1 | Compiling public model API examples; visible private-struct compatibility, inclusive count/import promotion and trusted reconstruction docs | UP01/02/06 |
+| F2 | Exact typed whole maps/markers/topology/spatial/full state, ordinary-empty promotion/genuine-empty ensure, CSV and literal real parser delta | UP01/02 |
+| F3 | Four-system marked+genuine-empty+import/base/full-player/selected7/version4725 checked-file/reverse/promotion/re-cache raw+derived oracle | UP03 |
+| F4 | Complete trusted invalid-marker preservation, mixed-order contents/indexes, future revision4 boundary and full distinct warm atlas/version | UP03/04 |
+| F5 | Actual headless raw false/true and rebuilt marker assertions while retaining cold-start18/19 limit | UP05/07 |
+| F6 | Future raw-first helper repair/nonempty two-channel preflight; preserve exact historical missing status observations | UP08 |
+
+The six existing actual format/lint attempts retain complete raw channels/exit/endUTC and HEAD/composite source fingerprints/untracked inventories, but twelve explicit before/after status observations are unavailable; no contemporaneous alternative was found in existing CC records. Composite fingerprints genuinely include working diff and untracked inventory, so lacking a standalone diff-hash representation is NOT a separate exception requirement. No raw channels were lost. Exact attempt table and byte-preserved original capture are in existing CDC receipts; old values remain unchanged. No waiver inferred, no prior exception extended; complete concrete current proof precedes any required Operator disposition. Future helper correction and separate support preflight are recorded; nonempty stderr/launch-exception controls are prescribed before the next SUT gate.
+
+Source/index remain held pending coherent new readback, then solely CC-owned for this bounded repair; CDC retains planning/index and independent judgment. Pinned complete changed-source review follows renewed format→lint before broad/native gates. All14 initial scope/trailers/captures/required native9/parent19 and broader raw/history/final-semantic/parent gates remain. Restored wrong-worktree import incident and exact protected-main fences are retained in execution and CDC receipts. No material policy/scope change or new Operator confirmation for these routine repairs; protected main/held pins/Project02 unchanged.

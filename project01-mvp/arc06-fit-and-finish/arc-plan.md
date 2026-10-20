@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.73, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.74, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -629,3 +629,8 @@ CDC may now detail author-ready bounded18 (or a coherent explicitly accounted sp
 Version1.73: adopted policyA is detailed into usable explicit model/cache/import foundation18 from accepted61f1d98, dedicated .worktrees/placeholder-cache/codex/placeholder-cache clean at author readiness. Initial assignment arc06-fit-and-finish/slice18-placeholder-cache/cc-prompt.md, eight UP/newR06-S18open:36arcrows17done19open/project25open. Same selected CDC/CC contexts/settings and serialized source/planning ownership; CC confirmed usable context after compaction.14namedpaths/private origin+exact promotion/3/3cache/checked marker vs trusted-data/no-emptyheuristic/full raw+derived/oldfixture/queryroute/header/native regressions/readback/raw-firstcaptures resolved before issue. No SUT18gate or source edit yet.
 
 Required19/CDC retains cold-start ensure before snapshot, ensure every accepted full live position before snapshot/notifications, exact physical MCP/resource/movement labels and actual normal/stdio/HTTP unknown→promotion→restart. These application bodies are frozen18;18's nine inherited normal cases prove regression, not new full unknown-policy composition. Existing broader history/raw-field/finalsemantic/strictfreshness-identicalrewrite-import-history and every original parent/integration/release owner retained. README stale double-producer paragraph missed in17 is explicitly remediated18 without rewriting17history. Context-sized split changes implementation detail only, preserves adoptedA/scope/quality/parent gates. Protected main9-line edit/allheldpins/Project02 remain; no nextarc/remote action.
+
+
+## Slice18 pinned initial review / first refinement — 2026-10-20 UTC
+
+Version1.74: initial14path candidate at61f+diff9309c1ce reviewed completely; format/lint green after two retained compile failures, no broad/native18proof yet. Existing-contract F1–F6 test/docs/capture completion is issued in slice18-placeholder-cache/cc-prompt-iteration01.md FIRSTof5, no production algorithm repair found. All8UP/R06-S18open:36arcrows17done19open/project25open. The four-system whole raw/derived checked-file/reversal/promotion oracle, genuine-empty controls/API teaching/native marker assertions and future-version boundary are concrete before further gates. Six historical actual format/lint attempts preserve raw channels/exit/endUTC/source fingerprints but lack twelve before/after status observations; complete current proof before Operator disposition, no waiver or missing-history reconstruction. Standalone diff-hash representation is not a separate exception requirement because composite fingerprints include it. Future capture repair/support preflight and restored wrong-path incident are retained proportionately in existing records. Same selected roles/models, source/planning ownership and Arc06-only endpoint; required19 and all broader raw/history/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release obligations and protected main/held pins/Project02 unchanged.

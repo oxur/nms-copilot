@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.63
+version: 1.64
 project: project01-mvp
 status: active
 depends-on: []
@@ -984,3 +984,8 @@ Version1.62: Operator explicitly selected A (“yeah, I’m with you on A :-)”
 ## Arc06 Slice18 foundation issued / required19 remainder — 2026-10-20 UTC
 
 Version1.63: approved policyA now has initial arc06-fit-and-finish/slice18-placeholder-cache/cc-prompt.md with resolved14-path model/cache/import foundation from accepted61f1d98. Eight UP/newR06-S18open;36arcrows17done19open/project25open. Required19explicitly retains common startup/full-live ensure ordering, exact physical label lookup and real normal/stdio/HTTP unknown→promotion→restart composition. Current old regressions stay required18, not counted as19proof. Same selected CDC6.1SolHigh/CC6LunaHigh/context headroom/ownership; all protected pins/main9-line edit/Project02 and every broader raw/history/finalsemantic/original parent/independent/Operator/integration/release obligation preserved. No SUT18gate/source edit yet, no new inquiry/dependency/terminal/remote action.
+
+
+## Arc06 Slice18 initial review / bounded refinement — 2026-10-20 UTC
+
+Version1.64: CDC full14-path pinned review leaves8UP/R06-S18open and issues first-of-five cc-prompt-iteration01.md to complete existing-contract literal raw/derived/file/promotion/docs/native-marker/capture proof before broad gates. Format/lint passed after retained errors; no18runtime acceptance.36arcrows17done19open/project25open. Six historical gate attempts retain raw completion/source fingerprints but lack twelve status observations; no exception adopted or prior waiver extended, current complete proof first. Same selected CDC/CC, protected main edit/heldpins/Project02, required19 composition and every broader raw/history/finalsemantic/original parent/independent/Operator/integration/release obligation retained; no new scope/policy/dependency/inquiry/remote action.
