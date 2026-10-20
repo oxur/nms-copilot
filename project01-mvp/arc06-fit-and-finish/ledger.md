@@ -127,3 +127,13 @@ Adds one child to28 prior rows;29 total/ten done/nineteen open. All prior criter
 | R06-S15 | Complete same-parse supported source-state/version watch→graph API independently accepted with legacy compatibility and owned producer lifetime | Seven CU rows, native full-state/state-only/version-only/failure/recovery/legacy checks, graph authority/selection/atlas tests and independent CDC review | correctness-grade | Operator-adopted complete-state ownership direction; source-grounded bounded API increment | done | child all7 CU done at11cf7e6: final CDC verification, fresh rebased gates, approved initial-capture exception69928e5 and retrospective | Required16 common coordinator/headless live cache;17 normal REPL/background lifetime/PTY; unknown/history/original parent gates retained |
 
 2026-10-19 Slice15 open:33 arc rows/14 done/19 open; parent capabilities remain open.
+
+2026-10-19 Slice15 closed:33 arc rows/15 done/18 open.
+
+## Slice16 — common coordinator and headless live cache
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S16 | Common app-owned full-update apply/cache coordinator and actual headless stdio/HTTP live-cache composition independently accepted | Eight LC rows, lock/order/error/no_cache/lifetime controls and native full-state/cache/observer matrix plus CDC review | correctness-grade | Adopted single-owner direction / source-grounded headless increment | open | | Normal same-owner REPL/background/PTY composition remains required17/CDC; unknown/history/original parent gates retained |
+
+2026-10-19 Slice16 opened:34 arc rows/15 done/19 open; all original parent capabilities remain open.

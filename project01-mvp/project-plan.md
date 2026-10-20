@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.47
+version: 1.48
 project: project01-mvp
 status: active
 depends-on: []
@@ -899,3 +899,8 @@ Operator explicitly approved the bounded initial historical-capture exception (�
 ## Arc06 Slice15 rebased closure / next owners — 2026-10-19 local
 
 All7 CU rows independently accepted at11cf7e6 above current mainb616ab2; original two patches replay exactly/no conflict, fresh15 gates include951 workspace unit/integration +doc1,290 focused+doc1/cache38/route4/native7/no-default220/build/docs/strict checks. Operator-approved initial capture exception applied exactly69928e5; missing originals remain unknown, all future/original gates retained. CC final report reviewed, CDC slice retrospective and bubble-up complete. R06-S15 done; arc33/15 done/18 open, project25 open. Required16 common coordinator/headless full live cache/observer,17 same-coordinator normal REPL/background-server/PTY composition, and all unknown-placeholder/history/raw-field/final semantic/original parent obligations remain. Candidate uninstalled/unintegrated; current main/external worktree/dependencies/Project02 protected. Version1.47 records child closure and explicit sizing of the complete next composition, no scope reduction or other acceptance amendment.
+
+
+## Arc06 Slice16 headless coordinator/live cache opened — 2026-10-19 local
+
+From accepted rebased15 source11cf7e6/close94cfcd1, issue arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt.md; new dedicated source .worktrees/headless-live-cache, same selected two contributors/Arc06-only scope. Common owned full-update apply/serialized outside-lock cache writer and observer-only headless stdio/HTTP wiring with complete state/version/cache/error/no_cache/lifetime proof; normal REPL SAME-coordinator/background-server/native normal matrix explicitly required17, all unknown-placeholder/history/raw/final semantic/original parent acceptance retained.8 child rows open; arc34/15done/19open, project25open. Mainb616ab2/external03e8d04/accepted15/earlier pins/Project02 preserved; candidate uninstalled/unintegrated. Version1.48 is routine detailing/readiness/next owner, no capability reduction or new approval waiver.
