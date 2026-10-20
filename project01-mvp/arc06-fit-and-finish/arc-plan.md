@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.58, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.59, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -505,3 +505,8 @@ Was: planned16 all application coordinator/both-mode/cache/lifetime composition.
 ## Slice16 source-grounded headless coordinator/cache assignment — 2026-10-19 local
 
 After15 close94cfcd1/accepted rebased11cf7e6, open arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt.md on dedicated .worktrees/headless-live-cache/codex/headless-live-cache. Same CC gpt-6-luna High owns source/index after acknowledgement; CDC gpt-6.1-sol High owns planning/index/independent review. One full-update owner/worker applies once, snapshots under model lock then serializes/writes outside it with event source version; unbounded read-only observers preserve order without blocking writer; no_cache bypass/error recovery/owned Drop and observer-only stdio/HTTP main path fully specified. Existing public legacy wrappers/normal branch frozen for17. Full literal warm imported phase matrix plus6cases×2transports and deterministic lock/order/error/lifetime controls make usable headless composition independently checkable. No new dependency/terminal method, parser/cache schema/placeholder policy or inquiry.8 LC/newR06-S16 open:34 arcrows/15done/19open, project25open. Required17 normal SAME-coordinator REPL/background lifetime/native normal C04 remains, plus every unknown/history/raw/final transition/original acceptance owner/gate. Main/external/15/earlier pins andProject02 protected; candidate wired/tested/documented, not installed/integrated. Version1.58 details existing adopted scope/readiness and complete remainder, with no acceptance reduction.
+
+
+## Slice16 initial review and bounded correction — 2026-10-19 local /20UTC
+
+Stable source4404f37, exact seven allowed paths/parsed coauthors/clean index, independently reproduced format/lint/focused519/native11. All8LC/R06-S16 remain open: green checks do not close F1–F6 incomplete complete-state/version/atlas/blocking writer/native exact previous-only/file-parent/no-cache/mtime/retry/error-boundary oracles and capture fidelity. Immutable first refinement arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt-iteration01.md carries complete bounded correction. Native harness11 is distinct from workspace13-test integration group. First of54compile-only stderr records12317bytes/hash now points to second1061byte output due filename collision; exact existing-artifact recovery/remaining availability being checked, no reconstruction or Slice15 exception applied. Current canonical return preserved byte-for-byte and corrections append-only; all8rows pending independent review, no closure/next17 dispatch through incomplete16. Arc34/15done/19open, project25open. Same selected CDC6.1SolHigh/CC6LunaHigh, Arc06-only, planning/source serialized ownership, latest mainb616ab2/external03e8d04/accepted15/held pins/Project02 protected; no remote action. All normal17/unknown-placeholder/history/raw/finaltransition/original export/import/format/docs/distribution/coverage/C04/R06-R02/R03/M7.4/parent independent/Operator/integration/release gates retained. Routine review/correction, no material architecture/scope/criteria/sequence amendment.

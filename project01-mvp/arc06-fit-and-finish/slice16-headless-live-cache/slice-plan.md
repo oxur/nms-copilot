@@ -1,6 +1,6 @@
 # Slice16 — app-owned coordinator and headless live cache
 
-Version:1.0. Created2026-10-19 local. Status:open, initial author-ready assignment. Current assignment arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt.md, initial (zero of five refinements). Same Arc06-only Autonomous Mode: CDC /root/cdc_arc06 gpt-6.1-sol High owns planning/index/independent review; CC /root/cdc_arc06/cc_slice15 gpt-6-luna High owns dedicated source/index after acknowledgement, both OpenAI/Codex, no fallback/extra context. Actual contributor name persists across slices; it is not a claim this is still Slice15.
+Version:1.1. Created2026-10-19 local. Status:open, initial return reviewed/corrections required. Current assignment arc06-fit-and-finish/slice16-headless-live-cache/cc-prompt-iteration01.md, first of five refinements. Same Arc06-only Autonomous Mode: CDC /root/cdc_arc06 gpt-6.1-sol High owns planning/index/independent review; CC /root/cdc_arc06/cc_slice15 gpt-6-luna High owns dedicated source/index after acknowledgement, both OpenAI/Codex, no fallback/extra context. Actual contributor name persists across slices; it is not a claim this is still Slice15.
 
 ## Useful delivery and dependency
 
@@ -25,3 +25,10 @@ CDC inspected current headless/normal main wiring, full watcher source API/lifet
 Required text/data manifest and complete pre-edit readback are in prompt. Expected one implementation context with headroom (rough estimate60–80k text/implementation tokens; not measured cost or backend capacity); stop with durable state if actual limits threaten complete reviewable work. CDC resolved public ownership/error/queue/selection/write/no-cache/shutdown/source-test oracles; CC local helper layout may vary within those binding observables.
 
 CC filesystem-stages ONLY closing-report.md/execution.md/validation.json in ignored source workbench/slice16-return, never Git-add. CDC byte-preserving transfer to canonical closing report/artifacts after stable source/index handback. Artifacts execution/validation are need-driven for intake/actual failures/raw results; no empty close/retrospective precreated. CC captures every gate/diagnostic attempt BEFORE launch from its first command. Format then lint before tests; all ordered gates and failures preserved, independent review required. Local exact-path commits/both trailers; no main/held-pin movement. All8 LC rows open until independent CDC acceptance. CDC closing retrospective and bottom-up bubble-up mandatory before child close; arc endpoint remains explicit.
+
+## Assignment history
+
+- Initial cc-prompt.md issued2026-10-19, planning04003b9, no predecessor; returned source4404f37 and reviewed by CDC; superseded for correction, preserved unchanged.
+- cc-prompt-iteration01.md issued2026-10-19 local/20UTC, predecessor cc-prompt.md; active first refinement of five for F1–F6 required oracles/fallible new entrypoint/capture fidelity. Eight LC rows remain open; no scope/criteria reduction or waiver. Independent initial format/lint/focused519/native11 green do not close missing oracle/evidence requirements. Source ownership returns to CC only after acknowledgement; planning stays CDC.
+
+Routine version1.1 records review/correction. Exact findings/capture mismatch and initial return hashes are in cdc-verification.md. The Slice15-only approved exception does not apply; actual unavailable historical fields remain pending, no recovery invented.

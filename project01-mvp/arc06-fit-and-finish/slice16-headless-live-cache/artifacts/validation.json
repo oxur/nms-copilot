@@ -1,0 +1,3222 @@
+{
+  "assignment": "Project01 Arc06 Slice16 initial assignment; cc-prompt.md issued planning 04003b978d8c0ee2d5bc0fb7ecaa80775f0943a7",
+  "source": {
+    "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+    "branch": "codex/headless-live-cache",
+    "baseline": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+    "commit": "4404f37f70df62177689d6108e68b3685ea422a1"
+  },
+  "scope": {
+    "allowed_source_paths": [
+      "README.md",
+      "crates/nms-copilot/src/lib.rs",
+      "crates/nms-copilot/src/coordinator.rs",
+      "crates/nms-copilot/src/watch.rs",
+      "crates/nms-copilot/src/mcp/mod.rs",
+      "crates/nms-copilot/src/main.rs",
+      "crates/nms-copilot/tests/mcp_live_integration.rs"
+    ],
+    "return_paths": [
+      "workbench/slice16-return/closing-report.md",
+      "workbench/slice16-return/execution.md",
+      "workbench/slice16-return/validation.json"
+    ],
+    "planning_changed": false
+  },
+  "final_candidate_attempts": [
+    "required_make_format_matrix_retry",
+    "required_make_lint_matrix_retry",
+    "diagnostic_stdio_live_matrix_corrected",
+    "diagnostic_http_live_matrix_final",
+    "required_make_test_final_matrix",
+    "required_diff_check_final_matrix"
+  ],
+  "capture_index_file": "workbench/slice16-return/gate-attempts.json",
+  "raw_capture_directory": "workbench/slice16-return/raw-gates",
+  "attempts": [
+    {
+      "id": "diagnostic_copilot_lib_no_run",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "--no-run"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:12:15.346367+00:00",
+      "ended_utc": "2026-10-20T01:12:45.774368+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "e4a1bb16221d204ea73204724e09b3752ef869ac64410ee81c7ce861fb075663",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_copilot_lib_no_run.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_copilot_lib_no_run.stderr",
+        "bytes": 12317,
+        "sha256": "cc8520fa47c9a0ffcb50d6f1d3463c337e7ab68c0fde61abca2e6e36bb845892"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_copilot_lib_no_run",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "--no-run"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:12:20.909321+00:00",
+      "ended_utc": "2026-10-20T01:12:45.905424+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "e4a1bb16221d204ea73204724e09b3752ef869ac64410ee81c7ce861fb075663",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_copilot_lib_no_run.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_copilot_lib_no_run.stderr",
+        "bytes": 1061,
+        "sha256": "cac0cb280bc96cde6f37053d03316757b149b93f18afb2629f6287681428e187"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:15:33.500734+00:00",
+      "ended_utc": "2026-10-20T01:15:34.187728+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6963a00ecd3d45b2c944830281a6761ef928bf30b56630b74255d78018b33c19",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_coordinator_tests",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "coordinator::",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:15:35.966481+00:00",
+      "ended_utc": "2026-10-20T01:15:45.581460+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_tests.stdout",
+        "bytes": 1097,
+        "sha256": "35f91dce54deca518186dd5e5f9722b07d0fd1d6e804ceed3e531fcae97d20da"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_tests.stderr",
+        "bytes": 1513,
+        "sha256": "737c806e68ca1c1705710c2fecee5c5352c3d715aca90370ca413a4f677491c0"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 2,
+          "failed": 4,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 221
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_real_coordinator_test",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "coordinator::tests::test_real_watcher_applies_complete_state_and_persists_matching_version",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:16:14.784079+00:00",
+      "ended_utc": "2026-10-20T01:16:20.514870+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_real_coordinator_test.stdout",
+        "bytes": 342,
+        "sha256": "1bc9a788f98f7ae6c446e38f9e77303c46ad822661f771ab979081423719436f"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_real_coordinator_test.stderr",
+        "bytes": 762,
+        "sha256": "92884b671a0b261a7ab04560591f7edfa3ad59b7e3fd723d70205c473602f02d"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 226
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_direct_watcher_test",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-watch",
+        "test_start_watching_updates_observes_state_and_version_only_changes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:16:40.525025+00:00",
+      "ended_utc": "2026-10-20T01:16:52.894859+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_direct_watcher_test.stdout",
+        "bytes": 327,
+        "sha256": "d2ed11eeea0faa071585982e9e0bc2e0fd425b970dd82a7f6c2634e1721fdd43"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_direct_watcher_test.stderr",
+        "bytes": 2006,
+        "sha256": "793b4a84aa1e2b91abeca6639dba7a44abaa264227013bc289be5eb61d23f95b"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 31
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_direct_watcher_test_host",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-watch",
+        "test_start_watching_updates_observes_state_and_version_only_changes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:17:04.281675+00:00",
+      "ended_utc": "2026-10-20T01:17:05.896258+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_direct_watcher_test_host.stdout",
+        "bytes": 209,
+        "sha256": "e16426b5009fc538f6cfceeaa122bd22a42f1678e312a9865a6c444a9a680500"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_direct_watcher_test_host.stderr",
+        "bytes": 154,
+        "sha256": "ff61c91d34ca97cb5e3ed6a6a3ed43e1c22bf9bf960933616cf84bbc302bc39b"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 31
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_coordinator_tests_host",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "coordinator::",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:17:13.075053+00:00",
+      "ended_utc": "2026-10-20T01:17:14.434384+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_tests_host.stdout",
+        "bytes": 700,
+        "sha256": "e9e306adc1c442e6b7dd593872f062150abbd7d62b4dd71490402b17a6f76ff9"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_tests_host.stderr",
+        "bytes": 490,
+        "sha256": "418e6faa0c98e3fa358113a1715536473fd82a9b6eeefad400bb40dbc3bb7e64"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 221
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_live_integration_no_run",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "--no-run"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:17:19.286983+00:00",
+      "ended_utc": "2026-10-20T01:17:26.630879+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6c93080a5a84f713a60e617052f5ba6e0e687d6e01f737b2a9b8d3a37c465780",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_live_integration_no_run.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_live_integration_no_run.stderr",
+        "bytes": 2525,
+        "sha256": "d537f911f9f4ab55ca9c72edcd411c2c75027cc3f2cae6e111f11545a3fe974e"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_format_final",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:17:57.733944+00:00",
+      "ended_utc": "2026-10-20T01:17:58.225895+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "24f615eaeafa38864679ce12ce703d9f67dab633b913cd0ad002c30fdb2c3d5a",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_live_integration_no_run_retry",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "--no-run"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:17:59.983062+00:00",
+      "ended_utc": "2026-10-20T01:18:01.169496+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_live_integration_no_run_retry.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_live_integration_no_run_retry.stderr",
+        "bytes": 1322,
+        "sha256": "446c8f91c38de494ef40b17ffbd55dff2d3ba2c1cedb91b67512dc7ceab33194"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_stdio_live_matrix",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_stdio_complete_live_update_matrix",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:18:10.023789+00:00",
+      "ended_utc": "2026-10-20T01:18:15.404795+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix.stdout",
+        "bytes": 173,
+        "sha256": "d3761c57cd0fee60b31a5d9c7197f8fe8a1d0d4884e8001d905162e671affa08"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix.stderr",
+        "bytes": 5217,
+        "sha256": "d83add4a4a25ca6e43620b3d9dfd89068728a02fd897c930578696c8d990d017"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_http_live_matrix",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_http_complete_live_update_matrix",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:18:19.484279+00:00",
+      "ended_utc": "2026-10-20T01:18:24.664635+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_live_matrix.stdout",
+        "bytes": 172,
+        "sha256": "f13ede80c69da7d7881e62ce7780cefadbfc97783a0f948cb309bf3210e28220"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_live_matrix.stderr",
+        "bytes": 5799,
+        "sha256": "316d7da1b86c6605056b2d7c0b19a440f9a4ed09c67c4222b9675c2032bd5efd"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_stdio_control_matrix",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_stdio_live_cache_control_matrix",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:18:29.930929+00:00",
+      "ended_utc": "2026-10-20T01:18:37.582422+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_control_matrix.stdout",
+        "bytes": 171,
+        "sha256": "74afeb2d9044580f1dae31962c83c1d28206693c38067f438d2bdca465b81c12"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_control_matrix.stderr",
+        "bytes": 4456,
+        "sha256": "a2fbba50714aa9374012802b68cc460c8404bebbc21d25101fdc2bd2af1fc0c6"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_http_control_matrix",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_http_live_cache_control_matrix",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:18:43.794091+00:00",
+      "ended_utc": "2026-10-20T01:18:51.354717+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_control_matrix.stdout",
+        "bytes": 170,
+        "sha256": "bd6313861b4ecd01c039b0acf86130f5bdcd43a2eb3b22b3b3cb007a99622aa3"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_control_matrix.stderr",
+        "bytes": 7374,
+        "sha256": "bdb0cfc148317218a9544a2aacf6b72b458ef7c6b9a4bd1cce8cefb4b2cea991"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "required_make_format_final2",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:19:03.568568+00:00",
+      "ended_utc": "2026-10-20T01:19:04.266652+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final2.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final2.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:19:07.670411+00:00",
+      "ended_utc": "2026-10-20T01:19:26.516686+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "795fa26464dcc659f970ac0c02eb319ea539dc456d09e3c4ef87647235c11ff2",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 2,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint.stdout",
+        "bytes": 69,
+        "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint.stderr",
+        "bytes": 13125,
+        "sha256": "d9a5b530d424c67e18c05152ca054c041b8a9628b6ce21ac9636d2235acdea7a"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_format_lintfix",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:07.925994+00:00",
+      "ended_utc": "2026-10-20T01:20:08.618303+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "e0d7fd50b17a7f237416bb6dc184bfc18762da0d26769d9527d6a89eb2c7fa57",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_lintfix.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_lintfix.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_lint_retry",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:10.546918+00:00",
+      "ended_utc": "2026-10-20T01:20:12.488287+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_retry.stdout",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_retry.stderr",
+        "bytes": 448,
+        "sha256": "70564c497efa816f77e1baea9c1f8038261fa8d5f1ca9ba7203003f24a7588ed"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_focused_lib_sandbox",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-core",
+        "-p",
+        "nms-graph",
+        "-p",
+        "nms-watch",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--lib",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:16.752051+00:00",
+      "ended_utc": "2026-10-20T01:20:24.169383+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_focused_lib_sandbox.stdout",
+        "bytes": 16698,
+        "sha256": "3c0c708aa13b0bd21e798ffa2ec76a2c1f29a9f9698378398ae69bf7bc2487f3"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_focused_lib_sandbox.stderr",
+        "bytes": 1970,
+        "sha256": "149cc0ce4a39ee75e44e50dd2816999a096fa57a7ff121ff6ef2063f91bbe06e"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 222,
+          "failed": 5,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_focused_lib_host",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-core",
+        "-p",
+        "nms-graph",
+        "-p",
+        "nms-watch",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--lib",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:29.064972+00:00",
+      "ended_utc": "2026-10-20T01:20:38.347889+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_focused_lib_host.stdout",
+        "bytes": 35324,
+        "sha256": "6db5e4030a707c6f0c7495f7e9b4a845a800c516f907d797e6daf902635eb7a1"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_focused_lib_host.stderr",
+        "bytes": 880,
+        "sha256": "6e3128b998907d71c69c5c5bdcade3e971af26a1d826b5b41e722f30c0b26a43"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 227,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 171,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 32,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_cache_tests",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-cache"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:43.478818+00:00",
+      "ended_utc": "2026-10-20T01:20:52.481669+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_cache_tests.stdout",
+        "bytes": 3087,
+        "sha256": "5db21fcee6ae715e1e4aa4a55ff541ac319966de62888023582bcfe29d34bfd8"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_cache_tests.stderr",
+        "bytes": 1219,
+        "sha256": "2c75a758e2bee9eff4c7a03100f382c7ee373f71134593f251c29ac3a6cc275b"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_route_integration",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "route_cache_integration"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:20:56.430068+00:00",
+      "ended_utc": "2026-10-20T01:20:57.805423+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_route_integration.stdout",
+        "bytes": 457,
+        "sha256": "4132cd17afd16b3564aaca4f4f1d149782a645b17bafe2cebde387424bb22342"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_route_integration.stderr",
+        "bytes": 556,
+        "sha256": "e6ccc78c148edc1a774729e595f43c16ce51b96ca01e564c083160264090b8bd"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_mcp_live_integration_sandbox",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:21:01.723481+00:00",
+      "ended_utc": "2026-10-20T01:21:30.045578+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_mcp_live_integration_sandbox.stdout",
+        "bytes": 1478,
+        "sha256": "ccf4cdb3a09e32bdafb187b56b9335a498cc0f03711b444b4b7c1a3a476b214d"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_mcp_live_integration_sandbox.stderr",
+        "bytes": 20098,
+        "sha256": "b208827bfc392047e576ead6dc4fc600745765809004acc460cbba71bfa9bcaa"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 2,
+          "failed": 9,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_mcp_live_integration_host",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "--",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:21:36.998392+00:00",
+      "ended_utc": "2026-10-20T01:22:14.101944+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_mcp_live_integration_host.stdout",
+        "bytes": 873,
+        "sha256": "d809106cb037334436d99c12b4c73dc1d174e2f7df851ddc59e533e45e774675"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_mcp_live_integration_host.stderr",
+        "bytes": 55016,
+        "sha256": "54af794942aca7a6756f1d632f931a05d69fc1d074ff4dbf135baa5db6c6f2ee"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_no_default_lib_sandbox",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--no-default-features",
+        "--lib"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:22:21.624939+00:00",
+      "ended_utc": "2026-10-20T01:22:36.576498+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_no_default_lib_sandbox.stdout",
+        "bytes": 16789,
+        "sha256": "8dcff1c1fbe48579210c0c6ecd10950411478cd3e03e1b8706e0c7866df0384d"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_no_default_lib_sandbox.stderr",
+        "bytes": 1607,
+        "sha256": "a5b4c40162277e1d979d8bef99cf4caa097656b00276bc0d8702fbb95a0c66c3"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 221,
+          "failed": 5,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_no_default_lib_host",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--no-default-features",
+        "--lib"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:22:42.166442+00:00",
+      "ended_utc": "2026-10-20T01:22:43.555617+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_no_default_lib_host.stdout",
+        "bytes": 14601,
+        "sha256": "52846a499673266843fb7f76d781fc7fd9013765de5738b4a227783862fd7a3b"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_no_default_lib_host.stderr",
+        "bytes": 411,
+        "sha256": "6aee70c3d52971f7f3bed0c26e351802716a76e8ce410053675e3d9cb73b98ef"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 226,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_make_test_sandbox",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:22:49.222073+00:00",
+      "ended_utc": "2026-10-20T01:23:01.324624+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 2,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_sandbox.stdout",
+        "bytes": 29934,
+        "sha256": "aa68730df65079776744041c6f9e5df693a531ec32e68fdff8087b01b989d02f"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_sandbox.stderr",
+        "bytes": 2405,
+        "sha256": "9751d65b795b953ae4ab32e8026a15cdb99af701c27690a4155e86483599832f"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 68,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 34,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 222,
+          "failed": 5,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_make_test_host",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:23:06.721727+00:00",
+      "ended_utc": "2026-10-20T01:23:26.768625+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_host.stdout",
+        "bytes": 64417,
+        "sha256": "f66ac682191c6a75f29b1735cba68f6c64de23673c292f1ba50ca873a8119a78"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_host.stderr",
+        "bytes": 2782,
+        "sha256": "1e3e54ec8c5248960fcba17c1d0f9f447868d8239bc355f2809930f4a6848f3c"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 68,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 34,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 227,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 171,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 96,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 102,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 32,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_build_all_features",
+      "argv": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--all-features"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:23:29.251315+00:00",
+      "ended_utc": "2026-10-20T01:23:40.353834+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_build_all_features.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_build_all_features.stderr",
+        "bytes": 1050,
+        "sha256": "1b39b149d67245ff979561b661e02d28b7731a5447f699c9b45bcfb7dac71405"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_workspace_doctests",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--all-features",
+        "--doc"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:23:43.047552+00:00",
+      "ended_utc": "2026-10-20T01:23:44.920457+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_workspace_doctests.stdout",
+        "bytes": 1175,
+        "sha256": "7ef224229c1d54b7774b50d774d57cec9e85eb0490d25ea35509a2519fc4bb1c"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_workspace_doctests.stderr",
+        "bytes": 530,
+        "sha256": "0aae0b0076f44b16878bd4aa4da9ecfb60656e959e397929fb43e9fbdc56d42a"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_workspace_docs",
+      "argv": [
+        "cargo",
+        "doc",
+        "--no-deps",
+        "--all-features",
+        "-p",
+        "nms-core",
+        "-p",
+        "nms-graph",
+        "-p",
+        "nms-query",
+        "-p",
+        "nms-cache",
+        "-p",
+        "nms-watch",
+        "-p",
+        "nms-copilot"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:23:48.410507+00:00",
+      "ended_utc": "2026-10-20T01:23:53.093396+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_workspace_docs.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_workspace_docs.stderr",
+        "bytes": 5590,
+        "sha256": "4e64dc3e05f885f019ad96ceceb131c6df2a6d8e2b7bfede9007eabd17c97b8f"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_strict_cache_docs",
+      "argv": [
+        "cargo",
+        "doc",
+        "--no-deps",
+        "--all-features",
+        "-p",
+        "nms-cache"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:23:56.003142+00:00",
+      "ended_utc": "2026-10-20T01:24:00.710300+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {
+        "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_strict_cache_docs.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_strict_cache_docs.stderr",
+        "bytes": 1358,
+        "sha256": "1a82b16e3d9071d043a6e808f8e381be61569cca39506a5b83848f68d97fecfd"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_strict_watch_docs",
+      "argv": [
+        "cargo",
+        "doc",
+        "--no-deps",
+        "--all-features",
+        "-p",
+        "nms-watch"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:24:02.497126+00:00",
+      "ended_utc": "2026-10-20T01:24:04.716608+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {
+        "RUSTDOCFLAGS": "-D rustdoc::broken_intra_doc_links"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_strict_watch_docs.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_strict_watch_docs.stderr",
+        "bytes": 1045,
+        "sha256": "bdafdcc6c84852db841c3f4d778099a5a2bfcd702a29546d824a1d94cdf9e56c"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_diff_check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:24:07.034056+00:00",
+      "ended_utc": "2026-10-20T01:24:07.104677+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "840c0c8d6921172f1fa91aea37d7f2a3822a03330bd99f6abdc6c4f7fce2ff76",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_format_postcoverage",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:24:35.446978+00:00",
+      "ended_utc": "2026-10-20T01:24:36.139167+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "9c5207e167c37a54eda75761c80b81e7feff8a1284dabea7c43c9cf9550fe6fa",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_postcoverage.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_postcoverage.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_coordinator_final",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "coordinator::",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:24:41.227163+00:00",
+      "ended_utc": "2026-10-20T01:24:44.264712+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "15cea1ff6562a3f17e8645b93437c22a3f29475210c8f6eb4cfd893da2613054",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_final.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_final.stderr",
+        "bytes": 481,
+        "sha256": "b4a09cc66b42f624b5f40ea23401000af736e25227688d08cbe48c50828d3098"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_coordinator_final_retry",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "coordinator::",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:25:39.560514+00:00",
+      "ended_utc": "2026-10-20T01:25:43.811153+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_final_retry.stdout",
+        "bytes": 926,
+        "sha256": "7c7402a996c9f79d32840ac5cf846e0d3822deb2011bd68b5dc580fa66412bd2"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_coordinator_final_retry.stderr",
+        "bytes": 611,
+        "sha256": "6fbeaafa66e9816debb144cddc4c5cfe7a5bf43d43b65f81d01e61930e12624b"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 221
+        }
+      ]
+    },
+    {
+      "id": "required_make_lint_final",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:25:49.231310+00:00",
+      "ended_utc": "2026-10-20T01:25:51.378986+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_final.stdout",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_final.stderr",
+        "bytes": 448,
+        "sha256": "ddcbcd8a37012de722772ffcf45ed7aab8ceaca766b93ee78dacc7a29eb97154"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_test_final",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:25:57.585933+00:00",
+      "ended_utc": "2026-10-20T01:26:20.082002+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_final.stdout",
+        "bytes": 64643,
+        "sha256": "772dc8cb7af9af08778cb4587ec06d5284fc66fe44abdf0b4280234693d7c742"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_final.stderr",
+        "bytes": 2903,
+        "sha256": "a78927094d70a18101ec6148a05fd7b5daff1b5f435b0c6d0f470f3b2cb1a118"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 68,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 34,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 229,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 171,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 96,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 102,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 32,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_make_format_final_candidate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:26:25.759652+00:00",
+      "ended_utc": "2026-10-20T01:26:26.253895+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final_candidate.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final_candidate.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_lint_formatted_final",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:26:29.935161+00:00",
+      "ended_utc": "2026-10-20T01:26:30.979377+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_formatted_final.stdout",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_formatted_final.stderr",
+        "bytes": 327,
+        "sha256": "4a8678f4c73001e58b9203d41545ec0c57f4e129fc791c34b4d96d96fe98a341"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_test_formatted_final",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:26:36.178780+00:00",
+      "ended_utc": "2026-10-20T01:26:55.030957+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_formatted_final.stdout",
+        "bytes": 64643,
+        "sha256": "2becbfc20810a1e03a41323b981b9d70f9ea07f5fbf71e0f4cffdcf92f989dab"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_formatted_final.stderr",
+        "bytes": 2782,
+        "sha256": "1e529daa7d5dc3287bd3b650f7cecd80cc808c3162080036a830f4440f7bc418"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 68,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 34,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 229,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 171,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 96,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 102,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 32,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_diff_check_final",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:27:12.604575+00:00",
+      "ended_utc": "2026-10-20T01:27:12.687443+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "1c71e9883912f03912b107313691a1f2b146472407868c9a0eeb66c99064e087",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check_final.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check_final.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_format_final_matrix",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:28:20.171129+00:00",
+      "ended_utc": "2026-10-20T01:28:20.807690+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "fb96f4cfa3d5a9129ec52606c2ff10dd33668081704f1d0bb8fa0a82ebfc9a77",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final_matrix.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_final_matrix.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_lint_final_matrix",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:28:24.181240+00:00",
+      "ended_utc": "2026-10-20T01:28:26.166719+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "903aabfcecb1caae9f0f5fa8ef546b56283cba69e68f13457cebc7e05bad6f1b",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_final_matrix.stdout",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_final_matrix.stderr",
+        "bytes": 448,
+        "sha256": "138035fcf9fa96e10dde0ceae3b9e53edc726b0ede96fc19bd41cd3a7f0b1e00"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_stdio_live_matrix_final",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_stdio_complete_live_update_matrix",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:28:30.824253+00:00",
+      "ended_utc": "2026-10-20T01:28:38.633685+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "903aabfcecb1caae9f0f5fa8ef546b56283cba69e68f13457cebc7e05bad6f1b",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 101,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix_final.stdout",
+        "bytes": 255,
+        "sha256": "bab31b882e961db24881459035bfcdddab1920f80c7297812e4e30d10713f270"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix_final.stderr",
+        "bytes": 4781,
+        "sha256": "245ba84255b2f306cee761ea51b8c04c524e253c6cf3564627e3e772b6105547"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "required_make_format_matrix_retry",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:28:59.697505+00:00",
+      "ended_utc": "2026-10-20T01:29:00.355798+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_matrix_retry.stdout",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_format_matrix_retry.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "required_make_lint_matrix_retry",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:29:06.455942+00:00",
+      "ended_utc": "2026-10-20T01:29:08.275733+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_matrix_retry.stdout",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_lint_matrix_retry.stderr",
+        "bytes": 448,
+        "sha256": "01c02ceed6aba8a9ceec9e497d8b470466e449ade4bc4263472ca014c4b7f27a"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "diagnostic_stdio_live_matrix_corrected",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_stdio_complete_live_update_matrix",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:29:14.894301+00:00",
+      "ended_utc": "2026-10-20T01:29:27.113550+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix_corrected.stdout",
+        "bytes": 174,
+        "sha256": "9b11150d3d9b606c2217e406a257d798c5055ac5d7fea2994390bfbc03874be2"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_stdio_live_matrix_corrected.stderr",
+        "bytes": 5171,
+        "sha256": "512de2262d74968f29da8b0049b7936dbd1e927e881a051f1bd01ad45d0b747d"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_http_live_matrix_final",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--all-features",
+        "--test",
+        "mcp_live_integration",
+        "test_headless_http_complete_live_update_matrix",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:29:32.598158+00:00",
+      "ended_utc": "2026-10-20T01:29:43.496711+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_live_matrix_final.stdout",
+        "bytes": 173,
+        "sha256": "365843c04b7f7a7f25157bf7f9a4211116f38d411f3ebc12960831ebb0a3bcd1"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/diagnostic_http_live_matrix_final.stderr",
+        "bytes": 5631,
+        "sha256": "52ec016af03da20f70fa14d6889cc7ef28420f8abcdc9d9c11d426d8249f06f0"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 10
+        }
+      ]
+    },
+    {
+      "id": "required_make_test_final_matrix",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:29:49.293324+00:00",
+      "ended_utc": "2026-10-20T01:30:11.486009+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_final_matrix.stdout",
+        "bytes": 64644,
+        "sha256": "c252f91b83706939bb66b7d7816c83d8bb7aa4d4da28ca6f65389324354a454c"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_make_test_final_matrix.stderr",
+        "bytes": 2782,
+        "sha256": "9aedd795403b536e3cfa1ef25b6171424a708cda7f9d21d9b23b3f3ca070abed"
+      },
+      "observed_harness_populations": [
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 68,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 34,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 29,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 7,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 229,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 11,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 87,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 171,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 96,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 102,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 32,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        },
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0
+        }
+      ]
+    },
+    {
+      "id": "required_diff_check_final_matrix",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:30:21.038437+00:00",
+      "ended_utc": "2026-10-20T01:30:21.136065+00:00",
+      "source_head_at_start": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "source_working_diff_identity_sha256": "6a27f3b8f0526a7c896273d1d7c4d17a61ec073660ad55a2dcb9186823d54b1d",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check_final_matrix.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/required_diff_check_final_matrix.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    },
+    {
+      "id": "postcommit_diff_check",
+      "argv": [
+        "git",
+        "diff",
+        "11cf7e6a8e2a7549a223880820c0bf4543381459..HEAD",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "started_utc": "2026-10-20T01:31:29.772975+00:00",
+      "ended_utc": "2026-10-20T01:31:29.845760+00:00",
+      "source_head_at_start": "4404f37f70df62177689d6108e68b3685ea422a1",
+      "source_working_diff_identity_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "inherited_selected_environment": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "HOME": "/Users/oubiwann"
+      },
+      "explicit_environment_overrides": {},
+      "status": "completed",
+      "exit_code": 0,
+      "stdout": {
+        "path": "workbench/slice16-return/raw-gates/postcommit_diff_check.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "workbench/slice16-return/raw-gates/postcommit_diff_check.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "observed_harness_populations": []
+    }
+  ],
+  "metadata_only_wrapper_error": {
+    "operation": "capture_gate.py failed while parsing git status before subprocess.run(argv)",
+    "observed_trace": "line.startswith string on bytes status row raised TypeError",
+    "cargo_launched": false,
+    "separate_wrapper_stdout_stderr": "unavailable; not reconstructed"
+  },
+  "cc_proposal_only": {
+    "LC-01": "proposed-done pending CDC review",
+    "LC-02": "proposed-done pending CDC review",
+    "LC-03": "proposed-done pending CDC review",
+    "LC-04": "proposed-done pending CDC review",
+    "LC-05": "proposed-done pending CDC review",
+    "LC-06": "proposed-done pending CDC review",
+    "LC-07": "proposed-done pending CDC review",
+    "LC-08": "proposed-done pending CDC review"
+  },
+  "limitations": [
+    "Slice17 normal REPL/shared MCP coordinator integration remains open.",
+    "No CDC acceptance, parent arc/project acceptance, Operator acceptance, install, merge, or release is inferred.",
+    "Earlier green build/docs and focused aggregate gates apply to their recorded source diff identities; final test-only changes have final format/lint/focused transport/full-workspace test proof.",
+    "All native restricted-host failures and unchanged authorized-host retries remain separately captured."
+  ],
+  "commit_proof": {
+    "parent": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+    "changed_paths": [
+      "README.md",
+      "crates/nms-copilot/src/coordinator.rs",
+      "crates/nms-copilot/src/lib.rs",
+      "crates/nms-copilot/src/main.rs",
+      "crates/nms-copilot/src/mcp/mod.rs",
+      "crates/nms-copilot/src/watch.rs",
+      "crates/nms-copilot/tests/mcp_live_integration.rs"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "git_status_porcelain": "clean",
+    "git_index": "clean",
+    "postcommit_baseline_diff_check": "postcommit_diff_check exit 0"
+  }
+}

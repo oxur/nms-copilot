@@ -1,0 +1,28 @@
+# Slice16 CC closing report
+
+This is a proposed implementation close for the initial Slice16 assignment, issued from planning revision `04003b978d8c0ee2d5bc0fb7ecaa80775f0943a7`. Source work is confined to `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache`, branch `codex/headless-live-cache`, based on `11cf7e6a8e2a7549a223880820c0bf4543381459`. Source commit: `4404f37f70df62177689d6108e68b3685ea422a1` (parent `11cf7e6a8e2a7549a223880820c0bf4543381459`); exactly the seven allowlisted source paths are committed, both required trailers parse exactly once, and the tracked tree and index are clean. CDC owns planning/index and independently reviews this return. All ledger rows remain open until CDC acceptance.
+
+The source adds a single app-owned full-update watcher/cache coordinator and wires it into headless stdio/HTTP as an observer-only consumer. Each accepted event formats existing notes before applying once, extracts version-matched cache state only when enabled, releases the model lock before serialized cache I/O, and publishes ordered full updates despite write errors. Legacy public wrappers, watcher formatting, and normal-mode ownership remain preserved. The README documents the behavior and the Slice17 boundary. No dependency, parser, model schema, graph/cache implementation, raw save semantics, placeholder policy, or planning files changed.
+
+Final candidate-specific checks passed in prescribed order: `make format`, `make lint`, focused stdio and HTTP complete live-update matrices (1/1 each), full `make test` (all populations zero failures, including 229 nms-copilot library and 13 MCP live integration tests), and `git diff --check`. Earlier required build/docs/strict docs/cache/route/focused gates passed on their recorded earlier diff identities; their exact attempt population, environment and separate raw stdout/stderr channels are retained in `execution.md`, `validation.json`, and `raw-gates/`. Native restricted-run failures are retained alongside unchanged authorized-host retries. A test-oracle address typo and a writer-fixture compile typo also remain as failed attempts with their successful corrections. No historical output is reconstructed.
+
+| Ledger row | CC proposal | Evidence / limit |
+|---|---|---|
+| LC-01 | Proposed done | One watcher/worker/apply owner, two ordered observers, slow/disconnected observer controls, preserved legacy APIs; CDC source review pending. |
+| LC-02 | Proposed done | Literal complete `PlayerState`, version, imported system/planet/base maps and selected-galaxy checks; full checked cache plus rebuilt primary maps. |
+| LC-03 | Proposed done | Barrier proves model access during blocked writer and serialized order; no-cache bypass, write-error continuation, final recovery cache. |
+| LC-04 | Proposed done | Six live phases and five malformed writes/recovery on actual stdio and HTTP; state-only/version-only notifications and cache invariants. |
+| LC-05 | Proposed done | Cold, bypass existing/missing, disabled current, and write-error controls on both transports; bytes/mtime/absence/error behavior. |
+| LC-06 | Proposed done | Bad startup, idle/in-flight Drop, receiver lifecycle, stdio EOF; no arbitrary I/O deadline claimed. |
+| LC-07 | Proposed done | Headless API/README/docs and strict rustdoc checks; normal REPL/shared MCP integration stays Slice17. |
+| LC-08 | Proposed done | Per-attempt capture ledger, source commit/trailers/index proof, clean stable handback; CDC independent rerun/review is still required. |
+
+The three transport/case dimensions are: full warm imported-cache update phases (currency-only 4720; previous-only 4720; version-only 4721; cross-reality 4722; same-reality 4723; five malformed stable writes with no events/cache mutation; recovered 4724; identical rewrite unchanged), plus Cold, BypassExisting, BypassMissing, DisabledCurrent, and WriteError on both stdio and HTTP. Full typed cache state and preserved maps are asserted at every warm phase. The component test `test_blocked_writer_releases_model_and_preserves_update_order` separately proves outside-lock serialized I/O.
+
+## Bubble-up to Arc06
+
+1. **What design change was necessary for the accepted live-save behavior?** The full parsed update must have one application-owned consumer that owns model apply, optional full-state cache persistence, and publication; observer-only MCP wiring prevents a second producer or stale startup-version cache writer.
+2. **What remains outside this slice even when these tests pass?** Normal REPL/shared MCP composition, terminal lifetime, idle-session anchor refresh, broader raw-field/history transitions, and Operator-gated unknown placeholder semantics remain open; this does not complete both-mode or parent acceptance.
+3. **What evidence should the next review preserve?** Separate native transport matrices, literal full-state/map/cache checks, failed restricted and corrected attempts with exact diff identities/channels, and CDC independent source/gate review must remain distinct; a fresh rerun does not rewrite historical evidence.
+
+`workbench/slice16-return/execution.md` contains the full readback, source inventory, intake deviations, captured attempt table and applicability. `workbench/slice16-return/validation.json` indexes each command, environment, diff identity, channels and raw receipts, including the post-commit baseline-range diff-check receipt. These three records are filesystem-only in ignored `workbench/slice16-return/`; they are not source commit paths. Source ownership is handed back to CDC after the exact commit and final clean tracked/index proof. No push, merge, installation, release, or independent acceptance occurred.
