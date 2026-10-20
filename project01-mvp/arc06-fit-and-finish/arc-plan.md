@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.74, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.75, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -634,3 +634,8 @@ Required19/CDC retains cold-start ensure before snapshot, ensure every accepted 
 ## Slice18 pinned initial review / first refinement — 2026-10-20 UTC
 
 Version1.74: initial14path candidate at61f+diff9309c1ce reviewed completely; format/lint green after two retained compile failures, no broad/native18proof yet. Existing-contract F1–F6 test/docs/capture completion is issued in slice18-placeholder-cache/cc-prompt-iteration01.md FIRSTof5, no production algorithm repair found. All8UP/R06-S18open:36arcrows17done19open/project25open. The four-system whole raw/derived checked-file/reversal/promotion oracle, genuine-empty controls/API teaching/native marker assertions and future-version boundary are concrete before further gates. Six historical actual format/lint attempts preserve raw channels/exit/endUTC/source fingerprints but lack twelve before/after status observations; complete current proof before Operator disposition, no waiver or missing-history reconstruction. Standalone diff-hash representation is not a separate exception requirement because composite fingerprints include it. Future capture repair/support preflight and restored wrong-path incident are retained proportionately in existing records. Same selected roles/models, source/planning ownership and Arc06-only endpoint; required19 and all broader raw/history/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release obligations and protected main/held pins/Project02 unchanged.
+
+
+## Slice18 complete refinement01 review / second bounded correction — 2026-10-20 UTC
+
+Version1.75: stable61f+diff6d4f4e39 finalformat/lint passed, but CDC direct full helper/sequence review and TWO focused actual diagnostics reproduce test-oracle marker/timestamp contradictions (each0passed/1failed/exit101). Smaller second-of-five cc-prompt-iteration02.md completes three test/doc paths: separate EMPTY promotion preserving principal other-marker control, exact whole typed state/spatial keys, dependency-free literal parsed timestamp and correctly attached public examples. Static codec/trusted/native-marker/capture repairs retained; broad/native18proof not yet run, all8UP/R06-S18open:36arcrows17done19open/project25open. Future helper/raw controls actually inspected before renewed product gates; old missing actual status observations and separate overwritten support-only channels remain unknown, no waiver/reconstruction. Same models/ownership/required19 and every broader raw/history/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gate retained. Main9-line edit/restored import/heldpins/Project02 protected; no external action or nextarc.

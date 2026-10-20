@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.64
+version: 1.65
 project: project01-mvp
 status: active
 depends-on: []
@@ -989,3 +989,8 @@ Version1.63: approved policyA now has initial arc06-fit-and-finish/slice18-place
 ## Arc06 Slice18 initial review / bounded refinement — 2026-10-20 UTC
 
 Version1.64: CDC full14-path pinned review leaves8UP/R06-S18open and issues first-of-five cc-prompt-iteration01.md to complete existing-contract literal raw/derived/file/promotion/docs/native-marker/capture proof before broad gates. Format/lint passed after retained errors; no18runtime acceptance.36arcrows17done19open/project25open. Six historical gate attempts retain raw completion/source fingerprints but lack twelve status observations; no exception adopted or prior waiver extended, current complete proof first. Same selected CDC/CC, protected main edit/heldpins/Project02, required19 composition and every broader raw/history/finalsemantic/original parent/independent/Operator/integration/release obligation retained; no new scope/policy/dependency/inquiry/remote action.
+
+
+## Arc06 Slice18 second test/documentation refinement — 2026-10-20 UTC
+
+Version1.65: complete pinned refinement01 review plus two actual focused CDC diagnostic failures exposes remaining marker/timestamp test-oracle contradictions and typed/spatial/API teaching omissions. Second-of-five three-path correction issued; algorithms unchanged, current format/lint green not runtime acceptance. All8UP/R06-S18open/36arcrows17done19open/project25open. Historical actual status gaps/support-only loss remain explicit and unexcepted pending concrete current proof; future capture helper directly inspected. Same selected roles/models, required19 and all broader raw/history/finalsemantic/original parent/independent/Operator/integration/release gates and protected main/heldpins/Project02 preserved.
