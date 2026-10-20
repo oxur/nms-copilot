@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.64, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.65, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -535,3 +535,8 @@ Operator: “yes, I agree — accept it and move on to17!” ONLY the exact five
 ## Slice17 author-ready normal integration issuance — 2026-10-20 UTC
 
 Version1.64: accepted16 closed04b3255/e093 with ONLY explicitly approved historical five-field exception. Open [slice17-repl-live-cache/cc-prompt.md](slice17-repl-live-cache/cc-prompt.md),8RC/newR06-S17open:35arcrows/16done/19open/project25open. Dedicated repl-live-cache clean e093; fresh sole CC context at SAME selected gpt-6-luna High requested for implementation headroom, CDC gpt-6.1-sol High/planning/independent review unchanged. Actual accepted launch recorded ondispatch, previousCCidle. Sourcegrounded owned observer-only server typed readiness/cancel/join and same-coordinator normal wiring/pre-first-action sessionrefresh/anchor preservation fullyresolved; nine real nativePTY boundaries via existing terminaltools +Rustfixture/HTTP/cache probe, no new dependency/terminaladapter/policy/inquiry. Complete literal atlas/player/version/selection oracles/negativecontrols/failure-safe SSE/process teardown/capture-before-firstgate and rawcompletion-beforepostprocessing apply16retrospective. No Operator decision blocks17; main protectednine-line native-test workingedit/external03e8d04/accepted15/16/held pins unchanged. Every unknown/history/raw/finalsemantic/strictmtime-identicalrewrite import-history/original parent/independent/Operator/integration/release owner remains, no nextarc/Project02/externalaction. Routine detailed existing-scope issuance, no acceptance reduction or new waiver.
+
+
+## Slice17 initial review / bounded first correction — 2026-10-20 UTC
+
+Version1.65: source still initial eight-path uncommitted candidate on e093, index empty, pinned hashes. CDC complete production/new-helper review found existing-contract F1–F8 omissions; immutable slice17-repl-live-cache/cc-prompt-iteration01.md FIRST of five supplies one closed batch plus unfinished native9. Existing partial green gates remain attributable to actual inputs, not acceptance; all8RC/R06-S17open,35arcrows/16done/19open/project25open. No new Operator gate, policy, dependency, role/model or terminal method. Source paused for issued readback; ownership remains sole CCsource/index and CDCplanning/independent review. All original unknown/history/raw/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gates and protected main workingedit/held pins remain unchanged.

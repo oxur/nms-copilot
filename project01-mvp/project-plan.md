@@ -9,7 +9,7 @@ updated: 2026-10-19
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.54
+version: 1.55
 project: project01-mvp
 status: active
 depends-on: []
@@ -934,3 +934,8 @@ Version1.53: Operator explicitly approved ONLY pending16 single-format five-fiel
 ## Arc06 Slice17 normal integration issued — 2026-10-20 UTC
 
 Version1.54: required normal SAME-coordinator REPL/owned shared background MCP/pre-first-command sessionrefresh/native terminal composition is detailed in arc06-fit-and-finish/slice17-repl-live-cache/cc-prompt.md, clean dedicated e093-basedsource.8RC/newR06-S17open:35arcrows/16done/19open/project25open. Same selected CDC6.1SolHigh/CC6LunaHigh, fresh sole implementer for headroom/previousidle, ownership serialized;16approvedexception bounded/historyunknown, no futurewaiver. All originalunknown/history/raw/finaltransition/cachefreshness-import-history/parent/independent/Operator/integration/release gates retained; mainworkingedit/heldpins/Project02 protected. No otherarc/remoteaction or capabilityclosure inferred.
+
+
+## Arc06 Slice17 initial review / bounded correction — 2026-10-20 UTC
+
+Version1.55: initial normal candidate on e093 remains uncommitted eight paths; CDC full production/new-helper review issued first-of-five immutable correction F1–F8 and complete native9 boundaries. All8RC/R06-S17open,35arcrows/16done/19open/project25open; prior partial gates are not final acceptance. Same selected roles/models/one-arc endpoint/serialized ownership; no new Operator gate or policy. Source and protected main/held history retained; all original parent independent/Operator/integration/release and unresolved unknown/history/raw/finalsemantic/freshness obligations unchanged.

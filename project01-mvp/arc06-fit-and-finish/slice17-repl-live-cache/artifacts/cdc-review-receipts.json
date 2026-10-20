@@ -457,5 +457,46 @@
     ],
     "new_helper_observation": "Launch durable before spawn; fsynced separate raw channels and raw exit/end completion before separate post metadata; injected post-metadata-failure retains actual exit0 and both channels. Executed by CC, source/results inspected by CDC.",
     "product_verdict": "All eight RC rows remain open; no stable source handback or independent product gates yet."
+  },
+  "initial_provisional_review": {
+    "reviewer": "/root/cdc_arc06",
+    "kind": "bounded source/helper review; not product gate or acceptance",
+    "input": {
+      "utc": "2026-10-20T03:48:34.814364+00:00",
+      "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+      "status": " M README.md\n M crates/nms-copilot/Cargo.toml\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/mod.rs\n M crates/nms-copilot/src/watch.rs\n?? crates/nms-copilot/examples/\n?? crates/nms-copilot/tests/owned_mcp_integration.rs\n?? crates/nms-copilot/tests/support/\n",
+      "staged_diff": "",
+      "working_tracked_diff_sha256": "10ce0d8942ab87c4f0b74e256bed87aeb233cf359180370a40d8b0d838e26877",
+      "files": {
+        "README.md": "3526c7d9c1de03f3c5aff2666fc2d71cb58d2e008b2b4ad1dec5fd7f95291fab",
+        "crates/nms-copilot/Cargo.toml": "780de7eae7fdc563eba2232aae9e8b52f69b271e020857fa28cdbe75e1048e60",
+        "crates/nms-copilot/src/main.rs": "efdb7f1f5fdc6f9e44c27fa263946d346301844663ca3594ea89640340666327",
+        "crates/nms-copilot/src/mcp/mod.rs": "1c8deafe216695606286148460cd4c02937d2bf3dedfcd3b42763a57eecbcf29",
+        "crates/nms-copilot/src/watch.rs": "98740fbc75ac37e66162fa8deca4ae668f06a5e8e58ead3be2f0ff1eee5fc9b2",
+        "crates/nms-copilot/tests/owned_mcp_integration.rs": "8ac908ff302b40efc70adaee308ef749fb3e45c3c477a51896f5b2ed02ed3977",
+        "crates/nms-copilot/tests/support/live_mcp.rs": "401649394e8063bee544d6c4c7b2023720a9d89ddabb19bc5bc782111d19c617",
+        "crates/nms-copilot/examples/repl_live_probe.rs": "63c90803e4407cf22c8c3a1b065b404b7e04d1be98af7b7026bd0b0b09c031a3"
+      }
+    },
+    "assignment": "cc-prompt-iteration01.md",
+    "refinement_number": 1,
+    "refinement_limit": 5,
+    "all_eight_rows": "open",
+    "native_nine_case_population": "unfinished; no complete case accepted",
+    "initial_execution": {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache/workbench/slice17-return/execution.md",
+      "preserved_path": "artifacts/initial-execution.md",
+      "bytes": 71556,
+      "sha256": "f7a151a97262363d55228696fb5cef29d9cdb6b020f350c76e067be7cc21243a"
+    },
+    "findings": {
+      "F1": "normal unwind/prompt/notes",
+      "F2": "typed error source and observable post-ready failure",
+      "F3/F4": "public contract/README",
+      "F5": "checked-cache whole raw+rebuilt state",
+      "F6": "one typed SSE helper/isolated safe lifecycle/real read-only RPC",
+      "F7": "bounded mode-aware nine-case controller/full file effects",
+      "F8": "complete attributable gates/stable exact-path return"
+    }
   }
 }
