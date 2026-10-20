@@ -1,6 +1,6 @@
 # Slice18 — explicit placeholder/cache foundation
 
-Version:1.6. Created2026-10-20 UTC. Status: refinement02 complete static review clear; CC released to remaining required validation/return, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration02.md; SECOND of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
+Version:1.7. Created2026-10-20 UTC. Status: refinement03 issued for one CDC-prescribed rich-edge oracle error; CC intake pending, eight UP rows open. Accepted17 source61f1d98/f3c6f228; policyA approved “yeah, I’m with you on A :-)”, recorded96699dd. Current assignment cc-prompt-iteration03.md; THIRD of five refinements. CDC gpt-6.1-sol High owns planning/index/design/independent review; same sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High confirmed qualitative headroom after compaction, no numeric estimate/substitution/extra role.
 
 Dedicated source .worktrees/placeholder-cache/codex/placeholder-cache created clean61f1d98; CDC owns until coherent CC intake/ownership acknowledgement. CC then owns only source/index and three ignored workbench/slice18-return records; CDC owns planning and later serialized byte-preserving transfer/independent acceptance. Exact14paths/API/compatibility/error/test/capture/gates/readback/commit contract in full initial prompt. No source edit or gate has run for18 during author readiness; ordinary read/hash/preflight is not SUT proof.
 
@@ -69,3 +69,19 @@ CDC inspected actual B1–B4 readback and matching frozen source/emptyindex/diff
 CDC inspected all changed doc/test bodies and assertion sequences at unchanged61f+diff3cade0ad, only the exact three editing paths differing from prior snapshot; other11candidate file hashes match. Principal G1 now retains{U0} through rich U9 promotion/duplicate with all3node identities; EMPTY promotion is separate; E0/planet-only full literal maps/state/topology/spatial boundaries, actual method-attached public examples/promotion prose, exact parser timestamp/delta vectors and rich spatial{0,9} are present. Actual final formatca963b7f/lintc0fc1261 exits0 with full before/after metadata/status/raw completions were directly checked. Static B1–B4 clear; this is not runtime or row acceptance. Prior two negative diagnostics remain failures at their original bytes; no history rewritten.
 
 CDC releases the same CC to original remaining serial real gates/native9, full channels/pre-matrix hashes/fresh fixtures and exact14-path local source commit/three returns under current iteration02. Source/index solely CC-owned until stable handback; CDC planning/review remains. No extra formal iteration; two-of-five. New failures retain actual observations and any source fix gets affected review/gates, no weakening. No broader policy/scope/production repair or19dispatch; eight UP and all parent/Operator/history gates stay open.
+
+
+## Refinement03 — source-grounded SSI distance correction / 2026-10-20 UTC
+
+CC current gates found cache UUID3ee51df3 exit101 (19unit pass,21integration pass/1fail): CDC's prescribed rich U0↔E0 weight0 is wrong. Actual unchanged address.rs17–22/211–229 and graph build_edges use264.6828728 for different SSI in one voxel; three-voxel U9↔I9 stays1200. CDC owns this author-oracle error. New immutable cc-prompt-iteration03.md permits ONLY that expected literal in cache load integration; all endpoints/counts/maps/state/negative controls remain. Third-of-five; no production fix, uncertainty, inquiry or Operator decision. Complete raw failure retained, not expected-success credit. All8rowsopen.
+
+CC observations on unchanged inputs: focused525, query2/route4, headless15 and owned5 pass via actual retained authorized-host retries where necessary. Restricted7watcher timeouts, headless11 failures and owned2PermissionDenied failures remain distinct. No independent acceptance yet. After coherent intake CC resumes one-path edit→captured format/lint→affectedcache, then remaining original gates; unaffected completed groups need not repeat solely for one test literal. Native matrix unstarted; actual CC-owned bridge/capture API/record and pre-matrix hashes must be reviewed before launch to avoid accidentally writing CDC planning records. Source/index held pending intake; CDC planning/index retained. Protected main/held pins/19/parent/one-arc boundaries unchanged.
+
+## Assignment history (current reconciliation; prior detailed dated sections retained)
+
+| Assignment | Issue | Predecessor | Reason | Current disposition |
+|---|---|---|---|---|
+| cc-prompt.md |2026-10-20|none|Approved policyA model/cache foundation|returned; initial history retained|
+| cc-prompt-iteration01.md |2026-10-20|cc-prompt.md|F1–F6 existing-contract completion|returned; first-of-five|
+| cc-prompt-iteration02.md |2026-10-20|cc-prompt-iteration01.md|B1–B4 oracle/docs correction|returned; second-of-five, current runtime failure retained|
+| cc-prompt-iteration03.md |2026-10-20|cc-prompt-iteration02.md|One SSI-aware rich-edge expected literal|active; third-of-five, intake pending|
