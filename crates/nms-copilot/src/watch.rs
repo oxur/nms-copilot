@@ -43,15 +43,11 @@ pub fn drain_watch_events(
     }
 }
 
-/// Apply a delta to the model and generate human-readable notifications.
+/// Format user-facing notes for an update before applying it to the model.
 ///
-/// Notifications are generated *before* the delta is applied so that
-/// system name lookups for the "from" position still resolve correctly.
-pub fn apply_and_notify(
-    model: &mut GalaxyModel,
-    session: &mut SessionState,
-    delta: &SaveDelta,
-) -> Vec<String> {
+/// This is pure with respect to the model and is shared by the coordinator so
+/// both live paths preserve the same name-resolution behavior.
+pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<String> {
     let mut notes = Vec::new();
 
     if let Some(ref moved) = delta.player_moved {
@@ -103,6 +99,20 @@ pub fn apply_and_notify(
     for base in &delta.new_bases {
         notes.push(format!("  New base: {}", base.name));
     }
+
+    notes
+}
+
+/// Apply a delta to the model and generate human-readable notifications.
+///
+/// Notifications are generated *before* the delta is applied so that
+/// system name lookups for the "from" position still resolve correctly.
+pub fn apply_and_notify(
+    model: &mut GalaxyModel,
+    session: &mut SessionState,
+    delta: &SaveDelta,
+) -> Vec<String> {
+    let notes = notifications_for_delta(model, delta);
 
     // Apply delta to model
     model.apply_delta(delta);
