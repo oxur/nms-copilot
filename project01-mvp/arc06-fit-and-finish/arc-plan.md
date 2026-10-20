@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.76, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.77, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -648,3 +648,8 @@ Version1.76: sourcee592ecf exact14paths clean; all five immutable refinements re
 UP-08/Slice18/R06-S18 remain open for ONLY twelve historical explicit Git statuses (before/after six early format/lint attempts). Original raw channels/exit/endUTC/composite working identities/untracked inventories survive; no extra standalone-diff-hash exception or lost-current-proof claim. Exact UUID/field table, recommended bounded acceptance vs hold, authority rule, available native evidence preservation and substantive retrospective are in slice18-placeholder-cache/cdc-verification.md and cdc-retrospective.md. No waiver inferred/previous exception extended; root obtains this concrete Operator decision before any19 dispatch. No source/test work remains for this decision; no record-only test reruns/sixth refinement.
 
 Arc36rows17done19open/project25open. Required19 retains common cold-start ensure before snapshot, accepted full-position ensure before cache/notifications, exact physical MCP/resource/movement labels and actual normal/stdio/HTTP unknown→real→restart. All original15 arc rows/three repair parents and broader raw/history/finalsemantic/strictmtime-identical-rewrite-stale-import-history/parent independent/Operator/integration/release gates remain. Same actual selected CDC gpt-6.1-sol High/CC gpt-6-luna High, Arc06 endpoint, protected main edit/held pins/external03e8d04/Project02 unchanged. Source rebasing requested by Operator was already fulfilled onto localmainb616; no new remote action.
+
+
+## Slice18 approved closure / required19 advancement — 2026-10-20 UTC
+
+Version1.77: Operator explicitly “yup, I accept that exception :-D On to 19!” adopts ONLY the twelve unknown historical before/after statuses from packet7531080. UP-08 and all8childrows/R06-S18closed at e592ecf; original facts/failures unchanged, no current-code rerun/future waiver. Final CDC verification and retrospective append the exact disposition. Arc36rows18done18open/project25open. Required19 common startup/update ensure and exact physical labels/native unknown→real→restart now enters source-grounded author readiness; same selected roles/models and one-arc endpoint. All broader original parent/raw/history/finalsemantic/freshness-import-history/independent/Operator/integration/release gates and main9line edit/held pins/external worktree/Project02 remain protected.

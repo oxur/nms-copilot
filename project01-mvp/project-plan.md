@@ -9,7 +9,7 @@ updated: 2026-10-20
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.66
+version: 1.67
 project: project01-mvp
 status: active
 depends-on: []
@@ -1001,3 +1001,8 @@ Version1.65: complete pinned refinement01 review plus two actual focused CDC dia
 Version1.66: explicit placeholder/promotion/cache3/3 model foundation on cleane592ecf independently reviewed; seven UP rows accepted, UP-08/Slice18/R06-S18 held for exactly twelve missing historical before/after Git statuses in six early format/lint attempts. Complete raw completions/composite source fingerprints survive; current all19 independent ordinary groups and fresh native9 pass (focused525/cache42/query2+route4/headless15/owned5/no-default230/binary16/workspace985+9; build/docs/stricts/diffs). Source/oracles/docs/actual artifact coverage reviewed, full decision and substantive retrospective in Arc06 Slice18 canonical records. No exception inferred, no19 dispatch or repeated unchanged-code tests. Arc36rows17done19open/project25open; no project capability row closes from child proof.
 
 Required19 actual application ensure/exact physical labels/unknown→promotion→restart, every original export/import/format/docs/distribution/coverage/history/raw/finalsemantic/freshness-import-history/parent independent/Operator/integration/release obligation retained. Selected CDC gpt-6.1-sol High/CC gpt-6-luna High and single-arc autonomy unchanged. Main9-line user edit/held pins/external worktree/Project02 protected; prior authorized rebase onto b616 already fulfilled, no push/merge/release.
+
+
+## Arc06 Slice18 approved closure — 2026-10-20 UTC
+
+Version1.67: Operator accepted ONLY the twelve historical status observations in7531080 and explicitly advanced to19. CDC closed UP-08/all8Slice18rows/R06-S18on e592ecf, preserving unknowns/original failures/current complete proof. Final retrospective and bottom-up records complete; no record-only test rerun/future exception. Arc36rows18done18open/project25open. Required19 source-grounded preparation now authorized; all original parent/raw/history/finalsemantic/freshness/import/independent/Operator/integration/release obligations, same CDC/CC settings/Arc06 endpoint and protected main/held pins/external/Project02 boundaries unchanged.

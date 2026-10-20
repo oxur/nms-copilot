@@ -156,8 +156,9 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S18 | Explicit model synthetic provenance/promotion/import and3/3 checked cache foundation independently accepted | Eight UP rows, exact whole-index/cache/raw negatives/old predecessor fallback/current regressions/CDC review | correctness-grade | Operator-approved policy A | open | [CDC decision packet](slice18-placeholder-cache/cdc-verification.md) — UP01–07 reproduced on e592ecf; UP08 pending | All19 independent ordinary groups/native9 pass; ONLY12historical status observations need Operator decision. Required19 application composition/parent gates retained. |
+| R06-S18 | Explicit model synthetic provenance/promotion/import and3/3 checked cache foundation independently accepted | Eight UP rows, exact whole-index/cache/raw negatives/old predecessor fallback/current regressions/CDC review | correctness-grade | Operator-approved policy A | done | [approved CDC closure](slice18-placeholder-cache/cdc-verification.md#operator-approved-up-08-exception-and-final-slice18-closure--2026-10-20-utc) — all8UP accepted on e592ecf | Exact12 historical status observations excepted by Operator; required19 application composition and original parent gates retained. |
 
 36arcrows17done19open/project25open; all previous35entire rows and criteria/dispositions retained.
 
 2026-10-20 Slice18 current independent review: seven child UP rows accepted/one open; R06-S18 remains open. Arc36rows17done19open/project25open. Exact bounded historical decision in CDC packet; no exception or next dispatch inferred.
+2026-10-20 Slice18 final closure:36arcrows18done18open/project25open; exact approved exception only, required19 retained.
