@@ -1,6 +1,6 @@
 # Slice17 — normal REPL and owned shared MCP live cache
 
-Version:1.0. Created2026-10-20 UTC. Status: initial author-ready assignment issued; eight rows open, no acceptance. Initial cc-prompt.md, zero of five refinements. Arc06-only Autonomous Mode unchanged: CDC /root/cdc_arc06 OpenAI/Codex gpt-6.1-sol High owns planning/index/design/independent review; fresh sole active CC context requested OpenAI/Codex gpt-6-luna High for context headroom, actual accepted launch recorded on dispatch. Previous16 CC idle, no CRC/fallback/extra active contributor.
+Version:1.1. Created2026-10-20 UTC. Status: initial author-ready assignment issued; eight rows open, no acceptance. Initial cc-prompt.md, zero of five refinements. Arc06-only Autonomous Mode unchanged: CDC /root/cdc_arc06 OpenAI/Codex gpt-6.1-sol High owns planning/index/design/independent review; fresh sole active CC /root/cdc_arc06/cc_slice17 launched through collaboration.spawn_agent with requested/applied OpenAI/Codex gpt-6-luna High, fork_turns=none, for context headroom. The tool accepted that exact model/reasoning selection; no separate hidden-backend identity is claimed. Previous16 CC idle, no CRC/fallback/extra active contributor.
 
 ## Delivery and dependencies
 
@@ -23,3 +23,5 @@ Main b616ab2 protected rootnative-test nine-line workingedit, external03e8d04/ac
 ## Assignment history
 
 - Initial cc-prompt.md author-ready/issued2026-10-20UTC from accepted16/e093, no predecessor/zero refinements; source clean e093, sole implementer handoff pending intake/acknowledgement.
+
+- Dispatch accepted at exact requested model/reasoning settings; new CC revalidated clean e093/source index/no in-progress Git operation and is completing required intake. Source/index handoff remains acknowledgement-gated before edits. Live clocks confirm UTC2026-10-20/localAmerica-Chicago2026-10-19, so UTC metadata is consistent; no contract change or Operator blocker.
