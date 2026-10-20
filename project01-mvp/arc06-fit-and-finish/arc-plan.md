@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.66, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.67, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -545,3 +545,8 @@ Version1.65: source still initial eight-path uncommitted candidate on e093, inde
 ## Slice17 full iteration01 review / second bounded correction — 2026-10-20 UTC
 
 Version1.66: complete eight-path/all-helper CDC static review on unchanged uncommitted e093+7ae37fcc found remaining normal-shutdown/API/docs/compound-oracle/SSE/failed-child-output/native mode+file-boundary omissions. Immutable iteration02 SECOND of five supplies concrete closed-list six-path correction; README/Cargo current bytes frozen, no source commit/row acceptance. Native9 remains0/9; CC held for issued readback. First warm native launch lost raw object and never recorded native UUID/startUTC; exact available precursor/preregistration/cleanup retained, no history reconstructed or16waiver extended. Finish concrete current proof before disposition. All8RC/R06-S17open,35arcrows/16done/19open/project25open; same selected roles/models/ownership/one-arc endpoint. All unknown/history/raw/finalsemantic/freshness-import-history/original parent/independent/Operator/integration/release gates and protected main workingedit/held pins unchanged.
+
+
+## Slice17 complete iteration02 review / third bounded correction — 2026-10-20 UTC
+
+Version1.67: complete eight-path/all-helper CDC static review on unchanged uncommitted e093+39be573 preserves repaired production shutdown/API/compound maps/failed-child output while returning remaining exact session/docs/read-only/reader-join/native initial+semantic+file-boundary omissions to immutable iteration03, THIRD of five. Same CC confirms context headroom; six editing paths/current README+Cargo frozen. All8RC/R06-S17open/native0of9,35arcrows/16done/19open/project25open; no CDC product gates/acceptance. Full helper readiness/current nine native cases/settled gates precede independent disposition. First failed native capture gap remains bounded and unexcepted, no16waiver inferred; no new Operator policy/terminal method/dependency/inquiry/model/role. Protected main working edit, distinct root/source native-file blobs and held pins unchanged; every original unknown/history/raw/finalsemantic/freshness-import-history/parentindependent/Operator/integration/release owner and Arc06-only endpoint retained.

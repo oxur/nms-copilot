@@ -843,5 +843,113 @@
       "missing_reason": "native UUID/time never captured; raw object not stored before unsupported TextEncoder threw; no reconstructed values",
       "exception_adopted": false
     }
+  },
+  "iteration02_complete_review": {
+    "reviewed_utc": "2026-10-20T04:57:32.763075+00:00",
+    "input": {
+      "utc": "2026-10-20T04:47:30.212878+00:00",
+      "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+      "index_diff": "",
+      "tracked_diff_sha256": "e04d3c7b474ac5178e4d98ba78ff680ce461ce686c2b6577a160eee13f2124cc",
+      "files": {
+        "README.md": {
+          "bytes": 20174,
+          "sha256": "e0fb03d21dbd9bffb2c25b054399558dac6cacadecfe7a4bb8e29a4fbfe890b5"
+        },
+        "crates/nms-copilot/Cargo.toml": {
+          "bytes": 1524,
+          "sha256": "780de7eae7fdc563eba2232aae9e8b52f69b271e020857fa28cdbe75e1048e60"
+        },
+        "crates/nms-copilot/src/main.rs": {
+          "bytes": 40065,
+          "sha256": "294d9af9bf81cd5971373250a4ff922a79716e3e27018ae69d3340c69189b47c"
+        },
+        "crates/nms-copilot/src/mcp/mod.rs": {
+          "bytes": 42525,
+          "sha256": "a31fca03cefe3f07a400fa72c8260764b9b2e846d000c8d58bb9a912cdfbbf76"
+        },
+        "crates/nms-copilot/src/watch.rs": {
+          "bytes": 28698,
+          "sha256": "98740fbc75ac37e66162fa8deca4ae668f06a5e8e58ead3be2f0ff1eee5fc9b2"
+        },
+        "crates/nms-copilot/tests/owned_mcp_integration.rs": {
+          "bytes": 14354,
+          "sha256": "5af385b4c6e8399083dec7ff012f8086f7aa7b1a672b9c417cf043f58ecb394a"
+        },
+        "crates/nms-copilot/tests/support/live_mcp.rs": {
+          "bytes": 31890,
+          "sha256": "7c0f0c12608ba7edebe3c3a02f6bed0aa9f0a2d5646ce2a14285ee5e539ea1db"
+        },
+        "crates/nms-copilot/examples/repl_live_probe.rs": {
+          "bytes": 48036,
+          "sha256": "0869957adb4ec92db06b5c74ac1196ceeefe84ac607049283274a8e495eee785"
+        }
+      },
+      "frozen_native_blob": "73d79d8206344901ae62d39ccf7131340b39fa47"
+    },
+    "cc_working_identity": "39be573dda041e6155fe60e349184a141346f8a05ac6ac416942c0818f2a2164",
+    "coverage": "all eight paths/all new and changed helper bodies; complete 536-line probe delta",
+    "disposition": "all RC open; immutable iteration03 third of five; native0/9; no CDC product gates",
+    "findings": [
+      "command output/Base and prompt exact controls",
+      "genuine public docs/queue ownership/feature import",
+      "raw mutant isolation/read-only delta/full RPC/fresh quiet/always join",
+      "prelaunch/mode/semantic/cache checkpoint/source mtime/ready/preexit/EOF boundaries"
+    ],
+    "frozen_native_blobs": {
+      "root_head_index": "5536225183db9f36fd6ba79b045f08c52d9dddbf",
+      "root_working": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e",
+      "source_head_index_working": "73d79d8206344901ae62d39ccf7131340b39fa47"
+    }
+  },
+  "cdc_native_raw_tool_preflight": {
+    "kind": "wrapper support only; not SUT",
+    "files": {
+      "verification.json": {
+        "sha256": "edcc2c999036b94fa47394695152c6104c7c09a668880b907b79352b64106cec",
+        "data": {
+          "id": "c44b9621cc944e27bd881eb596a8a8a4",
+          "stored_raw_object_matches_file": true,
+          "actual_exit": 7,
+          "actual_raw_result": {
+            "chunk_id": "8f3600",
+            "wall_time_seconds": 1.0084e-05,
+            "exit_code": 7,
+            "original_token_count": 7,
+            "output": "cdc-pty-out\r\ncdc-pty-err\r\n"
+          },
+          "kind": "native tool raw-object persistence preflight; not product gate"
+        }
+      },
+      "launch.json": {
+        "sha256": "cb0c031eba8012c54bbd596c3ca469f40dc3035b438483445ceba0022fa9a63b",
+        "data": {
+          "id": "c44b9621cc944e27bd881eb596a8a8a4",
+          "kind": "native tool raw-object persistence preflight; not product gate",
+          "started_utc": "2026-10-20T04:33:51.000422+00:00",
+          "tool": "exec_command",
+          "args": {
+            "cmd": "python3 -c 'import sys;print(\"cdc-pty-out\");print(\"cdc-pty-err\",file=sys.stderr);sys.exit(7)'",
+            "workdir": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+            "tty": true,
+            "yield_time_ms": 1000,
+            "max_output_tokens": 1200
+          },
+          "store_key": "cdc-native-preflight-c44b9621cc944e27bd881eb596a8a8a4",
+          "directory": "/private/tmp/nms-slice17-cdc-native-preflight-c44b9621cc944e27bd881eb596a8a8a4",
+          "channels": "PTY multiplexed"
+        }
+      },
+      "raw-result.json": {
+        "sha256": "0f1897057d8cb8e6343b25f53a5f165aca257a278c041925d1cdf9a1a108d986",
+        "data": {
+          "chunk_id": "8f3600",
+          "wall_time_seconds": 1.0084e-05,
+          "exit_code": 7,
+          "original_token_count": 7,
+          "output": "cdc-pty-out\r\ncdc-pty-err\r\n"
+        }
+      }
+    }
   }
 }

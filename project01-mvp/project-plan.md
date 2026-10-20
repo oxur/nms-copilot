@@ -944,3 +944,8 @@ Version1.55: initial normal candidate on e093 remains uncommitted eight paths; C
 ## Arc06 Slice17 complete code review / second correction — 2026-10-20 UTC
 
 Version1.56: full pinned eight-path/new-helper review returned remaining existing-contract gaps to immutable iteration02 (second of five), six editing paths, correct current README/Cargo frozen. Uncommitted e093+7ae37fcc, all8RC/R06-S17open/native0of9,35arcrows/16done/19open/project25open. Actual first native-launch capture gap retained without inferred16waiver; complete current proof precedes Operator disposition. Same authorized models/ownership/Arc06-only boundary and protected main/held history; all original parent/policy/independent/Operator/integration/release obligations retained.
+
+
+## Arc06 Slice17 complete second review / third correction — 2026-10-20 UTC
+
+Version1.57: full pinned iteration02 review at uncommitted e093+39be573 preserves valid production/oracle repairs and issues closed-list iteration03 THIRD of five for remaining session/docs/shared read-only+join/native prelaunch-semantic-file boundaries. All8RC/R06-S17open/native0of9,35arcrows/16done/19open/project25open; same selected roles/models/serialized ownership, no new decision/policy/dependency/terminal method or acceptance. Historical native-capture gap remains unexcepted pending concrete current proof, no prior16waiver extended. Protected main/held history/Project02 and all original parent/unknown/history/raw/finalsemantic/freshness-import-history/independent/Operator/integration/release obligations remain.
