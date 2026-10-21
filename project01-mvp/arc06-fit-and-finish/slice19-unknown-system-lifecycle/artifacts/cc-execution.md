@@ -319,3 +319,57 @@ The first local commit object was `09a147d01b2fd1c0de1922e45d7265a788c8d29a`; it
 The validation record's 64 entries are actual product/compiler/gate attempts from `/private/tmp/slice19-cc-product-attempts.json`. Wrapper and support-only incidents without a product/compiler/gate attempt are described in this execution record and are not counted among those 64 entries. Earlier wording that included wrapper/support attempts in that 64-entry count is preserved as reported history, not used as the corrected population definition.
 
 The commit subject says “complete Slice19 ... proof” as commit-message text only. It does not mean the proof is green or accepted: the required probe self-check and several runtime gates fail, native was not launched, and all eight UL rows remain open pending independent CDC review and disposition.
+
+
+## Iteration06 runtime completion and evidence return — 2026-10-21 UTC
+
+Operator approval and iteration06 authority are recorded in the planning packet; this is the approved exceptional sixth bounded pass, not a budget reset. The only source edits were the four lifecycle save-tuple corrections and the whole-key/sorted-primitive-row multiset comparator plus its same-route regression. Source remained HEAD `ce6b5c9421a0db6d668620868a60791cf40acf13`, based on `e592ecf061407cf13a40478c4d05bd78e4dd007f`; the current uncommitted diff before the exact two-path commit has SHA-256 `1c493ebe8ed24e49cd6adfa25814b01ec3accef5fb2f87890bb060533e500a7c`, identity `3b3299be79d98e961afca43623c88bc47c504a8154506251bffed61b7f0477ed`, empty index. The only changed paths are `crates/nms-copilot/tests/mcp_live_integration.rs` (SHA-256 `32b1ca58ecab884fdb6799191274ca469ad5afaf86720a8bb92d1d5e841f4577`) and `crates/nms-copilot/tests/support/live_mcp.rs` (SHA-256 `b4513541e79fbb994a0a7034ad1349874610ac1ee340b82afb57bee2b83cfd7f`). The two tuple sites in each named lifecycle scenario now use the intended U2 `(0,0,0,0,2,5)` order. The comparator retains the full biome keyset and compares each value as a sorted primitive-row multiset, preserving duplicate multiplicity while tolerating insertion-order changes. Its same-route regression accepts golden order and reversed system serialization, and rejects duplicated or omitted Toxic rows.
+
+Captured iteration06 `make format` UUID `e70f98e41aa6428ebe8bcfa0554bc287` and `make lint` UUID `ae97ca83e9924548960bb97c03da83d8` both exited 0 on the same source identity. The affected whole headless target passed 20/20 (`5f2be934248342ea8e6ffca0883ec843`) and whole owned target passed 7/7 (`2e932df01b514485b94508fc152cb8bd`). The binary+example build passed (`f674035e862b41f19d03333b64f64729`); the actual probe self-check passed (`51769f95831c4c04a450241c8cd22f0e`) with `golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); lifecycle-files=4 lifecycle-negatives=4; reversed-order=pass`.
+
+The released normal native matrix passed all original rows 1–9 and the assigned new row10. There are ten actual case directories, each with `case.json` and `result.json` reporting `pass`; their original-tool launch/raw/post files total 135 triplets. Row10 ran both actual normal REPL processes through warm repair, discovery promotion, and compatible restart. The current binary SHA-256 was `c99d71dc28705240b5c6cbfcddd48ae257ac219c923ab41d506b4cc76b73f3bc`, the probe SHA-256 was `2213de11acb41a121616b2fa78a3cd9fb18f7eefa91f0899d2db6391273c1444`, and the helpers were measured before the matrix: native capture `b4068c10cee39b4186be979912c66c04381e62fd87b4fa14591616c0901ae94e`, native capture/controller `57da0842638a8201a4455f6ccf471f4cf17006826de2a6dbb2d980c55845493a`, driver `c7d290da17208ef2fafac9d15bea85d1907f5682149eb928e70feefe601dd8fb`. CDC inspected these helpers, prelaunch digests, and two actual harmless raw-result controls before releasing launch. Support checks recorded Python and Node syntax success; the native controller retained raw tool objects and per-case preparation/postconditions. Its full attempt record is `/private/tmp/slice19-cc-native-receipts.json` (23 attempts, SHA-256 `22a0c4e960400477203a85c88e1472b076c5cac1573dd498c1072372cda65996`).
+
+The final full `make test` passed: the captured raw output contains 35 harness result groups, 999 unit/integration tests plus 10 actual doctest cases, 1009 passed total, exit 0 (UUID `d7e77193329f4885ba03b5565966233b`). This is the current iteration06 full-workspace result; earlier failures and retries remain preserved below. Final workspace build (`f8d39dc892994e9090759938d9ecaca1`), separate workspace doctests (`e97866285d6342819c28c978ae424b0e`, 10 cases), six-crate docs (`631fac981cac44a3993cf2e51238edd3`), strict cache docs (`885decad689e453ead6a9035681cc750`), strict watch docs (`26a67867785a48d8b6b0980e03e1dd08`), working diff check (`01f3e0c207d6492bab44ddb389aded4f`), and base diff check (`b21786a297a848a4b34c5d228b0b4284`) all exited 0. The docs command's existing rustdoc warnings remain in its full raw capture; no warning suppression was added.
+
+### Native and controlled-failure payload inventory
+
+The native evidence is packaged at `/private/tmp/slice19-cc-evidence.tar.gz` (314,820 bytes; SHA-256 `1d4aa7705b9656bc9f95ff575e71e2494b906cacbcd25ac32290a13c3ef79b6b`) with exact-member manifest `/private/tmp/slice19-cc-evidence-manifest.json` (156,614 bytes; SHA-256 `f292e94b79fe41004d17790fba5c0b3afdfb05e9ef33f0b6588eb70532ebf675`). It contains 743 members including manifest, all ten case directories and full actual tool receipts, all ten associated original-TMPDIR fixture directories, all 135 launch/raw/post triplets, helper/controller sources, controls, product and native attempt records, and four CC-owned controlled HTTP bind-failure sets. Archive verification compared every payload member byte-for-byte and exact tar membership to the manifest. The four HTTP receipt fixtures are `.tmprvu7qt`, `.tmp1Kz8kr`, `.tmpJW01W9`, and `.tmpINJbr8`; each archive set includes its `http-bind-failure.json`, linked save, cache, and linked HOME config. CDC-owned `.tmpQPKS1Q` is expressly excluded. The earlier two-case archive remains unchanged at `/private/tmp/slice19-cc-failed-http-bind-payload-all.tar`; this new archive preserves all four CC-owned cases. The product-attempt record has 79 entries total, its prior 64-entry prefix preserved; the current whole file SHA-256 is `2978cd6c91b97a96c7601d3da1d9b7bd0dc29da6cad22b1f9e482069704a1c36`. Those 79 are product/compiler/gate attempts only; wrapper/support-only incidents remain documented separately.
+
+Native case identity map:
+
+| Row | Case UUID | Fixture | Result |
+|---:|---|---|---|
+| 1 | `e70fbfe51f3449c6b7cfab0203670d07` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-WcMfji` | pass |
+| 2 | `f1edaafc337f4cc38c18a4bd0b8d904a` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-Eu2FOI` | pass |
+| 3 | `e34ea5f99545445b9a3f10cc6cf248e0` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-fCHBbW` | pass |
+| 4 | `ecde2163b7cf447c9edbcabcd4a33da5` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-IfvGL2` | pass |
+| 5 | `6fe78b718bf54198bc176e14f64a17d8` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-8DN9fL` | pass |
+| 6 | `9b4ed5347d3e479f8a7ae437a1a5577a` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-kc08Js` | pass |
+| 7 | `c880bfa63b25461dbc948313bf5688c3` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-h3r3t4` | pass |
+| 8 | `0e035b241fae4ad0a5bd480cb748bd14` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-SO9FXR` | pass |
+| 9 | `78ab5b579b524285b46e1db26cadea3c` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-eh4lNK` | pass |
+| 10 | `12174dd17f7e40f6b01a03d35700059d` | `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-unknown-qGfXXb` | pass; two actual normal REPLs |
+
+### Updated evidence status
+
+The iteration05 cache blocker correction and all iteration06 gates are now complete. Earlier iteration05 observations remain as historical attempt records, including the original failed full cache setup, the corrected cache rerun, previous lifecycle/player-state/oracle failures, and the original make-test failures. The iteration06 corrections were exercised by current complete headless/owned tests, self-check, native matrix, and the full `make test`; no old attempt was overwritten or relabeled. Current native evidence supersedes the earlier “no native rows” statement for the current iteration only; preserve that earlier statement as its original time-bounded history.
+
+CC proposes the following current evidence while CDC retains independent acceptance; all eight UL rows remain open pending CDC disposition:
+
+- UL-01: current cache and lifecycle full-state coverage passes after the tuple/order fixes; the earlier failures remain historical. CDC acceptance pending.
+- UL-02: cache blocker, warm repair, and preservation gates pass, with the current full headless/owned and native matrix; CDC acceptance pending.
+- UL-03: full `make test` passes 1009 tests in 35 harness groups; CDC acceptance pending.
+- UL-04: whole owned integration passes 7/7, including reversed-order preservation and same-route duplicate/missing row rejects; CDC acceptance pending.
+- UL-05: native rows 1–9 plus row10 pass; row10 exercises two real REPL processes. Complete raw tool receipts and fixtures are archived; CDC acceptance pending.
+- UL-06: full headless integration passes 20/20 and native lifecycle rows pass; CDC acceptance pending.
+- UL-07: probe self-check and documentation gates pass, including all raw/derived negative controls; existing rustdoc warnings are retained as observed.
+- UL-08: 79 actual product/compiler/gate entries and 23 native support/controller attempts are retained; archive membership and exact two-path commit are provided for independent review. CC does not mark the row accepted.
+
+This candidate remains proposed, not accepted. The uncommitted iteration06 changes will be committed to exactly the two paths listed above with the required parsed trailer block; a clean exact-path/index check follows. Parent project/arc status remains outside this slice's authority.
+
+
+## Exact two-path source commit and clean return boundary — 2026-10-21 UTC
+
+Committed the iteration06 diff as `4cb745b7190e7463663a0ead29f169060e36dc05`, parent `ce6b5c9421a0db6d668620868a60791cf40acf13`, tree `1bd65ebd70735271a3fbe1cbf171c2bb4c323cd9`. `git show --format= --name-only HEAD` lists exactly `crates/nms-copilot/tests/mcp_live_integration.rs` and `crates/nms-copilot/tests/support/live_mcp.rs`. `git interpret-trailers --parse` returns the consecutive required Codex and Billo AI trailers once each. `git status --porcelain=v2 -z` is zero bytes and the index is empty. No production file changed; no push, merge, release, or planning/index mutation occurred.
+
+The three ignored return files now carry the complete current gate/native/payload inventory and the eight open CC proposals. Their final hashes and byte counts are recorded after this appended block in the return handoff message. Source ownership/gates are ready for CDC independent review; no acceptance or closure is claimed.

@@ -168,10 +168,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S19 | Common startup/live ensure, exact physical labels and actual normal/stdio/HTTP unknown→real→compatible restart independently accepted | Eight UL rows, literal full model/cache/location/file controls, real transports/nativePTY and CDC review | correctness-grade | ApprovedA / required19 after18 | open | [current CDC decision](slice19-unknown-system-lifecycle/cdc-verification.md) | Clean unacceptedce6b5c94; Operator approved ONE exceptional sixth two-file test/oracle pass; intake pending, all proof/parents remain open |
+| R06-S19 | Common startup/live ensure, exact physical labels and actual normal/stdio/HTTP unknown→real→compatible restart independently accepted | Eight UL rows, literal full model/cache/location/file controls, real transports/nativePTY and CDC review | correctness-grade | ApprovedA / required19 after18 | done | [final CDC acceptance](slice19-unknown-system-lifecycle/cdc-verification.md#final-independent-acceptance--2026-10-21-utc) — reproduced | Clean4cb745b7; all8UL accepted, independent19ordinary/native10/full1009. Prior failures/unknown teardown cause retained; all original parents remain open |
 
 2026-10-21 opened19:37arcrows18done19open/project25open; all36previous entire rows/criteria/dispositions retained.
 
 2026-10-21 Slice19 current independent red review/cap gate:37arcrows18done19open/project25open; no row closed or silent scope change.
 
 2026-10-21 Operator explicitly approved ONE exceptional sixth bounded F19-01/F19-02 correction; no budget reset/waiver/rowclosure,37arcrows18done19open/project25open.
+
+2026-10-21 Slice19 independently closed after approved exceptional sixth pass:37arcrows19done18open/project25open. All15original and three repairparents remainopen.

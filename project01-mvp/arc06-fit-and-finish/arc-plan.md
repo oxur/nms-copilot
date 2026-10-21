@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.80, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.81, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -670,3 +670,10 @@ All8UL/R06-S19OPEN;37arcrows18done19open/project25open. Canonical slice19/cdc-ve
 ## Slice19 explicit exceptional continuation — 2026-10-21 UTC
 
 Version1.80: Operator “I approve that pass.” adopts ONLY05e533b proposal for ONE sixth bounded test/oracle correction: FOUR previousU2 literals plus full-key/multiplicity-preserving biome-index order normalization, production/otherfiles frozen. Original five passes/failures remain; no budget reset/historical waiver/redproof acceptance. Original native9+row10(twoREPLs), prerequisite and aggregate teardown/EOF bounds unchanged; further defect requiring source changes stops. Immutable iteration06issued on cleance6b5c94, intake/handoff pending; all8UL/R06-S19open/37arcrows18done19open/project25open. Same actual selected CDCgpt6.1solHigh/CCgpt6lunaHigh, protectedmain9lines/heldpins/external03e8d04, every original parent/raw/history/finalsemantic/strictfreshness/importhistory/release obligation and Arc06endpoint retained.
+
+
+## Slice19 final independent closure — 2026-10-21 UTC
+
+Version1.81: Operator-approved ONE exceptional sixth pass returned4cb745b7, exactlyfour intendedU2 tuples plus full-biome multiplicity-preserving sorted comparison/actual-consumer negatives, other11files/production frozen. CDC full current review independently passes all19ordinary groups/native10, focused528/cache47/query2+route4/headless20/owned7/no-default233/binary16/full999runtime+10doc, build/docs/stricts/diffs. All8UL/R06-S19DONE;37arcrows19done18open/project25open. Full verification/byte-preserved failed+current captures/native135objects/10case+fixture archive/rowwalk/finalretrospective in19canonicalrecords. No historical waiver or capreset; earlier aggregate teardown failures retainunknowncause despite currentaggregatepasses. Source/main9lineedit/heldpins/external fences preserved, prior requested rebase onto b616fulfilled; no remote/integration/release/nextarc/Project02.
+
+Common startup ensures before snapshot, repairs compatible3/3missingcurrent onlyonce, acceptedfullupdates ensure before cache/publication, and exact physical MCP/resource/movement labels plus actual normal/stdio/HTTP unknown→genuineunnamed→warmrestart are independently delivered. Existing3/3representation/markerinterpretation unchanged; no revisionbump needed merelyfor idempotent missing-key repair. Required later save-decoder semanticrepair MUST assess/bump finalrevisionand prove predecessor source rebuild. Every original15arcrow and R06-R01/R02/R03 staysopen; rawfield/reality/errorpolicy and 48bitboundary, strictmtime/identicalrewrite/staleimporthistory, finalsemantic, original export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release owners retained. CDC now inspects the next bounded owner under standingArc06autonomy; no new sourceassignment inferred by this closure.

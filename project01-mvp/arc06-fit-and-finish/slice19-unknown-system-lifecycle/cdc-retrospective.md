@@ -1,4 +1,6 @@
-# Slice19 CDC retrospective — bounded unaccepted outcome
+# Slice19 CDC retrospective — final delivered outcome and retained interim history
+
+Final outcome2026-10-21: Slice19 independently closed on4cb745b7 after the explicitly approved exceptional sixth pass. The final follow-through section below evaluates the actual correction and proof; the interim red-boundary retrospective remains unchanged as history.
 
 2026-10-21 UTC; CDC /root/cdc_arc06, selected/applied gpt-6.1-sol High, sole CC gpt-6-luna High. Cutoff: candidatece6b5c94, five refinements exhausted, all8rows open, current independent red proof complete and explicit Operator continuation pending. This is an interim substantive retrospective at a real decision boundary, not slice acceptance or a claim of final delivery.
 
@@ -34,3 +36,16 @@ Keep record-before-relay and exact parser-after-commit checks; consolidate hando
 
 
 Operator follow-through2026-10-21: “I approve that pass.” One bounded sixth test/oracle attempt is authorized, not yet implemented or evaluated. The proposed narrower corrective route and unchanged aggregate/native quality gates are now assigned in immutable iteration06; no success or effectiveness conclusion follows yet.
+
+
+## Final delivered outcome and follow-through — 2026-10-21 UTC
+
+Operator explicitly approved one exceptional sixth pass, preserving the five-pass cap history. The narrow correction delivered: all four tuples now encode the intended literal previousU2; the actual complete-key biome comparator sorts primitive Vec rows without removing duplicates. Golden/reversed positives and duplicate/missing negatives exercise that same consumed checker. A compile-shape issue in the comparator was caught and self-repaired within the assigned pass before final lint; no production or other11source files changed. Current clean4cb745b7 independently passes all19ordinary groups, headless20/owned7, full999runtime+10docs and native10 (including two real unknown→real→warm-restart REPL processes). All8UL/R06-S19accepted. The interim failure analysis above remains part of the record; later green does not erase author/reviewer misses.
+
+The specific proposed bounded correction succeeded through its original full consumers, real transports/native matrix and aggregate workspace. Current CC and CDC aggregate stdio cases pass within the original five-second bound, but the earlier intermittent failures still lack an established cause. Preserve that watch item and investigate only if it recurs or an agreed inquiry becomes useful; don't infer a fix from a tuple/oracle patch. No historical capture waiver or further source pass was needed. No measured comparative cost/model-effectiveness conclusion follows.
+
+Capture follow-through held: actual raw records were verified before status relay, full explicit statuses/source fingerprints and raw-first completions survived, prelaunch binaries/controllers were measured, native135objects/10case trees and actual failed HTTP/HOMEpayloads were byte-preserved and consumed by independent review. The CC archive's single excluded-basename typo was proportionately annotated without changing original history, adding a waiver or demanding an evidence-only source pass. No new report schema was needed. Source/index ownership stayed stable during current gates and both parsed trailers were correct on4cb.
+
+Carry forward two practical recommendations: keep fixture argument-position tables and actual-consumer order/multiplicity negatives; prefer a bounded runnable composed increment over delaying first runtime behind repeated expansive static-readiness passes. This slice demonstrates the exact two repairs worked, not that the broader authoring approach improved; the repeated earlier misses remain a cost and an untested methodology hypothesis. Retain record-before-relay and explicit actual-start handoff while avoiding ceremonial repeats. Next applicable unit should report whether smaller runnable preparation catches the same class earlier without losing full-state/file/EOF controls.
+
+Bottom-up bubble-up is recorded in slice-plan/ledger, arc-plan/ledger and project-plan. No new methodology package/framework edit is authorized. All original15Arc06 plus three repair parents/project25 remain open; field-policy/finalsemantic/history/import/freshness/independent/Operator/release obligations remain. Continue only this authorized arc to its endpoint or concrete material decision.
