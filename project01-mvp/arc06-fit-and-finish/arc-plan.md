@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.79, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.80, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -665,3 +665,8 @@ Version1.78: approved18closedce0004a/e592; required19 is source-grounded in slic
 Version1.79: cleance6b5c94 exacte592parent/d624fa04tree/13paths; all five refinements executed/preserved. Current CDC format/lint pass; host headless16/19fails three badprevious-tuple fixture assertions, owned5/6andprobe selfcheckfail order-sensitive biome oracle; native0 at unmet prerequisite. CC cache47/focused528/no-default233/binary16/query2route4/build/docs/stricts/diffs partial proof retained, workspacehost487pass4fail is incomplete. Earlier aggregate stdio teardown failures remain despite isolated/currentaggregatecasepasses; cause unknown/no waiver. No production defect established by concrete fixture/oracle failures.
 
 All8UL/R06-S19OPEN;37arcrows18done19open/project25open. Canonical slice19/cdc-verification.md gives exact four literal repairs, complete-key/multiplicity-preserving biome normalization, retained aggregate teardown bound and required affected/full/native10independentproof. Five-pass rule now requires explicit Operator continuation or re-scope; recommendONEbounded exceptional test/oracle pass, no sixth issued or acceptance amendment. No silent budget reset/nextslice/architecture/policychange. Interim CDC retrospective records author/reviewer contribution and failed/successful follow-through. Actual64CC/fivecurrentCDC productcaptures and failedpayloads preserved; no missinghistorical exception sought. Mainb6169lineedit/allheldpins/external03e8d04 and every original raw/history/finalsemantic/strictfreshness/importhistory/export/import/docs/distribution/coverage/parentindependent/Operator/integration/release obligation/Arc06endpoint remain.
+
+
+## Slice19 explicit exceptional continuation — 2026-10-21 UTC
+
+Version1.80: Operator “I approve that pass.” adopts ONLY05e533b proposal for ONE sixth bounded test/oracle correction: FOUR previousU2 literals plus full-key/multiplicity-preserving biome-index order normalization, production/otherfiles frozen. Original five passes/failures remain; no budget reset/historical waiver/redproof acceptance. Original native9+row10(twoREPLs), prerequisite and aggregate teardown/EOF bounds unchanged; further defect requiring source changes stops. Immutable iteration06issued on cleance6b5c94, intake/handoff pending; all8UL/R06-S19open/37arcrows18done19open/project25open. Same actual selected CDCgpt6.1solHigh/CCgpt6lunaHigh, protectedmain9lines/heldpins/external03e8d04, every original parent/raw/history/finalsemantic/strictfreshness/importhistory/release obligation and Arc06endpoint retained.
