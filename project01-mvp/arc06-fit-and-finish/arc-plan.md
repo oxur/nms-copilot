@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.82, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.83, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -719,3 +719,10 @@ After A approval, detail a bounded Slice20 or an explicitly accounted foundation
 **Why pause:** the existing arc sequence and accepted Slice04 D02–D04 reserve these failure/reality/default/compatibility choices. The applied [project-management guide](/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/guides/README.md:167) requires: “When new evidence makes a plan choice too ambiguous to resolve confidently, pause affected work and surface the decision; record the resolution before resuming dependent work.” This is the existing material product/error-contract gate, not routine Rust approval or an evidence waiver. Slice19 remains accepted; no additional tests are needed for this policy-only record.
 
 Version1.82: Arc37rows,19done/18open; project25open. All original15 arc rows/three repair parents and broader history, strict-mtime/identical-rewrite/stale-import, final-semantic, export/import/format/docs/distribution/coverage/performance/higher-independent/Operator/integration/release gates remain. Same Arc06-only endpoint/models. Main's nine-line edit, held pins, external03e8d04 and Project02 remain protected. No next prompt/dispatch/inquiry/source change/remote action.
+
+
+## Operator adopts the save-field contract A — 2026-10-21 UTC
+
+The human Operator explicitly says, “Yup, I approve option A”, adopting exactly the d20f9fe packet above: field-specific56-bit save decoding, strict lexical/encoded bounds, explicit active current-address presence and complete previous sentinel, atomic parsed-update rejection/last-good live state, and semantic3→4 when corrected extraction reaches applications. This supersedes that packet's policy hold ONLY. Existing bounded witnesses stay bounded; nonzero game-backed and broader parent acceptance remain open. No partial-atlas architecture, new inquiry, historical waiver or release/integration authority. CDC resolves routine API/omission/error/caller/fixture/cache details and may prepare a coherent Slice20 or explicitly accounted foundation/application split from clean4cb745b7 under standing Arc06-only autonomy. Same actual selected CDCgpt-6.1-solHigh / sole reused CCgpt-6-lunaHigh; no model/role substitution.
+
+Preflight: planningd20/source4cb clean/indexempty; mainb616 retains only protected9-line native-test edit, external03e8d04 clean, all held worktree pins preserved. All19closure/evidence/retrospective records stay intact. Arc37rows19done18open/project25open; all original raw/history/finalsemantic/freshness-import/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligations retained. No20source/prompt/dispatch yet; author readiness and stable ownership precede execution.

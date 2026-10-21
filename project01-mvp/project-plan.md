@@ -1031,3 +1031,8 @@ Version1.71: all8UL/R06-S19accepted at clean4cb745b7 after Operator-approved sin
 ## Arc06 next save-field contract decision — 2026-10-21 UTC
 
 Version1.72: Slice19 closed at4cb745b7/planningcb7e684; next ordered owner R06-R01 still requires reserved D02–D04 user-visible input/failure/reality choices. Arc-plan1.82 contains the source-grounded concrete A recommendation (explicit56bit field-family decode/strict lexical+encodedbounds/requiredactivecurrent/completeprevioussentinel/wholeparsed-updatefailure/finalsemantic3→4) versus partial-atlasB or evidenceholdC, bounded witnesses and exact limits/next proof. No universal/nonzero-game validity inferred, no inquiry/code/prompt/nextchild opened before decision. This is a material product/errorcompatibilitygate, not evidencewaiver or routineRusttypeapproval. Arc37rows19done18open/project25open and all original parents/gates/main9lineedit/heldpins/external/Project02/Arc06endpoint unchanged.
+
+
+## Arc06 save-field contract A approved — 2026-10-21 UTC
+
+Version1.73: Operator explicitly “Yup, I approve option A” adopts d20f9fe's supported field-specific56-bit/strict encoded input and presence/atomic parsed-update failure/semantic3→4 contract. Arc-plan1.83 records exact authority before dependent work. CDC may detail bounded20/foundation-application split from4cb; broader game-backed nonzero/evidence/history/finalsemantic and original parent/independent/Operator/release gates remain. No new inquiry/partial-atlas/waiver/source implementation or nextarc authority. Same roles/models/Arc06endpoint and protected main/heldpins/external/Project02.
