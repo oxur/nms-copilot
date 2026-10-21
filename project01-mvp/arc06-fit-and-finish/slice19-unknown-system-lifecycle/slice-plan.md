@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.7. Created2026-10-21 UTC. Status: first runtime focused libraries pass528 on identical host retry; cache gate fails on one directory-mtime test fixture before product assertions. Fifth/final one-line test-only refinement intake inspected; source/index/gates returned to same CC for correction/format/lint and pinned hold. All eight UL rows remain open, no native or cache acceptance. No19waiver.
+Version:1.8. Created2026-10-21 UTC. Status: final05 exact one-line correction independently checked; actual format/lint pass on frozen2be3ba6e, source/indexempty. Full failed cache gate and remaining original ordered runtime/native/final gates released. Focused528 identicalhost proof remains applicable. Five-of-five refinements exhausted; all8 rows open, no19waiver.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -178,3 +178,10 @@ Full affected test/helper/callsite walk supports one-line final correction: remo
 ## Refinement05 intake handoff — 2026-10-21 UTC
 
 CDC read full actual execution acknowledgement, source still40c6cbfa/indexempty. Exact one-line directory-time removal, actual immediately observed post-setup baseline, unchanged regular-file helper and every preservation assertion are coherently acknowledged. Same CC now receives sole dedicated19 source/index/gates for final correction, captured format→lint and pinned HOLD; no tests/native until release. Fifth/final cap and all8 rows open. CDC planning/index/independent acceptance retained. The original restricted-focused execution paragraph overstates later-crate results; actual8e0f rawstdout contains only copilot227passed/7failed, while hostfbd contains full528. Additive record correction requested; original text/raw evidence preserved, no invented extra SUT attempt.
+
+
+## Final05 pinned review and runtime resumption — 2026-10-21 UTC
+
+CDC independently read actual43 captures; first41 parsed values unchanged. Final28af9ce7 format0/e3877054 lint0 retain full raw completion and explicit equal before/after identity/status on2be3ba6e/workingidentity5fdac97a/indexempty. Actual fileSHAa0553412 differs from previousba583c2f by ONLY removing the forced blocker-directory mtime line, proved by reinsertion restoring exact old hash. Twelve other source hashes unchanged. All sentinel and directory/source/cache/parent/model preservation assertions remain intact; actual post-setup directory baseline precedes first operation. Exact patch/capture/execution prefixf3bcde73 retained in existing CDC receipt. Original restricted-denominator wording and additive correction remain distinct.
+
+Same CC source/index/gates now released for the failed whole cache command and remaining original ordered proof/native9+row10 two real REPLs/final gates. Focused host528 applicability retained because production/library code unchanged; no redundant rerun. Existing capture/status/raw-first/originalTMPDIR/identicalhostretry/prelaunchdigests and failed/native receipt inventory contracts remain. Fifth/final cap is exhausted; no further source correction is automatically authorized. All eight rows and parent gates remain open pending current proof/independent disposition; no waiver or new model/policy.
