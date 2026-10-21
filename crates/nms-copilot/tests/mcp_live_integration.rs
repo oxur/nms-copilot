@@ -125,6 +125,8 @@ fn save_json(phase: Phase) -> Value {
 fn save_bytes(phase: Phase) -> Vec<u8> {
     let bytes = serde_json::to_vec(&save_json(phase)).expect("fixture serializes");
     nms_save::parse_save(&bytes).expect("fixture is accepted by the production save parser");
+    nms_save::parse_validated_save(&bytes)
+        .expect("fixture is accepted by the checked application save parser");
     bytes
 }
 
@@ -154,7 +156,7 @@ fn unknown_lifecycle_save(
 
 #[cfg(unix)]
 fn assert_unknown_lifecycle_parser_promotion() {
-    let before = nms_save::parse_save(&unknown_lifecycle_save(
+    let before = nms_save::parse_validated_save(&unknown_lifecycle_save(
         4721,
         3,
         70,
@@ -163,8 +165,8 @@ fn assert_unknown_lifecycle_parser_promotion() {
         Some((0, 0, 0, 0, 2, 5)),
         false,
     ))
-    .expect("movement source parses");
-    let after = nms_save::parse_save(&unknown_lifecycle_save(
+    .expect("movement source validates before projection");
+    let after = nms_save::parse_validated_save(&unknown_lifecycle_save(
         4722,
         3,
         700,
@@ -173,10 +175,10 @@ fn assert_unknown_lifecycle_parser_promotion() {
         Some((0, 0, 0, 0, 2, 5)),
         true,
     ))
-    .expect("real discovery source parses");
+    .expect("real discovery source validates before projection");
     let delta = compute_delta(
-        &SaveSnapshot::from_save(&before),
-        &SaveSnapshot::from_save(&after),
+        &SaveSnapshot::from_validated_save(&before),
+        &SaveSnapshot::from_validated_save(&after),
     );
     let u3 = GalacticAddress::new(0, 0, 0, 3, 0, 0);
     let system = System::new(
@@ -1124,8 +1126,32 @@ fn test_warm_missing_physical_system_is_repaired_then_promoted_and_reused() {
         Some((&moved_cache, moved_mtime)),
     );
 
+    let invalid_address = crate::live_mcp::unknown_lifecycle_invalid_address_source();
+    let invalid_address_time = malformed_time + Duration::from_secs(1);
+    atomic_replace(&save, &invalid_address);
+    set_mtime(&save, invalid_address_time);
+    process.assert_no_location_update_for(Duration::from_millis(650));
+    call_unknown_stdio_pair(
+        &mut process,
+        35,
+        u3,
+        "(unknown)",
+        0,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    );
+    assert_unknown_file_boundary(
+        &save,
+        &invalid_address,
+        invalid_address_time,
+        &cache,
+        (&config_path, &config_before),
+        Stage::Moved,
+        Some((&moved_cache, moved_mtime)),
+    );
+
     let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 0, 2, 5)), true);
-    let promoted_time = moved_time + Duration::from_secs(2);
+    let promoted_time = invalid_address_time + Duration::from_secs(1);
     atomic_replace(&save, &promoted);
     set_mtime(&save, promoted_time);
     process.wait_location_update(PHASE_TIMEOUT);
@@ -1660,10 +1686,37 @@ fn run_http_unknown_lifecycle_attempt(
         Some((&moved_cache, moved_cache_mtime)),
     );
 
+    let invalid_address = crate::live_mcp::unknown_lifecycle_invalid_address_source();
+    let invalid_address_time = malformed_time + Duration::from_secs(1);
+    let invalid_cursor = events.cursor();
+    atomic_replace(&save, &invalid_address);
+    set_mtime(&save, invalid_address_time);
+    events
+        .wait_quiet_since(invalid_cursor, Duration::from_millis(650))
+        .unwrap();
+    call_unknown_http_pair(
+        &mut client,
+        35,
+        u3,
+        "(unknown)",
+        0,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    );
+    assert_unknown_file_boundary(
+        &save,
+        &invalid_address,
+        invalid_address_time,
+        &cache,
+        (&config_path, &config_before),
+        Stage::Moved,
+        Some((&moved_cache, moved_cache_mtime)),
+    );
+
     let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 0, 2, 5)), true);
     let promotion_cursor = events.cursor();
     atomic_replace(&save, &promoted);
-    let promoted_time = moved_time + Duration::from_secs(2);
+    let promoted_time = invalid_address_time + Duration::from_secs(1);
     set_mtime(&save, promoted_time);
     let promoted_event = events
         .wait_for_resource_updated_since(promotion_cursor, "nms://player/location", PHASE_TIMEOUT)
@@ -1673,7 +1726,7 @@ fn run_http_unknown_lifecycle_attempt(
         .unwrap();
     call_unknown_http_pair(
         &mut client,
-        34,
+        36,
         u3,
         "-",
         1,
@@ -1701,7 +1754,7 @@ fn run_http_unknown_lifecycle_attempt(
         .unwrap();
     call_unknown_http_pair(
         &mut client,
-        36,
+        38,
         u3,
         "-",
         1,
@@ -3218,6 +3271,7 @@ enum StartupCacheCase {
     StaleCurrent,
     FreshSchema1,
     FreshSemantic1,
+    FreshSemantic3,
     FreshCorrupt,
     BypassExisting,
     BypassMissing,
@@ -3225,12 +3279,13 @@ enum StartupCacheCase {
 
 #[cfg(unix)]
 impl StartupCacheCase {
-    const ALL: [Self; 8] = [
+    const ALL: [Self; 9] = [
         Self::ColdMissing,
         Self::FreshCurrent,
         Self::StaleCurrent,
         Self::FreshSchema1,
         Self::FreshSemantic1,
+        Self::FreshSemantic3,
         Self::FreshCorrupt,
         Self::BypassExisting,
         Self::BypassMissing,
@@ -3243,6 +3298,7 @@ impl StartupCacheCase {
             Self::StaleCurrent => "stale_current",
             Self::FreshSchema1 => "fresh_schema1",
             Self::FreshSemantic1 => "fresh_semantic1",
+            Self::FreshSemantic3 => "fresh_semantic3",
             Self::FreshCorrupt => "fresh_corrupt",
             Self::BypassExisting => "bypass_existing",
             Self::BypassMissing => "bypass_missing",
@@ -3257,6 +3313,7 @@ impl StartupCacheCase {
             Self::FreshCurrent
             | Self::StaleCurrent
             | Self::FreshSemantic1
+            | Self::FreshSemantic3
             | Self::BypassExisting => PHASE_A,
         }
     }
@@ -3288,6 +3345,7 @@ impl StartupCacheCase {
                 | Self::StaleCurrent
                 | Self::FreshSchema1
                 | Self::FreshSemantic1
+                | Self::FreshSemantic3
                 | Self::FreshCorrupt
         )
     }
@@ -3339,7 +3397,7 @@ fn sentinel_bytes() -> Vec<u8> {
     let model = sentinel_model();
     let data = nms_cache::extract_cache_data(&model, 9999);
     let bytes = nms_cache::serialize::serialize(&data).expect("serialize current sentinel");
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
     let dir = tempfile::tempdir().expect("sentinel verification directory");
     let path = dir.path().join("sentinel.rkyv");
     nms_cache::write_cache(&data, &path).expect("write sentinel through cache API");
@@ -3462,14 +3520,34 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 1,
-                        expected: 3
+                        expected: 4
+                    }
+                ))
+            ));
+            Some(bytes)
+        }
+        StartupCacheCase::FreshSemantic3 => {
+            let bytes =
+                include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic3.rkyv")
+                    .to_vec();
+            assert_eq!(bytes.len(), 752);
+            assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
+            std::fs::write(&cache, &bytes).expect("write actual schema3 semantic3 predecessor");
+            set_mtime(&cache, source_mtime() + Duration::from_secs(100));
+            assert!(nms_cache::is_cache_fresh(&cache, &save));
+            assert!(matches!(
+                nms_cache::read_cache(&cache),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                        found: 3,
+                        expected: 4
                     }
                 ))
             ));
             Some(bytes)
         }
         StartupCacheCase::FreshCorrupt => {
-            let bytes = b"NMSCACHE\x03\0\0\0\x03\0\0\0".to_vec();
+            let bytes = b"NMSCACHE\x03\0\0\0\x04\0\0\0".to_vec();
             std::fs::write(&cache, &bytes).expect("write literal empty current archive");
             set_mtime(&cache, source_mtime() + Duration::from_secs(100));
             assert!(nms_cache::is_cache_fresh(&cache, &save));
@@ -3519,7 +3597,7 @@ fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &Startup
 fn assert_cache_effect(case: StartupCacheCase, files: &StartupCaseFiles) -> &'static str {
     if case.rebuilds_cache() {
         let bytes = std::fs::read(&files.cache).expect("startup wrote current cache");
-        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
         let data = nms_cache::read_cache(&files.cache).expect("checked-read rebuilt cache");
         assert_eq!(data.save_version, 4720, "{} source version", case.label());
         assert_eq!(data.active_galaxy, case.source().reality_index);

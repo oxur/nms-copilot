@@ -6,6 +6,7 @@ use std::path::PathBuf;
 use nms_core::galaxy::Galaxy;
 use nms_query::display::hex_to_emoji;
 use nms_query::table::{Builder, build_table, nms_theme};
+use nms_save::ValidatedSave;
 use nms_save::model::{PlayerStateData, SaveRoot};
 
 pub fn run(save_path: Option<PathBuf>) -> Result<(), Box<dyn std::error::Error>> {
@@ -16,18 +17,19 @@ pub fn run(save_path: Option<PathBuf>) -> Result<(), Box<dyn std::error::Error>>
             .to_path_buf(),
     };
 
-    let save = nms_save::parse_save_file(&path)?;
+    let save = nms_save::parse_validated_save_file(&path)?;
     print_summary(&save);
     Ok(())
 }
 
-fn print_summary(save: &SaveRoot) {
+fn print_summary(checked: &ValidatedSave) {
     let theme = nms_theme();
 
+    let save: &SaveRoot = checked.root();
     let ps = save.active_player_state();
-    let ua = &ps.universe_address;
-    let galaxy = Galaxy::by_index(ua.reality_index);
-    let ga = &ua.galactic_address;
+    let player = checked.player_state();
+    let galaxy = Galaxy::by_index(player.current_reality);
+    let address = &player.current_address;
 
     let mut builder = Builder::default();
     builder.push_record(["Property", "Detail"]);
@@ -42,10 +44,15 @@ fn print_summary(save: &SaveRoot) {
     builder.push_record(["Galaxy", galaxy.name]);
     builder.push_record([
         "Voxel Position",
-        &format!("X={}, Y={}, Z={}", ga.voxel_x, ga.voxel_y, ga.voxel_z),
+        &format!(
+            "X={}, Y={}, Z={}",
+            address.voxel_x(),
+            address.voxel_y(),
+            address.voxel_z()
+        ),
     ]);
-    builder.push_record(["System Index", &ga.solar_system_index.to_string()]);
-    builder.push_record(["Planet Index", &ga.planet_index.to_string()]);
+    builder.push_record(["System Index", &address.solar_system_index().to_string()]);
+    builder.push_record(["Planet Index", &address.planet_index().to_string()]);
     builder.push_record(["", ""]);
 
     println!(
@@ -55,7 +62,7 @@ fn print_summary(save: &SaveRoot) {
     println!();
 
     print_discoveries(save, &theme);
-    print_bases(ps, &theme);
+    print_bases(ps, checked.bases(), &theme);
     print_currencies(ps, &theme);
 }
 
@@ -95,18 +102,22 @@ fn print_discoveries(save: &SaveRoot, theme: &nms_query::table::TableStyleConfig
     println!();
 }
 
-fn print_bases(ps: &PlayerStateData, theme: &nms_query::table::TableStyleConfig) {
+fn print_bases(
+    ps: &PlayerStateData,
+    checked_bases: &[nms_core::PlayerBase],
+    theme: &nms_query::table::TableStyleConfig,
+) {
     let bases = &ps.persistent_player_bases;
     if !bases.is_empty() {
         let mut builder = Builder::default();
         builder.push_record(["Name", "Type", "Address", "Portal Glyphs"]);
-        for base in bases {
+        for (base, checked) in bases.iter().zip(checked_bases) {
             let name = if base.name.is_empty() {
                 "-"
             } else {
                 &base.name
             };
-            let hex = format!("{:012X}", base.galactic_address.0 & 0xFFFF_FFFF_FFFF);
+            let hex = format!("{:012X}", checked.address.packed());
             let glyphs = hex_to_emoji(&hex);
             builder.push_record([
                 name.to_string(),

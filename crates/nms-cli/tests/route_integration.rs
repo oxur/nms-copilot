@@ -27,12 +27,12 @@ fn fixture_path(name: &str) -> PathBuf {
 }
 
 fn single_target_save_json() -> &'static str {
-    r#"{"Version":4720,"Platform":"Mac|Final","ActiveContext":"Main","CommonStateData":{"SaveName":"Single target route","TotalPlayTime":100},"BaseContext":{"GameMode":1,"PlayerStateData":{"UniverseAddress":{"RealityIndex":0,"GalacticAddress":{"VoxelX":-896,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":32,"PlanetIndex":0}},"Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},"ExpeditionContext":{"GameMode":6,"PlayerStateData":{"UniverseAddress":{"RealityIndex":0,"GalacticAddress":{"VoxelX":0,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":0,"PlanetIndex":0}},"Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},"DiscoveryManagerData":{"DiscoveryData-v1":{"ReserveStore":0,"ReserveManaged":0,"Store":{"Record":[{"DD":{"UA":"0x001000000064","DT":"SolarSystem","VP":[]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Explorer","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x101000000064","DT":"Planet","VP":["0xAB",0]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Explorer","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x002000000C80","DT":"SolarSystem","VP":[]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Traveler","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x102000000C80","DT":"Planet","VP":["0xCD",1]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Traveler","PTK":"ST","TS":1700000000},"FL":{"U":1}}]}}}}"#
+    r#"{"Version":4720,"Platform":"Mac|Final","ActiveContext":"Main","CommonStateData":{"SaveName":"Single target route","TotalPlayTime":100},"BaseContext":{"GameMode":1,"PlayerStateData":{"UniverseAddress":{"RealityIndex":0,"GalacticAddress":{"VoxelX":-896,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":32,"PlanetIndex":0}},"Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},"ExpeditionContext":{"GameMode":6,"PlayerStateData":{"UniverseAddress":{"RealityIndex":0,"GalacticAddress":{"VoxelX":0,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":0,"PlanetIndex":0}},"Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},"DiscoveryManagerData":{"DiscoveryData-v1":{"ReserveStore":0,"ReserveManaged":0,"Store":{"Record":[{"DD":{"UA":"0x00100000000064","DT":"SolarSystem","VP":[]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Explorer","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x10100000000064","DT":"Planet","VP":["0xAB",0]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Explorer","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x00200000000C80","DT":"SolarSystem","VP":[]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Traveler","PTK":"ST","TS":1700000000},"FL":{"U":1}},{"DD":{"UA":"0x10200000000C80","DT":"Planet","VP":["0xCD",1]},"DM":{},"OWS":{"LID":"","UID":"1","USN":"Traveler","PTK":"ST","TS":1700000000},"FL":{"U":1}}]}}}}"#
 }
 
 #[test]
 fn test_nms_route_lush_targets_succeed_for_nn_and_two_opt_round_trip() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     for (algorithm, expected) in [("nn", "nearest-neighbor"), ("2opt", "2-opt")] {
         cargo_bin_cmd!("nms")
             .args([
@@ -59,8 +59,8 @@ fn test_single_target_route_cli_matches_parser_and_query_oracle() {
     fixture
         .write_all(single_target_save_json().as_bytes())
         .unwrap();
-    let save = nms_save::parse_save_file(fixture.path()).unwrap();
-    let model = GalaxyModel::from_save(&save);
+    let save = nms_save::parse_validated_save_file(fixture.path()).unwrap();
+    let model = GalaxyModel::from_validated_save(&save);
     let start = GalacticAddress::new(-896, 0, 0, 32, 0, 0);
     let target = GalacticAddress::new(100, 0, 0, 16, 0, 0);
     let start_id = SystemId::from_address(&start);
@@ -124,7 +124,7 @@ fn test_single_target_route_cli_matches_parser_and_query_oracle() {
 
 #[test]
 fn test_nms_route_missing_target_fails_without_itinerary() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "route",
@@ -218,9 +218,9 @@ fn test_route_formatter_preserves_qualified_identity_and_exact_400_ly_legs() {
 
 #[test]
 fn test_route_biome_filter_is_not_implicitly_limited_to_one_hundred() {
-    let fixture = fixture_path("multi_system_save.json");
-    let save = nms_save::parse_save_file(&fixture).unwrap();
-    let mut model = GalaxyModel::from_save(&save);
+    let fixture = fixture_path("save56_multi_system.json");
+    let save = nms_save::parse_validated_save_file(&fixture).unwrap();
+    let mut model = GalaxyModel::from_validated_save(&save);
     let origin = *model.player_position().unwrap();
     for index in 0..110_u16 {
         let address = GalacticAddress::new(index as i16 + 20, 0, 0, index, 0, 0);

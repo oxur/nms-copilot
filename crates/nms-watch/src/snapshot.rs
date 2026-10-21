@@ -29,8 +29,8 @@ pub struct SaveSnapshot {
 impl SaveSnapshot {
     /// Build a snapshot by parsing a save file from disk.
     pub fn from_file(path: &Path) -> Result<Self, Box<dyn std::error::Error>> {
-        let save = nms_save::parse_save_file(path)?;
-        Ok(Self::from_save(&save))
+        let save = nms_save::parse_validated_save_file(path)?;
+        Ok(Self::from_validated_save(&save))
     }
 
     /// Build a snapshot from an already-parsed save.
@@ -60,6 +60,40 @@ impl SaveSnapshot {
             planets,
             bases,
             player_address,
+        }
+    }
+
+    /// Build a snapshot from a save whose addresses were checked before serde.
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let save = nms_save::parse_validated_save_file(std::path::Path::new("save.hg"))?;
+    /// let snapshot = nms_watch::SaveSnapshot::from_validated_save(&save);
+    /// println!("{} systems", snapshot.systems.len());
+    /// # Ok(())
+    /// # }
+    /// ```
+    pub fn from_validated_save(save: &nms_save::ValidatedSave) -> Self {
+        let extracted = nms_graph::extract::extract_systems_from_validated(save);
+        let mut planets = HashMap::new();
+        for (sys_id, system) in &extracted {
+            for planet in &system.planets {
+                planets.insert((*sys_id, planet.index), planet.clone());
+            }
+        }
+        let mut bases = HashMap::new();
+        for base in save.bases() {
+            if !base.name.is_empty() {
+                bases.insert(base.name.to_lowercase(), base.clone());
+            }
+        }
+        Self {
+            systems: extracted,
+            planets,
+            bases,
+            player_address: save.player_state().current_address,
         }
     }
 }

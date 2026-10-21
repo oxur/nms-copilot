@@ -13,9 +13,10 @@
 //! decoded model data. Future address-decoder or galaxy-identity changes must
 //! assess and bump the semantic revision when meaning changes, even if archive
 //! shape stays the same. One change may require both revisions to advance.
-//! The current schema and semantic revisions are both 3. Schema 2 adds the
+//! The current schema revision is 3 and semantic revision is 4. Schema 2 adds the
 //! selected galaxy; schema 3 adds explicit player-placeholder provenance.
-//! Semantic 3 preserves that distinction when rebuilding a model. Both
+//! Semantic 4 preserves validated 56-bit address identity when rebuilding a model;
+//! semantic 3 predates that application-wide identity boundary. Both
 //! revisions are separate from game save version, crate version, and
 //! `cached_at`.
 
@@ -37,7 +38,7 @@ use crate::error::{CacheCompatibilityError, CacheError};
 // semantic revision when the meaning or identity rules of CacheData change.
 const CACHE_MAGIC: &[u8; 8] = b"NMSCACHE";
 const CACHE_SCHEMA_REVISION: u32 = 3;
-const CACHE_SEMANTIC_REVISION: u32 = 3;
+const CACHE_SEMANTIC_REVISION: u32 = 4;
 const CACHE_HEADER_LEN: usize = 16;
 
 /// Validate duplicated physical reality fields without changing cache data.
@@ -515,14 +516,14 @@ mod tests {
             ));
         }
 
-        for semantic in [0_u32, 1, 2, 4] {
+        for semantic in [0_u32, 1, 2, 3, 5] {
             bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
             bytes[12..16].copy_from_slice(&semantic.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
                     found,
-                    expected: 3
+                    expected: 4
                 })) if found == semantic
             ));
         }
@@ -530,7 +531,7 @@ mod tests {
         // Mismatches are returned before inspecting an invalid payload, with
         // schema precedence when both revision fields differ.
         bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
-        bytes[12..16].copy_from_slice(&2_u32.to_le_bytes());
+        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Incompatible(
@@ -546,7 +547,7 @@ mod tests {
     fn test_current_header_with_bad_payload_is_deserialize_error() {
         let mut bytes = CACHE_MAGIC.to_vec();
         bytes.extend_from_slice(&3_u32.to_le_bytes());
-        bytes.extend_from_slice(&3_u32.to_le_bytes());
+        bytes.extend_from_slice(&4_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Deserialize(_))
@@ -569,13 +570,13 @@ mod tests {
     fn test_compatibility_error_display_and_source_are_observable() {
         let error = CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
             found: 9,
-            expected: 3,
+            expected: 4,
         });
         assert!(error.to_string().contains("semantic revision 9"));
-        assert!(error.to_string().contains("expected 3"));
+        assert!(error.to_string().contains("expected 4"));
         assert_eq!(
             std::error::Error::source(&error).unwrap().to_string(),
-            "cache model semantic revision 9 is incompatible (expected 3)"
+            "cache model semantic revision 9 is incompatible (expected 4)"
         );
     }
 

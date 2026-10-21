@@ -1,12 +1,19 @@
-//! Conversion from raw save model types to `nms-core` domain types.
+//! Legacy conversion from permissively deserialized raw save types to `nms-core` domain types.
+//!
+//! These compatibility helpers intentionally preserve the original parser's
+//! permissive address behavior. Application code that needs checked source
+//! addresses should use [`crate::ValidatedSave`] and its paired conversions.
 
 use chrono::DateTime;
 
 use crate::model::*;
 
 impl RawDiscoveryRecord {
-    /// Convert to an `nms_core::DiscoveryRecord`, or `None` if the discovery
-    /// type is unrecognized.
+    /// Legacy conversion to a core discovery record, or `None` for an unknown type.
+    ///
+    /// This compatibility helper uses the historical galaxy-zero behavior.
+    /// Applications should use the address paired by
+    /// [`crate::ValidatedSave::discoveries`].
     pub fn to_core_record(&self) -> Option<nms_core::DiscoveryRecord> {
         let discovery_type = match self.dd.dt.as_str() {
             "Planet" => nms_core::Discovery::Planet,
@@ -44,7 +51,10 @@ impl RawDiscoveryRecord {
 }
 
 impl PersistentPlayerBase {
-    /// Convert to an `nms_core::PlayerBase`.
+    /// Legacy conversion to a core base using the historical galaxy-zero address.
+    ///
+    /// Applications should use the checked bases exposed by
+    /// [`crate::ValidatedSave::bases`].
     pub fn to_core_base(&self) -> nms_core::PlayerBase {
         let base_type = match self.base_type.persistent_base_types.as_str() {
             "HomePlanetBase" => nms_core::BaseType::HomePlanetBase,
@@ -67,7 +77,9 @@ impl PersistentPlayerBase {
 }
 
 impl SaveRoot {
-    /// Get `PlayerStateData` for the active context.
+    /// Get `PlayerStateData` for the active context through the legacy parser.
+    ///
+    /// This accessor retains serde-defaulted address behavior for compatibility.
     pub fn active_player_state(&self) -> &PlayerStateData {
         match self.active_context.as_str() {
             "Expedition" => &self.expedition_context.player_state_data,
@@ -75,7 +87,10 @@ impl SaveRoot {
         }
     }
 
-    /// Convert active player state to `nms_core::PlayerState`.
+    /// Convert active player state through the legacy serde-decoded address fields.
+    ///
+    /// Applications should use [`crate::ValidatedSave::player_state`] when
+    /// source addresses must be validated before defaults or narrowing.
     pub fn to_core_player_state(&self) -> nms_core::PlayerState {
         let ps = self.active_player_state();
         let ua = &ps.universe_address;

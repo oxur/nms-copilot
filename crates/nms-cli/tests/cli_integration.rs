@@ -222,7 +222,7 @@ fn test_nms_no_args_shows_error() {
 
 #[test]
 fn test_nms_info_with_fixture_shows_summary() {
-    let fixture = fixture_path("minimal_save.json");
+    let fixture = fixture_path("save56_minimal.json");
     cargo_bin_cmd!("nms")
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
@@ -236,7 +236,7 @@ fn test_nms_info_with_fixture_shows_summary() {
 
 #[test]
 fn test_nms_info_with_multi_system_fixture_shows_discovery_counts() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args(["info", "--save", fixture.to_str().unwrap()])
         .assert()
@@ -258,7 +258,7 @@ fn test_nms_info_nonexistent_save_fails() {
 
 #[test]
 fn test_nms_find_with_fixture_returns_results() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args(["find", "--save", fixture.to_str().unwrap()])
         .assert()
@@ -268,7 +268,7 @@ fn test_nms_find_with_fixture_returns_results() {
 
 #[test]
 fn test_nms_find_with_biome_filter_lush() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "find",
@@ -283,7 +283,7 @@ fn test_nms_find_with_biome_filter_lush() {
 
 #[test]
 fn test_nms_find_with_biome_filter_frozen() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "find",
@@ -298,7 +298,7 @@ fn test_nms_find_with_biome_filter_frozen() {
 
 #[test]
 fn test_nms_find_with_nearest_limit() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "find",
@@ -313,7 +313,7 @@ fn test_nms_find_with_nearest_limit() {
 
 #[test]
 fn test_nms_find_invalid_biome_fails() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "find",
@@ -329,7 +329,7 @@ fn test_nms_find_invalid_biome_fails() {
 
 #[test]
 fn test_nms_stats_with_fixture_shows_statistics() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args(["stats", "--save", fixture.to_str().unwrap()])
         .assert()
@@ -339,7 +339,7 @@ fn test_nms_stats_with_fixture_shows_statistics() {
 
 #[test]
 fn test_nms_stats_biomes_flag_shows_biome_table() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args(["stats", "--save", fixture.to_str().unwrap(), "--biomes"])
         .assert()
@@ -349,7 +349,7 @@ fn test_nms_stats_biomes_flag_shows_biome_table() {
 
 #[test]
 fn test_nms_export_json_produces_valid_json() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     let output = cargo_bin_cmd!("nms")
         .args([
             "export",
@@ -370,7 +370,7 @@ fn test_nms_export_json_produces_valid_json() {
 
 #[test]
 fn test_nms_export_csv_produces_header_row() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     let output = cargo_bin_cmd!("nms")
         .args([
             "export",
@@ -394,7 +394,7 @@ fn test_nms_export_csv_produces_header_row() {
 
 #[test]
 fn test_nms_export_invalid_format_fails() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "export",
@@ -466,7 +466,7 @@ fn test_nms_convert_help_shows_options() {
 
 #[test]
 fn test_nms_find_from_base_reference() {
-    let fixture = fixture_path("multi_system_save.json");
+    let fixture = fixture_path("save56_multi_system.json");
     cargo_bin_cmd!("nms")
         .args([
             "find",

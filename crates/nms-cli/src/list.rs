@@ -32,8 +32,8 @@ fn load_model(
     slot: Option<u8>,
 ) -> Result<GalaxyModel, Box<dyn std::error::Error>> {
     let path = crate::resolve_save_with_slot(save, slot)?;
-    let save = nms_save::parse_save_file(&path)?;
-    Ok(GalaxyModel::from_save(&save))
+    let save = nms_save::parse_validated_save_file(&path)?;
+    Ok(GalaxyModel::from_validated_save(&save))
 }
 
 fn list_galaxies(galaxy_type: Option<String>) -> Result<(), Box<dyn std::error::Error>> {

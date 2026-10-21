@@ -5,7 +5,8 @@ use std::collections::HashMap;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::system::{Planet, System};
-use nms_save::model::SaveRoot;
+use nms_save::ValidatedSave;
+use nms_save::model::{RawDiscoveryRecord, SaveRoot};
 
 use crate::spatial::SystemId;
 
@@ -103,14 +104,41 @@ pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
 /// and returns a map of SystemId -> System.
 pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
     let records = &save.discovery_manager_data.discovery_data_v1.store.record;
+    extract_systems_with_records(|| {
+        records
+            .iter()
+            .map(|record| (record, GalacticAddress::from_packed(record.dd.ua.0, 0)))
+    })
+}
+
+/// Extract systems using addresses checked by [`ValidatedSave`].
+///
+/// # Examples
+///
+/// ```no_run
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let save = nms_save::parse_validated_save_file(std::path::Path::new("save.hg"))?;
+/// let systems = nms_graph::extract::extract_systems_from_validated(&save);
+/// println!("{} systems", systems.len());
+/// # Ok(())
+/// # }
+/// ```
+pub fn extract_systems_from_validated(save: &ValidatedSave) -> HashMap<SystemId, System> {
+    extract_systems_with_records(|| save.discoveries())
+}
+
+fn extract_systems_with_records<'a, F, I>(records: F) -> HashMap<SystemId, System>
+where
+    F: Fn() -> I,
+    I: Iterator<Item = (&'a RawDiscoveryRecord, GalacticAddress)>,
+{
     let mut builders: HashMap<SystemId, SystemBuilder> = HashMap::new();
 
     // First pass: collect SolarSystem discoveries (for system names/discoverers)
-    for rec in records {
+    for (rec, addr) in records() {
         if rec.dd.dt != "SolarSystem" {
             continue;
         }
-        let addr = GalacticAddress::from_packed(rec.dd.ua.0, 0);
         let sys_id = SystemId::from_address(&addr);
 
         let timestamp = if rec.ows.ts > 0 {
@@ -135,11 +163,10 @@ pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
     }
 
     // Second pass: collect Planet discoveries and attach to systems
-    for rec in records {
+    for (rec, addr) in records() {
         if rec.dd.dt != "Planet" {
             continue;
         }
-        let addr = GalacticAddress::from_packed(rec.dd.ua.0, 0);
         let sys_id = SystemId::from_address(&addr);
         let planet_index = addr.planet_index();
 

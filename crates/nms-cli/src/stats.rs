@@ -18,8 +18,8 @@ pub fn run(
             .path()
             .to_path_buf(),
     };
-    let save = nms_save::parse_save_file(&path)?;
-    let model = GalaxyModel::from_save(&save);
+    let save = nms_save::parse_validated_save_file(&path)?;
+    let model = GalaxyModel::from_validated_save(&save);
 
     let query = StatsQuery {
         biomes: biomes || !discoveries, // default to all if neither specified

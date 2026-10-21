@@ -28,6 +28,7 @@ pub mod locate;
 pub mod mapping;
 pub mod metadata;
 pub mod model;
+pub mod validated;
 pub mod xxtea;
 
 pub use decompress::{SaveFormat, decompress_save, decompress_save_file, detect_format};
@@ -35,17 +36,20 @@ pub use error::SaveError;
 pub use mapping::{KeyMapping, deobfuscate_json, is_obfuscated};
 pub use metadata::{SaveMetadata, StorageSlot, read_metadata, verify_sha256};
 pub use model::SaveRoot;
+pub use validated::{ValidatedSave, parse_validated_save, parse_validated_save_file};
 
-/// Parse deobfuscated save file JSON bytes into a [`SaveRoot`] struct.
+/// Legacy-permissively parse deobfuscated save JSON into a [`SaveRoot`] struct.
 ///
-/// The input must be valid UTF-8 JSON with plaintext (deobfuscated) keys.
+/// The input must be valid UTF-8 JSON with plaintext (deobfuscated) keys. This
+/// compatibility parser applies serde defaults before address validation; new
+/// application code should use [`parse_validated_save`].
 pub fn parse_save(json: &[u8]) -> Result<SaveRoot, SaveError> {
     serde_json::from_slice(json).map_err(|e| SaveError::JsonParseError {
         message: e.to_string(),
     })
 }
 
-/// Parse a save file from disk, handling the full pipeline.
+/// Legacy-permissively parse a save file from disk, handling the full pipeline.
 ///
 /// Runs the complete parsing pipeline:
 /// 1. Read raw bytes from disk
@@ -53,7 +57,8 @@ pub fn parse_save(json: &[u8]) -> Result<SaveRoot, SaveError> {
 /// 3. Check for obfuscated keys and deobfuscate if needed
 /// 4. Deserialize into [`SaveRoot`]
 ///
-/// This is the high-level entry point for reading NMS save files.
+/// This is the compatibility entry point for reading NMS save files. New
+/// application code should use [`parse_validated_save_file`].
 /// For already-decompressed, already-deobfuscated JSON bytes, use [`parse_save`] instead.
 pub fn parse_save_file(path: &std::path::Path) -> Result<SaveRoot, SaveError> {
     let raw = std::fs::read(path)?;
