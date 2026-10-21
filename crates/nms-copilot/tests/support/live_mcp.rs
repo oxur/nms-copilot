@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{SocketAddr, TcpStream};
 use std::sync::mpsc;
@@ -697,7 +697,27 @@ pub fn assert_model_matches(actual: &GalaxyModel, expected: &GalaxyModel) -> Res
     if actual.name_index != expected.name_index {
         return Err("whole name index differs".into());
     }
-    if actual.biome_index != expected.biome_index {
+    let normalized_biome_index = |model: &GalaxyModel| {
+        model
+            .biome_index
+            .iter()
+            .map(|(biome, planets)| {
+                let mut rows: Vec<_> = planets
+                    .iter()
+                    .map(|(system_id, planet_index)| {
+                        (
+                            system_id.reality_index(),
+                            system_id.system_address(),
+                            *planet_index,
+                        )
+                    })
+                    .collect();
+                rows.sort_unstable();
+                (*biome, rows)
+            })
+            .collect::<HashMap<_, _>>()
+    };
+    if normalized_biome_index(actual) != normalized_biome_index(expected) {
         return Err("whole biome index differs".into());
     }
     if actual.address_to_id != expected.address_to_id {
@@ -1496,7 +1516,51 @@ fn next_sse_frame(buffer: &[u8], cursor: usize) -> Result<Option<(usize, Option<
 
 #[cfg(test)]
 mod sse_cursor_tests {
-    use super::next_sse_frame;
+    use super::{
+        UnknownLifecycleStage, assert_model_matches, expected_unknown_lifecycle_model,
+        next_sse_frame,
+    };
+    use nms_core::biome::Biome;
+
+    #[test]
+    fn test_model_checker_biome_index_ignores_order_but_preserves_multiset() {
+        let expected = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        let actual = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        assert_model_matches(&actual, &expected).expect("promoted lifecycle golden matches");
+
+        let expected = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        let mut actual = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        actual
+            .biome_index
+            .get_mut(&Biome::Toxic)
+            .expect("promoted fixture has Toxic planets")
+            .reverse();
+        assert_model_matches(&actual, &expected)
+            .expect("reversing only Toxic rows preserves the complete biome multiset");
+
+        let expected = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        let mut actual = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        let duplicate = *actual
+            .biome_index
+            .get(&Biome::Toxic)
+            .and_then(|rows| rows.first())
+            .expect("promoted fixture has a Toxic row");
+        actual
+            .biome_index
+            .get_mut(&Biome::Toxic)
+            .expect("promoted fixture has Toxic planets")
+            .push(duplicate);
+        assert!(assert_model_matches(&actual, &expected).is_err());
+
+        let expected = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        let mut actual = expected_unknown_lifecycle_model(UnknownLifecycleStage::Promoted, true);
+        actual
+            .biome_index
+            .get_mut(&Biome::Toxic)
+            .expect("promoted fixture has Toxic planets")
+            .pop();
+        assert!(assert_model_matches(&actual, &expected).is_err());
+    }
 
     #[test]
     fn test_sse_cursor_ignores_historical_events_and_observes_new_bytes() {

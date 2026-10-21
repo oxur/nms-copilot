@@ -1062,7 +1062,7 @@ fn test_warm_missing_physical_system_is_repaired_then_promoted_and_reused() {
     let startup_cache = std::fs::read(&cache).unwrap();
     let startup_cache_mtime = std::fs::metadata(&cache).unwrap().modified().unwrap();
 
-    let moved = unknown_lifecycle_save(4721, 3, 70, 80, 90, Some((0, 0, 0, 2, 5, 0)), false);
+    let moved = unknown_lifecycle_save(4721, 3, 70, 80, 90, Some((0, 0, 0, 0, 2, 5)), false);
     let moved_time = initial_time + Duration::from_secs(1);
     assert_unknown_file_boundary(
         &save,
@@ -1124,7 +1124,7 @@ fn test_warm_missing_physical_system_is_repaired_then_promoted_and_reused() {
         Some((&moved_cache, moved_mtime)),
     );
 
-    let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 2, 5, 0)), true);
+    let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 0, 2, 5)), true);
     let promoted_time = moved_time + Duration::from_secs(2);
     atomic_replace(&save, &promoted);
     set_mtime(&save, promoted_time);
@@ -1591,7 +1591,7 @@ fn run_http_unknown_lifecycle_attempt(
     let startup_cache = std::fs::read(&cache).unwrap();
     let startup_cache_mtime = std::fs::metadata(&cache).unwrap().modified().unwrap();
 
-    let moved = unknown_lifecycle_save(4721, 3, 70, 80, 90, Some((0, 0, 0, 2, 5, 0)), false);
+    let moved = unknown_lifecycle_save(4721, 3, 70, 80, 90, Some((0, 0, 0, 0, 2, 5)), false);
     let moved_time = source_mtime() + Duration::from_secs(1);
     assert_unknown_file_boundary(
         &save,
@@ -1660,7 +1660,7 @@ fn run_http_unknown_lifecycle_attempt(
         Some((&moved_cache, moved_cache_mtime)),
     );
 
-    let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 2, 5, 0)), true);
+    let promoted = unknown_lifecycle_save(4722, 3, 700, 800, 900, Some((0, 0, 0, 0, 2, 5)), true);
     let promotion_cursor = events.cursor();
     atomic_replace(&save, &promoted);
     let promoted_time = moved_time + Duration::from_secs(2);
