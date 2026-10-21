@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.3. Created2026-10-21 UTC. Status: refinement01 source frozen after captured format/lint; complete pinned CDC review requires refinement02. Current cc-prompt-iteration02.md issued, source/index/gates held pending coherent intake. Eight UL rows open, two-of-five refinement issued, no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
+Version:1.3. Created2026-10-21 UTC. Status: refinement01 source frozen after captured format/lint; complete pinned CDC review requires refinement02. Current cc-prompt-iteration02.md issued, coherent intake inspected; source/index/gates returned solely to same CC for correction and pre-test hold. Eight UL rows open, two-of-five refinement issued, no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -104,6 +104,13 @@ Actual refinement01 has five format and five lint attempts, four lint failures (
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration02.md |2026-10-21|cc-prompt-iteration01.md / f5f25b2|Complete remaining pinned B1–B6 test/helper corrections before runtime release|issued; source/index/gates held pending coherent readback|
+| cc-prompt-iteration02.md |2026-10-21|cc-prompt-iteration01.md / f5f25b2|Complete remaining pinned B1–B6 test/helper corrections before runtime release|coherent actual readback inspected; same CC source/index correction ownership returned|
 
 All eight UL rows and original parents remain open. Same selected models/sole CC and source/planning ownership, no product policy/dependency/new role/Operator gate. Next step coherent intake then CC bounded correction, captured format→lint and another pinned hold; explicit CDC release still precedes runtime/native.
+
+
+## Refinement02 intake handoff — 2026-10-21 UTC
+
+CDC read the complete actual durable B1–B6 acknowledgement at execution prefix52929624, preserved exact bytes/hash in the existing receipt, and reverified frozen diff53d7a36a/indexempty. Concrete shorthand corrected before handoff: new HTTP has no existing retry, genuine unnamed duplicate must stay unchanged with a separate fresh named case, actual direct coordinator subscription is already present and retained, old typed rebuilt edge1600ly differs from new same-voxel264.6828728, generic cross-galaxy stays zero. Intake is attestation, not proof or independent acceptance. CDC now returns sole dedicated19source/index/gates to the same CC for bounded iteration02; captured format→lint then pinned HOLD, no tests/native until explicit CDC release. CDC planning/index retained.
+
+CDC support-only native controller Node syntax check19e9a55c and metadata-helper Python syntax check433fa39e passed raw exit0 with empty channels and explicit before/after status/identity. These execute no product/native process and do not count toward UL runtime gates. Current controller5f88e21b / metadata-helpera429039c hashes recorded for preparation only; actual final executable/controller/capture digests still precede first native launch. Main b616 user native blob2cd450ce and all worktree pins reverified unchanged.
