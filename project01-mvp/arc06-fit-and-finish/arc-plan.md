@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.77, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.78, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -653,3 +653,8 @@ Arc36rows17done19open/project25open. Required19 retains common cold-start ensure
 ## Slice18 approved closure / required19 advancement — 2026-10-20 UTC
 
 Version1.77: Operator explicitly “yup, I accept that exception :-D On to 19!” adopts ONLY the twelve unknown historical before/after statuses from packet7531080. UP-08 and all8childrows/R06-S18closed at e592ecf; original facts/failures unchanged, no current-code rerun/future waiver. Final CDC verification and retrospective append the exact disposition. Arc36rows18done18open/project25open. Required19 common startup/update ensure and exact physical labels/native unknown→real→restart now enters source-grounded author readiness; same selected roles/models and one-arc endpoint. All broader original parent/raw/history/finalsemantic/freshness-import-history/independent/Operator/integration/release gates and main9line edit/held pins/external worktree/Project02 remain protected.
+
+
+## Slice19 application unknown-system lifecycle issued — 2026-10-21 UTC
+
+Version1.78: approved18closedce0004a/e592; required19 is source-grounded in slice19-unknown-system-lifecycle/{slice-plan.md,ledger.md,cc-prompt.md}, eightULopen. Dedicatedcodex/unknown-system-lifecycle clean e592; sameCDCgpt-6.1-solHigh/CCgpt-6-lunaHigh, coherent intake before source ownership. Exact15sourcepaths, common ensure before cold snapshot/warm exposure, conditional best-effort missing-current3/3 repair once/no-op bytesmtime/no_cache/strictfreshness, full-update ensure before snapshot/publication, exact-key names and actual normal/stdio/HTTP unnamed parsed promotion/restart are resolved within approvedA. Schema/semantic3/3 unchanged representation, future finalrawtransition held. Literal rich same-voxelSSI/opposedgalaxy/genuineempty fixture preserves full maps/state/counts/anchors/imports and distinguishes live from rebuilt graph topology; inheritednative9+newrow10 and realheadlesscases required. Actual complete capture/status/raw-first controls inspected BEFORE first19SUT, supporting artifacts need-driven. No source edit/productgate yet; firstformat/lint then serialized complete pre-test worksheet before broad/native.37arcrows18done19open/project25open. Every original parent/raw/history/finalsemantic/freshness-import-history/independent/Operator/integration/release obligation, protectedmain9lines/heldpins/external/Project02 andArc06endpoint retained.

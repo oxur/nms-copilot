@@ -162,3 +162,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 2026-10-20 Slice18 current independent review: seven child UP rows accepted/one open; R06-S18 remains open. Arc36rows17done19open/project25open. Exact bounded historical decision in CDC packet; no exception or next dispatch inferred.
 2026-10-20 Slice18 final closure:36arcrows18done18open/project25open; exact approved exception only, required19 retained.
+
+
+## Slice19 required application unknown-system composition
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S19 | Common startup/live ensure, exact physical labels and actual normal/stdio/HTTP unknown→real→compatible restart independently accepted | Eight UL rows, literal full model/cache/location/file controls, real transports/nativePTY and CDC review | correctness-grade | ApprovedA / required19 after18 | open | [initial assignment](slice19-unknown-system-lifecycle/cc-prompt.md) | Dedicated e592-based candidate; no parent/raw/history/finalsemantic acceptance inferred |
+
+2026-10-21 opened19:37arcrows18done19open/project25open; all36previous entire rows/criteria/dispositions retained.
