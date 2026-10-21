@@ -383,5 +383,12 @@
     "production_review": "complete actual address.rs391lines and lib diff reviewed; no production defect found; executable definitions/bodies/signatures frozen for iteration02",
     "author_literal_inspection": "all12 expanded portal literals independently checked by grouping the declared field contract, no production call or SUT acceptance credit",
     "disposition": "all7AD open; issue one consolidated test/docs-only second-of-five correction; no policy change/new waiver; required21 unchanged"
+  },
+  "iteration02_documentation_format_clarification": {
+    "reason": "inline public variant fields require line breaks/trailing commas to add Rust doc comments",
+    "authority": "same doc-comments/test-only iteration02, mechanically necessary rustfmt formatting permitted; no production semantic/statement/signature change",
+    "evidence_boundary": "pre-edit nondoc-line hash remains historical baseline; direct actual diff review determines doc/format-only change",
+    "cc_acknowledged_before_affected_gates": true,
+    "refinement_count": 2
   }
 }
