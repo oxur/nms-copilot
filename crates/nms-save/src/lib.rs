@@ -8,7 +8,19 @@
 //! 4. Deserialize into typed Rust structs via serde
 //!
 //! Also handles metadata verification (`mf_save.hg`) via XXTEA + SHA-256.
+//!
+//! Callers that retain the original JSON can opt into strict address
+//! validation with [`address`], without changing the legacy typed parser.
+//!
+//! ```
+//! use nms_save::address::decode_discovery_address;
+//! let value = serde_json::json!("0x212B0004B2446A");
+//! let address = decode_discovery_address(Some(&value), "/DD/UA")?;
+//! assert_eq!(address.voxel_x(), 1130);
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
 
+pub mod address;
 pub mod convert;
 pub mod decompress;
 pub mod error;
