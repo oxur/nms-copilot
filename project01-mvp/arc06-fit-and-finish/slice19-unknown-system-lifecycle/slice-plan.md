@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.1. Created2026-10-21 UTC. Status: coherent CC intake independently inspected; source/index handed solely to CC for initial cc-prompt.md implementation, eight UL rows open. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
+Version:1.2. Created2026-10-21 UTC. Status: initial source frozen after captured format/lint; complete CDC pre-test review requires refinement01, current cc-prompt-iteration01.md pending coherent intake. Eight UL rows open, one-of-five refinement issued (execution pending), no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -66,7 +66,8 @@ Reading budget is bounded to full prompt/this plan/eightrows/entryAP and complet
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt.md |2026-10-21|none; accepted18/e592|Required application composition of approvedA|issued after local planning commit; intake/ownership acknowledgement required before edits|
+| cc-prompt.md |2026-10-21|none; accepted18/e592|Required application composition of approvedA|returned for pre-test review; compilation/lint pass, F1–F8 changes required|
+| cc-prompt-iteration01.md |2026-10-21|cc-prompt.md / f81081f|Complete pinned F1–F8 helper/oracle/docs correction before runtime release|current; issued after planning commit; intake pending|
 
 After CC complete return, CDC independently reviews all changed code/helper/assertion/document bodies and discriminating oracles, reruns required current checks on stable candidate, disposes all8rows and writes mandatory substantive retrospective/bottom-up closure. Parent raw/history/finalsemantic/strictmtime-identical-rewrite-stale-import-history/original fifteen arc milestones/three repairparents/project25/independent/Operator/integration/release remain open; arc endpoint stops autonomous advancement beyondArc06.
 
@@ -74,3 +75,15 @@ After CC complete return, CDC independently reviews all changed code/helper/asse
 ## Coherent intake and source ownership — 2026-10-21 UTC
 
 CDC read actual complete ignored execution.md prefix813af0c5 and checked its warm repair/exact identity/real unnamed parse/nativewholeoracle/graph/failure/lifetime readback against issued f81081f. Actual source remains clean e592/indexempty, no19product edits/compiler/gates. CC reading receipts are attestation, not proof of comprehension; full implementation/oracle review still required. Prefix bytes/hash preserved in existing CDC receipt. Minor path terminology qualified: private/tmp preflight is support input whose original bytes are in canonical planning receipt, not itself the planning path. CDC now explicitly transfers dedicated19source/index to same selected sole CC; CDC planning/index and independent review retained. CC implements only15paths then captured format→lint and complete pinned pre-test worksheet hold before broad/native. Eight UL rows and all parent gates remain open; no new role/model/policy or approval request.
+
+
+## Initial pre-test review and refinement01 — 2026-10-21 UTC
+
+
+Current assignment is `project01-mvp/arc06-fit-and-finish/slice19-unknown-system-lifecycle/cc-prompt-iteration01.md`, predecessor immutable cc-prompt.md. Eight actual captured attempts retained: format0/lint2, format0/lint2, format0/lint2, format0/lint0, all before/after status+identity/raw completion fields present. Frozen HEAD e592; diff699586ba / workingidentity65faaed1,13allowedpaths/indexempty. Complete initial diff and actual capture prefix bytes/hash are preserved in the existing CDC receipt. No tests/native or independent runtime checks have run, no UL row accepted.
+
+CDC complete helper/oracle/docs walk found F1 canonical/cache integer timestamp/unnamed-source/dual-loaded contradictions; F2 expected fixtures falsely supplied as observed live model and absent new fullupdate ensure witness; F3 partial location/decoy controls; F4 new HTTP accidentally no_cache=true and incomplete actual lifecycle/retry/EOF; F5 restart expected cache sampled after launch and protocol order not enforced; F6 inherited cold unknown/genuine-empty negative mismatch and new checked/reversed positives; F7 incomplete declared blocker/no_cache file effects; F8 remaining stale README sentence and changed function docs. All are the existing assigned test/helper/docs contract; no new product policy/dependency/debug API/role. Static production spine needs no behavior correction from this review; that is not runtime acceptance. Current refinement is one-of-five; budget not reset by initial compiler self-repairs.
+
+The compact original native finish/join/quit wording is mechanically clarified: send monitor finish, then quit product to close remoteSSE, then await monitor pass/EOF/join and product fullEOF/owned teardown, then650ms unchanged-file check. Existing deadlines/lifetime and native method remain. Actual child cache/rebuilt observations do not claim hidden live graph; a real in-process coordinator/model readguard supplies that witness, without a new diagnostic API.
+
+CC source/index/gates remain frozen through coherent iteration intake; CDC owns only planning/index and review, no Rust mutation. Upon acknowledgment same CC resumes the bounded correction, captured format→lint and another complete pre-test hold; broad/native still require explicit CDC release. The uncredited direct diff inspection retains only its actually known call/output/purpose and unknown nested completion in execution.md; final required working/base diff gates remain captured. No automatic waiver or missing-history reconstruction. All parents and protected pins remain open/preserved.
