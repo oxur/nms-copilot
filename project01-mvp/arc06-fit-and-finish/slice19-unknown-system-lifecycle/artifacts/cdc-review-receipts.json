@@ -1597,5 +1597,15 @@
     "prompt_path": "cc-prompt-iteration06.md",
     "prompt_sha256": "edbb8328c2741e3c200e968417a11918b381acd9b95c8f53f76092ef663b3dd6",
     "scope": "ONE exceptional sixth bounded test/oracle pass only F19-01 FOUR tuple literals and F19-02 full biome-key map/sorted primitive-row Vec preserving multiplicity/consumed checker proof; production frozen; no reset/waiver/furtherautomaticpass. Intake/handoff pending; same approvedmodels and Arc06endpoint."
+  },
+  "iteration06_intake_handoff": {
+    "utc": "2026-10-21T02:51:48.483210+00:00",
+    "channel": "actual collaboration message from sole CC; summarized, no invented file-prefix observation",
+    "source_head": "ce6b5c9421a0db6d668620868a60791cf40acf13",
+    "source_clean_index_empty": true,
+    "helper_sha256": "9842de91843a191fc9484030a0e2f346c55f8b607a05c2486650626781fcdd56",
+    "raw64_sha256": "1be0b542b51219213ad001b112b6ee914f583bcda62ec9fb65a2a18efa638b1c",
+    "readback": "Exact fourtuple positions/order/source inconsistency and intended(0,0,0,0,2,5) acknowledged; initial cached(9,2,3,4,1,1) preserved. BiomeCopy/Eq/Hash, SystemIdnoOrd and full HashMap<Biome,sortedVec<primitive tuple>> semantics preserve keys/multiplicity. Same consumed assert_model_matches regression baseline/reversedpositive/duplicateandmissingnegative with freshmodels; othercomparisons/consumers untouched. Actual64prefix retained. Native selfcheckprecondition/originalfullmatrix/5saggregatebounds and no further substantive fix authority acknowledged. Qualitative usable context affirmed without numericclaim.",
+    "handoff": "Same CC now sole dedicated19source/index/gates for EXACT two-test-file06correction, capturedformatthenlint and pinnedHOLD. No tests/native before CDCrelease. CDC planning/index/independentacceptance retained, production/other11paths/main/heldpins/externalfrozen."
   }
 }

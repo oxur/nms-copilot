@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.10. Created2026-10-21 UTC. Status: Operator explicitly approved ONE exceptional sixth bounded test/oracle pass. Immutable iteration06 issued on cleance6b5c94; intake/source handoff pending. Production frozen; two test files only, no budget reset or further automatic pass. All8UL/R06-S19 OPEN; current failures/history/native prerequisites unchanged.
+Version:1.10. Created2026-10-21 UTC. Status: Operator explicitly approved ONE exceptional sixth bounded test/oracle pass. Immutable iteration06 coherent intake inspected on cleance6b5c94; sole source/index/gates returned to same CC for exact correction/format/lint then pinned hold. Production frozen; two test files only, no budget reset or further automatic pass. All8UL/R06-S19 OPEN; current failures/history/native prerequisites unchanged.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -201,3 +201,8 @@ Supporting artifacts serve current attributable review/preservation: existing ar
 ## Operator-approved exceptional sixth pass — 2026-10-21 UTC
 
 Human Operator explicitly “I approve that pass.” This adopts ONLY the one additional bounded test/oracle pass proposed in05e533b: four U2 previous tuples in mcp_live_integration.rs and complete multiplicity-preserving sorted biome-index comparison in tests/support/live_mcp.rs, including the consumed checker boundary proof. Production/other sourcefiles frozen; original native prerequisite, fullmatrix and5-second teardown/EOF bounds unchanged. Five original executed refinements/history remain, no budget reset/historical waiver/red-proof acceptance. A further defect needing source changes stops. Current immutable cc-prompt-iteration06.md is issued; coherent readback and explicit source/index/gate handoff precede edits. All8UL/R06-S19 remain open, same CDC/CC models and Arc06-only endpoint.
+
+
+## Iteration06 coherent intake handoff — 2026-10-21 UTC
+
+Actual CC collaboration readback identifies all FOUR tuple positions/order/correctliteral, full biome-key map of sorted primitive-row Vecs preserving multiplicity, fresh-model actual-consumer regression and unchanged othercomparisons/callers. Sourcece6b5c94clean/indexempty and inspected helper9842de91/raw64record1be0b542 unchanged reverified. Qualitative usable context affirmed without invented capacity. Same CC now receives sole dedicated19source/index/gates for exactly the approved two-file06correction, capturedformat→lint then pinnedHOLD, no tests/native until CDCexplicitrelease. No further substantivefix/budgetreset/waiver; production/other11paths/5saggregate/nativegates/mainheldexternal unchanged. CDCplanning/index/independentacceptance retained; all8rowsopen.

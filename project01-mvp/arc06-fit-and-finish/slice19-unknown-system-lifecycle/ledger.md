@@ -1,6 +1,6 @@
 # Slice19 application unknown-system lifecycle ledger
 
-All eight rows OPEN on clean unacceptedce6b5c94. Operator explicitly approved ONE exceptional sixth bounded pass for F19-01/F19-02 only; immutable cc-prompt-iteration06.md issued, coherent intake/source handoff pending. No budget reset, historical waiver or acceptance; production/native/teardown gates unchanged. CC proposes, CDC independently accepts.
+All eight rows OPEN on clean unacceptedce6b5c94. Operator explicitly approved ONE exceptional sixth bounded pass for F19-01/F19-02 only; immutable cc-prompt-iteration06.md coherent intake inspected, exact two-file correction/format/lint handed back then pinned hold. No budget reset, historical waiver or acceptance; production/native/teardown gates unchanged. CC proposes, CDC independently accepts.
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
