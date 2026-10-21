@@ -233,5 +233,30 @@
     "review": "CDC read the full actual intake/readback and mapped API/bitlayout/presence/errors/sentinel/oracles/frozenapplication/gates to issuedcontract. Read receipts remain CCattestation; not implementationacceptance. Coherent handoff includes actualstart under already issuedauthority, no secondpermissionturn.",
     "source_head": "4cb745b7190e7463663a0ead29f169060e36dc05",
     "source_status_at_review": ""
+  },
+  "author_width_oracle_correction": {
+    "utc": "2026-10-21T04:02:42.428911+00:00",
+    "owner": "CDC author",
+    "old_literal": "0x012B0004B2446A",
+    "old_numeric": 328754055496810,
+    "old_bit_length": 49,
+    "old_below_2pow48": false,
+    "old_components_preserved": true,
+    "new_literal": "0x002B0004B2446A",
+    "new_numeric": 47279078786154,
+    "new_bit_length": 46,
+    "new_below_2pow48": true,
+    "new_expected": {
+      "planet_index": 0,
+      "solar_system_index": 43,
+      "reality_index": 0,
+      "voxel_x": 1130,
+      "voxel_y": 4,
+      "voxel_z": -1244,
+      "portal": "002B04B2446A"
+    },
+    "method": "ordinary author integer arithmetic, no production/compiler/SUT gate; actual printed values c49ad1; no fabricated validationreceipt",
+    "scope": "first preservedrefinement, both public packedAPIpositives; existing sourcepaths/API/algorithm/gates unchanged; no actual productgate yet",
+    "historical_qualification": "Slice02W-P0-WIDTH and oldpacket widthdescription inaccurate forSSI299; originalraw/artifacts/components not rewritten; currentSSI43synthetic lower-widthwitness supplies intended distinction"
   }
 }

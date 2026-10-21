@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.84, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.85, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -733,3 +733,8 @@ Preflight: planningd20/source4cb clean/indexempty; mainb616 retains only protect
 Version1.84 details approvedA into a usable public original-JSON decoder library on dedicatedcodex/save-address-decoder fromaccepted4cb745b7. Exactfivepaths/publicAPI/typederrorpriority/missing-null/encodedbounds/previoussentinel and45independentoracleprojection (1Chili+44base,31string13integer) resolved before issue. NewAD01–07/R06-S20OPEN;38arcrows19done19open/project25open. Author actually proved complete0/7supportcaptures/statuses/rawfirst onnewnamespaces BEFOREcompiler, not productevidence; CCconfirmedqualitativeheadroom/noactive19processes. Same selectedroles/models and serializedsource/planningownership.
 
 Required21/CDC retains whole-source validation BEFOREtypeddefaults/extraction/model/cache/publication, migrationofallactualsaveconsumers, strictactivecurrent/presence/fullprevious/atomicinvalidupdatekeepinggoodstate, semantic3→4/predecessor3/3rejection+sourcefallback/warmrestart and correctedCLI/normalPTY/stdio/HTTP/watch/fullfileEOFcomposition. All20legacyapplicationbodies/SaveRootconversion/cache3/3frozen; foundationacceptance cannotclaim those bugsfixed. The split follows previousretrospective: actual publicconsumer/oracle tests run early inusable boundedunit before largerapplicationmatrix. No lostscope/newinquiry/partialatlas/representationpolicychange. Original15arcrows/three repairparents/nonzero-game-backed/raw/history/freshness-import/finalsemantic/coverage/docs/packages/performance/higherindependent/Operator/integration/release remainopen. Main9lineedit/heldpins/external/Project02/Arc06endpoint protected; no remoteactions.
+
+
+## Slice20 first bounded author-oracle correction — 2026-10-21 UTC
+
+Version1.85: CDC caught a literal/property arithmetic error beforefirstcompiler/test. P0/SSI2990x012B0004B2446A is49bits, notbelow2^48; retainedexactpositivecomponents. AddedsyntheticP0/SSI430x002B0004B2446A is46bits and supplies actualnumeric-widthcounterexample, bothpackedAPIs. Immutableiteration01/currentplan clarifies initial and historicalSlice02 W-P0-WIDTH prosewithoutrewritingoriginalevidence; no newpolicy/inquiry/productiondefect. Samefivepaths/fullstrongmatrix/gates/required21 unchanged, firstof5refinements; all7AD/R06-S20open,38arcrows19done19open/project25open.
