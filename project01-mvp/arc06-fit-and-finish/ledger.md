@@ -197,3 +197,5 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 | R06-S21 | Checked whole-source save boundary reaches all application consumers and semantic4 lifecycle independently accepted | Eight CArows, typed originalJSON/wholemodel/cache/caller/originalnative10+predecessor11/atomiclastgood proof and independentCDC review | correctness-grade | ApprovedA / required21 / R06-R01/R02/R03 | open | — | Author-ready only; all original parents retained |
 
 39arcrows20done19open/project25open. All38previous entire rows/criteria/dispositions preserved.
+
+2026-10-21 Slice21 author discriminator refinement01 before source/compiler: all8CA/R06-S21open;39arcrows20done19open/project25open. Initialprompt preserved, no waived field/control or budget reset.

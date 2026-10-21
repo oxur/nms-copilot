@@ -9,7 +9,7 @@ updated: 2026-10-21
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.76
+version: 1.77
 project: project01-mvp
 status: active
 depends-on: []
@@ -1053,3 +1053,8 @@ Arc38rows20done18open/project25open; mandatory21/CDC next owns actual whole-sour
 ## Arc06 Slice21 application transition issued — 2026-10-21 UTC
 
 Version1.76: required21 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt.md. Same approvedA/modelsettings/Arc06endpoint; opaque original-value validated source boundary beforetypeddefaults, allactualcallers/faithfulfixturecopies/atomiclastgoodstate/semantic3→4 unchangedschema3/genuine752bytepredecessor/rebuild-warm/actualCLI-stdio-HTTP-normalnative11 recipe detailed author-ready. EightCA/R06-S21open;39arcrows20done19open/project25open. Source dedicatedchecked-save-integration clean0b37atissue, planningseparate/ownershipserialized, realinspectedcapture0/7controls precede firstcompiler. No applicationacceptance/gateyet. Alloriginalparents/nonzero-game-backed/raw/history/finalassembly/freshness-import/export/import/format/docs/distribution/coverage/performance/finalindependent/Operator/integration/release/main9lineedit/heldpins/external/Project02 preserved. No merge/push/install/release/otherarc/newinquiry/newrole.
+
+
+## Arc06 Slice21 discriminator refinement — 2026-10-21 UTC
+
+Version1.77 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt-iteration01.md. Author caught weak null-negative before first source/compiler and supplied exact2^56 legacyaccepted/checkedrejected typed-path/atomiclive fixture; original null/syntax controls remain. Firstof5, same36paths/approvedA/native11/gates/roles/Arc06endpoint/ownership/protectedfences. All8CA/R06-S21open;39arcrows20done19open/project25open, no parentclosure/inquiry/waiver/newpolicy.
