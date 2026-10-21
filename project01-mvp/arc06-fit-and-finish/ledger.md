@@ -188,3 +188,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 38arcrows19done19open/project25open; all37previousrows retained.
 
 2026-10-21 Slice20 independently closed after four preserved refinements:38arcrows20done18open/project25open. Original15arcrows/three repairparents remainopen; required21 applicationatomicvalidation/cache3→4/nativecomposition retained.
+
+
+## Checked save application child — 2026-10-21 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S21 | Checked whole-source save boundary reaches all application consumers and semantic4 lifecycle independently accepted | Eight CArows, typed originalJSON/wholemodel/cache/caller/originalnative10+predecessor11/atomiclastgood proof and independentCDC review | correctness-grade | ApprovedA / required21 / R06-R01/R02/R03 | open | — | Author-ready only; all original parents retained |
+
+39arcrows20done19open/project25open. All38previous entire rows/criteria/dispositions preserved.

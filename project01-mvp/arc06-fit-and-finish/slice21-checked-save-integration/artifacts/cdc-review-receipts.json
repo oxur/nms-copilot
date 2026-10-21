@@ -1,0 +1,328 @@
+{
+  "reviewer": "CDC /root/cdc_arc06",
+  "attempts": [
+    {
+      "id": "74fa167166e14e75a1dd306d6ad5d42e",
+      "label": "author-support-control-0",
+      "kind": "author support control; no SUT",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys;print(\"slice21 stdout 0\");print(\"slice21 stderr 0\",file=sys.stderr);sys.exit(0)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+      "started_utc": "2026-10-21T04:56:07.813699+00:00",
+      "before": {
+        "head": "0b37d8b41222b8e4a084c088246f777490575756",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-21T04:56:07.918157+00:00",
+        "stdout": {
+          "base64": "c2xpY2UyMSBzdGRvdXQgMAo=",
+          "bytes": 17,
+          "sha256": "992e5145aab6bf4e6aa64dd318e3e34608aae93733de439b7d27ca1f04f145c0"
+        },
+        "stderr": {
+          "base64": "c2xpY2UyMSBzdGRlcnIgMAo=",
+          "bytes": 17,
+          "sha256": "e3617f45f41c886428e5610b54f09db87147ae728e917556f64c9955abaaf5de"
+        }
+      },
+      "after": {
+        "head": "0b37d8b41222b8e4a084c088246f777490575756",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+      }
+    },
+    {
+      "id": "a14b6b7576134a6487ba147dd2fe5dd7",
+      "label": "author-support-control-7",
+      "kind": "author support control; no SUT",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys;print(\"slice21 stdout 7\");print(\"slice21 stderr 7\",file=sys.stderr);sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+      "started_utc": "2026-10-21T04:56:08.007911+00:00",
+      "before": {
+        "head": "0b37d8b41222b8e4a084c088246f777490575756",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 7,
+        "ended_utc": "2026-10-21T04:56:08.114607+00:00",
+        "stdout": {
+          "base64": "c2xpY2UyMSBzdGRvdXQgNwo=",
+          "bytes": 17,
+          "sha256": "10fa1498deb0c17032f6137d1542f8eedc106244bbfb37ae2c37c5e58b78418e"
+        },
+        "stderr": {
+          "base64": "c2xpY2UyMSBzdGRlcnIgNwo=",
+          "bytes": 17,
+          "sha256": "2fe9c68bbfe8b482c01e953b93578de84407ce7f0ba311a5e2f7d0876f61d3d3"
+        }
+      },
+      "after": {
+        "head": "0b37d8b41222b8e4a084c088246f777490575756",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+      }
+    }
+  ],
+  "author_capture_preflight": {
+    "cc": {
+      "helper_path": "/private/tmp/nms-slice21-cc-capture.py",
+      "helper_source": "\"\"\"CDC gate capture. No SUT launches on import; persist raw completion before metadata.\"\"\"\nimport base64, datetime, hashlib, json, os, pathlib, subprocess, sys, uuid\nROOT = pathlib.Path('/Users/oubiwann/lab/oxur/nms-copilot')\nSOURCE = ROOT / '.worktrees/checked-save-integration'\nRECORD = pathlib.Path('/private/tmp/nms-slice21-cc-attempts.json')\nENV_KEYS = ('TMPDIR','RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TERM','PATH')\n\ndef utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef atomic_save(data):\n    RECORD.parent.mkdir(parents=True, exist_ok=True)\n    temp = RECORD.with_suffix('.json.pending')\n    with temp.open('w') as f:\n        json.dump(data, f, indent=2); f.write('\\n'); f.flush(); os.fsync(f.fileno())\n    os.replace(temp, RECORD)\ndef metadata():\n    def git(*args): return subprocess.check_output(['git', *args], cwd=SOURCE)\n    head=git('rev-parse','HEAD').decode().strip()\n    diff_sha=hashlib.sha256(git('diff','HEAD','--binary')).hexdigest()\n    untracked={}\n    for raw in git('ls-files','--others','--exclude-standard','-z').split(b'\\0'):\n        if raw:\n            relative=os.fsdecode(raw); body=(SOURCE/relative).read_bytes()\n            untracked[relative]={'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()}\n    identity={'head':head,'tracked_diff_sha256':diff_sha,'untracked':untracked}\n    return {'head':head,'status':git('status','--short').decode(),\n            'working_diff_sha256':diff_sha,'untracked_files':untracked,\n            'working_identity_sha256':hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()}\ndef channel(raw):\n    return {'base64':base64.b64encode(raw).decode(), 'bytes':len(raw), 'sha256':hashlib.sha256(raw).hexdigest()}\ndef capture(label, argv, overrides=None, kind='SUT gate'):\n    overrides = overrides or {}\n    data=json.loads(RECORD.read_text()) if RECORD.exists() else {'implementer':'CC /root/cdc_arc06/cc_slice17','attempts':[]}\n    entry={'id':uuid.uuid4().hex,'label':label,'kind':kind,'argv':argv,'cwd':str(SOURCE),\n           'started_utc':utc(),'before':metadata(),'inherited_env':{k:os.environ.get(k) for k in ENV_KEYS},\n           'overrides':overrides,'status':'running'}\n    data['attempts'].append(entry); atomic_save(data)\n    try:\n        result=subprocess.run(argv,cwd=SOURCE,env=os.environ|overrides,capture_output=True)\n        # Persist child completion FIRST. No git/summary/report parsing before this write.\n        entry['raw_completion']={'exit_code':result.returncode,'ended_utc':utc(),\n                                 'stdout':channel(result.stdout),'stderr':channel(result.stderr)}\n        entry['status']='child-complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['launch_or_capture_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    try:\n        entry['after']=metadata(); entry['status']='complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['post_metadata_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    print(json.dumps({'id':entry['id'],'label':label,'exit_code':result.returncode,\n                      'stdout_bytes':len(result.stdout),'stderr_bytes':len(result.stderr),\n                      'stdout_tail':result.stdout.decode(errors='replace')[-1800:],\n                      'stderr_tail':result.stderr.decode(errors='replace')[-900:]}),flush=True)\n    return result.returncode\nif __name__=='__main__':\n    label=sys.argv[1]; spec=json.loads(sys.argv[2])\n    raise SystemExit(capture(label,spec['argv'],spec.get('overrides'),spec.get('kind','SUT gate')))\n",
+      "helper_sha256": "797283a6cc9581ae569c046d0db730eea7d2e010c3d3d5802bc9fd7ad7a507f6",
+      "controls": [
+        {
+          "id": "b843d00508b148d0adc1fa9795b9492d",
+          "label": "author-support-control-0",
+          "kind": "author support control; no SUT",
+          "argv": [
+            "python3",
+            "-c",
+            "import sys;print(\"slice21 stdout 0\");print(\"slice21 stderr 0\",file=sys.stderr);sys.exit(0)"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+          "started_utc": "2026-10-21T04:56:07.413155+00:00",
+          "before": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 0,
+            "ended_utc": "2026-10-21T04:56:07.523067+00:00",
+            "stdout": {
+              "base64": "c2xpY2UyMSBzdGRvdXQgMAo=",
+              "bytes": 17,
+              "sha256": "992e5145aab6bf4e6aa64dd318e3e34608aae93733de439b7d27ca1f04f145c0"
+            },
+            "stderr": {
+              "base64": "c2xpY2UyMSBzdGRlcnIgMAo=",
+              "bytes": 17,
+              "sha256": "e3617f45f41c886428e5610b54f09db87147ae728e917556f64c9955abaaf5de"
+            }
+          },
+          "after": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          }
+        },
+        {
+          "id": "b841529b01fa40e59ee15b302656c474",
+          "label": "author-support-control-7",
+          "kind": "author support control; no SUT",
+          "argv": [
+            "python3",
+            "-c",
+            "import sys;print(\"slice21 stdout 7\");print(\"slice21 stderr 7\",file=sys.stderr);sys.exit(7)"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+          "started_utc": "2026-10-21T04:56:07.614438+00:00",
+          "before": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 7,
+            "ended_utc": "2026-10-21T04:56:07.721419+00:00",
+            "stdout": {
+              "base64": "c2xpY2UyMSBzdGRvdXQgNwo=",
+              "bytes": 17,
+              "sha256": "10fa1498deb0c17032f6137d1542f8eedc106244bbfb37ae2c37c5e58b78418e"
+            },
+            "stderr": {
+              "base64": "c2xpY2UyMSBzdGRlcnIgNwo=",
+              "bytes": 17,
+              "sha256": "2fe9c68bbfe8b482c01e953b93578de84407ce7f0ba311a5e2f7d0876f61d3d3"
+            }
+          },
+          "after": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          }
+        }
+      ]
+    },
+    "cdc": {
+      "helper_path": "/private/tmp/nms-slice21-cdc-capture.py",
+      "helper_source": "\"\"\"CDC gate capture. No SUT launches on import; persist raw completion before metadata.\"\"\"\nimport base64, datetime, hashlib, json, os, pathlib, subprocess, sys, uuid\nROOT = pathlib.Path('/Users/oubiwann/lab/oxur/nms-copilot')\nSOURCE = ROOT / '.worktrees/checked-save-integration'\nRECORD = ROOT / '.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice21-checked-save-integration/artifacts/cdc-review-receipts.json'\nENV_KEYS = ('TMPDIR','RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TERM','PATH')\n\ndef utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef atomic_save(data):\n    RECORD.parent.mkdir(parents=True, exist_ok=True)\n    temp = RECORD.with_suffix('.json.pending')\n    with temp.open('w') as f:\n        json.dump(data, f, indent=2); f.write('\\n'); f.flush(); os.fsync(f.fileno())\n    os.replace(temp, RECORD)\ndef metadata():\n    def git(*args): return subprocess.check_output(['git', *args], cwd=SOURCE)\n    head=git('rev-parse','HEAD').decode().strip()\n    diff_sha=hashlib.sha256(git('diff','HEAD','--binary')).hexdigest()\n    untracked={}\n    for raw in git('ls-files','--others','--exclude-standard','-z').split(b'\\0'):\n        if raw:\n            relative=os.fsdecode(raw); body=(SOURCE/relative).read_bytes()\n            untracked[relative]={'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()}\n    identity={'head':head,'tracked_diff_sha256':diff_sha,'untracked':untracked}\n    return {'head':head,'status':git('status','--short').decode(),\n            'working_diff_sha256':diff_sha,'untracked_files':untracked,\n            'working_identity_sha256':hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()}\ndef channel(raw):\n    return {'base64':base64.b64encode(raw).decode(), 'bytes':len(raw), 'sha256':hashlib.sha256(raw).hexdigest()}\ndef capture(label, argv, overrides=None, kind='SUT gate'):\n    overrides = overrides or {}\n    data=json.loads(RECORD.read_text()) if RECORD.exists() else {'reviewer':'CDC /root/cdc_arc06','attempts':[]}\n    entry={'id':uuid.uuid4().hex,'label':label,'kind':kind,'argv':argv,'cwd':str(SOURCE),\n           'started_utc':utc(),'before':metadata(),'inherited_env':{k:os.environ.get(k) for k in ENV_KEYS},\n           'overrides':overrides,'status':'running'}\n    data['attempts'].append(entry); atomic_save(data)\n    try:\n        result=subprocess.run(argv,cwd=SOURCE,env=os.environ|overrides,capture_output=True)\n        # Persist child completion FIRST. No git/summary/report parsing before this write.\n        entry['raw_completion']={'exit_code':result.returncode,'ended_utc':utc(),\n                                 'stdout':channel(result.stdout),'stderr':channel(result.stderr)}\n        entry['status']='child-complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['launch_or_capture_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    try:\n        entry['after']=metadata(); entry['status']='complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['post_metadata_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    print(json.dumps({'id':entry['id'],'label':label,'exit_code':result.returncode,\n                      'stdout_bytes':len(result.stdout),'stderr_bytes':len(result.stderr),\n                      'stdout_tail':result.stdout.decode(errors='replace')[-1800:],\n                      'stderr_tail':result.stderr.decode(errors='replace')[-900:]}),flush=True)\n    return result.returncode\nif __name__=='__main__':\n    label=sys.argv[1]; spec=json.loads(sys.argv[2])\n    raise SystemExit(capture(label,spec['argv'],spec.get('overrides'),spec.get('kind','SUT gate')))\n",
+      "helper_sha256": "a9d1f67ad33bc58977d4055d64ab57ac1a3ab7eaf9c21863aea9dcdcedac24a2",
+      "controls": [
+        {
+          "id": "74fa167166e14e75a1dd306d6ad5d42e",
+          "label": "author-support-control-0",
+          "kind": "author support control; no SUT",
+          "argv": [
+            "python3",
+            "-c",
+            "import sys;print(\"slice21 stdout 0\");print(\"slice21 stderr 0\",file=sys.stderr);sys.exit(0)"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+          "started_utc": "2026-10-21T04:56:07.813699+00:00",
+          "before": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 0,
+            "ended_utc": "2026-10-21T04:56:07.918157+00:00",
+            "stdout": {
+              "base64": "c2xpY2UyMSBzdGRvdXQgMAo=",
+              "bytes": 17,
+              "sha256": "992e5145aab6bf4e6aa64dd318e3e34608aae93733de439b7d27ca1f04f145c0"
+            },
+            "stderr": {
+              "base64": "c2xpY2UyMSBzdGRlcnIgMAo=",
+              "bytes": 17,
+              "sha256": "e3617f45f41c886428e5610b54f09db87147ae728e917556f64c9955abaaf5de"
+            }
+          },
+          "after": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          }
+        },
+        {
+          "id": "a14b6b7576134a6487ba147dd2fe5dd7",
+          "label": "author-support-control-7",
+          "kind": "author support control; no SUT",
+          "argv": [
+            "python3",
+            "-c",
+            "import sys;print(\"slice21 stdout 7\");print(\"slice21 stderr 7\",file=sys.stderr);sys.exit(7)"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+          "started_utc": "2026-10-21T04:56:08.007911+00:00",
+          "before": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 7,
+            "ended_utc": "2026-10-21T04:56:08.114607+00:00",
+            "stdout": {
+              "base64": "c2xpY2UyMSBzdGRvdXQgNwo=",
+              "bytes": 17,
+              "sha256": "10fa1498deb0c17032f6137d1542f8eedc106244bbfb37ae2c37c5e58b78418e"
+            },
+            "stderr": {
+              "base64": "c2xpY2UyMSBzdGRlcnIgNwo=",
+              "bytes": 17,
+              "sha256": "2fe9c68bbfe8b482c01e953b93578de84407ce7f0ba311a5e2f7d0876f61d3d3"
+            }
+          },
+          "after": {
+            "head": "0b37d8b41222b8e4a084c088246f777490575756",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "b7c4a23294ff07807c8beac52aba17838d939b06dda0dbe1160f13558c17ec8c"
+          }
+        }
+      ]
+    }
+  },
+  "author_note": "Retargeting inspection caught and corrected the copied CDC record directory before any command. No SUT had launched; all actual support controls below have complete statuses/raw completion/identity. No product validation yet."
+}

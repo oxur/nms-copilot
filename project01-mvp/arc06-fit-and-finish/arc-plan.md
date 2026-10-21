@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.86, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.87, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -747,3 +747,12 @@ Version1.86: exactfivepath publicdecoderfoundation locally committed0b37d8b41222
 38arcrows20done18open/project25open. Libraryexportedconsumer usable; existing applicationSaveRoot/defaults/conversions/model/cache3/3 byte-frozen. Required21/CDC remains next: whole-original-source validation BEFOREtypeddefaults/extraction/model/cache/publication, all actualcaller/faithfulfixture migration, active-current presence/fullprevious sentinel/atomicfailure preserving good live fullstate/cache+fivefailure/recovery, semantic3→4 genuineold3/3rejection/sourcefallback/nextwarm3/4 and actualCLI/normalPTY/stdio/HTTP/watch/restart/fullfileEOFcomposition. Schema3 remains iflayoutunchanged; assess concrete layout beforehandoff. No new structural change beyond alreadyapproved foundation/application split; no silent applicationbugfix/parentacceptance/nonzero-game claim. All original15arcrows/three repairparents/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimporthistory/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release gates remain.
 
 Same selectedCDCgpt-6.1-solHigh/soleCCgpt-6-lunaHigh, Arc06endpoint/protectedmainb6169lineblob2cd450ce/heldpins/external03e8d04/Project02 retained; requested earlierrebase fulfilled. No active20CCassignment, sourceclean/unmerged/localonly, no remoteaction/release/nextarc. Continue source-grounded21readiness under adoptedA without routinepermissionrequest.
+
+
+## Slice21 checked application transition issued — 2026-10-21 UTC
+
+Version1.87 details required21 under alreadyadoptedA: originalJSON validation before defaults/narrowing, opaque checked parsed-save boundary, paired field-specific discovery/base/fullplayer data and shared extraction/model/snapshot construction, every actual CLI/cache/watch caller, atomic invalid-update last-good preservation, semantic4/schema3 and genuine3/3 rejection/rebuild/warm. Exact36sourcepaths/API/traversal/omission/errors/fixtures/docs and closed whole-oracle worksheet/native11 are resolved before handoff. Historical portal fixtures/legacy APIs retained; new faithfulsave56 copies supply actual application tests. Actual accepted19 752byte3/3 cache copied with provenance, not header simulation. Originalnative10 retained plus bounded predecessornormalstartup11 and additional semanticinvalid stages; existingHTTPwholecasefreshretry/stdoutEOF/anchors/owner/error/no_cache/freshness unchanged.
+
+New8CA/R06-S21OPEN:39arcrows20done19open/project25open. New dedicatedcodex/checked-save-integration clean0b37/indexempty before issue; accepted20/older/main9line/external/Project02 pins protected. Both inspected capturekernels actually proved complete0/7status/rawfirst controls BEFORE compiler; no21sourceedit/gate/nativeyet. Same CDCgpt-6.1-solHigh/soleexistingCCgpt-6-lunaHigh and serializedownership, fiveiterationcap/no newwaiver/role/inquiry. Currentassignment slice21-checked-save-integration/cc-prompt.md; coherent intake precedes edits, capturedformat/lint then CDC completeworksheethold before runtime.
+
+Original15arcrows/three repairparents/nonzero-game-backed/raw/history/strictfreshness-identicalrewrite-staleimporthistory/finalsemanticassembly/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release gates remainopen; no current application acceptance inferred from20foundation or21readiness. AutonomousendpointArc06only/no remoteactions.

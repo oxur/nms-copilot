@@ -1,0 +1,5 @@
+# Genuine schema3/semantic3 predecessor
+
+Byte-preserved accepted Slice19 final cache, not a changed-header simulation. Source archive `../slice19-unknown-system-lifecycle/artifacts/cdc-final-evidence.tar.gz`, SHA256 fcd8cd9f3ef9f6998b297182ffb735eed01aa0bb59c737fe2148dee9536ce798, member `fixtures/b266d84cf04d42018af59769689ea3aa/cache.rkyv`. Actual source4cb745b7; accepted CDC native row10 final promotion/compatible restart fixture. Member752bytes SHA256174ca6e8372533b9f5dea5c946a57ea14e63481dbd4073c694225e65e61a6045. Header NMSCACHE/schema3/semantic3. Associated archive native case/result and monitor/restart stdout record actual unknown→real→warm proof. This copy supplies rejection/rebuild proof after semantic4, not new old-version execution or a universal migration guarantee.
+
+Copy these exact bytes into the two declared source fixture paths; retain all earlier1/1 and2/2 fixtures unchanged. Package-local copilot fixture avoids a new published example dependency on another package's source tree.

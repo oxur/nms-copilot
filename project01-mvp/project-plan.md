@@ -9,7 +9,7 @@ updated: 2026-10-21
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.75
+version: 1.76
 project: project01-mvp
 status: active
 depends-on: []
@@ -1048,3 +1048,8 @@ Version1.74: approvedA detailed into usable five-path publicdecoderAPI from4cb w
 Version1.75: usable public original-JSONdecoderlibrary accepted atclean0b37d8b4/exactfivepaths/all7AD/R06-S20done. Independent12groups pass focused8/save102unit+8integration+8doc/core87/no-default233/workspace1007runtime+18doc/build/docs/strictsavedocs/fullbasediffs. All29CC/14CDCrawrecords/failures/retries/sourcebytes and four immutablecorrectionprompts/finalreport/independentrowwalk/CDCretrospective retained, no evidencewaiver/capreset. Metadata version nowmatchescurrentbodyhistory; older1.71–1.74entries remainunchanged.
 
 Arc38rows20done18open/project25open; mandatory21/CDC next owns actual whole-source validation beforedefaults/model/cache/publication, allcallers/faithfulrawfixtures/atomiclastgoodstate/semantic3→4/genuinepredecessor/warm/actualCLI-normalPTY-stdio-HTTP-watch-restartcomposition. Existing20applicationbodies/cache3/3 unchanged, no applicationbugfix/parentclosure/nonzero-game claim. Original raw/history/freshness-import/finalsemantic/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligations, unchangedmodels/Arc06endpoint/main9lineedit/heldpins/external/Project02 remain. No merge/push/install/release/otherarc.
+
+
+## Arc06 Slice21 application transition issued — 2026-10-21 UTC
+
+Version1.76: required21 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt.md. Same approvedA/modelsettings/Arc06endpoint; opaque original-value validated source boundary beforetypeddefaults, allactualcallers/faithfulfixturecopies/atomiclastgoodstate/semantic3→4 unchangedschema3/genuine752bytepredecessor/rebuild-warm/actualCLI-stdio-HTTP-normalnative11 recipe detailed author-ready. EightCA/R06-S21open;39arcrows20done19open/project25open. Source dedicatedchecked-save-integration clean0b37atissue, planningseparate/ownershipserialized, realinspectedcapture0/7controls precede firstcompiler. No applicationacceptance/gateyet. Alloriginalparents/nonzero-game-backed/raw/history/finalassembly/freshness-import/export/import/format/docs/distribution/coverage/performance/finalindependent/Operator/integration/release/main9lineedit/heldpins/external/Project02 preserved. No merge/push/install/release/otherarc/newinquiry/newrole.
