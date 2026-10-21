@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.88, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.89, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -761,3 +761,8 @@ Original15arcrows/three repairparents/nonzero-game-backed/raw/history/strictfres
 ## Slice21 author negative-control refinement — 2026-10-21 UTC
 
 Version1.88: current immutable assignment slice21-checked-save-integration/cc-prompt-iteration01.md. Before source/compiler CDC pinned the new semantic-invalid stage to legacy-u64-accepted 2^56 packedbase instead of already-serde-invalid null; original null/malformed controls retained. Exactotherwise-valid fullfixture/path/early valid records/wholelastgood/recovery oracles supplied, oneof5used. Same36paths/API/policy/native11/fullgates/models/ownership; all8CA/R06-S21open,39arcrows20done19open/project25open, alloriginalparents/fences remain. No newOperatorgate/inquiry/waiver or applicationacceptance.
+
+
+## Slice21 full CLI/current-cache oracle correction — 2026-10-21 UTC
+
+Version1.89 currentassignment slice21-checked-save-integration/cc-prompt-iteration02.md, secondof5. Before firstcompiler CC/CDCcaught author systemP0-vs-planetP2/P1 and nonexistentfindgalaxycolumn expectations; wholeCLIwalk supplied exact originalcount/fullJSON/multiplicity/route/duplicate/invalid/projection oracles, without query/outputchanges. Exactcurrentallowlist38: original36 plus query_cache_integration/route_cache_integration ONLY fourgeneratedheader semantic4literals, schema3/old2/2/typedlegacyproofunchanged. Existinggates/8rows/policy/native11/sourceownership/models retained, no newinquiry/gatewaiver/Operatorquestion. All8CA/R06-S21open;39arcrows20done19open/project25open; alloriginalparents/fences remain.

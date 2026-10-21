@@ -199,3 +199,5 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 39arcrows20done19open/project25open. All38previous entire rows/criteria/dispositions preserved.
 
 2026-10-21 Slice21 author discriminator refinement01 before source/compiler: all8CA/R06-S21open;39arcrows20done19open/project25open. Initialprompt preserved, no waived field/control or budget reset.
+
+2026-10-21 Slice21 consolidated CLI/currentheader refinement02 before compiler: secondof5,38currentallowedpaths, same8CA/R06-S21open;39arcrows20done19open/project25open. No row/control/gate removed.

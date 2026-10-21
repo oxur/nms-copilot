@@ -9,7 +9,7 @@ updated: 2026-10-21
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.77
+version: 1.78
 project: project01-mvp
 status: active
 depends-on: []
@@ -1058,3 +1058,8 @@ Version1.76: required21 currentassignment arc06-fit-and-finish/slice21-checked-s
 ## Arc06 Slice21 discriminator refinement — 2026-10-21 UTC
 
 Version1.77 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt-iteration01.md. Author caught weak null-negative before first source/compiler and supplied exact2^56 legacyaccepted/checkedrejected typed-path/atomiclive fixture; original null/syntax controls remain. Firstof5, same36paths/approvedA/native11/gates/roles/Arc06endpoint/ownership/protectedfences. All8CA/R06-S21open;39arcrows20done19open/project25open, no parentclosure/inquiry/waiver/newpolicy.
+
+
+## Arc06 Slice21 complete CLI/header oracle refinement — 2026-10-21 UTC
+
+Version1.78 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt-iteration02.md. Secondof5 beforecompiler; preservephysicalP2/basewhilefind/exportsystemP0oracles followunchangedformatter, complete originalCLIproof, add ONLYtwoexistingtestpaths/fourcurrentheadersemantic4literals to38pathallowlist. Schema3/predecessor2/2/typedcontrols and existinggates remain. No productpolicychange/Operatorgate/newinquiry/waiver/parentclosure. All8CA/R06-S21open,39arcrows20done19open/project25open; same roles/models/Arc06endpoint/ownership/main9line/heldpins/external/Project02.
