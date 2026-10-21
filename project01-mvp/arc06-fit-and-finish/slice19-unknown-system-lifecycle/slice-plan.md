@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.10. Created2026-10-21 UTC. Status: Operator explicitly approved ONE exceptional sixth bounded test/oracle pass. Immutable iteration06 coherent intake inspected on cleance6b5c94; sole source/index/gates returned to same CC for exact correction/format/lint then pinned hold. Production frozen; two test files only, no budget reset or further automatic pass. All8UL/R06-S19 OPEN; current failures/history/native prerequisites unchanged.
+Version:1.10. Created2026-10-21 UTC. Status: Operator explicitly approved ONE exceptional sixth bounded test/oracle pass. Immutable iteration06 coherent intake inspected on cleance6b5c94; actual two-file correction and complete pinned review passed format/lint on1c493ebe; original affected/full/native proof released, no runtime result yet. Production frozen; two test files only, no budget reset or further automatic pass. All8UL/R06-S19 OPEN; current failures/history/native prerequisites unchanged.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -206,3 +206,10 @@ Human Operator explicitly “I approve that pass.” This adopts ONLY the one ad
 ## Iteration06 coherent intake handoff — 2026-10-21 UTC
 
 Actual CC collaboration readback identifies all FOUR tuple positions/order/correctliteral, full biome-key map of sorted primitive-row Vecs preserving multiplicity, fresh-model actual-consumer regression and unchanged othercomparisons/callers. Sourcece6b5c94clean/indexempty and inspected helper9842de91/raw64record1be0b542 unchanged reverified. Qualitative usable context affirmed without invented capacity. Same CC now receives sole dedicated19source/index/gates for exactly the approved two-file06correction, capturedformat→lint then pinnedHOLD, no tests/native until CDCexplicitrelease. No further substantivefix/budgetreset/waiver; production/other11paths/5saggregate/nativegates/mainheldexternal unchanged. CDCplanning/index/independentacceptance retained; all8rowsopen.
+
+
+## Iteration06 pinned review and runtime release — 2026-10-21 UTC
+
+CDC read actual67record and full two-file diff; first64parsedvalues unchanged. Format65f3d160 preserved before active nested PlanetKey typo correction; finale70f98e4 format0/ae97ca83 lint0 have full raw/status/source before==after on1c493ebe/identity3b3299be/indexempty. Four U2 literals exact; full biome-key HashMap with sorted primitiveVec retains multiplicity/length/identity, no set/dedup/count shortcut; all othercomparisons and11otherfiles unchanged. Actual comparator regression uses fresh promotedmodels for golden/reversedpass/duplicate+missingreject. Entire bounded helper/callsite/assertion walk now clear, not runtime acceptance.
+
+SameCC sole dedicated19source/index/gates released for original affected headless/owned/build/selfcheck and full/native contract afteractualprerequisite. No source change authorized by release; further substantive defect stops. Existing5saggregateEOF and native9+row10/twoREPL controls, actualhashes/rawfirst/status/originalTMPDIR/failedpayloadretention unchanged. All8rowsopen, one approvedexceptionalsixth used, no budgetreset/seventh. CDCplanning/index/independentacceptance retained.
