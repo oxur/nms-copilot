@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.78, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.79, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -658,3 +658,10 @@ Version1.77: Operator explicitly “yup, I accept that exception :-D On to 19!�
 ## Slice19 application unknown-system lifecycle issued — 2026-10-21 UTC
 
 Version1.78: approved18closedce0004a/e592; required19 is source-grounded in slice19-unknown-system-lifecycle/{slice-plan.md,ledger.md,cc-prompt.md}, eightULopen. Dedicatedcodex/unknown-system-lifecycle clean e592; sameCDCgpt-6.1-solHigh/CCgpt-6-lunaHigh, coherent intake before source ownership. Exact15sourcepaths, common ensure before cold snapshot/warm exposure, conditional best-effort missing-current3/3 repair once/no-op bytesmtime/no_cache/strictfreshness, full-update ensure before snapshot/publication, exact-key names and actual normal/stdio/HTTP unnamed parsed promotion/restart are resolved within approvedA. Schema/semantic3/3 unchanged representation, future finalrawtransition held. Literal rich same-voxelSSI/opposedgalaxy/genuineempty fixture preserves full maps/state/counts/anchors/imports and distinguishes live from rebuilt graph topology; inheritednative9+newrow10 and realheadlesscases required. Actual complete capture/status/raw-first controls inspected BEFORE first19SUT, supporting artifacts need-driven. No source edit/productgate yet; firstformat/lint then serialized complete pre-test worksheet before broad/native.37arcrows18done19open/project25open. Every original parent/raw/history/finalsemantic/freshness-import-history/independent/Operator/integration/release obligation, protectedmain9lines/heldpins/external/Project02 andArc06endpoint retained.
+
+
+## Slice19 independent red review / cap decision — 2026-10-21 UTC
+
+Version1.79: cleance6b5c94 exacte592parent/d624fa04tree/13paths; all five refinements executed/preserved. Current CDC format/lint pass; host headless16/19fails three badprevious-tuple fixture assertions, owned5/6andprobe selfcheckfail order-sensitive biome oracle; native0 at unmet prerequisite. CC cache47/focused528/no-default233/binary16/query2route4/build/docs/stricts/diffs partial proof retained, workspacehost487pass4fail is incomplete. Earlier aggregate stdio teardown failures remain despite isolated/currentaggregatecasepasses; cause unknown/no waiver. No production defect established by concrete fixture/oracle failures.
+
+All8UL/R06-S19OPEN;37arcrows18done19open/project25open. Canonical slice19/cdc-verification.md gives exact four literal repairs, complete-key/multiplicity-preserving biome normalization, retained aggregate teardown bound and required affected/full/native10independentproof. Five-pass rule now requires explicit Operator continuation or re-scope; recommendONEbounded exceptional test/oracle pass, no sixth issued or acceptance amendment. No silent budget reset/nextslice/architecture/policychange. Interim CDC retrospective records author/reviewer contribution and failed/successful follow-through. Actual64CC/fivecurrentCDC productcaptures and failedpayloads preserved; no missinghistorical exception sought. Mainb6169lineedit/allheldpins/external03e8d04 and every original raw/history/finalsemantic/strictfreshness/importhistory/export/import/docs/distribution/coverage/parentindependent/Operator/integration/release obligation/Arc06endpoint remain.
