@@ -66,3 +66,8 @@ Readiness complete: this is a public usabledecoder route with exact API/errorpri
 ## Assignment history
 
 Initial `cc-prompt.md`,2026-10-21, predecessoraccepted19/4cb, author-ready decoder foundation. Coherent intake/readback precedes dependent edits under this issued authority; source ownership handoff recorded with actualstart, no ceremonial permission gate.
+
+
+## Coherent intake and actual start — 2026-10-21 UTC
+
+CDC read the complete actual ignored execution/readback, whose original prefix/hash is preserved in the existing CDCreceipt. Required text/data/45rows/pinnedNumber/helper controls and errorpriority/presence/sentinel/frozenapplication/strongoracles were coherently connected. Receipts remain attestation, not comprehension or codeacceptance. CC confirmed no leftover19process and usableheadroom, then actually began under the issuedhandoff without a repeatedpermissionturn. SameCC owns only dedicated20source/index/gates; CDCplanning/index/independentreview. All7AD/R06-S20open, required21 and allparent/Arc06/protectedfences unchanged. No productresultclaimed at intake.
