@@ -1,0 +1,391 @@
+{
+  "slice": "Project01 Arc06 Slice20 public save-address decoder foundation",
+  "status": "CC proposed-done; CDC independent review and acceptance pending",
+  "source": {
+    "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+    "branch": "codex/save-address-decoder",
+    "parent_commit": "4cb745b7190e7463663a0ead29f169060e36dc05",
+    "source_paths": {
+      "crates/nms-save/src/address.rs": "06f6794fb7b29e5634bddf7824e26057366985df4584057a2642208c7a26b4ca",
+      "crates/nms-save/src/lib.rs": "5e33753b02e40da40766fbf6b5be908b9d8eac6db6ddb761173457b2318dea1a",
+      "crates/nms-save/tests/address_decode.rs": "adbac83162c112814563fed76a84258eb16df0e3578904855ad307dba39c1536",
+      "crates/nms-save/tests/fixtures/address-oracles.json": "2a48d77a745002227e6bdd5957189a35d415d69f4023d4c93e616236a9d4aeaa",
+      "crates/nms-save/tests/fixtures/address-oracles.md": "9c7aa2fa4c90bb5f504eaa2b5730693c6e439c19bcde10b2266e6f228b30ca12"
+    },
+    "precommit_working_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+    "index_before_commit": "empty"
+  },
+  "raw_capture_record": {
+    "path": "/private/tmp/nms-slice20-cc-attempts.json",
+    "sha256": "a856330640598c981bd635be548f128d2e77806e0631136b2e5cb43c53c4c4d6",
+    "entry_count": 29,
+    "support_controls": 2,
+    "cc_product_attempts": 27,
+    "all_attempts": [
+      {
+        "id": "5f7427cf396c4195bae4986b426589a4",
+        "label": "support-known-7",
+        "kind": "wrapper-only preflight",
+        "exit_code": 7
+      },
+      {
+        "id": "2b9bd3a520e54787bcb40ac368b2808f",
+        "label": "support-known-0",
+        "kind": "wrapper-only preflight",
+        "exit_code": 0
+      },
+      {
+        "id": "ab4ae2465c22476b816e9b03b1186403",
+        "label": "cc-format-final01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "3b4a02432ac548c0874ded194032371f",
+        "label": "cc-lint-final01",
+        "kind": "SUT gate",
+        "exit_code": 2
+      },
+      {
+        "id": "0c0c81d47cb54651b33d2c2a55e6d810",
+        "label": "cc-format-repair01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "4635ee2bab2641729202e6b1232cc1bc",
+        "label": "cc-lint-repair01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "63e0da66dc4a4269977de3db14c4bbfc",
+        "label": "cc-address-external01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "b04d7ded07974d839c8b074c246ced11",
+        "label": "cc-nms-save01",
+        "kind": "SUT gate",
+        "exit_code": 101
+      },
+      {
+        "id": "4187dc836ce14176ade736017f44ae6e",
+        "label": "cc-format-repair02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "6fc1e9e7074f4d4a8cd03072da36b270",
+        "label": "cc-lint-repair02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "c850bebb57134249a1fa7d522489b44b",
+        "label": "cc-nms-save-doctest-repair",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "d039f66b5e2b4ca5a845fec31371d871",
+        "label": "cc-nms-core01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "82dd55e3a3734da2aefbc76676a58900",
+        "label": "cc-copilot-nodefault01",
+        "kind": "SUT gate",
+        "exit_code": 101
+      },
+      {
+        "id": "c2597db8f85d4abfb4b30c119fd9d87f",
+        "label": "cc-copilot-nodefault-host01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "fb565a1b16b84485a9856d101cb9c1ff",
+        "label": "cc-make-test01",
+        "kind": "SUT gate",
+        "exit_code": 2
+      },
+      {
+        "id": "ec596c80dbae451591faba40a2d747b1",
+        "label": "cc-make-test-host01",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "86387defa96d417c8f0245706c79979f",
+        "label": "cc-format-iteration02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "e90906a643434d269989a7f4dabb1edd",
+        "label": "cc-lint-iteration02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "7cf424c7189c41a8b3f67c2863722c70",
+        "label": "cc-address-external-iteration02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "65c8f51d29244a1c9bb32c95b2ded044",
+        "label": "cc-nms-save-iteration02",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "bce1e356b6c946d99885843bbef183e6",
+        "label": "cc-format-iteration03",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "60b5d6b6c4a2481a91927a965ef1e2b0",
+        "label": "cc-lint-iteration03",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "81c61a980a8e441bb18c324e90fc08fc",
+        "label": "cc-address-external-iteration03",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "c0a7c86109cf4c268aa23fca35060e42",
+        "label": "cc-doc-strict-iteration03",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "c7dbab9d09cb48cbb69694957c03bad5",
+        "label": "slice20-final-make-test",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "2905379aad404460ac9e380bedd374ef",
+        "label": "slice20-final-workspace-build",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "4cb4f186aca14661b29f06ff627ba825",
+        "label": "slice20-final-workspace-doctests",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "b2b15ff6a26b47c4a92a7aad7c3e1dd4",
+        "label": "slice20-final-working-diff-check",
+        "kind": "SUT gate",
+        "exit_code": 0
+      },
+      {
+        "id": "2b848d7cd55d4656a1753a1e08db1b64",
+        "label": "slice20-final-base-diff-check",
+        "kind": "SUT gate",
+        "exit_code": 0
+      }
+    ]
+  },
+  "final_released_gates": [
+    {
+      "id": "c7dbab9d09cb48cbb69694957c03bad5",
+      "label": "slice20-final-make-test",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "exit_code": 0,
+      "started_utc": "2026-10-21T04:24:22.739361+00:00",
+      "ended_utc": "2026-10-21T04:25:04.689036+00:00",
+      "before_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "after_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "stdout_bytes": 70486,
+      "stdout_sha256": "cb02fd362c1d67d11db6553b1cd265ad2339e40e52b17e1dd98bcd187e963255",
+      "stderr_bytes": 3918,
+      "stderr_sha256": "7e9e80de4283f852654c5ca9398079030f26593351a895e5da1e2c099c7ba54c"
+    },
+    {
+      "id": "2905379aad404460ac9e380bedd374ef",
+      "label": "slice20-final-workspace-build",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "build",
+        "--all-features",
+        "--workspace"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "exit_code": 0,
+      "started_utc": "2026-10-21T04:25:09.920117+00:00",
+      "ended_utc": "2026-10-21T04:25:21.973791+00:00",
+      "before_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "after_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 1053,
+      "stderr_sha256": "615738e9da7b479c5774d090137bdf20d9645f634694f140fdfa8b827a52d42d"
+    },
+    {
+      "id": "4cb4f186aca14661b29f06ff627ba825",
+      "label": "slice20-final-workspace-doctests",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "--doc",
+        "--workspace",
+        "--all-features"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "exit_code": 0,
+      "started_utc": "2026-10-21T04:25:23.839579+00:00",
+      "ended_utc": "2026-10-21T04:25:27.802297+00:00",
+      "before_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "after_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "stdout_bytes": 2896,
+      "stdout_sha256": "ff75ad9fe9d38fce05f2deb9c7824b1379e23dacd5a8be744a5b6942337fdd9c",
+      "stderr_bytes": 530,
+      "stderr_sha256": "e95326e20237278d25b35ab35e7c931be345b33ad052ea24a64a7a69d6ef19f2"
+    },
+    {
+      "id": "b2b15ff6a26b47c4a92a7aad7c3e1dd4",
+      "label": "slice20-final-working-diff-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "exit_code": 0,
+      "started_utc": "2026-10-21T04:25:31.365730+00:00",
+      "ended_utc": "2026-10-21T04:25:31.455538+00:00",
+      "before_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "after_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "2b848d7cd55d4656a1753a1e08db1b64",
+      "label": "slice20-final-base-diff-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "4cb745b7190e7463663a0ead29f169060e36dc05",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "exit_code": 0,
+      "started_utc": "2026-10-21T04:25:33.495700+00:00",
+      "ended_utc": "2026-10-21T04:25:33.582043+00:00",
+      "before_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "after_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "make_test_summary": {
+    "harness_result_groups": 36,
+    "total_passed_including_doctests": 1025,
+    "doctest_groups": 9,
+    "separate_workspace_doctest_groups": 9,
+    "separate_workspace_doctests_passed": 18,
+    "result": "pass"
+  },
+  "strict_save_docs": {
+    "id": "c0a7c86109cf4c268aa23fca35060e42",
+    "command": [
+      "cargo",
+      "doc",
+      "-p",
+      "nms-save",
+      "--no-deps"
+    ],
+    "override": {
+      "RUSTDOCFLAGS": "-D warnings"
+    },
+    "exit_code": 0,
+    "source_identity": "454a5064bdd2b4ae926c91b14a1d8568be3ac4fdad1e4c99a06835c98e61a54f"
+  },
+  "acceptance_rows": [
+    {
+      "id": "AD-01",
+      "criterion": "Public field-specific packed decoder preserves exact56-bit coordinates/reality",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-02",
+      "criterion": "Packed syntax/type/width failures are strict and matchable",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-03",
+      "criterion": "Expanded current presence/encodedbounds validate beforecoremask",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-04",
+      "criterion": "Previous absence/sentinel retainsplanetandreality",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-05",
+      "criterion": "Usable documented pure API and bounded sourcewitnessfixture",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-06",
+      "criterion": "Existing APIs/application/cache/nativecontracts remain unchanged",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    },
+    {
+      "id": "AD-07",
+      "criterion": "Attributable complete proof and independent handback",
+      "cc_disposition": "proposed-done",
+      "cdc_disposition": "pending independent review"
+    }
+  ],
+  "scope_boundary": "Slice20 supplies an opt-in decoder library API. Required21 owns whole-source atomic application integration, cache transition, and actual application/native proof; none is claimed here.",
+  "source_commit": {
+    "commit": "0b37d8b41222b8e4a084c088246f777490575756",
+    "subject": "Add public save address decoder",
+    "changed_paths": [
+      "crates/nms-save/src/address.rs",
+      "crates/nms-save/src/lib.rs",
+      "crates/nms-save/tests/address_decode.rs",
+      "crates/nms-save/tests/fixtures/address-oracles.json",
+      "crates/nms-save/tests/fixtures/address-oracles.md"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "trailers_parsed_in_order": true,
+    "source_index_worktree_clean": true
+  }
+}
