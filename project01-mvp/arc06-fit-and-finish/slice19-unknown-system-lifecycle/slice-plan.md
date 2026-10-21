@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.4. Created2026-10-21 UTC. Status: refinement02 real format/lint passed on frozen a8069a40, complete pinned CDC review requires refinement03. Current cc-prompt-iteration03.md issued, source/index/gates held pending coherent intake; three-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 and exact twelve-status exception remain closed at ce0004a, with no19waiver.
+Version:1.4. Created2026-10-21 UTC. Status: refinement02 real format/lint passed on frozen a8069a40, complete pinned CDC review requires refinement03. Current cc-prompt-iteration03.md coherent intake inspected, sole dedicated source/index returned to same CC for correction and pinned hold; three-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 and exact twelve-status exception remain closed at ce0004a, with no19waiver.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -131,6 +131,11 @@ Complete current B1–B6 helper/callsite walk found C1 retained gal0 edge still 
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration03.md |2026-10-21|cc-prompt-iteration02.md / bec4d5d|Complete pinned C1–C5 existing-contract proof corrections|issued; source/index/gates held pending coherent intake|
+| cc-prompt-iteration03.md |2026-10-21|cc-prompt-iteration02.md / bec4d5d|Complete pinned C1–C5 existing-contract proof corrections|coherent readback inspected; same CC owns bounded correction and pre-test hold|
 
 Same selected CDC/sole CC, separate source/planning ownership and protected main/heldpins. No routine engineering approval or new model/policy/dependency/terminal method. Next coherent intake then bounded correction, captured format→lint and complete pinned hold; no runtime before explicit CDC release.
+
+
+## Refinement03 intake handoff — 2026-10-21 UTC
+
+CDC read the complete actual C1–C5 execution acknowledgement03a0506a, preserved exact bytes/hash, and reverified sourcea8069a40/indexempty. The retained1600ly pair in both cached snapshots, valid physical9/current_reality/opposed selection, ordinary and controlled initial/restart collision stages and fresh full-case retry, complete config/checkpoint/stdout/SSE EOF boundaries, literal spatial/marker rows and opposed-cache parent/source postconditions were coherently acknowledged. This is intake attestation, not implementation or runtime acceptance. Same CC now receives sole dedicated19source/index/gates for pass3 bounded correction, captured format→lint then pinned HOLD; no tests/native until explicit CDC release. CDC planning/index retained; source/heldpins/main user edit untouched by CDC.
