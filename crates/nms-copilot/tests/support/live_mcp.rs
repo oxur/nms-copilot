@@ -343,14 +343,60 @@ pub fn unknown_lifecycle_source(
     }
     if promoted {
         value["DiscoveryManagerData"]["DiscoveryData-v1"]["Store"]["Record"] = serde_json::json!([
-            {"DD": {"UA": "0x000300000000", "DT": "SolarSystem", "VP": []},
+            {"DD": {"UA": "0x00030000000000", "DT": "SolarSystem", "VP": []},
              "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
-            {"DD": {"UA": "0x500300000000", "DT": "Planet", "VP": ["0xAB", 1]},
+            {"DD": {"UA": "0x50030000000000", "DT": "Planet", "VP": ["0xAB", 1]},
              "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
         ]);
     }
     let bytes = serde_json::to_vec(&value).expect("literal unknown lifecycle save serializes");
     nms_save::parse_save(&bytes).expect("production parser accepts unknown lifecycle save");
+    nms_save::parse_validated_save(&bytes)
+        .expect("checked parser accepts the same whole lifecycle save");
+    bytes
+}
+
+pub fn unknown_lifecycle_invalid_address_source() -> Vec<u8> {
+    let mut value: Value = serde_json::from_slice(&unknown_lifecycle_source(
+        4729,
+        3,
+        999,
+        998,
+        997,
+        Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+        false,
+    ))
+    .expect("valid lifecycle fixture JSON");
+    value["DiscoveryManagerData"]["DiscoveryData-v1"]["Store"]["Record"] = serde_json::json!([
+        {"DD": {"UA": "0x00060000000000", "DT": "SolarSystem", "VP": []},
+         "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Rejected", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
+        {"DD": {"UA": "0x10060000000000", "DT": "Planet", "VP": ["0xAC", 0]},
+         "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Rejected", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
+    ]);
+    value["BaseContext"]["PlayerStateData"]["PersistentPlayerBases"] = serde_json::json!([
+        {
+            "BaseVersion":8,
+            "GalacticAddress":"0x100000000000000",
+            "Position":[9.0,8.0,7.0],
+            "Forward":[1.0,0.0,0.0],
+            "LastUpdateTimestamp":1700000000,
+            "Objects":[],
+            "RID":"",
+            "Owner":{"LID":"","UID":"rejected-owner","USN":"","PTK":"ST","TS":0},
+            "Name":"Rejected Base",
+            "BaseType":{"PersistentBaseTypes":"HomePlanetBase"},
+            "LastEditedById":"",
+            "LastEditedByUsername":""
+        }
+    ]);
+    let bytes = serde_json::to_vec(&value).expect("invalid-address source serializes");
+    nms_save::parse_save(&bytes).expect("legacy parser accepts the 57-bit u64 address");
+    assert!(matches!(
+        nms_save::parse_validated_save(&bytes),
+        Err(nms_save::SaveError::Address(
+            nms_save::address::AddressDecodeError::PackedWidth { path }
+        )) if path == "/BaseContext/PlayerStateData/PersistentPlayerBases/0/GalacticAddress"
+    ));
     bytes
 }
 

@@ -1,5 +1,7 @@
 //! Error types for save file parsing.
 
+use crate::address::AddressDecodeError;
+
 /// Error returned by save file decompression and parsing operations.
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
@@ -48,6 +50,10 @@ pub enum SaveError {
     /// Failed to parse save JSON.
     #[error("JSON parse error: {message}")]
     JsonParseError { message: String },
+
+    /// A modeled source address or its containing JSON field is invalid.
+    #[error("{0}")]
+    Address(#[from] AddressDecodeError),
 
     /// Wrapper for std::io::Error (file I/O).
     #[error("I/O error: {0}")]

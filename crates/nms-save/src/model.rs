@@ -1,7 +1,9 @@
-//! Typed Rust structs for deobfuscated NMS save file JSON.
+//! Legacy typed Rust structs for deobfuscated NMS save file JSON.
 //!
 //! Only the fields NMS Copilot uses are deserialized — unknown fields
-//! are silently ignored (no `deny_unknown_fields`).
+//! are silently ignored (no `deny_unknown_fields`). Application input should
+//! cross the checked [`crate::ValidatedSave`] boundary before these compatibility
+//! types are used to construct queryable state.
 
 use serde::{Deserialize, Serialize, de};
 use std::fmt;

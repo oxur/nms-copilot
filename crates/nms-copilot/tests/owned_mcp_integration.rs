@@ -485,6 +485,67 @@ fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
     )
     .unwrap();
 
+    let moved_cache_bytes = std::fs::read(&cache).expect("read last-good cache before bad address");
+    let moved_cache_time = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    let invalid_address = live_mcp::unknown_lifecycle_invalid_address_source();
+    let source_before_invalid = std::fs::read(&save).expect("read actual last-good source");
+    let source_time_before_invalid = std::fs::metadata(&save).unwrap().modified().unwrap();
+    assert_eq!(source_before_invalid, moved);
+    let invalid_cursor = stream.cursor();
+    atomic_replace(&save, &invalid_address);
+    let invalid_source_time = source_time_before_invalid + Duration::from_secs(100);
+    assert!(invalid_source_time > source_time_before_invalid);
+    File::options()
+        .write(true)
+        .open(&save)
+        .expect("open invalid source timestamp")
+        .set_times(std::fs::FileTimes::new().set_modified(invalid_source_time))
+        .expect("advance invalid source timestamp deterministically");
+    assert_eq!(std::fs::read(&save).unwrap(), invalid_address);
+    assert_eq!(
+        std::fs::metadata(&save).unwrap().modified().unwrap(),
+        invalid_source_time
+    );
+    stream
+        .wait_quiet_since(invalid_cursor, Duration::from_millis(650))
+        .unwrap();
+    assert!(matches!(
+        witness.try_recv(),
+        Err(std::sync::mpsc::TryRecvError::Empty)
+    ));
+    {
+        let guard = model.blocking_read();
+        live_mcp::assert_model_matches(
+            &guard,
+            &live_mcp::expected_unknown_lifecycle_model(Stage::Moved, false),
+        )
+        .unwrap();
+        for (id, node) in &initial_nodes {
+            assert_eq!(guard.node_map.get(id), Some(node));
+        }
+    }
+    assert_eq!(std::fs::read(&cache).unwrap(), moved_cache_bytes);
+    assert_eq!(
+        std::fs::metadata(&cache).unwrap().modified().unwrap(),
+        moved_cache_time
+    );
+    let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 3, 5, 0),
+        "(unknown)",
+        0,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    )
+    .unwrap();
+    assert_eq!(std::fs::read(&save).unwrap(), invalid_address);
+    assert_eq!(
+        std::fs::metadata(&save).unwrap().modified().unwrap(),
+        invalid_source_time
+    );
+
     let promoted = live_mcp::unknown_lifecycle_source(
         4722,
         3,

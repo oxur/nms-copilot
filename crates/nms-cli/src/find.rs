@@ -28,10 +28,10 @@ pub fn run(args: FindArgs) -> Result<(), Box<dyn std::error::Error>> {
             .path()
             .to_path_buf(),
     };
-    let save = nms_save::parse_save_file(&path)?;
+    let save = nms_save::parse_validated_save_file(&path)?;
 
     // Build model
-    let mut model = GalaxyModel::from_save(&save);
+    let mut model = GalaxyModel::from_validated_save(&save);
     model.ensure_player_system();
 
     // Parse biome filter

@@ -20,8 +20,8 @@ pub fn run(save: Option<PathBuf>, target: ShowTarget) -> Result<(), Box<dyn std:
             .path()
             .to_path_buf(),
     };
-    let save = nms_save::parse_save_file(&path)?;
-    let model = GalaxyModel::from_save(&save);
+    let save = nms_save::parse_validated_save_file(&path)?;
+    let model = GalaxyModel::from_validated_save(&save);
 
     let query = match target {
         ShowTarget::System { name } => ShowQuery::System(name),

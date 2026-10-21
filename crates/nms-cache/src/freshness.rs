@@ -93,9 +93,9 @@ pub fn load_or_rebuild(
     }
 
     // Parse save file
-    let save = nms_save::parse_save_file(save_path)?;
-    let save_version = save.version;
-    let mut model = nms_graph::GalaxyModel::from_save(&save);
+    let save = nms_save::parse_validated_save_file(save_path)?;
+    let save_version = save.root().version;
+    let mut model = nms_graph::GalaxyModel::from_validated_save(&save);
     model.ensure_player_system();
 
     // Write cache for next time

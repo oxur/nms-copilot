@@ -165,6 +165,18 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                 if cache.exists() || cache.parent().is_some_and(Path::exists) {
                     return Err("cold fixture must begin without cache parent or file".into());
                 }
+            } else if mode == "predecessor" {
+                let bytes = include_bytes!(
+                    "../../nms-cache/tests/fixtures/predecessor-schema3-semantic3.rkyv"
+                );
+                if bytes.len() != 752 || &bytes[..16] != b"NMSCACHE\x03\0\0\0\x03\0\0\0" {
+                    return Err("canonical predecessor fixture bytes or header differ".into());
+                }
+                fs::write(&cache, bytes)?;
+                File::options()
+                    .write(true)
+                    .open(&cache)?
+                    .set_times(FileTimes::new().set_modified(fixed + Duration::from_secs(100)))?;
             } else if mode != "nocache" && mode != "bypass-missing" {
                 return Err(format!("unknown fixture mode {mode}").into());
             }
@@ -442,6 +454,24 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     let rebuilt_expected = nms_cache::rebuild_model(&expected);
     live_mcp::compare_cache_model(&expected, &rebuilt_expected, &expected, &expected_model)?;
     let checked_files = tempfile::tempdir()?;
+    let predecessor =
+        include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic3.rkyv");
+    if predecessor.len() != 752 || &predecessor[..16] != b"NMSCACHE\x03\0\0\0\x03\0\0\0" {
+        return Err("self-check predecessor fixture size/header differs".into());
+    }
+    let predecessor_path = checked_files.path().join("predecessor-semantic3.rkyv");
+    fs::write(&predecessor_path, predecessor)?;
+    if !matches!(
+        nms_cache::read_cache(&predecessor_path),
+        Err(nms_cache::CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SemanticMismatch {
+                found: 3,
+                expected: 4
+            }
+        ))
+    ) {
+        return Err("self-check did not reject the genuine semantic3/schema3 predecessor".into());
+    }
     let empty = live_mcp::expected_empty_cache(4720, 0, 7, 8, 9, 0);
     let empty_model = live_mcp::expected_empty_model(0, 7, 8, 9, 0);
     let cold_cross = live_mcp::expected_cold_cross_cache();
@@ -758,7 +788,7 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     println!(
-        "golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); lifecycle-files={lifecycle_file_count} lifecycle-negatives=4; reversed-order=pass"
+        "golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); predecessor=pass; lifecycle-files={lifecycle_file_count} lifecycle-negatives=4; reversed-order=pass"
     );
     Ok(())
 }
@@ -849,10 +879,17 @@ fn run_unknown_monitor(
     loop {
         let (line, next_offset) = wait_control_line(&control, offset, Duration::from_secs(60))?;
         offset = next_offset;
-        let required = ["move", "malformed", "promote", "identical", "finish"]
-            .get(next_step)
-            .copied()
-            .ok_or("unknown lifecycle monitor received a command after finish")?;
+        let required = [
+            "move",
+            "malformed",
+            "invalid-address",
+            "promote",
+            "identical",
+            "finish",
+        ]
+        .get(next_step)
+        .copied()
+        .ok_or("unknown lifecycle monitor received a command after finish")?;
         if line != required {
             return Err(format!(
                 "unknown lifecycle step {next_step} requires {required:?}, received {line:?}"
@@ -940,6 +977,33 @@ fn run_unknown_monitor(
                 println!("unknown-malformed=pass last-good+cache-retained");
                 io::stdout().flush()?;
             }
+            "invalid-address" => {
+                let invalid = live_mcp::unknown_lifecycle_invalid_address_source();
+                let cursor = sse.cursor();
+                expected_source_time = atomic_replace(&source, &invalid)?;
+                expected_source = invalid;
+                sse.wait_quiet_since(cursor, Duration::from_millis(650))?;
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "(unknown)",
+                    0,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )?;
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                next_step += 1;
+                println!("unknown-invalid-address=pass last-good+cache-retained");
+                io::stdout().flush()?;
+            }
             "promote" => {
                 let cursor = sse.cursor();
                 let promoted = live_mcp::unknown_lifecycle_source(
@@ -1020,7 +1084,7 @@ fn run_unknown_monitor(
                 io::stdout().flush()?;
             }
             "finish" => {
-                if stage != live_mcp::UnknownLifecycleStage::Promoted || next_step != 4 {
+                if stage != live_mcp::UnknownLifecycleStage::Promoted || next_step != 5 {
                     return Err("finish requires the ordered promoted lifecycle boundary".into());
                 }
                 sse.wait_closed_without_resource_updated(
@@ -1262,6 +1326,7 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
     let watch_enabled = mode_lines.lines().nth(1) != Some("disabled");
     let mut expected_source = initial.source;
     let mut expected_source_mtime = initial.source_modified;
+    let initial_cache = initial.cache.clone();
     let mut checkpoint = initial.cache;
     let mut semantic = initial.semantic;
     let mut last_good_location = if mode == "warm" {
@@ -1272,7 +1337,7 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
         }
     } else if matches!(
         mode.as_str(),
-        "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker"
+        "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker" | "predecessor"
     ) {
         LiveLocation {
             physical: 0,
@@ -1294,13 +1359,21 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
         "warm" => {
             assert_location_pair(&tool, &resource, 0, "Origin-0", 1)?;
         }
-        "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker" => {
+        "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker" | "predecessor" => {
             assert_location_pair(&tool, &resource, 0, "(unknown)", 0)?;
         }
         other => return Err(format!("unsupported monitor fixture mode {other}").into()),
     }
-    if mode == "cold" {
-        // Startup must first produce the literal empty cache, then pin that result.
+    if mode == "cold" || mode == "predecessor" {
+        // Cold and incompatible predecessor startup must produce a literal current empty cache.
+        if mode == "predecessor" {
+            let old = initial_cache
+                .as_ref()
+                .ok_or("predecessor cache checkpoint missing")?;
+            if old.bytes == fs::read(&cache)? {
+                return Err("predecessor startup did not replace old cache bytes".into());
+            }
+        }
         assert_semantic_cache(&cache, CacheExpectation::ColdStartup)?;
         semantic = CacheExpectation::ColdStartup;
         checkpoint = cache_stamp(&cache)?;
@@ -1579,6 +1652,16 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
                     &checkpoint,
                     semantic,
                 )?;
+                if mode == "predecessor" {
+                    thread::sleep(Duration::from_millis(650));
+                    check_fixture_files(
+                        fixture,
+                        &expected_source,
+                        expected_source_mtime,
+                        &checkpoint,
+                        semantic,
+                    )?;
+                }
                 let model = std::sync::Arc::new(tokio::sync::RwLock::new(live_mcp::golden_model()));
                 let owner = mcp::spawn_mcp_background_with_updates(model, address, None)?;
                 owner.shutdown()?;
@@ -1603,6 +1686,7 @@ enum CacheExpectation {
     ColdStartup,
     ColdCross,
     Unpersisted,
+    PredecessorSemantic3,
 }
 
 struct InitialFixture {
@@ -1679,6 +1763,21 @@ fn load_initial_fixture(fixture: &Path) -> Result<InitialFixture, Box<dyn std::e
     let semantic = match mode.as_str() {
         "warm" => CacheExpectation::Warm((4720, 0, 7, 8, 9, None, 7)),
         "cold" => CacheExpectation::ColdStartup,
+        "predecessor" => {
+            let expected =
+                include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic3.rkyv");
+            if source != save_bytes(4720, 0, 7, 8, 9, None)
+                || source_modified != UNIX_EPOCH + Duration::from_secs(1_700_000_000)
+                || cache.as_ref().map(|stamp| stamp.bytes.as_slice()) != Some(expected.as_slice())
+                || cache.as_ref().map(|stamp| stamp.modified)
+                    != Some(UNIX_EPOCH + Duration::from_secs(1_700_000_100))
+                || expected.len() != 752
+                || &expected[..16] != b"NMSCACHE\x03\0\0\0\x03\0\0\0"
+            {
+                return Err("prepared predecessor source/cache bytes or fixed times differ".into());
+            }
+            CacheExpectation::PredecessorSemantic3
+        }
         "sentinel" => {
             if cache
                 .as_ref()
@@ -1750,6 +1849,21 @@ fn assert_semantic_cache(
             &live_mcp::expected_cold_cross_model(),
         )?,
         CacheExpectation::Unpersisted => {}
+        CacheExpectation::PredecessorSemantic3 => {
+            if !matches!(
+                nms_cache::read_cache(path),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                        found: 3,
+                        expected: 4
+                    }
+                ))
+            ) {
+                return Err(
+                    "predecessor cache is not the literal semantic3/schema3 mismatch".into(),
+                );
+            }
+        }
     }
     Ok(())
 }
@@ -1847,6 +1961,16 @@ fn check_fixture_files_internal(
         _ => return Err("complete cache bytes/mtime checkpoint differs".into()),
     }
     match mode {
+        "predecessor"
+            if cache.parent() != Some(fixture)
+                || !fixture.is_dir()
+                || fixture.join("cache-parent").exists() =>
+        {
+            return Err(
+                "predecessor cache parent/path differs from the literal existing fixture directory"
+                    .into(),
+            );
+        }
         "bypass-missing" if cache.parent().is_some_and(Path::exists) || cache.exists() => {
             return Err("bypass-missing parent/cache path exists".into());
         }
@@ -1872,7 +1996,12 @@ fn check_fixture_files_internal(
         }
         _ => {}
     }
-    if ready || matches!(semantic, CacheExpectation::Warm(_)) {
+    if ready
+        || matches!(
+            semantic,
+            CacheExpectation::Warm(_) | CacheExpectation::PredecessorSemantic3
+        )
+    {
         assert_semantic_cache(&cache, semantic)?;
     }
     Ok(())

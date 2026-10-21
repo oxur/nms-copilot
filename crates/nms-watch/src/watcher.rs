@@ -158,11 +158,11 @@ struct SourceSnapshot {
 
 impl SourceSnapshot {
     fn from_file(path: &Path) -> Result<Self, Box<dyn std::error::Error>> {
-        let save = nms_save::parse_save_file(path)?;
+        let save = nms_save::parse_validated_save_file(path)?;
         Ok(Self {
-            snapshot: SaveSnapshot::from_save(&save),
-            player_state: save.to_core_player_state(),
-            save_version: save.version,
+            snapshot: SaveSnapshot::from_validated_save(&save),
+            player_state: save.player_state().clone(),
+            save_version: save.root().version,
         })
     }
 }

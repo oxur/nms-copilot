@@ -80,8 +80,8 @@ pub fn run(args: ExportArgs) -> Result<(), Box<dyn std::error::Error>> {
     let format = ExportFormat::parse(&args.format)?;
 
     let path = crate::resolve_save(args.save)?;
-    let save = nms_save::parse_save_file(&path)?;
-    let model = nms_graph::GalaxyModel::from_save(&save);
+    let save = nms_save::parse_validated_save_file(&path)?;
+    let model = nms_graph::GalaxyModel::from_validated_save(&save);
 
     let biome = args
         .biome

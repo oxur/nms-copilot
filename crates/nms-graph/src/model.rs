@@ -13,7 +13,7 @@ use nms_core::player::{PlayerBase, PlayerState};
 use nms_core::system::{Planet, System};
 use nms_save::model::SaveRoot;
 
-use crate::extract::extract_systems;
+use crate::extract::{extract_systems, extract_systems_from_validated};
 use crate::spatial::{SystemId, SystemPoint};
 
 /// Key for looking up a specific planet: (system, planet index).
@@ -105,7 +105,56 @@ impl GalaxyModel {
     /// Build a `GalaxyModel` from a parsed save file.
     pub fn from_save(save: &SaveRoot) -> Self {
         let extracted = extract_systems(save);
+        let bases = save
+            .active_player_state()
+            .persistent_player_bases
+            .iter()
+            .map(|base| base.to_core_base())
+            .filter(|base| !base.name.is_empty())
+            .map(|base| (base.name.to_lowercase(), base))
+            .collect();
+        Self::from_parts(
+            extracted,
+            save.to_core_player_state(),
+            save.active_player_state().universe_address.reality_index,
+            bases,
+        )
+    }
 
+    /// Build a `GalaxyModel` from a save validated before typed deserialization.
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let save = nms_save::parse_validated_save_file(std::path::Path::new("save.hg"))?;
+    /// let model = nms_graph::GalaxyModel::from_validated_save(&save);
+    /// println!("{} systems", model.system_count());
+    /// # Ok(())
+    /// # }
+    /// ```
+    pub fn from_validated_save(save: &nms_save::ValidatedSave) -> Self {
+        let extracted = extract_systems_from_validated(save);
+        let bases = save
+            .bases()
+            .iter()
+            .filter(|base| !base.name.is_empty())
+            .map(|base| (base.name.to_lowercase(), base.clone()))
+            .collect();
+        Self::from_parts(
+            extracted,
+            save.player_state().clone(),
+            save.player_state().current_reality,
+            bases,
+        )
+    }
+
+    fn from_parts(
+        extracted: HashMap<SystemId, System>,
+        player_state: PlayerState,
+        active_galaxy: u8,
+        bases: HashMap<String, PlayerBase>,
+    ) -> Self {
         let mut graph: StableGraph<SystemId, f64, Undirected> = StableGraph::default();
         let mut galaxy_points: HashMap<u8, Vec<SystemPoint>> = HashMap::new();
         let mut systems = HashMap::with_capacity(extracted.len());
@@ -151,20 +200,6 @@ impl GalaxyModel {
             .map(|(galaxy, points)| (galaxy, RTree::bulk_load(points)))
             .collect();
 
-        // Extract player state and determine active galaxy
-        let player_state = Some(save.to_core_player_state());
-        let active_galaxy = save.active_player_state().universe_address.reality_index;
-
-        // Extract bases
-        let ps = save.active_player_state();
-        let mut bases = HashMap::new();
-        for base in &ps.persistent_player_bases {
-            let core_base = base.to_core_base();
-            if !core_base.name.is_empty() {
-                bases.insert(core_base.name.to_lowercase(), core_base);
-            }
-        }
-
         let mut model = Self {
             graph,
             spatial,
@@ -176,7 +211,7 @@ impl GalaxyModel {
             name_index,
             address_to_id,
             node_map,
-            player_state,
+            player_state: Some(player_state),
             player_placeholders: HashSet::new(),
         };
 
