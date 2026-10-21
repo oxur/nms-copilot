@@ -281,12 +281,13 @@ pub(crate) fn build_where_am_i_json(model: &GalaxyModel) -> Result<serde_json::V
     let portal_hex = format!("{:012X}", addr.packed());
     let galaxy = Galaxy::by_index(addr.reality_index);
 
-    let nearest = model.nearest_systems_from_address(addr, 1);
-    let (system_name, system_planets) = nearest
-        .first()
-        .and_then(|(id, _)| model.system(id))
-        .map(|s| (s.name.as_deref().unwrap_or("-"), s.planets.len()))
-        .unwrap_or(("(unknown)", 0));
+    let id = nms_core::system::SystemId::from_address(addr);
+    let (system_name, system_planets) = match model.system(&id) {
+        Some(system) if !model.is_player_placeholder(&id) => {
+            (system.name.as_deref().unwrap_or("-"), system.planets.len())
+        }
+        _ => ("(unknown)", 0),
+    };
 
     Ok(json!({
         "system": system_name,
@@ -883,6 +884,446 @@ mod tests {
         let guard = model.read().await;
         assert_eq!(guard.player_state, reverse_state);
         assert_eq!(guard.active_galaxy, reverse_selected);
+    }
+
+    #[test]
+    fn test_where_am_i_uses_exact_system_identity_and_distinguishes_empty_from_marker() {
+        use nms_core::player::PlayerState;
+        use nms_core::system::{Planet, System, SystemId};
+
+        let mut model = GalaxyModel::new();
+        let decoy = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let physical = GalacticAddress::new(0, 0, 0, 2, 5, 0);
+        let selected_galaxy_decoy = GalacticAddress::new(0, 0, 0, 2, 0, 9);
+        let decoy_id = SystemId::from_address(&decoy);
+        let physical_id = SystemId::from_address(&physical);
+        model.insert_system(System::new(
+            decoy,
+            Some("Nearby Decoy".into()),
+            None,
+            None,
+            vec![Planet::new(0, Some(Biome::Lush), None, false, None, None)],
+        ));
+        model.insert_system(System::new(
+            selected_galaxy_decoy,
+            Some("Selected Galaxy Decoy".into()),
+            None,
+            None,
+            vec![Planet::new(0, Some(Biome::Toxic), None, false, None, None)],
+        ));
+        model.player_state = Some(PlayerState::new(physical, 0, None, None, 7, 8, 9));
+        model.set_active_galaxy(9);
+
+        let snapshot = |model: &GalaxyModel| {
+            let id_key = |id: &nms_graph::SystemId| (id.reality_index(), id.system_address());
+            let mut graph_nodes = model.graph.node_weights().map(id_key).collect::<Vec<_>>();
+            graph_nodes.sort();
+            let mut graph_edges = model
+                .graph
+                .edge_indices()
+                .map(|edge| {
+                    let (left, right) = model.graph.edge_endpoints(edge).expect("edge endpoints");
+                    let mut endpoints = [
+                        id_key(model.graph.node_weight(left).expect("left endpoint exists")),
+                        id_key(
+                            model
+                                .graph
+                                .node_weight(right)
+                                .expect("right endpoint exists"),
+                        ),
+                    ];
+                    endpoints.sort();
+                    (
+                        endpoints,
+                        model
+                            .graph
+                            .edge_weight(edge)
+                            .expect("edge weight exists")
+                            .to_bits(),
+                    )
+                })
+                .collect::<Vec<_>>();
+            graph_edges.sort();
+            let mut spatial_rows = model
+                .spatial
+                .iter()
+                .flat_map(|(galaxy, tree)| {
+                    tree.iter().map(|point| {
+                        (
+                            *galaxy,
+                            point.id.reality_index(),
+                            point.id.system_address(),
+                            point.point.map(f64::to_bits),
+                        )
+                    })
+                })
+                .collect::<Vec<_>>();
+            spatial_rows.sort();
+            (
+                (
+                    model.systems.clone(),
+                    model.planets.clone(),
+                    model.bases.clone(),
+                ),
+                (
+                    model.node_map.clone(),
+                    graph_nodes,
+                    graph_edges,
+                    spatial_rows,
+                ),
+                (
+                    model.name_index.clone(),
+                    model.biome_index.clone(),
+                    model.address_to_id.clone(),
+                ),
+                (
+                    model.player_state.clone(),
+                    model.active_galaxy,
+                    model
+                        .systems
+                        .keys()
+                        .filter(|id| model.is_player_placeholder(id))
+                        .copied()
+                        .collect::<std::collections::HashSet<_>>(),
+                ),
+            )
+        };
+        let initial_state = snapshot(&model);
+
+        let unknown = build_where_am_i_json(&model).unwrap();
+        assert_eq!(
+            unknown,
+            json!({
+                "system": "(unknown)",
+                "planets_in_system": 0,
+                "galaxy": "Euclid",
+                "voxel_x": 0,
+                "voxel_y": 0,
+                "voxel_z": 0,
+                "solar_system_index": 2,
+                "portal_glyphs_hex": "500200000000",
+                "portal_glyphs_emoji": hex_to_emoji("500200000000"),
+                "signal_booster": "07FF:007F:07FF:0002",
+            })
+        );
+        assert_ne!(decoy_id, physical_id);
+        assert_eq!(model.system_count(), 2);
+        assert_eq!(snapshot(&model), initial_state);
+
+        model.insert_player_placeholder(physical);
+        let marked_state = snapshot(&model);
+        let marked = build_where_am_i_json(&model).unwrap();
+        assert_eq!(
+            marked,
+            json!({
+                "system": "(unknown)",
+                "planets_in_system": 0,
+                "galaxy": "Euclid",
+                "voxel_x": 0,
+                "voxel_y": 0,
+                "voxel_z": 0,
+                "solar_system_index": 2,
+                "portal_glyphs_hex": "500200000000",
+                "portal_glyphs_emoji": hex_to_emoji("500200000000"),
+                "signal_booster": "07FF:007F:07FF:0002",
+            })
+        );
+        assert!(model.is_player_placeholder(&physical_id));
+        assert_eq!(snapshot(&model), marked_state);
+
+        let genuine_empty = System::new(physical, None, None, None, vec![]);
+        model.insert_system(genuine_empty);
+        let empty_state = snapshot(&model);
+        let empty = build_where_am_i_json(&model).unwrap();
+        assert_eq!(
+            empty,
+            json!({
+                "system": "-",
+                "planets_in_system": 0,
+                "galaxy": "Euclid",
+                "voxel_x": 0,
+                "voxel_y": 0,
+                "voxel_z": 0,
+                "solar_system_index": 2,
+                "portal_glyphs_hex": "500200000000",
+                "portal_glyphs_emoji": hex_to_emoji("500200000000"),
+                "signal_booster": "07FF:007F:07FF:0002",
+            })
+        );
+        assert!(!model.is_player_placeholder(&physical_id));
+        assert_ne!(empty_state, marked_state);
+        assert_eq!(snapshot(&model), empty_state);
+
+        let mut promoted = GalaxyModel::new();
+        promoted.player_state = Some(PlayerState::new(physical, 0, None, None, 7, 8, 9));
+        promoted.insert_player_placeholder(physical);
+        let unnamed_planet = Planet::new(5, Some(Biome::Toxic), None, false, None, Some(171));
+        promoted.insert_system(System::new(
+            GalacticAddress::from_packed(physical_id.system_address(), 0),
+            None,
+            Some("Explorer".into()),
+            Some(
+                "2023-11-14T22:13:20Z"
+                    .parse()
+                    .expect("literal RFC3339 timestamp"),
+            ),
+            vec![unnamed_planet],
+        ));
+        let unnamed_state = snapshot(&promoted);
+        let genuine_unnamed = build_where_am_i_json(&promoted).unwrap();
+        assert_eq!(
+            genuine_unnamed,
+            json!({
+                "system": "-",
+                "planets_in_system": 1,
+                "galaxy": "Euclid",
+                "voxel_x": 0,
+                "voxel_y": 0,
+                "voxel_z": 0,
+                "solar_system_index": 2,
+                "portal_glyphs_hex": "500200000000",
+                "portal_glyphs_emoji": hex_to_emoji("500200000000"),
+                "signal_booster": "07FF:007F:07FF:0002",
+            })
+        );
+        assert!(!promoted.is_player_placeholder(&physical_id));
+        assert_eq!(snapshot(&promoted), unnamed_state);
+
+        let named_duplicate = System::new(
+            GalacticAddress::from_packed(physical_id.system_address(), 0),
+            Some("Exact Physical Discovery".into()),
+            None,
+            None,
+            vec![Planet::new(
+                5,
+                Some(Biome::Toxic),
+                None,
+                false,
+                Some("U2".into()),
+                None,
+            )],
+        );
+        let duplicate_state = snapshot(&promoted);
+        promoted.insert_system(named_duplicate);
+        assert_eq!(snapshot(&promoted), duplicate_state);
+        assert_eq!(build_where_am_i_json(&promoted).unwrap(), genuine_unnamed);
+        assert_eq!(snapshot(&promoted), duplicate_state);
+
+        let mut fresh_named = GalaxyModel::new();
+        fresh_named.player_state = Some(PlayerState::new(physical, 0, None, None, 7, 8, 9));
+        fresh_named.set_active_galaxy(9);
+        fresh_named.insert_player_placeholder(physical);
+        fresh_named.insert_system(System::new(
+            GalacticAddress::from_packed(physical_id.system_address(), 0),
+            Some("Exact Physical Discovery".into()),
+            None,
+            None,
+            vec![Planet::new(
+                5,
+                Some(Biome::Toxic),
+                None,
+                false,
+                Some("U2".into()),
+                None,
+            )],
+        ));
+        let named_state = snapshot(&fresh_named);
+        let named_location = build_where_am_i_json(&fresh_named).unwrap();
+        assert_eq!(
+            named_location,
+            json!({
+                "system": "Exact Physical Discovery",
+                "planets_in_system": 1,
+                "galaxy": "Euclid",
+                "voxel_x": 0,
+                "voxel_y": 0,
+                "voxel_z": 0,
+                "solar_system_index": 2,
+                "portal_glyphs_hex": "500200000000",
+                "portal_glyphs_emoji": hex_to_emoji("500200000000"),
+                "signal_booster": "07FF:007F:07FF:0002",
+            })
+        );
+        // The selected-galaxy same-voxel decoy remains unrelated to physical U2.
+        assert_eq!(snapshot(&fresh_named), named_state);
+
+        for physical_galaxy in [0, 9] {
+            for reverse_order in [false, true] {
+                for state in ["absent", "marked", "empty", "unnamed", "named", "duplicate"] {
+                    let opposite_galaxy = if physical_galaxy == 0 { 9 } else { 0 };
+                    let physical = GalacticAddress::new(0, 0, 0, 2, 5, physical_galaxy);
+                    let physical_id = SystemId::from_address(&physical);
+                    let same_voxel_other_ssi = GalacticAddress::new(0, 0, 0, 1, 0, physical_galaxy);
+                    let same_ssi_other_galaxy =
+                        GalacticAddress::new(0, 0, 0, 2, 0, opposite_galaxy);
+                    let decoys = [
+                        System::new(
+                            same_voxel_other_ssi,
+                            Some("Same voxel other SSI".into()),
+                            None,
+                            None,
+                            vec![
+                                Planet::new(0, Some(Biome::Lush), None, false, None, None),
+                                Planet::new(1, Some(Biome::Toxic), None, false, None, None),
+                            ],
+                        ),
+                        System::new(
+                            same_ssi_other_galaxy,
+                            Some("Same SSI other galaxy".into()),
+                            None,
+                            None,
+                            vec![
+                                Planet::new(0, Some(Biome::Lush), None, false, None, None),
+                                Planet::new(1, Some(Biome::Toxic), None, false, None, None),
+                                Planet::new(2, Some(Biome::Lush), None, false, None, None),
+                            ],
+                        ),
+                    ];
+                    let mut case = GalaxyModel::new();
+                    case.player_state = Some(PlayerState::new(
+                        physical,
+                        physical_galaxy,
+                        None,
+                        None,
+                        7,
+                        8,
+                        9,
+                    ));
+                    case.set_active_galaxy(opposite_galaxy);
+                    let player = case.player_state.as_ref().expect("matrix player state");
+                    assert_eq!(player.current_reality, player.current_address.reality_index);
+                    let target = match state {
+                        "absent" => None,
+                        "marked" => None,
+                        "empty" => Some(System::new(
+                            GalacticAddress::from_packed(
+                                physical_id.system_address(),
+                                physical_galaxy,
+                            ),
+                            None,
+                            None,
+                            None,
+                            vec![],
+                        )),
+                        "unnamed" | "duplicate" => Some(System::new(
+                            GalacticAddress::from_packed(
+                                physical_id.system_address(),
+                                physical_galaxy,
+                            ),
+                            None,
+                            None,
+                            None,
+                            vec![Planet::new(
+                                5,
+                                Some(Biome::Toxic),
+                                None,
+                                false,
+                                Some("U2".into()),
+                                None,
+                            )],
+                        )),
+                        "named" => Some(System::new(
+                            GalacticAddress::from_packed(
+                                physical_id.system_address(),
+                                physical_galaxy,
+                            ),
+                            Some("Physical".into()),
+                            None,
+                            None,
+                            vec![
+                                Planet::new(
+                                    5,
+                                    Some(Biome::Toxic),
+                                    None,
+                                    false,
+                                    Some("U2".into()),
+                                    None,
+                                ),
+                                Planet::new(
+                                    6,
+                                    Some(Biome::Lush),
+                                    None,
+                                    false,
+                                    Some("U3".into()),
+                                    None,
+                                ),
+                            ],
+                        )),
+                        _ => unreachable!(),
+                    };
+                    let target_first = reverse_order;
+                    if target_first {
+                        if state == "marked" {
+                            case.insert_player_placeholder(physical);
+                        }
+                        if let Some(target) = target.clone() {
+                            case.insert_system(target);
+                        }
+                        for index in if reverse_order { [1, 0] } else { [0, 1] } {
+                            case.insert_system(decoys[index].clone());
+                        }
+                    } else {
+                        for index in if reverse_order { [1, 0] } else { [0, 1] } {
+                            case.insert_system(decoys[index].clone());
+                        }
+                        if state == "marked" {
+                            case.insert_player_placeholder(physical);
+                        }
+                        if let Some(target) = target.clone() {
+                            case.insert_system(target);
+                        }
+                    }
+                    if state == "duplicate" {
+                        let before_duplicate = snapshot(&case);
+                        case.insert_system(System::new(
+                            GalacticAddress::from_packed(
+                                physical_id.system_address(),
+                                physical_galaxy,
+                            ),
+                            Some("Ignored duplicate".into()),
+                            None,
+                            None,
+                            vec![Planet::new(
+                                5,
+                                Some(Biome::Toxic),
+                                None,
+                                false,
+                                Some("U2".into()),
+                                None,
+                            )],
+                        ));
+                        assert_eq!(snapshot(&case), before_duplicate);
+                    }
+                    let before_query = snapshot(&case);
+                    let actual = build_where_am_i_json(&case).unwrap();
+                    let (name, planet_count) = match state {
+                        "absent" | "marked" => ("(unknown)", 0),
+                        "empty" => ("-", 0),
+                        "unnamed" | "duplicate" => ("-", 1),
+                        "named" => ("Physical", 2),
+                        _ => unreachable!(),
+                    };
+                    let portal = "500200000000";
+                    assert_eq!(
+                        actual,
+                        json!({
+                            "system": name,
+                            "planets_in_system": planet_count,
+                            "galaxy": if physical_galaxy == 0 { "Euclid" } else { "Eissentam" },
+                            "voxel_x": 0,
+                            "voxel_y": 0,
+                            "voxel_z": 0,
+                            "solar_system_index": 2,
+                            "portal_glyphs_hex": portal,
+                            "portal_glyphs_emoji": hex_to_emoji(portal),
+                            "signal_booster": "07FF:007F:07FF:0002",
+                        }),
+                        "state={state} physical_galaxy={physical_galaxy} reverse_order={reverse_order}"
+                    );
+                    assert_eq!(snapshot(&case), before_query);
+                }
+            }
+        }
     }
 
     #[tokio::test]

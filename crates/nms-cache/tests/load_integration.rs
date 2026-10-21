@@ -349,12 +349,23 @@ fn source_model_from_json(json: &str) -> GalaxyModel {
     GalaxyModel::from_save(&save)
 }
 
-fn assert_source_semantics(actual: &GalaxyModel) {
-    let expected = source_model();
-    assert_source_semantics_against(actual, &expected);
+#[derive(Clone, Copy)]
+enum SourceModelStage {
+    InitialEnsure,
+    RebuiltWarm,
 }
 
-fn assert_source_semantics_against(actual: &GalaxyModel, expected: &GalaxyModel) {
+fn assert_source_semantics(actual: &GalaxyModel) {
+    assert_source_semantics_at(actual, SourceModelStage::InitialEnsure);
+}
+
+fn assert_source_semantics_at(actual: &GalaxyModel, stage: SourceModelStage) {
+    let expected = source_model();
+    assert_source_semantics_against(actual, &expected, stage);
+}
+
+fn assert_raw_source_semantics(actual: &GalaxyModel) {
+    let expected = source_model();
     assert_eq!(actual.systems, expected.systems);
     assert_eq!(actual.planets, expected.planets);
     assert_eq!(actual.bases, expected.bases);
@@ -362,7 +373,207 @@ fn assert_source_semantics_against(actual: &GalaxyModel, expected: &GalaxyModel)
     assert_eq!(actual.active_galaxy, expected.active_galaxy);
     assert_eq!(actual.systems.len(), 1);
     assert_eq!(actual.planets.len(), 2);
-    let system = actual.systems.values().next().unwrap();
+    assert!(
+        actual
+            .systems
+            .keys()
+            .all(|id| !actual.is_player_placeholder(id))
+    );
+}
+
+fn assert_cache_contents(actual: &CacheData, expected: &CacheData) {
+    assert_eq!(actual.save_version, expected.save_version);
+    assert_eq!(actual.player_state, expected.player_state);
+    assert_eq!(actual.active_galaxy, expected.active_galaxy);
+    let rows = |data: &CacheData| {
+        let mut rows = data
+            .systems
+            .iter()
+            .map(|system| {
+                (
+                    system.address.reality_index,
+                    system.address.voxel_x(),
+                    system.address.voxel_y(),
+                    system.address.voxel_z(),
+                    system.address.solar_system_index(),
+                    system.address.planet_index(),
+                    system.name.clone(),
+                    system.discoverer.clone(),
+                    system.timestamp_secs,
+                    system.planets.clone(),
+                    system.is_player_placeholder,
+                )
+            })
+            .collect::<Vec<_>>();
+        rows.sort_by_key(|row| (row.0, row.1, row.2, row.3, row.4, row.5));
+        rows
+    };
+    assert_eq!(rows(actual), rows(expected));
+    let mut actual_bases = actual.bases.clone();
+    actual_bases.sort_by(|left, right| left.name.cmp(&right.name));
+    let mut expected_bases = expected.bases.clone();
+    expected_bases.sort_by(|left, right| left.name.cmp(&right.name));
+    assert_eq!(actual_bases, expected_bases);
+}
+
+fn assert_source_semantics_against(
+    actual: &GalaxyModel,
+    source: &GalaxyModel,
+    stage: SourceModelStage,
+) {
+    let raw_data = nms_cache::extract_cache_data(source, 4720);
+    let raw = nms_cache::rebuild_model(&raw_data);
+    let mut first_ensure = raw;
+    first_ensure.ensure_player_system();
+    let expected = if matches!(stage, SourceModelStage::RebuiltWarm) {
+        let ensured_data = nms_cache::extract_cache_data(&first_ensure, 4720);
+        nms_cache::rebuild_model(&ensured_data)
+    } else {
+        first_ensure
+    };
+    assert_eq!(actual.systems, expected.systems);
+    assert_eq!(actual.planets, expected.planets);
+    assert_eq!(actual.bases, expected.bases);
+    assert_eq!(actual.player_state, expected.player_state);
+    assert_eq!(actual.active_galaxy, expected.active_galaxy);
+    assert_eq!(actual.name_index, expected.name_index);
+    assert_eq!(actual.biome_index, expected.biome_index);
+    assert_eq!(actual.address_to_id, expected.address_to_id);
+    let discovered_id = SystemId::from_address(&nms_core::address::GalacticAddress::from_packed(
+        0x050003AB8C07,
+        0,
+    ));
+    let node_weights = |model: &GalaxyModel| {
+        model
+            .graph
+            .node_weights()
+            .copied()
+            .collect::<std::collections::HashSet<_>>()
+    };
+    assert_eq!(node_weights(actual), node_weights(&expected));
+    let marker_ids = |model: &GalaxyModel| {
+        model
+            .systems
+            .keys()
+            .filter(|id| model.is_player_placeholder(id))
+            .copied()
+            .collect::<std::collections::HashSet<_>>()
+    };
+    let source_player = source.player_state.as_ref().expect("literal player state");
+    let physical_id = SystemId::from_address(&source_player.current_address);
+    let expected_markers = std::collections::HashSet::from([physical_id]);
+    assert_eq!(marker_ids(actual), expected_markers);
+    assert_eq!(marker_ids(&expected), expected_markers);
+    let expected_spatial_galaxies = if physical_id.reality_index() == 0 {
+        std::collections::HashSet::from([0])
+    } else {
+        std::collections::HashSet::from([0, 9])
+    };
+    assert_eq!(
+        actual
+            .spatial
+            .keys()
+            .copied()
+            .collect::<std::collections::HashSet<_>>(),
+        expected_spatial_galaxies
+    );
+    let spatial_rows = |model: &GalaxyModel, galaxy| {
+        let mut rows = model
+            .spatial_for(galaxy)
+            .into_iter()
+            .flat_map(|tree| tree.iter())
+            .map(|point| format!("{:?}|{:?}", point.id, point.point))
+            .collect::<Vec<_>>();
+        rows.sort();
+        rows
+    };
+    let discovered_point = [-1017.0, 3.0, -1352.0];
+    let physical_point = [0.0, 0.0, 0.0];
+    let mut expected_zero_rows = vec![format!("{discovered_id:?}|{discovered_point:?}")];
+    if physical_id.reality_index() == 0 {
+        expected_zero_rows.push(format!("{physical_id:?}|{physical_point:?}"));
+    }
+    expected_zero_rows.sort();
+    assert_eq!(spatial_rows(actual, 0), expected_zero_rows);
+    if physical_id.reality_index() == 9 {
+        assert_eq!(
+            spatial_rows(actual, 9),
+            vec![format!("{physical_id:?}|{physical_point:?}")]
+        );
+    }
+    let node_ids = |model: &GalaxyModel| {
+        model
+            .node_map
+            .keys()
+            .copied()
+            .collect::<std::collections::HashSet<_>>()
+    };
+    assert_eq!(node_ids(actual), node_ids(&expected));
+    assert!(
+        actual
+            .node_map
+            .iter()
+            .all(|(id, index)| { actual.graph.node_weight(*index) == Some(id) })
+    );
+    assert!(
+        expected
+            .node_map
+            .iter()
+            .all(|(id, index)| { expected.graph.node_weight(*index) == Some(id) })
+    );
+    assert_eq!(actual.graph.node_count(), expected.graph.node_count());
+    assert_eq!(actual.graph.edge_count(), expected.graph.edge_count());
+    let graph_edges = |model: &GalaxyModel| {
+        let mut edges = model
+            .graph
+            .edge_indices()
+            .map(|edge| {
+                let (left, right) = model.graph.edge_endpoints(edge).unwrap();
+                let mut left = format!("{:?}", model.graph.node_weight(left).unwrap());
+                let mut right = format!("{:?}", model.graph.node_weight(right).unwrap());
+                if left > right {
+                    std::mem::swap(&mut left, &mut right);
+                }
+                (
+                    left,
+                    right,
+                    model.graph.edge_weight(edge).unwrap().to_bits(),
+                )
+            })
+            .collect::<Vec<_>>();
+        edges.sort();
+        edges
+    };
+    assert_eq!(graph_edges(actual), graph_edges(&expected));
+    match stage {
+        SourceModelStage::InitialEnsure => {
+            assert_eq!(actual.graph.edge_count(), 0);
+        }
+        SourceModelStage::RebuiltWarm if physical_id.reality_index() == 0 => {
+            assert_eq!(actual.graph.edge_count(), 1);
+            let edge = actual.graph.edge_indices().next().unwrap();
+            let (left, right) = actual.graph.edge_endpoints(edge).unwrap();
+            let endpoints = std::collections::HashSet::from([
+                *actual.graph.node_weight(left).unwrap(),
+                *actual.graph.node_weight(right).unwrap(),
+            ]);
+            assert_eq!(
+                endpoints,
+                std::collections::HashSet::from([physical_id, discovered_id])
+            );
+            assert!(
+                (*actual.graph.edge_weight(edge).unwrap() - 676_721.744_884_853).abs() < 1e-9,
+                "literal rebuilt same-galaxy edge distance"
+            );
+        }
+        SourceModelStage::RebuiltWarm => assert_eq!(actual.graph.edge_count(), 0),
+    }
+    assert_eq!(actual.systems.len(), 2);
+    assert_eq!(actual.planets.len(), 2);
+    let system = actual
+        .system(&discovered_id)
+        .expect("literal galaxy-zero discovered system");
+    assert_eq!(system.name, None);
     assert_eq!(system.address.packed(), 0x050003AB8C07);
     let mut planet_indices = system
         .planets
@@ -375,6 +586,12 @@ fn assert_source_semantics_against(actual: &GalaxyModel, expected: &GalaxyModel)
     assert_eq!(base.name, "Semantic Base");
     assert_eq!(base.address.packed(), 0x050003AB8C07);
     assert_eq!(base.position, [1.0, 2.0, 3.0]);
+    assert!(actual.is_player_placeholder(&physical_id));
+    assert_eq!(
+        actual.system(&physical_id).unwrap().address.planet_index(),
+        0
+    );
+    assert!(actual.system(&physical_id).unwrap().planets.is_empty());
     let player = actual.player_state.as_ref().unwrap();
     assert_eq!(
         (player.units, player.nanites, player.quicksilver),
@@ -424,11 +641,140 @@ fn dual_galaxy_model(reverse: bool, with_player: bool) -> GalaxyModel {
     model
 }
 
-fn assert_dual_galaxy_model(actual: &GalaxyModel, with_player: bool) {
-    assert_dual_galaxy_model_with_selected(actual, with_player, 9);
+fn assert_dual_galaxy_model_after_ensure(
+    actual: &GalaxyModel,
+    with_player: bool,
+    stage: SourceModelStage,
+) {
+    let address0 = GalacticAddress::from_packed(0x150003AB8C07, 0);
+    let address9 = GalacticAddress::from_packed(0x150003AB8C07, 9);
+    let id0 = SystemId::from_address(&address0);
+    let id9 = SystemId::from_address(&address9);
     if with_player {
-        assert_eq!(actual.player_position().unwrap().reality_index, 0);
+        let player = actual.player_state.as_ref().unwrap();
+        assert_eq!(player.current_address.reality_index, 0);
+        let player_id = SystemId::from_address(&player.current_address);
+        assert_ne!(player_id, id0);
+        assert_ne!(player_id, id9);
+        assert_eq!(actual.system_count(), 3);
+        assert_eq!(actual.planet_count(), 2);
+        assert!(actual.is_player_placeholder(&player_id));
+        assert!(actual.system(&player_id).unwrap().planets.is_empty());
+        assert_eq!(actual.spatial_for(0).unwrap().size(), 2);
+        assert_eq!(actual.spatial_for(9).unwrap().size(), 1);
+        assert_eq!(actual.graph.node_count(), 3);
+        match stage {
+            SourceModelStage::InitialEnsure => assert_eq!(actual.graph.edge_count(), 0),
+            SourceModelStage::RebuiltWarm => {
+                assert_eq!(actual.graph.edge_count(), 1);
+                let edge = actual.graph.edge_indices().next().unwrap();
+                let (left, right) = actual.graph.edge_endpoints(edge).unwrap();
+                let endpoints = std::collections::HashSet::from([
+                    *actual.graph.node_weight(left).unwrap(),
+                    *actual.graph.node_weight(right).unwrap(),
+                ]);
+                assert_eq!(endpoints, std::collections::HashSet::from([player_id, id0]));
+                assert!(
+                    (*actual.graph.edge_weight(edge).unwrap() - 676_721.744_884_853).abs() < 1e-9,
+                    "literal rebuilt same-galaxy Zero-current edge distance"
+                );
+            }
+        }
+        assert_eq!(actual.active_galaxy, 9);
+        assert_eq!(actual.system(&id0).unwrap().name.as_deref(), Some("Zero"));
+        assert_eq!(actual.system(&id9).unwrap().name.as_deref(), Some("Nine"));
+    } else {
+        assert_dual_galaxy_model_with_selected(actual, false, 9);
+        assert_eq!(actual.system_count(), 2);
+        assert!(
+            actual
+                .systems
+                .keys()
+                .all(|id| !actual.is_player_placeholder(id))
+        );
     }
+    let mut expected = dual_galaxy_model(false, with_player);
+    if with_player {
+        let physical_address = expected
+            .player_state
+            .as_ref()
+            .expect("dual fixture player")
+            .current_address;
+        expected.insert_player_placeholder(physical_address);
+    }
+    if with_player && matches!(stage, SourceModelStage::RebuiltWarm) {
+        let data = extract_cache_data(&expected, 9999);
+        expected = rebuild_model(&data);
+    }
+    assert_eq!(actual.systems, expected.systems);
+    assert_eq!(actual.planets, expected.planets);
+    assert_eq!(actual.bases, expected.bases);
+    assert_eq!(actual.player_state, expected.player_state);
+    assert_eq!(actual.name_index, expected.name_index);
+    assert_eq!(actual.biome_index, expected.biome_index);
+    assert_eq!(actual.address_to_id, expected.address_to_id);
+    assert_eq!(actual.active_galaxy, expected.active_galaxy);
+    let expected_spatial_galaxies = std::collections::HashSet::from([0, 9]);
+    assert_eq!(
+        actual
+            .spatial
+            .keys()
+            .copied()
+            .collect::<std::collections::HashSet<_>>(),
+        expected_spatial_galaxies
+    );
+    let marker_ids = actual
+        .systems
+        .keys()
+        .filter(|id| actual.is_player_placeholder(id))
+        .copied()
+        .collect::<std::collections::HashSet<_>>();
+    let expected_marker_ids = if with_player {
+        std::collections::HashSet::from([SystemId::from_address(
+            &expected.player_state.as_ref().unwrap().current_address,
+        )])
+    } else {
+        std::collections::HashSet::new()
+    };
+    assert_eq!(marker_ids, expected_marker_ids);
+    let spatial_rows = |model: &GalaxyModel, galaxy| {
+        let mut rows = model
+            .spatial_for(galaxy)
+            .into_iter()
+            .flat_map(|tree| tree.iter())
+            .map(|point| format!("{:?}|{:?}", point.id, point.point))
+            .collect::<Vec<_>>();
+        rows.sort();
+        rows
+    };
+    let point0 = format!("{id0:?}|{:?}", [-1017.0, 3.0, -1352.0]);
+    let point9 = format!("{id9:?}|{:?}", [-1017.0, 3.0, -1352.0]);
+    let mut zero_rows = vec![point0];
+    if with_player {
+        let physical_id = *expected_marker_ids.iter().next().unwrap();
+        zero_rows.push(format!("{physical_id:?}|{:?}", [0.0, 0.0, 0.0]));
+    }
+    zero_rows.sort();
+    assert_eq!(spatial_rows(actual, 0), zero_rows);
+    assert_eq!(spatial_rows(actual, 9), vec![point9]);
+    assert_eq!(
+        actual
+            .node_map
+            .keys()
+            .collect::<std::collections::HashSet<_>>(),
+        expected
+            .node_map
+            .keys()
+            .collect::<std::collections::HashSet<_>>()
+    );
+    assert!(
+        actual
+            .node_map
+            .iter()
+            .all(|(id, node)| actual.graph.node_weight(*node) == Some(id))
+    );
+    assert_eq!(actual.graph.node_count(), expected.graph.node_count());
+    assert_eq!(actual.graph.edge_count(), expected.graph.edge_count());
 }
 
 fn assert_dual_galaxy_model_with_selected(
@@ -539,7 +885,7 @@ fn assert_rebuilt_and_warm(cache_path: &std::path::Path, save_path: &std::path::
     let warm = load_or_rebuild(cache_path, save_path, false).unwrap();
     assert!(warm.was_cached);
     assert_eq!(warm.save_version, 4720);
-    assert_source_semantics(&warm.model);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
 }
 
 #[test]
@@ -684,7 +1030,7 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
         assert!(!rebuilt.was_cached);
         assert_eq!(rebuilt.save_version, 4720);
-        assert_source_semantics_against(&rebuilt.model, &expected);
+        assert_source_semantics_against(&rebuilt.model, &expected, SourceModelStage::InitialEnsure);
         let rebuilt_player = rebuilt.model.player_state.as_ref().unwrap();
         assert_eq!(
             rebuilt_player.current_address,
@@ -709,7 +1055,7 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         assert_eq!(rewritten.save_version, 4720);
         assert_eq!(rewritten.active_galaxy, source_reality);
         let rewritten_model = rebuild_model(&rewritten);
-        assert_source_semantics_against(&rewritten_model, &expected);
+        assert_source_semantics_against(&rewritten_model, &expected, SourceModelStage::RebuiltWarm);
         let rewritten_player = rewritten_model.player_state.as_ref().unwrap();
         assert_eq!(
             rewritten_player.current_address,
@@ -730,7 +1076,7 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
         assert!(warm.was_cached);
         assert_eq!(warm.save_version, 4720);
-        assert_source_semantics_against(&warm.model, &expected);
+        assert_source_semantics_against(&warm.model, &expected, SourceModelStage::RebuiltWarm);
         let warm_player = warm.model.player_state.as_ref().unwrap();
         assert_eq!(
             warm_player.current_address,
@@ -859,11 +1205,32 @@ fn load_or_rebuild_uses_cache_when_fresh() {
     let data = extract_cache_data(&GalaxyModel::from_save(&save), 4720);
     write_cache(&data, &cache_path).unwrap();
     set_fresh(&cache_path, &save_path);
+    let before = fs::read(&cache_path).unwrap();
 
     let result = load_or_rebuild(&cache_path, &save_path, false).unwrap();
     assert!(result.was_cached);
     assert_eq!(result.save_version, 4720);
     assert_source_semantics(&result.model);
+    let repaired = fs::read(&cache_path).unwrap();
+    assert_ne!(repaired, before);
+    assert_eq!(
+        read_cache(&cache_path)
+            .unwrap()
+            .systems
+            .iter()
+            .filter(|system| system.is_player_placeholder)
+            .count(),
+        1
+    );
+    let repaired_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
+    assert_eq!(fs::read(&cache_path).unwrap(), repaired);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        repaired_mtime
+    );
 }
 
 #[test]
@@ -877,6 +1244,314 @@ fn load_or_rebuild_skips_cache_with_no_cache_flag() {
     assert_eq!(result.save_version, 4720);
     assert_source_semantics(&result.model);
     assert!(!cache_path.exists());
+}
+
+#[test]
+fn no_cache_preserves_valid_opposed_cache_and_temp_blocker_then_warm_repair_is_noop() {
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    let source = test_save_json().to_owned();
+    fs::write(&save_path, &source).unwrap();
+    set_mtime(&save_path, save_mtime());
+
+    let opposed_model = dual_galaxy_model(true, true);
+    let opposed = extract_cache_data(&opposed_model, 4719);
+    assert_eq!(opposed.active_galaxy, 9);
+    assert_eq!(opposed.systems.len(), 2);
+    write_cache(&opposed, &cache_path).unwrap();
+    set_mtime(&cache_path, save_mtime() + Duration::from_secs(100));
+    assert!(is_cache_fresh(&cache_path, &save_path));
+    let opposed_bytes = fs::read(&cache_path).unwrap();
+    let opposed_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+
+    let blocker = cache_path.with_extension("rkyv.tmp");
+    fs::create_dir(&blocker).unwrap();
+    let sentinel = blocker.join("owned-sentinel");
+    fs::write(&sentinel, b"slice19-no-cache-blocker\n").unwrap();
+    set_mtime(&sentinel, save_mtime() + Duration::from_secs(78));
+    let sentinel_mtime = fs::metadata(&sentinel).unwrap().modified().unwrap();
+    let blocker_mtime = fs::metadata(&blocker).unwrap().modified().unwrap();
+    let source_before = fs::read(&save_path).unwrap();
+    let source_mtime_before = fs::metadata(&save_path).unwrap().modified().unwrap();
+
+    let failed_repair = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(failed_repair.was_cached);
+    assert_eq!(failed_repair.save_version, 4719);
+    assert_dual_galaxy_model_after_ensure(
+        &failed_repair.model,
+        true,
+        SourceModelStage::InitialEnsure,
+    );
+    assert_eq!(fs::read(&cache_path).unwrap(), opposed_bytes);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        opposed_mtime
+    );
+    let blocker_meta = fs::symlink_metadata(&blocker).unwrap();
+    assert!(blocker_meta.is_dir());
+    assert_eq!(fs::read(&sentinel).unwrap(), b"slice19-no-cache-blocker\n");
+    assert!(fs::symlink_metadata(&sentinel).unwrap().is_file());
+    assert_eq!(
+        fs::metadata(&sentinel).unwrap().modified().unwrap(),
+        sentinel_mtime
+    );
+    assert_eq!(
+        fs::metadata(&blocker).unwrap().modified().unwrap(),
+        blocker_mtime
+    );
+    assert_eq!(
+        fs::read_dir(&blocker)
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<Vec<_>>(),
+        [std::ffi::OsString::from("owned-sentinel")]
+    );
+    assert_eq!(fs::read(&save_path).unwrap(), source_before);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        source_mtime_before
+    );
+
+    assert!(cache_path.parent().unwrap().is_dir());
+    assert_eq!(
+        fs::read_dir(cache_path.parent().unwrap())
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<std::collections::HashSet<_>>(),
+        std::collections::HashSet::from([
+            cache_path.file_name().unwrap().to_owned(),
+            blocker.file_name().unwrap().to_owned(),
+            save_path.file_name().unwrap().to_owned(),
+        ])
+    );
+
+    let bypassed = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    assert!(!bypassed.was_cached);
+    assert_eq!(bypassed.save_version, 4720);
+    assert_source_semantics(&bypassed.model);
+    assert_eq!(fs::read(&cache_path).unwrap(), opposed_bytes);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        opposed_mtime
+    );
+    assert_eq!(fs::read(&save_path).unwrap(), source_before);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        source_mtime_before
+    );
+    assert!(fs::symlink_metadata(&blocker).unwrap().is_dir());
+    assert_eq!(fs::read(&sentinel).unwrap(), b"slice19-no-cache-blocker\n");
+    assert!(fs::symlink_metadata(&sentinel).unwrap().is_file());
+    assert_eq!(
+        fs::metadata(&sentinel).unwrap().modified().unwrap(),
+        sentinel_mtime
+    );
+    assert_eq!(
+        fs::metadata(&blocker).unwrap().modified().unwrap(),
+        blocker_mtime
+    );
+    assert_eq!(
+        fs::read_dir(&blocker)
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<std::collections::HashSet<_>>(),
+        std::collections::HashSet::from([std::ffi::OsString::from("owned-sentinel")])
+    );
+    assert_eq!(
+        fs::read_dir(cache_path.parent().unwrap())
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<std::collections::HashSet<_>>(),
+        std::collections::HashSet::from([
+            cache_path.file_name().unwrap().to_owned(),
+            blocker.file_name().unwrap().to_owned(),
+            save_path.file_name().unwrap().to_owned(),
+        ])
+    );
+    fs::remove_dir_all(&blocker).unwrap();
+    let repaired = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(repaired.was_cached);
+    assert_eq!(repaired.save_version, 4719);
+    assert_dual_galaxy_model_after_ensure(&repaired.model, true, SourceModelStage::InitialEnsure);
+    let repaired_bytes = fs::read(&cache_path).unwrap();
+    let repaired_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+    assert_ne!(repaired_bytes, opposed_bytes);
+    let repaired_data = read_cache(&cache_path).unwrap();
+    let mut expected_first_repair = dual_galaxy_model(true, true);
+    let expected_physical = expected_first_repair
+        .player_state
+        .as_ref()
+        .unwrap()
+        .current_address;
+    expected_first_repair.insert_player_placeholder(expected_physical);
+    let expected_repaired_data = extract_cache_data(&expected_first_repair, 4719);
+    assert_cache_contents(&repaired_data, &expected_repaired_data);
+    assert!(repaired_data.systems.iter().any(|row| {
+        row.is_player_placeholder
+            && SystemId::from_address(&row.address)
+                == SystemId::from_address(
+                    &repaired
+                        .model
+                        .player_state
+                        .as_ref()
+                        .unwrap()
+                        .current_address,
+                )
+    }));
+    assert_eq!(fs::read(&save_path).unwrap(), source_before);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        source_mtime_before
+    );
+    let checked_rebuilt = rebuild_model(&repaired_data);
+    assert_dual_galaxy_model_after_ensure(&checked_rebuilt, true, SourceModelStage::RebuiltWarm);
+
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_eq!(warm.save_version, 4719);
+    assert_dual_galaxy_model_after_ensure(&warm.model, true, SourceModelStage::RebuiltWarm);
+    assert_eq!(fs::read(&cache_path).unwrap(), repaired_bytes);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        repaired_mtime
+    );
+    assert_eq!(fs::read(&save_path).unwrap(), source_before);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        source_mtime_before
+    );
+    assert!(!cache_path.with_extension("rkyv.tmp").exists());
+    assert_eq!(
+        fs::read_dir(cache_path.parent().unwrap())
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<std::collections::HashSet<_>>(),
+        std::collections::HashSet::from([
+            cache_path.file_name().unwrap().to_owned(),
+            save_path.file_name().unwrap().to_owned(),
+        ])
+    );
+}
+
+#[test]
+fn warm_existing_current_key_and_absent_player_do_not_rewrite_or_parse_source() {
+    for with_player in [false, true] {
+        let dir = tempfile::tempdir().unwrap();
+        let (save_path, cache_path) = paths(&dir);
+        fs::write(
+            &save_path,
+            b"malformed source must not be parsed for a fresh cache",
+        )
+        .unwrap();
+
+        let address = GalacticAddress::new(0, 0, 0, 1, 5, 0);
+        let id = SystemId::from_address(&address);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(
+            GalacticAddress::from_packed(id.system_address(), 0),
+            None,
+            None,
+            None,
+            vec![],
+        ));
+        if with_player {
+            model.player_state = Some(PlayerState::new(address, 0, None, None, 7, 8, 9));
+        }
+        let data = extract_cache_data(&model, 4720);
+        write_cache(&data, &cache_path).unwrap();
+        set_fresh(&cache_path, &save_path);
+        let bytes = fs::read(&cache_path).unwrap();
+        let mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+
+        let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+        assert!(warm.was_cached);
+        assert_eq!(warm.save_version, 4720);
+        assert_eq!(warm.model.systems, model.systems);
+        assert_eq!(warm.model.player_state, model.player_state);
+        assert!(!warm.model.is_player_placeholder(&id));
+        assert_eq!(fs::read(&cache_path).unwrap(), bytes);
+        assert_eq!(
+            fs::metadata(&cache_path).unwrap().modified().unwrap(),
+            mtime
+        );
+    }
+}
+
+#[test]
+fn warm_marker_repair_is_best_effort_and_then_a_byte_stable_noop() {
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    fs::write(&save_path, test_save_json()).unwrap();
+    let save = nms_save::parse_save(test_save_json().as_bytes()).unwrap();
+    let seed = extract_cache_data(&GalaxyModel::from_save(&save), 4719);
+    write_cache(&seed, &cache_path).unwrap();
+    set_fresh(&cache_path, &save_path);
+    let old_cache = fs::read(&cache_path).unwrap();
+    let old_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+
+    let blocker = cache_path.with_extension("rkyv.tmp");
+    fs::create_dir(&blocker).unwrap();
+    fs::write(blocker.join("owned-sentinel"), b"slice19-blocker\n").unwrap();
+    let blocked = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(blocked.was_cached);
+    assert_eq!(blocked.save_version, 4719);
+    assert_source_semantics(&blocked.model);
+    assert_eq!(fs::read(&cache_path).unwrap(), old_cache);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        old_mtime
+    );
+    assert_eq!(
+        fs::read(blocker.join("owned-sentinel")).unwrap(),
+        b"slice19-blocker\n"
+    );
+
+    fs::remove_dir_all(&blocker).unwrap();
+    let repaired = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(repaired.was_cached);
+    assert_eq!(repaired.save_version, 4719);
+    assert_source_semantics_at(&repaired.model, SourceModelStage::InitialEnsure);
+    let repaired_bytes = fs::read(&cache_path).unwrap();
+    let repaired_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+    assert_ne!(repaired_bytes, old_cache);
+    let marker = SystemId::from_address(
+        &repaired
+            .model
+            .player_state
+            .as_ref()
+            .unwrap()
+            .current_address,
+    );
+    assert!(read_cache(&cache_path).unwrap().systems.iter().any(|row| {
+        row.is_player_placeholder && SystemId::from_address(&row.address) == marker
+    }));
+
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
+    assert_eq!(fs::read(&cache_path).unwrap(), repaired_bytes);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        repaired_mtime
+    );
+}
+
+#[test]
+fn no_cache_ensures_player_without_creating_cache_parent() {
+    let dir = tempfile::tempdir().unwrap();
+    let save_path = dir.path().join("save.json");
+    let cache_path = dir
+        .path()
+        .join("not-created")
+        .join("nested")
+        .join("cache.rkyv");
+    fs::write(&save_path, test_save_json()).unwrap();
+
+    let result = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    assert!(!result.was_cached);
+    assert_source_semantics(&result.model);
+    assert!(!cache_path.exists());
+    assert!(!cache_path.parent().unwrap().exists());
 }
 
 #[test]
@@ -1021,7 +1696,7 @@ fn compatible_cache_preserves_populated_model_with_independent_save_version() {
         &fs::read(&path).unwrap()[..HEADER_LEN],
         b"NMSCACHE\x03\0\0\0\x03\0\0\0"
     );
-    assert_source_semantics(&rebuild_model(&restored));
+    assert_raw_source_semantics(&rebuild_model(&restored));
 }
 
 #[test]
@@ -1062,15 +1737,19 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
     assert!(!rebuilt.was_cached);
     assert_eq!(rebuilt.save_version, 4720);
     let expected = source_model_from_json(&active9_json);
-    assert_source_semantics_against(&rebuilt.model, &expected);
+    assert_source_semantics_against(&rebuilt.model, &expected, SourceModelStage::InitialEnsure);
     assert_eq!(rebuilt.model.active_galaxy, 9);
     assert!(
         rebuilt
             .model
             .systems
-            .keys()
-            .all(|id| id.reality_index() == 0)
+            .iter()
+            .all(|(id, _)| { id.reality_index() == 0 || rebuilt.model.is_player_placeholder(id) })
     );
+    let ensured_id =
+        SystemId::from_address(&rebuilt.model.player_state.as_ref().unwrap().current_address);
+    assert_eq!(ensured_id.reality_index(), 9);
+    assert!(rebuilt.model.is_player_placeholder(&ensured_id));
 
     let rewritten = fs::read(&cache_path).unwrap();
     assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x03\0\0\0");
@@ -1080,7 +1759,7 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
     assert!(warm.was_cached);
     assert_eq!(warm.save_version, 4720);
-    assert_source_semantics_against(&warm.model, &expected);
+    assert_source_semantics_against(&warm.model, &expected, SourceModelStage::RebuiltWarm);
     assert_eq!(warm.model.active_galaxy, 9);
 }
 
@@ -1117,7 +1796,7 @@ fn actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_
     let rewritten_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
     assert!(warm.was_cached);
-    assert_source_semantics(&warm.model);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
     assert_eq!(fs::read(&cache_path).unwrap(), rewritten);
     assert_eq!(
         fs::metadata(&cache_path).unwrap().modified().unwrap(),
@@ -1310,14 +1989,50 @@ fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits(
             assert_eq!(data.active_galaxy, 9);
             let bytes = serialize(&data).unwrap();
             let direct = rebuild_model(&deserialize(&bytes).unwrap());
-            assert_dual_galaxy_model(&direct, with_player);
+            assert_dual_galaxy_model_with_selected(&direct, with_player, 9);
 
             write_cache(&data, &cache_path).unwrap();
             set_fresh(&cache_path, &save_path);
             let cached = load_or_rebuild(&cache_path, &save_path, false).unwrap();
             assert!(cached.was_cached);
             assert_eq!(cached.save_version, 9999);
-            assert_dual_galaxy_model(&cached.model, with_player);
+            assert_dual_galaxy_model_after_ensure(
+                &cached.model,
+                with_player,
+                SourceModelStage::InitialEnsure,
+            );
+            let repaired_bytes = fs::read(&cache_path).unwrap();
+            let repaired_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+            let checked = read_cache(&cache_path).unwrap();
+            assert_eq!(checked.save_version, 9999);
+            assert_eq!(checked.active_galaxy, 9);
+            assert_eq!(checked.systems.len(), if with_player { 3 } else { 2 });
+            let checked_markers = checked
+                .systems
+                .iter()
+                .filter(|row| row.is_player_placeholder)
+                .map(|row| SystemId::from_address(&row.address))
+                .collect::<std::collections::HashSet<_>>();
+            let expected_markers = if with_player {
+                std::collections::HashSet::from([SystemId::from_address(
+                    &cached.model.player_state.as_ref().unwrap().current_address,
+                )])
+            } else {
+                std::collections::HashSet::new()
+            };
+            assert_eq!(checked_markers, expected_markers);
+            let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+            assert!(warm.was_cached);
+            assert_dual_galaxy_model_after_ensure(
+                &warm.model,
+                with_player,
+                SourceModelStage::RebuiltWarm,
+            );
+            assert_eq!(fs::read(&cache_path).unwrap(), repaired_bytes);
+            assert_eq!(
+                fs::metadata(&cache_path).unwrap().modified().unwrap(),
+                repaired_mtime
+            );
         }
     }
 }

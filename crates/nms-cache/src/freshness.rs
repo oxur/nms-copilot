@@ -47,7 +47,18 @@ pub struct LoadResult {
 /// warns and rebuilds from the save file. This check requires
 /// `player.current_reality == player.current_address.reality_index`; it does not
 /// compare the independently selected galaxy or previous/freighter addresses.
-/// If parsing the source save fails, no replacement cache is written.
+/// If a compatible cache lacks the physical player's system key, the returned
+/// in-memory model includes it and the cache is repaired on a best-effort
+/// basis. A failed repair warns but still returns the ensured model with
+/// `was_cached` set to `true`. Cold parsing also ensures the key; cache write
+/// failure warns without discarding the parsed model. With `no_cache`, neither
+/// cache reads nor writes occur, but the parsed model is still ensured.
+///
+/// # Errors
+///
+/// Returns an error when the source save cannot be read or parsed. Cache read,
+/// compatibility, and repair-write failures are handled as warnings followed
+/// by a source rebuild or an in-memory success, as applicable.
 pub fn load_or_rebuild(
     cache_path: &Path,
     save_path: &Path,
@@ -58,7 +69,17 @@ pub fn load_or_rebuild(
         match crate::read_cache(cache_path) {
             Ok(data) => {
                 let save_version = data.save_version;
-                let model = crate::rebuild_model(&data);
+                let mut model = crate::rebuild_model(&data);
+                let system_count = model.system_count();
+                model.ensure_player_system();
+                if model.system_count() != system_count {
+                    let repaired = crate::extract_cache_data(&model, save_version);
+                    if let Err(e) = crate::write_cache(&repaired, cache_path) {
+                        eprintln!(
+                            "Warning: could not repair cache after ensuring player system ({e})"
+                        );
+                    }
+                }
                 return Ok(LoadResult {
                     model,
                     was_cached: true,
@@ -74,7 +95,8 @@ pub fn load_or_rebuild(
     // Parse save file
     let save = nms_save::parse_save_file(save_path)?;
     let save_version = save.version;
-    let model = nms_graph::GalaxyModel::from_save(&save);
+    let mut model = nms_graph::GalaxyModel::from_save(&save);
+    model.ensure_player_system();
 
     // Write cache for next time
     if !no_cache {

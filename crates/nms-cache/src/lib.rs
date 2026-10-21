@@ -46,6 +46,25 @@
 //! persisted-data entrypoints validate their input, while [`load_or_rebuild`]
 //! additionally reparses the source save after a cache read failure.
 //!
+//! Both cold parsing and compatible warm-cache loading ensure that the
+//! physical player system has a model key. A warm cache is rewritten only
+//! when that ensure operation inserts a missing key; existing marked keys,
+//! genuine empty systems, and saves without player state keep the cache file
+//! untouched. A failed best-effort warm repair warns and returns the ensured
+//! in-memory model with `was_cached` still true. Cold cache-write failures are
+//! likewise warnings after a successful parse; source parse errors are
+//! returned and do not replace the previous cache. `no_cache` still parses
+//! and ensures the in-memory model, but performs no cache read or write.
+//!
+//! ```no_run
+//! use std::path::Path;
+//!
+//! fn load(save: &Path, cache: &Path) -> Result<nms_graph::GalaxyModel, Box<dyn std::error::Error>> {
+//!     let loaded = nms_cache::load_or_rebuild(cache, save, false)?;
+//!     Ok(loaded.model)
+//! }
+//! ```
+//!
 //! Adding [`CacheError::Incompatible`] can require updates to external code
 //! that exhaustively matches `CacheError`. The nested
 //! [`CacheCompatibilityError`] is non-exhaustive. Public function signatures

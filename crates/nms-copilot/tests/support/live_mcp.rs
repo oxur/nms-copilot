@@ -129,6 +129,304 @@ pub fn expected_cache(
     }
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum UnknownLifecycleStage {
+    Startup,
+    Moved,
+    Promoted,
+}
+
+const LIFECYCLE_EDGE_LY: f64 = 264.682_872_8;
+
+fn lifecycle_addresses() -> (
+    GalacticAddress,
+    GalacticAddress,
+    GalacticAddress,
+    GalacticAddress,
+    GalacticAddress,
+) {
+    (
+        GalacticAddress::new(0, 0, 0, 1, 0, 0),
+        GalacticAddress::new(0, 0, 0, 2, 0, 0),
+        GalacticAddress::new(0, 0, 0, 3, 0, 0),
+        GalacticAddress::new(0, 0, 0, 4, 0, 0),
+        GalacticAddress::new(0, 0, 0, 3, 0, 9),
+    )
+}
+
+fn lifecycle_player(stage: UnknownLifecycleStage) -> PlayerState {
+    let physical_u2 = GalacticAddress::new(0, 0, 0, 2, 5, 0);
+    let physical_u3 = GalacticAddress::new(0, 0, 0, 3, 5, 0);
+    let (current, reality, previous, freighter, units, nanites, specials) = match stage {
+        UnknownLifecycleStage::Startup => (
+            physical_u2,
+            0,
+            Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+            Some(GalacticAddress::new(9, 8, 7, 2, 3, 9)),
+            7,
+            8,
+            9,
+        ),
+        UnknownLifecycleStage::Moved => (
+            physical_u3,
+            0,
+            Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+            None,
+            70,
+            80,
+            90,
+        ),
+        UnknownLifecycleStage::Promoted => (
+            physical_u3,
+            0,
+            Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+            None,
+            700,
+            800,
+            900,
+        ),
+    };
+    PlayerState::new(
+        current, reality, previous, freighter, units, nanites, specials,
+    )
+}
+
+fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
+    let (d1, u2, u3, e4, i9) = lifecycle_addresses();
+    let mut systems = vec![
+        CachedSystem {
+            address: d1,
+            name: Some("Decoy-0".into()),
+            discoverer: Some("atlas-owner".into()),
+            timestamp_secs: None,
+            planets: vec![Planet::new(
+                0,
+                Some(Biome::Lush),
+                None,
+                false,
+                Some("Decoy I".into()),
+                Some(11),
+            )],
+            is_player_placeholder: false,
+        },
+        CachedSystem {
+            address: e4,
+            name: None,
+            discoverer: None,
+            timestamp_secs: None,
+            planets: vec![],
+            is_player_placeholder: false,
+        },
+        CachedSystem {
+            address: i9,
+            name: Some("Imported-9".into()),
+            discoverer: Some("atlas-owner".into()),
+            timestamp_secs: None,
+            planets: vec![Planet::new(
+                1,
+                Some(Biome::Toxic),
+                None,
+                false,
+                Some("Imported I".into()),
+                Some(22),
+            )],
+            is_player_placeholder: false,
+        },
+        CachedSystem {
+            address: u2,
+            name: None,
+            discoverer: None,
+            timestamp_secs: None,
+            planets: vec![],
+            is_player_placeholder: true,
+        },
+    ];
+    if stage != UnknownLifecycleStage::Startup {
+        systems.push(CachedSystem {
+            address: u3,
+            name: None,
+            discoverer: None,
+            timestamp_secs: None,
+            planets: if stage == UnknownLifecycleStage::Promoted {
+                vec![Planet::new(
+                    5,
+                    Some(Biome::Toxic),
+                    None,
+                    false,
+                    None,
+                    Some(171),
+                )]
+            } else {
+                vec![]
+            },
+            is_player_placeholder: stage == UnknownLifecycleStage::Moved,
+        });
+        if stage == UnknownLifecycleStage::Promoted {
+            systems.last_mut().unwrap().discoverer = Some("Explorer".into());
+            systems.last_mut().unwrap().timestamp_secs = Some(1_700_000_000);
+        }
+    }
+    systems
+}
+
+pub fn expected_unknown_lifecycle_cache(stage: UnknownLifecycleStage) -> CacheData {
+    CacheData {
+        systems: lifecycle_systems(stage),
+        bases: vec![PlayerBase::new(
+            "Anchor-0".into(),
+            BaseType::HomePlanetBase,
+            lifecycle_addresses().0,
+            [1.0, 2.0, 3.0],
+            Some("fixture-owner".into()),
+        )],
+        player_state: Some(lifecycle_player(stage)),
+        active_galaxy: 9,
+        save_version: match stage {
+            UnknownLifecycleStage::Startup => 4720,
+            UnknownLifecycleStage::Moved => 4721,
+            UnknownLifecycleStage::Promoted => 4722,
+        },
+        cached_at: 0,
+    }
+}
+
+pub fn unknown_lifecycle_seed_cache() -> CacheData {
+    let mut seed = expected_unknown_lifecycle_cache(UnknownLifecycleStage::Startup);
+    let u2 = lifecycle_addresses().1;
+    seed.systems.retain(|system| system.address != u2);
+    seed
+}
+
+pub fn unknown_lifecycle_source(
+    version: u32,
+    solar_system_index: u16,
+    units: u64,
+    nanites: u64,
+    specials: u64,
+    previous: Option<GalacticAddress>,
+    promoted: bool,
+) -> Vec<u8> {
+    let mut value = serde_json::json!({
+        "Version": version,
+        "Platform": "Mac|Final",
+        "ActiveContext": "Main",
+        "CommonStateData": {"SaveName": "Slice19", "TotalPlayTime": 100},
+        "BaseContext": {"GameMode": 1, "PlayerStateData": {
+            "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {
+                "VoxelX": 0, "VoxelY": 0, "VoxelZ": 0,
+                "SolarSystemIndex": solar_system_index, "PlanetIndex": 5
+            }},
+            "Units": units, "Nanites": nanites, "Specials": specials,
+            "PersistentPlayerBases": []
+        }},
+        "ExpeditionContext": {"GameMode": 6, "PlayerStateData": {
+            "UniverseAddress": {"RealityIndex": 0, "GalacticAddress": {
+                "VoxelX": 0, "VoxelY": 0, "VoxelZ": 0,
+                "SolarSystemIndex": 0, "PlanetIndex": 0
+            }},
+            "Units": 0, "Nanites": 0, "Specials": 0,
+            "PersistentPlayerBases": []
+        }},
+        "DiscoveryManagerData": {"DiscoveryData-v1": {
+            "ReserveStore": 0, "ReserveManaged": 0, "Store": {"Record": []}
+        }}
+    });
+    if let Some(previous) = previous {
+        value["BaseContext"]["PlayerStateData"]["PreviousUniverseAddress"] = serde_json::json!({
+            "RealityIndex": previous.reality_index,
+            "GalacticAddress": {
+                "VoxelX": previous.voxel_x(), "VoxelY": previous.voxel_y(),
+                "VoxelZ": previous.voxel_z(), "SolarSystemIndex": previous.solar_system_index(),
+                "PlanetIndex": previous.planet_index()
+            }
+        });
+    }
+    if promoted {
+        value["DiscoveryManagerData"]["DiscoveryData-v1"]["Store"]["Record"] = serde_json::json!([
+            {"DD": {"UA": "0x000300000000", "DT": "SolarSystem", "VP": []},
+             "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}},
+            {"DD": {"UA": "0x500300000000", "DT": "Planet", "VP": ["0xAB", 1]},
+             "DM": {}, "OWS": {"LID": "", "UID": "1", "USN": "Explorer", "PTK": "ST", "TS": 1700000000}, "FL": {"U": 1}}
+        ]);
+    }
+    let bytes = serde_json::to_vec(&value).expect("literal unknown lifecycle save serializes");
+    nms_save::parse_save(&bytes).expect("production parser accepts unknown lifecycle save");
+    bytes
+}
+
+pub fn expected_unknown_lifecycle_model(
+    stage: UnknownLifecycleStage,
+    rebuilt: bool,
+) -> GalaxyModel {
+    let mut model = GalaxyModel::new();
+    let systems = lifecycle_systems(stage);
+    for cached in &systems {
+        let system = System::new(
+            cached.address,
+            cached.name.clone(),
+            cached.discoverer.clone(),
+            cached.timestamp_secs.map(|_| {
+                "2023-11-14T22:13:20Z"
+                    .parse()
+                    .expect("literal RFC3339 timestamp")
+            }),
+            cached.planets.clone(),
+        );
+        if cached.is_player_placeholder {
+            model.insert_player_placeholder(cached.address);
+        } else {
+            model.insert_system(system);
+        }
+    }
+    let (d1, _, _, e4, _) = lifecycle_addresses();
+    model.insert_base(PlayerBase::new(
+        "Anchor-0".into(),
+        BaseType::HomePlanetBase,
+        d1,
+        [1.0, 2.0, 3.0],
+        Some("fixture-owner".into()),
+    ));
+    model.player_state = Some(lifecycle_player(stage));
+    model.set_active_galaxy(9);
+
+    // Live startup inherits the one D1–E4 edge from the seed. Placeholder
+    // insertions and promotion preserve that topology. A cache rebuild instead
+    // creates the literal complete same-galaxy edge set.
+    let d1_id = nms_graph::SystemId::from_address(&d1);
+    let e4_id = nms_graph::SystemId::from_address(&e4);
+    let mut edges = vec![(d1_id, e4_id)];
+    if rebuilt {
+        let mut ids: Vec<_> = systems
+            .iter()
+            .filter(|system| system.address.reality_index == 0)
+            .map(|system| nms_graph::SystemId::from_address(&system.address))
+            .collect();
+        ids.sort_by_key(|id| id.system_address());
+        edges.clear();
+        for left in 0..ids.len() {
+            for right in left + 1..ids.len() {
+                edges.push((ids[left], ids[right]));
+            }
+        }
+    }
+    for (left, right) in edges {
+        let a = model.node_map[&left];
+        let b = model.node_map[&right];
+        model.graph.add_edge(a, b, LIFECYCLE_EDGE_LY);
+    }
+    model
+}
+
+pub fn assert_unknown_lifecycle_cache(
+    path: &std::path::Path,
+    stage: UnknownLifecycleStage,
+) -> Result<(), String> {
+    let actual = nms_cache::read_cache(path).map_err(|error| error.to_string())?;
+    compare_cache(&actual, &expected_unknown_lifecycle_cache(stage))?;
+    let rebuilt = nms_cache::rebuild_model(&actual);
+    assert_model_matches(&rebuilt, &expected_unknown_lifecycle_model(stage, true))
+}
+
 pub fn expected_model(
     physical_reality: u8,
     units: u64,
@@ -186,8 +484,16 @@ pub fn expected_empty_cache(
     specials: u64,
     selected: u8,
 ) -> CacheData {
+    let current = GalacticAddress::new(0, 0, 0, 1, 0, physical_reality);
     CacheData {
-        systems: vec![],
+        systems: vec![CachedSystem {
+            address: current,
+            name: None,
+            discoverer: None,
+            timestamp_secs: None,
+            planets: vec![],
+            is_player_placeholder: true,
+        }],
         bases: vec![],
         player_state: Some(PlayerState::new(
             GalacticAddress::new(0, 0, 0, 1, 0, physical_reality),
@@ -212,8 +518,9 @@ pub fn expected_empty_model(
     selected: u8,
 ) -> GalaxyModel {
     let mut model = GalaxyModel::new();
+    let current = GalacticAddress::new(0, 0, 0, 1, 0, physical_reality);
     model.player_state = Some(PlayerState::new(
-        GalacticAddress::new(0, 0, 0, 1, 0, physical_reality),
+        current,
         physical_reality,
         None,
         None,
@@ -221,20 +528,24 @@ pub fn expected_empty_model(
         nanites,
         specials,
     ));
+    model.ensure_player_system();
     model.set_active_galaxy(selected);
     model
 }
 
 pub fn expected_cold_cross_cache() -> CacheData {
     CacheData {
-        systems: vec![CachedSystem {
-            address: GalacticAddress::new(0, 0, 0, 1, 0, 0),
-            name: None,
-            discoverer: None,
-            timestamp_secs: None,
-            planets: vec![],
-            is_player_placeholder: true,
-        }],
+        systems: [0, 9]
+            .into_iter()
+            .map(|reality| CachedSystem {
+                address: GalacticAddress::new(0, 0, 0, 1, 0, reality),
+                name: None,
+                discoverer: None,
+                timestamp_secs: None,
+                planets: vec![],
+                is_player_placeholder: true,
+            })
+            .collect(),
         bases: vec![],
         player_state: Some(PlayerState::new(
             GalacticAddress::new(0, 0, 0, 1, 0, 9),
@@ -263,6 +574,7 @@ pub fn expected_cold_cross_model() -> GalaxyModel {
         800,
         900,
     ));
+    model.ensure_player_system();
     model.set_active_galaxy(9);
     model
 }
@@ -358,6 +670,7 @@ pub fn expected_genuine_empty_cross_model() -> GalaxyModel {
         None,
         vec![],
     ));
+    model.insert_player_placeholder(GalacticAddress::new(0, 0, 0, 1, 0, 9));
     model.player_state = Some(PlayerState::new(
         GalacticAddress::new(0, 0, 0, 1, 0, 9),
         9,
@@ -417,6 +730,24 @@ pub fn assert_model_matches(actual: &GalaxyModel, expected: &GalaxyModel) -> Res
         rows.sort();
         rows
     };
+    let graph_edges = |model: &GalaxyModel| {
+        let mut rows: Vec<_> = model
+            .graph
+            .edge_indices()
+            .filter_map(|edge| {
+                let (a, b) = model.graph.edge_endpoints(edge)?;
+                let mut a = format!("{:?}", model.graph.node_weight(a)?);
+                let mut b = format!("{:?}", model.graph.node_weight(b)?);
+                if a > b {
+                    std::mem::swap(&mut a, &mut b);
+                }
+                let weight = model.graph.edge_weight(edge)?.to_bits();
+                Some((a, b, weight))
+            })
+            .collect();
+        rows.sort();
+        rows
+    };
     let node_map_is_valid = |model: &GalaxyModel| {
         model
             .node_map
@@ -427,10 +758,11 @@ pub fn assert_model_matches(actual: &GalaxyModel, expected: &GalaxyModel) -> Res
         || !node_map_is_valid(actual)
         || !node_map_is_valid(expected)
         || graph_weights(actual) != graph_weights(expected)
+        || graph_edges(actual) != graph_edges(expected)
         || actual.graph.node_count() != expected.graph.node_count()
         || actual.graph.edge_count() != expected.graph.edge_count()
     {
-        return Err("complete graph node IDs/weights or counts differ".into());
+        return Err("complete graph node IDs/weights/edges or counts differ".into());
     }
     if actual.active_galaxy != expected.active_galaxy {
         return Err("selected galaxy differs".into());
@@ -605,7 +937,7 @@ pub fn initialize_http(addr: SocketAddr) -> Result<(String, HttpResponse), Strin
             &serde_json::json!({
                 "jsonrpc":"2.0", "id":1, "method":"initialize",
                 "params":{"protocolVersion":"2025-03-26", "capabilities":{"resources":{"subscribe":true}},
-                "clientInfo":{"name":"slice17-probe","version":"1"}}
+                "clientInfo":{"name":"slice19-probe","version":"1"}}
             })
             .to_string(),
         ),
@@ -774,6 +1106,57 @@ pub fn assert_location_pair(
     }
     assert_location(tool, physical, system, planets)?;
     assert_location(resource, physical, system, planets)
+}
+
+pub fn assert_location_at(
+    actual: &Value,
+    address: GalacticAddress,
+    system: &str,
+    planets: usize,
+    portal_hex: &str,
+    signal_booster: &str,
+) -> Result<(), String> {
+    let expected = serde_json::json!({
+        "system": system,
+        "planets_in_system": planets,
+        "galaxy": if address.reality_index == 9 { "Eissentam" } else { "Euclid" },
+        "voxel_x": address.voxel_x(),
+        "voxel_y": address.voxel_y(),
+        "voxel_z": address.voxel_z(),
+        "solar_system_index": address.solar_system_index(),
+        "portal_glyphs_hex": portal_hex,
+        "portal_glyphs_emoji": nms_query::display::hex_to_emoji(portal_hex),
+        "signal_booster": signal_booster,
+    });
+    if actual != &expected {
+        return Err(format!(
+            "full physical location mismatch; expected {expected}, observed {actual}"
+        ));
+    }
+    Ok(())
+}
+
+pub fn assert_location_pair_at(
+    tool: &Value,
+    resource: &Value,
+    address: GalacticAddress,
+    system: &str,
+    planets: usize,
+    portal_hex: &str,
+    signal_booster: &str,
+) -> Result<(), String> {
+    if tool != resource {
+        return Err("where_am_i tool and location resource differ".into());
+    }
+    assert_location_at(tool, address, system, planets, portal_hex, signal_booster)?;
+    assert_location_at(
+        resource,
+        address,
+        system,
+        planets,
+        portal_hex,
+        signal_booster,
+    )
 }
 
 pub fn subscribe_sse(addr: SocketAddr, session: &str) -> Result<SseStream, String> {
@@ -977,6 +1360,46 @@ impl SseStream {
             match self.events.recv_timeout(remaining) {
                 Ok(SseRead::Data(bytes)) => self.buffer.extend(bytes),
                 Ok(SseRead::PeerClosed(_reason)) => return Ok(()),
+                Ok(SseRead::Failed(error)) => {
+                    return Err(format!("SSE reader failed before close: {error}"));
+                }
+                Err(error) => return Err(format!("SSE did not close: {error}")),
+            }
+        }
+    }
+
+    pub fn wait_closed_without_resource_updated(
+        &mut self,
+        timeout: Duration,
+        uri: &str,
+    ) -> Result<(), String> {
+        let deadline = std::time::Instant::now() + timeout;
+        let mut scan = self.consumed;
+        loop {
+            while let Some((end, frame)) = next_sse_frame(&self.buffer, scan)? {
+                scan = end;
+                self.consumed = end;
+                if frame.as_ref().is_some_and(|message| {
+                    message["method"] == "notifications/resources/updated"
+                        && message["params"]["uri"] == uri
+                }) {
+                    return Err(format!(
+                        "unexpected resource-updated notification for {uri} while awaiting EOF"
+                    ));
+                }
+            }
+            let remaining = deadline.saturating_duration_since(std::time::Instant::now());
+            if remaining.is_zero() {
+                return Err("SSE did not close before deadline".into());
+            }
+            match self.events.recv_timeout(remaining) {
+                Ok(SseRead::Data(bytes)) => self.buffer.extend(bytes),
+                Ok(SseRead::PeerClosed(_reason)) => {
+                    if scan != self.buffer.len() {
+                        return Err("SSE ended with an incomplete frame".into());
+                    }
+                    return Ok(());
+                }
                 Ok(SseRead::Failed(error)) => {
                     return Err(format!("SSE reader failed before close: {error}"));
                 }
