@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.83, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.84, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -726,3 +726,10 @@ Version1.82: Arc37rows,19done/18open; project25open. All original15 arc rows/thr
 The human Operator explicitly says, “Yup, I approve option A”, adopting exactly the d20f9fe packet above: field-specific56-bit save decoding, strict lexical/encoded bounds, explicit active current-address presence and complete previous sentinel, atomic parsed-update rejection/last-good live state, and semantic3→4 when corrected extraction reaches applications. This supersedes that packet's policy hold ONLY. Existing bounded witnesses stay bounded; nonzero game-backed and broader parent acceptance remain open. No partial-atlas architecture, new inquiry, historical waiver or release/integration authority. CDC resolves routine API/omission/error/caller/fixture/cache details and may prepare a coherent Slice20 or explicitly accounted foundation/application split from clean4cb745b7 under standing Arc06-only autonomy. Same actual selected CDCgpt-6.1-solHigh / sole reused CCgpt-6-lunaHigh; no model/role substitution.
 
 Preflight: planningd20/source4cb clean/indexempty; mainb616 retains only protected9-line native-test edit, external03e8d04 clean, all held worktree pins preserved. All19closure/evidence/retrospective records stay intact. Arc37rows19done18open/project25open; all original raw/history/finalsemantic/freshness-import/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligations retained. No20source/prompt/dispatch yet; author readiness and stable ownership precede execution.
+
+
+## Slice20 decoder foundation and required21 application transition — 2026-10-21 UTC
+
+Version1.84 details approvedA into a usable public original-JSON decoder library on dedicatedcodex/save-address-decoder fromaccepted4cb745b7. Exactfivepaths/publicAPI/typederrorpriority/missing-null/encodedbounds/previoussentinel and45independentoracleprojection (1Chili+44base,31string13integer) resolved before issue. NewAD01–07/R06-S20OPEN;38arcrows19done19open/project25open. Author actually proved complete0/7supportcaptures/statuses/rawfirst onnewnamespaces BEFOREcompiler, not productevidence; CCconfirmedqualitativeheadroom/noactive19processes. Same selectedroles/models and serializedsource/planningownership.
+
+Required21/CDC retains whole-source validation BEFOREtypeddefaults/extraction/model/cache/publication, migrationofallactualsaveconsumers, strictactivecurrent/presence/fullprevious/atomicinvalidupdatekeepinggoodstate, semantic3→4/predecessor3/3rejection+sourcefallback/warmrestart and correctedCLI/normalPTY/stdio/HTTP/watch/fullfileEOFcomposition. All20legacyapplicationbodies/SaveRootconversion/cache3/3frozen; foundationacceptance cannotclaim those bugsfixed. The split follows previousretrospective: actual publicconsumer/oracle tests run early inusable boundedunit before largerapplicationmatrix. No lostscope/newinquiry/partialatlas/representationpolicychange. Original15arcrows/three repairparents/nonzero-game-backed/raw/history/freshness-import/finalsemantic/coverage/docs/packages/performance/higherindependent/Operator/integration/release remainopen. Main9lineedit/heldpins/external/Project02/Arc06endpoint protected; no remoteactions.

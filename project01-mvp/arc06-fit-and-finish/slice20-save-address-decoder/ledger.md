@@ -1,0 +1,13 @@
+# Slice20 decoder foundation ledger
+
+All7rows OPEN; CC proposes, CDC independently accepts. Application21 and all original parent gates retained.
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| AD-01 | Public field-specific packed decoder preserves exact56-bit coordinates/reality | Chili,44bases,highprecision/P0/gal0+9/signedbound literals through exported functions | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-02 | Packed syntax/type/width failures are strict and matchable | Both public APIs full token/string matrix, exact error/path/range andpriority | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-03 | Expanded current presence/encodedbounds validate beforecoremask | Completeobject and eachmissing/null/type/min/max/onebeyond, wholecomponents/portal | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-04 | Previous absence/sentinel retainsplanetandreality | Absent/allzero/partial/null/eachsinglecomponent nonzero, typedResult andexactaddress | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-05 | Usable documented pure API and bounded sourcewitnessfixture | Externalcaller/docs/Error+Send+Sync/inputpurity/projection45allrows | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-06 | Existing APIs/application/cache/nativecontracts remain unchanged | Exact5pathdiff/frozenexistingbodies/current orderedregressiongates; required21 tracked | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-07 | Attributable complete proof and independent handback | Actualraw-first statuses/source/failedattempts/committrailers/frozenreturn/CDCindependentreview | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |

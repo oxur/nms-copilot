@@ -177,3 +177,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 2026-10-21 Operator explicitly approved ONE exceptional sixth bounded F19-01/F19-02 correction; no budget reset/waiver/rowclosure,37arcrows18done19open/project25open.
 
 2026-10-21 Slice19 independently closed after approved exceptional sixth pass:37arcrows19done18open/project25open. All15original and three repairparents remainopen.
+
+
+## Public save-address foundation child — 2026-10-21 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S20 | Public original-JSON save-address decoder foundation independently accepted | Seven ADrows,45oracles/strictmatrix/publicdocs/orderedgates and independentCDC review | correctness-grade | ApprovedA / R06-R01 dependency | open | — | Required21 applicationatomicvalidation/semantic3→4/nativecomposition retained; no parentacceptance |
+
+38arcrows19done19open/project25open; all37previousrows retained.

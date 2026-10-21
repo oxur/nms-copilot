@@ -1036,3 +1036,8 @@ Version1.72: Slice19 closed at4cb745b7/planningcb7e684; next ordered owner R06-R
 ## Arc06 save-field contract A approved — 2026-10-21 UTC
 
 Version1.73: Operator explicitly “Yup, I approve option A” adopts d20f9fe's supported field-specific56-bit/strict encoded input and presence/atomic parsed-update failure/semantic3→4 contract. Arc-plan1.83 records exact authority before dependent work. CDC may detail bounded20/foundation-application split from4cb; broader game-backed nonzero/evidence/history/finalsemantic and original parent/independent/Operator/release gates remain. No new inquiry/partial-atlas/waiver/source implementation or nextarc authority. Same roles/models/Arc06endpoint and protected main/heldpins/external/Project02.
+
+
+## Arc06 Slice20 decoder foundation issued — 2026-10-21 UTC
+
+Version1.74: approvedA detailed into usable five-path publicdecoderAPI from4cb with exacttypederrors/presence/56bitfielddecode/45boundedindependentoracles; all7AD/R06-S20open,38arcrows19done19open/project25open. Required21/CDC owns wholeparsed-sourcevalidationbeforedefaults/model/cache/publication, allcallermigrations/atomiclastgoodstate/semantic3→4/predecessor/warm/actualinterface-nativecomposition. No20applicationbugfixclaim or silentdrop; allpriorclosures/parents/gates/models/Arc06endpoint/protectedmainheldpinsexternalProject02 remain. Initial20prompt and actualcapturepreflight recorded beforehandoff; no compiler/sourceedit yet.
