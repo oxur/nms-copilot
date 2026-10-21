@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.2. Created2026-10-21 UTC. Status: initial source frozen after captured format/lint; complete CDC pre-test review requires refinement01, current cc-prompt-iteration01.md pending coherent intake. Eight UL rows open, one-of-five refinement issued (execution pending), no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
+Version:1.2. Created2026-10-21 UTC. Status: initial source frozen after captured format/lint; complete CDC pre-test review requires refinement01, current cc-prompt-iteration01.md coherent intake acknowledged and source/index returned solely to same CC. Eight UL rows open, one-of-five refinement active, no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -67,7 +67,7 @@ Reading budget is bounded to full prompt/this plan/eightrows/entryAP and complet
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
 | cc-prompt.md |2026-10-21|none; accepted18/e592|Required application composition of approvedA|returned for pre-test review; compilation/lint pass, F1–F8 changes required|
-| cc-prompt-iteration01.md |2026-10-21|cc-prompt.md / f81081f|Complete pinned F1–F8 helper/oracle/docs correction before runtime release|current; issued after planning commit; intake pending|
+| cc-prompt-iteration01.md |2026-10-21|cc-prompt.md / f81081f|Complete pinned F1–F8 helper/oracle/docs correction before runtime release|current active; coherent intake independently read; CC source/index ownership acknowledged|
 
 After CC complete return, CDC independently reviews all changed code/helper/assertion/document bodies and discriminating oracles, reruns required current checks on stable candidate, disposes all8rows and writes mandatory substantive retrospective/bottom-up closure. Parent raw/history/finalsemantic/strictmtime-identical-rewrite-stale-import-history/original fifteen arc milestones/three repairparents/project25/independent/Operator/integration/release remain open; arc endpoint stops autonomous advancement beyondArc06.
 
@@ -87,3 +87,10 @@ CDC complete helper/oracle/docs walk found F1 canonical/cache integer timestamp/
 The compact original native finish/join/quit wording is mechanically clarified: send monitor finish, then quit product to close remoteSSE, then await monitor pass/EOF/join and product fullEOF/owned teardown, then650ms unchanged-file check. Existing deadlines/lifetime and native method remain. Actual child cache/rebuilt observations do not claim hidden live graph; a real in-process coordinator/model readguard supplies that witness, without a new diagnostic API.
 
 CC source/index/gates remain frozen through coherent iteration intake; CDC owns only planning/index and review, no Rust mutation. Upon acknowledgment same CC resumes the bounded correction, captured format→lint and another complete pre-test hold; broad/native still require explicit CDC release. The uncredited direct diff inspection retains only its actually known call/output/purpose and unknown nested completion in execution.md; final required working/base diff gates remain captured. No automatic waiver or missing-history reconstruction. All parents and protected pins remain open/preserved.
+
+
+## Refinement01 intake handoff — 2026-10-21 UTC
+
+CDC read the actual full F1–F8 execution readback at unchanged e592/diff699586ba/indexempty. Prefix bytes/hash preserved in the existing receipt. CanonicalP0/physicalP5, integer/cache topology stages, genuine observed live readguard versus actual rebuilt cache, whole identity oracles, cache-enabled HTTP/fresh failed-repair retry, prelaunch restart checkpoint, finish→quit→monitor-join, inherited negatives, full blocker/no_cache effects and docs were coherently acknowledged. This is intake attestation, not independent implementation acceptance. Same CC now owns dedicated19source/index/gates to execute iteration01, captured format→lint then HOLD for complete pinned review; no tests/native release. CDC retains planning/index and independent review.
+
+The exact direct combined diff/whitespace inspection source and original pre-validation purpose are now retained/read. CDC classifies it as noncounting incidental source inspection within the issued metadata boundary: nested completion remains unknown, no required-gate or runtime credit and no inferred exit. Both final required diff gates still need actual capture. This is contract interpretation from actual purpose, not an Operator exception or historical reconstruction.
