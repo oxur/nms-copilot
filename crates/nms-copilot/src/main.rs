@@ -137,8 +137,6 @@ fn main() {
             }
         };
 
-    let mut model = model;
-    model.ensure_player_system();
     let watch_config = configured_watcher(&config, save_path.as_deref());
 
     // ── Headless mode: MCP server only ──────────────────────────

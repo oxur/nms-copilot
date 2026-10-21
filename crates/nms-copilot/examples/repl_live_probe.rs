@@ -19,7 +19,7 @@ use nms_cache::CacheData;
 use nms_copilot::mcp;
 use nms_core::address::GalacticAddress;
 
-const MARKER: &str = ".slice17-owned-fixture";
+const MARKER: &str = ".slice19-owned-fixture";
 type PreviousFields = (u8, i16, i8, i16, u16, u8);
 type PhaseState = (u32, u8, u64, u64, u64, Option<PreviousFields>, u8);
 
@@ -36,14 +36,80 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         .next()
         .ok_or("expected prepare, inspect-cache, self-check, write, phase, malformed, expect-cache, monitor, or hold-port")?;
     match command.as_str() {
+        "prepare-unknown" => {
+            let dir = tempfile::Builder::new()
+                .prefix("slice19-unknown-")
+                .tempdir_in(std::env::temp_dir())?;
+            let path = dir.keep();
+            fs::write(path.join(MARKER), b"Project01 Arc06 Slice19 fixture\n")?;
+            let home = path.join("home");
+            let config_dir = home.join(".nms-copilot");
+            fs::create_dir_all(&config_dir)?;
+            let save = path.join("save.json");
+            let cache = path.join("cache.rkyv");
+            let source = live_mcp::unknown_lifecycle_source(
+                4720,
+                2,
+                7,
+                8,
+                9,
+                Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+                false,
+            );
+            fs::write(&save, &source)?;
+            let source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+            File::options()
+                .write(true)
+                .open(&save)?
+                .set_times(FileTimes::new().set_modified(source_time))?;
+            let cache_seed = live_mcp::unknown_lifecycle_seed_cache();
+            nms_cache::write_cache(&cache_seed, &cache)?;
+            let cache_time = source_time + Duration::from_secs(100);
+            File::options()
+                .write(true)
+                .open(&cache)?
+                .set_times(FileTimes::new().set_modified(cache_time))?;
+            let config = format!(
+                "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = true\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+                cache.to_string_lossy()
+            );
+            fs::write(config_dir.join("config.toml"), config)?;
+            fs::write(path.join("cache-path.txt"), b"cache.rkyv")?;
+            fs::write(path.join("monitor.commands"), b"")?;
+            fs::write(path.join("restart.commands"), b"")?;
+            fs::write(path.join("mode.txt"), b"unknown\nenabled\n")?;
+            fs::write(
+                path.join("initial-state.json"),
+                serde_json::to_vec(&serde_json::json!({
+                    "source_hex": hex_bytes(&source),
+                    "source_modified_nanos": source_time.duration_since(UNIX_EPOCH)?.as_nanos(),
+                    "cache": {
+                        "bytes_hex": hex_bytes(&fs::read(&cache)?),
+                        "modified_nanos": cache_time.duration_since(UNIX_EPOCH)?.as_nanos(),
+                    }
+                }))?,
+            )?;
+            println!(
+                "{}",
+                serde_json::json!({
+                    "fixture": path,
+                    "marker": path.join(MARKER),
+                    "home": home,
+                    "save": save,
+                    "cache": cache,
+                    "mode": "unknown",
+                    "watch": "enabled",
+                })
+            );
+        }
         "prepare" => {
             let mode = args.next().unwrap_or_else(|| "warm".into());
             let watch = args.next().unwrap_or_else(|| "enabled".into());
             let dir = tempfile::Builder::new()
-                .prefix("slice17-")
+                .prefix("slice19-")
                 .tempdir_in(std::env::temp_dir())?;
             let path = dir.keep();
-            fs::write(path.join(MARKER), b"Project01 Arc06 Slice17 fixture\n")?;
+            fs::write(path.join(MARKER), b"Project01 Arc06 Slice19 fixture\n")?;
             let home = path.join("home");
             let config_dir = home.join(".nms-copilot");
             fs::create_dir_all(&config_dir)?;
@@ -83,14 +149,14 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                     .open(&cache)?
                     .set_times(FileTimes::new().set_modified(newer))?;
             } else if mode == "sentinel" {
-                fs::write(&cache, b"slice17-no-cache-sentinel\n")?;
+                fs::write(&cache, b"slice19-no-cache-sentinel\n")?;
                 File::options()
                     .write(true)
                     .open(&cache)?
                     .set_times(FileTimes::new().set_modified(fixed + Duration::from_secs(77)))?;
             } else if mode == "blocker" {
                 let blocker = cache.parent().ok_or("blocker parent missing")?;
-                fs::write(blocker, b"slice17-cache-write-blocker\n")?;
+                fs::write(blocker, b"slice19-cache-write-blocker\n")?;
                 File::options()
                     .write(true)
                     .open(blocker)?
@@ -153,6 +219,16 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                 actual.active_galaxy,
                 actual.player_state
             );
+        }
+        "verify-unknown" => {
+            let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
+            verify_unknown_fixture(&fixture)?;
+            println!("unknown-fixture=pass source+fresh-compatible-seed+config");
+        }
+        "prepare-restart" => {
+            let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
+            prepare_unknown_restart(&fixture)?;
+            println!("restart-source=pass malformed+older-than-cache");
         }
         "self-check" => self_check()?,
         "verify-bind-failure" => {
@@ -247,6 +323,16 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             let address: SocketAddr = args.next().ok_or("MCP socket address required")?.parse()?;
             run_monitor(&fixture, address)?;
         }
+        "monitor-unknown" => {
+            let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
+            let address: SocketAddr = args.next().ok_or("MCP socket address required")?.parse()?;
+            run_unknown_monitor(&fixture, address)?;
+        }
+        "verify-restart" => {
+            let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
+            let address: SocketAddr = args.next().ok_or("MCP socket address required")?.parse()?;
+            run_unknown_restart_monitor(&fixture, address)?;
+        }
         "hold-port" => {
             let address: SocketAddr = args.next().ok_or("socket address required")?.parse()?;
             let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
@@ -270,7 +356,7 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
 fn owned_path(path: String) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let path = PathBuf::from(path);
     let marker = path.join(MARKER);
-    if !marker.is_file() || fs::read(marker)? != b"Project01 Arc06 Slice17 fixture\n" {
+    if !marker.is_file() || fs::read(marker)? != b"Project01 Arc06 Slice19 fixture\n" {
         return Err(format!("refusing unowned fixture path {}", path.display()).into());
     }
     Ok(path)
@@ -333,7 +419,7 @@ fn save_bytes(
 ) -> Vec<u8> {
     let mut value = serde_json::json!({
         "Version": version, "Platform": "Mac|Final", "ActiveContext": "Main",
-        "CommonStateData": {"SaveName":"Slice17", "TotalPlayTime":100},
+        "CommonStateData": {"SaveName":"Slice19", "TotalPlayTime":100},
         "BaseContext": {"GameMode":1,"PlayerStateData":{
             "UniverseAddress":{"RealityIndex":reality,"GalacticAddress":{"VoxelX":0,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":0}},
             "Units":units,"Nanites":nanites,"Specials":specials,"PersistentPlayerBases":[]
@@ -468,7 +554,697 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
         &cold_cross,
         &cold_cross_model,
     )?;
-    println!("golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); reversed-order=pass");
+
+    let lifecycle_stage = live_mcp::UnknownLifecycleStage::Startup;
+    let lifecycle_data = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    let lifecycle_live = live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, false);
+    let lifecycle_rebuilt = live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, true);
+    let lifecycle_dir = tempfile::tempdir()?;
+    let mut lifecycle_file_count = 0;
+    for stage in [
+        live_mcp::UnknownLifecycleStage::Startup,
+        live_mcp::UnknownLifecycleStage::Promoted,
+    ] {
+        let expected_data = live_mcp::expected_unknown_lifecycle_cache(stage);
+        let expected_rebuilt = live_mcp::expected_unknown_lifecycle_model(stage, true);
+        for reversed in [false, true] {
+            let mut written = live_mcp::expected_unknown_lifecycle_cache(stage);
+            if reversed {
+                written.systems.reverse();
+            }
+            let path = lifecycle_dir.path().join(format!(
+                "lifecycle-{}-{}.rkyv",
+                if matches!(stage, live_mcp::UnknownLifecycleStage::Startup) {
+                    "startup"
+                } else {
+                    "promoted"
+                },
+                if reversed { "reversed" } else { "literal" }
+            ));
+            nms_cache::write_cache(&written, &path)?;
+            let checked = nms_cache::read_cache(&path)?;
+            let rebuilt = nms_cache::rebuild_model(&checked);
+            live_mcp::compare_cache_model(&checked, &rebuilt, &expected_data, &expected_rebuilt)?;
+            lifecycle_file_count += 1;
+        }
+    }
+    live_mcp::compare_cache_model(
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+    )?;
+    let u2 = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+    let mut raw_marker_false = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    raw_marker_false
+        .systems
+        .iter_mut()
+        .find(|system| system.address == u2)
+        .ok_or("literal U2 cache row missing")?
+        .is_player_placeholder = false;
+    let raw_marker_path = lifecycle_dir.path().join("lifecycle-raw-marker-false.rkyv");
+    nms_cache::write_cache(&raw_marker_false, &raw_marker_path)?;
+    let raw_marker_checked = nms_cache::read_cache(&raw_marker_path)?;
+    let raw_marker_rebuilt = nms_cache::rebuild_model(&raw_marker_checked);
+    if live_mcp::compare_cache_model(
+        &raw_marker_checked,
+        &raw_marker_rebuilt,
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+    )
+    .is_ok()
+    {
+        return Err("raw U2 marker mutation passed the consumed combined predicate".into());
+    }
+    let mut derived_marker_cleared =
+        live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, false);
+    derived_marker_cleared.insert_system(nms_core::system::System::new(
+        u2,
+        None,
+        None,
+        None,
+        vec![],
+    ));
+    let node_keys = |model: &nms_graph::GalaxyModel| {
+        model
+            .node_map
+            .keys()
+            .map(|id| format!("{id:?}"))
+            .collect::<std::collections::BTreeSet<_>>()
+    };
+    let node_weights = |model: &nms_graph::GalaxyModel| {
+        model
+            .graph
+            .node_weights()
+            .map(|id| format!("{id:?}"))
+            .collect::<std::collections::BTreeSet<_>>()
+    };
+    let edge_rows = |model: &nms_graph::GalaxyModel| {
+        let mut rows = model
+            .graph
+            .edge_indices()
+            .map(|edge| {
+                let (left, right) = model.graph.edge_endpoints(edge).expect("edge endpoints");
+                let mut left = format!("{:?}", model.graph.node_weight(left).expect("left id"));
+                let mut right = format!("{:?}", model.graph.node_weight(right).expect("right id"));
+                if left > right {
+                    std::mem::swap(&mut left, &mut right);
+                }
+                (
+                    left,
+                    right,
+                    model
+                        .graph
+                        .edge_weight(edge)
+                        .expect("edge weight")
+                        .to_bits(),
+                )
+            })
+            .collect::<Vec<_>>();
+        rows.sort();
+        rows
+    };
+    let spatial_rows = |model: &nms_graph::GalaxyModel| {
+        let mut rows = model
+            .spatial
+            .iter()
+            .flat_map(|(galaxy, tree)| {
+                tree.iter().map(|point| {
+                    (
+                        *galaxy,
+                        point.id.reality_index(),
+                        point.id.system_address(),
+                        point.point.map(f64::to_bits),
+                    )
+                })
+            })
+            .collect::<Vec<_>>();
+        rows.sort();
+        rows
+    };
+    if derived_marker_cleared.systems != lifecycle_live.systems
+        || derived_marker_cleared.planets != lifecycle_live.planets
+        || derived_marker_cleared.bases != lifecycle_live.bases
+        || derived_marker_cleared.name_index != lifecycle_live.name_index
+        || derived_marker_cleared.biome_index != lifecycle_live.biome_index
+        || derived_marker_cleared.address_to_id != lifecycle_live.address_to_id
+        || derived_marker_cleared.player_state != lifecycle_live.player_state
+        || derived_marker_cleared.active_galaxy != lifecycle_live.active_galaxy
+        || node_keys(&derived_marker_cleared) != node_keys(&lifecycle_live)
+        || node_weights(&derived_marker_cleared) != node_weights(&lifecycle_live)
+        || !derived_marker_cleared
+            .node_map
+            .iter()
+            .all(|(id, index)| derived_marker_cleared.graph.node_weight(*index) == Some(id))
+        || !lifecycle_live
+            .node_map
+            .iter()
+            .all(|(id, index)| lifecycle_live.graph.node_weight(*index) == Some(id))
+        || derived_marker_cleared.graph.node_count() != lifecycle_live.graph.node_count()
+        || derived_marker_cleared.graph.edge_count() != lifecycle_live.graph.edge_count()
+        || edge_rows(&derived_marker_cleared) != edge_rows(&lifecycle_live)
+        || spatial_rows(&derived_marker_cleared) != spatial_rows(&lifecycle_live)
+    {
+        return Err("derived marker mutation changed state beyond marker provenance".into());
+    }
+    reject_model(
+        "derived U2 marker promotion",
+        &derived_marker_cleared,
+        &lifecycle_data,
+        &lifecycle_live,
+    )?;
+    let mut missing_u2 = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    missing_u2.systems.retain(|system| system.address != u2);
+    let missing_u2_rebuilt = nms_cache::rebuild_model(&missing_u2);
+    if live_mcp::compare_cache_model(
+        &missing_u2,
+        &missing_u2_rebuilt,
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+    )
+    .is_ok()
+    {
+        return Err("missing retained U2 passed the consumed combined predicate".into());
+    }
+    let physical_u2 = GalacticAddress::new(0, 0, 0, 2, 5, 0);
+    let literal_u2 = serde_json::json!({
+        "system": "(unknown)", "planets_in_system": 0, "galaxy": "Euclid",
+        "voxel_x": 0, "voxel_y": 0, "voxel_z": 0, "solar_system_index": 2,
+        "portal_glyphs_hex": "500200000000",
+        "portal_glyphs_emoji": nms_query::display::hex_to_emoji("500200000000"),
+        "signal_booster": "07FF:007F:07FF:0002",
+    });
+    live_mcp::assert_location_at(
+        &literal_u2,
+        physical_u2,
+        "(unknown)",
+        0,
+        "500200000000",
+        "07FF:007F:07FF:0002",
+    )?;
+    let mut wrong_ssi_location = literal_u2;
+    wrong_ssi_location["system"] = serde_json::json!("Decoy-0");
+    if live_mcp::assert_location_at(
+        &wrong_ssi_location,
+        physical_u2,
+        "(unknown)",
+        0,
+        "500200000000",
+        "07FF:007F:07FF:0002",
+    )
+    .is_ok()
+    {
+        return Err("same-voxel wrong-SSI location passed full literal predicate".into());
+    }
+
+    println!(
+        "golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); lifecycle-files={lifecycle_file_count} lifecycle-negatives=4; reversed-order=pass"
+    );
+    Ok(())
+}
+
+fn verify_unknown_fixture(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let source = live_mcp::unknown_lifecycle_source(
+        4720,
+        2,
+        7,
+        8,
+        9,
+        Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+        false,
+    );
+    let expected_source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+    let cache = fixture_cache_path(fixture)?;
+    if fs::read_to_string(fixture.join("mode.txt"))? != "unknown\nenabled\n"
+        || fs::read_to_string(fixture.join("cache-path.txt"))? != "cache.rkyv"
+        || fs::read(fixture.join("save.json"))? != source
+        || fs::metadata(fixture.join("save.json"))?.modified()? != expected_source_time
+        || !nms_cache::is_cache_fresh(&cache, &fixture.join("save.json"))
+        || cache.with_extension("rkyv.tmp").exists()
+    {
+        return Err("unknown fixture source/mode/freshness/temp state differs".into());
+    }
+    let actual = nms_cache::read_cache(&cache)?;
+    let expected = live_mcp::unknown_lifecycle_seed_cache();
+    live_mcp::compare_cache(&actual, &expected).map_err(|error| error.to_string())?;
+    let config = fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?;
+    let expected_config = format!(
+        "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = true\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+        cache.to_string_lossy()
+    );
+    if config != expected_config {
+        return Err("unknown fixture cache/watcher config differs".into());
+    }
+    Ok(())
+}
+
+fn run_unknown_monitor(
+    fixture: &Path,
+    address: SocketAddr,
+) -> Result<(), Box<dyn std::error::Error>> {
+    verify_unknown_fixture_after_startup(fixture)?;
+    let source = fixture.join("save.json");
+    let cache = fixture_cache_path(fixture)?;
+    let control = fixture.join("monitor.commands");
+    let mut expected_source = live_mcp::unknown_lifecycle_source(
+        4720,
+        2,
+        7,
+        8,
+        9,
+        Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+        false,
+    );
+    let mut expected_source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+    let mut checkpoint = cache_stamp(&cache)?;
+    let mut stage = live_mcp::UnknownLifecycleStage::Startup;
+    let mut next_step = 0usize;
+    let (session, _) = initialize_http(address)?;
+    let mut sse = subscribe_sse(address, &session)?;
+    let (tool, resource) = location_rpc_pair(address, &session)?;
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 2, 5, 0),
+        "(unknown)",
+        0,
+        "500200000000",
+        "07FF:007F:07FF:0002",
+    )
+    .map_err(|error| format!("repaired U2 location: {error}"))?;
+    check_unknown_boundary(
+        fixture,
+        &expected_source,
+        expected_source_time,
+        &checkpoint,
+        stage,
+    )?;
+    fs::write(
+        fixture.join("monitor.ready"),
+        format!("address={address} session={session}\n"),
+    )?;
+    File::open(fixture.join("monitor.ready"))?.sync_all()?;
+    let mut offset = 0;
+
+    loop {
+        let (line, next_offset) = wait_control_line(&control, offset, Duration::from_secs(60))?;
+        offset = next_offset;
+        let required = ["move", "malformed", "promote", "identical", "finish"]
+            .get(next_step)
+            .copied()
+            .ok_or("unknown lifecycle monitor received a command after finish")?;
+        if line != required {
+            return Err(format!(
+                "unknown lifecycle step {next_step} requires {required:?}, received {line:?}"
+            )
+            .into());
+        }
+        check_unknown_boundary(
+            fixture,
+            &expected_source,
+            expected_source_time,
+            &checkpoint,
+            stage,
+        )?;
+        match line.as_str() {
+            "move" => {
+                let cursor = sse.cursor();
+                let moved = live_mcp::unknown_lifecycle_source(
+                    4721,
+                    3,
+                    70,
+                    80,
+                    90,
+                    Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+                    false,
+                );
+                expected_source_time = atomic_replace(&source, &moved)?;
+                expected_source = moved;
+                sse.wait_for_resource_updated_since(
+                    cursor,
+                    "nms://player/location",
+                    Duration::from_secs(8),
+                )?;
+                stage = live_mcp::UnknownLifecycleStage::Moved;
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "(unknown)",
+                    0,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )
+                .map_err(|error| format!("moved U3 location: {error}"))?;
+                checkpoint = cache_stamp(&cache)?;
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                next_step += 1;
+                println!("unknown-move=pass exact-U3+whole-cache");
+                io::stdout().flush()?;
+            }
+            "malformed" => {
+                let bad = br#"{"Version":broken"#;
+                let before = location_rpc_pair(address, &session)?;
+                let cursor = sse.cursor();
+                expected_source_time = atomic_replace(&source, bad)?;
+                expected_source = bad.to_vec();
+                sse.wait_quiet_since(cursor, Duration::from_millis(650))?;
+                if location_rpc_pair(address, &session)? != before {
+                    return Err("malformed source changed full tool/resource location".into());
+                }
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "(unknown)",
+                    0,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )?;
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                next_step += 1;
+                println!("unknown-malformed=pass last-good+cache-retained");
+                io::stdout().flush()?;
+            }
+            "promote" => {
+                let cursor = sse.cursor();
+                let promoted = live_mcp::unknown_lifecycle_source(
+                    4722,
+                    3,
+                    700,
+                    800,
+                    900,
+                    Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+                    true,
+                );
+                expected_source_time = atomic_replace(&source, &promoted)?;
+                expected_source = promoted;
+                sse.wait_for_resource_updated_since(
+                    cursor,
+                    "nms://player/location",
+                    Duration::from_secs(8),
+                )?;
+                stage = live_mcp::UnknownLifecycleStage::Promoted;
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "-",
+                    1,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )?;
+                checkpoint = cache_stamp(&cache)?;
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                next_step += 1;
+                println!("unknown-promotion=pass exact-real-unnamed+whole-cache");
+                io::stdout().flush()?;
+            }
+            "identical" => {
+                if stage != live_mcp::UnknownLifecycleStage::Promoted {
+                    return Err("identical rewrite requires promoted U3".into());
+                }
+                let fixed = UNIX_EPOCH + Duration::from_secs(1_700_000_777);
+                let bytes = fs::read(&cache)?;
+                File::options()
+                    .write(true)
+                    .open(&cache)?
+                    .set_times(FileTimes::new().set_modified(fixed))?;
+                checkpoint = Some(CacheStamp {
+                    bytes,
+                    modified: fixed,
+                });
+                let cursor = sse.cursor();
+                expected_source_time = atomic_replace(&source, &expected_source)?;
+                sse.wait_quiet_since(cursor, Duration::from_millis(650))?;
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "-",
+                    1,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )?;
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                next_step += 1;
+                println!("unknown-identical=pass exact-cache-bytes+mtime");
+                io::stdout().flush()?;
+            }
+            "finish" => {
+                if stage != live_mcp::UnknownLifecycleStage::Promoted || next_step != 4 {
+                    return Err("finish requires the ordered promoted lifecycle boundary".into());
+                }
+                sse.wait_closed_without_resource_updated(
+                    Duration::from_secs(8),
+                    "nms://player/location",
+                )?;
+                sse.close_and_join()?;
+                thread::sleep(Duration::from_millis(650));
+                check_unknown_boundary(
+                    fixture,
+                    &expected_source,
+                    expected_source_time,
+                    &checkpoint,
+                    stage,
+                )?;
+                println!("unknown-first-eof=pass sse-reader-joined+cache-stable");
+                return Ok(());
+            }
+            other => return Err(format!("unknown lifecycle monitor command {other:?}").into()),
+        }
+    }
+}
+
+fn verify_unknown_fixture_after_startup(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let source = live_mcp::unknown_lifecycle_source(
+        4720,
+        2,
+        7,
+        8,
+        9,
+        Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+        false,
+    );
+    check_unknown_boundary(
+        fixture,
+        &source,
+        UNIX_EPOCH + Duration::from_secs(1_700_000_000),
+        &cache_stamp(&fixture_cache_path(fixture)?)?,
+        live_mcp::UnknownLifecycleStage::Startup,
+    )
+}
+
+fn check_unknown_boundary(
+    fixture: &Path,
+    source: &[u8],
+    source_time: std::time::SystemTime,
+    checkpoint: &Option<CacheStamp>,
+    stage: live_mcp::UnknownLifecycleStage,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let marker = fixture.join(MARKER);
+    let cache = fixture_cache_path(fixture)?;
+    let mode = fs::read_to_string(fixture.join("mode.txt"))?;
+    let watch_enabled = match mode.as_str() {
+        "unknown\nenabled\n" => true,
+        "unknown\ndisabled\n" => false,
+        _ => return Err("owned lifecycle mode/watch boundary changed".into()),
+    };
+    if !marker.is_file()
+        || fs::read(&marker)? != b"Project01 Arc06 Slice19 fixture\n"
+        || fs::read_to_string(fixture.join("cache-path.txt"))? != "cache.rkyv"
+        || fs::read(fixture.join("save.json"))? != source
+        || fs::metadata(fixture.join("save.json"))?.modified()? != source_time
+        || cache.with_extension("rkyv.tmp").exists()
+    {
+        return Err("owned lifecycle source/marker/temp boundary changed".into());
+    }
+    let expected_config = format!(
+        "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = {}\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+        watch_enabled,
+        cache.to_string_lossy()
+    );
+    if fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))? != expected_config {
+        return Err("complete lifecycle config differs".into());
+    }
+    let actual = cache_stamp(&cache)?;
+    match (checkpoint, actual) {
+        (Some(expected), Some(actual))
+            if expected.bytes == actual.bytes && expected.modified == actual.modified => {}
+        _ => return Err("lifecycle cache exact bytes/mtime checkpoint changed".into()),
+    }
+    live_mcp::assert_unknown_lifecycle_cache(&cache, stage)
+        .map_err(|error| format!("whole raw/rebuilt cache oracle: {error}"))?;
+    Ok(())
+}
+
+fn prepare_unknown_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let cache = fixture_cache_path(fixture)?;
+    let promoted = live_mcp::unknown_lifecycle_source(
+        4722,
+        3,
+        700,
+        800,
+        900,
+        Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+        true,
+    );
+    let cache_state = cache_stamp(&cache)?.ok_or("promoted cache missing")?;
+    let source = fs::read(fixture.join("save.json"))?;
+    if source != promoted {
+        return Err("restart preparation requires exact promoted source".into());
+    }
+    let malformed = br#"{"Version":restart-opposed"#;
+    atomic_replace(&fixture.join("save.json"), malformed)?;
+    let older = cache_state.modified - Duration::from_secs(1);
+    File::options()
+        .write(true)
+        .open(fixture.join("save.json"))?
+        .set_times(FileTimes::new().set_modified(older))?;
+    if fs::metadata(fixture.join("save.json"))?.modified()? >= cache_state.modified
+        || fs::read(&cache)? != cache_state.bytes
+        || fs::metadata(&cache)?.modified()? != cache_state.modified
+    {
+        return Err("opposed restart source/cache freshness boundary differs".into());
+    }
+    fs::write(fixture.join("mode.txt"), b"unknown\ndisabled\n")?;
+    let config = format!(
+        "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = false\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+        cache.to_string_lossy()
+    );
+    fs::write(fixture.join("home/.nms-copilot/config.toml"), config)?;
+    let source_time = fs::metadata(fixture.join("save.json"))?.modified()?;
+    let config = fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?;
+    fs::write(
+        fixture.join("restart-checkpoint.json"),
+        serde_json::to_vec(&serde_json::json!({
+            "cache_bytes_hex": hex_bytes(&cache_state.bytes),
+            "cache_modified_nanos": cache_state.modified.duration_since(UNIX_EPOCH)?.as_nanos(),
+            "source_hex": hex_bytes(&fs::read(fixture.join("save.json"))?),
+            "source_modified_nanos": source_time.duration_since(UNIX_EPOCH)?.as_nanos(),
+            "config": config,
+            "mode": fs::read_to_string(fixture.join("mode.txt"))?,
+            "cache_path": fs::read_to_string(fixture.join("cache-path.txt"))?,
+        }))?,
+    )?;
+    File::open(fixture.join("restart-checkpoint.json"))?.sync_all()?;
+    Ok(())
+}
+
+fn run_unknown_restart_monitor(
+    fixture: &Path,
+    address: SocketAddr,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let cache = fixture_cache_path(fixture)?;
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("restart-checkpoint.json"))?)?;
+    let cache_checkpoint = CacheStamp {
+        bytes: decode_hex(
+            checkpoint["cache_bytes_hex"]
+                .as_str()
+                .ok_or("checkpoint cache bytes")?,
+        )?,
+        modified: UNIX_EPOCH
+            + Duration::from_nanos(
+                checkpoint["cache_modified_nanos"]
+                    .as_u64()
+                    .ok_or("checkpoint cache time")?,
+            ),
+    };
+    let expected_source = decode_hex(
+        checkpoint["source_hex"]
+            .as_str()
+            .ok_or("checkpoint source")?,
+    )?;
+    let expected_source_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["source_modified_nanos"]
+                .as_u64()
+                .ok_or("checkpoint source time")?,
+        );
+    if expected_source.as_slice() != br#"{"Version":restart-opposed"#
+        || expected_source_time >= cache_checkpoint.modified
+        || fs::read(&cache)? != cache_checkpoint.bytes
+        || fs::metadata(&cache)?.modified()? != cache_checkpoint.modified
+        || fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?
+            != checkpoint["config"].as_str().ok_or("checkpoint config")?
+        || fs::read_to_string(fixture.join("mode.txt"))?
+            != checkpoint["mode"].as_str().ok_or("checkpoint mode")?
+        || fs::read_to_string(fixture.join("cache-path.txt"))?
+            != checkpoint["cache_path"]
+                .as_str()
+                .ok_or("checkpoint cache path")?
+    {
+        return Err("prelaunch restart checkpoint differs from the literal opposed state".into());
+    }
+    let (session, _) = initialize_http(address)?;
+    let mut sse = subscribe_sse(address, &session)?;
+    let (tool, resource) = location_rpc_pair(address, &session)?;
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 3, 5, 0),
+        "-",
+        1,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    )?;
+    check_unknown_boundary(
+        fixture,
+        &expected_source,
+        expected_source_time,
+        &Some(cache_checkpoint.clone()),
+        live_mcp::UnknownLifecycleStage::Promoted,
+    )?;
+    fs::write(
+        fixture.join("restart.ready"),
+        format!("address={address} session={session}\n"),
+    )?;
+    File::open(fixture.join("restart.ready"))?.sync_all()?;
+    let control = fixture.join("restart.commands");
+    let (line, _) = wait_control_line(&control, 0, Duration::from_secs(60))?;
+    if line != "finish" {
+        return Err(format!("restart monitor expected finish, received {line:?}").into());
+    }
+    sse.wait_closed_without_resource_updated(Duration::from_secs(8), "nms://player/location")?;
+    sse.close_and_join()?;
+    thread::sleep(Duration::from_millis(650));
+    check_unknown_boundary(
+        fixture,
+        &expected_source,
+        expected_source_time,
+        &Some(cache_checkpoint),
+        live_mcp::UnknownLifecycleStage::Promoted,
+    )?;
+    println!("unknown-restart=pass warm-source-bypassed+cache-stable+eof");
     Ok(())
 }
 
@@ -494,6 +1270,15 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
             system: "Origin-0",
             planets: 1,
         }
+    } else if matches!(
+        mode.as_str(),
+        "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker"
+    ) {
+        LiveLocation {
+            physical: 0,
+            system: "(unknown)",
+            planets: 0,
+        }
     } else {
         LiveLocation {
             physical: 0,
@@ -510,7 +1295,7 @@ fn run_monitor(fixture: &Path, address: SocketAddr) -> Result<(), Box<dyn std::e
             assert_location_pair(&tool, &resource, 0, "Origin-0", 1)?;
         }
         "cold" | "nocache" | "bypass-missing" | "sentinel" | "blocker" => {
-            assert_location_pair(&tool, &resource, 0, "-", 0)?;
+            assert_location_pair(&tool, &resource, 0, "(unknown)", 0)?;
         }
         other => return Err(format!("unsupported monitor fixture mode {other}").into()),
     }
@@ -899,7 +1684,7 @@ fn load_initial_fixture(fixture: &Path) -> Result<InitialFixture, Box<dyn std::e
                 .as_ref()
                 .map(|stamp| (stamp.bytes.as_slice(), stamp.modified))
                 != Some((
-                    b"slice17-no-cache-sentinel\n".as_slice(),
+                    b"slice19-no-cache-sentinel\n".as_slice(),
                     UNIX_EPOCH + Duration::from_secs(1_700_000_077),
                 ))
             {
@@ -1025,7 +1810,7 @@ fn check_fixture_files_internal(
     ready: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let marker = fixture.join(MARKER);
-    if !marker.is_file() || fs::read(&marker)? != b"Project01 Arc06 Slice17 fixture\n" {
+    if !marker.is_file() || fs::read(&marker)? != b"Project01 Arc06 Slice19 fixture\n" {
         return Err("owned fixture marker differs".into());
     }
     let mode_lines = fs::read_to_string(fixture.join("mode.txt"))?;
@@ -1068,7 +1853,7 @@ fn check_fixture_files_internal(
         "blocker" => {
             let parent = fixture.join("cache-parent");
             if !parent.is_file()
-                || fs::read(&parent)? != b"slice17-cache-write-blocker\n"
+                || fs::read(&parent)? != b"slice19-cache-write-blocker\n"
                 || fs::metadata(&parent)?.modified()?
                     != UNIX_EPOCH + Duration::from_secs(1_700_000_077)
                 || cache.exists()
@@ -1076,7 +1861,7 @@ fn check_fixture_files_internal(
                 return Err("write-error blocker/parent/cache state differs".into());
             }
         }
-        "sentinel" if fs::read(&cache)? != b"slice17-no-cache-sentinel\n" => {
+        "sentinel" if fs::read(&cache)? != b"slice19-no-cache-sentinel\n" => {
             return Err("no-cache sentinel bytes changed".into());
         }
         "cold" if ready && !cache.is_file() => {

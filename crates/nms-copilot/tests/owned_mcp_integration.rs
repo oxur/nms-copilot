@@ -3,21 +3,23 @@
 #[path = "support/live_mcp.rs"]
 pub mod live_mcp;
 
+use std::fs::File;
 use std::net::TcpListener;
 use std::process::{Child, Command, Stdio};
 use std::thread;
-use std::time::{Duration, Instant};
+use std::time::{Duration, Instant, SystemTime};
 
-use nms_copilot::coordinator::AppliedSaveUpdate;
+use nms_copilot::coordinator::{AppliedSaveUpdate, LiveSaveCoordinator};
 use nms_copilot::mcp::{self, McpBackgroundError};
 use nms_core::SaveUpdate;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::player::{BaseType, PlayerBase, PlayerState};
-use nms_core::system::{Planet, System};
+use nms_core::system::{Planet, System, SystemId};
+use nms_watch::WatchConfig;
 use tokio::sync::RwLock;
 
-const CHILD_MARKER: &str = "NMS_SLICE17_OWNED_CHILD";
+const CHILD_MARKER: &str = "NMS_SLICE19_OWNED_CHILD";
 const TEST_TIMEOUT: Duration = Duration::from_secs(8);
 
 #[test]
@@ -75,6 +77,194 @@ fn test_literal_cache_validator_accepts_golden_and_rejects_discriminating_mutati
     assert!(
         live_mcp::compare_cache_model(&marker_data, &genuine_empty, &marker_data, &marker_model)
             .is_err()
+    );
+
+    let physical_nine = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+    let mut marker_cleared_raw = live_mcp::expected_cold_cross_cache();
+    marker_cleared_raw
+        .systems
+        .iter_mut()
+        .find(|system| system.address == physical_nine)
+        .expect("literal current system exists")
+        .is_player_placeholder = false;
+    assert!(
+        live_mcp::compare_cache_model(
+            &marker_cleared_raw,
+            &nms_cache::rebuild_model(&marker_cleared_raw),
+            &marker_data,
+            &marker_model,
+        )
+        .is_err()
+    );
+
+    let mut marker_cleared_derived = nms_cache::rebuild_model(&marker_data);
+    marker_cleared_derived.insert_system(System::new(physical_nine, None, None, None, vec![]));
+    assert!(
+        live_mcp::compare_cache_model(
+            &marker_data,
+            &marker_cleared_derived,
+            &marker_data,
+            &marker_model,
+        )
+        .is_err()
+    );
+
+    let mut missing_current = live_mcp::expected_cold_cross_cache();
+    missing_current
+        .systems
+        .retain(|system| system.address != physical_nine);
+    assert!(
+        live_mcp::compare_cache_model(
+            &missing_current,
+            &nms_cache::rebuild_model(&missing_current),
+            &marker_data,
+            &marker_model,
+        )
+        .is_err()
+    );
+
+    let location = serde_json::json!({
+        "system": "(unknown)", "planets_in_system": 0, "galaxy": "Eissentam",
+        "voxel_x": 0, "voxel_y": 0, "voxel_z": 0, "solar_system_index": 1,
+        "portal_glyphs_hex": "000100000000",
+        "portal_glyphs_emoji": nms_query::display::hex_to_emoji("000100000000"),
+        "signal_booster": "07FF:007F:07FF:0001",
+    });
+    live_mcp::assert_location_at(
+        &location,
+        physical_nine,
+        "(unknown)",
+        0,
+        "000100000000",
+        "07FF:007F:07FF:0001",
+    )
+    .expect("literal exact physical unknown passes the complete location predicate");
+    let mut decoy_location = location;
+    decoy_location["system"] = serde_json::json!("Imported-9");
+    assert!(
+        live_mcp::assert_location_at(
+            &decoy_location,
+            physical_nine,
+            "(unknown)",
+            0,
+            "000100000000",
+            "07FF:007F:07FF:0001",
+        )
+        .is_err()
+    );
+
+    let lifecycle_stage = live_mcp::UnknownLifecycleStage::Startup;
+    let lifecycle_data = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    let lifecycle_live = live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, false);
+    let lifecycle_rebuilt = live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, true);
+    let lifecycle_dir = tempfile::tempdir().expect("checked lifecycle codec fixtures");
+    for (name, stage) in [
+        ("startup", live_mcp::UnknownLifecycleStage::Startup),
+        ("promoted", live_mcp::UnknownLifecycleStage::Promoted),
+    ] {
+        let expected_data = live_mcp::expected_unknown_lifecycle_cache(stage);
+        let expected_rebuilt = live_mcp::expected_unknown_lifecycle_model(stage, true);
+        let path = lifecycle_dir.path().join(format!("{name}.rkyv"));
+        nms_cache::write_cache(&expected_data, &path).expect("write literal lifecycle cache");
+        live_mcp::assert_cache_oracle(&path, &expected_data, &expected_rebuilt)
+            .expect("checked codec read and rebuild match literal lifecycle graph");
+        let mut reversed = live_mcp::expected_unknown_lifecycle_cache(stage);
+        reversed.systems.reverse();
+        let reversed_path = lifecycle_dir.path().join(format!("{name}-reversed.rkyv"));
+        nms_cache::write_cache(&reversed, &reversed_path)
+            .expect("write reversed literal lifecycle cache");
+        live_mcp::assert_cache_oracle(&reversed_path, &expected_data, &expected_rebuilt)
+            .expect("reversed system serialization preserves full lifecycle semantics");
+    }
+    live_mcp::compare_cache_model(
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+        &lifecycle_data,
+        &lifecycle_rebuilt,
+    )
+    .expect("literal four-system cache/rebuilt graph baseline passes");
+    let mut wrong_edge_endpoints =
+        live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, true);
+    let removed = wrong_edge_endpoints
+        .graph
+        .edge_indices()
+        .next()
+        .expect("literal same-galaxy edge exists");
+    wrong_edge_endpoints.graph.remove_edge(removed);
+    let d1 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+    let i9 = GalacticAddress::new(0, 0, 0, 3, 0, 9);
+    let d1_id = nms_graph::SystemId::from_address(&d1);
+    let i9_id = nms_graph::SystemId::from_address(&i9);
+    wrong_edge_endpoints.graph.add_edge(
+        wrong_edge_endpoints.node_map[&d1_id],
+        wrong_edge_endpoints.node_map[&i9_id],
+        264.682_872_8,
+    );
+    assert!(
+        live_mcp::compare_cache_model(
+            &lifecycle_data,
+            &wrong_edge_endpoints,
+            &lifecycle_data,
+            &lifecycle_rebuilt,
+        )
+        .is_err()
+    );
+    let u2 = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+
+    let mut raw_marker_false = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    raw_marker_false
+        .systems
+        .iter_mut()
+        .find(|system| system.address == u2)
+        .expect("U2 raw row exists")
+        .is_player_placeholder = false;
+    let raw_marker_path = lifecycle_dir.path().join("raw-marker-false.rkyv");
+    nms_cache::write_cache(&raw_marker_false, &raw_marker_path)
+        .expect("ordinary U2 codec state remains valid when marker is false");
+    let checked_raw_marker = nms_cache::read_cache(&raw_marker_path).unwrap();
+    let raw_marker_rebuilt = nms_cache::rebuild_model(&checked_raw_marker);
+    assert!(
+        !checked_raw_marker
+            .systems
+            .iter()
+            .find(|system| system.address == u2)
+            .unwrap()
+            .is_player_placeholder
+    );
+    assert!(
+        live_mcp::compare_cache_model(
+            &checked_raw_marker,
+            &raw_marker_rebuilt,
+            &lifecycle_data,
+            &lifecycle_rebuilt,
+        )
+        .is_err()
+    );
+
+    let mut derived_marker_cleared =
+        live_mcp::expected_unknown_lifecycle_model(lifecycle_stage, false);
+    derived_marker_cleared.insert_system(System::new(u2, None, None, None, vec![]));
+    assert!(
+        live_mcp::compare_cache_model(
+            &lifecycle_data,
+            &derived_marker_cleared,
+            &lifecycle_data,
+            &lifecycle_live,
+        )
+        .is_err()
+    );
+
+    let mut missing_u2 = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
+    missing_u2.systems.retain(|system| system.address != u2);
+    let missing_u2_rebuilt = nms_cache::rebuild_model(&missing_u2);
+    assert!(
+        live_mcp::compare_cache_model(
+            &missing_u2,
+            &missing_u2_rebuilt,
+            &lifecycle_data,
+            &lifecycle_rebuilt,
+        )
+        .is_err()
     );
 
     let mut wrong_name_index = live_mcp::golden_model();
@@ -148,6 +338,203 @@ fn test_literal_cache_model_oracles_cover_empty_and_cold_cross_states() {
 }
 
 #[test]
+fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
+    use live_mcp::UnknownLifecycleStage as Stage;
+
+    if std::env::var_os(CHILD_MARKER).is_none() {
+        run_isolated(
+            "test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity",
+            "unknown-live",
+        );
+        return;
+    }
+    let directory = tempfile::tempdir().expect("live lifecycle fixture directory");
+    let save = directory.path().join("save.json");
+    let cache = directory.path().join("cache.rkyv");
+    let initial = live_mcp::unknown_lifecycle_source(
+        4720,
+        2,
+        7,
+        8,
+        9,
+        Some(GalacticAddress::new(2, 3, 4, 1, 1, 9)),
+        false,
+    );
+    std::fs::write(&save, &initial).expect("write source fixture");
+    let source_time = SystemTime::UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+    File::options()
+        .write(true)
+        .open(&save)
+        .expect("open source timestamp")
+        .set_times(std::fs::FileTimes::new().set_modified(source_time))
+        .expect("set source timestamp");
+    nms_cache::write_cache(&live_mcp::unknown_lifecycle_seed_cache(), &cache)
+        .expect("write fresh atlas cache without current U2");
+    File::options()
+        .write(true)
+        .open(&cache)
+        .expect("open cache timestamp")
+        .set_times(std::fs::FileTimes::new().set_modified(source_time + Duration::from_secs(100)))
+        .expect("make seed cache fresh");
+
+    let loaded = nms_cache::load_or_rebuild(&cache, &save, false)
+        .expect("common loader repairs the missing warm U2 key");
+    assert!(loaded.was_cached);
+    let model = std::sync::Arc::new(RwLock::new(loaded.model));
+    let coordinator = LiveSaveCoordinator::start(
+        std::sync::Arc::clone(&model),
+        WatchConfig {
+            save_path: save.clone(),
+            debounce: Duration::from_millis(137),
+        },
+        Some(cache.clone()),
+    )
+    .expect("start live file coordinator");
+    let mcp_observer = coordinator.subscribe();
+    let witness = coordinator.subscribe();
+    let owner = mcp::spawn_mcp_background_with_updates(
+        std::sync::Arc::clone(&model),
+        "127.0.0.1:0".parse().unwrap(),
+        Some(mcp_observer),
+    )
+    .expect("start observer MCP on the coordinator-owned model");
+    let address = owner.local_addr();
+    let (session, tools) = live_mcp::initialize_http(address).unwrap();
+    assert!(tools.text().contains("where_am_i"));
+    let mut stream = live_mcp::subscribe_sse(address, &session).unwrap();
+
+    let d1 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 1, 0, 0));
+    let e4 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 4, 0, 0));
+    let i9 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 3, 0, 9));
+    let initial_nodes = {
+        let guard = model.blocking_read();
+        live_mcp::assert_model_matches(
+            &guard,
+            &live_mcp::expected_unknown_lifecycle_model(Stage::Startup, false),
+        )
+        .unwrap();
+        [d1, e4, i9]
+            .into_iter()
+            .map(|id| (id, guard.node_map[&id]))
+            .collect::<std::collections::HashMap<_, _>>()
+    };
+    live_mcp::assert_unknown_lifecycle_cache(&cache, Stage::Startup).unwrap();
+    let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 2, 5, 0),
+        "(unknown)",
+        0,
+        "500200000000",
+        "07FF:007F:07FF:0002",
+    )
+    .unwrap();
+
+    let moved = live_mcp::unknown_lifecycle_source(
+        4721,
+        3,
+        70,
+        80,
+        90,
+        Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+        false,
+    );
+    let move_cursor = stream.cursor();
+    atomic_replace(&save, &moved);
+    let move_event = witness
+        .recv_timeout(TEST_TIMEOUT)
+        .expect("coordinator observer receives movement");
+    assert_eq!(move_event.update.save_version, 4721);
+    stream
+        .wait_for_resource_updated_since(move_cursor, "nms://player/location", TEST_TIMEOUT)
+        .unwrap();
+    {
+        let guard = model.blocking_read();
+        live_mcp::assert_model_matches(
+            &guard,
+            &live_mcp::expected_unknown_lifecycle_model(Stage::Moved, false),
+        )
+        .unwrap();
+        for (id, node) in &initial_nodes {
+            assert_eq!(guard.node_map.get(id), Some(node));
+        }
+        assert_eq!(guard.graph.edge_count(), 1);
+        let edge = guard.graph.edge_indices().next().unwrap();
+        let endpoints = guard.graph.edge_endpoints(edge).unwrap();
+        let mut endpoint_ids = [
+            *guard.graph.node_weight(endpoints.0).unwrap(),
+            *guard.graph.node_weight(endpoints.1).unwrap(),
+        ];
+        endpoint_ids.sort_by_key(|id| format!("{id:?}"));
+        let mut expected_endpoints = [d1, e4];
+        expected_endpoints.sort_by_key(|id| format!("{id:?}"));
+        assert_eq!(endpoint_ids, expected_endpoints);
+        assert_eq!(*guard.graph.edge_weight(edge).unwrap(), 264.682_872_8);
+    }
+    live_mcp::assert_unknown_lifecycle_cache(&cache, Stage::Moved).unwrap();
+    let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 3, 5, 0),
+        "(unknown)",
+        0,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    )
+    .unwrap();
+
+    let promoted = live_mcp::unknown_lifecycle_source(
+        4722,
+        3,
+        700,
+        800,
+        900,
+        Some(GalacticAddress::new(0, 0, 0, 2, 5, 0)),
+        true,
+    );
+    let promotion_cursor = stream.cursor();
+    atomic_replace(&save, &promoted);
+    let promotion_event = witness
+        .recv_timeout(TEST_TIMEOUT)
+        .expect("coordinator observer receives genuine discovery");
+    assert_eq!(promotion_event.update.save_version, 4722);
+    stream
+        .wait_for_resource_updated_since(promotion_cursor, "nms://player/location", TEST_TIMEOUT)
+        .unwrap();
+    {
+        let guard = model.blocking_read();
+        live_mcp::assert_model_matches(
+            &guard,
+            &live_mcp::expected_unknown_lifecycle_model(Stage::Promoted, false),
+        )
+        .unwrap();
+        for (id, node) in &initial_nodes {
+            assert_eq!(guard.node_map.get(id), Some(node));
+        }
+        assert_eq!(guard.graph.edge_count(), 1);
+    }
+    live_mcp::assert_unknown_lifecycle_cache(&cache, Stage::Promoted).unwrap();
+    let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 3, 5, 0),
+        "-",
+        1,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    )
+    .unwrap();
+
+    owner.shutdown().expect("stop and join observer MCP");
+    stream.wait_closed(TEST_TIMEOUT).unwrap();
+    stream.close_and_join().unwrap();
+    drop(coordinator);
+}
+
+#[test]
 fn test_owned_mcp_http_lifecycle_isolation() {
     if std::env::var_os(CHILD_MARKER).is_some() {
         run_owned_server_child();
@@ -209,6 +596,12 @@ fn run_isolated(test_name: &str, marker: &str) {
         }
         thread::sleep(Duration::from_millis(20));
     }
+}
+
+fn atomic_replace(path: &std::path::Path, bytes: &[u8]) {
+    let replacement = path.with_extension("replacement");
+    std::fs::write(&replacement, bytes).expect("write replacement save beside source");
+    std::fs::rename(&replacement, path).expect("atomically replace source on same filesystem");
 }
 
 fn run_owned_server_child() {
@@ -285,7 +678,16 @@ fn run_owned_server_child() {
         .unwrap();
 
     let (tool_location, resource_location) = live_mcp::location_rpc_pair(addr, &session).unwrap();
-    live_mcp::assert_location_pair(&tool_location, &resource_location, 0, "Origin-0", 1).unwrap();
+    live_mcp::assert_location_pair_at(
+        &tool_location,
+        &resource_location,
+        GalacticAddress::new(0, 0, 0, 1, 0, 0),
+        "Origin-0",
+        1,
+        "000100000000",
+        "07FF:007F:07FF:0001",
+    )
+    .unwrap();
     assert!(live_mcp::assert_model_matches(&model.blocking_read(), &expected).is_ok());
 
     owner.shutdown().expect("explicit stop and worker join");

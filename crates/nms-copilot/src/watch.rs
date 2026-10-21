@@ -146,14 +146,20 @@ pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<St
     let mut notes = Vec::new();
 
     if let Some(ref moved) = delta.player_moved {
-        let from_name = system_name_near(model, &moved.from);
+        let from_name = system_name_at_key(model, &moved.from);
         let to_id = SystemId::from_address(&moved.to);
-        let incoming_destination = delta
-            .new_systems
-            .iter()
-            .find(|system| SystemId::from_address(&system.address) == to_id);
+        let destination_can_be_inserted =
+            model.system(&to_id).is_none() || model.is_player_placeholder(&to_id);
+        let incoming_destination = destination_can_be_inserted
+            .then(|| {
+                delta
+                    .new_systems
+                    .iter()
+                    .find(|system| SystemId::from_address(&system.address) == to_id)
+            })
+            .flatten();
         let to_name = incoming_destination.map_or_else(
-            || system_name_near(model, &moved.to),
+            || system_name_at_key(model, &moved.to),
             |system| system.name.as_deref().unwrap_or("unknown").to_owned(),
         );
         notes.push(format!("  Warped: {from_name} -> {to_name}"));
@@ -217,12 +223,11 @@ pub fn apply_and_notify(
     notes
 }
 
-/// Look up the name of the nearest system to an address.
-fn system_name_near(model: &GalaxyModel, addr: &nms_core::address::GalacticAddress) -> String {
+/// Look up the name registered for the address's system key.
+fn system_name_at_key(model: &GalaxyModel, addr: &nms_core::address::GalacticAddress) -> String {
+    let id = SystemId::from_address(addr);
     model
-        .nearest_systems_from_address(addr, 1)
-        .first()
-        .and_then(|(id, _)| model.system(id))
+        .system(&id)
         .and_then(|s| s.name.as_deref())
         .unwrap_or("unknown")
         .to_string()
@@ -451,13 +456,6 @@ mod tests {
         let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
         let mut model = GalaxyModel::new();
         model.insert_system(System::new(a0, Some("Origin-0".into()), None, None, vec![]));
-        model.insert_system(System::new(
-            a9,
-            Some("Old-Destination-Name".into()),
-            None,
-            None,
-            vec![],
-        ));
         let mut session = SessionState::from_model(&model);
         let new_system = System::new(
             a9,
@@ -493,6 +491,44 @@ mod tests {
         assert_eq!(notes[0], "  Warped: Origin-0 -> Destination-9");
         assert_eq!(notes[1], "  New system: Destination-9 (1 planet)");
         assert_eq!(notes[2], "  New scan: \"Leaf-9\" (Toxic) in Destination-9");
+
+        let mut duplicate = GalaxyModel::new();
+        duplicate.insert_system(System::new(a0, Some("Origin-0".into()), None, None, vec![]));
+        duplicate.insert_system(System::new(
+            a9,
+            Some("Existing-Destination".into()),
+            None,
+            None,
+            vec![],
+        ));
+        let mut duplicate_session = SessionState::from_model(&duplicate);
+        let duplicate_notes = apply_and_notify(
+            &mut duplicate,
+            &mut duplicate_session,
+            &SaveDelta {
+                new_systems: vec![System::new(
+                    a9,
+                    Some("Ignored-Incoming-Name".into()),
+                    None,
+                    None,
+                    vec![],
+                )],
+                player_moved: Some(PlayerMoved { from: a0, to: a9 }),
+                ..SaveDelta::empty()
+            },
+        );
+        assert_eq!(
+            duplicate_notes[0],
+            "  Warped: Origin-0 -> Existing-Destination"
+        );
+        assert_eq!(
+            duplicate
+                .system(&SystemId::from_address(&a9))
+                .unwrap()
+                .name
+                .as_deref(),
+            Some("Existing-Destination")
+        );
 
         let mut foreign_only = GalaxyModel::new();
         foreign_only.insert_system(System::new(
