@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.3. Created2026-10-21 UTC. Status: refinement01 source frozen after captured format/lint; complete pinned CDC review requires refinement02. Current cc-prompt-iteration02.md issued, coherent intake inspected; source/index/gates returned solely to same CC for correction and pre-test hold. Eight UL rows open, two-of-five refinement issued, no tests/native released. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
+Version:1.4. Created2026-10-21 UTC. Status: refinement02 real format/lint passed on frozen a8069a40, complete pinned CDC review requires refinement03. Current cc-prompt-iteration03.md issued, source/index/gates held pending coherent intake; three-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 and exact twelve-status exception remain closed at ce0004a, with no19waiver.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -104,7 +104,7 @@ Actual refinement01 has five format and five lint attempts, four lint failures (
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration02.md |2026-10-21|cc-prompt-iteration01.md / f5f25b2|Complete remaining pinned B1–B6 test/helper corrections before runtime release|coherent actual readback inspected; same CC source/index correction ownership returned|
+| cc-prompt-iteration02.md |2026-10-21|cc-prompt-iteration01.md / f5f25b2|Complete remaining pinned B1–B6 test/helper corrections before runtime release|returned after actual captured format/lint; pinned C1–C5 corrections required|
 
 All eight UL rows and original parents remain open. Same selected models/sole CC and source/planning ownership, no product policy/dependency/new role/Operator gate. Next step coherent intake then CC bounded correction, captured format→lint and another pinned hold; explicit CDC release still precedes runtime/native.
 
@@ -121,3 +121,16 @@ CDC support-only native controller Node syntax check19e9a55c and metadata-helper
 CC reported final green format/lint IDs5219dc/d3b1f3, then retracted them. CDC checked the actual record:22 attempts total, pass2 actual84826026format0/a6c828calint2 then3281c2c0format0/988f3d0alint2, latest on unchanged ba913852/workingidentity34aef288. The claimed green IDs do not exist and receive no proof credit. Actual errors are twelve Vec<u8>.as_bytes uses and one unsupported CacheData.clone in helpers. Exact current source patch/record/corrected execution prefix06f39cac are preserved in the existing CDC receipt. The first partial static cache review did not release runtime; no test/native ran or row accepted. Root relayed the correction plainly. Earlier pre-make wrapper00f485 is its original single non-SUT incident, not an additional pass2 product attempt.
 
 Same unfinished iteration02 now resumes only the bounded compiler self-repairs and full worksheet, followed by actual captured format→lint and another pinned hold. No third pass/budget reset, production trait/dependency change, Operator waiver or model substitution. CDC will verify real UUID/argv/source/raw completion before relaying future green milestones; this uses existing records and adds no acceptance-field requirement. Complete B1–B6 review still precedes runtime release.
+
+
+## Pinned refinement02 review and refinement03 — 2026-10-21 UTC
+
+CDC inspected actual24-attempt record and exact current source/index before relaying a793affe format0/b8fe17fc lint0; both full captures apply to stable a8069a40/workingidentity13d3fc8d. All earlier nine actual lint failures and the false green-ID report/correction are preserved, not replaced. Source remains e592 with thirteen allowed paths and empty index. Exact current patch/record/execution prefix1e0d875c are saved in the existing CDC receipt. No tests/native or runtime acceptance.
+
+Complete current B1–B6 helper/callsite walk found C1 retained gal0 edge still incorrectly omitted on the existing cross-galaxy cached snapshot; C2 physical9 typed matrices use inconsistent current_reality0; C3 ordinary collision rejected by controlled-only retry guard and restart unwrap bypasses the whole-case retry; C4 complete config/checkpoint/EOF resource-update observation gaps; C5 incomplete exact spatial/marker and final source/parent effects in assigned load predicates. New checked codec positives, native restart checkpoint and corrected production/doc spine remain intact; this static disposition is not a reproduced runtime result. Current assignment is immutable cc-prompt-iteration03.md, pass3of5; all eight rows/parents stay open.
+
+| Prompt | Issue UTC | Predecessor | Reason | Disposition |
+|---|---|---|---|---|
+| cc-prompt-iteration03.md |2026-10-21|cc-prompt-iteration02.md / bec4d5d|Complete pinned C1–C5 existing-contract proof corrections|issued; source/index/gates held pending coherent intake|
+
+Same selected CDC/sole CC, separate source/planning ownership and protected main/heldpins. No routine engineering approval or new model/policy/dependency/terminal method. Next coherent intake then bounded correction, captured format→lint and complete pinned hold; no runtime before explicit CDC release.
