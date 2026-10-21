@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.0. Created2026-10-21 UTC. Status: author-ready initial assignment cc-prompt.md; implementation/gates unstarted, eight UL rows open. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
+Version:1.1. Created2026-10-21 UTC. Status: coherent CC intake independently inspected; source/index handed solely to CC for initial cc-prompt.md implementation, eight UL rows open. This completes REQUIRED19 from accepted18/e592ecf under Operator-approved policyA and explicit “yup, I accept that exception :-D On to 19!”18's exact12status exception is closed in ce0004a; it does not waive any19capture.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -69,3 +69,8 @@ Reading budget is bounded to full prompt/this plan/eightrows/entryAP and complet
 | cc-prompt.md |2026-10-21|none; accepted18/e592|Required application composition of approvedA|issued after local planning commit; intake/ownership acknowledgement required before edits|
 
 After CC complete return, CDC independently reviews all changed code/helper/assertion/document bodies and discriminating oracles, reruns required current checks on stable candidate, disposes all8rows and writes mandatory substantive retrospective/bottom-up closure. Parent raw/history/finalsemantic/strictmtime-identical-rewrite-stale-import-history/original fifteen arc milestones/three repairparents/project25/independent/Operator/integration/release remain open; arc endpoint stops autonomous advancement beyondArc06.
+
+
+## Coherent intake and source ownership — 2026-10-21 UTC
+
+CDC read actual complete ignored execution.md prefix813af0c5 and checked its warm repair/exact identity/real unnamed parse/nativewholeoracle/graph/failure/lifetime readback against issued f81081f. Actual source remains clean e592/indexempty, no19product edits/compiler/gates. CC reading receipts are attestation, not proof of comprehension; full implementation/oracle review still required. Prefix bytes/hash preserved in existing CDC receipt. Minor path terminology qualified: private/tmp preflight is support input whose original bytes are in canonical planning receipt, not itself the planning path. CDC now explicitly transfers dedicated19source/index to same selected sole CC; CDC planning/index and independent review retained. CC implements only15paths then captured format→lint and complete pinned pre-test worksheet hold before broad/native. Eight UL rows and all parent gates remain open; no new role/model/policy or approval request.
