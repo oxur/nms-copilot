@@ -1,0 +1,643 @@
+{
+  "provenance": {
+    "base_source": "slice03-decoded-location-witnesses/artifacts/location-witnesses.json",
+    "base_source_sha256": "b5799abff6577e8062faae37049d16ef8bcd6c670f94f2b2d9236ed0d43f8a68",
+    "scope": "44 one-save raw Name+Position associations; no native-ID/game or nonzero-packed/general applicability claim",
+    "discovery_source": "slice02-packed-format-authority/artifacts/witnesses.json#W-CHILI",
+    "scope_discovery": "one accepted prior game-confirmed galaxy0 witness"
+  },
+  "discovery": [
+    {
+      "id": "W-CHILI",
+      "json_kind": "string",
+      "input": "0x212B0004B2446A",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 299,
+        "reality_index": 0,
+        "voxel_x": 1130,
+        "voxel_y": 4,
+        "voxel_z": -1244,
+        "portal": "212B04B2446A"
+      }
+    }
+  ],
+  "bases": [
+    {
+      "id": "W-BASE-000-039",
+      "json_kind": "string",
+      "input": "0x40050003AB8C07",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "voxel_x": -1017,
+        "voxel_y": 3,
+        "voxel_z": -1352,
+        "portal": "400503AB8C07",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-001-142",
+      "json_kind": "string",
+      "input": "0x40050003AB8C07",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 5,
+        "voxel_x": -1017,
+        "voxel_y": 3,
+        "voxel_z": -1352,
+        "portal": "400503AB8C07",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-003-047",
+      "json_kind": "string",
+      "input": "0x224D0000366A31",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 589,
+        "voxel_x": -1487,
+        "voxel_y": 0,
+        "voxel_z": 870,
+        "portal": "224D00366A31",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-004-050",
+      "json_kind": "string",
+      "input": "0x30C10006B374F3",
+      "expected": {
+        "planet_index": 3,
+        "solar_system_index": 193,
+        "voxel_x": 1267,
+        "voxel_y": 6,
+        "voxel_z": -1225,
+        "portal": "30C106B374F3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-005-004",
+      "json_kind": "string",
+      "input": "0x41D50003AB8C07",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 469,
+        "voxel_x": -1017,
+        "voxel_y": 3,
+        "voxel_z": -1352,
+        "portal": "41D503AB8C07",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-007-055",
+      "json_kind": "string",
+      "input": "0x40740003D2C9B3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "voxel_x": -1613,
+        "voxel_y": 3,
+        "voxel_z": -724,
+        "portal": "407403D2C9B3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-008-057",
+      "json_kind": "string",
+      "input": "0x40740003D2C9B3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "voxel_x": -1613,
+        "voxel_y": 3,
+        "voxel_z": -724,
+        "portal": "407403D2C9B3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-009-056",
+      "json_kind": "string",
+      "input": "0x40740003D2C9B3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 116,
+        "voxel_x": -1613,
+        "voxel_y": 3,
+        "voxel_z": -724,
+        "portal": "407403D2C9B3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-010-059",
+      "json_kind": "integer",
+      "input": 4630043528755646,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 115,
+        "voxel_x": -1602,
+        "voxel_y": 3,
+        "voxel_z": -713,
+        "portal": "107303D379BE",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-011-066",
+      "json_kind": "string",
+      "input": "0x20350003D5F9E9",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 53,
+        "voxel_x": -1559,
+        "voxel_y": 3,
+        "voxel_z": -673,
+        "portal": "203503D5F9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-012-017",
+      "json_kind": "string",
+      "input": "0x4014000349954C",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 20,
+        "voxel_x": 1356,
+        "voxel_y": 3,
+        "voxel_z": 1177,
+        "portal": "40140349954C",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-014-070",
+      "json_kind": "string",
+      "input": "0x20E9000399BD3C",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 233,
+        "voxel_x": -708,
+        "voxel_y": 3,
+        "voxel_z": -1637,
+        "portal": "20E90399BD3C",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-015-162",
+      "json_kind": "integer",
+      "input": 4940110002121198,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 397,
+        "voxel_x": -1554,
+        "voxel_y": -3,
+        "voxel_z": -706,
+        "portal": "118DFDD3E9EE",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-016-165",
+      "json_kind": "string",
+      "input": "0x20D60003D5F9E8",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 214,
+        "voxel_x": -1560,
+        "voxel_y": 3,
+        "voxel_z": -673,
+        "portal": "20D603D5F9E8",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-017-034",
+      "json_kind": "integer",
+      "input": 4720203482397160,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 197,
+        "voxel_x": -1560,
+        "voxel_y": 3,
+        "voxel_z": -673,
+        "portal": "10C503D5F9E8",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-018-073",
+      "json_kind": "string",
+      "input": "0x403300F85DD35A",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "voxel_x": 858,
+        "voxel_y": -8,
+        "voxel_z": 1501,
+        "portal": "4033F85DD35A",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-019-072",
+      "json_kind": "string",
+      "input": "0x403300F85DD35A",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 51,
+        "voxel_x": 858,
+        "voxel_y": -8,
+        "voxel_z": 1501,
+        "portal": "4033F85DD35A",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-021-092",
+      "json_kind": "integer",
+      "input": 5653688887933417,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1046,
+        "voxel_x": -1559,
+        "voxel_y": 5,
+        "voxel_z": -673,
+        "portal": "141605D5F9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-022-090",
+      "json_kind": "string",
+      "input": "0x541C0004D5D9E9",
+      "expected": {
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -675,
+        "portal": "541C04D5D9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-023-091",
+      "json_kind": "string",
+      "input": "0x541C0004D5D9E9",
+      "expected": {
+        "planet_index": 5,
+        "solar_system_index": 1052,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -675,
+        "portal": "541C04D5D9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-024-089",
+      "json_kind": "string",
+      "input": "0x23EC0004D5E9E9",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 1004,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "23EC04D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-025-088",
+      "json_kind": "string",
+      "input": "0x34170004D5D9E9",
+      "expected": {
+        "planet_index": 3,
+        "solar_system_index": 1047,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -675,
+        "portal": "341704D5D9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-026-087",
+      "json_kind": "string",
+      "input": "0x64190004D5D9E9",
+      "expected": {
+        "planet_index": 6,
+        "solar_system_index": 1049,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -675,
+        "portal": "641904D5D9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-027-084",
+      "json_kind": "integer",
+      "input": 5655887894407657,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "141804D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-028-037",
+      "json_kind": "integer",
+      "input": 5655887894407657,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "141804D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-029-036",
+      "json_kind": "integer",
+      "input": 5655887894407657,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "141804D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-030-086",
+      "json_kind": "integer",
+      "input": 5655887894407657,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "141804D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-031-083",
+      "json_kind": "integer",
+      "input": 5655887894407657,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1048,
+        "voxel_x": -1559,
+        "voxel_y": 4,
+        "voxel_z": -674,
+        "portal": "141804D5E9E9",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-033-167",
+      "json_kind": "integer",
+      "input": 5661389633509027,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 1053,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "141DFE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-034-197",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-035-160",
+      "json_kind": "string",
+      "input": "0x40D200011A42B0",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 210,
+        "voxel_x": 688,
+        "voxel_y": 1,
+        "voxel_z": 420,
+        "portal": "40D2011A42B0",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-036-184",
+      "json_kind": "string",
+      "input": "0x40ED00FE0A56A3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 237,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "40EDFE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-037-189",
+      "json_kind": "integer",
+      "input": 4716909145249443,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "10C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-038-199",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-039-187",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-040-175",
+      "json_kind": "string",
+      "input": "0x4052002BADB6EA",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 82,
+        "voxel_x": 1770,
+        "voxel_y": 43,
+        "voxel_z": -1317,
+        "portal": "40522BADB6EA",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-041-201",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-042-198",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-046-185",
+      "json_kind": "integer",
+      "input": 4761989121988259,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 235,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "10EBFE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-047-200",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-048-190",
+      "json_kind": "string",
+      "input": "0x20C200FE0A56A3",
+      "expected": {
+        "planet_index": 2,
+        "solar_system_index": 194,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "20C2FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-050-202",
+      "json_kind": "string",
+      "input": "0x415300FE0A56A3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "4153FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-052-203",
+      "json_kind": "string",
+      "input": "0x415300FE0A56A3",
+      "expected": {
+        "planet_index": 4,
+        "solar_system_index": 339,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "4153FE0A56A3",
+        "reality_index": 0
+      }
+    },
+    {
+      "id": "W-BASE-053-206",
+      "json_kind": "integer",
+      "input": 4902726610343587,
+      "expected": {
+        "planet_index": 1,
+        "solar_system_index": 363,
+        "voxel_x": 1699,
+        "voxel_y": -2,
+        "voxel_z": 165,
+        "portal": "116BFE0A56A3",
+        "reality_index": 0
+      }
+    }
+  ]
+}
