@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.4. Created2026-10-21 UTC. Status: refinement02 real format/lint passed on frozen a8069a40, complete pinned CDC review requires refinement03. Current cc-prompt-iteration03.md coherent intake inspected, sole dedicated source/index returned to same CC for correction and pinned hold; three-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 and exact twelve-status exception remain closed at ce0004a, with no19waiver.
+Version:1.5. Created2026-10-21 UTC. Status: refinement03 actual format/lint passed on frozen56a3da93; full CDC C1–C5 walk leaves one prospective C3 failure-receipt retention correction. Current cc-prompt-iteration04.md issued, one source file only, source/index/gates held pending intake; four-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 exact exception remains closed, no19waiver.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -131,7 +131,7 @@ Complete current B1–B6 helper/callsite walk found C1 retained gal0 edge still 
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration03.md |2026-10-21|cc-prompt-iteration02.md / bec4d5d|Complete pinned C1–C5 existing-contract proof corrections|coherent readback inspected; same CC owns bounded correction and pre-test hold|
+| cc-prompt-iteration03.md |2026-10-21|cc-prompt-iteration02.md / bec4d5d|Complete pinned C1–C5 existing-contract proof corrections|returned after real format/lint; single C3 retention correction remains|
 
 Same selected CDC/sole CC, separate source/planning ownership and protected main/heldpins. No routine engineering approval or new model/policy/dependency/terminal method. Next coherent intake then bounded correction, captured format→lint and complete pinned hold; no runtime before explicit CDC release.
 
@@ -139,3 +139,16 @@ Same selected CDC/sole CC, separate source/planning ownership and protected main
 ## Refinement03 intake handoff — 2026-10-21 UTC
 
 CDC read the complete actual C1–C5 execution acknowledgement03a0506a, preserved exact bytes/hash, and reverified sourcea8069a40/indexempty. The retained1600ly pair in both cached snapshots, valid physical9/current_reality/opposed selection, ordinary and controlled initial/restart collision stages and fresh full-case retry, complete config/checkpoint/stdout/SSE EOF boundaries, literal spatial/marker rows and opposed-cache parent/source postconditions were coherently acknowledged. This is intake attestation, not implementation or runtime acceptance. Same CC now receives sole dedicated19source/index/gates for pass3 bounded correction, captured format→lint then pinned HOLD; no tests/native until explicit CDC release. CDC planning/index retained; source/heldpins/main user edit untouched by CDC.
+
+
+## Pinned refinement03 review and narrow refinement04 — 2026-10-21 UTC
+
+CDC independently checked actual30-attempt record, first24 parsed values unchanged, final05f6ae07 format0/eea710d3 lint0 on stable56a3da93/identityf4ea13e1/indexempty. Actual pass3 earlier09cab5b3 binding-scope and797b3cea Clippy8args failures remain. A partial847f8c message was inaccurate and is corrected additively; no such product attempt is invented. Exact current patch/capture/execution prefix3eec2eb9 are retained in existing CDC receipt.
+
+Full current C1–C5/helper/caller walk confirms both1600ly cached snapshots, valid physical-galaxy matrices, ordinary/controlled initial/restart whole-case bound, complete spatial/marker/config/cache/source/stdout/SSE EOF boundaries are statically coherent. One already-issued C3 prospective retention defect remains: kept failed fixture/HOMEs have no durable phase/available child diagnostic/status/HOME-link record; outer successful retry drops the returned fields and passing harness hides status. CC confirmed no other hook. No internal case ran, so this is not missing historical capture or an Operator waiver. Pass4 is narrowly ONE file, existing mcp_live_integration.rs, to retain actual available observations/links in one receipt per kept failed fixture and verify readback in existing controlled retry. No new runtime population or capture-field contract, report forest, product policy/dependency/model change.
+
+| Prompt | Issue UTC | Predecessor | Reason | Disposition |
+|---|---|---|---|---|
+| cc-prompt-iteration04.md |2026-10-21|cc-prompt-iteration03.md /754ded0|Finish single existing C3 failed-attempt receipt/link retention before execution|issued; source/index/gates held pending coherent intake|
+
+All eight UL rows and parent gates remain open, four-of-five cap binding; no runtime/native until complete pinned release. Same selected models/sole contributor/ownership/protected main and heldpins.
