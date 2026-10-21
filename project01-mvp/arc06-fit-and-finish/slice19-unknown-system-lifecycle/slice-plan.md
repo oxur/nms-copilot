@@ -1,6 +1,6 @@
 # Slice19 — application unknown-system lifecycle
 
-Version:1.5. Created2026-10-21 UTC. Status: refinement03 actual format/lint passed on frozen56a3da93; full CDC C1–C5 walk leaves one prospective C3 failure-receipt retention correction. Current cc-prompt-iteration04.md issued, one source file only, source/index/gates held pending intake; four-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 exact exception remains closed, no19waiver.
+Version:1.5. Created2026-10-21 UTC. Status: refinement03 actual format/lint passed on frozen56a3da93; full CDC C1–C5 walk leaves one prospective C3 failure-receipt retention correction. Current cc-prompt-iteration04.md coherent intake inspected, one source file only, source/index/gates returned solely to same CC for correction and pinned hold; four-of-five refinements issued. All eight UL rows open; no tests/native released. Accepted18 exact exception remains closed, no19waiver.
 
 Actual selected CDC /root/cdc_arc06 gpt-6.1-sol High owns design/planning/index/independent review; sole reused CC /root/cdc_arc06/cc_slice17 gpt-6-luna High reports usable qualitative headroom after recovery. No additional role/model/context or numeric-capacity claim. Autonomous endpoint Project01 Arc06 ONLY; local commits/review/retrospective/closure authorized, no merge/push/install/publish/release/other arc/Project02. Parent root is transport/preflight only.
 
@@ -149,6 +149,11 @@ Full current C1–C5/helper/caller walk confirms both1600ly cached snapshots, va
 
 | Prompt | Issue UTC | Predecessor | Reason | Disposition |
 |---|---|---|---|---|
-| cc-prompt-iteration04.md |2026-10-21|cc-prompt-iteration03.md /754ded0|Finish single existing C3 failed-attempt receipt/link retention before execution|issued; source/index/gates held pending coherent intake|
+| cc-prompt-iteration04.md |2026-10-21|cc-prompt-iteration03.md /754ded0|Finish single existing C3 failed-attempt receipt/link retention before execution|actual coherent readback inspected; one-file source correction handed back|
 
 All eight UL rows and parent gates remain open, four-of-five cap binding; no runtime/native until complete pinned release. Same selected models/sole contributor/ownership/protected main and heldpins.
+
+
+## Refinement04 intake handoff — 2026-10-21 UTC
+
+CDC read full actual execution prefix5c414850 and preserved exact bytes/hash, reverified56a3da93/indexempty. Both failure phases, real cached ExitStatus, line-wise available stderr limits, stdout EOF predicate, one kept fixture-local JSON receipt/HOME links and same controlled-retry readback were coherently acknowledged. Same selected CC now receives sole dedicated19source/index/gates for narrow one-file pass4 correction, actual captured format→lint then pinned HOLD; no tests/native until explicit CDC release. CDC planning/index and independent acceptance retained. No new role/model/policy, historical observation reconstruction, waiver or validation population.
