@@ -254,6 +254,57 @@
         "untracked_files": {},
         "working_identity_sha256": "0d6b3d78c57e5d527b54dbe2108580bea4d1a4400260f7aac70088d851c5276f"
       }
+    },
+    {
+      "id": "627db2248875440cba8c93a12f9d4de2",
+      "label": "cdc-native-controller-bounded-metadata-syntax",
+      "kind": "support-only syntax check after metadata wait correction; no SUT execution",
+      "argv": [
+        "node",
+        "--check",
+        "/private/tmp/nms-slice19-cdc-native-driver-v3.js"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+      "started_utc": "2026-10-21T01:27:03.646099+00:00",
+      "before": {
+        "head": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+        "status": " M README.md\n M crates/nms-cache/src/freshness.rs\n M crates/nms-cache/src/lib.rs\n M crates/nms-cache/tests/load_integration.rs\n M crates/nms-copilot/examples/repl_live_probe.rs\n M crates/nms-copilot/src/coordinator.rs\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/resources.rs\n M crates/nms-copilot/src/mcp/tools.rs\n M crates/nms-copilot/src/watch.rs\n M crates/nms-copilot/tests/mcp_live_integration.rs\n M crates/nms-copilot/tests/owned_mcp_integration.rs\n M crates/nms-copilot/tests/support/live_mcp.rs\n",
+        "working_diff_sha256": "b5a1a648faea2e2bd0ae582e946b1a766758f66e4fd9637adefc070ccf3b62af",
+        "untracked_files": {},
+        "working_identity_sha256": "85f20c56c393c0f4783a4a636d25a5a789f8221af0d5fac68525adb3adfdb28a"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-21T01:27:03.944098+00:00",
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "after": {
+        "head": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+        "status": " M README.md\n M crates/nms-cache/src/freshness.rs\n M crates/nms-cache/src/lib.rs\n M crates/nms-cache/tests/load_integration.rs\n M crates/nms-copilot/examples/repl_live_probe.rs\n M crates/nms-copilot/src/coordinator.rs\n M crates/nms-copilot/src/main.rs\n M crates/nms-copilot/src/mcp/resources.rs\n M crates/nms-copilot/src/mcp/tools.rs\n M crates/nms-copilot/src/watch.rs\n M crates/nms-copilot/tests/mcp_live_integration.rs\n M crates/nms-copilot/tests/owned_mcp_integration.rs\n M crates/nms-copilot/tests/support/live_mcp.rs\n",
+        "working_diff_sha256": "b5a1a648faea2e2bd0ae582e946b1a766758f66e4fd9637adefc070ccf3b62af",
+        "untracked_files": {},
+        "working_identity_sha256": "85f20c56c393c0f4783a4a636d25a5a789f8221af0d5fac68525adb3adfdb28a"
+      }
     }
   ],
   "author_capture_preflight": {
@@ -857,5 +908,19 @@
     "source_diff_sha256": "53d7a36a5426ddf35339c27e54a5d3a71eafc977a2be53f9a0e7bf8defac9755",
     "index_empty": true,
     "disposition": "Read coherent actual B1\u2013B6 acknowledgement including corrected shorthand. CDC returns source/index/gates solely to same CC for bounded changes and captured format\u2192lint/pre-test hold, no runtime release. Separate support-only native controller syntax checks are inspected, not product/native evidence."
+  },
+  "native_support_preparation": {
+    "scope": "CDC private/tmp controller/metadata helper only; never launches a terminal itself; existing native tool method retained. No product/native gate yet.",
+    "controller_path": "/private/tmp/nms-slice19-cdc-native-driver-v3.js",
+    "controller_sha256": "77410b0fc51bbfe9e01e52afc4cbdbc17d10e95f2c84b9fe69727c53e9244cbb",
+    "metadata_helper_path": "/private/tmp/nms-slice19-cdc-native.py",
+    "metadata_helper_sha256": "a429039c27020370b055e1f26edec9f84601cdfc3ed8d6b12d545d4b59aa3f37",
+    "syntax_attempt_ids": [
+      "19e9a55c91b44f92b0e251305eef2b18",
+      "433fa39ebece43288ac540fa4bb30903",
+      "627db2248875440cba8c93a12f9d4de2"
+    ],
+    "change": "Preregistration/postmetadata helper calls now use the already assigned finite15second helper-tool wait, preserving the1second interactive product-tool poll. Raw-first store and file persistence unchanged. First two syntax receipts apply to prior private helper bytes; third applies to this amended controller. Candidate/probe binaries not yet built; no copied predecessor executable hashes, actual final digests mandatory before native launch.",
+    "unexecuted_static_edit_correction": "Before any support execution/SUT attempt, row10 branch was moved from premature pre-SUT placement to after actual SUT launch/PID check. No product receipt or historical gap inferred."
   }
 }
