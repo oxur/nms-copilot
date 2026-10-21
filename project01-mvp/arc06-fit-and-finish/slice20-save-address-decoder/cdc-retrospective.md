@@ -1,0 +1,37 @@
+# Slice20 CDC retrospective
+
+2026-10-21 UTC. CDC `/root/cdc_arc06`, selected GPT6.1Sol High; implementation context `/root/cdc_arc06/cc_slice17`, selected GPT6Luna High. Autonomous Arc06-only, two contributors. This analysis uses the actual issued initial/01–04 prompts, complete five-file source/oracle/helper review, frozen returns, all29 CC captures and all12 fresh independent product gates at0b37d8b4. It examines CDC's authoring/review as well as CC execution. It is not independent evidence of methodology effectiveness and does not replace the acceptance record.
+
+## Outcome and boundary
+
+The intended useful increment is an opt-in public original-JSON decoder library. Four field-specific APIs, typed path errors, strict lexical/encoded-range/presence behavior, previous sentinel, independent45-row projection and runnable docs are delivered locally at0b37d8b41222b8e4a084c088246f777490575756. Independent focused8/save102unit+8integration+8docs/core87/no-default233/workspace1007runtime+18docs and all build/doc/strict/diff gates pass. Application extraction/cache behavior remains unchanged; mandatory21 still owns actual whole-source atomic validation/callers/semantic3→4/native composition. Broader raw/history/game-backed and parent gates remain open.
+
+The observed corrections are retained, not concealed by green final proof. The current record-only04 addresses attributable closing text, with no code/gate rerun. No historical capture exception is sought in20. Actual captures preserve every required status/source/raw completion field and the original restricted failures/retries. Test-harness count8 is not the number of fixture or matrix cases; the independently inspected projection contains1discovery plus44bases.
+
+## What happened and what helped
+
+CDC's initial lower-width example was arithmetically wrong: P0/SSI299 occupies49bits, so P0 alone does not imply below2^48. The decoded component oracle was valid. CDC caught this before the first compiler/test, qualified the preserved earlier prose, and issued01 with a distinct46bitSSI43 counterexample plus actual threshold assertions. Reading the full guidance/source did not prevent this author error. Numerical property claims need a direct arithmetic check before issue, separate from the component expectation.
+
+The deliberately smaller library increment exercised the exported consumer and rustdoc before application migration. Actual first lint caught private test-type complexity/hex formatting, and whole-crate testing caught the error example's missing hidden fallible return. Both failures and repairs are captured. This is observed early feedback; it does not establish a controlled reduction in total effort or predict the outcome of21.
+
+Green focused/workspace tests did not establish complete worksheet coverage. The full pinned review found partial positive endpoint/sentinel observations, missing failure-input purity, a galaxy comparison confounded by planet index, and incomplete public documentation. Iteration02 supplied concrete shared helpers and literal full-field tables. Its full follow-up walk showed most omissions resolved, but also found the removed original numericGG9 case and wrong-page doc anchors;03 repaired those five edits. Preserving exact predecessor bytes enabled a real delta review, rather than assessing only the latest plausible file. Strict docs alone does not establish that a fragment points to the intended page; inspection of actual generated links supplied that missing observation.
+
+CDC's first doc fence was too literal: inserting field docs into inline enum variants necessarily changes line layout/trailing commas. A before-gate clarification permitted only that mechanical formatting while freezing executable semantics and preserving the original baseline. This was author-created friction. Future comment-only contracts should distinguish executable statements/types/signatures from physical line layout, with direct diff review of the permitted formatting.
+
+The original closing return omitted the named assignment/bubble-up section and described byte-equivalent precommit gates as being on the committed source. The raw records themselves were complete and retained the true precommit HEAD/working identity. Record-only04 supplies the explicit chronology and original three bubble-up answers. CDC's fresh executions genuinely name committed0b37; they do not repair or rewrite the older timestamps/identities. This final handoff is avoidable reporting rework, not a production failure or an excuse to weaken attribution.
+
+## Preservation, platform and limits
+
+The raw-first helper and actual0/7 support controls were in place before the first product gate. All original16/20-entry prefixes remain byte-equivalent under exact reconstruction; frozen returns/captures are transferred with hashes. Wrapper `--help` IndexError launched no child and stays a supporting-tool observation, without manufacturing a SUT attempt or historical loss. This unit's complete capture is a bounded observed outcome of following the prior lesson, not proof that a general capture intervention is effective.
+
+Restricted watcher/coordinator failures were kept, then identically retried on the authorized host with original TMPDIR. They did not justify production edits. Current independent no-default/workspace host proof is green. Existing proc-macro-error2 future-incompatibility warnings, universal/nonzero game validity, actual application extraction and all higher-scale integration/release gates remain outside20acceptance. No model comparison, unseen effort/token estimate or cause for an error is inferred from these results.
+
+## Follow-through for required21
+
+The prior recommendation to use a smaller usable increment was adopted:20 has a public consumer with early compilation/runtime/docs proof, while21 remains explicitly owned rather than silently dropped. Whether the overall split saves effort remains unknown until application composition is delivered; fewer runtime cases in20 alone is not comparative success.
+
+CDC should carry the concrete whole-object literal oracles, baseline-case preservation and full helper/callsite walk into21 before dispatch. Original JSON presence and active-context selection must survive until validation, source fixture migrations must use independent expected physical addresses, and malformed records must fail before any model/cache/publication change. The semantic transition and actual CLI/normalPTY/stdio/HTTP/watch/restart file/EOF controls remain required, not replaced by library tests. Later21 review should check those outcomes directly and note any regression or inadequacy of this preparation.
+
+For closing returns, the same original three bubble-up questions and exact gate/source chronology should be supplied before freezing the report. This is a local prompting recommendation owned by CDC, not a new artifact scheme or framework amendment. Preserve useful existing records and complete independent ledgers, while avoiding tests for record-only edits. No additional inquiry, methodology experiment or model/role change is commissioned here.
+
+At final closure,04 appended the exact assignment/chronology/three-answer bubble-up and linked this record; CDC verified strict preservation of prior report/execution byte prefixes. All7AD are accepted in [CDC final closure](cdc-verification.md#final-independent-closure--2026-10-21-utc). No source or runtime proof changed for that reporting repair.

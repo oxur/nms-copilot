@@ -1,6 +1,6 @@
 # Slice20 decoder foundation ledger
 
-AD01–06 independently accepted at0b37; AD07 OPEN for record-only closing-report completion. CC proposes, CDC independently accepts. Application21 and all original parent gates retained.
+All7rows independently accepted at0b37 after record-only04; no deferred/no-op. CC proposes, CDC independently accepts. Application21 and all original parent gates retained.
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
@@ -10,4 +10,4 @@ AD01–06 independently accepted at0b37; AD07 OPEN for record-only closing-repor
 | AD-04 | Previous absence/sentinel retainsplanetandreality | Absent/allzero/partial/null/eachsinglecomponent nonzero, typedResult andexactaddress | correctness-grade | ApprovedA / requiredR06-R01 | done | [CDC independent review](cdc-verification.md#independent-current-review) — reproduced | No application acceptance inferred |
 | AD-05 | Usable documented pure API and bounded sourcewitnessfixture | Externalcaller/docs/Error+Send+Sync/inputpurity/projection45allrows | correctness-grade | ApprovedA / requiredR06-R01 | done | [CDC independent review](cdc-verification.md#independent-current-review) — reproduced | No application acceptance inferred |
 | AD-06 | Existing APIs/application/cache/nativecontracts remain unchanged | Exact5pathdiff/frozenexistingbodies/current orderedregressiongates; required21 tracked | correctness-grade | ApprovedA / requiredR06-R01 | done | [CDC independent review](cdc-verification.md#independent-current-review) — reproduced | No application acceptance inferred |
-| AD-07 | Attributable complete proof and independent handback | Actualraw-first statuses/source/failedattempts/committrailers/frozenreturn/CDCindependentreview | correctness-grade | ApprovedA / requiredR06-R01 | open | — | No application acceptance inferred |
+| AD-07 | Attributable complete proof and independent handback | Actualraw-first statuses/source/failedattempts/committrailers/frozenreturn/CDCindependentreview | correctness-grade | ApprovedA / requiredR06-R01 | done | [CDC final closure](cdc-verification.md#final-independent-closure--2026-10-21-utc) — reproduced | No application acceptance inferred |

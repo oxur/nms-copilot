@@ -1445,5 +1445,169 @@
       "base64": "IyBTbGljZTIwIENDIHByb3Bvc2VkLWRvbmUgcmV0dXJuCgpUaGUgZml2ZS1wYXRoIFNsaWNlMjAgbGlicmFyeSBpbmNyZW1lbnQgaXMgaW1wbGVtZW50ZWQgYW5kIGNvbW1pdHRlZCBsb2NhbGx5IGFzIGAwYjM3ZDhiNDEyMjJiOGU0YTA4NGMwODgyNDZmNzc3NDkwNTc1NzU2YCAoYEFkZCBwdWJsaWMgc2F2ZSBhZGRyZXNzIGRlY29kZXJgKS4gSXQgYWRkcyBhbiBvcHQtaW4gYG5tc19zYXZlOjphZGRyZXNzYCBtb2R1bGUgd2l0aCBmb3VyIHR5cGVkLCBmaWVsZC1zcGVjaWZpYyBkZWNvZGVyczsgaW5kZXBlbmRlbnQgZml4dHVyZSBkYXRhOyBleHRlcm5hbCBjb25zdW1lciBjb3ZlcmFnZTsgYW5kIHB1YmxpYyBkb2N1bWVudGF0aW9uLiBJdCBkb2VzIG5vdCBtaWdyYXRlIHNhdmUgcGFyc2luZywgYXBwbGljYXRpb24gY2FsbGVycywgZ3JhcGggY29uc3RydWN0aW9uLCBvciBjYWNoZSBiZWhhdmlvci4gVGhvc2UgcmVtYWluIGluIHJlcXVpcmVkMjEuCgpUaGUgY29tbWl0IGNvbnRhaW5zIGV4YWN0bHkgdGhlc2UgZml2ZSBwYXRoczoKCi0gYGNyYXRlcy9ubXMtc2F2ZS9zcmMvYWRkcmVzcy5yc2AKLSBgY3JhdGVzL25tcy1zYXZlL3NyYy9saWIucnNgCi0gYGNyYXRlcy9ubXMtc2F2ZS90ZXN0cy9hZGRyZXNzX2RlY29kZS5yc2AKLSBgY3JhdGVzL25tcy1zYXZlL3Rlc3RzL2ZpeHR1cmVzL2FkZHJlc3Mtb3JhY2xlcy5qc29uYAotIGBjcmF0ZXMvbm1zLXNhdmUvdGVzdHMvZml4dHVyZXMvYWRkcmVzcy1vcmFjbGVzLm1kYAoKVGhlIHNvdXJjZS9pbmRleCB3b3JrdHJlZSBpcyBjbGVhbiBhdCB0aGUgY29tbWl0LiBJdHMgbWVzc2FnZSBoYXMgdGhlIHR3byByZXF1aXJlZCBjb25zZWN1dGl2ZSwgb25jZS1vbmx5IHRyYWlsZXJzLCBwYXJzZWQgaW4gb3JkZXI6IGBDby1hdXRob3JlZC1ieTogQ29kZXggPG5vcmVwbHlAb3BlbmFpLmNvbT5gIGFuZCBgQ28tYXV0aG9yZWQtYnk6IEJpbGxvIEFJIDxhaS1lbmdpbmVlcmluZ0BiaWxsby5zeXN0ZW1zPmAuIE5vIHNvdXJjZSBjaGFuZ2VzIG9jY3VycmVkIGR1cmluZyB0aGUgZmluYWwgcmVsZWFzZWQgZ2F0ZXMuCgojIyBWYWxpZGF0aW9uIHByb3Bvc2VkIGJ5IENDCgpDYXB0dXJlZCBmaW5hbCBnYXRlcyBvbiB0aGUgY29tbWl0dGVkIHNvdXJjZSBwYXNzZWQ6CgotIGBtYWtlIGZvcm1hdGAgYGJjZTFlMzU2YjZjOTQ2ZDk5ODg1ODQzYmJlZjE4M2U2YDogZXhpdCAwLgotIGBtYWtlIGxpbnRgIGA2MGI1ZDZiNmM0YTI0ODFhOTE5MjdhOTY1ZWYxZTJiMGA6IGV4aXQgMC4KLSBGb2N1c2VkIGV4dGVybmFsIGNvbnN1bWVyIHRlc3QgYDgxYzYxYTk4MGE4ZTQ0MWJiMThjMzI0ZTkwZmMwOGZjYDogZXhpdCAwLCA4LzguCi0gU3RyaWN0IHNhdmUtY3JhdGUgZG9jcyBgYzBhN2M4NjEwOWNmNGMyNjhhYTIzZmNhMzUwNjBlNDJgIHdpdGggYFJVU1RET0NGTEFHUz0tRCB3YXJuaW5nc2A6IGV4aXQgMC4gR2VuZXJhdGVkIEhUTUwgbGlua3MgYW5kIGRlc3RpbmF0aW9uIGZyYWdtZW50IElEcyB3ZXJlIHNlcGFyYXRlbHkgaW5zcGVjdGVkIGFuZCBhbGwgZm91ciB0YXJnZXRzIHJlc29sdmUuCi0gQ3VycmVudC1zb3VyY2UgYXV0aG9yaXplZC1ob3N0IGBtYWtlIHRlc3RgIGBjN2RiYWI5ZDA5Y2I0OGNiYjY5Njk0OTU3YzAzYmFkNWA6IGV4aXQgMDsgMzYgcmVzdWx0IGdyb3VwcywgMSwwMjUgcGFzc2luZyB0ZXN0cyBpbmNsdWRpbmcgMTggZG9jdGVzdHMgYWNyb3NzIG5pbmUgZ3JvdXBzLgotIEFsbC1mZWF0dXJlIHdvcmtzcGFjZSBidWlsZCBgMjkwNTM3OWFhZDQwNDQ2MGFjOWUzODBiZWRkMzc0ZWZgOiBleGl0IDAuIFRoZSBjYXB0dXJlZCBvdXRwdXQgY29udGFpbnMgdGhlIGV4aXN0aW5nIGZ1dHVyZS1pbmNvbXBhdGliaWxpdHkgd2FybmluZyBmb3IgYHByb2MtbWFjcm8tZXJyb3IyIHYyLjAuMWAuCi0gQWxsLWZlYXR1cmUgd29ya3NwYWNlIGRvY3Rlc3RzIGA0Y2I0ZjE4NmFjYTE0NjYxYjI5ZjA2ZmY2MjdiYTgyNWA6IGV4aXQgMDsgbmluZSBncm91cHMsIDE4IHBhc3NlZC4KLSBXb3JraW5nIGFuZCBiYXNlbGluZSBkaWZmIGNoZWNrcyBgYjJiMTVmZjZhMjZiNDdjNGE5MmE3YWFkN2MzZTFkZDRgIGFuZCBgMmI4NDhkN2NkNTVkNDY1NmExNzUzYTFlMDhkYjFiNjRgOiBib3RoIGV4aXQgMC4KClRoZSBjdXJyZW50IHJhdy1maXJzdCBjYXB0dXJlIHJlY29yZCBpcyBgL3ByaXZhdGUvdG1wL25tcy1zbGljZTIwLWNjLWF0dGVtcHRzLmpzb25gLCBTSEEtMjU2IGBhODU2MzMwNjQwNTk4Yzk4MWJkNjM1YmU1NDhmMTI4ZDJlNzc4MDZlMDYzMTEzNmIyZTVjYjQzYzUzYzRjNGQ2YCwgd2l0aCAyOSBhcHBlbmQtb25seSBlbnRyaWVzOiB0d28gQ0RDIHdyYXBwZXIgY29udHJvbHMgYW5kIDI3IENDIHByb2R1Y3QgYXR0ZW1wdHMuIEl0IHJldGFpbnMgYWN0dWFsIGFyZ3YsIHNvdXJjZS9zdGF0dXMgbWV0YWRhdGEsIHJhdyBjaGFubmVscywgZXhpdCBjb2RlcywgYW5kIGVuZCB0aW1lcy4gRWFybGllciBmYWlsdXJlcyBhbmQgcmV0cmllcyBhcmUgcHJlc2VydmVkIHJhdGhlciB0aGFuIHJlcGxhY2VkIGJ5IGxhdGVyIGdyZWVuIHJ1bnMuIEluIHBhcnRpY3VsYXIsIHRoZSBpbml0aWFsIGxpbnQgYW5kIGRvY3Rlc3QgZmFpbHVyZXMgYW5kIHRoZSByZXN0cmljdGVkIHdhdGNoZXIvY29vcmRpbmF0b3IgZmFpbHVyZXMgcmVtYWluIHNlcGFyYXRlbHkgcmVjb3JkZWQgYmVzaWRlIHRoZWlyIHJlcGFpcnMgb3IgaWRlbnRpY2FsIGF1dGhvcml6ZWQtaG9zdCByZXRyaWVzLiBUaGUgZmlyc3Qgd2hvbGUtd29ya3NwYWNlIGhvc3QgcnVuIHdhcyBvbiB0aGUgcHJlLWl0ZXJhdGlvbjAyIGNhbmRpZGF0ZTsgdGhlIGZpbmFsIGBtYWtlIHRlc3RgIGFib3ZlIGlzIG9uIHRoaXMgZmluYWwgc291cmNlLgoKIyMgQUQgcm93cyDigJQgQ0MgcHJvcG9zYWwgb25seQoKfCBSb3cgfCBDQyBwcm9wb3NlZCBkaXNwb3NpdGlvbiB8IENEQyBkaXNwb3NpdGlvbiB8CnwtLS18LS0tfC0tLXwKfCBBRC0wMSDigJQgUGFja2VkIGNvb3JkaW5hdGUvcmVhbGl0eSBkZWNvZGluZyB8IFByb3Bvc2VkIGRvbmU6IGFsbCBjYW5vbmljYWwgZGlzY292ZXJ5L2Jhc2Ugcm93cyBhbmQgZXhwbGljaXQgaGlnaC1wcmVjaXNpb24sIGJlbG93LTQ4LWJpdCwgZ2FsYXh5LW5pbmUsIGFuZCBzaWduZWQtZWRnZSBjb250cm9scyBhcmUgZXhlcmNpc2VkIHRocm91Z2ggdGhlIHB1YmxpYyBmdW5jdGlvbnMgd2l0aCBjb21wbGV0ZSBleHBlY3RlZCBjb21wb25lbnRzIGFuZCBwb3J0YWwgdmFsdWVzLiB8IFBlbmRpbmcgaW5kZXBlbmRlbnQgcmV2aWV3IHwKfCBBRC0wMiDigJQgU3RyaWN0IHBhY2tlZCBzeW50YXggYW5kIHR5cGVkIGZhaWx1cmVzIHwgUHJvcG9zZWQgZG9uZTogYm90aCBwYWNrZWQgQVBJcyBjb3ZlciB0aGUgc3RyaWN0IHR5cGUvc3RyaW5nL3dpZHRoL2Vycm9yLXByaW9yaXR5IG1hdHJpeCBhbmQgZGlhZ25vc3RpYyBwYXRocy4gfCBQZW5kaW5nIGluZGVwZW5kZW50IHJldmlldyB8CnwgQUQtMDMg4oCUIEV4cGFuZGVkIGN1cnJlbnQgcHJlc2VuY2UgYW5kIHJhbmdlcyB8IFByb3Bvc2VkIGRvbmU6IGNvbXBsZXRlIHJlcXVpcmVkLW1lbWJlciwgSlNPTi1raW5kLCByYW5nZS1ib3VuZGFyeSBhbmQgZXh0cmEta2V5IGJlaGF2aW9yIGlzIGNoZWNrZWQgYmVmb3JlIGNvcmUgbWFza2luZy4gfCBQZW5kaW5nIGluZGVwZW5kZW50IHJldmlldyB8CnwgQUQtMDQg4oCUIFByZXZpb3VzIGFic2VuY2UgYW5kIHNlbnRpbmVsIHwgUHJvcG9zZWQgZG9uZTogYWJzZW50IGFuZCBhbGwtemVybyBzZW50aW5lbCBiZWhhdmlvciBpcyBzZXBhcmF0ZWQgZnJvbSBwcmVzZW50LWludmFsaWQgdmFsdWVzIGFuZCBwYXJ0aWFsIG5vbnplcm8gYWRkcmVzc2VzLCBwcmVzZXJ2aW5nIHBsYW5ldCBhbmQgcmVhbGl0eS4gfCBQZW5kaW5nIGluZGVwZW5kZW50IHJldmlldyB8CnwgQUQtMDUg4oCUIFVzYWJsZSBBUEkgYW5kIHNvdXJjZS13aXRuZXNzIGZpeHR1cmUgfCBQcm9wb3NlZCBkb25lOiBwdWJsaWMgZG9jcy9leGFtcGxlcywgZXh0ZXJuYWwgY29uc3VtZXIgY2FsbHMsIHR5cGVkIGVycm9yIHRyYWl0cy9wYXRoL2Rpc3BsYXksIGlucHV0LXB1cml0eSBjaGVja3MsIGFuZCBhbGwgNDUgc291cmNlLXByb2plY3Rpb24gcm93cyBhcmUgY292ZXJlZC4gfCBQZW5kaW5nIGluZGVwZW5kZW50IHJldmlldyB8CnwgQUQtMDYg4oCUIEV4aXN0aW5nIGludGVyZmFjZXMgcmVtYWluIHVuY2hhbmdlZCB8IFByb3Bvc2VkIGRvbmUgZm9yIHRoaXMgYm91bmRlZCBsaWJyYXJ5IGluY3JlbWVudDogb25seSB0aGUgZml2ZSBhdXRob3JpemVkIHBhdGhzIGNoYW5nZWQ7IGxlZ2FjeSBwYXJzaW5nL2NvbnZlcnNpb24gYW5kIGFwcGxpY2F0aW9uL2NhY2hlL25hdGl2ZSB3b3JrIGFyZSBvdXRzaWRlIHRoaXMgY29tbWl0LiB8IFBlbmRpbmcgaW5kZXBlbmRlbnQgcmV2aWV3IHwKfCBBRC0wNyDigJQgQXR0cmlidXRhYmxlIGV2aWRlbmNlIGFuZCBoYW5kYmFjayB8IFByb3Bvc2VkIGRvbmU6IHJhdy1maXJzdCBjYXB0dXJlIGludmVudG9yeSwgcmV0YWluZWQgZmFpbHVyZXMvcmV0cmllcywgZXhhY3QtcGF0aCBjb21taXQsIHBhcnNlZCB0cmFpbGVycywgYW5kIGZyb3plbiByZXR1cm4gcGFja2FnZSBhcmUgc3VwcGxpZWQuIHwgUGVuZGluZyBpbmRlcGVuZGVudCByZXZpZXcgfAoKVGhlc2UgYXJlIHRoZSBpbXBsZW1lbnRlcidzIHByb3Bvc2Fscywgbm90IGFjY2VwdGFuY2UuIFNsaWNlMjAgZG9lcyBub3QgcHJvdmUgd2hvbGUtc291cmNlIGFwcGxpY2F0aW9uIHZhbGlkYXRpb24sIGNhbGxlciBtaWdyYXRpb24sIHNlbWFudGljIGNhY2hlIHRyYW5zaXRpb24sIG9yIHJlYWwgYXBwbGljYXRpb24vbmF0aXZlIGJlaGF2aW9yLiBUaG9zZSByZW1haW4gcmVxdWlyZWQyMTsgbm8gY2xvc3VyZSBvZiBSMDYtUjAxIG9yIG90aGVyIHBhcmVudCB3b3JrIGlzIGluZmVycmVkLgoKIyMgUmV0dXJuIGFydGlmYWN0cyBhbmQgZXZpZGVuY2UgbGltaXRzCgotIGBleGVjdXRpb24ubWRgIHByZXNlcnZlcyBpbnRha2UsIHNvdXJjZS9BUEkvb3JhY2xlIHJlYWRiYWNrLCBlYWNoIGl0ZXJhdGlvbidzIGFjdHVhbCBnYXRlcyBhbmQgZmFpbHVyZXMsIHNvdXJjZSBpZGVudGl0aWVzLCBmaW5hbCBncm91cHMsIGFuZCBjb21taXQvaGFuZGJhY2sgZGV0YWlscy4KLSBgdmFsaWRhdGlvbi5qc29uYCBsaXN0cyBhbGwgMjkgYXR0ZW1wdCBJRHMgYW5kIG91dGNvbWVzLCB0aGUgZmluYWwgY29tbWFuZHMgYW5kIHJhdy1jaGFubmVsIGhhc2hlcywgc291cmNlIHBhdGhzL2hhc2hlcywgYW5kIHRoZSBzZXZlbiBwcm9wb3NlZCBkaXNwb3NpdGlvbnMuCi0gYGNsb3NpbmctcmVwb3J0Lm1kYCBpcyB0aGlzIGNvbmNpc2UgcHJvcG9zZWQtZG9uZSBzdW1tYXJ5LgotIFRoZSBjb21wbGV0ZSByYXcgY2FwdHVyZSBwYXlsb2FkIHJlbWFpbnMgaW4gYC9wcml2YXRlL3RtcC9ubXMtc2xpY2UyMC1jYy1hdHRlbXB0cy5qc29uYDsgaXQgaXMgbm90IGNvcGllZCBvciByZXdyaXR0ZW4gYnkgdGhlIHJldHVybiBwYWNrYWdlLgoKVGhlIHNlcGFyYXRlIGhlbHBlciBgLS1oZWxwYCBpbnZvY2F0aW9uIHByb2R1Y2VkIGFuIG9ic2VydmVkIHdyYXBwZXIgYEluZGV4RXJyb3JgIGJlY2F1c2UgdGhlIGhlbHBlciByZXF1aXJlcyBwb3NpdGlvbmFsIGFyZ3VtZW50czsgaXQgbGF1bmNoZWQgbm8gY2hpbGQgYW5kIGlzIGRvY3VtZW50ZWQgaW4gYGV4ZWN1dGlvbi5tZGAsIG5vdCByZXByZXNlbnRlZCBhcyBhIHByb2R1Y3QgYXR0ZW1wdC4gVGhlIGFjdHVhbCBnYXRlcyB1c2VkIHRoZSBpbnNwZWN0ZWQgaGVscGVyIGNvbnRyYWN0LiBDREMgb3ducyBpbmRlcGVuZGVudCByZXByb2R1Y3Rpb24gYW5kIGZpbmFsIGRpc3Bvc2l0aW9uOyB0aGUgc291cmNlIGFuZCB0aHJlZSBpZ25vcmVkIHJldHVybiBmaWxlcyBhcmUgZnJvemVuIGZvciB0aGF0IHJldmlldy4K"
     },
     "correction": "immutable record-only iteration04, source/gates frozen; no reruns for report edits"
+  },
+  "final_fence_inspection": {
+    "worktrees": [
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot",
+        "HEAD": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+        "branch": "refs/heads/main",
+        "status": " M crates/nms-copilot/tests/mcp_live_integration.rs\n",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "HEAD": "a101bd44b277f06c75ed7260b470b31cd5510130",
+        "branch": "refs/heads/codex/cache-player-state-integrity",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+        "HEAD": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+        "branch": "refs/heads/codex/cache-semantic-compatibility",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/complete-live-save-updates",
+        "HEAD": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+        "branch": "refs/heads/codex/complete-live-save-updates",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+        "HEAD": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+        "branch": "refs/heads/codex/galaxy-qualified-identity",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "HEAD": "7118a486ea43a776aa2451ec0807d43384fb954f",
+        "branch": "refs/heads/codex/galaxy-scoped-queries",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+        "HEAD": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+        "branch": "refs/heads/codex/galaxy-scoped-repl",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+        "HEAD": "f71d607e27e18d7266855a2708449f9d6b90c632",
+        "branch": "refs/heads/codex/galaxy-scoped-routing",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-session",
+        "HEAD": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+        "branch": "refs/heads/codex/galaxy-scoped-session",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup",
+        "HEAD": "130034e8a6f2e77605058620fea2fb0cae43c608",
+        "branch": "refs/heads/codex/headless-cache-startup",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+        "HEAD": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "branch": "refs/heads/codex/headless-live-cache",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+        "HEAD": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+        "branch": "refs/heads/codex/mcp-live-watch",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-watch-settings",
+        "HEAD": "16c078725492744db22bae837d87c89489a6add5",
+        "branch": "refs/heads/codex/mcp-watch-settings",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/placeholder-cache",
+        "HEAD": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+        "branch": "refs/heads/codex/placeholder-cache",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "HEAD": "797c1849971ad4aaf9a1e9105cf08adc8e6c6a83",
+        "branch": "refs/heads/planning",
+        "status": "?? project01-mvp/arc06-fit-and-finish/slice20-save-address-decoder/cdc-retrospective.md\n",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/pr-stack-ci",
+        "HEAD": "03e8d04b11d1899f2d66cdca3f26763c406dd275",
+        "branch": "refs/heads/codex/pr-14-headless-cache-startup",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+        "HEAD": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+        "branch": "refs/heads/codex/repl-live-cache",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+        "HEAD": "0b37d8b41222b8e4a084c088246f777490575756",
+        "branch": "refs/heads/codex/save-address-decoder",
+        "status": "",
+        "index": ""
+      },
+      {
+        "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+        "HEAD": "4cb745b7190e7463663a0ead29f169060e36dc05",
+        "branch": "refs/heads/codex/unknown-system-lifecycle",
+        "status": "",
+        "index": ""
+      }
+    ],
+    "protected_main_blob": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e",
+    "main_is_source_ancestor": true,
+    "source_parsed_trailers": "Co-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n",
+    "purpose": "ordinary source/planning/pin protection metadata, not a product gate"
+  },
+  "final_record_only_closure": {
+    "utc": "2026-10-21T04:35:35.510105+00:00",
+    "assignment": "cc-prompt-iteration04.md",
+    "review": "both amended returns are strictly appended to the original frozen bytes; exact assignment/current03/record04, precommit chronology, named three-answer bubble-up, canonical inventory and CDC retrospective link now correct",
+    "byte_preserved": [
+      {
+        "name": "execution.md",
+        "canonical": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice20-save-address-decoder/artifacts/cc-execution.md",
+        "sha256": "ceac6cd7dd9e26e5bea2194702aba0ea972085a2a29eea58d9710f8c0411b98d"
+      },
+      {
+        "name": "closing-report.md",
+        "canonical": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice20-save-address-decoder/closing-report.md",
+        "sha256": "3ec5c1dcfa1cd0c6420769929de74766158a15fd9a2b8b09c7ad677b83664a3f"
+      }
+    ],
+    "unchanged_validation_sha256": "89e9c77d2d63325b0bd5e12b1eae9bd038cf161bb6fb99fa3e30a0069e4cb431",
+    "unchanged_capture_sha256": "a856330640598c981bd635be548f128d2e77806e0631136b2e5cb43c53c4c4d6",
+    "no_source_or_gate_change": true,
+    "verdict": "AD07 accepted; all7AD andR06-S20done; no deferred/no-op; required21/allparents open; no rerun for records",
+    "refinements_used": 4,
+    "retrospective": "cdc-retrospective.md"
   }
 }

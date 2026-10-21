@@ -4,7 +4,7 @@
 
 ## Independent current review
 
-Current disposition: AD01–06 accepted; AD07 remains open only for record-only iteration04. All twelve independent execution groups pass at the exact clean committed source, with explicit before/after status, identity and raw stdout/stderr/exit/end. Evidence is [CDC raw receipts](artifacts/cdc-review-receipts.json); [all29 preserved CC attempts](artifacts/cc-captures.json) remain doer evidence with their original HEADs, working identities, failures and retry environments. First two entries in each capture collection are author-run wrapper controls, not product gates.
+Initial independent disposition before record-only04: AD01–06 accepted; AD07 open for closing-text completion. Current final verdict: all seven rows accepted; see final closure below. All twelve independent execution groups pass at the exact clean committed source, with explicit before/after status, identity and raw stdout/stderr/exit/end. Evidence is [CDC raw receipts](artifacts/cdc-review-receipts.json); [all29 preserved CC attempts](artifacts/cc-captures.json) remain doer evidence with their original HEADs, working identities, failures and retry environments. First two entries in each capture collection are author-run wrapper controls, not product gates.
 
 | Independent command | Receipt ID | Result |
 |---|---|---|
@@ -23,7 +23,7 @@ Current disposition: AD01–06 accepted; AD07 remains open only for record-only 
 
 Known watcher/filesystem/loopback restrictions justify direct authorized-host no-default/workspace runs, retaining original TMPDIR `/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/`. There were no failed current CDC product attempts. Existing proc-macro-error2 future-incompatibility warnings remain visible; no broader dependency/MSRV or whole-workspace strict-documentation closure is inferred.
 
-## Seven-row walk
+## Seven-row walk before record-only04
 
 | Row | Independent observation | Disposition |
 |---|---|---|
@@ -54,3 +54,12 @@ This foundation delivers the planned usable opt-in decoder library, with exporte
 The existing foundation/application split remains correct; no new structural scope or policy change arose. Arithmetic and proof/docs corrections require honest history/retrospective follow-through, not a new application architecture. R06-R01/C01/R03 and every original raw/history/nonzero-game/freshness-import/export/import/format/docs/distribution/coverage/performance/higher-independent/Operator/integration/release gate remain open. Arc06-only endpoint and protected main edit/held pins/external worktree remain. The source is locally committed; no merge/push/install/release is authorized or performed.
 
 AD07 record completion is the only current child blocker. No source/gate rerun is needed for the record-only04 handoff. The mandatory CDC retrospective will live in `cdc-retrospective.md`; it does not replace this independent verdict.
+
+
+## Final independent closure — 2026-10-21 UTC
+
+CDC reviewed complete actual iteration04 closing/execution append and verified both retain the exact prior byte prefixes. Corrected reportSHA3ec5c1dcfa1cd0c6420769929de74766158a15fd9a2b8b09c7ad677b83664a3f and executionSHAceac6cd7dd9e26e5bea2194702aba0ea972085a2a29eea58d9710f8c0411b98d are byte-preserved in the canonical locations. Validation89e9c77d… and raw29capturea8563306… remain unchanged; no source/index/gate work occurred. The report now names every issued assignment, explicitly distinguishes real precommit identities from matching committed bytes, answers all three bubble-up questions and links the mandatory [CDC retrospective](cdc-retrospective.md). AD07 is accepted. All7AD/R06-S20done, with no deferral/no-op, missing-history exception or silent scope drop. Fourof5refinements were used; no reset or future exception.
+
+The twelve current independent groups remain applicable without rerun for record-only edits. Source0b37 stays clean; mainb616 remains its ancestor, protected main workingblob2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e/indexempty and every held worktree pin/external03e8d04 are unchanged (ordinary metadata fence in existing receipt). Source and planning commits use exact namedpaths/proper consecutive parsed trailers. All durable supporting artifacts are the existing45-row projection, CDCraw/review/helper/preserved-candidate receipts, transferred CCexecution/validation/all29captures; prompts and close-set/retrospective are first-class root records. No additional native20proof is claimed or required by this pure opt-in unit.
+
+Arc-plan1.86/project-plan1.75 record foundation closure and required21 before further planning. Arc38rows20done18open/project25open. No new structural change is needed beyond the already-accounted foundation/application split; no application/raw/history/finalsemantic/nonzero-game/coverage/docs/distribution/higher-independent/Operator/integration/release parent is closed. Continue authorized required21 source-grounded readiness under approvedA and the unchanged one-arc endpoint/models.

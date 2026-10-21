@@ -183,6 +183,8 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S20 | Public original-JSON save-address decoder foundation independently accepted | Seven ADrows,45oracles/strictmatrix/publicdocs/orderedgates and independentCDC review | correctness-grade | ApprovedA / R06-R01 dependency | open | — | Required21 applicationatomicvalidation/semantic3→4/nativecomposition retained; no parentacceptance |
+| R06-S20 | Public original-JSON save-address decoder foundation independently accepted | Seven ADrows,45oracles/strictmatrix/publicdocs/orderedgates and independentCDC review | correctness-grade | ApprovedA / R06-R01 dependency | done | [CDC final20closure](slice20-save-address-decoder/cdc-verification.md#final-independent-closure--2026-10-21-utc) — reproduced | Required21 applicationatomicvalidation/semantic3→4/nativecomposition retained; no parentacceptance |
 
 38arcrows19done19open/project25open; all37previousrows retained.
+
+2026-10-21 Slice20 independently closed after four preserved refinements:38arcrows20done18open/project25open. Original15arcrows/three repairparents remainopen; required21 applicationatomicvalidation/cache3→4/nativecomposition retained.

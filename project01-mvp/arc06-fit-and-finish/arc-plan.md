@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.85, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.86, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -738,3 +738,12 @@ Required21/CDC retains whole-source validation BEFOREtypeddefaults/extraction/mo
 ## Slice20 first bounded author-oracle correction — 2026-10-21 UTC
 
 Version1.85: CDC caught a literal/property arithmetic error beforefirstcompiler/test. P0/SSI2990x012B0004B2446A is49bits, notbelow2^48; retainedexactpositivecomponents. AddedsyntheticP0/SSI430x002B0004B2446A is46bits and supplies actualnumeric-widthcounterexample, bothpackedAPIs. Immutableiteration01/currentplan clarifies initial and historicalSlice02 W-P0-WIDTH prosewithoutrewritingoriginalevidence; no newpolicy/inquiry/productiondefect. Samefivepaths/fullstrongmatrix/gates/required21 unchanged, firstof5refinements; all7AD/R06-S20open,38arcrows19done19open/project25open.
+
+
+## Slice20 independent foundation closure / required21 next — 2026-10-21 UTC
+
+Version1.86: exactfivepath publicdecoderfoundation locally committed0b37d8b41222b8e4a084c088246f777490575756. All7AD/R06-S20 independently accepted after four preserved refinements (01authorwidthproperty,02wholeoracle/docs completeness,03numericwitness/docURLs,04record-onlyassignment/bubble-up/chronology). FreshCDC12groupspass: focused8/save102unit+8integration+8docs/core87/no-default233/workspace1007runtime+18docs/build/allfeaturedoctests/strictsavedocs/working+full5pathbasediffs. Complete29CC/14CDCrawrecords/preservedcandidatebytes/frozenreturns and fullrowwalk/retrospective remaincanonical; earlierlint/rustdoc/restrictedwatchfailures/identicalhostretries intact, no missing-history exception or capreset. Record-only04 caused no rerun.
+
+38arcrows20done18open/project25open. Libraryexportedconsumer usable; existing applicationSaveRoot/defaults/conversions/model/cache3/3 byte-frozen. Required21/CDC remains next: whole-original-source validation BEFOREtypeddefaults/extraction/model/cache/publication, all actualcaller/faithfulfixture migration, active-current presence/fullprevious sentinel/atomicfailure preserving good live fullstate/cache+fivefailure/recovery, semantic3→4 genuineold3/3rejection/sourcefallback/nextwarm3/4 and actualCLI/normalPTY/stdio/HTTP/watch/restart/fullfileEOFcomposition. Schema3 remains iflayoutunchanged; assess concrete layout beforehandoff. No new structural change beyond alreadyapproved foundation/application split; no silent applicationbugfix/parentacceptance/nonzero-game claim. All original15arcrows/three repairparents/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimporthistory/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release gates remain.
+
+Same selectedCDCgpt-6.1-solHigh/soleCCgpt-6-lunaHigh, Arc06endpoint/protectedmainb6169lineblob2cd450ce/heldpins/external03e8d04/Project02 retained; requested earlierrebase fulfilled. No active20CCassignment, sourceclean/unmerged/localonly, no remoteaction/release/nextarc. Continue source-grounded21readiness under adoptedA without routinepermissionrequest.

@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-20
+updated: 2026-10-21
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.70
+version: 1.75
 project: project01-mvp
 status: active
 depends-on: []
@@ -1041,3 +1041,10 @@ Version1.73: Operator explicitly “Yup, I approve option A” adopts d20f9fe's 
 ## Arc06 Slice20 decoder foundation issued — 2026-10-21 UTC
 
 Version1.74: approvedA detailed into usable five-path publicdecoderAPI from4cb with exacttypederrors/presence/56bitfielddecode/45boundedindependentoracles; all7AD/R06-S20open,38arcrows19done19open/project25open. Required21/CDC owns wholeparsed-sourcevalidationbeforedefaults/model/cache/publication, allcallermigrations/atomiclastgoodstate/semantic3→4/predecessor/warm/actualinterface-nativecomposition. No20applicationbugfixclaim or silentdrop; allpriorclosures/parents/gates/models/Arc06endpoint/protectedmainheldpinsexternalProject02 remain. Initial20prompt and actualcapturepreflight recorded beforehandoff; no compiler/sourceedit yet.
+
+
+## Arc06 Slice20 independent foundation closure — 2026-10-21 UTC
+
+Version1.75: usable public original-JSONdecoderlibrary accepted atclean0b37d8b4/exactfivepaths/all7AD/R06-S20done. Independent12groups pass focused8/save102unit+8integration+8doc/core87/no-default233/workspace1007runtime+18doc/build/docs/strictsavedocs/fullbasediffs. All29CC/14CDCrawrecords/failures/retries/sourcebytes and four immutablecorrectionprompts/finalreport/independentrowwalk/CDCretrospective retained, no evidencewaiver/capreset. Metadata version nowmatchescurrentbodyhistory; older1.71–1.74entries remainunchanged.
+
+Arc38rows20done18open/project25open; mandatory21/CDC next owns actual whole-source validation beforedefaults/model/cache/publication, allcallers/faithfulrawfixtures/atomiclastgoodstate/semantic3→4/genuinepredecessor/warm/actualCLI-normalPTY-stdio-HTTP-watch-restartcomposition. Existing20applicationbodies/cache3/3 unchanged, no applicationbugfix/parentclosure/nonzero-game claim. Original raw/history/freshness-import/finalsemantic/export/import/format/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligations, unchangedmodels/Arc06endpoint/main9lineedit/heldpins/external/Project02 remain. No merge/push/install/release/otherarc.
