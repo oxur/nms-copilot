@@ -24,6 +24,15 @@
     "crates/nms-copilot/tests/support/live_mcp.rs",
     "crates/nms-cli/src/main.rs",
     "README.md",
-    "crates/nms-copilot/src/mcp/tools.rs"
-  ]
+    "crates/nms-copilot/src/mcp/tools.rs",
+    "crates/nms-copilot/src/config.rs"
+  ],
+  "iteration06": {
+    "authority": "Operator \u201cI approve both!\u201d / packet7b7c2f94 Decision1",
+    "baseline": "133bc762c19b91222f7aeea4eb514696a22bede5",
+    "only_path": "crates/nms-copilot/src/config.rs",
+    "only_change": "Config::save_path doc link effective_save_file -> Self::effective_save_file",
+    "other_23_paths": "frozen",
+    "budget": "one exceptional sixth; no reset or further correction"
+  }
 }

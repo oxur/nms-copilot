@@ -1,6 +1,6 @@
 # Slice23 application discovery-name integration ledger
 
-NI-01–NI-06 are independently done; NI-07/NI-08 remain open at the Operator gate. Required24/full original parents remain.
+NI-01–NI-06 are independently done; Operator approved the bounded sixth pass and separate historical exception; NI-07/NI-08 await actual affected proof and final closure. Required24/full original parents remain.
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
@@ -10,5 +10,5 @@ NI-01–NI-06 are independently done; NI-07/NI-08 remain open at the Operator ga
 | NI-04 | Real stdio/HTTP name change/query/resource/error/restart composition | O5 complete closed worksheet | correctness-grade | Approved namingA/required23 | done | [CDC current review](cdc-verification.md#row-walk) — reproduced | Issued boundary accepted; strict gate/record decisions remain NI-07 |
 | NI-05 | Semantic5/schema3 authentic predecessor and actual normal-native13 | O6 complete closed worksheet | correctness-grade | Approved namingA/required23 | done | [CDC current review](cdc-verification.md#row-walk) — reproduced | Issued boundary accepted; strict gate/record decisions remain NI-07 |
 | NI-06 | Existing APIs, regression controls and accurate public docs | O7 complete closed worksheet | correctness-grade | Approved namingA/required23 | done | [CDC current review](cdc-verification.md#row-walk) — reproduced | Issued boundary accepted; strict gate/record decisions remain NI-07 |
-| NI-07 | Attributable current gates/native/failures/local delivery | O8 capture/return complete closed worksheet | correctness-grade | Approved namingA/required23 | open | [CDC decisions](cdc-verification.md#decision1--one-additional-doc-only-pass) | Strict docs/current capture disposition and final closure pending |
-| NI-08 | Independent acceptance, retrospective and bottom-up closure | O8 independentclosure complete closed worksheet | correctness-grade | Approved namingA/required23 | open | [CDC decisions](cdc-verification.md#decision1--one-additional-doc-only-pass) | Strict docs/current capture disposition and final closure pending |
+| NI-07 | Attributable current gates/native/failures/local delivery | O8 capture/return complete closed worksheet | correctness-grade | Approved namingA/required23 | open | [CDC decisions](cdc-verification.md#decision1--one-additional-doc-only-pass) | Historical exception approved without attempt credit; actual strict-doc repair/proof and final closure pending |
+| NI-08 | Independent acceptance, retrospective and bottom-up closure | O8 independentclosure complete closed worksheet | correctness-grade | Approved namingA/required23 | open | [CDC decisions](cdc-verification.md#decision1--one-additional-doc-only-pass) | Historical exception approved without attempt credit; actual strict-doc repair/proof and final closure pending |

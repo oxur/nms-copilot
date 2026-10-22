@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.97, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.98, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -854,3 +854,10 @@ Approved namingA/8922313 now proceeds from accepted22/753bb3a9 to the actual usa
 Candidate133bc762 (accepted22parent753bb3a9) is clean/local/unintegrated, exact23paths. [Current CDC review](slice23-discovery-name-integration/cdc-verification.md) accepts NI-01–NI-06 after21of22 source gates/native13/workspace1062runtime+31docs. NI-07/08/R06-S23 remain open: strict docs independently fails inherited config.rs288 method link; five ordinary refinements are exhausted, so only a proposed one-line sixth-pass override awaits Operator decision. Separately the first privateCLI py_compile lacks its issued historical capture observations; no success/exit/channel/identity is reconstructed, and no prior waiver carries. The packet distinguishes these two decisions, preserved failures, raw-complete83CC/55CDC evidence and summary-key nulls that are not missing observations. No06 or dependent24 dispatch/source change before authorization; complete unaffected proof and interim CDC retrospective are retained.
 
 Arc41rows22done19open/project25open unchanged. Required24 full originalM7.1 export and every original/repair/raw/history/final-semantic/freshness-import/game-backed/format/UI/docs/distribution/coverage/performance/higher independent/Operator/integration/release gate remain. Same CDC/CC models/Arc06 endpoint/serialized ownership; mainb616 only protected nine-line human edit, all held pins/external03e8d04 unchanged. No other arc/Project02/merge/push/install/publish/release.
+
+
+## Operator approves Slice23 bounded decisions — 2026-10-22 UTC
+
+Human explicitly “I approve both!” adopts exactly7b7c2f94 Decision1 and Decision2. ONE exceptional sixth pass may qualify only config.rs288 comment link to Self::effective_save_file, with all executable/other23path/test/controller/fixture bytes frozen and only affected format/lint/exact strict-doc/diff proof repeated independently. Five ordinary passes stay exhausted; no further repair authority. Separately the original first privateCLI py_compile absent issued observations receive the bounded historical exception, unknowns stay unknown/no attempt acceptance credit/no future waiver. Current red strict docs is not waived. This authority is recorded before source execution.
+
+Clean133bc762/planning7b7c2f94/mainb616 protected9line/heldpins revalidated; immutable06/overall24path allowlist restricts this pass to ONE comment. Same CDC6.1-solHigh/CC6-lunaHigh, coherent headroom/readback then sourceCC/planningCDC handoff, raw-first current checks/named-path commit/freeze/independent acceptance required. NI01–06done; NI07/08/R06-S23 stillopen until actual proof/retrospective/closure. Arc41rows22done19open/project25open; original24 export and all original/repair/higher/game/raw/history/finalsemantic/freshness/import/UI/docs/distribution/coverage/performance/Operator/release obligations remain. No otherarc/Project02/merge/push/install/publish/release.
