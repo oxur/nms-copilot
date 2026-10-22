@@ -190,10 +190,42 @@ nms list systems --all                 # all discovered systems
 
 ### Shell Completions
 
+The `completions` command generates scripts for Bash, Zsh, Fish, PowerShell, and Elvish. Generating a script requires only `nms`; using it requires the matching shell.
+
+For Bash, save the script and load it into the current shell:
+
 ```bash
-nms completions bash > ~/.bash_completion.d/nms   # bash completions
-nms completions zsh > ~/.zfunc/_nms               # zsh completions
-nms completions fish > ~/.config/fish/completions/nms.fish  # fish completions
+mkdir -p "$HOME/.bash_completion.d"
+nms completions bash > "$HOME/.bash_completion.d/nms"
+source "$HOME/.bash_completion.d/nms"
+```
+
+To load it in future Bash sessions, add this line to `~/.bashrc`:
+
+```bash
+source "$HOME/.bash_completion.d/nms"
+```
+
+For Zsh, generate `_nms` in a directory on `fpath`:
+
+```zsh
+mkdir -p "$HOME/.zfunc"
+nms completions zsh > "$HOME/.zfunc/_nms"
+```
+
+Add the `fpath` assignment to `~/.zshrc` before its existing `compinit` call. If your configuration does not initialize completion yet, add the setup once:
+
+```zsh
+fpath=("$HOME/.zfunc" $fpath)
+autoload -Uz compinit
+compinit
+```
+
+For Fish, save the script in its standard completion directory. Fish loads it automatically in future sessions:
+
+```fish
+mkdir -p "$HOME/.config/fish/completions"
+nms completions fish > "$HOME/.config/fish/completions/nms.fish"
 ```
 
 ### Multi-Save Support
