@@ -1,14 +1,68 @@
 //! Extract System/Planet data from raw save discovery records.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
+use nms_core::delta::DiscoveryNames;
 use nms_core::system::{Planet, System};
 use nms_save::ValidatedSave;
 use nms_save::model::{RawDiscoveryRecord, SaveRoot};
 
 use crate::spatial::SystemId;
+
+/// Extract literal first-row discovery names from a validated save.
+///
+/// System and planet rows are tracked independently. The first row for each
+/// effective key reserves that key even when its `DM.CN` value is absent or
+/// not a string. Unknown discovery types reserve neither kind of key. Planet
+/// names remain keyed to their exact system and planet index; an orphan planet
+/// row does not create a system observation.
+///
+/// Addresses come from the parser's validated record/address pairs, so this
+/// function does not decode the raw packed address a second time. Name text is
+/// retained literally, including whitespace and empty strings.
+///
+/// # Examples
+///
+/// ```no_run
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let bytes = std::fs::read("save.json")?;
+/// let save = nms_save::parse_validated_save(&bytes)?;
+/// let names = nms_graph::extract::extract_discovery_names_from_validated(&save);
+/// println!("{} system names", names.system_names.len());
+/// # Ok(())
+/// # }
+/// ```
+pub fn extract_discovery_names_from_validated(save: &ValidatedSave) -> DiscoveryNames {
+    let mut names = DiscoveryNames::default();
+    let mut seen_systems = HashSet::new();
+    let mut seen_planets = HashSet::new();
+
+    for (record, address) in save.discoveries() {
+        match record.dd.dt.as_str() {
+            "SolarSystem" => {
+                let system_id = SystemId::from_address(&address);
+                if seen_systems.insert(system_id)
+                    && let Some(name) = record.dm.get("CN").and_then(serde_json::Value::as_str)
+                {
+                    names.system_names.insert(system_id, name.to_owned());
+                }
+            }
+            "Planet" => {
+                let key = (SystemId::from_address(&address), address.planet_index());
+                if seen_planets.insert(key)
+                    && let Some(name) = record.dm.get("CN").and_then(serde_json::Value::as_str)
+                {
+                    names.planet_names.insert(key, name.to_owned());
+                }
+            }
+            _ => {}
+        }
+    }
+
+    names
+}
 
 /// Temporary accumulator for building a System from multiple discovery records.
 #[derive(Debug)]

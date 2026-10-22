@@ -3,9 +3,55 @@
 //! These types live in nms-core so that both nms-graph (apply) and nms-watch
 //! (produce) can use them without creating a dependency cycle.
 
+use std::collections::HashMap;
+
 use crate::address::GalacticAddress;
 use crate::player::{PlayerBase, PlayerState};
 use crate::system::{Planet, System, SystemId};
+
+/// Runtime discovery names observed from one validated save.
+///
+/// The keys use galaxy-qualified system identities. A present empty string
+/// explicitly clears a name; a missing key leaves the corresponding model
+/// value unchanged. Values are retained literally, without trimming. This is
+/// an in-memory observation type, not a save or cache representation.
+///
+/// # Examples
+///
+/// ```
+/// use nms_core::address::GalacticAddress;
+/// use nms_core::delta::DiscoveryNames;
+/// use nms_core::system::SystemId;
+///
+/// let id = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 1, 0, 0));
+/// let mut observations = DiscoveryNames::default();
+/// assert!(observations.is_empty());
+///
+/// // A present empty value means clear; an absent entry means preserve.
+/// observations.system_names.insert(id, String::new());
+/// assert!(!observations.is_empty());
+/// assert_eq!(observations.system_names.get(&id).map(String::as_str), Some(""));
+/// let absent = DiscoveryNames::default();
+/// assert!(!absent.system_names.contains_key(&id));
+/// ```
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct DiscoveryNames {
+    /// Literal system names keyed by galaxy-qualified [`SystemId`].
+    ///
+    /// An empty string clears a system name; absence preserves it.
+    pub system_names: HashMap<SystemId, String>,
+    /// Literal planet names keyed by `(system, planet index)`.
+    ///
+    /// An empty string clears a planet name; absence preserves it.
+    pub planet_names: HashMap<(SystemId, u8), String>,
+}
+
+impl DiscoveryNames {
+    /// Return whether this observation contains no system or planet entries.
+    pub fn is_empty(&self) -> bool {
+        self.system_names.is_empty() && self.planet_names.is_empty()
+    }
+}
 
 /// A typed description of what changed between two save file snapshots.
 #[derive(Debug, Clone)]
