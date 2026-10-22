@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.94
+version: 1.95
 project: project01-mvp
 status: active
 depends-on: []
@@ -1165,3 +1165,8 @@ Arc-plan1.106/[Slice27](arc06-fit-and-finish/slice27-multi-galaxy-composition/sl
 Arc-plan1.107/all6MG/R06-S27/originalM7.4doneatcleanisolated063c8c65, oneNEWintegrationtestfile/productionunchanged. Fulloriginal0038mapped/current256checked-save-index-query-routing-3/5cache-actualREPLcomposition independentlyreviewed/reproduced, 11groups/full1085runtime+31docs. Initial+01firstimplementation;02/03twoactualrefinements, noreset/exception. Raw26CC+13CDC/failedhistory/byteexactreturns/archive/mandatoryretroretained.
 
 45arc31done14open/project25open. NextoriginalM7.5source/fixtureconditional-formatgrounding; syntheticproofdoesnotclosegame-backednonzero orallconsumer/finaltransitionparentreconciliation. Allotheroriginal/raw/history/freshness-import/platform/UI/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligations retainowners. Mainhuman9line/allheldexternalpins/samemodels/Arc06endpointpreserved; no otherarc/Project02/merge/push/install/publish/release.
+
+
+## Arc06 original M7.5 input boundary and ready-work continuation — 2026-10-22 UTC
+
+Arc-plan1.108 records bounded ordinary existing-source/archive-manifest readiness, not a new inquiry: local NomNom has no export source/sample; libNOM.io source serializes mapped JSON, but all six local archive payloads are encrypted and none is a .json export. No payload decryption/exporter/network/install/run or product acceptance occurred. Original0038 requires actual export verification; M7.5 remains OPEN pending an attributable full-save NomNom export/version/settings, not waived by synthetic standard fixtures or heuristic tests. CDC owns that input dependency. Continue independent original M7.9 community-import grounding under unchanged selected CDC/CC/Arc06 authority; final docs/all other original and repair/higher gates remain.45arc31done14open/project25open/source063c8c65/protectedmainhuman9line/allheldpins preserved; no new slice issued or integration/release.
