@@ -156,8 +156,19 @@ nms convert --voxel 100,50,-200 --ssi 42           # voxel coordinates
 
 ### Export & Import
 
+`nms export` writes a flat twelve-field planet record to stdout as JSON (the
+default) or CSV. Its fields, in order, are `planet_name`, `biome`,
+`system_name`, `distance_ly`, `portal_glyphs`, `portal_emoji`, `coords_x`,
+`coords_y`, `coords_z`, `galaxy`, `discoverer`, and `infested`. The default
+reference is the current position in the current galaxy. It accepts the shared
+biome, infested, named-planet, discoverer, distance, nearest, and base-reference
+filters. A base reference selects that base's galaxy; each row's portal address
+and coordinates come from the stored system address. Export does not modify
+the save. Input and query errors go to stderr before a data payload is written.
+An empty CSV result is zero bytes.
+
 ```bash
-nms export --format json                          # export all planets as JSON
+nms export --format json                          # export all matching planets as JSON
 nms export --biome Lush --format csv              # export filtered planets as CSV
 nms import community_data.csv --source "NMSCE"    # import community coordinates
 ```
