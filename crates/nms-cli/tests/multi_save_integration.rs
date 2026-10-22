@@ -426,7 +426,7 @@ fn selection_matches_info(text: &str, save_name: &str, units: &str) -> bool {
 fn replace_info_value(text: &str, key: &str, value: &str) -> Option<String> {
     let mut replaced = false;
     let lines = text
-        .lines()
+        .split('\n')
         .map(|line| {
             if replaced {
                 return line.to_owned();
