@@ -14,3 +14,5 @@
 | CI-08 | Attributable execution/independent acceptance/retrospective/original mapping | I8 raw records/returns/named commits/bottom-up review | correctness-grade | open | — |
 
 Current assignment cc-prompt-iteration01.md is a pre-edit author clarification of I4 discriminator/stage; initial+01 FIRST implementation, zero actual refinements of five used. All8CI remain OPEN, initial/readback preserved; no new scope or acceptance.
+
+Current assignment02 is first actual refinement1/5; four remain. Settled initial pair green, runtime/native unrun. CDC full I1–I8 review F1–F7 preserves production and requires seven-path test/probe correction before runtime. All8CI remain OPEN; no acceptance or exception.
