@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.79
+version: 1.80
 project: project01-mvp
 status: active
 depends-on: []
@@ -1072,3 +1072,10 @@ Version1.78 currentassignment arc06-fit-and-finish/slice21-checked-save-integrat
 ApprovedA now reaches actual application source parsing, model/watch/cache and CLI/normal/stdio/HTTP paths. All8 child CA rows accepted at b290ea31 after independent23 major groups/native11; workspace1036runtime/27docs plus feature/build/strict docs/diffs pass. Authentic3/3 is rejected/rebuilt to3/4 and compatible restart, semantic-invalid full-update retention and recovery are reproduced. Child acceptance does not close P01-R01/R02/R03 or C01/C04/C05: broader original scope, game-backed nonzero evidence and final independent assembly remain. Earlier notes describing the input/reality/error policy as pending are historical; the Operator adoptedA and20/21 deliver its bounded implementation.
 
 Arc39 rows/21 done/18 open; project25 open. Source8a01b3d7→b290ea31 is local/unintegrated. Five ordinary refinements and one explicitly approved sixth, all failed/retried evidence, exact contributor/CDC transfers and the retrospective remain canonical. All original raw/history, final semantic, strict freshness/identical rewrite/stale-import history, export/import/slots/formats/UI/docs/distribution/95%coverage/performance/MSRV/platform/higher independent/Operator/integration/release obligations remain with their existing owners. Same CDC/CC models, protected main nine-line edit, held/external pins and Arc06-only endpoint; no other arc or Project02 starts.
+
+
+## Arc06 original export / raw-name ownership decision — 2026-10-22 UTC
+
+Version1.80: full original0037/M7.1 reconciliation at acceptedb290 exposes preservedF02: rawDM.CN is retained but extraction discards system/planet names, while additive live deltas lack rename/clear observations. [Arc-plan1.92](arc06-fit-and-finish/arc-plan.md#next-original-export-owner-raw-name-ownership-decision--2026-10-22-utc) contains the concrete recommendedA ownership/clear contract, exact galaxy-qualified imported-overlap examples, live same-parse path, semantic4→5/schema3 rebuild and cache-only-label loss, provenance-awareB/holdC alternatives, and bounded full export/live/restart proof. Consequential explicit-source-versus-imported ownership remains an Operator decision; no new inquiry/source edit/prompt/dispatch before resolution. Routine APIs follow after approval, not another policy gate.
+
+Arc39rows21done18open/project25open; all prior closures/failures/retrospectives and original capability/repair/game-backed/history/finalsemantic/freshness-import/coverage/docs/distribution/higher-independent/Operator/release obligations remain. Same CDC/CC settings and Arc06 endpoint, protected main9line edit/allheld/externalpins/Project02; sourceb290 local/unintegrated. No unchanged-code reruns or other-arc/external authority.
