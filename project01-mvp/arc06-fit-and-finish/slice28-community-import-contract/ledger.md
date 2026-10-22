@@ -12,3 +12,5 @@
 | CI-06 | Normal/stdio/HTTP current cache/live/lifetime and old/new predecessor composition | I6 original13 plus native14/new3/5 retained controls | correctness-grade | open | — |
 | CI-07 | Full changed source/helper/oracle/docs review and required gates | I7 settled source and independent actual checks | correctness-grade | open | — |
 | CI-08 | Attributable execution/independent acceptance/retrospective/original mapping | I8 raw records/returns/named commits/bottom-up review | correctness-grade | open | — |
+
+Current assignment cc-prompt-iteration01.md is a pre-edit author clarification of I4 discriminator/stage; initial+01 FIRST implementation, zero actual refinements of five used. All8CI remain OPEN, initial/readback preserved; no new scope or acceptance.

@@ -5,3 +5,8 @@
 Capture kernel inspected from known27 raw-first implementation and namespace/source/header mechanically adapted to28. CDC actual support controls05a6ae0f1d0d45d9b8ef4e80c36213d3 exit7 and00de30227cd6450aba3e6d7662b92367 exit0 retain10/6 channels/exits/end/status/identities, complete stable3bf4f326 before==after/clean063. Author support only. Private kernel SHA dc262bb910b9c1509d89bcad50fce776742bb809ce6325392553176ed788e41b. No actual compiler/product/native gate launched; no acceptance claim.
 
 CDC sole planning/index owner, CC sole source/index after coherent intake. Initial durable assignment current cc-prompt.md, zero actual refinements of five used; full I1–I8 author worksheet/actual native14 and held pair review required. Mainhuman9line/heldexternalpins protected. Source remains isolated/unintegrated; no otherarc/Project02/install/network/publish/release.
+
+
+## Pre-edit author01 / first implementation
+
+CC initial coherent source-cited readbackc5c8f70a recorded before source/compiler/runtime and preserves full original prefix. CDC caught a readiness ambiguity before first edit: source-only new placeholder-origin negative must keep all old marker-valid metadata unchanged, and complete cache graph roundtrip follows explicit default-edge build. Immutable cc-prompt-iteration01.md supplies these exact I4 shapes, no new scope/scenario/API. CC confirmed source still clean063 and acknowledged both boundaries while held. Initial+01 FIRST implementation/zero actual refinements, no reset/waiver; five ordinary passes remain. Once actual01 readback appended, CC proceeds initial implementation/captured pair then full CDC held review. All original I1–I8/exact20 paths/native14/gates unchanged.
