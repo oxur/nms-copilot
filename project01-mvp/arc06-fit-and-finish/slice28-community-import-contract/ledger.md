@@ -16,3 +16,5 @@
 Current assignment cc-prompt-iteration01.md is a pre-edit author clarification of I4 discriminator/stage; initial+01 FIRST implementation, zero actual refinements of five used. All8CI remain OPEN, initial/readback preserved; no new scope or acceptance.
 
 Current assignment02 is first actual refinement1/5; four remain. Settled initial pair green, runtime/native unrun. CDC full I1–I8 review F1–F7 preserves production and requires seven-path test/probe correction before runtime. All8CI remain OPEN; no acceptance or exception.
+
+Current03 actual2/5 (three remain) addresses only existing F2 test oracle/guards; other reviewed groups/production frozen. Final02 pair green but runtime unrun; all8CI OPEN pending original execution and independent disposition.
