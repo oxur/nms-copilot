@@ -23,6 +23,7 @@
     "crates/nms-copilot/tests/owned_mcp_integration.rs",
     "crates/nms-copilot/tests/support/live_mcp.rs",
     "crates/nms-cli/src/main.rs",
-    "README.md"
+    "README.md",
+    "crates/nms-copilot/src/mcp/tools.rs"
   ]
 }
