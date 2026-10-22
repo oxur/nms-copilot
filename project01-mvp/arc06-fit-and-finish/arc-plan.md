@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.89, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.90, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -766,3 +766,8 @@ Version1.88: current immutable assignment slice21-checked-save-integration/cc-pr
 ## Slice21 full CLI/current-cache oracle correction — 2026-10-21 UTC
 
 Version1.89 currentassignment slice21-checked-save-integration/cc-prompt-iteration02.md, secondof5. Before firstcompiler CC/CDCcaught author systemP0-vs-planetP2/P1 and nonexistentfindgalaxycolumn expectations; wholeCLIwalk supplied exact originalcount/fullJSON/multiplicity/route/duplicate/invalid/projection oracles, without query/outputchanges. Exactcurrentallowlist38: original36 plus query_cache_integration/route_cache_integration ONLY fourgeneratedheader semantic4literals, schema3/old2/2/typedlegacyproofunchanged. Existinggates/8rows/policy/native11/sourceownership/models retained, no newinquiry/gatewaiver/Operatorquestion. All8CA/R06-S21open;39arcrows20done19open/project25open; alloriginalparents/fences remain.
+
+
+### Slice21 exceptional sixth refinement authorization — 2026-10-21 UTC
+
+Operator “oh, yeah — absolutely, go ahead :-D” approves consolidated packetf0d64ff3: ONE extra test/docs pass over child-onlyfindfixture + literalcachetestsemantic3→4 + threeextractdoccodespans, preservingproduction/legacycontrols/assertions. Currentimmutable Slice21cc-prompt-iteration06.md; onlyfindaddsallowedpath(total39). Fiveordinarypasses/redhistory intact, no automaticseventh/budgetreset/historicalwaiver. Source8a01b3d clean beforehandoff; affected/full/strictdocs and independentacceptance/retro/bubble-up required. All8CA/R06-S21/otherparentrows remainopen (39arcrows20done19open/project25open), mainuser9line/heldpins/models/Arc06-only/nointegrationrelease fences unchanged.
