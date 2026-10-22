@@ -150,3 +150,26 @@ The committed19 tracked-path patch exactly reproduces precommitc50e2934; all fou
 - `cdc-retrospective.md` records the current review's observations; closing disposition remains pending. No causal model comparison or new inquiry is claimed.
 
 Arc41 rows/22done/19open and project25open remain unchanged. All15 original capability rows/three repair parents and original export24, raw/history/final-semantic/freshness-identical-rewrite-stale-import/import/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher independent/Operator/integration/release gates remain. Mainb616 has ONLY the protected nine-line human native-test edit/blob2cd450ce, empty index. Accepted/held worktrees and external03e8d04 remain protected. Same CDC/CC models/one-arc endpoint; no source or helper changes after this proof, no06/24 dispatch, no merge/push/install/publish/release or next arc/Project02.
+
+
+## Final independent application acceptance — 2026-10-22 UTC
+
+Operator explicitly “I approve both!” approved exactly the two preceding decisions, recorded before execution in a849305c/immutable06. The historical first private CLI py_compile observations remain unknown with no attempt acceptance credit; this bounded exception does not cover future work. Five ordinary corrections remain exhausted, and ONE exceptional sixth comment-only pass was completed without a reset or further correction authority.
+
+CDC independently verifies source **2f2814c780f5022dea3bc1643d99828ba679e8d0**, parent133bc762, treee70484db7c487a81a5f30819cf5707d616de60bf, clean/indexempty and both parsed coauthor trailers once. The entire delta is the exact config.rs288 comment `effective_save_file`→`Self::effective_save_file`; direct old/new complete bytes verify this replacement, with all executable/test/fixture/controller bytes identical. The generated Config HTML resolves `struct.Config.html#method.effective_save_file`.
+
+| Fresh affected CDC check | UUID | Actual exit |
+|---|---|---:|
+| make format | 0decbc6eed9d40b3b88ec06c58695bd9 | 0 |
+| make lint | bd0f22a1e94a4fb6861174747bd6ca9d | 0 |
+| Exact strict docs from Decision1 | 024d81f6c19c4f89b96b13e2ffa817d2 | 0 |
+| Working diff | 7ea9dd65d1eb4e25a543a8d53b5c353b | 0 |
+| Accepted22 baseline diff | 23c0d25a0cff482e95f0eb377d4f7e24 | 0 |
+
+All five complete raw channels/exits/endUTC/explicit before-after statuses and identities verify; clean2f2814 identity1c324f0ac43e43d30de340b34bb74ec825ee17f641a5d2a1c72ea03f47458966 remained stable. CC's five corresponding actual records also pass (7eb1c917/add7d42e/705e039b/2cd380a5/73320395), attributable to precommit133 plus the sole comment diff. Original83CC/55CDC JSON entry values exactly match the preceding archives. The original three return documents remain byte-exact; cc-iteration06.md is a separate attributable addendum. Its failed pre-kernel shell quotation receipt is preserved as exit2 before Cargo/kernel invocation, without a fabricated SUT UUID or product credit. No further historical exception is needed for that complete outer preparation failure.
+
+`artifacts/iteration06-evidence.tar.gz` is199397bytes/SHA2561a6b138714d954378cf00eb26504c8aefb2904585dcdd5366318c33832d51021, inventory with raw88CC/60CDC attempts, byte-exact addendum, entire one-comment patch and generated link HTML. CDC raw record SHA0e4adcfc0ce21f85c6f250b4b4c5ba585bbde9510ff51006afce6b66d34890a0; CC936126f87d7abe7825c586034c14f4c4d8da62ffd21714ea4299e1ec8c578cf2. Previous archives/historical red strict-doc results and failed/retried attempts are unchanged.
+
+NI-07 is now **done**: actual strict-doc repair/proof passes, the exact historical exception is explicitly authorized, and current source/return/attempt chronology is attributable. NI-08 is **done** after this independent acceptance, final mandatory CDC retrospective and bottom-up slice/arc/project records. **All eight NI rows/R06-S23 accepted.** The original21 unaffected passing gate groups, native13 and workspace1,062runtime+31docs remain applicable by exact executable/test/controller identity; they are not relabelled fresh2f2814 executions. Only the five affected checks were repeated, closing all22 required groups. No broad unchanged reruns.
+
+Parent compliance: approved A delivered checked cold and same-parse name-only live updates/cache5/schema3/real normal-stdio-HTTP restart behavior, within issued child criteria. Structural change: none beyond the approved22foundation→23application→required24export decomposition and authorized one-line documentation allowance. Bubble-up: arc41rows/23done/18open/project25open; required24 complete original M7.1 export is next. Original capability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher-independent/Operator/integration/release gates remain open. Mainb616 protected9line blob2cd450ce, all held/external pins retained. Local isolated delivery only; same models/Arc06 endpoint, no integration/push/install/publish/release or other arc/Project02.

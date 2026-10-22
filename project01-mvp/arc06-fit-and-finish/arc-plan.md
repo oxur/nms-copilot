@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.98, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.99, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -861,3 +861,10 @@ Arc41rows22done19open/project25open unchanged. Required24 full originalM7.1 expo
 Human explicitly “I approve both!” adopts exactly7b7c2f94 Decision1 and Decision2. ONE exceptional sixth pass may qualify only config.rs288 comment link to Self::effective_save_file, with all executable/other23path/test/controller/fixture bytes frozen and only affected format/lint/exact strict-doc/diff proof repeated independently. Five ordinary passes stay exhausted; no further repair authority. Separately the original first privateCLI py_compile absent issued observations receive the bounded historical exception, unknowns stay unknown/no attempt acceptance credit/no future waiver. Current red strict docs is not waived. This authority is recorded before source execution.
 
 Clean133bc762/planning7b7c2f94/mainb616 protected9line/heldpins revalidated; immutable06/overall24path allowlist restricts this pass to ONE comment. Same CDC6.1-solHigh/CC6-lunaHigh, coherent headroom/readback then sourceCC/planningCDC handoff, raw-first current checks/named-path commit/freeze/independent acceptance required. NI01–06done; NI07/08/R06-S23 stillopen until actual proof/retrospective/closure. Arc41rows22done19open/project25open; original24 export and all original/repair/higher/game/raw/history/finalsemantic/freshness/import/UI/docs/distribution/coverage/performance/Operator/release obligations remain. No otherarc/Project02/merge/push/install/publish/release.
+
+
+## Slice23 independent application closure — 2026-10-22 UTC
+
+All8NI/R06-S23 accepted atclean2f2814c7 after human “I approve both!” bounded one-comment exceptional06 and separate original private diagnostic capture exception. No unknown history recovered or attempt credit; initial/01–06/failed/retried proof preserved. CDC exact-byte scope review and five affected captured checks pass, including repaired strict docs; original21 unaffected groups/native13/workspace1062runtime+31docs remain byte-applicable, not fresh executions. Final row dispositions/mandatory CDC retrospective/archives/bottom-up records are canonical. Parent compliance yes within23; no structural change beyond approved split and one-comment allowance.
+
+Arc41rows23done18open/project25open. NEXT required24/CDC complete original0037 M7.1 export (all12 fields/JSON/CSV/filters/origin/multiplicity/escaping/stdout/error), after source-grounded author readiness/headroom. All original capability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher-independent/Operator/integration/release obligations remain. Same CDC/CC models/Arc06 endpoint, protected main9line/held/external pins; no integration/push/install/publish/release/otherarc/Project02.

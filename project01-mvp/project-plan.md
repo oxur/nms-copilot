@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.85
+version: 1.86
 project: project01-mvp
 status: active
 depends-on: []
@@ -1104,3 +1104,10 @@ Version1.83/arc-plan1.95: opt-in publicnamesfoundation accepted atclean753bb3a9/
 ## Arc06 Slice23 independent current proof / Operator decisions — 2026-10-22 UTC
 
 Version1.85/arc-plan1.97: clean isolated133bc762 delivers independently proved application naming behavior; NI-01–06 done after21of22 source groups/native13/workspace1062runtime+31docs. NI-07/08/R06-S23 remain open for the inherited strict-doc one-line link at exhausted five-pass cap and separate original private syntax-diagnostic capture disposition. [The concrete packet](arc06-fit-and-finish/slice23-discovery-name-integration/cdc-verification.md) gives exact failed receipts/proposed diff/minimal affected reruns/rule/unknowns; no sixth repair or historical waiver inferred. Required24 original export waits for23closure. Arc41rows22done19open/project25open and all original/repair/game/raw/history/final-semantic/freshness-import/format/UI/docs/distribution/coverage/performance/higher independent/Operator/integration/release obligations remain. Same selected models, protected main nine-line edit/held/external pins and Arc06-only endpoint; no other arc or Project02.
+
+
+## Slice23 independent application closure — 2026-10-22 UTC
+
+All8NI/R06-S23 accepted atclean2f2814c7 after human “I approve both!” bounded one-comment exceptional06 and separate original private diagnostic capture exception. No unknown history recovered or attempt credit; initial/01–06/failed/retried proof preserved. CDC exact-byte scope review and five affected captured checks pass, including repaired strict docs; original21 unaffected groups/native13/workspace1062runtime+31docs remain byte-applicable, not fresh executions. Final row dispositions/mandatory CDC retrospective/archives/bottom-up records are canonical. Parent compliance yes within23; no structural change beyond approved split and one-comment allowance.
+
+Arc41rows23done18open/project25open. NEXT required24/CDC complete original0037 M7.1 export (all12 fields/JSON/CSV/filters/origin/multiplicity/escaping/stdout/error), after source-grounded author readiness/headroom. All original capability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher-independent/Operator/integration/release obligations remain. Same CDC/CC models/Arc06 endpoint, protected main9line/held/external pins; no integration/push/install/publish/release/otherarc/Project02.
