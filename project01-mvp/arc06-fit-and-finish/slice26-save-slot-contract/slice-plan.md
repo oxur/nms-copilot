@@ -1,6 +1,8 @@
 # Slice26 — original M7.3 save-slot contract
 
-Version1.0,2026-10-22 UTC. OPEN initial0of5. Standing Autonomous Arc06 only, same actual selected CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. Qualitative headroom/no owned process confirmed after closed25. Dedicated codex/save-slot-contract clean03b atissue; CDCplanning/sourcehandoffaftercoherentreadback/independentreview, CCsole source-index-gates duringimplementation.
+Version1.1,2026-10-22 UTC. OPEN iteration01 firstof5. Standing Autonomous Arc06 only, same actual selected CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. Qualitative headroom/no owned process confirmed after closed25. Dedicated codex/save-slot-contract clean03b atissue; CDCplanning/sourcehandoffaftercoherentreadback/independentreview, CCsole source-index-gates duringimplementation.
+
+Current immutable assignment is initial cc-prompt.md plus cc-prompt-iteration01.md: retain valid after-command slot2→B and nested slot15→A cases; add opposed after-command info slot1→A because defaultB made the first observation nondiscriminating. Author-oracle correction only, no demonstrated product defect or fivepath/policy/gategroup expansion; original thirty caller cases retained. CC confirmed no edits/product gates before this issuance.
 
 ## Usable delivery / full readiness
 
