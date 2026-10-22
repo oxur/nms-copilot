@@ -1,0 +1,278 @@
+{
+  "session": "/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/sessions/2026/10/19/rollout-2026-10-19T22-11-00-01a1574a-769c-7c63-9819-d843dcfb7984.jsonl",
+  "items": [
+    {
+      "timestamp": "2026-10-22T11:39:27.411Z",
+      "ordinal": 51109,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call",
+        "id": "ctc_017a4b013469419f016ad9f5ecf758819fb80ce32d5d9be93f",
+        "status": "completed",
+        "call_id": "call_024234aaf1a246119b87dd790a011e57",
+        "name": "exec",
+        "input": "const patch = \"*** Begin Patch\\n*** Update File: /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract/crates/nms-core/src/system.rs\\n@@\\n use crate::address::GalacticAddress;\\n use crate::biome::{Biome, BiomeSubType};\\n+\\n+/// Records whether a system came from the player's save or a named catalog.\\n+///\\n+/// This is contribution provenance, not the in-game discoverer identity.\\n+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]\\n+#[cfg_attr(\\n+    feature = \\\"archive\\\",\\n+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)\\n+)]\\n+pub enum DiscoverySource {\\n+    /// A system extracted from the player's own save or constructed locally.\\n+    Personal,\\n+    /// A system contributed by a named community catalog.\\n+    Community { source: String },\\n+}\\n@@\\n pub struct System {\\n     pub address: GalacticAddress,\\n+    /// Origin of this system's atlas contribution.\\n+    pub source: DiscoverySource,\\n     pub name: Option<String>,\\n@@\\n         Self {\\n             address,\\n+            source: DiscoverySource::Personal,\\n             name,\\n*** Update File: /Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core/src/lib.rs\\n@@\\n-pub use system::{Planet, System, SystemId};\\n+pub use system::{DiscoverySource, Planet, System, SystemId};\\n*** End Patch\";\ntext(await tools.apply_patch(patch));\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669164.9695632
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-22T11:42:04.950Z",
+      "ordinal": 51312,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call",
+        "id": "ctc_017a4b013469419f016ad9f683b548819f98f129a5e75752ea",
+        "status": "completed",
+        "call_id": "call_b9b3ee893e634032a5d3363d760af264",
+        "name": "exec",
+        "input": "const r = await tools.exec_command({cmd:\"python3 - <<'PY'\\nimport json\\nfrom pathlib import Path\\nroot=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract')\\nmanifest=json.loads((Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/source-allowlist.json')).read_text())\\nallowed=set(manifest['absolute_paths'])\\ndef guarded(path):\\n    p=Path(path).resolve()\\n    assert str(p).startswith(str(root.resolve())+'/') and str(p) in allowed, f'forbidden target: {p}'\\n    return p\\nrepls={\\n'crates/nms-core/src/lib.rs': [('pub use system::{Planet, System, SystemId};','pub use system::{DiscoverySource, Planet, System, SystemId};')],\\n'crates/nms-cache/src/data.rs': [('use nms_core::system::CachedSystem;', 'use nms_core::system::CachedSystem;')],\\n'crates/nms-cache/src/serialize.rs': [('The current schema revision is 3 and semantic revision is 5.', 'The current schema revision is 4 and semantic revision is 6.'), ('The current schema revision is 3 and semantic revision is 5. Schema 2 adds the\\\\n//! selected galaxy; schema 3 adds explicit player-placeholder provenance.', 'The current schema revision is 4 and semantic revision is 6. Schema 2 adds the\\\\n//! selected galaxy; schema 3 adds explicit player-placeholder provenance; schema 4\\\\n//! stores discovery contribution source.'), ('for schema in [0_u32, 1, 2, 4] {','for schema in [0_u32, 1, 2, 3, 5] {'), ('expected: 3\\\\n                })) if found == schema','expected: 4\\\\n                })) if found == schema'), ('for semantic in [0_u32, 1, 2, 3, 4, 6] {','for semantic in [0_u32, 1, 2, 3, 4, 5, 7] {'), ('bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());\\\\n            bytes[12..16].copy_from_slice(&semantic.to_le_bytes());','bytes[8..12].copy_from_slice(&4_u32.to_le_bytes());\\\\n            bytes[12..16].copy_from_slice(&semantic.to_le_bytes());'), ('expected: 5\\\\n                })) if found == semantic','expected: 6\\\\n                })) if found == semantic'), ('expected: 3\\\\n                }\\\\n            ))','expected: 4\\\\n                }\\\\n            ))'), ('bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());\\\\n        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());','bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());\\\\n        bytes[12..16].copy_from_slice(&5_u32.to_le_bytes());'), ('found: 2,\\\\n                    expected: 3','found: 3,\\\\n                    expected: 4'), ('bytes.extend_from_slice(&3_u32.to_le_bytes());\\\\n        bytes.extend_from_slice(&5_u32.to_le_bytes());','bytes.extend_from_slice(&4_u32.to_le_bytes());\\\\n        bytes.extend_from_slice(&6_u32.to_le_bytes());'), ('expected: 5,','expected: 6,'), ('b\\\\'N\\\\', b\\\\'M\\\\', b\\\\'S\\\\', b\\\\'C\\\\', b\\\\'A\\\\', b\\\\'C\\\\', b\\\\'H\\\\', b\\\\'E\\\\', 3, 0, 0, 0, 5, 0, 0, 0','b\\\\'N\\\\', b\\\\'M\\\\', b\\\\'S\\\\', b\\\\'C\\\\', b\\\\'A\\\\', b\\\\'C\\\\', b\\\\'H\\\\', b\\\\'E\\\\', 4, 0, 0, 0, 6, 0, 0, 0')],\\n'crates/nms-cache/src/lib.rs': [('The current schema revision is 3 and the current semantic revision is 5.', 'The current schema revision is 4 and the current semantic revision is 6.')]\\n}\\nfor rel, pairs in repls.items():\\n    p=guarded(str(root/rel)); text=p.read_text()\\n    for old,new in pairs:\\n        if old not in text:\\n            if rel.endswith('data.rs') and old=='use nms_core::system::CachedSystem;': continue\\n            raise SystemExit(f'missing expected text in {rel}: {old[:90]!r}')\\n        text=text.replace(old,new)\\n    p.write_text(text)\\n# fix example's explicit source type\\np=guarded(str(root/'crates/nms-cache/src/data.rs')); text=p.read_text().replace('source: DiscoverySource::Personal,','source: nms_core::system::DiscoverySource::Personal,'); p.write_text(text)\\n# preserve the exact predecessor payload and create its truthful provenance companion\\nsrc=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/artifacts/predecessor-schema3-semantic5.rkyv')\\ndst=guarded(str(root/'crates/nms-cache/tests/fixtures/predecessor-schema3-semantic5.rkyv'))\\nraw=src.read_bytes(); assert len(raw)==632\\nimport hashlib\\nassert hashlib.sha256(raw).hexdigest()=='7e308a95dc28874e9c164c425a09c84e38fd72d1e819c5cabcaa57fee8a2d99d'\\ndst.write_bytes(raw)\\nprov=guarded(str(root/'crates/nms-cache/tests/fixtures/predecessor-schema3-semantic5-provenance.json'))\\nprov.write_text(Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/artifacts/predecessor-provenance.json').read_text())\\nprint('guarded docs/header revisions; copied predecessor exact bytes')\\nPY\",yield_time_ms:10000,max_output_tokens:2000}); text(r.output)\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669315.713103
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-22T11:42:19.469Z",
+      "ordinal": 51326,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call",
+        "id": "ctc_017a4b013469419f016ad9f6936840819f8914302e85db725c",
+        "status": "completed",
+        "call_id": "call_580fbeb01a8b4d5288095b7da0f2956c",
+        "name": "exec",
+        "input": "const r = await tools.exec_command({cmd:\"python3 - <<'PY'\\nimport json, hashlib\\nfrom pathlib import Path\\nroot=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract').resolve()\\nmanifest=json.loads(Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/source-allowlist.json').read_text())\\nallowed=set(manifest['absolute_paths'])\\ndef target(rel):\\n p=(root/rel).resolve(); assert str(p) in allowed and str(p).startswith(str(root)+'/'); return p\\np=target('crates/nms-cache/src/serialize.rs'); s=p.read_text()\\ns=s.replace('//! The current schema revision is 3 and semantic revision is 5. Schema 2 adds the\\\\n//! selected galaxy; schema 3 adds explicit player-placeholder provenance.', '//! The current schema revision is 4 and semantic revision is 6. Schema 2 adds the\\\\n//! selected galaxy; schema 3 adds explicit player-placeholder provenance; schema 4\\\\n//! stores discovery contribution source.')\\ns=s.replace('for schema in [0_u32, 1, 2, 4] {','for schema in [0_u32, 1, 2, 3, 5] {')\\ns=s.replace('expected: 3\\\\n                })) if found == schema','expected: 4\\\\n                })) if found == schema')\\ns=s.replace('for semantic in [0_u32, 1, 2, 3, 4, 6] {','for semantic in [0_u32, 1, 2, 3, 4, 5, 7] {')\\ns=s.replace('bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());\\\\n            bytes[12..16].copy_from_slice(&semantic.to_le_bytes());','bytes[8..12].copy_from_slice(&4_u32.to_le_bytes());\\\\n            bytes[12..16].copy_from_slice(&semantic.to_le_bytes());')\\ns=s.replace('expected: 5\\\\n                })) if found == semantic','expected: 6\\\\n                })) if found == semantic')\\ns=s.replace('bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());\\\\n        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());','bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());\\\\n        bytes[12..16].copy_from_slice(&5_u32.to_le_bytes());')\\ns=s.replace('found: 2,\\\\n                    expected: 3','found: 3,\\\\n                    expected: 4')\\ns=s.replace('bytes.extend_from_slice(&3_u32.to_le_bytes());\\\\n        bytes.extend_from_slice(&5_u32.to_le_bytes());','bytes.extend_from_slice(&4_u32.to_le_bytes());\\\\n        bytes.extend_from_slice(&6_u32.to_le_bytes());')\\ns=s.replace('found: 9,\\\\n            expected: 5','found: 9,\\\\n            expected: 6').replace('assert!(error.to_string().contains(\\\"expected 5\\\"));','assert!(error.to_string().contains(\\\"expected 6\\\"));').replace('revision 9 is incompatible (expected 5)','revision 9 is incompatible (expected 6)')\\n# literal success header\\ns=s.replace(\\\"b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 3, 0, 0, 0, 5, 0, 0, 0\\\", \\\"b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 4, 0, 0, 0, 6, 0, 0, 0\\\")\\np.write_text(s)\\n# current crate docs\\np=target('crates/nms-cache/src/lib.rs'); s=p.read_text().replace('The current schema revision is 3 and the current semantic revision is 5.','The current schema revision is 4 and the current semantic revision is 6.'); p.write_text(s)\\n# example qualifies enum fully\\np=target('crates/nms-cache/src/data.rs'); s=p.read_text().replace('source: DiscoverySource::Personal,','source: nms_core::system::DiscoverySource::Personal,'); p.write_text(s)\\n# exact predecessor data and provenance\\nsrc=Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/artifacts/predecessor-schema3-semantic5.rkyv')\\nraw=src.read_bytes(); assert len(raw)==632 and hashlib.sha256(raw).hexdigest()=='7e308a95dc28874e9c164c425a09c84e38fd72d1e819c5cabcaa57fee8a2d99d'\\ntarget('crates/nms-cache/tests/fixtures/predecessor-schema3-semantic5.rkyv').write_bytes(raw)\\ntarget('crates/nms-cache/tests/fixtures/predecessor-schema3-semantic5-provenance.json').write_text(Path('/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice28-community-import-contract/artifacts/predecessor-provenance.json').read_text())\\nprint('updated current4/6 unit expectations and copied exact 632-byte predecessor')\\nPY\",yield_time_ms:10000,max_output_tokens:2000}); text(r.output)\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669331.4097724
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-22T11:39:27.528Z",
+      "ordinal": 51112,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call_output",
+        "id": "ctco_01a16368-afa8-7d02-8cd8-b10b775a3f49",
+        "call_id": "call_024234aaf1a246119b87dd790a011e57",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.1 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "{}"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669167.528197
+        }
+      },
+      "metadata": {
+        "client_authored": false,
+        "fallback_token_limit_override": 12000
+      }
+    },
+    {
+      "timestamp": "2026-10-22T11:42:05.099Z",
+      "ordinal": 51315,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call_output",
+        "id": "ctco_01a1636b-172b-7003-8805-fe331c9f48c2",
+        "call_id": "call_b9b3ee893e634032a5d3363d760af264",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.1 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "missing expected text in crates/nms-cache/src/serialize.rs: 'The current schema revision is 3 and semantic revision is 5. Schema 2 adds the\\n//! selecte'\n"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669325.09964
+        }
+      },
+      "metadata": {
+        "client_authored": false,
+        "fallback_token_limit_override": 12000
+      }
+    },
+    {
+      "timestamp": "2026-10-22T11:42:19.614Z",
+      "ordinal": 51329,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call_output",
+        "id": "ctco_01a1636b-4fde-78f0-b058-ae45844970f4",
+        "call_id": "call_580fbeb01a8b4d5288095b7da0f2956c",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.1 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "updated current4/6 unit expectations and copied exact 632-byte predecessor\n"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+          "create_time": 1792669339.614236
+        }
+      },
+      "metadata": {
+        "client_authored": false,
+        "fallback_token_limit_override": 12000
+      }
+    }
+  ],
+  "completed_file_change": [
+    {
+      "timestamp": "2026-10-22T11:39:27.486Z",
+      "ordinal": 51110,
+      "type": "event_msg",
+      "payload": {
+        "type": "item_completed",
+        "thread_id": "01a1574a-769c-7c63-9819-d843dcfb7984",
+        "turn_id": "01a16364-24d5-71a1-a0a5-a4bb75d4d0c6",
+        "item": {
+          "type": "FileChange",
+          "id": "exec-cfcc7ffc-2c8b-48eb-b21b-db0dd53ff070",
+          "changes": {
+            "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract/crates/nms-core/src/system.rs": {
+              "type": "update",
+              "unified_diff": "@@ -6,2 +6,17 @@\n \n+/// Records whether a system came from the player's save or a named catalog.\n+///\n+/// This is contribution provenance, not the in-game discoverer identity.\n+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]\n+#[cfg_attr(\n+    feature = \"archive\",\n+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)\n+)]\n+pub enum DiscoverySource {\n+    /// A system extracted from the player's own save or constructed locally.\n+    Personal,\n+    /// A system contributed by a named community catalog.\n+    Community { source: String },\n+}\n+\n /// Identifies a star system by galaxy and its canonical planet-zeroed address.\n@@ -80,2 +95,4 @@\n     pub address: GalacticAddress,\n+    /// Origin of this system's atlas contribution.\n+    pub source: DiscoverySource,\n     pub name: Option<String>,\n@@ -96,2 +113,3 @@\n             address,\n+            source: DiscoverySource::Personal,\n             name,\n",
+              "move_path": null
+            },
+            "/Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core/src/lib.rs": {
+              "type": "update",
+              "unified_diff": "@@ -18,2 +18,2 @@\n pub use player::{BaseType, BaseTypeParseError, PlayerBase, PlayerState};\n-pub use system::{Planet, System, SystemId};\n+pub use system::{DiscoverySource, Planet, System, SystemId};\n",
+              "move_path": null
+            }
+          },
+          "status": "completed",
+          "stdout": "Success. Updated the following files:\nM /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract/crates/nms-core/src/system.rs\nM /Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core/src/lib.rs\n",
+          "stderr": ""
+        },
+        "started_at_ms": 1792669167423,
+        "completed_at_ms": 1792669167486
+      }
+    }
+  ],
+  "preserved_before": {
+    "working-lib.rs": {
+      "bytes": 699,
+      "sha256": "7b2b3977d2260734b0ec7be7ded875295dd01270555e086d5c2fdf20d4227217",
+      "base64": "Ly8hIENvcmUgdHlwZXMsIGVudW1zLCBhZGRyZXNzIG1hdGgsIGFuZCBwb3J0YWwgZ2x5cGggZGlzcGxheSBmb3IgTk1TIENvcGlsb3QuCgpwdWIgbW9kIGFkZHJlc3M7CnB1YiBtb2QgYmlvbWU7CnB1YiBtb2QgZGVsdGE7CnB1YiBtb2QgZGlzY292ZXJ5OwpwdWIgbW9kIGdhbGF4eTsKcHViIG1vZCBnbHlwaDsKcHViIG1vZCBwbGF5ZXI7CnB1YiBtb2Qgc3lzdGVtOwoKcHViIHVzZSBhZGRyZXNzOjp7QWRkcmVzc1BhcnNlRXJyb3IsIEdhbGFjdGljQWRkcmVzcywgUG9ydGFsQWRkcmVzcywgUG9ydGFsUGFyc2VFcnJvcn07CnB1YiB1c2UgYmlvbWU6OntCaW9tZSwgQmlvbWVQYXJzZUVycm9yLCBCaW9tZVN1YlR5cGV9OwpwdWIgdXNlIGRlbHRhOjp7UGxheWVyTW92ZWQsIFNhdmVEZWx0YX07CnB1YiB1c2UgZGlzY292ZXJ5Ojp7RGlzY292ZXJ5LCBEaXNjb3ZlcnlQYXJzZUVycm9yLCBEaXNjb3ZlcnlSZWNvcmR9OwpwdWIgdXNlIGdhbGF4eTo6e0dhbGF4eSwgR2FsYXh5VHlwZSwgR2FsYXh5VHlwZVBhcnNlRXJyb3J9OwpwdWIgdXNlIGdseXBoOjp7R2x5cGgsIEdseXBoUGFyc2VFcnJvcn07CnB1YiB1c2UgcGxheWVyOjp7QmFzZVR5cGUsIEJhc2VUeXBlUGFyc2VFcnJvciwgUGxheWVyQmFzZSwgUGxheWVyU3RhdGV9OwpwdWIgdXNlIHN5c3RlbTo6e0Rpc2NvdmVyeVNvdXJjZSwgUGxhbmV0LCBTeXN0ZW0sIFN5c3RlbUlkfTsK"
+    },
+    "main-lib.diff": {
+      "bytes": 537,
+      "sha256": "be575d65036736d5328451887496280e56a7142ac13bddff35438e204174d9b9",
+      "base64": "ZGlmZiAtLWdpdCBhL2NyYXRlcy9ubXMtY29yZS9zcmMvbGliLnJzIGIvY3JhdGVzL25tcy1jb3JlL3NyYy9saWIucnMKaW5kZXggYWZmZTc3MS4uNTVlMWM4MiAxMDA2NDQKLS0tIGEvY3JhdGVzL25tcy1jb3JlL3NyYy9saWIucnMKKysrIGIvY3JhdGVzL25tcy1jb3JlL3NyYy9saWIucnMKQEAgLTE2LDQgKzE2LDQgQEAgcHViIHVzZSBkaXNjb3Zlcnk6OntEaXNjb3ZlcnksIERpc2NvdmVyeVBhcnNlRXJyb3IsIERpc2NvdmVyeVJlY29yZH07CiBwdWIgdXNlIGdhbGF4eTo6e0dhbGF4eSwgR2FsYXh5VHlwZSwgR2FsYXh5VHlwZVBhcnNlRXJyb3J9OwogcHViIHVzZSBnbHlwaDo6e0dseXBoLCBHbHlwaFBhcnNlRXJyb3J9OwogcHViIHVzZSBwbGF5ZXI6OntCYXNlVHlwZSwgQmFzZVR5cGVQYXJzZUVycm9yLCBQbGF5ZXJCYXNlLCBQbGF5ZXJTdGF0ZX07Ci1wdWIgdXNlIHN5c3RlbTo6e1BsYW5ldCwgU3lzdGVtLCBTeXN0ZW1JZH07CitwdWIgdXNlIHN5c3RlbTo6e0Rpc2NvdmVyeVNvdXJjZSwgUGxhbmV0LCBTeXN0ZW0sIFN5c3RlbUlkfTsK"
+    }
+  },
+  "disposition": "Exact own mixed-root edit restored by sole CC. First guard failed before writing (raw SHA1 versus Git blob); second guard restored ONLY main lib from exact HEAD bytes. CDC independent postfence: main HEADb616, libblobaffe7713497d7ead37551ebb5942df9f78c0a4a2, only human native M/blob2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e, indexempty. Candidate HEAD063, tracked diff2002c445367b31c4ff9b7a3f814193a018994e616ae272fef66940ee988985ad, four untracked file hashes/bytes match final lint capture, indexempty. Held pins unchanged. Ordinary edit/metadata incident, no product receipt or acceptance credit.",
+  "restoration_calls": [
+    {
+      "timestamp": "2026-10-22T12:20:46.150Z",
+      "ordinal": 53258,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call",
+        "id": "ctc_017a4b013469419f016ad9ff9a6678819fb06f414b3d9f2350",
+        "status": "completed",
+        "call_id": "call_c73b8afd2c9d4a24abb947710f01f645",
+        "name": "exec",
+        "input": "const r = await tools.exec_command({\n  cmd: \"python3 - <<'PY'\\nimport hashlib, subprocess\\nfrom pathlib import Path\\nroot=Path('/Users/oubiwann/lab/oxur/nms-copilot')\\nrel='crates/nms-core/src/lib.rs'\\ntarget=root/rel\\nnative='crates/nms-copilot/tests/mcp_live_integration.rs'\\ndef git(*args):\\n return subprocess.check_output(['git','-C',str(root),*args])\\nhead=git('rev-parse','HEAD').decode().strip()\\nindex=git('ls-files','-s','--',rel).decode().strip()\\nworking=git('hash-object',str(target)).decode().strip()\\nnative_index=git('ls-files','-s','--',native).decode().strip()\\nnative_working=git('hash-object',str(root/native)).decode().strip()\\nstaged=git('diff','--cached','--numstat').decode()\\nassert head=='b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc', head\\nassert index=='100644 affe7713497d7ead37551ebb5942df9f78c0a4a2 0\\\\t'+rel, index\\nassert working=='55e1c8273b1432fe6c037c526bfcce1be8783188', working\\nassert native_index=='100644 5536225183db9f36fd6ba79b045f08c52d9dddbf 0\\\\t'+native, native_index\\nassert native_working=='2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e', native_working\\nassert not staged, repr(staged)\\noriginal=git('cat-file','blob','HEAD:'+rel)\\nassert hashlib.sha1(original).hexdigest()=='affe7713497d7ead37551ebb5942df9f78c0a4a2'\\ntarget.write_bytes(original)\\nrestored=git('hash-object',str(target)).decode().strip()\\nassert restored=='affe7713497d7ead37551ebb5942df9f78c0a4a2', restored\\nprint('restored only',target)\\nprint('HEAD',head)\\nprint('restored working blob',restored)\\nprint('index blob',index.split()[1])\\nprint('protected native working blob',native_working)\\nPY\",\n  workdir: \"/Users/oubiwann/lab/oxur/nms-copilot\",\n  yield_time_ms: 10000,\n  max_output_tokens: 500\n});\nstore(\"slice28_main_exact_restore_raw\", r);\ntext(r.output);\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1638e-0b19-7782-81fa-369c074f4b56",
+          "create_time": 1792671642.416973
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-22T12:20:55.405Z",
+      "ordinal": 53267,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call",
+        "id": "ctc_017a4b013469419f016ad9ffa3ce2c819fbc067de57611e487",
+        "status": "completed",
+        "call_id": "call_3936ceffa7b64e5a8489deddb0e4bc34",
+        "name": "exec",
+        "input": "const r = await tools.exec_command({\n  cmd: \"python3 - <<'PY'\\nimport subprocess\\nfrom pathlib import Path\\nroot=Path('/Users/oubiwann/lab/oxur/nms-copilot')\\nrel='crates/nms-core/src/lib.rs'\\ntarget=root/rel\\nnative='crates/nms-copilot/tests/mcp_live_integration.rs'\\ndef git(*args, input=None):\\n return subprocess.check_output(['git','-C',str(root),*args],input=input)\\nhead=git('rev-parse','HEAD').decode().strip()\\nindex=git('ls-files','-s','--',rel).decode().strip()\\nworking=git('hash-object',str(target)).decode().strip()\\nnative_index=git('ls-files','-s','--',native).decode().strip()\\nnative_working=git('hash-object',str(root/native)).decode().strip()\\nstaged=git('diff','--cached','--numstat').decode()\\nassert head=='b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc', head\\nassert index=='100644 affe7713497d7ead37551ebb5942df9f78c0a4a2 0\\\\t'+rel, index\\nassert working=='55e1c8273b1432fe6c037c526bfcce1be8783188', working\\nassert native_index=='100644 5536225183db9f36fd6ba79b045f08c52d9dddbf 0\\\\t'+native, native_index\\nassert native_working=='2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e', native_working\\nassert not staged, repr(staged)\\noriginal=git('cat-file','blob','HEAD:'+rel)\\nassert git('hash-object','--stdin',input=original).decode().strip()=='affe7713497d7ead37551ebb5942df9f78c0a4a2'\\ntarget.write_bytes(original)\\nrestored=git('hash-object',str(target)).decode().strip()\\nassert restored=='affe7713497d7ead37551ebb5942df9f78c0a4a2', restored\\nprint('restored only',target)\\nprint('HEAD',head)\\nprint('restored working blob',restored)\\nprint('index blob',index.split()[1])\\nprint('protected native working blob',native_working)\\nPY\",\n  workdir: \"/Users/oubiwann/lab/oxur/nms-copilot\",\n  yield_time_ms: 10000,\n  max_output_tokens: 500\n});\nstore(\"slice28_main_exact_restore_raw_v2\", r);\ntext(r.output);\n",
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1638e-0b19-7782-81fa-369c074f4b56",
+          "create_time": 1792671651.812991
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-22T12:20:46.356Z",
+      "ordinal": 53261,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call_output",
+        "id": "ctco_01a1638e-8294-7bc2-a7de-7665f5f2c721",
+        "call_id": "call_c73b8afd2c9d4a24abb947710f01f645",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.2 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "Traceback (most recent call last):\n  File \"<stdin>\", line 22, in <module>\nAssertionError\n"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1638e-0b19-7782-81fa-369c074f4b56",
+          "create_time": 1792671646.35677
+        }
+      },
+      "metadata": {
+        "client_authored": false,
+        "fallback_token_limit_override": 12000
+      }
+    },
+    {
+      "timestamp": "2026-10-22T12:20:55.668Z",
+      "ordinal": 53270,
+      "type": "response_item",
+      "payload": {
+        "type": "custom_tool_call_output",
+        "id": "ctco_01a1638e-a6f4-79c1-9e23-e6554461051f",
+        "call_id": "call_3936ceffa7b64e5a8489deddb0e4bc34",
+        "output": [
+          {
+            "type": "input_text",
+            "text": "Script completed\nWall time 0.3 seconds\nOutput:\n"
+          },
+          {
+            "type": "input_text",
+            "text": "restored only /Users/oubiwann/lab/oxur/nms-copilot/crates/nms-core/src/lib.rs\nHEAD b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc\nrestored working blob affe7713497d7ead37551ebb5942df9f78c0a4a2\nindex blob affe7713497d7ead37551ebb5942df9f78c0a4a2\nprotected native working blob 2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e\n"
+          }
+        ],
+        "internal_chat_message_metadata_passthrough": {
+          "turn_id": "01a1638e-0b19-7782-81fa-369c074f4b56",
+          "create_time": 1792671655.668896
+        }
+      },
+      "metadata": {
+        "client_authored": false,
+        "fallback_token_limit_override": 12000
+      }
+    }
+  ]
+}
