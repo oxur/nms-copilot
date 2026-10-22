@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.86
+version: 1.87
 project: project01-mvp
 status: active
 depends-on: []
@@ -1111,3 +1111,8 @@ Version1.85/arc-plan1.97: clean isolated133bc762 delivers independently proved a
 All8NI/R06-S23 accepted atclean2f2814c7 after human “I approve both!” bounded one-comment exceptional06 and separate original private diagnostic capture exception. No unknown history recovered or attempt credit; initial/01–06/failed/retried proof preserved. CDC exact-byte scope review and five affected captured checks pass, including repaired strict docs; original21 unaffected groups/native13/workspace1062runtime+31docs remain byte-applicable, not fresh executions. Final row dispositions/mandatory CDC retrospective/archives/bottom-up records are canonical. Parent compliance yes within23; no structural change beyond approved split and one-comment allowance.
 
 Arc41rows23done18open/project25open. NEXT required24/CDC complete original0037 M7.1 export (all12 fields/JSON/CSV/filters/origin/multiplicity/escaping/stdout/error), after source-grounded author readiness/headroom. All original capability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher-independent/Operator/integration/release obligations remain. Same CDC/CC models/Arc06 endpoint, protected main9line/held/external pins; no integration/push/install/publish/release/otherarc/Project02.
+
+
+## Arc06 required24 original export issued — 2026-10-22 UTC
+
+Arc-plan1.100/Slice24 owns complete original0037 M7.1 actual-child JSON/CSV twelvefield/header/escaping/multiplicity/allfilter-origin/stdout-empty-error/read-only proof. Existing production already exposes these paths after accepted23; three-path test/docs increment freezes executable behavior, same existing CC headroom/models, raw-first controls and whole pinned review before runtime. SixEX/R06-S24/M7.1OPEN;42arcrows23done19open/project25open. All other original/repair/higher/game/raw/history/finalsemantic/freshness-import/distribution/coverage/Operator/release gates and protected pins/Arc06endpoint remain; no nextarc/Project02/integration/release authority.

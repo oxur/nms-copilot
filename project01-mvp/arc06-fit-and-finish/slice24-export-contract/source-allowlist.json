@@ -1,0 +1,15 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+  "branch": "codex/export-contract",
+  "baseline": "2f2814c780f5022dea3bc1643d99828ba679e8d0",
+  "paths": [
+    "crates/nms-cli/tests/export_integration.rs",
+    "crates/nms-cli/src/export.rs",
+    "README.md"
+  ],
+  "restrictions": {
+    "crates/nms-cli/src/export.rs": "cfg(test) module only; all executable production bytes frozen",
+    "README.md": "Export & Import export prose/examples only; import statements and remainder unchanged",
+    "crates/nms-cli/tests/export_integration.rs": "new bounded real-child tests, pure inline fixtures/oracles; no extra module/dependency"
+  }
+}

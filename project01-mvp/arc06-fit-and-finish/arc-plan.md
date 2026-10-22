@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.99, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.100, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -868,3 +868,8 @@ Clean133bc762/planning7b7c2f94/mainb616 protected9line/heldpins revalidated; imm
 All8NI/R06-S23 accepted atclean2f2814c7 after human “I approve both!” bounded one-comment exceptional06 and separate original private diagnostic capture exception. No unknown history recovered or attempt credit; initial/01–06/failed/retried proof preserved. CDC exact-byte scope review and five affected captured checks pass, including repaired strict docs; original21 unaffected groups/native13/workspace1062runtime+31docs remain byte-applicable, not fresh executions. Final row dispositions/mandatory CDC retrospective/archives/bottom-up records are canonical. Parent compliance yes within23; no structural change beyond approved split and one-comment allowance.
 
 Arc41rows23done18open/project25open. NEXT required24/CDC complete original0037 M7.1 export (all12 fields/JSON/CSV/filters/origin/multiplicity/escaping/stdout/error), after source-grounded author readiness/headroom. All original capability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/game-backed nonzero/higher-independent/Operator/integration/release obligations remain. Same CDC/CC models/Arc06 endpoint, protected main9line/held/external pins; no integration/push/install/publish/release/otherarc/Project02.
+
+
+## Required Slice24 original M7.1 issued — 2026-10-22 UTC
+
+Accepted23 full names/cache/live composition unblocks original0037 export proof. [Slice24](slice24-export-contract/slice-plan.md) is a three-path test/docs-only usable increment: all12 exact real-child JSON/CSV fields/header/escaping/multiplicity, every existing filter/current/base/crossgalaxy origin interaction, stdout/stderr/empty/error/writefailure/read-only source behavior, full independent literal oracles. Production frozen at2f2814; original emptyCSV zero-byte allowance retained, no new policy/inquiry. Same CC confirmed headroom/no owned processes; raw-first controls7/0 verify before first compiler; initial0of5/current immutableprompt and whole held review before runtime. All6EX/R06-S24 and M7.1 remain OPEN at issue.42arcrows23done19open/project25open; all original remaining capability/repair/game/raw/history/finalsemantic/freshness-import/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Same models/Arc06endpoint/main9line/heldexternalpins; no otherarc/Project02/remote authority.

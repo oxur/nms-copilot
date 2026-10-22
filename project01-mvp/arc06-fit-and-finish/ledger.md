@@ -226,3 +226,11 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 Slice23 current review: six child criteria independently accepted, two open; R06-S23 remains open, counts41/22done/19open and project25open unchanged. No parent closure from partial child acceptance.
 
 2026-10-22 Slice23 closed:41arcrows23done18open/project25open. Required24/CDC full original M7.1 export remains next; all original parents/higher gates retained.
+
+## Original export proof child — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S24 | Full original M7.1 actual-child export contract independently accepted | Six EX rows/closed twelvefield JSON/CSV/filter/origin/error/read-only worksheet | correctness-grade | Original0037 M7.1/required24 | open | [Slice24 plan](slice24-export-contract/slice-plan.md) | Three-path test/docs only; production frozen; M7.1 remains open until independent full leaf proof |
+
+42arcrows23done19open/project25open; no acceptance at issue.
