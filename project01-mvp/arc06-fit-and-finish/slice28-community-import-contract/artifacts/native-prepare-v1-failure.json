@@ -1,0 +1,26 @@
+{
+  "classification": "operational native preparation; no fixture/product launch or acceptance credit",
+  "outer_receipt": {
+    "chunk_id": "e0fe49",
+    "wall_time_seconds": 0.180943125,
+    "exit_code": 1,
+    "original_token_count": 580,
+    "output": "Traceback (most recent call last):\n  File \"/private/tmp/nms-slice28-cc-native.py\", line 14, in <module>\n    manifest={'id':folder.name,'row':row,'mode':mode,'watch':watch,'dir':str(folder),'before_prepare':context()};save(folder/'before-prepare.json',manifest)\n                                                                                                      ^^^^^^^^^\n  File \"/private/tmp/nms-slice28-cc-native.py\", line 10, in context\n    def context():return {'utc':cap.utc(),'source':cap.metadata(),'inherited_env':{k:os.environ.get(k) for k in cap.ENV_KEYS},'binaries':binaries(),'support_scripts':{p:{'sha256':hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()} for p in [__file__,'/private/tmp/nms-slice28-cc-capture.py','/private/tmp/nms-slice28-cc28-native-driver-v1.js']}}\n                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/nms-slice28-cc-native.py\", line 10, in <dictcomp>\n    def context():return {'utc':cap.utc(),'source':cap.metadata(),'inherited_env':{k:os.environ.get(k) for k in cap.ENV_KEYS},'binaries':binaries(),'support_scripts':{p:{'sha256':hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()} for p in [__file__,'/private/tmp/nms-slice28-cc-capture.py','/private/tmp/nms-slice28-cc28-native-driver-v1.js']}}\n                                                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py\", line 1050, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py\", line 1044, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/nms-slice28-cc28-native-driver-v1.js'\n"
+  },
+  "outer_receipt_path": "/private/tmp/nms-slice28-cc-native/driver-prepare-row1.json",
+  "bytes": 2454,
+  "sha256": "6730e506ade1babfb87921a64fce8388ee19dc8d06693b968258b226bf79cc62",
+  "empty_case_directory": "/private/tmp/nms-slice28-cc-native/463b9b459c044f128be11e629dcc87a5",
+  "empty_directory_observed": true,
+  "unavailable": [
+    "kernel UUID/start/end for preparation",
+    "persisted before/after preparation source/env context",
+    "separated kernel raw_completion channels"
+  ],
+  "boundary": "context support-path lookup raises before before-prepare save, cap.capture or native tool; available outer receipt is complete; do not reconstruct absent observations",
+  "support_diagnostics": [
+    "69e0ca2449c840e3b358b56e41433569",
+    "45fc3f031a274378a7ca1f7daca1a579"
+  ],
+  "capacity_interruption": "Root reports backend capacity interruption; same requested/applied CDC context resumed; no independently visible failed tool result or substitution claimed."
+}
