@@ -1,6 +1,6 @@
 # Slice25 — original M7.2 shell completions
 
-Version1.1,2026-10-22 UTC. OPEN; initial0of5. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
+Version1.2,2026-10-22 UTC. OPEN; iteration02 SECONDof5; immutable initial retained. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
 
 ## Usable boundary / author readiness
 
@@ -30,3 +30,8 @@ Five SC rows/R06-S25/M7.2 open. Original remaining capabilities/repair/raw/histo
 ## Initial pinned review / iteration01
 
 Complete O1–O5/allnewhelpers/assertions/README/privatecontroller/pinnedSDK walk at trackedidentity3c4040a4. Actual6records, initialunusedmethodlint2retained, renewedformatc0afd979/lint179d71e9both0/rawcomplete/stable. Privatecontrollerauthoredafterpairdespitereminder, no execution/Pythoncredit; exact chronology retained/correctedadditively. Firstof5 immutable correction closes demonstrated Bash namespace any-branch weakness/registration oracle, wrong-global Zsh named mutation, Fish condition scope, complete inner raw receipts/clean-shell requirement; soundREADMEandproduction frozen. Author O3 language clarified missing-required versus invalid-alternatives, existingcorrectcasespreserved. No runtime/native/newpolicy/newscenario/waiver; original12groups and5SC/M7.2remainopen.
+
+
+## Iteration01 targeted review / exact second correction
+
+Actual8records, formatc0f2be9a0/layoutchange andlint7b43efaf0/stablede38a362/fullraw. FullF1–F5delta/controllerwalk confirms all scopedfixes exceptFishShowparentliteralomitsautomatichelp and two syntaxstages lackissuedexplicitstdoutemptyasserts. Exact02permitsONEteststringandTWOprivatecallsites only, README/restfrozen; primarypinnedClapbuild/addhelp/Fishchildlist source supportsreplacement. No newcase/policy/productdefect/runtimecredit, secondof5; original12groups/5SC/M7.2OPEN.
