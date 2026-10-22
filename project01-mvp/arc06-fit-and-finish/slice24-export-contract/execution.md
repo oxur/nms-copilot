@@ -28,3 +28,10 @@ Static final source/doc reconciliation: SystemId::from_address masks planetbits,
 ## Iteration01 settled / exact second qualification issued
 
 ActualCCentries9–10 format946fa8e41cee4c3cbc0f694e38b23d66/linteea3ceeec61445ccb59e0fd9b95fcc25 complete0/fullchannels/source. Formatter39ed7a80→cae0b6ae retained; lintstablecae0b6ae. CDCfulltargetedF1–F6review satisfied exceptalreadydisclosedauthorP0docoverclaim. Productionprefixbyte-identical; allfournewtestnamesvalid; originalmatrixandoraclesretained. Sibling02secondof5ONEREADMEline toactualstoredaddress, bothRustfiles frozen/ac056f2f+443df606. No runtime/native yet, no newpolicy orbroaderinquiry.
+
+
+## CDC settled runtime release — 2026-10-22 UTC
+
+Actualentries11–12 format3779485f09724579a7cd647677a214f7/lint2783e03f375f4d68a25de9de416aa2b5 complete0, fullrawhashes/exit/end/status verified, stable26abeb7afbdf7238188b143563f1c42004cc9ee9ebc781a71fcdc72674c9e5ed/diff5421ac48ec5a7cda92d8355112b364f439dbdd3fe5d04d3b8abf04f8af88dcab. CompleteRusthashes unchangedfromsettled01(ac056f2f/443df606); reversingEXACToneREADMEclausereproduces01SHA12487270. Productionprefixidenticaltobaseline2f2814. FullinitialworksheetplusF1–F6/02delta satisfied; no outstandingknownsource/test/docsfinding. READMEtruthfulstoredaddressdoesnotchangeoriginal12fieldsemanticsorliteralP0fixture.
+
+CDC releases ONLY originalorderedruntime: focusedexport,wholeCLI,query,make test,allfeatureworkspacebuild/doctests,strictCLIdocs,working/baselinediffs perinitialprompt. No newnative/proofpopulation, sourcefrozenexceptreportedgenuinefailurerequiringpropernumberedcorrection withinremaining3of5. All6EX/M7.1/R06-S24remainOPENpendingactualproof/localcommit/independentacceptance/retro. This is source/readinessrelease, not runtimegreen or acceptance. Fullrecords/unknownincidentalinspectionlimits/main9line/heldpins/same models/Arc06endpointretained.
