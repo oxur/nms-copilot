@@ -285,7 +285,7 @@ impl Config {
 
     /// Resolve the effective save path (if configured).
     ///
-    /// Delegates to [`effective_save_file`]. For backward compatibility,
+    /// Delegates to [`Self::effective_save_file`]. For backward compatibility,
     /// also checks the legacy `save.path` field.
     pub fn save_path(&self) -> Option<PathBuf> {
         self.effective_save_file()
