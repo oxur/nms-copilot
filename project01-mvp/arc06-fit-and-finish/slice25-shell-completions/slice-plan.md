@@ -1,6 +1,6 @@
 # Slice25 — original M7.2 shell completions
 
-Version1.2,2026-10-22 UTC. OPEN; iteration02 SECONDof5; immutable initial retained. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
+Version1.3,2026-10-22 UTC. OPEN; iteration02 SECONDof5; immutable initial retained. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
 
 ## Usable boundary / author readiness
 
@@ -35,3 +35,8 @@ Complete O1–O5/allnewhelpers/assertions/README/privatecontroller/pinnedSDK wal
 ## Iteration01 targeted review / exact second correction
 
 Actual8records, formatc0f2be9a0/layoutchange andlint7b43efaf0/stablede38a362/fullraw. FullF1–F5delta/controllerwalk confirms all scopedfixes exceptFishShowparentliteralomitsautomatichelp and two syntaxstages lackissuedexplicitstdoutemptyasserts. Exact02permitsONEteststringandTWOprivatecallsites only, README/restfrozen; primarypinnedClapbuild/addhelp/Fishchildlist source supportsreplacement. No newcase/policy/productdefect/runtimecredit, secondof5; original12groups/5SC/M7.2OPEN.
+
+
+## Settled iteration02 review / original runtime released
+
+Actual10records, f07d3974format0/f064bc6dlint0/fullraw/status/bothstable89a596b9. ExactdeltaONEFishliteral addsClapautohelp/TWOprivatecallsiteasserts; testSHA95175056/controllerSHA39d29bd4/READMEb4145e1frozen. AllO1–O5/F1–F5staticallysatisfied, no otherchangedpath/index. Original12groups released underexistingauthority; CCownssolegatesandrecords, nogenericapproval/runtimeacceptanceinferred. All5SC/M7.2/R06-S25OPENpendingactualproof/commit/independentreproduction/retro. Main9line/allheldexternalpinsrevalidatedunchanged; allparent/highergatesretained.
