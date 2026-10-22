@@ -1,0 +1,10 @@
+{
+  "source_archive": "project01-mvp/arc06-fit-and-finish/slice23-discovery-name-integration/artifacts/cdc-review-evidence.tar.gz",
+  "source_archive_sha256": "e95ccca92992b44a6047f6d8946e6d4ff9cd013e1075b741978965d6874bd651",
+  "member": "cdc/fixtures/row13/cache.rkyv",
+  "bytes": 632,
+  "sha256": "7e308a95dc28874e9c164c425a09c84e38fd72d1e819c5cabcaa57fee8a2d99d",
+  "header_hex": "4e4d5343414348450300000005000000",
+  "origin": "Byte-exact actual accepted Slice23 CDC native fixture snapshot. No header/payload modification. Prior cache has no source tag; origin cannot be reconstructed from its labels.",
+  "acceptance_limit": "Preparation artifact, not a new product execution or provenance reconstruction."
+}

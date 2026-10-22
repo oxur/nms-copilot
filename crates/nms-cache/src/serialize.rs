@@ -13,8 +13,9 @@
 //! decoded model data. Future address-decoder or galaxy-identity changes must
 //! assess and bump the semantic revision when meaning changes, even if archive
 //! shape stays the same. One change may require both revisions to advance.
-//! The current schema revision is 3 and semantic revision is 5. Schema 2 adds the
-//! selected galaxy; schema 3 adds explicit player-placeholder provenance.
+//! The current schema revision is 4 and semantic revision is 6. Schema 2 adds the
+//! selected galaxy; schema 3 adds explicit player-placeholder provenance; schema 4
+//! stores discovery contribution source.
 //! Semantic 4 preserves validated 56-bit address identity when rebuilding a model;
 //! semantic 5 adds checked discovery names to cold and live application models;
 //! semantic 3 predates the application-wide identity boundary. Both
@@ -29,7 +30,7 @@ use chrono::TimeZone;
 use rkyv::rancor::Error as RkyvError;
 use rkyv::util::AlignedVec;
 
-use nms_core::system::System;
+use nms_core::system::{DiscoverySource, System};
 use nms_graph::{EdgeStrategy, GalaxyModel};
 
 use crate::data::{CacheData, CachedSystem};
@@ -38,8 +39,8 @@ use crate::error::{CacheCompatibilityError, CacheError};
 // Bump the schema revision when the archive layout or codec changes. Bump the
 // semantic revision when the meaning or identity rules of CacheData change.
 const CACHE_MAGIC: &[u8; 8] = b"NMSCACHE";
-const CACHE_SCHEMA_REVISION: u32 = 3;
-const CACHE_SEMANTIC_REVISION: u32 = 5;
+const CACHE_SCHEMA_REVISION: u32 = 4;
+const CACHE_SEMANTIC_REVISION: u32 = 6;
 const CACHE_HEADER_LEN: usize = 16;
 
 /// Validate duplicated physical reality fields without changing cache data.
@@ -56,7 +57,8 @@ fn validate_cache_data(data: &CacheData) -> Result<(), String> {
 
     for system in &data.systems {
         if system.is_player_placeholder
-            && (system.address.planet_index() != 0
+            && (system.source != DiscoverySource::Personal
+                || system.address.planet_index() != 0
                 || system.name.is_some()
                 || system.discoverer.is_some()
                 || system.timestamp_secs.is_some()
@@ -79,6 +81,7 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
         .values()
         .map(|system| CachedSystem {
             address: system.address,
+            source: system.source.clone(),
             name: system.name.clone(),
             discoverer: system.discoverer.clone(),
             timestamp_secs: system.timestamp.map(|ts| ts.timestamp()),
@@ -226,14 +229,16 @@ pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
             .timestamp_secs
             .and_then(|secs| chrono::Utc.timestamp_opt(secs, 0).single());
 
-        let system = System::new(
+        let mut system = System::new(
             cached.address,
             cached.name.clone(),
             cached.discoverer.clone(),
             timestamp,
             cached.planets.clone(),
         );
+        system.source = cached.source.clone();
         if cached.is_player_placeholder
+            && cached.source == DiscoverySource::Personal
             && cached.address.planet_index() == 0
             && cached.name.is_none()
             && cached.discoverer.is_none()
@@ -453,6 +458,110 @@ mod tests {
     }
 
     #[test]
+    fn test_marked_community_source_is_rejected_but_trusted_rebuild_preserves_it() {
+        let address = nms_core::address::GalacticAddress::new(2, 0, 0, 3, 0, 0);
+        let mut model = GalaxyModel::new();
+        model.insert_player_placeholder(address);
+        let positive = extract_cache_data(&model, 4720);
+        assert_eq!(positive.systems.len(), 1);
+        assert_eq!(positive.systems[0].source, DiscoverySource::Personal);
+        assert!(positive.systems[0].is_player_placeholder);
+        let bytes = serialize(&positive).unwrap();
+        let checked = deserialize(&bytes).unwrap();
+        assert_eq!(checked.systems[0].source, DiscoverySource::Personal);
+        assert!(checked.systems[0].is_player_placeholder);
+
+        // Decode the same valid positive payload, then mutate only source.
+        let mut marked_community = deserialize(&bytes).unwrap();
+        marked_community.systems[0].source = DiscoverySource::Community {
+            source: " NMSCE α ".to_string(),
+        };
+        assert_eq!(marked_community.systems.len(), checked.systems.len());
+        assert_eq!(
+            marked_community.systems[0].address,
+            checked.systems[0].address
+        );
+        assert_eq!(marked_community.systems[0].name, checked.systems[0].name);
+        assert_eq!(
+            marked_community.systems[0].discoverer,
+            checked.systems[0].discoverer
+        );
+        assert_eq!(
+            marked_community.systems[0].timestamp_secs,
+            checked.systems[0].timestamp_secs
+        );
+        assert_eq!(
+            marked_community.systems[0].planets,
+            checked.systems[0].planets
+        );
+        assert_eq!(
+            marked_community.systems[0].is_player_placeholder,
+            checked.systems[0].is_player_placeholder
+        );
+        assert_eq!(marked_community.bases, checked.bases);
+        assert_eq!(marked_community.player_state, checked.player_state);
+        assert_eq!(marked_community.active_galaxy, checked.active_galaxy);
+        assert_eq!(marked_community.save_version, checked.save_version);
+        assert_eq!(marked_community.cached_at, checked.cached_at);
+        assert!(matches!(
+            serialize(&marked_community),
+            Err(CacheError::Serialize(_))
+        ));
+
+        // The trusted in-memory rebuild boundary preserves all supplied record
+        // data, but a marked non-Personal record is treated as genuine.
+        let rebuilt = rebuild_model(&marked_community);
+        let id = nms_core::system::SystemId::from_address(&address);
+        let system = rebuilt.system(&id).unwrap();
+        let mut expected_system = System::new(address, None, None, None, vec![]);
+        expected_system.source = DiscoverySource::Community {
+            source: " NMSCE α ".to_string(),
+        };
+        let mut expected = GalaxyModel::new();
+        expected.insert_system(expected_system.clone());
+        expected.build_edges(EdgeStrategy::default());
+
+        assert_eq!(system, &expected_system);
+        assert_eq!(
+            system.source,
+            DiscoverySource::Community {
+                source: " NMSCE α ".to_string()
+            }
+        );
+        assert_eq!(rebuilt.systems, expected.systems);
+        assert_eq!(rebuilt.planets, expected.planets);
+        assert_eq!(rebuilt.bases, expected.bases);
+        assert_eq!(rebuilt.name_index, expected.name_index);
+        assert_eq!(rebuilt.biome_index, expected.biome_index);
+        assert_eq!(rebuilt.address_to_id, expected.address_to_id);
+        assert_eq!(rebuilt.node_map, expected.node_map);
+        assert_eq!(rebuilt.active_galaxy, 0);
+        assert!(rebuilt.player_state.is_none());
+        assert_eq!(rebuilt.graph.node_count(), 1);
+        assert_eq!(rebuilt.graph.edge_count(), 0);
+        let spatial_rows = |model: &GalaxyModel| {
+            let mut rows = model
+                .spatial
+                .iter()
+                .flat_map(|(galaxy, tree)| {
+                    tree.iter().map(|point| {
+                        (
+                            *galaxy,
+                            format!("{:?}", point.id),
+                            point.point.map(f64::to_bits),
+                        )
+                    })
+                })
+                .collect::<Vec<_>>();
+            rows.sort();
+            rows
+        };
+        assert_eq!(spatial_rows(&rebuilt), spatial_rows(&expected));
+        assert!(!rebuilt.spatial.contains_key(&9));
+        assert!(!rebuilt.is_player_placeholder(&id));
+    }
+
+    #[test]
     fn test_envelope_has_literal_header_and_roundtrips() {
         let data = extract_cache_data(&test_model(), 4720);
         let bytes = serialize(&data).unwrap();
@@ -460,7 +569,7 @@ mod tests {
         assert_eq!(
             &bytes[..CACHE_HEADER_LEN],
             &[
-                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 3, 0, 0, 0, 5, 0, 0, 0
+                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 4, 0, 0, 0, 6, 0, 0, 0
             ]
         );
         assert_eq!(data.save_version, 4720);
@@ -504,7 +613,7 @@ mod tests {
             ))
         ));
 
-        for schema in [0_u32, 1, 2, 4] {
+        for schema in [0_u32, 1, 2, 3, 5] {
             bytes[..8].copy_from_slice(CACHE_MAGIC);
             bytes[8..12].copy_from_slice(&schema.to_le_bytes());
             bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
@@ -512,33 +621,33 @@ mod tests {
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SchemaMismatch {
                     found,
-                    expected: 3
+                    expected: 4
                 })) if found == schema
             ));
         }
 
-        for semantic in [0_u32, 1, 2, 3, 4, 6] {
-            bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
+        for semantic in [0_u32, 1, 2, 3, 4, 5, 7] {
+            bytes[8..12].copy_from_slice(&4_u32.to_le_bytes());
             bytes[12..16].copy_from_slice(&semantic.to_le_bytes());
             assert!(matches!(
                 deserialize(&bytes),
                 Err(CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
                     found,
-                    expected: 5
+                    expected: 6
                 })) if found == semantic
             ));
         }
 
         // Mismatches are returned before inspecting an invalid payload, with
         // schema precedence when both revision fields differ.
-        bytes[8..12].copy_from_slice(&2_u32.to_le_bytes());
-        bytes[12..16].copy_from_slice(&3_u32.to_le_bytes());
+        bytes[8..12].copy_from_slice(&3_u32.to_le_bytes());
+        bytes[12..16].copy_from_slice(&5_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Incompatible(
                 CacheCompatibilityError::SchemaMismatch {
-                    found: 2,
-                    expected: 3
+                    found: 3,
+                    expected: 4
                 }
             ))
         ));
@@ -547,8 +656,8 @@ mod tests {
     #[test]
     fn test_current_header_with_bad_payload_is_deserialize_error() {
         let mut bytes = CACHE_MAGIC.to_vec();
-        bytes.extend_from_slice(&3_u32.to_le_bytes());
-        bytes.extend_from_slice(&5_u32.to_le_bytes());
+        bytes.extend_from_slice(&4_u32.to_le_bytes());
+        bytes.extend_from_slice(&6_u32.to_le_bytes());
         assert!(matches!(
             deserialize(&bytes),
             Err(CacheError::Deserialize(_))
@@ -571,13 +680,13 @@ mod tests {
     fn test_compatibility_error_display_and_source_are_observable() {
         let error = CacheError::Incompatible(CacheCompatibilityError::SemanticMismatch {
             found: 9,
-            expected: 5,
+            expected: 6,
         });
         assert!(error.to_string().contains("semantic revision 9"));
-        assert!(error.to_string().contains("expected 5"));
+        assert!(error.to_string().contains("expected 6"));
         assert_eq!(
             std::error::Error::source(&error).unwrap().to_string(),
-            "cache model semantic revision 9 is incompatible (expected 5)"
+            "cache model semantic revision 9 is incompatible (expected 6)"
         );
     }
 

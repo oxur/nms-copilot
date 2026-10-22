@@ -4,6 +4,21 @@ use serde::{Deserialize, Deserializer, Serialize};
 use crate::address::GalacticAddress;
 use crate::biome::{Biome, BiomeSubType};
 
+/// Records whether a system came from the player's save or a named catalog.
+///
+/// This is contribution provenance, not the in-game discoverer identity.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(
+    feature = "archive",
+    derive(rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)
+)]
+pub enum DiscoverySource {
+    /// A system extracted from the player's own save or constructed locally.
+    Personal,
+    /// A system contributed by a named community catalog.
+    Community { source: String },
+}
+
 /// Identifies a star system by galaxy and its canonical planet-zeroed address.
 ///
 /// `system_address` contains only the low 44 coordinate and solar-system bits
@@ -78,6 +93,8 @@ impl std::fmt::Display for SystemId {
 #[non_exhaustive]
 pub struct System {
     pub address: GalacticAddress,
+    /// Origin of this system's atlas contribution.
+    pub source: DiscoverySource,
     pub name: Option<String>,
     pub discoverer: Option<String>,
     pub timestamp: Option<DateTime<Utc>>,
@@ -94,6 +111,7 @@ impl System {
     ) -> Self {
         Self {
             address,
+            source: DiscoverySource::Personal,
             name,
             discoverer,
             timestamp,
@@ -156,6 +174,87 @@ mod tests {
         let addr = GalacticAddress::new(0, 0, 0, 0x123, 0, 42);
         let sys = System::new(addr, None, None, None, vec![]);
         assert_eq!(sys.reality_index(), 42);
+        assert_eq!(sys.source, DiscoverySource::Personal);
+    }
+
+    #[test]
+    fn test_discovery_source_serde_uses_exact_external_tag_shapes() {
+        assert_eq!(
+            serde_json::to_value(DiscoverySource::Personal).unwrap(),
+            serde_json::json!("Personal")
+        );
+        let community = DiscoverySource::Community {
+            source: "NMSCE".to_string(),
+        };
+        assert_eq!(
+            serde_json::to_value(&community).unwrap(),
+            serde_json::json!({"Community": {"source": "NMSCE"}})
+        );
+        assert_eq!(
+            serde_json::from_value::<DiscoverySource>(serde_json::json!("Personal")).unwrap(),
+            DiscoverySource::Personal
+        );
+        assert_eq!(
+            serde_json::from_value::<DiscoverySource>(serde_json::json!({
+                "Community": {"source": "NMSCE"}
+            }))
+            .unwrap(),
+            community
+        );
+    }
+
+    #[test]
+    fn test_system_serde_requires_known_source_without_defaulting() {
+        let system = System::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+            Some("A".to_string()),
+            None,
+            None,
+            vec![],
+        );
+        let encoded = serde_json::to_value(&system).unwrap();
+        assert_eq!(encoded["source"], serde_json::json!("Personal"));
+        assert_eq!(
+            serde_json::from_value::<System>(encoded.clone()).unwrap(),
+            system
+        );
+
+        for source_label in [" NMSCE α ", " Catalog \"α\"\n ", ""] {
+            let mut community = system.clone();
+            community.source = DiscoverySource::Community {
+                source: source_label.to_string(),
+            };
+            let community_value = serde_json::to_value(&community).unwrap();
+            assert_eq!(
+                community_value["source"],
+                json!({"Community": {"source": source_label}})
+            );
+            assert_eq!(
+                serde_json::from_value::<System>(community_value).unwrap(),
+                community
+            );
+        }
+
+        let mut missing = encoded.clone();
+        missing.as_object_mut().unwrap().remove("source");
+        assert!(serde_json::from_value::<System>(missing).is_err());
+        let mut unknown = encoded;
+        unknown["source"] = serde_json::json!("Catalog");
+        assert!(serde_json::from_value::<System>(unknown).is_err());
+    }
+
+    #[cfg(feature = "archive")]
+    #[test]
+    fn test_discovery_source_archive_preserves_exact_community_labels() {
+        for source_label in [" NMSCE α ", " Catalog \"α\"\n ", ""] {
+            let source = DiscoverySource::Community {
+                source: source_label.to_string(),
+            };
+            let bytes = rkyv::to_bytes::<rkyv::rancor::Error>(&source).unwrap();
+            let restored =
+                rkyv::from_bytes::<DiscoverySource, rkyv::rancor::Error>(&bytes).unwrap();
+            assert_eq!(restored, source);
+        }
     }
 
     #[test]

@@ -11,7 +11,7 @@ use nms_cache::data::CachedSystem;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::player::{BaseType, PlayerBase, PlayerState};
-use nms_core::system::{Planet, System};
+use nms_core::system::{DiscoverySource, Planet, System};
 use nms_graph::GalaxyModel;
 use serde_json::Value;
 
@@ -70,6 +70,7 @@ pub fn expected_cache(
 ) -> CacheData {
     let systems = vec![
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: GalacticAddress::new(0, 0, 0, 1, 0, 0),
             name: Some("Origin-0".into()),
             discoverer: None,
@@ -85,6 +86,7 @@ pub fn expected_cache(
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: GalacticAddress::new(0, 0, 0, 1, 0, 9),
             name: Some("Imported-9".into()),
             discoverer: None,
@@ -196,6 +198,7 @@ fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
     let (d1, u2, u3, e4, i9) = lifecycle_addresses();
     let mut systems = vec![
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: d1,
             name: Some("Decoy-0".into()),
             discoverer: Some("atlas-owner".into()),
@@ -211,6 +214,7 @@ fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: e4,
             name: None,
             discoverer: None,
@@ -219,6 +223,7 @@ fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: i9,
             name: Some("Imported-9".into()),
             discoverer: Some("atlas-owner".into()),
@@ -234,6 +239,7 @@ fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: u2,
             name: None,
             discoverer: None,
@@ -244,6 +250,7 @@ fn lifecycle_systems(stage: UnknownLifecycleStage) -> Vec<CachedSystem> {
     ];
     if stage != UnknownLifecycleStage::Startup {
         systems.push(CachedSystem {
+            source: DiscoverySource::Personal,
             address: u3,
             name: None,
             discoverer: None,
@@ -534,6 +541,7 @@ pub fn expected_empty_cache(
     let current = GalacticAddress::new(0, 0, 0, 1, 0, physical_reality);
     CacheData {
         systems: vec![CachedSystem {
+            source: DiscoverySource::Personal,
             address: current,
             name: None,
             discoverer: None,
@@ -585,6 +593,7 @@ pub fn expected_cold_cross_cache() -> CacheData {
         systems: [0, 9]
             .into_iter()
             .map(|reality| CachedSystem {
+                source: DiscoverySource::Personal,
                 address: GalacticAddress::new(0, 0, 0, 1, 0, reality),
                 name: None,
                 discoverer: None,
@@ -679,12 +688,13 @@ fn system_rows(systems: &[CachedSystem]) -> Vec<String> {
         .iter()
         .map(|system| {
             format!(
-                "{:?}|{:?}|{:?}|{:?}|{:?}|placeholder={}",
+                "{:?}|{:?}|{:?}|{:?}|{:?}|source={:?}|placeholder={}",
                 system.address,
                 system.name,
                 system.discoverer,
                 system.timestamp_secs,
                 system.planets,
+                system.source,
                 system.is_player_placeholder
             )
         })

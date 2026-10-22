@@ -4,7 +4,7 @@ use rkyv::{Archive, Deserialize, Serialize};
 
 use nms_core::address::GalacticAddress;
 use nms_core::player::{PlayerBase, PlayerState};
-use nms_core::system::Planet;
+use nms_core::system::{DiscoverySource, Planet};
 
 /// Flattened galaxy data for cache serialization.
 ///
@@ -43,6 +43,8 @@ pub struct CacheData {
 pub struct CachedSystem {
     /// Galactic address of this system.
     pub address: GalacticAddress,
+    /// Origin of this system's atlas contribution.
+    pub source: DiscoverySource,
     /// Discovered system name, when known.
     pub name: Option<String>,
     /// Discoverer name, when known.
@@ -64,6 +66,7 @@ pub struct CachedSystem {
     ///
     /// let known_empty_discovery = CachedSystem {
     ///     address: GalacticAddress::new(0, 0, 0, 1, 0, 0),
+    ///     source: nms_core::system::DiscoverySource::Personal,
     ///     name: None,
     ///     discoverer: None,
     ///     timestamp_secs: None,

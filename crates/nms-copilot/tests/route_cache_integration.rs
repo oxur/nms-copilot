@@ -219,7 +219,7 @@ fn schema2_fixture_is_rejected_and_current_cache_matches_independent_route_liter
         Err(nms_cache::CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 2,
-                expected: 3
+                expected: 4
             }
         ))
     ));
@@ -227,7 +227,7 @@ fn schema2_fixture_is_rejected_and_current_cache_matches_independent_route_liter
     let expected = predecessor_fresh_model();
     let current_bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&expected, 4720)).unwrap();
-    assert_eq!(&current_bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&current_bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let current_data = nms_cache::serialize::deserialize(&current_bytes).unwrap();
     let current = nms_cache::rebuild_model(&current_data);
 
@@ -259,7 +259,7 @@ fn current_three_system_nine_galaxy_route_matches_fresh_and_checked_cache() {
     let fresh = rich_route_model();
     let bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let rebuilt = nms_cache::rebuild_model(&nms_cache::serialize::deserialize(&bytes).unwrap());
     for model in [&fresh, &rebuilt] {
         let direct = rich_projection(model, false, RoutingAlgorithm::NearestNeighbor);
@@ -481,14 +481,14 @@ fn schema2_archive_is_rejected_and_current_cache_matches_typed_literal_expectati
         Err(nms_cache::CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 2,
-                expected: 3
+                expected: 4
             }
         ))
     ));
     let fresh = predecessor_fresh_model();
     let bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let current_data = nms_cache::serialize::deserialize(&bytes).unwrap();
     let current = nms_cache::rebuild_model(&current_data);
     let zero = GalacticAddress::new(0, 0, 0, 1, 0, 0);

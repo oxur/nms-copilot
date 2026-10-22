@@ -78,7 +78,7 @@ fn schema2_semantic2_archive_is_rejected_and_current_cache_matches_fresh_queries
         Err(nms_cache::CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 2,
-                expected: 3
+                expected: 4
             }
         ))
     ));
@@ -86,7 +86,7 @@ fn schema2_semantic2_archive_is_rejected_and_current_cache_matches_fresh_queries
     let fresh = fresh_model();
     let current_bytes =
         nms_cache::serialize::serialize(&nms_cache::extract_cache_data(&fresh, 4720)).unwrap();
-    assert_eq!(&current_bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&current_bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let current_data = nms_cache::serialize::deserialize(&current_bytes).unwrap();
     let current = nms_cache::rebuild_model(&current_data);
     assert_eq!(current.system_count(), 2);

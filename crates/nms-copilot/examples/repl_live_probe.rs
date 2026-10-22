@@ -433,10 +433,54 @@ fn name_cache_path(fixture: &Path) -> PathBuf {
     fixture.join("cache.rkyv")
 }
 
-fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
-    if profile != "warm" && profile != "predecessor" {
-        return Err(format!("unknown name profile {profile}").into());
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum NamesProfile {
+    Warm,
+    Predecessor,
+    PredecessorSource,
+}
+
+impl NamesProfile {
+    fn parse(value: &str) -> Result<Self, String> {
+        match value {
+            "warm" => Ok(Self::Warm),
+            "predecessor" => Ok(Self::Predecessor),
+            "predecessor-source" => Ok(Self::PredecessorSource),
+            _ => Err(format!("unknown name profile {value:?}")),
+        }
     }
+
+    fn is_predecessor(self) -> bool {
+        matches!(self, Self::Predecessor | Self::PredecessorSource)
+    }
+
+    fn predecessor_cache_bytes(self) -> Option<&'static [u8]> {
+        match self {
+            Self::Warm => None,
+            Self::Predecessor => Some(include_bytes!(
+                "../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv"
+            )),
+            Self::PredecessorSource => Some(include_bytes!(
+                "../../nms-cache/tests/fixtures/predecessor-schema3-semantic5.rkyv"
+            )),
+        }
+    }
+
+    fn watch_enabled(self) -> bool {
+        self == Self::Warm
+    }
+
+    fn source_phase(self) -> SourcePhase {
+        if self.is_predecessor() {
+            SourcePhase::Recover
+        } else {
+            SourcePhase::Initial
+        }
+    }
+}
+
+fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let profile_kind = NamesProfile::parse(profile)?;
     let dir = tempfile::Builder::new()
         .prefix("slice23-names-")
         .tempdir_in(std::env::temp_dir())?;
@@ -450,11 +494,7 @@ fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all(&config_dir)?;
     let source_path = fixture.join("save.json");
     let cache_path = name_cache_path(&fixture);
-    let source_phase = if profile == "warm" {
-        SourcePhase::Initial
-    } else {
-        SourcePhase::Recover
-    };
+    let source_phase = profile_kind.source_phase();
     let source = name_observations::source_bytes(source_phase);
     fs::write(&source_path, &source)?;
     let source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
@@ -462,7 +502,7 @@ fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
         .write(true)
         .open(&source_path)?
         .set_times(FileTimes::new().set_modified(source_time))?;
-    let cache_bytes = if profile == "warm" {
+    let cache_bytes = if profile_kind == NamesProfile::Warm {
         nms_cache::write_cache(&name_observations::warm_seed_cache(), &cache_path)?;
         let modified = source_time + Duration::from_secs(100);
         File::options()
@@ -471,10 +511,21 @@ fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
             .set_times(FileTimes::new().set_modified(modified))?;
         fs::read(&cache_path)?
     } else {
-        let predecessor =
-            include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv");
-        if predecessor.len() != 224 || &predecessor[..16] != b"NMSCACHE\x03\0\0\0\x04\0\0\0" {
-            return Err("canonical schema3/semantic4 predecessor bytes/header differ".into());
+        let predecessor = profile_kind
+            .predecessor_cache_bytes()
+            .ok_or("predecessor profile has no predecessor cache")?;
+        let expected_header = if profile_kind == NamesProfile::PredecessorSource {
+            b"NMSCACHE\x03\0\0\0\x05\0\0\0".as_slice()
+        } else {
+            b"NMSCACHE\x03\0\0\0\x04\0\0\0".as_slice()
+        };
+        let expected_len = if profile_kind == NamesProfile::PredecessorSource {
+            632
+        } else {
+            224
+        };
+        if predecessor.len() != expected_len || &predecessor[..16] != expected_header {
+            return Err(format!("canonical cache predecessor for {profile:?} differs").into());
         }
         fs::write(&cache_path, predecessor)?;
         let modified = source_time + Duration::from_secs(100);
@@ -484,7 +535,7 @@ fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
             .set_times(FileTimes::new().set_modified(modified))?;
         predecessor.to_vec()
     };
-    let watch_enabled = profile == "warm";
+    let watch_enabled = profile_kind.watch_enabled();
     fs::write(
         config_dir.join("config.toml"),
         names_config(&cache_path, watch_enabled),
@@ -531,7 +582,8 @@ fn verify_names_fixture(fixture: &Path) -> Result<(), Box<dyn std::error::Error>
     let profile = checkpoint["profile"]
         .as_str()
         .ok_or("name profile missing")?;
-    let watch_enabled = profile == "warm";
+    let profile_kind = NamesProfile::parse(profile)?;
+    let watch_enabled = profile_kind.watch_enabled();
     let source_path = fixture.join("save.json");
     let cache_path = name_cache_path(fixture);
     let expected_source = decode_hex(
@@ -573,21 +625,43 @@ fn verify_names_fixture(fixture: &Path) -> Result<(), Box<dyn std::error::Error>
     {
         return Err("name fixture prelaunch source/cache/config checkpoint differs".into());
     }
-    if profile == "warm" {
+    let profile_kind = NamesProfile::parse(profile)?;
+    if profile_kind == NamesProfile::Warm {
         live_mcp::compare_cache(
             &nms_cache::read_cache(&cache_path)?,
             &name_observations::warm_seed_cache(),
         )?;
-    } else {
-        let predecessor =
-            include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv");
+    } else if profile_kind == NamesProfile::PredecessorSource {
+        let predecessor = profile_kind
+            .predecessor_cache_bytes()
+            .ok_or("schema5 predecessor bytes missing")?;
         if expected_cache.as_slice() != predecessor
             || !matches!(
                 nms_cache::read_cache(&cache_path),
                 Err(nms_cache::CacheError::Incompatible(
-                    nms_cache::CacheCompatibilityError::SemanticMismatch {
-                        found: 4,
-                        expected: 5
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
+                        found: 3,
+                        expected: 4
+                    }
+                ))
+            )
+        {
+            return Err(
+                "authentic schema3/semantic5 cache must fail schema compatibility before startup"
+                    .into(),
+            );
+        }
+    } else {
+        let predecessor = profile_kind
+            .predecessor_cache_bytes()
+            .ok_or("schema4 predecessor bytes missing")?;
+        if expected_cache.as_slice() != predecessor
+            || !matches!(
+                nms_cache::read_cache(&cache_path),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
+                        found: 3,
+                        expected: 4
                     }
                 ))
             )
@@ -604,6 +678,7 @@ fn prepare_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error
     let profile = checkpoint["profile"]
         .as_str()
         .ok_or("name profile missing")?;
+    let profile_kind = NamesProfile::parse(profile)?;
     let source_path = fixture.join("save.json");
     let cache_path = name_cache_path(fixture);
     let current_cache = cache_stamp(&cache_path)?.ok_or("name cache missing before restart")?;
@@ -612,7 +687,7 @@ fn prepare_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error
     }
     let actual = nms_cache::read_cache(&cache_path)?;
     let rebuilt = nms_cache::rebuild_model(&actual);
-    if profile == "warm" {
+    if !profile_kind.is_predecessor() {
         live_mcp::compare_cache_model(
             &actual,
             &rebuilt,
@@ -661,6 +736,7 @@ fn verify_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error>
     let profile = checkpoint["profile"]
         .as_str()
         .ok_or("restart profile missing")?;
+    let profile_kind = NamesProfile::parse(profile)?;
     let source_path = fixture.join("save.json");
     let cache_path = name_cache_path(fixture);
     let expected_source = decode_hex(
@@ -707,7 +783,7 @@ fn verify_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error>
     }
     let actual = nms_cache::read_cache(&cache_path)?;
     let rebuilt = nms_cache::rebuild_model(&actual);
-    if profile == "warm" {
+    if !profile_kind.is_predecessor() {
         live_mcp::compare_cache_model(
             &actual,
             &rebuilt,
@@ -801,12 +877,13 @@ fn check_names_boundary(
     boundary: NamesBoundary<'_>,
 ) -> Result<(), Box<dyn std::error::Error>> {
     check_names_file_boundary(fixture, &boundary)?;
+    let profile = NamesProfile::parse(boundary.profile)?;
     check_names_rpc(
         fixture,
         address,
         session,
         boundary.stage,
-        boundary.profile == "predecessor",
+        profile.is_predecessor(),
     )?;
     Ok(())
 }
@@ -817,12 +894,13 @@ fn check_names_file_boundary(
 ) -> Result<(), Box<dyn std::error::Error>> {
     let source = fixture.join("save.json");
     let cache = name_cache_path(fixture);
-    let expected_cache = if boundary.profile == "predecessor" {
+    let profile = NamesProfile::parse(boundary.profile)?;
+    let expected_cache = if profile.is_predecessor() {
         name_observations::expected_predecessor_cache()
     } else {
         name_observations::expected_cache(boundary.stage, 7)
     };
-    let expected_model = if boundary.profile == "predecessor" {
+    let expected_model = if profile.is_predecessor() {
         name_observations::expected_predecessor_model()
     } else {
         name_observations::expected_model(boundary.stage)
@@ -905,10 +983,8 @@ fn run_names_monitor(
     let profile = checkpoint["profile"]
         .as_str()
         .ok_or("name profile missing")?;
-    if profile != "warm" && profile != "predecessor" {
-        return Err(format!("unknown name profile {profile:?}").into());
-    }
-    let predecessor = profile == "predecessor";
+    let profile_kind = NamesProfile::parse(profile)?;
+    let predecessor = profile_kind.is_predecessor();
     let mut expected_source = name_observations::source_bytes(if predecessor {
         SourcePhase::Recover
     } else {
@@ -943,7 +1019,7 @@ fn run_names_monitor(
             cache_stamp: &expected_cache_stamp,
             stage,
             profile,
-            watch_enabled: !predecessor,
+            watch_enabled: profile_kind.watch_enabled(),
         },
     )?;
     if predecessor {
@@ -1004,7 +1080,7 @@ fn run_names_monitor(
                     cache_stamp: &expected_cache_stamp,
                     stage,
                     profile,
-                    watch_enabled: !predecessor,
+                    watch_enabled: profile_kind.watch_enabled(),
                 },
             )?;
             sse.wait_closed_without_resource_updates(
@@ -1020,7 +1096,7 @@ fn run_names_monitor(
                     cache_stamp: &expected_cache_stamp,
                     stage,
                     profile,
-                    watch_enabled: !predecessor,
+                    watch_enabled: profile_kind.watch_enabled(),
                 },
             )?;
             println!("name-lifecycle=pass profile={profile} both-resource-eof+pure-file-boundary");
@@ -1036,7 +1112,7 @@ fn run_names_monitor(
                 cache_stamp: &expected_cache_stamp,
                 stage,
                 profile,
-                watch_enabled: !predecessor,
+                watch_enabled: profile_kind.watch_enabled(),
             },
         )?;
         if required == "identical" {
@@ -1057,7 +1133,7 @@ fn run_names_monitor(
                     cache_stamp: &expected_cache_stamp,
                     stage,
                     profile,
-                    watch_enabled: !predecessor,
+                    watch_enabled: profile_kind.watch_enabled(),
                 },
             )?;
             println!("name-identical=pass both-resource-quiet+whole-cache");
@@ -1107,7 +1183,7 @@ fn run_names_monitor(
                 cache_stamp: &expected_cache_stamp,
                 stage,
                 profile,
-                watch_enabled: !predecessor,
+                watch_enabled: profile_kind.watch_enabled(),
             },
         )?;
         println!("name-phase-{required}=pass");
@@ -1126,9 +1202,7 @@ fn run_names_restart_monitor(
     let profile = checkpoint["profile"]
         .as_str()
         .ok_or("restart profile missing")?;
-    if profile != "warm" && profile != "predecessor" {
-        return Err(format!("unknown restart profile {profile:?}").into());
-    }
+    let profile_kind = NamesProfile::parse(profile)?;
     let expected_source = decode_hex(
         checkpoint["source_hex"]
             .as_str()
@@ -1154,7 +1228,7 @@ fn run_names_restart_monitor(
             ),
     };
     let stage = ModelStage::Recover;
-    let predecessor = profile == "predecessor";
+    let predecessor = profile_kind.is_predecessor();
     let (session, _) = initialize_http(address)?;
     let mut sse = live_mcp::subscribe_sse_uris(
         address,
@@ -1288,6 +1362,7 @@ fn save_bytes(
 
 fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     use nms_core::address::GalacticAddress;
+    use nms_core::system::DiscoverySource;
     let expected = expected_cache(4720, 0, 7, 8, 9, None, 7);
     let expected_model = live_mcp::expected_model(0, 7, 8, 9, None, 7);
     let rebuilt_expected = nms_cache::rebuild_model(&expected);
@@ -1303,9 +1378,9 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     if !matches!(
         nms_cache::read_cache(&predecessor_path),
         Err(nms_cache::CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 3,
-                expected: 5
+                expected: 4
             }
         ))
     ) {
@@ -1321,9 +1396,9 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     if !matches!(
         nms_cache::read_cache(&name_predecessor_path),
         Err(nms_cache::CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
-                found: 4,
-                expected: 5
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 3,
+                expected: 4
             }
         ))
     ) {
@@ -1331,9 +1406,33 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
             "self-check did not reject authentic schema3/semantic4 names predecessor".into(),
         );
     }
+    let source_predecessor =
+        include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic5.rkyv");
+    if source_predecessor.len() != 632
+        || &source_predecessor[..16] != b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+    {
+        return Err(
+            "self-check authentic schema3/semantic5 source predecessor fixture differs".into(),
+        );
+    }
+    let source_predecessor_path = checked_files.path().join("predecessor-semantic5.rkyv");
+    fs::write(&source_predecessor_path, source_predecessor)?;
+    if !matches!(
+        nms_cache::read_cache(&source_predecessor_path),
+        Err(nms_cache::CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 3,
+                expected: 4
+            }
+        ))
+    ) {
+        return Err(
+            "self-check did not reject authentic schema3/semantic5 source predecessor".into(),
+        );
+    }
     let initial_names = name_observations::expected_cache(ModelStage::Initial, 7);
     let initial_names_model = name_observations::expected_model(ModelStage::Initial);
-    let initial_names_path = checked_files.path().join("names-current-semantic5.rkyv");
+    let initial_names_path = checked_files.path().join("names-current-semantic6.rkyv");
     nms_cache::write_cache(&initial_names, &initial_names_path)?;
     live_mcp::assert_cache_oracle(&initial_names_path, &initial_names, &initial_names_model)?;
     let empty = live_mcp::expected_empty_cache(4720, 0, 7, 8, 9, 0);
@@ -1381,6 +1480,7 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     reject("source version", &wrong_version, &expected, &expected_model)?;
     let mut extra = expected_cache(4720, 0, 7, 8, 9, None, 7);
     extra.systems.push(nms_cache::data::CachedSystem {
+        source: DiscoverySource::Personal,
         address: GalacticAddress::new(4, 4, 4, 4, 0, 9),
         name: Some("Unexpected".into()),
         discoverer: None,
@@ -1846,6 +1946,102 @@ fn check_name_cache_oracles(
             .unwrap()
             .name = Some("Wrong galaxy name".into());
     });
+    let mixed_label = " NMSCE α ";
+    let mut mixed_data = expected_cache(ModelStage::Recover, 7);
+    let mixed_a9 = mixed_data
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a9())
+        .ok_or("literal A9 cache row missing")?;
+    mixed_a9.source = nms_core::system::DiscoverySource::Community {
+        source: mixed_label.to_owned(),
+    };
+    let mut mixed_model = expected_model(ModelStage::Recover);
+    let mixed_a9_id = SystemId::from_address(&a9());
+    mixed_model
+        .systems
+        .get_mut(&mixed_a9_id)
+        .ok_or("literal A9 model row missing")?
+        .source = nms_core::system::DiscoverySource::Community {
+        source: mixed_label.to_owned(),
+    };
+    let mixed_path = directory.join("names-recover-mixed-origin.rkyv");
+    nms_cache::write_cache(&mixed_data, &mixed_path)?;
+    let mixed_checked = nms_cache::read_cache(&mixed_path)?;
+    let mixed_rebuilt = nms_cache::rebuild_model(&mixed_checked);
+    live_mcp::compare_cache_model(&mixed_checked, &mixed_rebuilt, &mixed_data, &mixed_model)?;
+    files += 1;
+
+    let mut wrong_origin = nms_cache::read_cache(&mixed_path)?;
+    let mixed_cached_at = wrong_origin.cached_at;
+    wrong_origin
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a9())
+        .ok_or("literal A9 checked row missing")?
+        .source = nms_core::system::DiscoverySource::Personal;
+    let wrong_origin_model = nms_cache::rebuild_model(&wrong_origin);
+    if live_mcp::compare_cache_model(
+        &wrong_origin,
+        &wrong_origin_model,
+        &mixed_data,
+        &mixed_model,
+    )
+    .is_ok()
+    {
+        return Err("A9 source-only Personal mutant passed the combined predicate".into());
+    }
+    wrong_origin
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a9())
+        .unwrap()
+        .source = mixed_data
+        .systems
+        .iter()
+        .find(|row| row.address == a9())
+        .unwrap()
+        .source
+        .clone();
+    live_mcp::compare_cache(&wrong_origin, &mixed_data)?;
+    if wrong_origin.cached_at != mixed_cached_at {
+        return Err("A9 source-only Personal mutant changed cached_at".into());
+    }
+    raw_negatives += 1;
+
+    let mut wrong_label = nms_cache::read_cache(&mixed_path)?;
+    let mixed_cached_at = wrong_label.cached_at;
+    wrong_label
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a9())
+        .ok_or("literal A9 checked row missing")?
+        .source = nms_core::system::DiscoverySource::Community {
+        source: " XMSCE α ".to_owned(),
+    };
+    let wrong_label_model = nms_cache::rebuild_model(&wrong_label);
+    if live_mcp::compare_cache_model(&wrong_label, &wrong_label_model, &mixed_data, &mixed_model)
+        .is_ok()
+    {
+        return Err("A9 one-byte wrong-label mutant passed the combined predicate".into());
+    }
+    wrong_label
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a9())
+        .unwrap()
+        .source = mixed_data
+        .systems
+        .iter()
+        .find(|row| row.address == a9())
+        .unwrap()
+        .source
+        .clone();
+    live_mcp::compare_cache(&wrong_label, &mixed_data)?;
+    if wrong_label.cached_at != mixed_cached_at {
+        return Err("A9 wrong-label mutant changed cached_at".into());
+    }
+    raw_negatives += 1;
     let initial_data = expected_cache(ModelStage::Initial, 7);
     let initial_model = expected_model(ModelStage::Initial);
     let mut initial_marker_false = expected_cache(ModelStage::Initial, 7);
@@ -3094,15 +3290,13 @@ fn assert_semantic_cache(
             if !matches!(
                 nms_cache::read_cache(path),
                 Err(nms_cache::CacheError::Incompatible(
-                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
                         found: 3,
-                        expected: 5
+                        expected: 4
                     }
                 ))
             ) {
-                return Err(
-                    "predecessor cache is not the literal semantic3/schema3 mismatch".into(),
-                );
+                return Err("schema3 predecessor did not fail schema compatibility first".into());
             }
         }
     }

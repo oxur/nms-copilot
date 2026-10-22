@@ -50,6 +50,7 @@ struct SystemRow {
     id: (u8, u64),
     address: (i16, i8, i16, u16, u8, u8),
     name: Option<String>,
+    source: nms_core::system::DiscoverySource,
     discoverer: Option<String>,
     timestamp: Option<String>,
     planets: Vec<PlanetRow>,
@@ -226,6 +227,7 @@ fn view(model: &GalaxyModel) -> ModelView {
                 system.address.reality_index,
             ),
             name: system.name.clone(),
+            source: system.source.clone(),
             discoverer: system.discoverer.clone(),
             timestamp: system.timestamp.as_ref().map(|time| time.to_rfc3339()),
             planets: system
@@ -440,6 +442,8 @@ fn assert_literal_model_for_active(model: &GalaxyModel, active: u8) {
         let b_system = model.system(&b_id).unwrap();
         assert_eq!(a_system.address, a);
         assert_eq!(b_system.address, b);
+        assert_eq!(a_system.source, nms_core::system::DiscoverySource::Personal);
+        assert_eq!(b_system.source, nms_core::system::DiscoverySource::Personal);
         assert_eq!(a_system.name.as_deref(), Some("Shared"));
         assert_eq!(b_system.name.as_deref(), Some("Target"));
         assert_eq!(a_system.planets.len(), 1);
@@ -980,7 +984,7 @@ fn test_current_cache_full_256_galaxy_round_trips_both_orders() {
         assert_eq!(data.systems.len(), 512);
         assert_eq!(data.bases.len(), 2);
         let bytes = serialize(&data).unwrap();
-        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
         let decoded = deserialize(&bytes).unwrap();
         assert_eq!(decoded.save_version, 4720);
         assert_eq!(decoded.active_galaxy, 255);
@@ -1051,7 +1055,7 @@ fn test_actual_repl_selects_all_galaxies_and_preserves_session() {
     assert_eq!(data.systems.len(), 512);
     assert_eq!(data.bases.len(), 2);
     let bytes = serialize(&data).unwrap();
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let decoded = deserialize(&bytes).unwrap();
     let mut model = rebuild_model(&decoded);
     assert_eq!(view(&model), view(&data_model));

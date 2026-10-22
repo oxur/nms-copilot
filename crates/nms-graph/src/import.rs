@@ -11,7 +11,7 @@ use serde::Deserialize;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::galaxy::Galaxy;
-use nms_core::system::{Planet, System};
+use nms_core::system::{DiscoverySource, Planet, System};
 
 use crate::model::GalaxyModel;
 use crate::spatial::SystemId;
@@ -103,10 +103,13 @@ fn resolve_galaxy_index(name: &str) -> u8 {
 pub fn import_csv(
     model: &mut GalaxyModel,
     path: &Path,
-    _source_name: &str,
+    source_name: &str,
 ) -> Result<ImportStats, ImportError> {
     let mut stats = ImportStats::default();
-    let mut reader = csv::Reader::from_path(path)?;
+    let mut reader = csv::ReaderBuilder::new()
+        .has_headers(true)
+        .flexible(true)
+        .from_path(path)?;
 
     for result in reader.deserialize() {
         let record: CommunityRecord = match result {
@@ -171,7 +174,10 @@ pub fn import_csv(
             vec![]
         };
 
-        let system = System::new(addr, Some(record.system_name), None, None, planets);
+        let mut system = System::new(addr, Some(record.system_name), None, None, planets);
+        system.source = DiscoverySource::Community {
+            source: source_name.to_owned(),
+        };
 
         model.insert_system(system);
         stats.added += 1;
@@ -209,6 +215,52 @@ Beta System,Euclid,0A0002001234,Toxic
         assert_eq!(stats.duplicates, 0);
         assert_eq!(stats.skipped, 0);
         assert_eq!(model.system_count(), 2);
+        assert!(model.systems.values().all(|system| {
+            system.source
+                == DiscoverySource::Community {
+                    source: "test".to_string(),
+                }
+        }));
+    }
+
+    #[test]
+    fn test_import_csv_preserves_source_and_accepts_ragged_optional_columns() {
+        let csv = csv_file(
+            "System Name,Galaxy,Portal Glyphs,Biome,Platform\nAlpha,0,000100000000,Toxic,PC\nBeta,0,000200000001,Frozen\nGamma,0,000300000002,Barren,PC,ignored-extra\n",
+        );
+        let mut model = GalaxyModel::new();
+        let source = " NMSCE α ";
+        let stats = import_csv(&mut model, csv.path(), source).unwrap();
+        assert_eq!((stats.added, stats.duplicates, stats.skipped), (3, 0, 0));
+        assert_eq!(model.system_count(), 3);
+        assert!(model.systems.values().all(|system| {
+            system.source
+                == DiscoverySource::Community {
+                    source: source.to_string(),
+                }
+        }));
+        let original = model
+            .system(&SystemId::from_address(&GalacticAddress::from_packed(
+                0x000100000000,
+                0,
+            )))
+            .unwrap()
+            .clone();
+        let later = csv_file(
+            "System Name,Galaxy,Portal Glyphs,Biome\nRenamed by later catalog,0,000100000000,Lush\n",
+        );
+        let duplicate = import_csv(&mut model, later.path(), "Later Catalog").unwrap();
+        assert_eq!(
+            (duplicate.added, duplicate.duplicates, duplicate.skipped),
+            (0, 1, 0)
+        );
+        assert_eq!(
+            model.system(&SystemId::from_address(&GalacticAddress::from_packed(
+                0x000100000000,
+                0
+            ))),
+            Some(&original)
+        );
     }
 
     #[test]
@@ -260,13 +312,16 @@ Alpha Duplicate,Euclid,01717D8A4EA2,Toxic
         );
         assert_eq!(model.system_count(), 1);
         assert!(!model.is_player_placeholder(&id));
-        let expected = System::new(
+        let mut expected = System::new(
             address,
             Some("Promoted".into()),
             None,
             None,
             vec![Planet::new(0, Some(Biome::Toxic), None, false, None, None)],
         );
+        expected.source = DiscoverySource::Community {
+            source: "test".to_string(),
+        };
         assert_eq!(
             model.systems,
             std::collections::HashMap::from([(id, expected.clone())])
