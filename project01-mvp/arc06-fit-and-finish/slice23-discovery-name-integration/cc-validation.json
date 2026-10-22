@@ -1,0 +1,2088 @@
+{
+  "assignment": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice23-discovery-name-integration/cc-prompt-iteration05.md",
+  "source": {
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+    "branch": "codex/discovery-name-integration",
+    "precommit_head": "753bb3a9a01451e57fff34262acd4ab194d99341",
+    "precommit_composite_identity": "990eab17222054bcd16c0894d0d48989e4ff162d96baa7cfe577bfefbe18787a",
+    "tracked_diff_sha256": "c50e29343ed6e87453db4e8e1dab3de090e86f593f3a5f86f828d02725620a7a",
+    "allowlist_count": 23,
+    "changed_paths_count": 23,
+    "index": "empty before commit",
+    "commit": "133bc762c19b91222f7aeea4eb514696a22bede5",
+    "parent": "753bb3a9a01451e57fff34262acd4ab194d99341",
+    "tree": "a34dd237734a293d06a9744147616ea7797dea51",
+    "postcommit_status": "clean",
+    "postcommit_index": "empty",
+    "committed_path_count": 23,
+    "committed_paths": [
+      "README.md",
+      "crates/nms-cache/src/lib.rs",
+      "crates/nms-cache/src/serialize.rs",
+      "crates/nms-cache/tests/fixtures/predecessor-schema3-semantic4.md",
+      "crates/nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv",
+      "crates/nms-cache/tests/load_integration.rs",
+      "crates/nms-cli/src/main.rs",
+      "crates/nms-copilot/examples/repl_live_probe.rs",
+      "crates/nms-copilot/src/coordinator.rs",
+      "crates/nms-copilot/src/mcp/mod.rs",
+      "crates/nms-copilot/src/mcp/tools.rs",
+      "crates/nms-copilot/src/watch.rs",
+      "crates/nms-copilot/tests/mcp_live_integration.rs",
+      "crates/nms-copilot/tests/name_observations_integration.rs",
+      "crates/nms-copilot/tests/owned_mcp_integration.rs",
+      "crates/nms-copilot/tests/query_cache_integration.rs",
+      "crates/nms-copilot/tests/route_cache_integration.rs",
+      "crates/nms-copilot/tests/support/live_mcp.rs",
+      "crates/nms-copilot/tests/support/name_observations.rs",
+      "crates/nms-graph/src/extract.rs",
+      "crates/nms-graph/tests/discovery_names.rs",
+      "crates/nms-watch/src/lib.rs",
+      "crates/nms-watch/src/watcher.rs"
+    ],
+    "strict_doc_gate": "red, inherited unresolved intra-doc link"
+  },
+  "capture_record": {
+    "path": "/private/tmp/nms-slice23-cc-attempts.json",
+    "sha256": "843c98a03132d36a58a9e2f714f4f8a692628c0cf507cc0ffeb9be16e2d44165",
+    "attempt_count": 83,
+    "status_counts": {
+      "complete": 83
+    },
+    "kind_counts": {
+      "SUT gate": 77,
+      "support-only native controller syntax check": 4,
+      "author capture support control; not product evidence": 2
+    },
+    "attempts": [
+      {
+        "id": "d38d16cb4c034299925b45027ce8e3c1",
+        "label": "author23-support-exit7",
+        "kind": "author capture support control; not product evidence",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-c",
+          "import sys;print(\"cc23-out\");print(\"cc23-err\",file=sys.stderr);sys.exit(7)"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T02:24:30.783638+00:00",
+        "ended_utc": "2026-10-22T02:24:30.958869+00:00",
+        "exit_code": 7,
+        "stdout_bytes": 9,
+        "stdout_sha256": "d21398b4c358f97929fe1000b558c8768cc17f11866a8a0c9f66aa1e7c8fd96b",
+        "stderr_bytes": 9,
+        "stderr_sha256": "ef27b8365ae90e138b90318af20cfc97a6882291b46013a48f5da4c341c9c6c7",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0445f4c2d96b4df3b53f3f806d2d338b",
+        "label": "author23-support-exit0",
+        "kind": "author capture support control; not product evidence",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-c",
+          "print(\"cc23-ok\")"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T02:24:31.221476+00:00",
+        "ended_utc": "2026-10-22T02:24:31.341174+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 8,
+        "stdout_sha256": "2cf595730ff248e9cd8c24c32abc8ec90c1b6218dd2981a960bf6faea1d21562",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "6824139995c14c6da87eac72852096e8",
+        "label": "format-iteration23",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:23:43.526797+00:00",
+        "ended_utc": "2026-10-22T03:23:44.517252+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "bf617d860a6b49b6a2a13d1c642f0053",
+        "label": "lint-iteration23",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:23:47.917806+00:00",
+        "ended_utc": "2026-10-22T03:24:08.606520+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 13450,
+        "stderr_sha256": "59c6ce9373b611ad042d3435fb7bb5fde3b93addd29c1304783a5918e94bce55",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "2c2b5bfdddd8456b99ed73638e641482",
+        "label": "format-repair-01",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:26:56.004229+00:00",
+        "ended_utc": "2026-10-22T03:26:56.916681+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0200d981449a456aa7df75c73280c835",
+        "label": "lint-repair-01",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:27:03.558002+00:00",
+        "ended_utc": "2026-10-22T03:27:05.348643+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 1760,
+        "stderr_sha256": "4e812df864300f35fe62b2872647630a9ad7bef0649ea2f96f19f98f0e15a5e5",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f1f61679d85e4b2cb6d45147c644b6a0",
+        "label": "format-repair-02",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:27:22.639396+00:00",
+        "ended_utc": "2026-10-22T03:27:23.398181+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "64a4f03e34e44209b1a51731a449646a",
+        "label": "lint-repair-02",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:27:25.715957+00:00",
+        "ended_utc": "2026-10-22T03:27:29.132835+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 10985,
+        "stderr_sha256": "bffa9cb9ea80ea7247615fc46df606ea42a487c977e95990dbefe08942800914",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "94fc852ae7d94695813fc075715a5f23",
+        "label": "format-repair-03",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:28:27.593287+00:00",
+        "ended_utc": "2026-10-22T03:28:28.512915+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "85da6edb53404184a7bbf35991b27a99",
+        "label": "lint-repair-03",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:28:34.616224+00:00",
+        "ended_utc": "2026-10-22T03:28:36.576647+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 964,
+        "stderr_sha256": "baea10f80a0c2bdec44a740ff394bb3d36ea93e4c25b6651092c8e4083ddc114",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "b8736d0a78f6436f85d80e0f8f312570",
+        "label": "format-repair-04",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:29:16.223740+00:00",
+        "ended_utc": "2026-10-22T03:29:17.207188+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "678b69caaedc42459878135b9cb346fd",
+        "label": "lint-repair-04",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T03:29:22.816553+00:00",
+        "ended_utc": "2026-10-22T03:29:25.151289+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 455,
+        "stderr_sha256": "192f58c842f3def5993c1d486e048b3cbb9abd21485e00b7eb866fd44293907a",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "51709e5e34d34b80899a275cb8ddd9b3",
+        "label": "format-f1-f7-final",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:13:56.649047+00:00",
+        "ended_utc": "2026-10-22T04:13:57.685160+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "07b0533355ba40c2818e21168486191f",
+        "label": "lint-f1-f7-final",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:14:00.407127+00:00",
+        "ended_utc": "2026-10-22T04:14:03.728004+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 19750,
+        "stderr_sha256": "4a960b6e8eb19c04086c069a21f0edac67bff993178b6cb869d179bfe6cdb3eb",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0806a38e089b4df892f69abd66e968e0",
+        "label": "format-f1-f7-repair1",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:14:24.119550+00:00",
+        "ended_utc": "2026-10-22T04:14:25.080030+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "ac51b9ec8dce4cceae46813b60528732",
+        "label": "lint-f1-f7-repair1",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:14:26.729966+00:00",
+        "ended_utc": "2026-10-22T04:14:28.592885+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 1036,
+        "stderr_sha256": "67a852de439d31ca53c85f27f130b117c10a29592f0d48489d4afa2c04c78cc3",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "ae7f0bb624e149c3b36d4a7760618aeb",
+        "label": "format-f1-f7-repair2",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:14:35.901783+00:00",
+        "ended_utc": "2026-10-22T04:14:36.720267+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "2c03c00975af44e899e92e8745c8a1ea",
+        "label": "lint-f1-f7-repair2",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:14:39.790585+00:00",
+        "ended_utc": "2026-10-22T04:14:42.358848+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 455,
+        "stderr_sha256": "7c863ddc37aab5570a43a35e7824092324ea0c71f6e0241cc4eda96de3f1af89",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "dc1ebb5a95ca4cd3a2c6a757c2f15a48",
+        "label": "slice23-i02-make-format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:35:35.008338+00:00",
+        "ended_utc": "2026-10-22T04:35:36.074809+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "a0c6f291d7bc4bf59c773a22eb396a60",
+        "label": "slice23-i02-make-lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:35:38.386748+00:00",
+        "ended_utc": "2026-10-22T04:35:41.567397+00:00",
+        "exit_code": 2,
+        "stdout_bytes": 69,
+        "stdout_sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b",
+        "stderr_bytes": 6613,
+        "stderr_sha256": "ec4fc9c17df3c78a885eb55ddb90f055e829d8c6a91d9ff91a3969bd8398ab04",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "b9c29e12c0294b82906508f083a3f320",
+        "label": "slice23-i02-repair-make-format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:35:54.623089+00:00",
+        "ended_utc": "2026-10-22T04:35:55.595498+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "bed342bb0f4749a4bea53b78a609e37a",
+        "label": "slice23-i02-repair-make-lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:35:57.561944+00:00",
+        "ended_utc": "2026-10-22T04:36:00.377308+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 455,
+        "stderr_sha256": "bf21f10f100eda7d17ebd6aee3c39bcad648e15f017ad8dfd76f380fa428e640",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "092fea96787c4f32b22d0557ba790ead",
+        "label": "slice23-i03-make-format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:43:28.176186+00:00",
+        "ended_utc": "2026-10-22T04:43:29.168979+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "7f42bcf6fc954e06b0bf75d90b05454d",
+        "label": "slice23-i03-make-lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:43:32.114886+00:00",
+        "ended_utc": "2026-10-22T04:43:34.404625+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 455,
+        "stderr_sha256": "699fa7bcc0f6a2f74a1f44d5269ba2ef2e0eced6531620ff70366897fb66f50d",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "347bfbf27efe41f88f5e9b2faf368c75",
+        "label": "slice23-i03-focused-discovery-names",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-graph",
+          "--test",
+          "discovery_names"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:44:23.278723+00:00",
+        "ended_utc": "2026-10-22T04:44:30.458897+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 716,
+        "stdout_sha256": "da11fafc08609cdcd3f44086941ce1280c509234829ccbc366ae833124c24188",
+        "stderr_bytes": 2177,
+        "stderr_sha256": "812f728a5d9a30beb6668600bc1d105658dbde3756d538841e9f1eb5057c1900",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "005b760fd3644175bb31de7eecbe3371",
+        "label": "slice23-i03-nms-graph",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-graph"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:44:33.109995+00:00",
+        "ended_utc": "2026-10-22T04:44:36.153583+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 14126,
+        "stdout_sha256": "f4c1c7c97b3cbaad6f96a4c0e12ce186306d795186d0e9d3b14903f754bb0c04",
+        "stderr_bytes": 481,
+        "stderr_sha256": "522cb6d42c5916d4961a2ab256d70b5fa194354b74a64e0862ec788cd73e94a7",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "5bcf4a6797814dbc8f19b36cfd14f57b",
+        "label": "slice23-i03-nms-watch",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-watch"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:44:40.483636+00:00",
+        "ended_utc": "2026-10-22T04:45:30.975070+00:00",
+        "exit_code": 101,
+        "stdout_bytes": 6695,
+        "stdout_sha256": "2578805d303cfe3ce3b1feaf7a4afa2a5aa09c5c2bc044feafafeb6b9e5d4635",
+        "stderr_bytes": 525,
+        "stderr_sha256": "3b886072e5609c83a6de8eba07f866fa5200d485b112142372f810e16903cf1e",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0e597299da7947748b18373141e76ad8",
+        "label": "slice23-i03-nms-watch-host-retry",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-watch"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:45:47.733380+00:00",
+        "ended_utc": "2026-10-22T04:46:04.481547+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 3967,
+        "stdout_sha256": "c031325db673ad34600646be6d06e001e71b6b15c5d152fc3c5a71abc1d52f9a",
+        "stderr_bytes": 266,
+        "stderr_sha256": "28cbe27bf79d7835e41396f35cabad739cb0d8a585f43b0912c95e44f1bfbfe5",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "818ab631d9a948d3847f1a0e07723a5d",
+        "label": "slice23-i03-cache-load",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cache",
+          "--test",
+          "load_integration"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:46:10.180900+00:00",
+        "ended_utc": "2026-10-22T04:46:18.940762+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 2362,
+        "stdout_sha256": "c93dec9309bce9583c833931c0ec96796a3a126a83c6cea30bc93b1ed2af092e",
+        "stderr_bytes": 1172,
+        "stderr_sha256": "8f2f390aba80ac87dcadaf3fe3ef52dbf813be645217313cf10e83a6ff5ea457",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "6d7f85a238174ee0a4329850549e3e8b",
+        "label": "slice23-i03-nms-cli",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:46:21.084172+00:00",
+        "ended_utc": "2026-10-22T04:46:38.532805+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 9720,
+        "stdout_sha256": "cf2eee2f75fd2f843a129bd8a80a4608335f318b85b7039fe05e3a3393419912",
+        "stderr_bytes": 6479,
+        "stderr_sha256": "b3b0ebbc9f7de1cdd526364ff26b1c6de69b1fc57757cca23bfff5c95270bac3",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f8b1412b7b684ad1bb4bfbdf45384dad",
+        "label": "slice23-i03-copilot-lib-all-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--lib",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:46:47.411691+00:00",
+        "ended_utc": "2026-10-22T04:47:07.049596+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 15598,
+        "stdout_sha256": "146f3fa4eec117cfde8b97bea80a9f01ea1257a259e0a34de888b71706863009",
+        "stderr_bytes": 6962,
+        "stderr_sha256": "b5505f3d1e77edad63ffc8fec7a46133ac27387ed5ff139057a7a70c13e47f5a",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f4bc957b8c5e4907b4c6602d9f9cdf33",
+        "label": "slice23-i03-name-observations-all-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "name_observations_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:47:11.700442+00:00",
+        "ended_utc": "2026-10-22T04:47:29.974449+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 770,
+        "stdout_sha256": "d544d7954283fc1650265e4abf17eec3482dee4245ae1518c8f7dd55c2a10670",
+        "stderr_bytes": 575,
+        "stderr_sha256": "b716f666e13f61c8e1c55daac3b6cd4e416696e163310590909054501a4383d9",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "1a7c667554884e4ab9158025337c6f66",
+        "label": "slice23-i03-query-route-all-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "query_cache_integration",
+          "--test",
+          "route_cache_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:47:33.414527+00:00",
+        "ended_utc": "2026-10-22T04:47:35.039800+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 751,
+        "stdout_sha256": "7df9cb5bd10b48db31b4ff9eb820a258d4619760600563f6377b7dc9c0a9ddd1",
+        "stderr_bytes": 670,
+        "stderr_sha256": "8fadc887bef56e0c6ed97456fc7c24d3c6bf6abad88f6a89704f9fcee1f74fd1",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "963ea435bb3e4f2ebb75db10d0586601",
+        "label": "slice23-i03-mcp-live-all-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "mcp_live_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:47:41.734220+00:00",
+        "ended_utc": "2026-10-22T04:47:59.582003+00:00",
+        "exit_code": 101,
+        "stdout_bytes": 4270,
+        "stdout_sha256": "7e08ab26ae37e4884b749ac38157566e5b00c890b60b048aa2325f53444c197b",
+        "stderr_bytes": 636,
+        "stderr_sha256": "85a12cfc42ea8eb4ce73fcd902fb4d4e3412b5496fae069b0a443d40b58c6e41",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "7ed9888740534a7f9e258d9025f377b5",
+        "label": "slice23-i04-make-format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:50:33.467434+00:00",
+        "ended_utc": "2026-10-22T04:50:34.451478+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "c517a2c92314444889edbc832b51ebc1",
+        "label": "slice23-i04-make-lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:50:36.329448+00:00",
+        "ended_utc": "2026-10-22T04:50:38.920053+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 455,
+        "stderr_sha256": "7c863ddc37aab5570a43a35e7824092324ea0c71f6e0241cc4eda96de3f1af89",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fe0a766c6c9e4789912cb1fddb96b448",
+        "label": "slice23-i04-headless-mcp-all-features-retry",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "mcp_live_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:51:52.848216+00:00",
+        "ended_utc": "2026-10-22T04:52:05.255313+00:00",
+        "exit_code": 101,
+        "stdout_bytes": 12609,
+        "stdout_sha256": "743fb3a79feb6c44a55754eb642a2d9eb6910589853ed684bf22842691a05075",
+        "stderr_bytes": 636,
+        "stderr_sha256": "bd4153f9aa3a272f036597d62b0ef07c0cf67d2b58eb2c47824eea6065709b15",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fec7a8a15cb64329b6fe4461f29a7c7e",
+        "label": "slice23-i04-headless-mcp-all-features-host-retry",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "mcp_live_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:52:24.512254+00:00",
+        "ended_utc": "2026-10-22T04:53:23.676511+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 1925,
+        "stdout_sha256": "b165b41c73fcb6e596aafad95b85943a0f3d38c070956f34281da679ed1cc4bd",
+        "stderr_bytes": 429,
+        "stderr_sha256": "2ef674d1faeaf6ee1e251830c1cc9f15ec1abc3b40f89e103790c238a9a83932",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "3db139e7974a4d6a84046305734e082a",
+        "label": "slice23-owned-mcp-all-features-host",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--test",
+          "owned_mcp_integration",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:54:19.772307+00:00",
+        "ended_utc": "2026-10-22T04:54:25.854687+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 791,
+        "stdout_sha256": "52a044e6827a51e34cfe94499ae6545cae35f8b48fda232fce4e1711351efdc3",
+        "stderr_bytes": 559,
+        "stderr_sha256": "d9df3ee240b9803802dbe8f523b393d15f51063f0c69a6977b4ae626498ca735",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "b5bdd3e13fc04f9ebcaa180acf6715a9",
+        "label": "slice23-copilot-nodefault-lib-host",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--lib",
+          "--no-default-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:54:46.604791+00:00",
+        "ended_utc": "2026-10-22T04:54:57.570705+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 15529,
+        "stdout_sha256": "7cda88c7558e4496d07556379dafa5fc812f886ddef5991f7e2b4e72306ca66a",
+        "stderr_bytes": 1515,
+        "stderr_sha256": "a661dff3b5eadf418cc8f49fbbc746ca6c1e4614bab72bfb5f81599e6045e900",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "aa62d600773e42d297fa932c1958eae3",
+        "label": "slice23-copilot-binary-probe-all-features-build",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "build",
+          "-p",
+          "nms-copilot",
+          "--bin",
+          "nms-copilot",
+          "--example",
+          "repl_live_probe",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:55:12.062027+00:00",
+        "ended_utc": "2026-10-22T04:55:14.492192+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 455,
+        "stderr_sha256": "c4bb19b34df8cf936080b713b8c9aba26a0652051218a8e3e670228a350cd9bd",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "cf0d63851e5d44d28e8072c7df4518c3",
+        "label": "slice23-repl-probe-self-check",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "self-check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:55:19.446120+00:00",
+        "ended_utc": "2026-10-22T04:55:20.125625+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 210,
+        "stdout_sha256": "d68aa7e1cab53b4511d6fe31a1293ae642d4606c3bf5b9d9e8adf6290cdd19a6",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0da3f82ae1444cc48b821b0795d3f465",
+        "label": "slice23-private-cli-name-smoke",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-slice23-cli-name-smoke.py",
+          "target/debug/nms"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:55:40.023827+00:00",
+        "ended_utc": "2026-10-22T04:55:40.270738+00:00",
+        "exit_code": 1,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 3613,
+        "stderr_sha256": "b92c21653a18c6e38f28a06f6cf9d79a60c71a9b069ac93e9d33daeb87203e23",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fcce1e85d85846038f7a5f579dc809bc",
+        "label": "slice23-private-cli-name-smoke-retry",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "/private/tmp/nms-slice23-cli-name-smoke.py",
+          "target/debug/nms"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T04:58:52.816746+00:00",
+        "ended_utc": "2026-10-22T04:58:53.026951+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 12806,
+        "stdout_sha256": "7aea81043e318418791ac1441ed7be617635250bfa945c2a5ef0ae022b65e1a7",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fafb73a05b564c8d95783a130d283d90",
+        "label": "CC native helper py_compile support check",
+        "kind": "support-only native controller syntax check",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-m",
+          "py_compile",
+          "/private/tmp/nms-slice23-cc-native.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:02:06.532976+00:00",
+        "ended_utc": "2026-10-22T05:02:06.672143+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "17c4c4602c034c0f8b7929897ea8eed9",
+        "label": "CC native driver node --check support check",
+        "kind": "support-only native controller syntax check",
+        "status": "complete",
+        "argv": [
+          "node",
+          "--check",
+          "/private/tmp/nms-slice23-cc-native-driver-v3.js"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:02:06.925608+00:00",
+        "ended_utc": "2026-10-22T05:02:07.209827+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "8e36be1d6a474b49ae78bcaa0a9b644f",
+        "label": "CC native helper py_compile support check namespace-v2",
+        "kind": "support-only native controller syntax check",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-m",
+          "py_compile",
+          "/private/tmp/nms-slice23-cc-native.py"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:03:01.532314+00:00",
+        "ended_utc": "2026-10-22T05:03:01.688664+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fe2c4b358cd744d2b80e703b963094c8",
+        "label": "CC native driver node --check support check namespace-v2",
+        "kind": "support-only native controller syntax check",
+        "status": "complete",
+        "argv": [
+          "node",
+          "--check",
+          "/private/tmp/nms-slice23-cc-native-driver-v3.js"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:03:01.944945+00:00",
+        "ended_utc": "2026-10-22T05:03:02.250622+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "d80a75fcce51406d9a43a54a7c244755",
+        "label": "cc-native-1-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "warm",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:03:16.836447+00:00",
+        "ended_utc": "2026-10-22T05:03:16.927516+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 454,
+        "stdout_sha256": "618ae726f34f85e2810822bb046dc80d6e2e9c7cff70e10380752ecfe0ad2cef",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "12f83e2b3a964f4c81995b4194d54a8e",
+        "label": "cc-native-1-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-TUnkBX"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:03:17.014277+00:00",
+        "ended_utc": "2026-10-22T05:03:17.104816+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "c873354ca5244c238a0f5d93927c38ff",
+        "label": "cc-native-2-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "warm",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:04:39.471407+00:00",
+        "ended_utc": "2026-10-22T05:04:39.560736+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 454,
+        "stdout_sha256": "253c65b6c0a4f23d913efe1f33fc315825c348d9aee6aebc65bc55f0159fb745",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f4f4f0477fc54d4893ba9886d8c7b6c6",
+        "label": "cc-native-2-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JrqEQG"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:04:39.648424+00:00",
+        "ended_utc": "2026-10-22T05:04:39.737915+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0584c0af549a419dbe0d79a30575092e",
+        "label": "cc-native-3-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "warm",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:10.216959+00:00",
+        "ended_utc": "2026-10-22T05:05:10.307428+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 454,
+        "stdout_sha256": "d4091c8b464264d7a27413e9005bfc2617f88a4bb7283822f2b9e45007832b8e",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f19d13ace2ae43179a58e4428f800d21",
+        "label": "cc-native-3-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JuVoNk"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:10.398087+00:00",
+        "ended_utc": "2026-10-22T05:05:10.499730+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0a93242fb9004c19bb636df7fa7963b4",
+        "label": "cc-native-4-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "cold",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:33.633196+00:00",
+        "ended_utc": "2026-10-22T05:05:33.725757+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 466,
+        "stdout_sha256": "7772a2743f4d1ab4cff169acbb02980da4eb022e77c1092057786f9a36014cea",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "288094d42180417393e6eccb4ce85ece",
+        "label": "cc-native-4-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-3Wg3gS"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:33.818105+00:00",
+        "ended_utc": "2026-10-22T05:05:33.908879+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "c99ed633eea34d04bfcd9675193fa603",
+        "label": "cc-native-5-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "sentinel",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:58.097798+00:00",
+        "ended_utc": "2026-10-22T05:05:58.188843+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 458,
+        "stdout_sha256": "31213747ad3691a6372ecefc8952d07f660d66d91c2ad9b91dc6dcc0de4b6599",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "b336866fc1c140fb8d813cb33220e82e",
+        "label": "cc-native-5-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-YW9KBg"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:05:58.278821+00:00",
+        "ended_utc": "2026-10-22T05:05:58.368808+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "bdb6e35f94d4445fae2a0b3c0a3d0212",
+        "label": "cc-native-6-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "bypass-missing",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:06:19.770066+00:00",
+        "ended_utc": "2026-10-22T05:06:19.858520+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 478,
+        "stdout_sha256": "1c554646eb94296109e1c2f1e39009f3268239d9d86f87457ab44bdcef72b58f",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "77cd63fd8f714f4db97fa13b73144235",
+        "label": "cc-native-6-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-N6iq3u"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:06:19.945691+00:00",
+        "ended_utc": "2026-10-22T05:06:20.032646+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "c4b24f9a6f93496894adaadfa88b6ea5",
+        "label": "cc-native-7-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "warm",
+          "disabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:06:42.366780+00:00",
+        "ended_utc": "2026-10-22T05:06:42.459376+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 455,
+        "stdout_sha256": "b1fd5f3d9531b7578bf71e054a6eb5ecb932a12381cdf2fdf2ffcd81c225cda7",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "5a890841fc24404bb5bc4bfb5dce55b4",
+        "label": "cc-native-7-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-uPoXRU"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:06:42.549302+00:00",
+        "ended_utc": "2026-10-22T05:06:42.637719+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "12c15c56db7c470586c49816bc63bcff",
+        "label": "cc-native-8-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "blocker",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:07.395055+00:00",
+        "ended_utc": "2026-10-22T05:07:07.504031+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 470,
+        "stdout_sha256": "e664048f7a7850d0cc25e7d1ef6dc75e9329948d52929289e3345e55adc557e3",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "0c49654012004aa69e1064a378fd84b7",
+        "label": "cc-native-8-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-yO3uHA"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:07.622012+00:00",
+        "ended_utc": "2026-10-22T05:07:07.754332+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "9cf0f699e87c4b4eb9f8e0ca0cf6c8ab",
+        "label": "cc-native-9-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "warm",
+          "enabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:32.295047+00:00",
+        "ended_utc": "2026-10-22T05:07:32.397460+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 454,
+        "stdout_sha256": "61ce46c449e85ee211d934a6f836f756afc15f047b5e55cb27705fc0d3cd9d8b",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "b268438235d24492b21d8fb26803c6cd",
+        "label": "cc-native-9-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-AVAEeA"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:32.501578+00:00",
+        "ended_utc": "2026-10-22T05:07:32.598008+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "fd742dfbfd2a43b392ef5785f6f0712d",
+        "label": "cc-native-10-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-unknown"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:48.089456+00:00",
+        "ended_utc": "2026-10-22T05:07:48.180501+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 497,
+        "stdout_sha256": "adb3beea36eba8703a896fb0243056d7166d9c192c1be4ee11cdcba27c079ce9",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "a874bb98646f42658faed147b748054f",
+        "label": "cc-native-10-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-unknown",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-unknown-gaixDU"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:07:48.272028+00:00",
+        "ended_utc": "2026-10-22T05:07:48.363662+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 57,
+        "stdout_sha256": "d79c55e42881512d109b9433bf023284a01efeee43585ce6a3cde571a4408208",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "8f915947f8d746a2abdc083fb4548757",
+        "label": "cc-native-10-prepare-restart",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-restart",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-unknown-gaixDU"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:08:38.850269+00:00",
+        "ended_utc": "2026-10-22T05:08:38.955261+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 47,
+        "stdout_sha256": "a8d6b665616ec73fe0f18e693618e113710982253f9938f0a3455605df09bbfe",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "de64e86e0c4f43a1bd7baf9965feb90e",
+        "label": "cc-native-11-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare",
+          "predecessor",
+          "disabled"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:09:14.606795+00:00",
+        "ended_utc": "2026-10-22T05:09:14.698303+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 462,
+        "stdout_sha256": "89b10176efa797161062ec5ce5db191a8d67ce40eb396bda6312b319b7b0966d",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "ad768361e6c24190ad0c919b00472084",
+        "label": "cc-native-11-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-bind-failure",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-tKNH0k"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:09:14.789982+00:00",
+        "ended_utc": "2026-10-22T05:09:14.878339+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 83,
+        "stdout_sha256": "6e82466d788644782088634dd5f5dcac249cc2b4a478496e0086f0c86b118722",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "5d3eed504e6d493e95495947afee887d",
+        "label": "cc-native-12-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-names",
+          "warm"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:09:43.860484+00:00",
+        "ended_utc": "2026-10-22T05:09:43.980638+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 478,
+        "stdout_sha256": "1fc22b0f802009450f7f3abd2f1574fedac75e821b8d0e324b6b11ee6c9e78b5",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "644426654ab24411b284ebd581ac4add",
+        "label": "cc-native-12-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-names",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-jYtLxO"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:09:44.096296+00:00",
+        "ended_utc": "2026-10-22T05:09:44.209623+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 44,
+        "stdout_sha256": "fe4b696d57eef045dbbdf57dc48918ed2fc5f688d7dcacdf5e9b7fd526ad5f4c",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "8f66eb53a8934aaa973d89e7d6c5fbf4",
+        "label": "cc-native-names-prepare-restart",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-names-restart",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-jYtLxO"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:11:00.247486+00:00",
+        "ended_utc": "2026-10-22T05:11:00.348810+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 42,
+        "stdout_sha256": "ebf14e35c599e67def97cd5822d767ca65c4d01e6c0c79fb1cf7be34823909d9",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "7c218d723233420f989fd04968b85198",
+        "label": "cc-native-13-prepare",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-names",
+          "predecessor"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:11:30.865594+00:00",
+        "ended_utc": "2026-10-22T05:11:30.962407+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 486,
+        "stdout_sha256": "1b3ab384731c3d193e2407fbd6aeb7c55023337e1baad2c049ae3557d1a7302d",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "5df9906cf4314673a6751943d9664920",
+        "label": "cc-native-13-verify-initial",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "verify-names",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-is74IT"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:11:31.087480+00:00",
+        "ended_utc": "2026-10-22T05:11:31.234313+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 44,
+        "stdout_sha256": "fe4b696d57eef045dbbdf57dc48918ed2fc5f688d7dcacdf5e9b7fd526ad5f4c",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "6fb0de56b63e471aae9cf209ec2a2d73",
+        "label": "cc-native-names-prepare-restart",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "target/debug/examples/repl_live_probe",
+          "prepare-names-restart",
+          "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-is74IT"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:11:55.320077+00:00",
+        "ended_utc": "2026-10-22T05:11:55.430051+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 42,
+        "stdout_sha256": "ebf14e35c599e67def97cd5822d767ca65c4d01e6c0c79fb1cf7be34823909d9",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "f1a83879ae75491fbb43c674ebb87ab0",
+        "label": "Final full workspace make test",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "test"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:12:46.985416+00:00",
+        "ended_utc": "2026-10-22T05:14:31.891194+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 77606,
+        "stdout_sha256": "c8af323163003f27bef38115d28b7edb9a40670939183553887401b930d06d49",
+        "stderr_bytes": 4786,
+        "stderr_sha256": "572e4b016ac42fa681aee9f01c65e416e378faf127ec4c85f92cf45d4b3a10dc",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "21ce5763e95c4c60825ed23600bf856a",
+        "label": "workspace-build",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "build",
+          "--all-features",
+          "--workspace"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:15:12.128575+00:00",
+        "ended_utc": "2026-10-22T05:15:24.087827+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 1071,
+        "stderr_sha256": "b2cf1c39bb7319bf2785153a79aa1f0b126ab77596d93c53fba96dd2742b4fb8",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "838eaa7d45c545eca2675ff11d5055aa",
+        "label": "workspace all-features doctests",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "--doc",
+          "--workspace",
+          "--all-features"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:15:50.269421+00:00",
+        "ended_utc": "2026-10-22T05:15:56.267173+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 4285,
+        "stdout_sha256": "27691e69906d33a137991361c8f4e9aebd44336a9534830b04ccd844967a0082",
+        "stderr_bytes": 530,
+        "stderr_sha256": "38b6e275d2f01c94f500e73900bbf25fe5f0ed043535615fd40bf296f2194061",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "5a22629a1c3442a4901a88b46c69cb6d",
+        "label": "strict graph watch cache copilot docs",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "doc",
+          "-p",
+          "nms-graph",
+          "-p",
+          "nms-watch",
+          "-p",
+          "nms-cache",
+          "-p",
+          "nms-copilot",
+          "--no-deps"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:16:01.808349+00:00",
+        "ended_utc": "2026-10-22T05:16:07.036334+00:00",
+        "exit_code": 101,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 2177,
+        "stderr_sha256": "67594d30c23340274f190a05c57471be10a97e3bd6181ac8a8ac26a4eb9ac848",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "259e916ddb4f42f29b38d3f73949cbd5",
+        "label": "working-diff-check",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:16:26.965455+00:00",
+        "ended_utc": "2026-10-22T05:16:27.087278+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      },
+      {
+        "id": "e5c039fef7a543ec95834b24e9d6cf9c",
+        "label": "base-diff-check",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "git",
+          "diff",
+          "753bb3a9a01451e57fff34262acd4ab194d99341",
+          "--check"
+        ],
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "started_utc": "2026-10-22T05:16:27.391808+00:00",
+        "ended_utc": "2026-10-22T05:16:27.507080+00:00",
+        "exit_code": 0,
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "before_identity": null,
+        "after_identity": null
+      }
+    ]
+  },
+  "native_matrix": {
+    "case_count": 13,
+    "rows": [
+      {
+        "row": 1,
+        "id": "9369dc8a2b7041769f46448c1ddfc95f",
+        "profile": "warm/enabled",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-TUnkBX",
+        "result": "pass"
+      },
+      {
+        "row": 2,
+        "id": "c1cabd80fb244796bc717c57de21f746",
+        "profile": "warm/enabled",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JrqEQG",
+        "result": "pass"
+      },
+      {
+        "row": 3,
+        "id": "567a427508dd40b6aa4b6885610fda98",
+        "profile": "warm/enabled Ctrl-C",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JuVoNk",
+        "result": "pass"
+      },
+      {
+        "row": 4,
+        "id": "cd6193bde18841099d1e36f83440a40e",
+        "profile": "cold/enabled",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-3Wg3gS",
+        "result": "pass"
+      },
+      {
+        "row": 5,
+        "id": "851d0d1a2ea64e888975e9d8f7e0e696",
+        "profile": "sentinel/enabled --no-cache",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-YW9KBg",
+        "result": "pass"
+      },
+      {
+        "row": 6,
+        "id": "7a80dc53fafd4b91937efc6b359fcdd2",
+        "profile": "bypass-missing/enabled --no-cache",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-N6iq3u",
+        "result": "pass"
+      },
+      {
+        "row": 7,
+        "id": "f9bb26c60320404f87beaa389050c185",
+        "profile": "warm/disabled",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-uPoXRU",
+        "result": "pass"
+      },
+      {
+        "row": 8,
+        "id": "d554d9d1a28a40c892f507445d9142a8",
+        "profile": "blocker/enabled",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-yO3uHA",
+        "result": "pass"
+      },
+      {
+        "row": 9,
+        "id": "350a8088a39b44ac90e6881a23b2fa36",
+        "profile": "warm/enabled occupied-port expected bind failure",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-AVAEeA",
+        "result": "pass"
+      },
+      {
+        "row": 10,
+        "id": "0fb75f541fb247788b1463f51302884b",
+        "profile": "unknown/enabled; two REPL lifetimes",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-unknown-gaixDU",
+        "result": "pass"
+      },
+      {
+        "row": 11,
+        "id": "b510c2e4562e46928b146aa592ad3778",
+        "profile": "authentic predecessor/disabled watch",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-tKNH0k",
+        "result": "pass"
+      },
+      {
+        "row": 12,
+        "id": "2bb99e234ef24e78a5cf4d3df31ee94e",
+        "profile": "warm seeded names; two REPL lifetimes",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-jYtLxO",
+        "result": "pass"
+      },
+      {
+        "row": 13,
+        "id": "c04bb11436ff48e8ad4c509b756534b5",
+        "profile": "authentic predecessor names; two REPL lifetimes",
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-is74IT",
+        "result": "pass"
+      }
+    ],
+    "receipt_file_count": 916,
+    "triplets": {
+      "launch": 216,
+      "raw": 216,
+      "post": 216,
+      "case_directory_files": 903,
+      "root_prepare_records": 13
+    },
+    "archive": {
+      "path": "workbench/slice23-return/cc-native-evidence.tar.gz",
+      "sha256": "e02b8493020a15580667945bf2db307641cc96e5fb18f5493bf597adf41351ca",
+      "bytes": 366592
+    },
+    "case_file_inventory": [
+      {
+        "case_id": "0fb75f541fb247788b1463f51302884b",
+        "file_count": 135,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-unknown-gaixDU"
+      },
+      {
+        "case_id": "2bb99e234ef24e78a5cf4d3df31ee94e",
+        "file_count": 187,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-jYtLxO"
+      },
+      {
+        "case_id": "350a8088a39b44ac90e6881a23b2fa36",
+        "file_count": 31,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-AVAEeA"
+      },
+      {
+        "case_id": "567a427508dd40b6aa4b6885610fda98",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JuVoNk"
+      },
+      {
+        "case_id": "7a80dc53fafd4b91937efc6b359fcdd2",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-N6iq3u"
+      },
+      {
+        "case_id": "851d0d1a2ea64e888975e9d8f7e0e696",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-YW9KBg"
+      },
+      {
+        "case_id": "9369dc8a2b7041769f46448c1ddfc95f",
+        "file_count": 111,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-TUnkBX"
+      },
+      {
+        "case_id": "b510c2e4562e46928b146aa592ad3778",
+        "file_count": 47,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-tKNH0k"
+      },
+      {
+        "case_id": "c04bb11436ff48e8ad4c509b756534b5",
+        "file_count": 91,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice23-names-is74IT"
+      },
+      {
+        "case_id": "c1cabd80fb244796bc717c57de21f746",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-JrqEQG"
+      },
+      {
+        "case_id": "cd6193bde18841099d1e36f83440a40e",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-3Wg3gS"
+      },
+      {
+        "case_id": "d554d9d1a28a40c892f507445d9142a8",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-yO3uHA"
+      },
+      {
+        "case_id": "f9bb26c60320404f87beaa389050c185",
+        "file_count": 43,
+        "fixture": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/slice19-uPoXRU"
+      }
+    ],
+    "per_case_directory_file_count": 903,
+    "root_prepare_record_count": 13
+  },
+  "final_gates": [
+    {
+      "id": "f1a83879ae75491fbb43c674ebb87ab0",
+      "command": "make test",
+      "exit": 0,
+      "harnesses": 42,
+      "passed": 1093,
+      "unit_and_integration": 1062,
+      "doctests": 31
+    },
+    {
+      "id": "21ce5763e95c4c60825ed23600bf856a",
+      "command": "cargo build --all-features --workspace",
+      "exit": 0
+    },
+    {
+      "id": "838eaa7d45c545eca2675ff11d5055aa",
+      "command": "cargo test --doc --workspace --all-features",
+      "exit": 0,
+      "passed": 31,
+      "harnesses": 9
+    },
+    {
+      "id": "5a22629a1c3442a4901a88b46c69cb6d",
+      "command": "RUSTDOCFLAGS=-D warnings cargo doc -p nms-graph -p nms-watch -p nms-cache -p nms-copilot --no-deps",
+      "exit": 101,
+      "failure": "Unresolved intra-doc link effective_save_file at unchanged crates/nms-copilot/src/config.rs:288; inherited, unmodified, no correction authorized after five-pass cap."
+    },
+    {
+      "id": "259e916ddb4f42f29b38d3f73949cbd5",
+      "command": "git diff --check",
+      "exit": 0
+    },
+    {
+      "id": "e5c039fef7a543ec95834b24e9d6cf9c",
+      "command": "git diff 753bb3a9a01451e57fff34262acd4ab194d99341 --check",
+      "exit": 0
+    }
+  ],
+  "proposed_rows": {
+    "NI-01": "proposed-done; CDC reproduction pending",
+    "NI-02": "proposed-done; CDC reproduction pending",
+    "NI-03": "proposed-done; CDC reproduction pending",
+    "NI-04": "proposed-done; CDC reproduction pending",
+    "NI-05": "proposed-done; CDC reproduction pending",
+    "NI-06": "proposed-done; CDC reproduction pending",
+    "NI-07": "open; strict docs gate red",
+    "NI-08": "open; CDC acceptance/retrospective/bubble-up pending"
+  },
+  "artifact_inventory": [
+    "workbench/slice23-return/execution.md (append-only, includes original history)",
+    "workbench/slice23-return/validation.json",
+    "workbench/slice23-return/closing-report.md",
+    "workbench/slice23-return/cc-native-evidence.tar.gz (916 native receipt files, helper/controller inputs, attempt record)"
+  ],
+  "acceptance": "CC proposed evidence only; all eight ledger rows remain open pending CDC independent review and disposition.",
+  "artifact_hashes": {
+    "execution.md": "12eae39d586d0dcee178ff2e814470ae6d12238ec0e679360237be043c5d100d",
+    "validation.json": "self-hash intentionally omitted",
+    "closing-report.md": "87a0e444450bab00919efc644628cb1ea7326c26e15320ea47a0d5c7e2e413c5",
+    "cc-native-evidence.tar.gz": "e02b8493020a15580667945bf2db307641cc96e5fb18f5493bf597adf41351ca"
+  }
+}
