@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.104, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.105, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -901,3 +901,10 @@ All5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productio
 [Slice26](slice26-save-slot-contract/slice-plan.md) owns full original15slot/discovery/CLIselection/listing contract: boundedfivepaths closeImportresolverbypass/out-of-rangefilenames/maskedlistIO, allcallerthree-mode literal56-bitfixtures/pairedmtime/tie/account/error/readonlyproof/docs. Explicit--savepriority/firstsortedaccount/globalnewest/Unknowndirectory policy preserved; no selector/nickname/address/cache/importpersistence/terminal/dependency/inquiry change. SameCDC/CC/headroomconfirmed, newdedicatedsourceclean03b/rawfirstsupportcontrols beforecompiler/initial0of5/fullheldworksheet/11groups. NativeMacLinuxHOME safe/WindowsKnownFoldersruntime limit explicit/no realhostsaveaccess.
 
 44arcrows27done17open/project25open; all6MS/R06-S26/M7.3OPEN. All25closures/originalM7.1M7.2retained, allotheroriginal/repair/raw/history/finalsemantic/freshness-import/game/platform/format/UI/docs/distribution/coverage/performance/higher/Operator/integration/release gates remain. Main9line/heldexternalpins/models/onearcendpoint protected/no otherarc/Project02/remote/integration/install/release.
+
+
+## Original M7.3 / Slice26 independent closure — 2026-10-22 UTC
+
+All6MS/R06-S26andoriginalM7.3acceptedatcleanbfa2b371 (fivepathrange03b→proofpending84a5→onecallbfa2). Importglobal-slot/range15/listIO fixes plusliteralportable30file/15slot/account/error/ownedactualten-callerthree-mode/readonly/negativeproof satisfycompleteoriginal0037leaf. ElevenfreshCDCgroups pass: nms-save130+14, focused6,CLI172,full1082runtime+31docs,build/docs31/strict/diffs. NativeHOMEproofMacLinux/Windowsruntimeunclaimed. Sourceisolated/alloriginalpoliciespreserved/no newselector/nickname/persistence/cache/architecture.
+
+ActualbudgetreconciledBEFORE06: initial+01firstimplementation;02–06fiveactualrefinements, exactguideexcludesunstartedreplacement; erroneousfilename-countlabels preserved/superseded, no directhumanstrictercap/no exception/reset. Raw38CC+13CDC/allfailedattempts/byteexactreturns andsummarycorrections/archives/mandatoryCDCretro/bottomup complete. ParentcompliantYESwithinM7.3.44arcrows29done15open/project25open. NEXTcompleteoriginal0038/M7.4andremainingrepair-parent source/evidencegrounding beforeboundedownerselection. Allotheroriginal/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game/platform/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. SameCDC-CCmodels/Arc06endpoint/mainhuman9line/allheldexternalpinsprotected; no otherarc/Project02/merge/push/install/publish/release.

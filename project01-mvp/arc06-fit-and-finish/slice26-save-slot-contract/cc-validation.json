@@ -1,0 +1,433 @@
+{
+  "slice": "M7.3 / Slice26 save-slot contract",
+  "source": {
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-slot-contract",
+    "branch": "codex/save-slot-contract",
+    "base_commit": "03b6536636f00a74a52f2d783a9ef80a671d191e",
+    "commit": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+    "index_clean": true,
+    "worktree_clean": true,
+    "commit_diff_sha256": "b2edb8b95144ddf1a98ff8ef3d970348a6db124677489a573456815f51322b95",
+    "changed_paths": [
+      "README.md",
+      "crates/nms-cli/src/main.rs",
+      "crates/nms-cli/src/saves.rs",
+      "crates/nms-cli/tests/multi_save_integration.rs",
+      "crates/nms-save/src/locate.rs"
+    ],
+    "coauthor_trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
+  },
+  "capture_record": "/private/tmp/nms-slice26-cc-attempts.json",
+  "final_pair_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+  "attempts": [
+    {
+      "id": "30dd902bd4f845a99b9af73deeaed2c3",
+      "command": "make format",
+      "exit_code": 0,
+      "before_identity": "6abf2de4426f48b21f50b84d1093ff7473fa8186e7f2a9d11d4af0a43bf60d07",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "779c33e417ee4618b72dbb06f1497ce9",
+      "command": "make lint",
+      "exit_code": 0,
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "034ce3dc913042afb89a2cf8e45362f7",
+      "command": "cargo test -p nms-cli --test multi_save_integration",
+      "exit_code": 101,
+      "passed": 5,
+      "failed": 1,
+      "failure": "assert_only_table_cell_changed line-count assertion: 43 versus 42",
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "2f3096ac330c40659356559c73ae7a61",
+      "command": "cargo test -p nms-cli",
+      "exit_code": 101,
+      "passed": 129,
+      "failed": 1,
+      "failure": "same multi_save_integration line-count assertion",
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "88a87e74daef468aaaf7d029ce9e0137",
+      "command": "make test (authorized host, original inherited TMPDIR)",
+      "exit_code": 2,
+      "runtime_cases": 178,
+      "passed": 177,
+      "failed": 1,
+      "failure": "same multi_save_integration line-count assertion",
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "f96d94dbdec6412a85bb48258bbb4af8",
+      "command": "cargo build --all-features --workspace",
+      "exit_code": 0,
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "460930db1eeb4e0f8af14f0ee96781f5",
+      "command": "cargo test --doc --workspace --all-features",
+      "exit_code": 0,
+      "doctests": 33,
+      "passed": 33,
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "204d85399d5e4e368c87f8aa513ec200",
+      "command": "cargo doc -p nms-save -p nms-cli --no-deps (RUSTDOCFLAGS=-D warnings)",
+      "exit_code": 0,
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "1c3242d0202f4e0bb146dd893712872e",
+      "command": "git diff --check (before staging new test)",
+      "exit_code": 0,
+      "before_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2",
+      "after_identity": "32e45c38f8ec163a9140fe5f7085cc350360e23bda87f9966df8682cf69b59c2"
+    },
+    {
+      "id": "5f5963e74d9643d6ba3e61c6db82f3aa",
+      "command": "git diff 03b6536636f00a74a52f2d783a9ef80a671d191e --check (after staging new test)",
+      "exit_code": 0,
+      "before_identity": "994f872b4ce43538bf21417fd37744fe4da4c998ea45214ec48ae371e3a2a3de",
+      "after_identity": "994f872b4ce43538bf21417fd37744fe4da4c998ea45214ec48ae371e3a2a3de"
+    }
+  ],
+  "retained_prior_proof": {
+    "focused_nms_save": {
+      "id": "24000f4f418940519202fd71010bb676",
+      "runtime_cases": 130,
+      "passed": 130,
+      "doctests": 14,
+      "doctests_passed": 14,
+      "source_applicability": "nms-save files unchanged from the recorded attempt"
+    }
+  },
+  "acceptance": "CC proposal only; all six Slice26 rows remain open pending CDC independent review and reconciliation. The focused integration and aggregate test gate are red.",
+  "iteration06_current_update": {
+    "assignment": "cc-prompt-iteration06.md",
+    "correction": "In replace_info_value, use split('\\n') in place of lines(); no other source change.",
+    "base_commit": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+    "source_file_sha256": "b7bdfa8eb5c9b1e4969c1a7f9c0a442553d424aadf23b3e2cda1947aa4ce4a5c",
+    "working_identity_before_commit": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+    "attempts": [
+      {
+        "id": "30c0c622ff204baab5a98a1b3147d239",
+        "label": "slice26-iter06-format",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:42:27.634539+00:00",
+        "ended_utc": "2026-10-22T09:42:28.645295+00:00",
+        "stdout_bytes": 107,
+        "stderr_bytes": 0,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "192136cd330b4453890ba7027dee116d",
+        "label": "slice26-iter06-lint",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:42:32.175695+00:00",
+        "ended_utc": "2026-10-22T09:42:34.248112+00:00",
+        "stdout_bytes": 176,
+        "stderr_bytes": 439,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "60a41cb072b24dc68873c59ad6f793e6",
+        "label": "focused-multi-save",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli",
+          "--test",
+          "multi_save_integration",
+          "--all-features"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:44:18.723787+00:00",
+        "ended_utc": "2026-10-22T09:44:21.625103+00:00",
+        "stdout_bytes": 646,
+        "stderr_bytes": 545,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "384917e048974951a0e9dcd9c13c9b55",
+        "label": "whole-cli",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli",
+          "--all-features"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:44:32.383138+00:00",
+        "ended_utc": "2026-10-22T09:44:35.056718+00:00",
+        "stdout_bytes": 11414,
+        "stderr_bytes": 1483,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "7695e61ce28f4a6492a6081b9632752b",
+        "label": "full-make-test",
+        "argv": [
+          "make",
+          "test"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:44:58.633841+00:00",
+        "ended_utc": "2026-10-22T09:46:43.223454+00:00",
+        "stdout_bytes": 79569,
+        "stderr_bytes": 3981,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "53c5683c99404becb74da6a6d538582f",
+        "label": "focused-multi-save-exact",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli",
+          "--test",
+          "multi_save_integration"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:46:50.429229+00:00",
+        "ended_utc": "2026-10-22T09:46:51.700643+00:00",
+        "stdout_bytes": 646,
+        "stderr_bytes": 433,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "90f3c9f429c44c4c91b5572ad9b1d128",
+        "label": "whole-cli-exact",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:46:58.174705+00:00",
+        "ended_utc": "2026-10-22T09:47:00.098405+00:00",
+        "stdout_bytes": 11414,
+        "stderr_bytes": 1483,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "64198f49a25b4ef79f65cfa01e00c720",
+        "label": "working-diff-check",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:47:57.535260+00:00",
+        "ended_utc": "2026-10-22T09:47:57.639705+00:00",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "7034a7730a414690b8dd2dda057dd653",
+        "label": "baseline-diff-check",
+        "argv": [
+          "git",
+          "diff",
+          "03b6536636f00a74a52f2d783a9ef80a671d191e",
+          "--check"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:48:04.857134+00:00",
+        "ended_utc": "2026-10-22T09:48:04.948354+00:00",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0,
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      }
+    ],
+    "counts": {
+      "focused_exact": {
+        "passed": 6,
+        "failed": 0
+      },
+      "whole_cli_exact": {
+        "passed": 172,
+        "failed": 0,
+        "harnesses": 12
+      },
+      "make_test": {
+        "runtime_harnesses": 36,
+        "runtime_passed": 1082,
+        "runtime_failed": 0,
+        "doctest_groups": 9,
+        "doctests_passed": 31,
+        "doctests_failed": 0
+      }
+    },
+    "retained_applicability": "Earlier all-feature workspace build, workspace doctests, and strict save/CLI docs remain applicable because iteration06 changed only the test helper expression; their original entries above are preserved.",
+    "current_status": "All released post-correction focused, CLI, full make test, and diff checks pass. CC proposes completion; independent CDC acceptance remains pending. The one-path correction commit is to be added atop the existing 84a5abde candidate."
+  },
+  "iteration06_final_delivery": {
+    "commit": "bfa2b3710269b8110a858227ad79202ffdd1d513",
+    "parent": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+    "tree": "0645d2fdf18b5120f377325cb731ed88e213c033",
+    "changed_paths": [
+      "crates/nms-cli/tests/multi_save_integration.rs"
+    ],
+    "parsed_trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "post_commit_identity": "527102057fcea2b3712a173c4c8f2d009fc5e080f2d3518fb5b8cb72c1deb02b",
+    "working_tree": "clean; index empty; no untracked files",
+    "captured_attempt_count": 38,
+    "final_attempts": [
+      {
+        "id": "53c5683c99404becb74da6a6d538582f",
+        "label": "focused-multi-save-exact",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli",
+          "--test",
+          "multi_save_integration"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:46:50.429229+00:00",
+        "ended_utc": "2026-10-22T09:46:51.700643+00:00",
+        "stdout_bytes": 646,
+        "stderr_bytes": 433,
+        "before_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "after_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "90f3c9f429c44c4c91b5572ad9b1d128",
+        "label": "whole-cli-exact",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-cli"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:46:58.174705+00:00",
+        "ended_utc": "2026-10-22T09:47:00.098405+00:00",
+        "stdout_bytes": 11414,
+        "stderr_bytes": 1483,
+        "before_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "after_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "7695e61ce28f4a6492a6081b9632752b",
+        "label": "full-make-test",
+        "argv": [
+          "make",
+          "test"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:44:58.633841+00:00",
+        "ended_utc": "2026-10-22T09:46:43.223454+00:00",
+        "stdout_bytes": 79569,
+        "stderr_bytes": 3981,
+        "before_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "after_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "64198f49a25b4ef79f65cfa01e00c720",
+        "label": "working-diff-check",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:47:57.535260+00:00",
+        "ended_utc": "2026-10-22T09:47:57.639705+00:00",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0,
+        "before_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "after_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "7034a7730a414690b8dd2dda057dd653",
+        "label": "baseline-diff-check",
+        "argv": [
+          "git",
+          "diff",
+          "03b6536636f00a74a52f2d783a9ef80a671d191e",
+          "--check"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:48:04.857134+00:00",
+        "ended_utc": "2026-10-22T09:48:04.948354+00:00",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0,
+        "before_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "after_head": "84a5abde8a772f031cb1f1620a2bc3af144ba285",
+        "before_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b",
+        "after_identity": "b92a42ef81d0661e701ade9ae10f0ca7c40af37a8af9524cd3e30cf3cd2b429b"
+      },
+      {
+        "id": "a55755a457604fe983fa460bf88c6959",
+        "label": "committed-baseline-diff-check",
+        "argv": [
+          "git",
+          "diff",
+          "03b6536636f00a74a52f2d783a9ef80a671d191e",
+          "--check"
+        ],
+        "exit_code": 0,
+        "started_utc": "2026-10-22T09:50:48.157015+00:00",
+        "ended_utc": "2026-10-22T09:50:48.257412+00:00",
+        "stdout_bytes": 0,
+        "stderr_bytes": 0,
+        "before_head": "bfa2b3710269b8110a858227ad79202ffdd1d513",
+        "after_head": "bfa2b3710269b8110a858227ad79202ffdd1d513",
+        "before_identity": "527102057fcea2b3712a173c4c8f2d009fc5e080f2d3518fb5b8cb72c1deb02b",
+        "after_identity": "527102057fcea2b3712a173c4c8f2d009fc5e080f2d3518fb5b8cb72c1deb02b"
+      }
+    ],
+    "current_status": "Released focused/whole CLI/full make test and diff checks passed. This is CC proposed completion; all six Slice26 rows await CDC independent disposition."
+  }
+}
