@@ -33,3 +33,5 @@ Current assignment additionally includes immutable iteration03: closed F1–F6 r
 Current immutable iteration04 corrects actual INTERNAL│/noouter table shape across parser/metadata/mutant consumers in newtestONLY, allotherfourfilesfrozen. First runtime nms-save130+14green retained; focusedCLI2pass4fail of6 retained/no complete matrix credit. CDC missed actualthemeboundary in held source review. Capturedpair/targetreview then focusedCLI-first remainder; fourthof5/oneordinaryleft.
 
 Current immutable05 additionally corrects author04 colored-style overclaim: piped find/show/stats are borderless Theme::none; same newtest-only two+-space field parser/callers retain all source literals/populations/negatives. CC04 partial held before any newgate; original04/source retained. Combined04+05 then pair/immediatehold/targetedreview; fivecap binding, no automatic sixth.
+
+Final05 pair actual30dd902bformat0/779c33e4lint0 complete/current32e45c38 identity. CDC wholeaffected diff/consumer review satisfied; corrected focusedCLI-first original remaining runtime/final groups RELEASED. No postcorrectionruntime credit yet; allsixMS/parentM7.3 open. Fifthcap remains binding.
