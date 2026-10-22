@@ -156,3 +156,8 @@ Human replied “oh, yeah — absolutely, go ahead :-D” to the consolidated f0
 ## Exceptional06 coherent intake and three-file source handoff
 
 CDC inspected fullappendedreadback c4f390c4, original19f58428redprefixbyte-preserved. Exactfive-fieldchildprojection/wholeJSONrestore/legacypositive-negativefilters, literalheaderonly and threecodespans match issuedrecipe; currentclean8a01b3d/indexempty. Return onlyexactthreepaths/sourceindex/gates to sameCC throughcapturedformat→lint, thenHOLDforfullboundedreview before runtime. CDCplanning/independentacceptance retained, all8CA/parentsopen/no seventh.
+
+
+## Exceptional06 static release — existing affected sequence
+
+Actual76CCrecords inspected/prior74valuesunchanged. Formatac3d885f0 legitimatelyformats070b7b→26004e2f; linta71eade30 stable26004e2f, fullraw/end/status complete. CDC completechildbody/assertions and fullfileinversecomparison prove sharedlegacyfixture/other6tests/invocationpositive-negativebyteidentical, fiveexactfields/fullJSONrestore correct; cacheexactoneindependentsemanticbyte and graphexactthreecodespans only. Other36paths/production/index/untracked frozen; no runtimeclaim. RELEASEonlyissuedfocusedfind/allCLI/wholecache/fullmake/samestrictdocs/twodiffs, preservingfailures/hostretry/originalTMPDIR. All8CAopen; no seventhauthority.
