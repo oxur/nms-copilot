@@ -219,6 +219,8 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S23 | Actual same-parse application names/cache5/live/native composition independently accepted | Eight NI rows and complete O1–O8/current independent gates/native13 | correctness-grade | Approved namingA/required23 | open | — | Required24/full original parents retained |
+| R06-S23 | Actual same-parse application names/cache5/live/native composition independently accepted | Eight NI rows and complete O1–O8/current independent gates/native13 | correctness-grade | Approved namingA/required23 | open | [CDC current proof/decisions](slice23-discovery-name-integration/cdc-verification.md) — reproduced partial | NI-01–06 done; NI-07/08 strict-doc cap/historical capture/final closure open; required24/full original parents retained |
 
 41arcrows22done19open/project25open at Slice23 issue; no child or original parent acceptance inferred.
+
+Slice23 current review: six child criteria independently accepted, two open; R06-S23 remains open, counts41/22done/19open and project25open unchanged. No parent closure from partial child acceptance.

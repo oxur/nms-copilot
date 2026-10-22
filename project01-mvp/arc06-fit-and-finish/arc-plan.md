@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.96, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.97, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -847,3 +847,10 @@ All6NF/R06-S22 independently accepted atclean753bb3a9a01451e57fff34262acd4ab194d
 ## Slice23 actual discovery-name application issued — 2026-10-22 UTC
 
 Approved namingA/8922313 now proceeds from accepted22/753bb3a9 to the actual usable application owner [Slice23](slice23-discovery-name-integration/slice-plan.md). Same CC confirmed qualitativeheadroom/noownedprocesses; newdedicatedsourcecodex/discovery-name-integration clean753 atissue. Concrete pairedobservation API preserves coreSaveUpdate/oldwatchstreams, checkedcoldnames and sameparsefull/name-only coordinatorapplication beforecache/publication; actualmetadataflaginvalidatesnamedstats withoutfalsemovement. Semantic5/schema3, exactauthentic224B3/4predecessor/provenance, currentwarm/cachelossdisclosure, wholeliteralmodel/index/cache/liveguards/stdoutEOF/HTTPfreshwhole-retry and original11native+names12/predecessor13 areclosedO1–O8. Exact22paths include onlynecessarylegacyheader/eventliteralmechanicalupdates. Actualrawfirstcapturecontrols7/0 completewithstatuses beforecompiler; no23sourceedit/productgate/acceptance atissue. Initialpromptimmutable0of5, sameCDC/CCmodels/serializedownership/protectedmain9line/heldexternalpins/Arc06endpoint. All8NI/R06-S23OPEN;41arcrows22done19open/project25open. Mandatory24/CDC fulloriginalM7.1 exportandalloriginalparents/repair/game/raw/history/finalsemantic/freshness-import/UI/docs/distribution/coverage/performance/independent/Operator/integration/release obligations remain. No newpolicy/inquiry/releaseauthority.
+
+
+## Slice23 independent current proof / Operator gate — 2026-10-22 UTC
+
+Candidate133bc762 (accepted22parent753bb3a9) is clean/local/unintegrated, exact23paths. [Current CDC review](slice23-discovery-name-integration/cdc-verification.md) accepts NI-01–NI-06 after21of22 source gates/native13/workspace1062runtime+31docs. NI-07/08/R06-S23 remain open: strict docs independently fails inherited config.rs288 method link; five ordinary refinements are exhausted, so only a proposed one-line sixth-pass override awaits Operator decision. Separately the first privateCLI py_compile lacks its issued historical capture observations; no success/exit/channel/identity is reconstructed, and no prior waiver carries. The packet distinguishes these two decisions, preserved failures, raw-complete83CC/55CDC evidence and summary-key nulls that are not missing observations. No06 or dependent24 dispatch/source change before authorization; complete unaffected proof and interim CDC retrospective are retained.
+
+Arc41rows22done19open/project25open unchanged. Required24 full originalM7.1 export and every original/repair/raw/history/final-semantic/freshness-import/game-backed/format/UI/docs/distribution/coverage/performance/higher independent/Operator/integration/release gate remain. Same CDC/CC models/Arc06 endpoint/serialized ownership; mainb616 only protected nine-line human edit, all held pins/external03e8d04 unchanged. No other arc/Project02/merge/push/install/publish/release.
