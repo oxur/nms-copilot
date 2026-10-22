@@ -1,0 +1,152 @@
+{
+  "slice": "22",
+  "status": "author-ready; no product attempts",
+  "authority": {
+    "operator": "agreed and approve",
+    "packet": "877218c56ef7d1811d4c81a5dec987e002f18d68",
+    "approval_record": "8922313",
+    "CDC": "gpt-6.1-sol High",
+    "CC": "gpt-6-luna High",
+    "endpoint": "Project01 Arc06 only"
+  },
+  "source": {
+    "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+    "branch": "codex/discovery-name-observations",
+    "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+    "status": "",
+    "index_empty": true
+  },
+  "capture_helper": {
+    "path": "/private/tmp/nms-slice22-cc-capture.py",
+    "bytes": 3705,
+    "sha256": "ecdd3337c935e2078ceec7e75b6036f2447590d5a377b2a6a7f35e18b8a85c33",
+    "text": "\"\"\"CDC gate capture. No SUT launches on import; persist raw completion before metadata.\"\"\"\nimport base64, datetime, hashlib, json, os, pathlib, subprocess, sys, uuid\nROOT = pathlib.Path('/Users/oubiwann/lab/oxur/nms-copilot')\nSOURCE = ROOT / '.worktrees/discovery-name-observations'\nRECORD = pathlib.Path('/private/tmp/nms-slice22-cc-attempts.json')\nENV_KEYS = ('TMPDIR','RUSTDOCFLAGS','CARGO_TARGET_DIR','CARGO_NET_OFFLINE','RUSTUP_TOOLCHAIN','TERM','PATH')\n\ndef utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef atomic_save(data):\n    RECORD.parent.mkdir(parents=True, exist_ok=True)\n    temp = RECORD.with_suffix('.json.pending')\n    with temp.open('w') as f:\n        json.dump(data, f, indent=2); f.write('\\n'); f.flush(); os.fsync(f.fileno())\n    os.replace(temp, RECORD)\ndef metadata():\n    def git(*args): return subprocess.check_output(['git', *args], cwd=SOURCE)\n    head=git('rev-parse','HEAD').decode().strip()\n    diff_sha=hashlib.sha256(git('diff','HEAD','--binary')).hexdigest()\n    untracked={}\n    for raw in git('ls-files','--others','--exclude-standard','-z').split(b'\\0'):\n        if raw:\n            relative=os.fsdecode(raw); body=(SOURCE/relative).read_bytes()\n            untracked[relative]={'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest()}\n    identity={'head':head,'tracked_diff_sha256':diff_sha,'untracked':untracked}\n    return {'head':head,'status':git('status','--short').decode(),\n            'working_diff_sha256':diff_sha,'untracked_files':untracked,\n            'working_identity_sha256':hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()}\ndef channel(raw):\n    return {'base64':base64.b64encode(raw).decode(), 'bytes':len(raw), 'sha256':hashlib.sha256(raw).hexdigest()}\ndef capture(label, argv, overrides=None, kind='SUT gate'):\n    overrides = overrides or {}\n    data=json.loads(RECORD.read_text()) if RECORD.exists() else {'implementer':'CC /root/cdc_arc06/cc_slice17','attempts':[]}\n    entry={'id':uuid.uuid4().hex,'label':label,'kind':kind,'argv':argv,'cwd':str(SOURCE),\n           'started_utc':utc(),'before':metadata(),'inherited_env':{k:os.environ.get(k) for k in ENV_KEYS},\n           'overrides':overrides,'status':'running'}\n    data['attempts'].append(entry); atomic_save(data)\n    try:\n        result=subprocess.run(argv,cwd=SOURCE,env=os.environ|overrides,capture_output=True)\n        # Persist child completion FIRST. No git/summary/report parsing before this write.\n        entry['raw_completion']={'exit_code':result.returncode,'ended_utc':utc(),\n                                 'stdout':channel(result.stdout),'stderr':channel(result.stderr)}\n        entry['status']='child-complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['launch_or_capture_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    try:\n        entry['after']=metadata(); entry['status']='complete'; atomic_save(data)\n    except BaseException as exc:\n        entry['post_metadata_exception']={'type':type(exc).__name__,'message':str(exc),'utc':utc()}\n        atomic_save(data); raise\n    print(json.dumps({'id':entry['id'],'label':label,'exit_code':result.returncode,\n                      'stdout_bytes':len(result.stdout),'stderr_bytes':len(result.stderr),\n                      'stdout_tail':result.stdout.decode(errors='replace')[-1800:],\n                      'stderr_tail':result.stderr.decode(errors='replace')[-900:]}),flush=True)\n    return result.returncode\nif __name__=='__main__':\n    label=sys.argv[1]; spec=json.loads(sys.argv[2])\n    raise SystemExit(capture(label,spec['argv'],spec.get('overrides'),spec.get('kind','SUT gate')))\n"
+  },
+  "author_support_prefix": {
+    "path": "/private/tmp/nms-slice22-cc-attempts.json",
+    "bytes": 7753,
+    "sha256": "4c6a96ea5c98a65990c9c417e4957b3d4ebc652d9784dafa4f84390b2f90d2f8",
+    "data": {
+      "implementer": "CC /root/cdc_arc06/cc_slice17",
+      "attempts": [
+        {
+          "id": "2912bbbd62e147fabc1c35aca4d3f934",
+          "label": "author-support-exit7",
+          "kind": "capture support control; not product evidence",
+          "argv": [
+            "python3",
+            "-c",
+            "import sys;print(\"capture22-out\");print(\"capture22-err\",file=sys.stderr);sys.exit(7)"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+          "started_utc": "2026-10-22T01:22:17.754900+00:00",
+          "before": {
+            "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "21559b155a7c01fa2a1acfd8391c9c9258a65a74c7aca481b0eda73fec95701d"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 7,
+            "ended_utc": "2026-10-22T01:22:17.903846+00:00",
+            "stdout": {
+              "base64": "Y2FwdHVyZTIyLW91dAo=",
+              "bytes": 14,
+              "sha256": "ba9f2d6e8ba5d4b310ea57ec04399c5e37d2c012e72f3757be384a4a5c34c1f2"
+            },
+            "stderr": {
+              "base64": "Y2FwdHVyZTIyLWVycgo=",
+              "bytes": 14,
+              "sha256": "4564b7d844d5c3289b0389a11ee171bb61c7cf3578d642a50584436bf7a4faff"
+            }
+          },
+          "after": {
+            "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "21559b155a7c01fa2a1acfd8391c9c9258a65a74c7aca481b0eda73fec95701d"
+          }
+        },
+        {
+          "id": "1c09df495d4741229e70bd021c84c6bb",
+          "label": "author-support-exit0",
+          "kind": "capture support control; not product evidence",
+          "argv": [
+            "python3",
+            "-c",
+            "print(\"capture22-ok\")"
+          ],
+          "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+          "started_utc": "2026-10-22T01:22:18.151656+00:00",
+          "before": {
+            "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "21559b155a7c01fa2a1acfd8391c9c9258a65a74c7aca481b0eda73fec95701d"
+          },
+          "inherited_env": {
+            "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+            "RUSTDOCFLAGS": null,
+            "CARGO_TARGET_DIR": null,
+            "CARGO_NET_OFFLINE": null,
+            "RUSTUP_TOOLCHAIN": null,
+            "TERM": "dumb",
+            "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+          },
+          "overrides": {},
+          "status": "complete",
+          "raw_completion": {
+            "exit_code": 0,
+            "ended_utc": "2026-10-22T01:22:18.261486+00:00",
+            "stdout": {
+              "base64": "Y2FwdHVyZTIyLW9rCg==",
+              "bytes": 13,
+              "sha256": "21e21ab39284c3415ed67c1a0da2d10780cec32118ea43be457e12e21fc4a928"
+            },
+            "stderr": {
+              "base64": "",
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          },
+          "after": {
+            "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+            "status": "",
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "untracked_files": {},
+            "working_identity_sha256": "21559b155a7c01fa2a1acfd8391c9c9258a65a74c7aca481b0eda73fec95701d"
+          }
+        }
+      ]
+    },
+    "verification": "Both actual support controls independently decoded/rehashed; stdout/stderr exact14/14 at exit7 and13/0 at exit0; end and explicit statuses present; identical clean before/after composite. Not product evidence."
+  },
+  "CC_headroom": "Existing sole CC reports usable qualitative headroom for self-contained unit, no owned active processes/gates, source held cleanb290; no new role/model.",
+  "required_successors": {
+    "23": "actual cold/fullsame-parse/name-only application/cache semantic5/schema3/native lifecycle",
+    "24": "complete original0037 M7.1 real-child export contract"
+  },
+  "independent_attempts": [],
+  "dispositions": {
+    "NF-01": "open",
+    "NF-02": "open",
+    "NF-03": "open",
+    "NF-04": "open",
+    "NF-05": "open",
+    "NF-06": "open"
+  }
+}

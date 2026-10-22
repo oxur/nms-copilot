@@ -203,3 +203,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 2026-10-21 Slice21 consolidated CLI/currentheader refinement02 before compiler: secondof5,38currentallowedpaths, same8CA/R06-S21open;39arcrows20done19open/project25open. No row/control/gate removed.
 
 2026-10-22 Slice21 independently closed:39 arc rows/21 done/18 open; all25 project rows remain open. All38 prior entire rows and original criteria remain, including15 original capability rows and three repair parents. No parent/integration/release acceptance is inferred.
+
+
+## Discovery-name foundation child — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S22 | Explicit checked discovery-name observations and opt-in exact-entity model API independently accepted | Six NF rows/full literal maps/firstduplicates/rawmetadata/wholemodel/index/compatibility/publicdocs/independent proof | correctness-grade | Approved877218c5 A / F02 / M7.1 dependency | open | — | Required23 application/live/cache5/native and24 full originalexport retained; no parentacceptance |
+
+40arcrows21done19open/project25open. All39 prior entire rows preserved. No Slice22 product acceptance at issue.

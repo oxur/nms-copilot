@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.81
+version: 1.82
 project: project01-mvp
 status: active
 depends-on: []
@@ -1084,3 +1084,8 @@ Arc39rows21done18open/project25open; all prior closures/failures/retrospectives 
 ## Arc06 raw-name ownership A approved — 2026-10-22 UTC
 
 Version1.81: Operator “agreed and approve” adopts exactly877218c5 A; arc-plan1.93 records authority before dependent work. Explicit sourceCN strings own exact-entity set/empty-clear over imported labels; missing/null/nonstring/nonobject preserve, firstduplicates/rawmetadata/existing lifecycle semantics retained. Application semantic4→5/schema3 rebuild with disclosed cache-only re-import consequence is authorized. CDC resolves bounded names/export owner(s), APIs/oracles and contributor headroom before handoff under same models/Arc06-only authority. No new inquiry/provenance architecture/waiver/integration/release, no source acceptance yet. Arc39rows21done18open/project25open and all protected pins/original remaining obligations preserved.
+
+
+## Arc06 Slice22 opt-in names foundation issued — 2026-10-22 UTC
+
+Version1.82/arc-plan1.94 details approvedA into four-path public runtime literalCN observations/checkedextractor/exactexistingentitymodelmethod, sixNF/R06-S22OPEN. ActualCCheadroom and inspectedcomplete7/0capturecontrols confirmed, dedicatedsource cleanb290 atissue; no productgate/acceptance yet. Required23/CDC still owns real cold/fullsame-parse/name-onlywatch application integration/semantic5schema3/genuine3/4rebuild/currentwarm/normal-stdio-HTTPlive-native; required24/CDC full originalM7.1 real-child12fieldJSON/CSV/filter/origin/escaping/stdout/error contract. Existing constructor/extraction/app/cacheinterpretation stays frozen in22, no false applicationfix/parentclosure.40arcrows21done19open/project25open, all prior original/repair/higher gates/models/Arc06endpoint/main9line/held/externalpins/Project02 retained. No inquiry/remote/release/otherarc authority.
