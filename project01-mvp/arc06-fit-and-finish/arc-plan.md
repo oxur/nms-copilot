@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.106, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.107, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -915,3 +915,10 @@ ActualbudgetreconciledBEFORE06: initial+01firstimplementation;02–06fiveactualr
 [Slice27](slice27-multi-galaxy-composition/slice-plan.md) owns complete original0038 M7.4 current synthetic256-galaxy checked-save/model/index/query/route/cache3/5/actualREPLparser-dispatcher composition. Existing product already implements per-galaxy routing; no production defect established. ONE newcopilotintegrationtestfile, other source/README/Cargo/APIs/revisions frozen; exact512system/512planet/two-base/256edge populations and literal0/400ly/typedcrossscope/currentcache/sessionanchor oracles resolvedbeforeissue. SameCDC-CCmodels/headroomattested/dedicatedcleanbfa2/rawfirstsupport7-0complete, firstimplementation0actualrefinement/5max/pair-immediatehold/11groups. No newterminal/controller/dependency/gameinquiry, syntheticproof doesnotclosegame-backednonzerogate.
 
 Adds R06-S27 to44priorrows:45arc29done16open/project25open; sixMG/originalM7.4/repairparentsOPEN. All prior26closures/originalM7.1–3 retained. R06-R02allconsumer/R03finaltransition remain separatelydispositioned, otheroriginal/raw/history/strictfreshness-identicalrewrite-staleimport/game/platform/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Mainhuman9line/allheldexternalpins/onearcendpoint protected; no otherarc/Project02/merge/push/install/publish/release.
+
+
+## Original M7.4 / Slice27 independent closure — 2026-10-22 UTC
+
+All6MG/R06-S27/originalM7.4acceptedatclean063c8c65(oneNEWtestfile/parentbfa2/tree81295847), fulloriginal0038constructors/default-empty/pergalaxyindexes/scopedqueries/routing/REPL/256/internalcompatibilityreconciled. ElevenfreshCDCgroupspassfocused416runtime+10docs/new3/no-default234/full1085runtime+31docs/build/docs31/strict/diffs, completecurrent3-5cache/physical0vsselection255/wholestate/literalprojectionproof. No production/API/policy/dependency/terminal change. Synthetic256isnotgame-backedauthority orautomaticR06-R02/R03closure.
+
+Actualtwo refinements02/03 afterinitial+01FIRSTimplementation; authorparseroracle/implementerrootDM-lossy-partialobservations/order-sensitivebiomefixes andallfailedattempts preserved. Raw26CC+13CDC/byteexactreturns/13memberarchive/mandatoryCDCretro/bottomupcomplete, no capturewaiver/reset.45arc31done14open/project25open. NEXToriginalM7.5source/actualfixture/conditionalformatreadiness, allotheroriginal/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game/platform/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligationsretained. SameCDC-CCmodels/Arc06endpoint/mainhuman9line/allheldexternalpinsprotected; no otherarc/Project02/merge/push/install/publish/release.
