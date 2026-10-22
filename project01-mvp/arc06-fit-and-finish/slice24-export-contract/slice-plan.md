@@ -1,6 +1,6 @@
 # Slice24 — full original M7.1 export contract
 
-Version1.0,2026-10-22 UTC. OPEN; initial0of5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
+Version1.1,2026-10-22 UTC. OPEN; iteration01 firstof5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
 
 ## Usable delivery / readiness
 
@@ -23,3 +23,8 @@ All paths below resolve under `/Users/oubiwann/Library/Application Support/ChatG
 | testing/guides/01-testing-discipline.md “Test Behavior And Contracts” / “Failure Triage” | Full external fields/filter interactions/read-only/error behavior, no implementation-mirroring expected production calls or source changes to appease wrong tests | Literal independent source/records/CSV; held complete assertion walk, source-grounded root-cause correction only |
 
 Full Rust/AP knowledge already loaded remains applicable: cfg(test) legitimate panic assertions are distinguished from production panic policy; no unsafe, dependency, runtime, public API, ownership/concurrency or performance change is introduced by this increment. Domain defaults do not replace repository twyg/confyg/clap/edition conventions.
+
+
+## Initial held review / first correction
+
+Actualinitialformat/lint pass at09df0c3; CCthenpost-paireditinvalidatedapplicabilityandrenewal foundunusedhelper9941713c. Narrowinitialcompilerrepairusesexistingunchangedasserthelper; final89f00c66/9c3c425d passstable14272ed7. No runtime. Fullthreepath/767line/helpers/calls/README/O1matrix walk complete. Immutableiteration01 addresses EXACTexistingtest/docs misses: AnchorRowdistancewiring (initialtablealreadycorrect), serde_json1.0.149rootio_error_kind inspection, independentfullrow default/uppercase/sourcecheck, omittedspecificnegativecontrols, IOatomicitydocqualification/issuedfieldlist andfournewtestnamesperAGENTS. Production/testpopulation/threepaths unchanged; no newpolicy/waiver. CDCreadiness lesson: supply wrapper-specific errorinspection upfront; do not inventwrongauthorconstants. Firstof5, all6EX/M7.1/R06-S24OPEN.
