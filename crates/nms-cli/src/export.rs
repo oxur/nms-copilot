@@ -147,6 +147,7 @@ mod tests {
     use nms_core::address::GalacticAddress;
     use nms_core::biome::Biome;
     use nms_core::system::{Planet, System};
+    use std::io;
 
     fn test_find_result() -> FindResult {
         let addr = GalacticAddress::new(100, 50, -200, 0x123, 0, 0);
@@ -272,5 +273,59 @@ mod tests {
         let lines: Vec<&str> = s.lines().collect();
         assert_eq!(lines.len(), 2); // header + 1 row
         assert!(lines[0].starts_with("planet_name,"));
+    }
+
+    struct BrokenPipeWriter {
+        writes: usize,
+    }
+
+    impl Write for BrokenPipeWriter {
+        fn write(&mut self, _buffer: &[u8]) -> io::Result<usize> {
+            self.writes += 1;
+            Err(io::Error::new(
+                io::ErrorKind::BrokenPipe,
+                "closed test pipe",
+            ))
+        }
+
+        fn flush(&mut self) -> io::Result<()> {
+            Ok(())
+        }
+    }
+
+    fn assert_broken_pipe(result: Result<(), Box<dyn std::error::Error>>, writes: usize) {
+        assert!(writes > 0, "writer was never called");
+        let error = result.unwrap_err();
+        let kind = if let Some(json_error) = error.downcast_ref::<serde_json::Error>() {
+            json_error.io_error_kind()
+        } else if let Some(io_error) = error.downcast_ref::<io::Error>() {
+            Some(io_error.kind())
+        } else if let Some(csv_error) = error.downcast_ref::<csv::Error>() {
+            match csv_error.kind() {
+                csv::ErrorKind::Io(io_error) => Some(io_error.kind()),
+                _ => None,
+            }
+        } else {
+            None
+        };
+        assert_eq!(kind, Some(io::ErrorKind::BrokenPipe), "{error:#}");
+        assert!(
+            format!("{error:#}").contains("closed test pipe"),
+            "{error:#}"
+        );
+    }
+
+    #[test]
+    fn test_write_json_propagates_broken_pipe() {
+        let mut writer = BrokenPipeWriter { writes: 0 };
+        let result = write_json(&mut writer, &[test_find_result()]);
+        assert_broken_pipe(result, writer.writes);
+    }
+
+    #[test]
+    fn test_write_csv_propagates_broken_pipe() {
+        let mut writer = BrokenPipeWriter { writes: 0 };
+        let result = write_csv(&mut writer, &[test_find_result()]);
+        assert_broken_pipe(result, writer.writes);
     }
 }
