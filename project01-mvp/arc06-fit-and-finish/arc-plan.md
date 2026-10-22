@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.105, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.106, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -908,3 +908,10 @@ All5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productio
 All6MS/R06-S26andoriginalM7.3acceptedatcleanbfa2b371 (fivepathrange03b→proofpending84a5→onecallbfa2). Importglobal-slot/range15/listIO fixes plusliteralportable30file/15slot/account/error/ownedactualten-callerthree-mode/readonly/negativeproof satisfycompleteoriginal0037leaf. ElevenfreshCDCgroups pass: nms-save130+14, focused6,CLI172,full1082runtime+31docs,build/docs31/strict/diffs. NativeHOMEproofMacLinux/Windowsruntimeunclaimed. Sourceisolated/alloriginalpoliciespreserved/no newselector/nickname/persistence/cache/architecture.
 
 ActualbudgetreconciledBEFORE06: initial+01firstimplementation;02–06fiveactualrefinements, exactguideexcludesunstartedreplacement; erroneousfilename-countlabels preserved/superseded, no directhumanstrictercap/no exception/reset. Raw38CC+13CDC/allfailedattempts/byteexactreturns andsummarycorrections/archives/mandatoryCDCretro/bottomup complete. ParentcompliantYESwithinM7.3.44arcrows29done15open/project25open. NEXTcompleteoriginal0038/M7.4andremainingrepair-parent source/evidencegrounding beforeboundedownerselection. Allotheroriginal/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game/platform/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. SameCDC-CCmodels/Arc06endpoint/mainhuman9line/allheldexternalpinsprotected; no otherarc/Project02/merge/push/install/publish/release.
+
+
+## Original M7.4 / Slice27 current composition owner — 2026-10-22 UTC
+
+[Slice27](slice27-multi-galaxy-composition/slice-plan.md) owns complete original0038 M7.4 current synthetic256-galaxy checked-save/model/index/query/route/cache3/5/actualREPLparser-dispatcher composition. Existing product already implements per-galaxy routing; no production defect established. ONE newcopilotintegrationtestfile, other source/README/Cargo/APIs/revisions frozen; exact512system/512planet/two-base/256edge populations and literal0/400ly/typedcrossscope/currentcache/sessionanchor oracles resolvedbeforeissue. SameCDC-CCmodels/headroomattested/dedicatedcleanbfa2/rawfirstsupport7-0complete, firstimplementation0actualrefinement/5max/pair-immediatehold/11groups. No newterminal/controller/dependency/gameinquiry, syntheticproof doesnotclosegame-backednonzerogate.
+
+Adds R06-S27 to44priorrows:45arc29done16open/project25open; sixMG/originalM7.4/repairparentsOPEN. All prior26closures/originalM7.1–3 retained. R06-R02allconsumer/R03finaltransition remain separatelydispositioned, otheroriginal/raw/history/strictfreshness-identicalrewrite-staleimport/game/platform/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Mainhuman9line/allheldexternalpins/onearcendpoint protected; no otherarc/Project02/merge/push/install/publish/release.

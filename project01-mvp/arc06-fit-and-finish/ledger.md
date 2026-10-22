@@ -263,3 +263,12 @@ FiveSC/R06-S25/M7.2doneat03b6536 aftertwoordinaryrefinements/12freshCDCgroups/10
 ## Slice26 / original M7.3 independently closed — 2026-10-22 UTC
 
 All6MS/R06-S26/M7.3doneatbfa2, fulloriginal0037mapped/11freshCDCgroups/1082runtime+31docs. Fiveactualrefinements afterinitial+01firstimplementation; incorrectfilenamecountlabels preserved/supersededbefore06, no reset/humanexception. Allfailedcompiler/runtime/raw38CC+13CDC/byteexactreturns/archive/mandatoryretro retained; summary33docs corrected31 againstraw.44rows29done15open/project25open. Nextfulloriginal0038/M7.4andremainingrepairparentsgrounding; allotheroriginal/higher/game/raw/history/semantic/freshness-import/platform/UI/docs/distribution/coverage/performance/Operator/integration/releasegates retained. No otherarc/integration/release authority.
+
+
+## Original M7.4 current composition child — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S27 | Current full256-galaxy checked-save/index/query/route/cache/REPL composition independently accepted | SixMG rows/one-file literal both-order integration/11groups/fulloriginal0038 M7.4 reconciliation | correctness-grade | Original0038 M7.4 / retained identity-cache composition | open | [Issued plan](slice27-multi-galaxy-composition/slice-plan.md) | Production frozen; synthetic proof not game-backed authority or automatic repair-parent closure |
+
+45arcrows29done16open/project25open; all44priorentirerows retained. SixMG/originalM7.4/R06-R02/R03OPEN; allotheroriginal/higherobligations remain.
