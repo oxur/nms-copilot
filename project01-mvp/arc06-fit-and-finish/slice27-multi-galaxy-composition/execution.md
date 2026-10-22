@@ -16,3 +16,10 @@ Unsupportedcapturekernel--help lookup disclosed withIndexErrorbeforecapture()/an
 
 
 Settled02pair verifiedactual14records: format256a6e25complete0 BEFOREd93aa4fc→AFTERe695dad0, lintbd18d8ebcomplete0 before==aftere695dad0; fullraw/status/sourcehash42be6406/42442B verified. Complete1233line reviewed withallchangedhelpers/callsites, previousF1–F6 satisfied exceptorder-sensitive finalbiomeassertion. Actualsourcefrom_parts HashMapiteration hasnoVecorderingcontract. Filename03secondACTUALpass targetonlyclone/sortfullobservedVec inassert_literal_model_for_active; allkeys/multiplicity/counts/expected/populations/restofsource frozen. Wholeheld42be6406privatelypreserved beforeedit. No runtime everreleased, no productiondefectclaimed, no waiver or newproofbreadth.
+
+
+## Settled03 exact review / original runtime release — 2026-10-22 UTC
+
+Actual16records: formatc8edbb283d0841c78d3a9e43236ba600/lint37d6408cb56346b9a80115ff23890655 bothcomplete0/fullchannelhashes/explicitstatus/before==afterba1fd35e49c502dc3b1dd6bea3d325a7841e52949bf3ce3f5b5aa6c57a6cfe4c. Currenttest42534B/SHA1ff25772c79c7c98f6abc1ba24de595e47562e9978943c8950143ecf6100b56f. CDC exactentirefile bytecomparison proves prescribed ONE assertionblock only changed fromheld42be6406: ownedactualVec clone/sort/full equality, allotherbytes identical. Completeprior1233lineF1–F6review remainsapplicable; no unresolvedissuedstaticfinding. Runtimeuncredited beforethisrelease.
+
+CDC RELEASES originalfocused-first remaining9groups/11total, exactargv/features/knownsubstrateretry/originalTMPDIR/capturefailures/denominators asinitialprompt. No extraAPI/source/proofpopulation or broadnative/lifecycle repeat. CC retainssole dedicatedsource/index/gates throughoriginalproof/namedonepathcommit/frozenattributablereturn; CDCplanning/independentreviewafterhandback. Actualrefinements02→1/03→2, three remain; noreset/exception. SixMG/R06-S27/M7.4remainOPEN pendingrealruntime/independentdisposition/retrospective/bottomup. Allmain/heldpins/Arc06endpoint/highergatespreserved.
