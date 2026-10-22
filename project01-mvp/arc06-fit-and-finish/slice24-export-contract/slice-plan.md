@@ -9,3 +9,17 @@ Complete original0037 read/reconciled: existing production export has all12 fiel
 ## Required independent acceptance
 
 Six EX rows/closed prompt worksheet govern. Raw-first helper/supportcontrols before first compiler; format→lint→CDC whole held review before runtime; focused export/wholeCLI/query/fullworkspace/build/docs/strictCLI docs/diffs; named local commit/freeze and independent reproduction. No unaffected native repetition. Five ordinary correction limit applies. At closure answer parent compliance/structural change/bubble-up, mandatory CDC retrospective and bottom-up plans. OriginalM7.1 closes only if all full leaf requirements truly satisfied; all other capability/repair/game/raw/history/finalsemantic/freshness-import/higher/Operator/release gates retained.
+
+
+## Applied domain-guideline decisions (same issued contract)
+
+All paths below resolve under `/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/`. This table makes author-applied guidance explicit; no scope, oracle, gate or correction-budget change.
+
+| Read guide / exact pattern and strength | Applied decision and fit | Implementation and proof |
+|---|---|---|
+| rust-guidelines/guides/14-cli-tools/06-testing.md CLI-34 SHOULD, CLI-35 MUST, CLI-37 SHOULD | Actual bounded subprocesses exercise registration, parsing, source/model/query and serialization; code1/runtime versus code2/usage retained | New export_integration full success/error matrix, exact entire stdout and diagnostic checks |
+| Same CLI-38 CONSIDER | Reuse existing tempfile::TempDir instead of adding suggested assert_fs; per-child HOME/explicit source and complete file invariance isolate filesystem effects | TempDir owner and timeout10 before child action; source/parent before-after checks |
+| Same CLI-36 CONSIDER | Independent literal CSV golden fits specified fixed byte contract/escaping, despite general warning about brittle human-output strings; no dynamic timestamp/rendered-table snapshot or new insta package | Full golden plus parsed vectors, same validator positive/negative mutations; JSON exact whole structured values |
+| testing/guides/01-testing-discipline.md “Test Behavior And Contracts” / “Failure Triage” | Full external fields/filter interactions/read-only/error behavior, no implementation-mirroring expected production calls or source changes to appease wrong tests | Literal independent source/records/CSV; held complete assertion walk, source-grounded root-cause correction only |
+
+Full Rust/AP knowledge already loaded remains applicable: cfg(test) legitimate panic assertions are distinguished from production panic policy; no unsafe, dependency, runtime, public API, ownership/concurrency or performance change is introduced by this increment. Domain defaults do not replace repository twyg/confyg/clap/edition conventions.
