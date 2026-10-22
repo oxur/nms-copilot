@@ -20,3 +20,5 @@ Current assignment02 is first actual refinement1/5; four remain. Settled initial
 Current03 actual2/5 (three remain) addresses only existing F2 test oracle/guards; other reviewed groups/production frozen. Final02 pair green but runtime unrun; all8CI OPEN pending original execution and independent disposition.
 
 CDC settled03 targeted review clears F2 and frozen other19paths; actual format/lint green, original ordered runtime/native14 RELEASED. No runtime or acceptance credit yet; all8CI OPEN. Actual2/5 refinements used,three remain.
+
+Current04 actual3/5 (TWO remain): four existing testfiles/exact envelope assertion migration after combined1pass/2fail. Other16files/production frozen; applicable completed focused results retained, nativeunrun/all8CI OPEN.
