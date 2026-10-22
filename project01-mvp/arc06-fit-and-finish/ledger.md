@@ -236,3 +236,12 @@ Slice23 current review: six child criteria independently accepted, two open; R06
 42arcrows23done19open/project25open; no acceptance at issue.
 
 2026-10-22 Slice24/originalM7.1independentlyclosed:42arcrows25done17open/project25open. M7.2shellcompletionsNEXT; M7.3slots/otheroriginal/highergatesremain.
+
+
+## Original M7.2 shell-completion child issued — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S25 | Original Bash/Zsh/Fish generation and usable installation documentation independently accepted | Five SC rows, literal metadata/negative controls, actual available-shell and12groups/CDC original-leaf reconciliation | correctness-grade | Original0037 M7.2 | open | [Issued plan](slice25-shell-completions/slice-plan.md) | Fish generated-output proof only; no Fish shell runtime claim/install |
+
+43rows25done18open; M7.2 and all prior other open rows retained unchanged. OriginalM7.1 closed, M7.3slots separate; no acceptance from supportcontrols or installed-tool inventory.

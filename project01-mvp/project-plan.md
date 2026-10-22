@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.88
+version: 1.89
 project: project01-mvp
 status: active
 depends-on: []
@@ -1123,3 +1123,10 @@ Arc-plan1.100/Slice24 owns complete original0037 M7.1 actual-child JSON/CSV twel
 All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, productionfrozen)aftertwoordinaryrefinements. CDCcompleteoriginal0037leafreconciliation/independent11groupspass: focused4,CLI161,query96,workspace1068runtime+31docs,build/separatedocs/strictCLI/diffs.68actualchildrenbehind4integrationtestsprovewhole12fields/CSVexactness/multiplicity/allflags-origins/empty-errors/read-only; no newnative or universalgame-backedclaim. Raw22CC/13CDC/byte-exactreturns/originalintakeversion/failedrestricted228-7watchgroup+identicalhostpass/initialpairs/authorstoredaddressqualification/finalCDCretro/archivespreserved. ParentcompliantyesM7.1; nostructuralchange/test-docsonly; otherparentsnotclosed.
 
 42arcrows25done17open/project25open. NEXT originalM7.2shellcompletions source-groundedowner/headroom understandingArc06authority, thenremainingoriginalM7.3slots/import/format/UI/docs/distribution/coverage/performance/game/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/higherindependent/Operator/integration/releasegateswiththeircurrentowners. SameCDC/CCmodels/onearcendpoint/mainhuman9line/allheldexternalpinsprotected;localisolatedcandidate/nootherarc/Project02/merge/push/install/publish/release.
+
+
+## Arc06 original M7.2 / Slice25 issued — 2026-10-22 UTC
+
+Arc-plan1.102/[Slice25](arc06-fit-and-finish/slice25-shell-completions/slice-plan.md) details original shell-generation/README activation within exact two test/docs paths from clean accepted24cd38; production/dependencies frozen, same selected CDC/CC with confirmed headroom. Literal command/flag/context/negative oracles, available Bash/Zsh syntax/registration/candidates and explicit Fish output-only limitation; PATH fish is BSD game, no execution/install/newpolicygate. Raw-first supportcontrols beforecompiler, immediateformatlint hold/fullworksheet/12groups/independentacceptance. Initial0of5; all5SC/R06-S25/M7.2OPEN.
+
+43arcrows25done18open/project25open. All prior24closures/originalM7.1retained; M7.3slots and every other original/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligation retains owner. Protectedmain9line/allheldexternalpins/models/Arc06-onlyendpoint; no otherarc/Project02/integration/push/install/publish/release.

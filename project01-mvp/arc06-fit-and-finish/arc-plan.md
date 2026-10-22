@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.101, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.102, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -880,3 +880,10 @@ Accepted23 full names/cache/live composition unblocks original0037 export proof.
 All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, productionfrozen)aftertwoordinaryrefinements. CDCcompleteoriginal0037leafreconciliation/independent11groupspass: focused4,CLI161,query96,workspace1068runtime+31docs,build/separatedocs/strictCLI/diffs.68actualchildrenbehind4integrationtestsprovewhole12fields/CSVexactness/multiplicity/allflags-origins/empty-errors/read-only; no newnative or universalgame-backedclaim. Raw22CC/13CDC/byte-exactreturns/originalintakeversion/failedrestricted228-7watchgroup+identicalhostpass/initialpairs/authorstoredaddressqualification/finalCDCretro/archivespreserved. ParentcompliantyesM7.1; nostructuralchange/test-docsonly; otherparentsnotclosed.
 
 42arcrows25done17open/project25open. NEXT originalM7.2shellcompletions source-groundedowner/headroom understandingArc06authority, thenremainingoriginalM7.3slots/import/format/UI/docs/distribution/coverage/performance/game/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/higherindependent/Operator/integration/releasegateswiththeircurrentowners. SameCDC/CCmodels/onearcendpoint/mainhuman9line/allheldexternalpinsprotected;localisolatedcandidate/nootherarc/Project02/merge/push/install/publish/release.
+
+
+## Original M7.2 / Slice25 issued — 2026-10-22 UTC
+
+[Slice25](slice25-shell-completions/slice-plan.md) owns actual Bash/Zsh/Fish generation/scoped command-flag-negative proof and usable README activation, with available Bash/Zsh checks and explicit Fish generated-output-only limit (PATH fish is BSD game, never executed/installed). Exact two test/docs paths, production frozen at accepted24cd38; same selected CDC/CC models, CC headroom confirmed, raw-first supportcontrols inspected before firstcompiler, initial0of5/immediatepairhold/fullworksheet/12groups. No policy amendment/new inquiry/dependency or source acceptance.
+
+43arcrows25done18open/project25open; M7.2/R06-S25/all5SCOPEN. OriginalM7.1andall24closures retained. M7.3slots/allotheroriginalcapability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations remain. Protectedmain9line/allheldexternalpins/onearcendpoint unchanged; nootherarc/Project02/merge/push/install/publish/release.
