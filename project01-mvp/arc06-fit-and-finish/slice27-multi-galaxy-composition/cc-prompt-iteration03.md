@@ -1,0 +1,17 @@
+# Slice27 second ACTUAL refinement — unordered biome population comparison
+
+2026-10-22 UTC. Filename03 is ACTUAL refinement2of5; initial+01 FIRSTimplementation,02 actual1 retained. Same selected CDC/CC models and Autonomous Arc06-only authority. Initial/01/02 and all14 actual raw records/failed compilers remain unchanged. No runtime has run. Production and every other tracked path remain frozen.
+
+Source /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/multi-galaxy-composition at HEADbfa2b3710269b8110a858227ad79202ffdd1d513; only new crates/nms-copilot/tests/multi_galaxy_integration.rs untracked42442B/SHA42be6406700dcd1778c279899530e2d07663ca7b9906c9874da8562a819fbe11. Working identitye695dad09bf3f76dfc92cd2d8b45a365465f6c3e60e4e13321ffa109d531813b; indexempty. Actual format256a6e25f1d44b9da0e53f4b761d7714 exit0 changed formatting; AFTER matches lintbd18d8eb1cab4f76997c56bc5578e137 stable before/after/exit0. Do not claim format before==after. CDC complete1233line F1–F6 review is closed; all other corrections are satisfactory at static-review strength, with runtime still uncredited.
+
+ONLY correction: in assert_literal_model_for_active, the existing block sorts expected_biome but compares directly with the raw observed model.biome_index[Lush] Vec. model.rs from_parts builds that Vec while iterating the extracted HashMap, so this order is unspecified. No product ordering guarantee exists. The full projection helper already correctly normalizes it; the independent literal oracle must do the same without losing members. Replace that final assertion with the exact shape (routine sketch):
+```rust
+let mut actual_biome = model.biome_index.get(&Biome::Lush).unwrap().clone();
+actual_biome.sort_by_key(|&(id, index)| (id_key(id), index));
+assert_eq!(actual_biome, expected_biome);
+```
+Keep expected_biome generation/sort, exactly512 entries, sole Lush key/count, explicit per-ID/planet1 multiplicity checks, literal ID/flat-map/index/source/query/edge/cache/REPL assertions and all negative controls intact. NO deduplication/filter/count-only substitute, mutation of the live model, fixture or expected population change, new helper/framework/scenario. Patch ABSOLUTE dedicated path, target only this assertion block; no other source bytes may change except rustfmt needed for that tiny block. All other F1–F6 source is frozen.
+
+Required-full: this sibling/currentplan/ledger and the complete affected function and relevant initial+02 constraints; required-section current model.rs from_parts HashMap loop and already-correct view biome normalization, to confirm the cause. Existing full source/guide reads remain applicable; reload missing governing content before edits. Record coherent source-cited readback BEFORE editing then proceed existing authority. CC sole source/index/gates, CDCplanning/independent review. No new user permission needed within actual remaining budget.
+
+Captured format→lint→IMMEDIATE HOLD, exact IDs/current file hash/composite/explicit status. Targeted CDC exact-delta review then original eleven-group focused-first runtime sequence if no unresolved issued finding; do not launch runtime early. Same raw-first kernel/record, all attempts preserved, ordinary inspections not SUTgates/no unsupported-help repeats. Append ignored returns/history; preserve prefixes/JSON values. After execution three actual refinements remain, no reset/exception. Mainhuman9line/heldpins/priorclosures/allparent/game-backed/highergates/Arc06endpoint unchanged; no otherarc/integration/external action.
