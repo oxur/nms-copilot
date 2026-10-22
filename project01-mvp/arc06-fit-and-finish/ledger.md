@@ -4,7 +4,7 @@ Created 2026-10-03 during closeout preparation. Original milestone documents rem
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| M7.1 | `nms export` command: Export filtered results as JSON, CSV. `--biome`, `--within`, `--format` flags; Scriptable data extraction | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:205](../README.md) | open | — | No result inferred from test count alone |
+| M7.1 | `nms export` command: Export filtered results as JSON, CSV. `--biome`, `--within`, `--format` flags; Scriptable data extraction | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:205](../README.md) | done | [CDC24 full original reconciliation](slice24-export-contract/cdc-verification.md) — reproduced | Complete original0037 M7.1 accepted atcd38d7e; other milestone/higher obligations retained |
 | M7.2 | Shell completions: `clap_complete` for bash, zsh, fish; Install instructions in README | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:206](../README.md) | open | — | No result inferred from test count alone |
 | M7.3 | Multi-save support: Detect and list all save slots. `--slot` flag or interactive selector; Choose between save slots | `cargo test -p nms-save` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:207](../README.md) | open | — | No result inferred from test count alone |
 | M7.4 | Multi-galaxy support: Separate spatial index per galaxy, cross-galaxy queries, galaxy switching in REPL; Full 256-galaxy support | `cargo test -p nms-graph` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:208](../README.md) | open | — | No result inferred from test count alone |
@@ -231,6 +231,8 @@ Slice23 current review: six child criteria independently accepted, two open; R06
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S24 | Full original M7.1 actual-child export contract independently accepted | Six EX rows/closed twelvefield JSON/CSV/filter/origin/error/read-only worksheet | correctness-grade | Original0037 M7.1/required24 | open | [Slice24 plan](slice24-export-contract/slice-plan.md) | Three-path test/docs only; production frozen; M7.1 remains open until independent full leaf proof |
+| R06-S24 | Full original M7.1 actual-child export contract independently accepted | Six EX rows/closed twelvefield JSON/CSV/filter/origin/error/read-only worksheet | correctness-grade | Original0037 M7.1/required24 | done | [CDC24 independent acceptance](slice24-export-contract/cdc-verification.md) — reproduced | All6EX/full originalM7.1 accepted; production frozen and wider owners retained |
 
 42arcrows23done19open/project25open; no acceptance at issue.
+
+2026-10-22 Slice24/originalM7.1independentlyclosed:42arcrows25done17open/project25open. M7.2shellcompletionsNEXT; M7.3slots/otheroriginal/highergatesremain.

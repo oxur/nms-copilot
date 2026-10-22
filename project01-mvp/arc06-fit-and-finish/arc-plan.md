@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.100, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.101, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -873,3 +873,10 @@ Arc41rows23done18open/project25open. NEXT required24/CDC complete original0037 M
 ## Required Slice24 original M7.1 issued — 2026-10-22 UTC
 
 Accepted23 full names/cache/live composition unblocks original0037 export proof. [Slice24](slice24-export-contract/slice-plan.md) is a three-path test/docs-only usable increment: all12 exact real-child JSON/CSV fields/header/escaping/multiplicity, every existing filter/current/base/crossgalaxy origin interaction, stdout/stderr/empty/error/writefailure/read-only source behavior, full independent literal oracles. Production frozen at2f2814; original emptyCSV zero-byte allowance retained, no new policy/inquiry. Same CC confirmed headroom/no owned processes; raw-first controls7/0 verify before first compiler; initial0of5/current immutableprompt and whole held review before runtime. All6EX/R06-S24 and M7.1 remain OPEN at issue.42arcrows23done19open/project25open; all original remaining capability/repair/game/raw/history/finalsemantic/freshness-import/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Same models/Arc06endpoint/main9line/heldexternalpins; no otherarc/Project02/remote authority.
+
+
+## Original M7.1 / Slice24 independent closure — 2026-10-22 UTC
+
+All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, productionfrozen)aftertwoordinaryrefinements. CDCcompleteoriginal0037leafreconciliation/independent11groupspass: focused4,CLI161,query96,workspace1068runtime+31docs,build/separatedocs/strictCLI/diffs.68actualchildrenbehind4integrationtestsprovewhole12fields/CSVexactness/multiplicity/allflags-origins/empty-errors/read-only; no newnative or universalgame-backedclaim. Raw22CC/13CDC/byte-exactreturns/originalintakeversion/failedrestricted228-7watchgroup+identicalhostpass/initialpairs/authorstoredaddressqualification/finalCDCretro/archivespreserved. ParentcompliantyesM7.1; nostructuralchange/test-docsonly; otherparentsnotclosed.
+
+42arcrows25done17open/project25open. NEXT originalM7.2shellcompletions source-groundedowner/headroom understandingArc06authority, thenremainingoriginalM7.3slots/import/format/UI/docs/distribution/coverage/performance/game/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/higherindependent/Operator/integration/releasegateswiththeircurrentowners. SameCDC/CCmodels/onearcendpoint/mainhuman9line/allheldexternalpinsprotected;localisolatedcandidate/nootherarc/Project02/merge/push/install/publish/release.

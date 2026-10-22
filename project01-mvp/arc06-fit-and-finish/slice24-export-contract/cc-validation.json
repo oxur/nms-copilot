@@ -1,0 +1,64 @@
+{
+  "slice": "Project01 Arc06 Slice24 M7.1 export",
+  "status": "CC proposed-done; CDC independent acceptance pending",
+  "source": {
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+    "branch": "codex/export-contract",
+    "commit": "cd38d7e1603b957f862b75c23b60ed5bc713bcf0",
+    "parent": "2f2814c780f5022dea3bc1643d99828ba679e8d0",
+    "paths": [
+      "README.md",
+      "crates/nms-cli/src/export.rs",
+      "crates/nms-cli/tests/export_integration.rs"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "working_tree": "clean",
+    "index": "empty"
+  },
+  "child_invocations": {
+    "total": 68,
+    "derivation": {
+      "paired_matrix": "21 run_pair calls x JSON and CSV = 42",
+      "literal_baseline": 2,
+      "uppercase_and_lowercase_comparisons": 4,
+      "default_and_explicit_json_comparisons": 2,
+      "independent_empty_outputs": 2,
+      "error_cases": "8 cases x JSON and CSV = 16"
+    },
+    "passing_integration_tests": 4
+  },
+  "captured_attempts": {
+    "path": "/private/tmp/nms-slice24-cc-attempts.json",
+    "count": 22,
+    "full_raw_channels_and_before_after_source_identities": true
+  },
+  "gates": [
+    {"id":"572d1797685c4519a305eef2ae7e319d","command":"cargo test -p nms-cli --test export_integration","exit":0,"result":"4 passed"},
+    {"id":"1b6aae0518964ca3a7f279a6f5a00f23","command":"cargo test -p nms-cli","exit":0,"result":"161 passed across 10 harnesses"},
+    {"id":"56a6846e978b43fcb01f499ba5660d79","command":"cargo test -p nms-query","exit":0,"result":"96 passed"},
+    {"id":"fe06f1481add432787868fc710582ccc","command":"make test (restricted attempt)","exit":2,"result":"228 passed, 7 watcher/observer/barrier timeouts in nms-copilot --lib; retained"},
+    {"id":"68e0b1d32d414465ad4b8afd5953c69a","command":"make test (identical authorized-host retry; original TMPDIR)","exit":0,"result":"1068 runtime + 31 doctests = 1099 total across 43 result groups"},
+    {"id":"1b789521173a44e4b14b0d0f4523bbde","command":"cargo build --all-features --workspace","exit":0},
+    {"id":"03f5e47b70e8498db1e44bf74b27d149","command":"cargo test --doc --workspace --all-features","exit":0,"result":"9 doc-test groups"},
+    {"id":"cd6eba71ec214dcc9cd29d5942b6aa4d","command":"RUSTDOCFLAGS=-D warnings cargo doc -p nms-cli --no-deps","exit":0},
+    {"id":"e0ada66ee70a4495a6b8c0ba328662cb","command":"git diff --check","exit":0},
+    {"id":"11e57e11e97443e3b6687a01f776d3b7","command":"git diff 2f2814c780f5022dea3bc1643d99828ba679e8d0 --check","exit":0}
+  ],
+  "acceptance_rows": {
+    "EX-01": "CC proposed-done; exact JSON fields/types, CSV byte golden and discrimination controls; CDC review pending",
+    "EX-02": "CC proposed-done; 21 paired filter/order/origin cases in JSON and CSV; CDC review pending",
+    "EX-03": "CC proposed-done; empty/default/case/error/read-only and both writer failure tests; CDC review pending",
+    "EX-04": "CC proposed-done; three-path preservation, docs, build, rustdoc and diff gates; CDC review pending",
+    "EX-05": "CC proposed-done; raw-first captures, retained failure/retry, exact local commit; CDC review pending",
+    "EX-06": "Independent CDC acceptance, original M7.1 leaf reconciliation, retrospective and closure remain pending"
+  },
+  "nonclaims": [
+    "No CC self-acceptance; all ledger rows remain for CDC disposition.",
+    "The restricted make test failure remains preserved beside the identical authorized-host pass.",
+    "Slice23 native proof was accepted previously and was not rerun.",
+    "M7.2/M7.3 and other original project obligations are outside this Slice24 delivery."
+  ]
+}

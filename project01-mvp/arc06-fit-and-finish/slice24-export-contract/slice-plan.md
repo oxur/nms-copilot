@@ -1,6 +1,6 @@
 # Slice24 — full original M7.1 export contract
 
-Version1.2,2026-10-22 UTC. OPEN; iteration02 secondof5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
+Version1.3,2026-10-22 UTC. CLOSED; iteration02 secondof5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
 
 ## Usable delivery / readiness
 
@@ -33,3 +33,8 @@ Actualinitialformat/lint pass at09df0c3; CCthenpost-paireditinvalidatedapplicabi
 ## Settled first correction and author-only second qualification
 
 Actualformat946fa8e4/linteea3ceee0 atcae0b6ae, no runtime. CDC targetedcompleteF1–F6review satisfied: originalAnchororacles nowwired, pinnedwrapperkind/sentinel, fullvariantrows/sourcecheck, actualnegativecontrols, publicdocfield/errorqualification/projectnames. Sourceproductionprefixidentical. Sole remainingauthoruniversalP0claim is not original0037policy: SystemIdidentity differsfrom storedSystem.address. Immutable02permitsONEREADMEline “stored system address”; exactRusthashes frozen/no newscenario/proofpopulation/productionchange. Secondof5, capturepairthenfreeze/CDCexactdelta review beforeoriginalruntime release.
+
+
+## Independent closeout
+
+All6EX/R06-S24/originalM7.1acceptedatcd38d7eaftertwoordinaryrefinements, independent11groups/full1068runtime+31docs/focused4/CLI161/query96/strictdocs/diffs. Byte-exactreturns/raw22CC+13CDC/originalintake/archive/failedandretriedattempts/CDCrowwalk/finalretro preserved. ParentcompliantyeswithinM7.1; nostructuralchange/test-docsonly; bubbleup42arcrows25done17open/project25open. NextM7.2shellcompletions, M7.3slotsandallotheroriginal/highergatesretainowners. Protectedmain/heldpins/models/Arc06endpointunchanged;localunintegrated/nootherarc/Project02.
