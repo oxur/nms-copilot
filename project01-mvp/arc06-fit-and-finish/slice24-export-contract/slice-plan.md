@@ -1,6 +1,6 @@
 # Slice24 — full original M7.1 export contract
 
-Version1.1,2026-10-22 UTC. OPEN; iteration01 firstof5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
+Version1.2,2026-10-22 UTC. OPEN; iteration02 secondof5 ordinary refinements, no inherited exception. Standing Autonomous Arc06-only authority; CDC gpt-6.1-sol High/sole existing CC gpt-6-luna High. CC qualitative headroom/no owned processes confirmed after accepted23 handback. Planning CDC-owned, source/index/gates CC only after coherent readback. Main nine-line edit/all held/external pins protected; no integration/release/otherarc/Project02.
 
 ## Usable delivery / readiness
 
@@ -28,3 +28,8 @@ Full Rust/AP knowledge already loaded remains applicable: cfg(test) legitimate p
 ## Initial held review / first correction
 
 Actualinitialformat/lint pass at09df0c3; CCthenpost-paireditinvalidatedapplicabilityandrenewal foundunusedhelper9941713c. Narrowinitialcompilerrepairusesexistingunchangedasserthelper; final89f00c66/9c3c425d passstable14272ed7. No runtime. Fullthreepath/767line/helpers/calls/README/O1matrix walk complete. Immutableiteration01 addresses EXACTexistingtest/docs misses: AnchorRowdistancewiring (initialtablealreadycorrect), serde_json1.0.149rootio_error_kind inspection, independentfullrow default/uppercase/sourcecheck, omittedspecificnegativecontrols, IOatomicitydocqualification/issuedfieldlist andfournewtestnamesperAGENTS. Production/testpopulation/threepaths unchanged; no newpolicy/waiver. CDCreadiness lesson: supply wrapper-specific errorinspection upfront; do not inventwrongauthorconstants. Firstof5, all6EX/M7.1/R06-S24OPEN.
+
+
+## Settled first correction and author-only second qualification
+
+Actualformat946fa8e4/linteea3ceee0 atcae0b6ae, no runtime. CDC targetedcompleteF1–F6review satisfied: originalAnchororacles nowwired, pinnedwrapperkind/sentinel, fullvariantrows/sourcecheck, actualnegativecontrols, publicdocfield/errorqualification/projectnames. Sourceproductionprefixidentical. Sole remainingauthoruniversalP0claim is not original0037policy: SystemIdidentity differsfrom storedSystem.address. Immutable02permitsONEREADMEline “stored system address”; exactRusthashes frozen/no newscenario/proofpopulation/productionchange. Secondof5, capturepairthenfreeze/CDCexactdelta review beforeoriginalruntime release.
