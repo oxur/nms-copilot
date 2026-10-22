@@ -459,7 +459,7 @@ mod tests {
         assert_eq!(
             &bytes[..CACHE_HEADER_LEN],
             &[
-                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 3, 0, 0, 0, 3, 0, 0, 0
+                b'N', b'M', b'S', b'C', b'A', b'C', b'H', b'E', 3, 0, 0, 0, 4, 0, 0, 0
             ]
         );
         assert_eq!(data.save_version, 4720);

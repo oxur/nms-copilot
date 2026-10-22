@@ -23,8 +23,8 @@ struct SystemBuilder {
 /// Extract biome and infested flag from a discovery record's VP array.
 ///
 /// VP array format (for Planet discovery type):
-///   VP[0]: seed hash (hex string or integer)
-///   VP[1]: biome/flags packed integer
+///   `VP[0]`: seed hash (hex string or integer)
+///   `VP[1]`: biome/flags packed integer
 ///     - bits 0..15 (mask 0xFFFF): biome type index (GcBiomeType enum)
 ///     - bit 16 (mask 0x10000): infested flag
 ///
@@ -80,7 +80,7 @@ pub fn extract_biome_from_vp(vp: &[serde_json::Value]) -> (Option<Biome>, bool) 
     (biome, infested)
 }
 
-/// Extract seed hash from VP[0].
+/// Extract seed hash from `VP[0]`.
 pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
     if vp.is_empty() {
         return None;
