@@ -173,6 +173,25 @@ nms export --biome Lush --format csv              # export filtered planets as C
 nms import community_data.csv --source "NMSCE"    # import community coordinates
 ```
 
+The import command reads a community coordinate CSV into its one-shot in-memory
+query model. `--source` is retained exactly as the contribution label, including
+spacing and Unicode. New accepted systems and marked player-placeholder
+promotions are tagged `Community { source }`; existing genuine systems are left
+unchanged when a later row matches them. A later source does not merge or replace
+the first genuine contribution. This origin is separate from `DM.CN` display
+names and the in-game discoverer. Import reports its counts on stderr and does
+not write the save or cache; there is no REPL import command. To reuse the data,
+run the import again for that session.
+
+Rust callers can inspect `System.source` (`Personal` or
+`Community { source: String }`). Ordinary save extraction creates `Personal`
+systems. The existing whole-model cache stores this tag; cache schema 4 /
+semantic 6 is required for that added field and meaning. Older schema 3 /
+semantic 5 caches have no source field, so their origin cannot be inferred from
+labels. They are rejected and rebuilt from the save as `Personal`; imported
+cache-only systems must be imported again. Export remains the existing flat
+twelve-field contract and does not include contribution source.
+
 ### Listing Data
 
 Browse reference data and model collections:
@@ -398,14 +417,14 @@ enabled = true
 path = "/path/to/copilot-cache.rkyv"
 ```
 
-The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. The current cache envelope is schema 3 / semantic 5: it stores an explicit marker for a synthetic player-location placeholder, separate from an ordinary empty discovery record, records that modeled save addresses were validated before constructing application state, and includes models built with checked discovery names. A marked record must have a planet-zero address, no discovery metadata, and no planets. When genuine system or planet data arrives for that exact key, the model promotes the placeholder while retaining its graph and spatial identity. A stale, incompatible, or corrupt cache is rebuilt from the save; schema 2 / semantic 2 and schema 3 / semantic 3 or 4 files are incompatible and use the source save rather than being relabelled. A cache-only imported atlas absent from the source save must be re-imported after this rebuild; cache-only labels on source entities can also be lost when the source rebuilds their records. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
+The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. The current cache envelope is schema 4 / semantic 6: it stores an explicit marker for a synthetic player-location placeholder, separate from an ordinary empty discovery record; records that modeled save addresses were validated before constructing application state; includes models built with checked discovery names; and preserves each system's Personal or Community contribution source. A marked record must have a planet-zero address, Personal source, no discovery metadata, and no planets. When genuine system or planet data arrives for that exact key, the model promotes the placeholder while retaining its graph and spatial identity. A stale, incompatible, or corrupt cache is rebuilt from the save; schema 2 / semantic 2, schema 3 / semantic 3 or 4, and predecessor schema 3 / semantic 5 files are incompatible and use the source save rather than being relabelled. A cache-only imported atlas absent from the source save must be re-imported after this rebuild; cache-only labels on source entities can also be lost when the source rebuilds their records. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
 
 ```bash
 nms-copilot --headless --no-cache --save /path/to/save.hg
 nms-copilot --headless --no-cache --http 127.0.0.1:5099 --save /path/to/save.hg
 ```
 
-The cache preserves the selected galaxy separately from the player's physical location. The `where_am_i` tool and `nms://player/location` resource describe the physical player system. Library callers can explicitly insert a synthetic player placeholder for an undiscovered location; a genuinely empty system remains ordinary data, and genuine data promotes only an explicitly marked key. `GalaxyModel` owns private placeholder provenance, so downstream callers construct models with `GalaxyModel::new`, `GalaxyModel::from_save` for legacy raw input, or `GalaxyModel::from_validated_save` for checked input rather than struct literals. Its system count includes both discovered systems and marked placeholders. `ImportStats.added` counts accepted catalog contributions, including promotion of an existing placeholder; promotion does not add another system. Public `CacheData` and `CachedSystem` struct literals must supply the current fields, including `active_galaxy` and `is_player_placeholder`. The infallible trusted-data `rebuild_model` restores valid markers but preserves malformed marked entries as ordinary systems; checked persisted cache codecs reject malformed markers. Normal startup and accepted live updates ensure the physical player-system key before exposing the model, while exact physical-location labels distinguish unknown placeholders from genuine empty discoveries.
+The cache preserves the selected galaxy separately from the player's physical location. The `where_am_i` tool and `nms://player/location` resource describe the physical player system. Library callers can explicitly insert a synthetic player placeholder for an undiscovered location; a genuinely empty system remains ordinary data, and genuine data promotes only an explicitly marked key. `GalaxyModel` owns private placeholder provenance, so downstream callers construct models with `GalaxyModel::new`, `GalaxyModel::from_save` for legacy raw input, or `GalaxyModel::from_validated_save` for checked input rather than struct literals. Its system count includes both discovered systems and marked placeholders. `ImportStats.added` counts accepted catalog contributions, including promotion of an existing placeholder; promotion does not add another system. Public `CacheData` and `CachedSystem` struct literals must supply the current fields, including `active_galaxy`, `source`, and `is_player_placeholder`. The infallible trusted-data `rebuild_model` restores valid markers but preserves malformed marked entries as ordinary systems; checked persisted cache codecs reject malformed markers. Normal startup and accepted live updates ensure the physical player-system key before exposing the model, while exact physical-location labels distinguish unknown placeholders from genuine empty discoveries.
 
 For the current location, call the `where_am_i` tool or read `nms://player/location`. These report the player's exact galaxy-qualified physical system: an absent or explicitly marked placeholder is `(unknown)` with zero planets, while a genuine unnamed discovery is `-` with its actual planet count. A client can subscribe to that resource with `resources/subscribe`; when an enabled watcher ingests a save change, the server sends `notifications/resources/updated` for the location URI. Read the resource again to fetch the current location.
 

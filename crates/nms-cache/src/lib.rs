@@ -4,7 +4,7 @@
 //! archive. Bytes 0–7 are the ASCII magic `NMSCACHE`, bytes 8–11 are the
 //! little-endian archive schema revision, and bytes 12–15 are the little-endian
 //! model semantic revision. The checked payload begins at byte 16.
-//! The current schema revision is 3 and the current semantic revision is 5.
+//! The current schema revision is 4 and the current semantic revision is 6.
 //!
 //! Readers require both revisions to equal the values they support. Headerless
 //! legacy caches and caches with mismatched revisions are rejected. The schema
@@ -18,8 +18,11 @@
 //! Schema 3 adds `CachedSystem::is_player_placeholder`; semantic 3 preserves
 //! explicit synthetic player-location provenance. Semantic 4 preserves
 //! validated 56-bit address identity when rebuilding a model. Semantic 5
-//! includes checked discovery names in cold and live application models. Only marked planet-zero
-//! records with no discovery metadata or planets are valid placeholders. A
+//! includes checked discovery names in cold and live application models. Schema 4
+//! archives each system's contribution source; semantic 6 preserves Personal or
+//! named Community origin across cache extraction and rebuild. Only marked
+//! Personal planet-zero records with no discovery metadata or planets are valid
+//! placeholders. A
 //! genuine empty record remains unmarked. Inserting genuine data at a marked
 //! key promotes it while preserving graph and spatial identity. Public
 //! `CacheData` and `CachedSystem` struct literals must provide their fields.

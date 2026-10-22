@@ -4491,6 +4491,7 @@ enum StartupCacheCase {
     FreshSchema1,
     FreshSemantic1,
     FreshSemantic3,
+    FreshSchema3Semantic5,
     FreshCorrupt,
     BypassExisting,
     BypassMissing,
@@ -4498,13 +4499,14 @@ enum StartupCacheCase {
 
 #[cfg(unix)]
 impl StartupCacheCase {
-    const ALL: [Self; 9] = [
+    const ALL: [Self; 10] = [
         Self::ColdMissing,
         Self::FreshCurrent,
         Self::StaleCurrent,
         Self::FreshSchema1,
         Self::FreshSemantic1,
         Self::FreshSemantic3,
+        Self::FreshSchema3Semantic5,
         Self::FreshCorrupt,
         Self::BypassExisting,
         Self::BypassMissing,
@@ -4518,6 +4520,7 @@ impl StartupCacheCase {
             Self::FreshSchema1 => "fresh_schema1",
             Self::FreshSemantic1 => "fresh_semantic1",
             Self::FreshSemantic3 => "fresh_semantic3",
+            Self::FreshSchema3Semantic5 => "fresh_schema3_semantic5",
             Self::FreshCorrupt => "fresh_corrupt",
             Self::BypassExisting => "bypass_existing",
             Self::BypassMissing => "bypass_missing",
@@ -4533,6 +4536,7 @@ impl StartupCacheCase {
             | Self::StaleCurrent
             | Self::FreshSemantic1
             | Self::FreshSemantic3
+            | Self::FreshSchema3Semantic5
             | Self::BypassExisting => PHASE_A,
         }
     }
@@ -4565,6 +4569,7 @@ impl StartupCacheCase {
                 | Self::FreshSchema1
                 | Self::FreshSemantic1
                 | Self::FreshSemantic3
+                | Self::FreshSchema3Semantic5
                 | Self::FreshCorrupt
         )
     }
@@ -4616,7 +4621,7 @@ fn sentinel_bytes() -> Vec<u8> {
     let model = sentinel_model();
     let data = nms_cache::extract_cache_data(&model, 9999);
     let bytes = nms_cache::serialize::serialize(&data).expect("serialize current sentinel");
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let dir = tempfile::tempdir().expect("sentinel verification directory");
     let path = dir.path().join("sentinel.rkyv");
     nms_cache::write_cache(&data, &path).expect("write sentinel through cache API");
@@ -4722,7 +4727,7 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SchemaMismatch {
                         found: 1,
-                        expected: 3
+                        expected: 4
                     }
                 ))
             ));
@@ -4739,7 +4744,7 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 1,
-                        expected: 5
+                        expected: 6
                     }
                 ))
             ));
@@ -4757,16 +4762,36 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
             assert!(matches!(
                 nms_cache::read_cache(&cache),
                 Err(nms_cache::CacheError::Incompatible(
-                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
                         found: 3,
-                        expected: 5
+                        expected: 4
+                    }
+                ))
+            ));
+            Some(bytes)
+        }
+        StartupCacheCase::FreshSchema3Semantic5 => {
+            let bytes =
+                include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic5.rkyv")
+                    .to_vec();
+            assert_eq!(bytes.len(), 632);
+            assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+            std::fs::write(&cache, &bytes).expect("write authentic schema3 semantic5 predecessor");
+            set_mtime(&cache, source_mtime() + Duration::from_secs(100));
+            assert!(nms_cache::is_cache_fresh(&cache, &save));
+            assert!(matches!(
+                nms_cache::read_cache(&cache),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SchemaMismatch {
+                        found: 3,
+                        expected: 4
                     }
                 ))
             ));
             Some(bytes)
         }
         StartupCacheCase::FreshCorrupt => {
-            let bytes = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
+            let bytes = b"NMSCACHE\x04\0\0\0\x06\0\0\0".to_vec();
             std::fs::write(&cache, &bytes).expect("write literal empty current archive");
             set_mtime(&cache, source_mtime() + Duration::from_secs(100));
             assert!(nms_cache::is_cache_fresh(&cache, &save));
@@ -4816,7 +4841,7 @@ fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &Startup
 fn assert_cache_effect(case: StartupCacheCase, files: &StartupCaseFiles) -> &'static str {
     if case.rebuilds_cache() {
         let bytes = std::fs::read(&files.cache).expect("startup wrote current cache");
-        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
         let data = nms_cache::read_cache(&files.cache).expect("checked-read rebuilt cache");
         assert_eq!(data.save_version, 4720, "{} source version", case.label());
         assert_eq!(data.active_galaxy, case.source().reality_index);

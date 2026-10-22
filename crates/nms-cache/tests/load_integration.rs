@@ -9,7 +9,7 @@ use nms_cache::{
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::player::{BaseType, PlayerBase, PlayerState};
-use nms_core::system::{Planet, System, SystemId};
+use nms_core::system::{DiscoverySource, Planet, System, SystemId};
 use nms_graph::GalaxyModel;
 
 const HEADER_LEN: usize = 16;
@@ -91,6 +91,7 @@ fn expected_rich_cache(promoted: bool) -> CacheData {
     CacheData {
         systems: vec![
             nms_cache::data::CachedSystem {
+                source: DiscoverySource::Personal,
                 address: GalacticAddress::from_packed(
                     SystemId::from_address(&u0).system_address(),
                     0,
@@ -102,6 +103,7 @@ fn expected_rich_cache(promoted: bool) -> CacheData {
                 is_player_placeholder: true,
             },
             nms_cache::data::CachedSystem {
+                source: DiscoverySource::Personal,
                 address: GalacticAddress::from_packed(
                     SystemId::from_address(&u9).system_address(),
                     9,
@@ -117,6 +119,7 @@ fn expected_rich_cache(promoted: bool) -> CacheData {
                 is_player_placeholder: !promoted,
             },
             nms_cache::data::CachedSystem {
+                source: DiscoverySource::Personal,
                 address: e0,
                 name: None,
                 discoverer: None,
@@ -125,6 +128,7 @@ fn expected_rich_cache(promoted: bool) -> CacheData {
                 is_player_placeholder: false,
             },
             nms_cache::data::CachedSystem {
+                source: DiscoverySource::Personal,
                 address: i9,
                 name: Some("Imported-9".into()),
                 discoverer: Some("AtlasOwner".into()),
@@ -405,6 +409,7 @@ fn assert_cache_contents(actual: &CacheData, expected: &CacheData) {
                     system.discoverer.clone(),
                     system.timestamp_secs,
                     system.planets.clone(),
+                    system.source.clone(),
                     system.is_player_placeholder,
                 )
             })
@@ -874,7 +879,7 @@ fn mismatched_cache_data(current_reality: u8, address_reality: u8) -> CacheData 
 /// the public writer so reader tests can represent contradictory persisted data.
 fn unchecked_current_envelope(data: &CacheData) -> Vec<u8> {
     let payload = rkyv::to_bytes::<rkyv::rancor::Error>(data).unwrap();
-    let mut bytes = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
+    let mut bytes = b"NMSCACHE\x04\0\0\0\x06\0\0\0".to_vec();
     bytes.extend_from_slice(&payload);
     bytes
 }
@@ -904,7 +909,7 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
     for (current_reality, address_reality) in [(0, 9), (9, 0)] {
         let data = mismatched_cache_data(current_reality, address_reality);
         let bytes = unchecked_current_envelope(&data);
-        assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+        assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
 
         let mut aligned = rkyv::util::AlignedVec::<16>::with_capacity(bytes.len() - HEADER_LEN);
         aligned.extend_from_slice(&bytes[HEADER_LEN..]);
@@ -978,7 +983,7 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
             Err(CacheError::Incompatible(
                 nms_cache::CacheCompatibilityError::SchemaMismatch {
                     found: 2,
-                    expected: 3
+                    expected: 4
                 }
             ))
         ));
@@ -989,7 +994,7 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
             Err(CacheError::Incompatible(
                 nms_cache::CacheCompatibilityError::SemanticMismatch {
                     found: 1,
-                    expected: 5
+                    expected: 6
                 }
             ))
         ));
@@ -1053,7 +1058,7 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         let rewritten_bytes = fs::read(&cache_path).unwrap();
         assert_eq!(
             &rewritten_bytes[..HEADER_LEN],
-            b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+            b"NMSCACHE\x04\0\0\0\x06\0\0\0"
         );
         let rewritten = read_cache(&cache_path).unwrap();
         assert_eq!(rewritten.save_version, 4720);
@@ -1196,7 +1201,7 @@ fn load_or_rebuild_from_save_when_no_cache() {
     assert!(cache_path.exists());
     assert_eq!(
         &fs::read(&cache_path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
 }
 
@@ -1689,7 +1694,7 @@ fn direct_file_roundtrip_has_header_and_source_version_is_not_header_version() {
     let data = extract_cache_data(&source_model(), 4720);
     write_cache(&data, &path).unwrap();
     let bytes = fs::read(&path).unwrap();
-    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     assert_eq!(deserialize(&bytes).unwrap().save_version, 4720);
     assert_eq!(read_cache(&path).unwrap().save_version, 4720);
 }
@@ -1706,7 +1711,7 @@ fn compatible_cache_preserves_populated_model_with_independent_save_version() {
     assert_eq!(restored.save_version, 9999);
     assert_eq!(
         &fs::read(&path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
     assert_raw_source_semantics(&rebuild_model(&restored));
 }
@@ -1722,7 +1727,7 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 1,
-                expected: 3
+                expected: 4
             }
         ))
     ));
@@ -1739,7 +1744,7 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 1,
-                expected: 3
+                expected: 4
             }
         ))
     ));
@@ -1764,7 +1769,7 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
     assert!(rebuilt.model.is_player_placeholder(&ensured_id));
 
     let rewritten = fs::read(&cache_path).unwrap();
-    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     assert_eq!(deserialize(&rewritten).unwrap().active_galaxy, 9);
     assert!(is_cache_fresh(&cache_path, &save_path));
 
@@ -1787,7 +1792,7 @@ fn actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 2,
-                expected: 3
+                expected: 4
             }
         ))
     ));
@@ -1804,7 +1809,7 @@ fn actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_
     assert_eq!(rebuilt.save_version, 4720);
     assert_source_semantics(&rebuilt.model);
     let rewritten = fs::read(&cache_path).unwrap();
-    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
     let rewritten_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
     assert!(warm.was_cached);
@@ -1898,6 +1903,113 @@ fn actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_
 }
 
 #[test]
+fn authentic_schema3_semantic5_predecessor_rebuilds_then_warm_hits() {
+    const LEGACY: &[u8] = include_bytes!("fixtures/predecessor-schema3-semantic5.rkyv");
+    assert_eq!(LEGACY.len(), 632);
+    assert_eq!(&LEGACY[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
+    assert!(matches!(
+        deserialize(LEGACY),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 3,
+                expected: 4
+            }
+        ))
+    ));
+
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    fs::write(&save_path, test_save_json()).unwrap();
+    fs::write(&cache_path, LEGACY).unwrap();
+    set_mtime(&save_path, save_mtime());
+    set_mtime(&cache_path, save_mtime() + Duration::from_secs(100));
+    assert!(is_cache_fresh(&cache_path, &save_path));
+
+    let source_before = fs::read(&save_path).unwrap();
+    let source_mtime_before = fs::metadata(&save_path).unwrap().modified().unwrap();
+    let entries_before = {
+        let mut entries = fs::read_dir(dir.path())
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<Vec<_>>();
+        entries.sort();
+        entries
+    };
+
+    let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(!rebuilt.was_cached);
+    assert_source_semantics(&rebuilt.model);
+    assert!(
+        rebuilt
+            .model
+            .systems
+            .values()
+            .all(|system| system.source == DiscoverySource::Personal)
+    );
+    assert_eq!(fs::read(&save_path).unwrap(), source_before);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        source_mtime_before
+    );
+    let current = fs::read(&cache_path).unwrap();
+    assert_eq!(&current[..HEADER_LEN], b"NMSCACHE\x04\0\0\0\x06\0\0\0");
+    let current_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
+    let mut rebuilt_entries = fs::read_dir(dir.path())
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name())
+        .collect::<Vec<_>>();
+    rebuilt_entries.sort();
+    assert_eq!(rebuilt_entries, entries_before);
+    assert!(!dir.path().join("galaxy.rkyv.tmp").exists());
+
+    let malformed_source = b"malformed older source is not parsed after rebuild";
+    fs::write(&save_path, malformed_source).unwrap();
+    set_mtime(&save_path, save_mtime());
+    assert!(is_cache_fresh(&cache_path, &save_path));
+    let malformed_source_mtime = fs::metadata(&save_path).unwrap().modified().unwrap();
+    let malformed_source_before = fs::read(&save_path).unwrap();
+    let cache_before = fs::read(&cache_path).unwrap();
+    let cache_mtime_before = fs::metadata(&cache_path).unwrap().modified().unwrap();
+    assert_eq!(cache_mtime_before, current_mtime);
+    assert!(cache_mtime_before > malformed_source_mtime);
+    let entries_before_warm = {
+        let mut entries = fs::read_dir(dir.path())
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect::<Vec<_>>();
+        entries.sort();
+        entries
+    };
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
+    assert!(
+        warm.model
+            .systems
+            .values()
+            .all(|system| system.source == DiscoverySource::Personal)
+    );
+    assert_eq!(fs::read(&cache_path).unwrap(), cache_before);
+    assert_eq!(
+        fs::metadata(&cache_path).unwrap().modified().unwrap(),
+        cache_mtime_before
+    );
+    assert_eq!(fs::read(&save_path).unwrap(), malformed_source_before);
+    assert_eq!(fs::read(&save_path).unwrap(), malformed_source);
+    assert_eq!(
+        fs::metadata(&save_path).unwrap().modified().unwrap(),
+        malformed_source_mtime
+    );
+    let mut entries_after_warm = fs::read_dir(dir.path())
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name())
+        .collect::<Vec<_>>();
+    entries_after_warm.sort();
+    assert_eq!(entries_after_warm, entries_before_warm);
+    assert!(!dir.path().join("galaxy.rkyv.tmp").exists());
+}
+
+#[test]
 fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching_fresh_current() {
     assert_eq!(PREDECESSOR_SCHEMA3_SEMANTIC3.len(), 752);
     assert_eq!(
@@ -1907,9 +2019,9 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
     assert!(matches!(
         deserialize(PREDECESSOR_SCHEMA3_SEMANTIC3),
         Err(CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 3,
-                expected: 5
+                expected: 4
             }
         ))
     ));
@@ -1924,9 +2036,9 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
     assert!(matches!(
         read_cache(&cache_path),
         Err(CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
                 found: 3,
-                expected: 5
+                expected: 4
             }
         ))
     ));
@@ -1938,7 +2050,7 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
     let current_bytes = fs::read(&cache_path).unwrap();
     assert_eq!(
         &current_bytes[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
     let current_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
     let original_source_bytes = fs::read(&save_path).unwrap();
@@ -1975,9 +2087,9 @@ fn authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits() {
     assert!(matches!(
         deserialize(PREDECESSOR_SCHEMA3_SEMANTIC4),
         Err(CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
-                found: 4,
-                expected: 5
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 3,
+                expected: 4
             }
         ))
     ));
@@ -1992,9 +2104,9 @@ fn authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits() {
     assert!(matches!(
         read_cache(&cache_path),
         Err(CacheError::Incompatible(
-            nms_cache::CacheCompatibilityError::SemanticMismatch {
-                found: 4,
-                expected: 5
+            nms_cache::CacheCompatibilityError::SchemaMismatch {
+                found: 3,
+                expected: 4
             }
         ))
     ));
@@ -2006,7 +2118,7 @@ fn authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits() {
     let current_bytes = fs::read(&cache_path).unwrap();
     assert_eq!(
         &current_bytes[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
 
     let original_source_bytes = fs::read(&save_path).unwrap();
@@ -2156,7 +2268,7 @@ fn semantic3_predecessor_failure_no_cache_and_write_blocker_preserve_all_owned_f
     let current_bytes = fs::read(&cache_path).unwrap();
     assert_eq!(
         &current_bytes[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
     let mut repaired_entries = fs::read_dir(dir.path())
         .unwrap()
@@ -2234,7 +2346,7 @@ fn marker_round_trip_preserves_full_model_and_genuine_planet_promotion() {
 }
 
 #[test]
-fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits() {
+fn current_schema4_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits() {
     let dir = tempfile::tempdir().unwrap();
     let (save_path, cache_path) = paths(&dir);
     let active9_json = source_json_active_galaxy_9();
@@ -2246,7 +2358,7 @@ fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits(
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SemanticMismatch {
                 found: 1,
-                expected: 5
+                expected: 6
             }
         ))
     ));
@@ -2261,7 +2373,7 @@ fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits(
     assert_eq!(rebuilt.model.active_galaxy, 9);
     assert_eq!(
         &fs::read(&cache_path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+        b"NMSCACHE\x04\0\0\0\x06\0\0\0"
     );
     set_fresh(&cache_path, &save_path);
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
@@ -2344,6 +2456,7 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
         cached_at: 0,
     };
     let valid = || CachedSystem {
+        source: DiscoverySource::Personal,
         address,
         name: None,
         discoverer: None,
@@ -2424,22 +2537,27 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
     };
     let invalid_cases = [
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: GalacticAddress::new(1, 2, 3, 4, 1, 9),
             ..valid()
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             name: Some(String::new()),
             ..valid()
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             discoverer: Some(String::new()),
             ..valid()
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             timestamp_secs: Some(0),
             ..valid()
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             planets: vec![Planet::new(1, None, None, false, None, None)],
             ..valid()
         },
@@ -2461,7 +2579,7 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
             other => panic!("expected marker serialize error, got {other:?}"),
         }
         let payload = rkyv::to_bytes::<rkyv::rancor::Error>(&data).unwrap();
-        let mut raw = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
+        let mut raw = b"NMSCACHE\x04\0\0\0\x06\0\0\0".to_vec();
         raw.extend_from_slice(&payload);
         match deserialize(&raw).unwrap_err() {
             CacheError::Deserialize(message) => assert_eq!(message, expected_message),
@@ -2472,6 +2590,7 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
     }
 
     let rich_invalid = CachedSystem {
+        source: DiscoverySource::Personal,
         address: GalacticAddress::new(1, 2, 3, 4, 1, 9),
         name: Some("Rich-malformed".into()),
         discoverer: Some("Trusted-owner".into()),
@@ -2507,6 +2626,7 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
     assert!(genuine_model.system(&id).unwrap().planets.is_empty());
 
     let genuine = || CachedSystem {
+        source: DiscoverySource::Personal,
         name: Some("Genuine".into()),
         planets: vec![Planet::new(
             2,

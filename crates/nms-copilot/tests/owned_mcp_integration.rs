@@ -15,7 +15,7 @@ use nms_core::SaveUpdate;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::player::{BaseType, PlayerBase, PlayerState};
-use nms_core::system::{Planet, System, SystemId};
+use nms_core::system::{DiscoverySource, Planet, System, SystemId};
 use nms_watch::WatchConfig;
 use tokio::sync::RwLock;
 
@@ -51,6 +51,7 @@ fn test_literal_cache_validator_accepts_golden_and_rejects_discriminating_mutati
     assert!(reject_raw(&wrong_version));
     let mut extra_named = live_mcp::expected_cache(4720, 0, 7, 8, 9, None, 7);
     extra_named.systems.push(CachedSystem {
+        source: DiscoverySource::Personal,
         address: GalacticAddress::new(4, 4, 4, 4, 0, 9),
         name: Some("Unexpected".into()),
         discoverer: None,

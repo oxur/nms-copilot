@@ -6,7 +6,7 @@ use nms_cache::data::CachedSystem;
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::player::{BaseType, PlayerBase, PlayerState};
-use nms_core::system::{Planet, System};
+use nms_core::system::{DiscoverySource, Planet, System};
 use nms_graph::GalaxyModel;
 use serde_json::{Value, json};
 
@@ -333,6 +333,7 @@ pub fn expected_cache(stage: ModelStage, units: u64) -> CacheData {
     let b0_names = stage != ModelStage::Initial;
     let systems = vec![
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: a0(),
             name: a0_name.map(str::to_owned),
             discoverer: if a0_placeholder {
@@ -349,6 +350,7 @@ pub fn expected_cache(stage: ModelStage, units: u64) -> CacheData {
             is_player_placeholder: a0_placeholder,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: b0(),
             name: Some(
                 if b0_names {
@@ -374,6 +376,7 @@ pub fn expected_cache(stage: ModelStage, units: u64) -> CacheData {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: a9(),
             name: Some("Community Nine".into()),
             discoverer: Some("Explorer".into()),
@@ -382,6 +385,7 @@ pub fn expected_cache(stage: ModelStage, units: u64) -> CacheData {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: c0(),
             name: Some("Absent Import".into()),
             discoverer: Some("Explorer".into()),
@@ -461,6 +465,7 @@ pub fn warm_seed_cache() -> CacheData {
     let timestamp_secs = Some(1_700_000_000);
     let systems = vec![
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: a0(),
             name: None,
             discoverer: None,
@@ -469,6 +474,7 @@ pub fn warm_seed_cache() -> CacheData {
             is_player_placeholder: true,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: b0(),
             name: Some("Community Rest".into()),
             discoverer: Some("Explorer".into()),
@@ -477,6 +483,7 @@ pub fn warm_seed_cache() -> CacheData {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: a9(),
             name: Some("Community Nine".into()),
             discoverer: Some("Explorer".into()),
@@ -485,6 +492,7 @@ pub fn warm_seed_cache() -> CacheData {
             is_player_placeholder: false,
         },
         CachedSystem {
+            source: DiscoverySource::Personal,
             address: c0(),
             name: Some("Absent Import".into()),
             discoverer: Some("Explorer".into()),

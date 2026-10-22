@@ -16,4 +16,4 @@ pub use discovery::{Discovery, DiscoveryParseError, DiscoveryRecord};
 pub use galaxy::{Galaxy, GalaxyType, GalaxyTypeParseError};
 pub use glyph::{Glyph, GlyphParseError};
 pub use player::{BaseType, BaseTypeParseError, PlayerBase, PlayerState};
-pub use system::{Planet, System, SystemId};
+pub use system::{DiscoverySource, Planet, System, SystemId};
