@@ -1053,9 +1053,10 @@ fn run_names_monitor(
         "invalid5",
         "recover",
         "identical",
+        "pre-exit",
         "finish",
     ];
-    let predecessor_commands = ["finish"];
+    let predecessor_commands = ["pre-exit", "finish"];
     let commands: &[&str] = if predecessor {
         &predecessor_commands
     } else {
@@ -1115,6 +1116,11 @@ fn run_names_monitor(
                 watch_enabled: profile_kind.watch_enabled(),
             },
         )?;
+        if required == "pre-exit" {
+            println!("name-pre-exit=pass");
+            io::stdout().flush()?;
+            continue;
+        }
         if required == "identical" {
             let cursor = sse.cursor();
             expected_source_time = atomic_replace(&fixture.join("save.json"), &expected_source)?;
@@ -1259,9 +1265,32 @@ fn run_names_restart_monitor(
         format!("address={address} session={session} predecessor={predecessor}\n"),
     )?;
     File::open(fixture.join("restart.names.ready"))?.sync_all()?;
-    let (line, _) = wait_control_line(
+    let (line, offset) = wait_control_line(
         &fixture.join("restart.names.commands"),
         0,
+        Duration::from_secs(60),
+    )?;
+    if line != "pre-exit" {
+        return Err(format!("name restart monitor expected pre-exit, got {line:?}").into());
+    }
+    check_names_boundary(
+        fixture,
+        address,
+        &session,
+        NamesBoundary {
+            source: &expected_source,
+            source_time: expected_source_time,
+            cache_stamp: &expected_cache_stamp,
+            stage,
+            profile,
+            watch_enabled: false,
+        },
+    )?;
+    println!("name-restart-pre-exit=pass");
+    io::stdout().flush()?;
+    let (line, _) = wait_control_line(
+        &fixture.join("restart.names.commands"),
+        offset,
         Duration::from_secs(60),
     )?;
     if line != "finish" {
@@ -2322,6 +2351,7 @@ fn run_unknown_monitor(
             "invalid-address",
             "promote",
             "identical",
+            "pre-exit",
             "finish",
         ]
         .get(next_step)
@@ -2520,8 +2550,26 @@ fn run_unknown_monitor(
                 println!("unknown-identical=pass exact-cache-bytes+mtime");
                 io::stdout().flush()?;
             }
-            "finish" => {
+            "pre-exit" => {
                 if stage != live_mcp::UnknownLifecycleStage::Promoted || next_step != 5 {
+                    return Err("pre-exit requires the ordered promoted lifecycle boundary".into());
+                }
+                let (tool, resource) = location_rpc_pair(address, &session)?;
+                live_mcp::assert_location_pair_at(
+                    &tool,
+                    &resource,
+                    GalacticAddress::new(0, 0, 0, 3, 5, 0),
+                    "-",
+                    1,
+                    "500300000000",
+                    "07FF:007F:07FF:0003",
+                )?;
+                next_step += 1;
+                println!("unknown-pre-exit=pass");
+                io::stdout().flush()?;
+            }
+            "finish" => {
+                if stage != live_mcp::UnknownLifecycleStage::Promoted || next_step != 6 {
                     return Err("finish requires the ordered promoted lifecycle boundary".into());
                 }
                 sse.wait_closed_without_resource_updated(
@@ -2731,7 +2779,30 @@ fn run_unknown_restart_monitor(
     )?;
     File::open(fixture.join("restart.ready"))?.sync_all()?;
     let control = fixture.join("restart.commands");
-    let (line, _) = wait_control_line(&control, 0, Duration::from_secs(60))?;
+    let (line, offset) = wait_control_line(&control, 0, Duration::from_secs(60))?;
+    if line != "pre-exit" {
+        return Err(format!("restart monitor expected pre-exit, received {line:?}").into());
+    }
+    let (tool, resource) = location_rpc_pair(address, &session)?;
+    live_mcp::assert_location_pair_at(
+        &tool,
+        &resource,
+        GalacticAddress::new(0, 0, 0, 3, 5, 0),
+        "-",
+        1,
+        "500300000000",
+        "07FF:007F:07FF:0003",
+    )?;
+    check_unknown_boundary(
+        fixture,
+        &expected_source,
+        expected_source_time,
+        &Some(cache_checkpoint.clone()),
+        live_mcp::UnknownLifecycleStage::Promoted,
+    )?;
+    println!("unknown-restart-pre-exit=pass");
+    io::stdout().flush()?;
+    let (line, _) = wait_control_line(&control, offset, Duration::from_secs(60))?;
     if line != "finish" {
         return Err(format!("restart monitor expected finish, received {line:?}").into());
     }
