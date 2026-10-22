@@ -1,0 +1,7 @@
+# Slice26 CDC issuance / execution
+
+2026-10-22 UTC. Standing Arc06-only/same selected models; accepted25source03b held, new dedicatedcodex/save-slot-contract clean/indexempty. SameCCusableheadroom/noownedprocessconfirmed. FulloriginalM7.3/caller/locator/SDK/platform/error/fixture/oracle/table reviewcompletebeforehandoff; exactfivepaths/closedO1–O5/no extraaccountselector/nickname/importpersistence/cachepolicy. NativeHOME Mac/Linux safe; WindowsKnownFoldersnotredirectable so no realuserhostsaveaccess andhigherplatformlimits retained.
+
+Newraw-firstkernelSHAedbdcd5d58d59e05f8d5af018ac4dcb25f598f805c4a8923baf94b0382436e89 exactlypreviouswithONLYsource/recordnamespacechanges. Actualsupport756a0f2338cf436faccd70575892ed1b exit7/f90155f2c7de4bf49b6de036a5eaaff9 exit0, complete fullrawstdout10/stderr6/base64/hash/exit/end/prepostHEAD-status-identity, before==afterclean03b. No productcompiler/test/diagnostic/implementationyet; controlsnotacceptance.
+
+Initialimmutableprompt0of5; coherentreadbackthenCCsole source-index-gates, CDCplanning/independentreview. Firstcapturedformatlintimmediatehold/fullworksheetbeforeelevenorderedgroups. Original25closure/failures/main9line/allheldexternalpins/Arc06endpointandallbroaderoriginalgatespreserved; no remote/integration/install/release/otherarc/Project02.

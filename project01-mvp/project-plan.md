@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.90
+version: 1.91
 project: project01-mvp
 status: active
 depends-on: []
@@ -1137,3 +1137,10 @@ Arc-plan1.102/[Slice25](arc06-fit-and-finish/slice25-shell-completions/slice-pla
 Arc-plan1.103 recordsall5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productionfrozen), twoordinaryrefinements/12freshCDCgroups/CLI163/full1070runtime+31docs/controller14actualactions. Original0037generation/registration/usage/testsfullleafmapped; actualBash-Zshactivation/candidates andFishgeneration/output-onlylimit explicit. Raw22CC+14CDC/failedlint/metadatarepair/same-modelcapacityrecovery/postpairchronology/byteexactreturns/archive/mandatoryretropreserved, noexception orscopepolicyamendment.
 
 43arcrows27done16open/project25open. NEXT originalM7.3slotsgrounding/boundedowner/headroom understandingArc06authority; allotheroriginal/repair/game/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release gatesretainowners. Main9line/heldexternalpins/samemodels/onearcendpoint protected; isolatedlocalcandidate/nootherarc/Project02/merge/push/install/publish/release.
+
+
+## Arc06 original M7.3 / Slice26 issued — 2026-10-22 UTC
+
+Arc-plan1.104/[Slice26](arc06-fit-and-finish/slice26-save-slot-contract/slice-plan.md) owns original15slot/discovery/listing/allCLIcaller selection through fiveboundedpaths fromaccepted25clean03b. Importresolver/range/listIOdefects sourcegrounded; literalA/Bsave56/mtime/account/explicitpriority/firstaccount/readonly/error/negativecontrols suppliedbeforehandoff. Same selectedCDC-CC/headroomconfirmed/rawfirst7-0controls/initial0of5/formatlintimmediatehold/11groups. WindowsKnownFoldersnotredirected; nativeHOMEfixtureMacLinuxonly/portableparameterizedlocatorproof/higherplatformlimit retained. No newselector/nickname/catalog/address/cache/persistence policy/inquiry/dependency.
+
+All6MS/R06-S26/M7.3OPEN;44arcrows27done17open/project25open. All25closures/originalM7.1M7.2andallotheroriginal/repair/raw/history/finalsemantic/freshness-import/game/format/UI/docs/distribution/coverage/performance/platform/higherindependent/Operator/integration/release obligations retained. Mainhuman9line/heldexternalpins/samemodels/onearcendpointprotected; no otherarc/Project02/merge/push/install/publish/release.

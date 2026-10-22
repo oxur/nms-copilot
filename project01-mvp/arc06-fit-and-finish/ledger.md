@@ -250,3 +250,12 @@ Slice23 current review: six child criteria independently accepted, two open; R06
 ## Slice25 / original M7.2 independently closed — 2026-10-22 UTC
 
 FiveSC/R06-S25/M7.2doneat03b6536 aftertwoordinaryrefinements/12freshCDCgroups/1070runtime+31docs/controller14actualactions. Originalfull0037mapping/failedlint-andmetadatahistory/raw22CC+14CDC/returns/archive/mandatoryretro preserved; Fishgeneration-onlylimit explicit, noexception.43rows27done16open/project25open; M7.3slotsNEXT, allotheroriginal/repair/highergatesretained. No otherarc/integration/release authority.
+
+
+## Original M7.3 save-slot child issued — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S26 | Full15-slot discovery/listing and global CLI selection independently accepted | SixMS rows/allcaller-literal-fixture/15boundary/error/readonlyproof/11groups/fulloriginalleafreconciliation | correctness-grade | Original0037 M7.3 | open | [Issued plan](slice26-save-slot-contract/slice-plan.md) | Original first-account/explicit-path policies retained; no new selector/name catalog |
+
+44rows27done17open/project25open; M7.3 and all prior other open rows unchanged. Nativecurrenthost evidence/portablelibraryproof do not claim Windowsruntime or hostedCI.

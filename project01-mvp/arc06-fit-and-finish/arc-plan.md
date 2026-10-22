@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.103, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.104, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -894,3 +894,10 @@ All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, produ
 All5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productionfrozen), twoordinaryrefinements/12freshCDCgroups/CLI163/workspace1070runtime+31docs/controller14actualactions. Completeoriginal0037leafmapping/scopedliteralmanifests/effectivemutants/availableBash-Zshactivationandcandidates/READMEinstructions/Fishgeneration-onlylimit verified. Raw22CC+14CDC/failures/same-modelcapacityretry/postpairauthorship/applicability/metadata-onlytreepreservingrepair/byteexactreturns/archive/finalretro preserved; nowaiver/newdependency/productionchange.
 
 43arcrows27done16open/project25open. ParentcompliantyesM7.2/no structuralchange. NEXT originalM7.3slotsgrounding/boundedowner/headroom beforefreshassignment; no prematureacceptance. All original/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Mainhuman9line/allheldexternalpins/sameCDC-CCmodels/onearcendpoint protected, sourceisolated/nootherarc/Project02/merge/push/install/publish/release.
+
+
+## Original M7.3 / Slice26 issued — 2026-10-22 UTC
+
+[Slice26](slice26-save-slot-contract/slice-plan.md) owns full original15slot/discovery/CLIselection/listing contract: boundedfivepaths closeImportresolverbypass/out-of-rangefilenames/maskedlistIO, allcallerthree-mode literal56-bitfixtures/pairedmtime/tie/account/error/readonlyproof/docs. Explicit--savepriority/firstsortedaccount/globalnewest/Unknowndirectory policy preserved; no selector/nickname/address/cache/importpersistence/terminal/dependency/inquiry change. SameCDC/CC/headroomconfirmed, newdedicatedsourceclean03b/rawfirstsupportcontrols beforecompiler/initial0of5/fullheldworksheet/11groups. NativeMacLinuxHOME safe/WindowsKnownFoldersruntime limit explicit/no realhostsaveaccess.
+
+44arcrows27done17open/project25open; all6MS/R06-S26/M7.3OPEN. All25closures/originalM7.1M7.2retained, allotheroriginal/repair/raw/history/finalsemantic/freshness-import/game/platform/format/UI/docs/distribution/coverage/performance/higher/Operator/integration/release gates remain. Main9line/heldexternalpins/models/onearcendpoint protected/no otherarc/Project02/remote/integration/install/release.
