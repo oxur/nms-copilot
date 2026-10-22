@@ -4,6 +4,8 @@
 
 #[path = "../tests/support/live_mcp.rs"]
 pub mod live_mcp;
+#[path = "../tests/support/name_observations.rs"]
+pub mod name_observations;
 
 use std::fs::{self, File, FileTimes};
 use std::io::{self, Write};
@@ -15,11 +17,13 @@ use std::time::{Duration, UNIX_EPOCH};
 use live_mcp::{
     assert_location_pair, expected_cache, initialize_http, location_rpc_pair, subscribe_sse,
 };
+use name_observations::{ModelStage, SourcePhase};
 use nms_cache::CacheData;
 use nms_copilot::mcp;
 use nms_core::address::GalacticAddress;
 
 const MARKER: &str = ".slice19-owned-fixture";
+const NAME_MARKER: &str = ".slice23-name-fixture";
 type PreviousFields = (u8, i16, i8, i16, u16, u8);
 type PhaseState = (u32, u8, u64, u64, u64, Option<PreviousFields>, u8);
 
@@ -237,6 +241,41 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             verify_unknown_fixture(&fixture)?;
             println!("unknown-fixture=pass source+fresh-compatible-seed+config");
         }
+        "prepare-names" => {
+            let profile = args.next().unwrap_or_else(|| "warm".into());
+            prepare_names(&profile)?;
+        }
+        "verify-names" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            verify_names_fixture(&fixture)?;
+            println!("name-fixture=pass exact-source-cache-config");
+        }
+        "prepare-names-restart" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            prepare_names_restart(&fixture)?;
+            println!("name-restart=pass exact-cache-source-mode");
+        }
+        "verify-names-restart" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            verify_names_restart(&fixture)?;
+            println!("name-restart-checkpoint=pass");
+        }
+        "monitor-names" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            let address: SocketAddr = args.next().ok_or("MCP socket address required")?.parse()?;
+            run_names_monitor(&fixture, address)?;
+        }
+        "monitor-names-restart" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            let address: SocketAddr = args.next().ok_or("MCP socket address required")?.parse()?;
+            run_names_restart_monitor(&fixture, address)?;
+        }
+        "name-phase" => {
+            let fixture = owned_names_path(args.next().ok_or("fixture path required")?)?;
+            let phase = args.next().ok_or("name phase required")?;
+            write_name_phase(&fixture, &phase)?;
+            println!("name-phase={phase} written");
+        }
         "prepare-restart" => {
             let fixture = owned_path(args.next().ok_or("fixture path required")?)?;
             prepare_unknown_restart(&fixture)?;
@@ -374,6 +413,806 @@ fn owned_path(path: String) -> Result<PathBuf, Box<dyn std::error::Error>> {
     Ok(path)
 }
 
+fn owned_names_path(path: String) -> Result<PathBuf, Box<dyn std::error::Error>> {
+    let path = PathBuf::from(path);
+    let marker = path.join(NAME_MARKER);
+    if !marker.is_file() || fs::read(marker)? != b"Project01 Arc06 Slice23 name fixture\n" {
+        return Err(format!("refusing unowned name fixture path {}", path.display()).into());
+    }
+    Ok(path)
+}
+
+fn names_config(cache: &Path, watch_enabled: bool) -> String {
+    format!(
+        "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = {watch_enabled}\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+        cache.to_string_lossy()
+    )
+}
+
+fn name_cache_path(fixture: &Path) -> PathBuf {
+    fixture.join("cache.rkyv")
+}
+
+fn prepare_names(profile: &str) -> Result<(), Box<dyn std::error::Error>> {
+    if profile != "warm" && profile != "predecessor" {
+        return Err(format!("unknown name profile {profile}").into());
+    }
+    let dir = tempfile::Builder::new()
+        .prefix("slice23-names-")
+        .tempdir_in(std::env::temp_dir())?;
+    let fixture = dir.keep();
+    fs::write(
+        fixture.join(NAME_MARKER),
+        b"Project01 Arc06 Slice23 name fixture\n",
+    )?;
+    let home = fixture.join("home");
+    let config_dir = home.join(".nms-copilot");
+    fs::create_dir_all(&config_dir)?;
+    let source_path = fixture.join("save.json");
+    let cache_path = name_cache_path(&fixture);
+    let source_phase = if profile == "warm" {
+        SourcePhase::Initial
+    } else {
+        SourcePhase::Recover
+    };
+    let source = name_observations::source_bytes(source_phase);
+    fs::write(&source_path, &source)?;
+    let source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+    File::options()
+        .write(true)
+        .open(&source_path)?
+        .set_times(FileTimes::new().set_modified(source_time))?;
+    let cache_bytes = if profile == "warm" {
+        nms_cache::write_cache(&name_observations::warm_seed_cache(), &cache_path)?;
+        let modified = source_time + Duration::from_secs(100);
+        File::options()
+            .write(true)
+            .open(&cache_path)?
+            .set_times(FileTimes::new().set_modified(modified))?;
+        fs::read(&cache_path)?
+    } else {
+        let predecessor =
+            include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv");
+        if predecessor.len() != 224 || &predecessor[..16] != b"NMSCACHE\x03\0\0\0\x04\0\0\0" {
+            return Err("canonical schema3/semantic4 predecessor bytes/header differ".into());
+        }
+        fs::write(&cache_path, predecessor)?;
+        let modified = source_time + Duration::from_secs(100);
+        File::options()
+            .write(true)
+            .open(&cache_path)?
+            .set_times(FileTimes::new().set_modified(modified))?;
+        predecessor.to_vec()
+    };
+    let watch_enabled = profile == "warm";
+    fs::write(
+        config_dir.join("config.toml"),
+        names_config(&cache_path, watch_enabled),
+    )?;
+    fs::write(fixture.join("cache-path.txt"), b"cache.rkyv\n")?;
+    fs::write(
+        fixture.join("mode.txt"),
+        format!(
+            "names-{profile}\n{}\n",
+            if watch_enabled { "enabled" } else { "disabled" }
+        ),
+    )?;
+    fs::write(fixture.join("monitor.names.commands"), b"")?;
+    fs::write(fixture.join("restart.names.commands"), b"")?;
+    let cache_modified = fs::metadata(&cache_path)?.modified()?;
+    fs::write(
+        fixture.join("names-initial-state.json"),
+        serde_json::to_vec(&serde_json::json!({
+            "profile": profile,
+            "source_hex": hex_bytes(&source),
+            "source_modified_nanos": source_time.duration_since(UNIX_EPOCH)?.as_nanos(),
+            "cache_hex": hex_bytes(&cache_bytes),
+            "cache_modified_nanos": cache_modified.duration_since(UNIX_EPOCH)?.as_nanos(),
+        }))?,
+    )?;
+    println!(
+        "{}",
+        serde_json::json!({
+            "fixture": fixture,
+            "marker": fixture.join(NAME_MARKER),
+            "home": home,
+            "save": source_path,
+            "cache": cache_path,
+            "mode": profile,
+            "watch": watch_enabled,
+        })
+    );
+    Ok(())
+}
+
+fn verify_names_fixture(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("names-initial-state.json"))?)?;
+    let profile = checkpoint["profile"]
+        .as_str()
+        .ok_or("name profile missing")?;
+    let watch_enabled = profile == "warm";
+    let source_path = fixture.join("save.json");
+    let cache_path = name_cache_path(fixture);
+    let expected_source = decode_hex(
+        checkpoint["source_hex"]
+            .as_str()
+            .ok_or("initial source missing")?,
+    )?;
+    let expected_cache = decode_hex(
+        checkpoint["cache_hex"]
+            .as_str()
+            .ok_or("initial cache missing")?,
+    )?;
+    let source_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["source_modified_nanos"]
+                .as_u64()
+                .ok_or("initial source time missing")?,
+        );
+    let cache_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["cache_modified_nanos"]
+                .as_u64()
+                .ok_or("initial cache time missing")?,
+        );
+    let expected_mode = format!(
+        "names-{profile}\n{}\n",
+        if watch_enabled { "enabled" } else { "disabled" }
+    );
+    if !fixture.join(NAME_MARKER).is_file()
+        || fs::read(fixture.join(NAME_MARKER))? != b"Project01 Arc06 Slice23 name fixture\n"
+        || fs::read_to_string(fixture.join("mode.txt"))? != expected_mode
+        || fs::read_to_string(fixture.join("cache-path.txt"))? != "cache.rkyv\n"
+        || fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?
+            != names_config(&cache_path, watch_enabled)
+        || fs::read(&source_path)? != expected_source
+        || fs::metadata(&source_path)?.modified()? != source_time
+        || fs::read(&cache_path)? != expected_cache
+        || fs::metadata(&cache_path)?.modified()? != cache_time
+    {
+        return Err("name fixture prelaunch source/cache/config checkpoint differs".into());
+    }
+    if profile == "warm" {
+        live_mcp::compare_cache(
+            &nms_cache::read_cache(&cache_path)?,
+            &name_observations::warm_seed_cache(),
+        )?;
+    } else {
+        let predecessor =
+            include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv");
+        if expected_cache.as_slice() != predecessor
+            || !matches!(
+                nms_cache::read_cache(&cache_path),
+                Err(nms_cache::CacheError::Incompatible(
+                    nms_cache::CacheCompatibilityError::SemanticMismatch {
+                        found: 4,
+                        expected: 5
+                    }
+                ))
+            )
+        {
+            return Err("authentic schema3/semantic4 prelaunch cache check differs".into());
+        }
+    }
+    Ok(())
+}
+
+fn prepare_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("names-initial-state.json"))?)?;
+    let profile = checkpoint["profile"]
+        .as_str()
+        .ok_or("name profile missing")?;
+    let source_path = fixture.join("save.json");
+    let cache_path = name_cache_path(fixture);
+    let current_cache = cache_stamp(&cache_path)?.ok_or("name cache missing before restart")?;
+    if fs::read(&source_path)? != name_observations::source_bytes(SourcePhase::Recover) {
+        return Err("name restart requires the completed recovery source".into());
+    }
+    let actual = nms_cache::read_cache(&cache_path)?;
+    let rebuilt = nms_cache::rebuild_model(&actual);
+    if profile == "warm" {
+        live_mcp::compare_cache_model(
+            &actual,
+            &rebuilt,
+            &name_observations::expected_cache(ModelStage::Recover, 7),
+            &name_observations::expected_model(ModelStage::Recover),
+        )?;
+    } else {
+        live_mcp::compare_cache_model(
+            &actual,
+            &rebuilt,
+            &name_observations::expected_predecessor_cache(),
+            &name_observations::expected_predecessor_model(),
+        )?;
+    }
+    let malformed = br#"{"Version":slice23-restart-opposed"#;
+    atomic_replace(&source_path, malformed)?;
+    File::options().write(true).open(&source_path)?.set_times(
+        FileTimes::new().set_modified(current_cache.modified - Duration::from_secs(1)),
+    )?;
+    let config = names_config(&cache_path, false);
+    fs::write(
+        fixture.join("mode.txt"),
+        format!("names-{profile}\ndisabled\n"),
+    )?;
+    fs::write(fixture.join("home/.nms-copilot/config.toml"), &config)?;
+    let source_time = fs::metadata(&source_path)?.modified()?;
+    fs::write(
+        fixture.join("names-restart-checkpoint.json"),
+        serde_json::to_vec(&serde_json::json!({
+            "profile": profile,
+            "cache_hex": hex_bytes(&fs::read(&cache_path)?),
+            "cache_modified_nanos": fs::metadata(&cache_path)?.modified()?.duration_since(UNIX_EPOCH)?.as_nanos(),
+            "source_hex": hex_bytes(&fs::read(&source_path)?),
+            "source_modified_nanos": source_time.duration_since(UNIX_EPOCH)?.as_nanos(),
+            "config": config,
+            "mode": fs::read_to_string(fixture.join("mode.txt"))?,
+        }))?,
+    )?;
+    File::open(fixture.join("names-restart-checkpoint.json"))?.sync_all()?;
+    Ok(())
+}
+
+fn verify_names_restart(fixture: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("names-restart-checkpoint.json"))?)?;
+    let profile = checkpoint["profile"]
+        .as_str()
+        .ok_or("restart profile missing")?;
+    let source_path = fixture.join("save.json");
+    let cache_path = name_cache_path(fixture);
+    let expected_source = decode_hex(
+        checkpoint["source_hex"]
+            .as_str()
+            .ok_or("restart source missing")?,
+    )?;
+    let expected_cache = decode_hex(
+        checkpoint["cache_hex"]
+            .as_str()
+            .ok_or("restart cache missing")?,
+    )?;
+    let source_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["source_modified_nanos"]
+                .as_u64()
+                .ok_or("restart source time missing")?,
+        );
+    let cache_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["cache_modified_nanos"]
+                .as_u64()
+                .ok_or("restart cache time missing")?,
+        );
+    let malformed = br#"{"Version":slice23-restart-opposed"#;
+    if expected_source.as_slice() != malformed
+        || cache_time <= source_time
+        || !nms_cache::is_cache_fresh(&cache_path, &source_path)
+    {
+        return Err("restart requires the literal older malformed source and fresh cache".into());
+    }
+    if fs::read(&source_path)? != expected_source
+        || fs::metadata(&source_path)?.modified()? != source_time
+        || fs::read(&cache_path)? != expected_cache
+        || fs::metadata(&cache_path)?.modified()? != cache_time
+        || fs::read_to_string(fixture.join("mode.txt"))?
+            != "names-".to_owned() + profile + "\ndisabled\n"
+        || fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?
+            != checkpoint["config"]
+                .as_str()
+                .ok_or("restart config missing")?
+    {
+        return Err("name restart exact source/cache/config checkpoint differs".into());
+    }
+    let actual = nms_cache::read_cache(&cache_path)?;
+    let rebuilt = nms_cache::rebuild_model(&actual);
+    if profile == "warm" {
+        live_mcp::compare_cache_model(
+            &actual,
+            &rebuilt,
+            &name_observations::expected_cache(ModelStage::Recover, 7),
+            &name_observations::expected_model(ModelStage::Recover),
+        )?;
+    } else {
+        live_mcp::compare_cache_model(
+            &actual,
+            &rebuilt,
+            &name_observations::expected_predecessor_cache(),
+            &name_observations::expected_predecessor_model(),
+        )?;
+    }
+    Ok(())
+}
+
+fn write_name_phase(fixture: &Path, phase: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let source = match phase {
+        "overwrite" => name_observations::source_bytes(SourcePhase::Overwrite),
+        "promote" => name_observations::source_bytes(SourcePhase::Promote),
+        "rename" => name_observations::source_bytes(SourcePhase::Rename),
+        "clear" => name_observations::source_bytes(SourcePhase::Clear),
+        "omit" => name_observations::source_bytes(SourcePhase::Omit),
+        "null" => name_observations::source_bytes(SourcePhase::Null),
+        "nonstring" => name_observations::source_bytes(SourcePhase::NonString),
+        "nonobject" => name_observations::source_bytes(SourcePhase::NonObject),
+        "nonobject-dm" => name_observations::source_bytes(SourcePhase::NonObjectDm),
+        "recover" => name_observations::source_bytes(SourcePhase::Recover),
+        _ if phase.starts_with("invalid") => {
+            let attempt = phase
+                .strip_prefix("invalid")
+                .ok_or("invalid phase suffix missing")?
+                .parse::<u8>()?;
+            if !(1..=5).contains(&attempt) {
+                return Err(format!("invalid attempt is outside 1..=5: {attempt}").into());
+            }
+            name_observations::invalid_address_attempt(attempt)
+        }
+        _ => return Err(format!("unknown name phase {phase:?}").into()),
+    };
+    atomic_replace(&fixture.join("save.json"), &source)?;
+    Ok(())
+}
+
+fn check_names_rpc(
+    fixture: &Path,
+    address: SocketAddr,
+    session: &str,
+    stage: ModelStage,
+    predecessor: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let (tool, location) = location_rpc_pair(address, session)?;
+    let expected_location = name_observations::expected_location(stage, predecessor);
+    if tool != location || tool != expected_location {
+        return Err(format!(
+            "full where_am_i tool/resource mismatch; expected {expected_location}, tool {tool}, resource {location}"
+        )
+        .into());
+    }
+    let stats = live_mcp::resource_json(address, session, "nms://galaxy/stats")?;
+    let expected_stats = name_observations::normalize_stats_biomes(
+        name_observations::expected_stats(stage, predecessor),
+    );
+    let actual_stats = name_observations::normalize_stats_biomes(stats);
+    if actual_stats != expected_stats {
+        return Err(format!(
+            "complete galaxy stats mismatch; expected {expected_stats}, observed {actual_stats}"
+        )
+        .into());
+    }
+    if !fixture.join("monitor.names.commands").is_file() {
+        return Err("name monitor command file disappeared".into());
+    }
+    Ok(())
+}
+
+struct NamesBoundary<'a> {
+    source: &'a [u8],
+    source_time: std::time::SystemTime,
+    cache_stamp: &'a CacheStamp,
+    stage: ModelStage,
+    profile: &'a str,
+    watch_enabled: bool,
+}
+
+fn check_names_boundary(
+    fixture: &Path,
+    address: SocketAddr,
+    session: &str,
+    boundary: NamesBoundary<'_>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    check_names_file_boundary(fixture, &boundary)?;
+    check_names_rpc(
+        fixture,
+        address,
+        session,
+        boundary.stage,
+        boundary.profile == "predecessor",
+    )?;
+    Ok(())
+}
+
+fn check_names_file_boundary(
+    fixture: &Path,
+    boundary: &NamesBoundary<'_>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let source = fixture.join("save.json");
+    let cache = name_cache_path(fixture);
+    let expected_cache = if boundary.profile == "predecessor" {
+        name_observations::expected_predecessor_cache()
+    } else {
+        name_observations::expected_cache(boundary.stage, 7)
+    };
+    let expected_model = if boundary.profile == "predecessor" {
+        name_observations::expected_predecessor_model()
+    } else {
+        name_observations::expected_model(boundary.stage)
+    };
+    let raw = nms_cache::read_cache(&cache)?;
+    let rebuilt = nms_cache::rebuild_model(&raw);
+    live_mcp::compare_cache_model(&raw, &rebuilt, &expected_cache, &expected_model)
+        .map_err(|error| format!("complete raw+rebuilt discovery-name oracle: {error}"))?;
+    let actual_stamp = cache_stamp(&cache)?.ok_or("name cache disappeared")?;
+    if fs::read(&source)? != boundary.source
+        || fs::metadata(&source)?.modified()? != boundary.source_time
+        || actual_stamp.bytes != boundary.cache_stamp.bytes
+        || actual_stamp.modified != boundary.cache_stamp.modified
+        || fs::read_to_string(fixture.join("home/.nms-copilot/config.toml"))?
+            != names_config(&cache, boundary.watch_enabled)
+        || fs::read_to_string(fixture.join("mode.txt"))?
+            != format!(
+                "names-{}\n{}\n",
+                boundary.profile,
+                if boundary.watch_enabled {
+                    "enabled"
+                } else {
+                    "disabled"
+                }
+            )
+        || fs::read_to_string(fixture.join("cache-path.txt"))? != "cache.rkyv\n"
+        || cache.with_extension("rkyv.tmp").exists()
+        || source.with_extension("replacement").exists()
+    {
+        return Err("name lifecycle source/cache/config/mtime/temp boundary differs".into());
+    }
+    Ok(())
+}
+
+fn wait_names_positive(
+    sse: &mut live_mcp::SseStream,
+    cursor: usize,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let location_end = sse.wait_for_resource_updated_since(
+        cursor,
+        "nms://player/location",
+        Duration::from_secs(8),
+    )?;
+    let stats_end = sse.wait_for_resource_updated_since(
+        location_end,
+        "nms://galaxy/stats",
+        Duration::from_secs(8),
+    )?;
+    sse.wait_quiet_uris_since(
+        stats_end,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )?;
+    Ok(())
+}
+
+fn wait_names_location_only(
+    sse: &mut live_mcp::SseStream,
+    cursor: usize,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let location_end = sse.wait_for_resource_updated_since(
+        cursor,
+        "nms://player/location",
+        Duration::from_secs(8),
+    )?;
+    sse.wait_quiet_uris_since(
+        location_end,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )?;
+    Ok(())
+}
+
+fn run_names_monitor(
+    fixture: &Path,
+    address: SocketAddr,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("names-initial-state.json"))?)?;
+    let profile = checkpoint["profile"]
+        .as_str()
+        .ok_or("name profile missing")?;
+    if profile != "warm" && profile != "predecessor" {
+        return Err(format!("unknown name profile {profile:?}").into());
+    }
+    let predecessor = profile == "predecessor";
+    let mut expected_source = name_observations::source_bytes(if predecessor {
+        SourcePhase::Recover
+    } else {
+        SourcePhase::Initial
+    });
+    let mut expected_source_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["source_modified_nanos"]
+                .as_u64()
+                .ok_or("initial source mtime missing")?,
+        );
+    let mut expected_cache_stamp =
+        cache_stamp(&name_cache_path(fixture))?.ok_or("name cache missing at monitor start")?;
+    let (session, _) = initialize_http(address)?;
+    let mut sse = live_mcp::subscribe_sse_uris(
+        address,
+        &session,
+        &["nms://player/location", "nms://galaxy/stats"],
+    )?;
+    let mut stage = if predecessor {
+        ModelStage::Recover
+    } else {
+        ModelStage::Initial
+    };
+    check_names_boundary(
+        fixture,
+        address,
+        &session,
+        NamesBoundary {
+            source: &expected_source,
+            source_time: expected_source_time,
+            cache_stamp: &expected_cache_stamp,
+            stage,
+            profile,
+            watch_enabled: !predecessor,
+        },
+    )?;
+    if predecessor {
+        let cursor = sse.cursor();
+        sse.wait_quiet_uris_since(
+            cursor,
+            &["nms://player/location", "nms://galaxy/stats"],
+            Duration::from_millis(650),
+        )?;
+    }
+    fs::write(
+        fixture.join("monitor.names.ready"),
+        format!("address={address} session={session}\n"),
+    )?;
+    File::open(fixture.join("monitor.names.ready"))?.sync_all()?;
+    let control = fixture.join("monitor.names.commands");
+    let warm_commands = [
+        "overwrite",
+        "promote",
+        "rename",
+        "clear",
+        "omit",
+        "null",
+        "nonstring",
+        "nonobject",
+        "nonobject-dm",
+        "invalid1",
+        "invalid2",
+        "invalid3",
+        "invalid4",
+        "invalid5",
+        "recover",
+        "identical",
+        "finish",
+    ];
+    let predecessor_commands = ["finish"];
+    let commands: &[&str] = if predecessor {
+        &predecessor_commands
+    } else {
+        &warm_commands
+    };
+    let mut offset = 0;
+    for (index, required) in commands.iter().copied().enumerate() {
+        let (line, next_offset) = wait_control_line(&control, offset, Duration::from_secs(60))?;
+        offset = next_offset;
+        if line != required {
+            return Err(format!(
+                "name lifecycle command {index} requires {required:?}, received {line:?}"
+            )
+            .into());
+        }
+        if required == "finish" {
+            check_names_file_boundary(
+                fixture,
+                &NamesBoundary {
+                    source: &expected_source,
+                    source_time: expected_source_time,
+                    cache_stamp: &expected_cache_stamp,
+                    stage,
+                    profile,
+                    watch_enabled: !predecessor,
+                },
+            )?;
+            sse.wait_closed_without_resource_updates(
+                Duration::from_secs(8),
+                &["nms://player/location", "nms://galaxy/stats"],
+            )?;
+            sse.close_and_join()?;
+            check_names_file_boundary(
+                fixture,
+                &NamesBoundary {
+                    source: &expected_source,
+                    source_time: expected_source_time,
+                    cache_stamp: &expected_cache_stamp,
+                    stage,
+                    profile,
+                    watch_enabled: !predecessor,
+                },
+            )?;
+            println!("name-lifecycle=pass profile={profile} both-resource-eof+pure-file-boundary");
+            return Ok(());
+        }
+        check_names_boundary(
+            fixture,
+            address,
+            &session,
+            NamesBoundary {
+                source: &expected_source,
+                source_time: expected_source_time,
+                cache_stamp: &expected_cache_stamp,
+                stage,
+                profile,
+                watch_enabled: !predecessor,
+            },
+        )?;
+        if required == "identical" {
+            let cursor = sse.cursor();
+            expected_source_time = atomic_replace(&fixture.join("save.json"), &expected_source)?;
+            sse.wait_quiet_uris_since(
+                cursor,
+                &["nms://player/location", "nms://galaxy/stats"],
+                Duration::from_millis(650),
+            )?;
+            check_names_boundary(
+                fixture,
+                address,
+                &session,
+                NamesBoundary {
+                    source: &expected_source,
+                    source_time: expected_source_time,
+                    cache_stamp: &expected_cache_stamp,
+                    stage,
+                    profile,
+                    watch_enabled: !predecessor,
+                },
+            )?;
+            println!("name-identical=pass both-resource-quiet+whole-cache");
+            io::stdout().flush()?;
+            continue;
+        }
+        let cursor = sse.cursor();
+        write_name_phase(fixture, required)?;
+        expected_source = fs::read(fixture.join("save.json"))?;
+        expected_source_time = fs::metadata(fixture.join("save.json"))?.modified()?;
+        let (next_stage, notifications) = match required {
+            "overwrite" => (ModelStage::Overwrite, Some(true)),
+            "promote" => (ModelStage::Promote, Some(true)),
+            "rename" => (ModelStage::Rename, Some(true)),
+            "clear" => (ModelStage::Clear, Some(true)),
+            "omit" => (ModelStage::Ignore, Some(false)),
+            "recover" => (ModelStage::Recover, Some(true)),
+            "invalid1" | "invalid2" | "invalid3" | "invalid4" | "invalid5" => {
+                (ModelStage::Ignore, None)
+            }
+            "null" | "nonstring" | "nonobject" | "nonobject-dm" => (ModelStage::Ignore, None),
+            _ => return Err(format!("unexpected name phase {required:?}").into()),
+        };
+        match notifications {
+            Some(true) => wait_names_positive(&mut sse, cursor)?,
+            Some(false) => wait_names_location_only(&mut sse, cursor)?,
+            None => {
+                sse.wait_quiet_uris_since(
+                    cursor,
+                    &["nms://player/location", "nms://galaxy/stats"],
+                    Duration::from_millis(650),
+                )?;
+            }
+        }
+        stage = next_stage;
+        if notifications.is_some() {
+            expected_cache_stamp = cache_stamp(&name_cache_path(fixture))?
+                .ok_or("name cache disappeared after an accepted update")?;
+        }
+        check_names_boundary(
+            fixture,
+            address,
+            &session,
+            NamesBoundary {
+                source: &expected_source,
+                source_time: expected_source_time,
+                cache_stamp: &expected_cache_stamp,
+                stage,
+                profile,
+                watch_enabled: !predecessor,
+            },
+        )?;
+        println!("name-phase-{required}=pass");
+        io::stdout().flush()?;
+    }
+    Err("name lifecycle controller ended without finish".into())
+}
+
+fn run_names_restart_monitor(
+    fixture: &Path,
+    address: SocketAddr,
+) -> Result<(), Box<dyn std::error::Error>> {
+    verify_names_restart(fixture)?;
+    let checkpoint: serde_json::Value =
+        serde_json::from_slice(&fs::read(fixture.join("names-restart-checkpoint.json"))?)?;
+    let profile = checkpoint["profile"]
+        .as_str()
+        .ok_or("restart profile missing")?;
+    if profile != "warm" && profile != "predecessor" {
+        return Err(format!("unknown restart profile {profile:?}").into());
+    }
+    let expected_source = decode_hex(
+        checkpoint["source_hex"]
+            .as_str()
+            .ok_or("restart source bytes missing")?,
+    )?;
+    let expected_source_time = UNIX_EPOCH
+        + Duration::from_nanos(
+            checkpoint["source_modified_nanos"]
+                .as_u64()
+                .ok_or("restart source mtime missing")?,
+        );
+    let expected_cache_stamp = CacheStamp {
+        bytes: decode_hex(
+            checkpoint["cache_hex"]
+                .as_str()
+                .ok_or("restart cache bytes missing")?,
+        )?,
+        modified: UNIX_EPOCH
+            + Duration::from_nanos(
+                checkpoint["cache_modified_nanos"]
+                    .as_u64()
+                    .ok_or("restart cache mtime missing")?,
+            ),
+    };
+    let stage = ModelStage::Recover;
+    let predecessor = profile == "predecessor";
+    let (session, _) = initialize_http(address)?;
+    let mut sse = live_mcp::subscribe_sse_uris(
+        address,
+        &session,
+        &["nms://player/location", "nms://galaxy/stats"],
+    )?;
+    check_names_boundary(
+        fixture,
+        address,
+        &session,
+        NamesBoundary {
+            source: &expected_source,
+            source_time: expected_source_time,
+            cache_stamp: &expected_cache_stamp,
+            stage,
+            profile,
+            watch_enabled: false,
+        },
+    )?;
+    let cursor = sse.cursor();
+    sse.wait_quiet_uris_since(
+        cursor,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )?;
+    fs::write(
+        fixture.join("restart.names.ready"),
+        format!("address={address} session={session} predecessor={predecessor}\n"),
+    )?;
+    File::open(fixture.join("restart.names.ready"))?.sync_all()?;
+    let (line, _) = wait_control_line(
+        &fixture.join("restart.names.commands"),
+        0,
+        Duration::from_secs(60),
+    )?;
+    if line != "finish" {
+        return Err(format!("name restart monitor expected finish, got {line:?}").into());
+    }
+    sse.wait_closed_without_resource_updates(
+        Duration::from_secs(8),
+        &["nms://player/location", "nms://galaxy/stats"],
+    )?;
+    sse.close_and_join()?;
+    check_names_file_boundary(
+        fixture,
+        &NamesBoundary {
+            source: &expected_source,
+            source_time: expected_source_time,
+            cache_stamp: &expected_cache_stamp,
+            stage,
+            profile,
+            watch_enabled: false,
+        },
+    )?;
+    println!("name-restart=pass disabled-watch+both-resource-eof+whole-cache");
+    Ok(())
+}
+
 fn fixture_cache_path(fixture: &Path) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let relative = fs::read_to_string(fixture.join("cache-path.txt"))?;
     let relative = PathBuf::from(relative.trim());
@@ -466,12 +1305,37 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
         Err(nms_cache::CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SemanticMismatch {
                 found: 3,
-                expected: 4
+                expected: 5
             }
         ))
     ) {
         return Err("self-check did not reject the genuine semantic3/schema3 predecessor".into());
     }
+    let name_predecessor =
+        include_bytes!("../../nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv");
+    if name_predecessor.len() != 224 || &name_predecessor[..16] != b"NMSCACHE\x03\0\0\0\x04\0\0\0" {
+        return Err("self-check authentic name predecessor fixture size/header differs".into());
+    }
+    let name_predecessor_path = checked_files.path().join("predecessor-semantic4.rkyv");
+    fs::write(&name_predecessor_path, name_predecessor)?;
+    if !matches!(
+        nms_cache::read_cache(&name_predecessor_path),
+        Err(nms_cache::CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SemanticMismatch {
+                found: 4,
+                expected: 5
+            }
+        ))
+    ) {
+        return Err(
+            "self-check did not reject authentic schema3/semantic4 names predecessor".into(),
+        );
+    }
+    let initial_names = name_observations::expected_cache(ModelStage::Initial, 7);
+    let initial_names_model = name_observations::expected_model(ModelStage::Initial);
+    let initial_names_path = checked_files.path().join("names-current-semantic5.rkyv");
+    nms_cache::write_cache(&initial_names, &initial_names_path)?;
+    live_mcp::assert_cache_oracle(&initial_names_path, &initial_names, &initial_names_model)?;
     let empty = live_mcp::expected_empty_cache(4720, 0, 7, 8, 9, 0);
     let empty_model = live_mcp::expected_empty_model(0, 7, 8, 9, 0);
     let cold_cross = live_mcp::expected_cold_cross_cache();
@@ -584,6 +1448,11 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
         &cold_cross,
         &cold_cross_model,
     )?;
+
+    let (name_raw_negatives, name_derived_negatives, name_golden_files) =
+        check_name_cache_oracles(checked_files.path())?;
+    let name_file_negatives = check_name_file_boundary_self_check(checked_files.path())?;
+    live_mcp::check_paired_sse_cursor_contract().map_err(std::io::Error::other)?;
 
     let lifecycle_stage = live_mcp::UnknownLifecycleStage::Startup;
     let lifecycle_data = live_mcp::expected_unknown_lifecycle_cache(lifecycle_stage);
@@ -788,8 +1657,380 @@ fn self_check() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     println!(
-        "golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); predecessor=pass; lifecycle-files={lifecycle_file_count} lifecycle-negatives=4; reversed-order=pass"
+        "golden=pass checked-files=4 negatives=12 (6 raw + 6 derived); predecessor=pass; names-files={name_golden_files} names-negatives={name_raw_negatives}+{name_derived_negatives}+file{name_file_negatives}; paired-uri-cursors=pass; lifecycle-files={lifecycle_file_count} lifecycle-negatives=4; reversed-order=pass"
     );
+    Ok(())
+}
+
+fn check_name_file_boundary_self_check(
+    directory: &Path,
+) -> Result<usize, Box<dyn std::error::Error>> {
+    let fixture = directory.join("name-file-boundary");
+    let home_config = fixture.join("home/.nms-copilot");
+    std::fs::create_dir_all(&home_config)?;
+    std::fs::write(
+        fixture.join(NAME_MARKER),
+        b"Project01 Arc06 Slice23 name fixture\n",
+    )?;
+    let source = fixture.join("save.json");
+    let cache = fixture.join("cache.rkyv");
+    let config = home_config.join("config.toml");
+    let source_bytes = name_observations::source_bytes(SourcePhase::Recover);
+    let source_time = UNIX_EPOCH + Duration::from_secs(1_700_000_000);
+    std::fs::write(&source, &source_bytes)?;
+    File::options()
+        .write(true)
+        .open(&source)?
+        .set_times(FileTimes::new().set_modified(source_time))?;
+    nms_cache::write_cache(
+        &name_observations::expected_cache(ModelStage::Recover, 7),
+        &cache,
+    )?;
+    let cache_time = source_time + Duration::from_secs(100);
+    File::options()
+        .write(true)
+        .open(&cache)?
+        .set_times(FileTimes::new().set_modified(cache_time))?;
+    std::fs::write(&config, names_config(&cache, true))?;
+    std::fs::write(fixture.join("mode.txt"), "names-warm\nenabled\n")?;
+    std::fs::write(fixture.join("cache-path.txt"), "cache.rkyv\n")?;
+    let expected_stamp = cache_stamp(&cache)?.ok_or("self-check cache stamp missing")?;
+    let boundary = NamesBoundary {
+        source: &source_bytes,
+        source_time,
+        cache_stamp: &expected_stamp,
+        stage: ModelStage::Recover,
+        profile: "warm",
+        watch_enabled: true,
+    };
+    check_names_file_boundary(&fixture, &boundary)?;
+    let mut negatives = 0;
+
+    std::fs::write(&source, b"source-byte-mutation")?;
+    File::options()
+        .write(true)
+        .open(&source)?
+        .set_times(FileTimes::new().set_modified(source_time))?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted changed source bytes".into());
+    }
+    negatives += 1;
+    std::fs::write(&source, &source_bytes)?;
+    File::options()
+        .write(true)
+        .open(&source)?
+        .set_times(FileTimes::new().set_modified(source_time + Duration::from_secs(1)))?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted changed source mtime".into());
+    }
+    negatives += 1;
+    File::options()
+        .write(true)
+        .open(&source)?
+        .set_times(FileTimes::new().set_modified(source_time))?;
+
+    let expected_cache_bytes = std::fs::read(&cache)?;
+    nms_cache::write_cache(
+        &name_observations::expected_cache(ModelStage::Rename, 7),
+        &cache,
+    )?;
+    File::options()
+        .write(true)
+        .open(&cache)?
+        .set_times(FileTimes::new().set_modified(cache_time))?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted changed cache bytes".into());
+    }
+    negatives += 1;
+    std::fs::write(&cache, expected_cache_bytes)?;
+    File::options()
+        .write(true)
+        .open(&cache)?
+        .set_times(FileTimes::new().set_modified(cache_time))?;
+    File::options()
+        .write(true)
+        .open(&cache)?
+        .set_times(FileTimes::new().set_modified(cache_time + Duration::from_secs(1)))?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted changed cache mtime".into());
+    }
+    negatives += 1;
+    File::options()
+        .write(true)
+        .open(&cache)?
+        .set_times(FileTimes::new().set_modified(cache_time))?;
+
+    std::fs::write(&config, "changed config\n")?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted changed config".into());
+    }
+    negatives += 1;
+    std::fs::write(&config, names_config(&cache, true))?;
+    std::fs::write(cache.with_extension("rkyv.tmp"), b"stale temporary")?;
+    if check_names_file_boundary(&fixture, &boundary).is_ok() {
+        return Err("name file boundary accepted a cache temporary".into());
+    }
+    negatives += 1;
+    std::fs::remove_file(cache.with_extension("rkyv.tmp"))?;
+    check_names_file_boundary(&fixture, &boundary)?;
+    Ok(negatives)
+}
+
+fn check_name_cache_oracles(
+    directory: &Path,
+) -> Result<(usize, usize, usize), Box<dyn std::error::Error>> {
+    use name_observations::{ModelStage, a0, a9, b0, expected_cache, expected_model};
+    use nms_core::biome::Biome;
+    use nms_core::system::SystemId;
+
+    let mut files = 0;
+    for stage in [
+        ModelStage::Initial,
+        ModelStage::Overwrite,
+        ModelStage::Promote,
+        ModelStage::Rename,
+        ModelStage::Clear,
+        ModelStage::Ignore,
+        ModelStage::Recover,
+    ] {
+        let expected_data = expected_cache(stage, 7);
+        let expected_model = expected_model(stage);
+        for reversed in [false, true] {
+            let mut observed = expected_cache(stage, 7);
+            if reversed {
+                observed.systems.reverse();
+            }
+            let suffix = if reversed { "reversed" } else { "literal" };
+            let path = directory.join(format!("names-{stage:?}-{suffix}.rkyv"));
+            nms_cache::write_cache(&observed, &path)?;
+            let raw = nms_cache::read_cache(&path)?;
+            let rebuilt = nms_cache::rebuild_model(&raw);
+            live_mcp::compare_cache_model(&raw, &rebuilt, &expected_data, &expected_model)?;
+            files += 1;
+        }
+    }
+
+    let expected_data = expected_cache(ModelStage::Recover, 7);
+    let golden_model = expected_model(ModelStage::Recover);
+    let mut raw_negatives = 0;
+    macro_rules! raw_negative {
+        ($label:expr, $mutation:expr) => {{
+            let mut actual = expected_cache(ModelStage::Recover, 7);
+            ($mutation)(&mut actual);
+            reject($label, &actual, &expected_data, &golden_model)?;
+            raw_negatives += 1;
+        }};
+    }
+    raw_negative!("wrong B0 system name", |cache: &mut CacheData| {
+        cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == b0())
+            .unwrap()
+            .name = Some("Wrong B0".into());
+    });
+    raw_negative!("wrong nested B0 planet name", |cache: &mut CacheData| {
+        cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == b0())
+            .unwrap()
+            .planets[0]
+            .name = Some("Wrong B0 moon".into());
+    });
+    raw_negative!("wrong GG9 A9 name", |cache: &mut CacheData| {
+        cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == a9())
+            .unwrap()
+            .name = Some("Wrong galaxy name".into());
+    });
+    let initial_data = expected_cache(ModelStage::Initial, 7);
+    let initial_model = expected_model(ModelStage::Initial);
+    let mut initial_marker_false = expected_cache(ModelStage::Initial, 7);
+    let a0_row = initial_marker_false
+        .systems
+        .iter_mut()
+        .find(|row| row.address == a0())
+        .ok_or("literal initial A0 cache row missing")?;
+    if !a0_row.is_player_placeholder {
+        return Err("literal initial A0 is not the marked player placeholder".into());
+    }
+    a0_row.is_player_placeholder = false;
+    let initial_marker_path = directory.join("names-initial-a0-marker-false.rkyv");
+    nms_cache::write_cache(&initial_marker_false, &initial_marker_path)?;
+    let initial_marker_checked = nms_cache::read_cache(&initial_marker_path)?;
+    let initial_marker_rebuilt = nms_cache::rebuild_model(&initial_marker_checked);
+    if live_mcp::compare_cache_model(
+        &initial_marker_checked,
+        &initial_marker_rebuilt,
+        &initial_data,
+        &initial_model,
+    )
+    .is_ok()
+    {
+        return Err("initial raw A0 marker mutation passed the consumed combined predicate".into());
+    }
+    raw_negatives += 1;
+    raw_negative!("dropped P2", |cache: &mut CacheData| {
+        cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == b0())
+            .unwrap()
+            .planets
+            .clear();
+    });
+    raw_negative!("changed B0 biome", |cache: &mut CacheData| {
+        cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == b0())
+            .unwrap()
+            .planets[0]
+            .biome = Some(Biome::Toxic);
+    });
+    raw_negative!("duplicated B0 planet", |cache: &mut CacheData| {
+        let row = cache
+            .systems
+            .iter_mut()
+            .find(|row| row.address == b0())
+            .unwrap();
+        row.planets.push(row.planets[0].clone());
+    });
+    raw_negative!("wrong player units", |cache: &mut CacheData| {
+        cache.player_state.as_mut().unwrap().units = 70;
+    });
+    raw_negative!("wrong save version", |cache: &mut CacheData| {
+        cache.save_version += 1;
+    });
+    raw_negative!("wrong selected galaxy", |cache: &mut CacheData| {
+        cache.active_galaxy = 0;
+    });
+    raw_negative!("wrong base identity", |cache: &mut CacheData| {
+        cache.bases[0].name = "Wrong Anchor".into();
+    });
+
+    let mut derived_negatives = 0;
+    macro_rules! model_negative {
+        ($label:expr, $mutation:expr) => {{
+            let mut actual = expected_model(ModelStage::Recover);
+            ($mutation)(&mut actual);
+            reject_name_model($label, &actual, &expected_data, &golden_model)?;
+            derived_negatives += 1;
+        }};
+    }
+    let a0_id = SystemId::from_address(&a0());
+    let b0_id = SystemId::from_address(&b0());
+    model_negative!(
+        "wrong flat planet name",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.planets.get_mut(&(b0_id, 2)).unwrap().name = Some("Wrong flat moon".into());
+        }
+    );
+    model_negative!(
+        "stale old normalized alias",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.name_index.insert((0, "current".into()), a0_id);
+        }
+    );
+    model_negative!(
+        "missing current alias",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.name_index.remove(&(0, "current recovered".into()));
+        }
+    );
+    model_negative!(
+        "wrong galaxy alias",
+        |model: &mut nms_graph::GalaxyModel| {
+            model
+                .name_index
+                .insert((9, "current recovered".into()), a0_id);
+        }
+    );
+    model_negative!(
+        "duplicated biome membership",
+        |model: &mut nms_graph::GalaxyModel| {
+            let key = *model
+                .biome_index
+                .get(&Biome::Lush)
+                .unwrap()
+                .first()
+                .unwrap();
+            model.biome_index.get_mut(&Biome::Lush).unwrap().push(key);
+        }
+    );
+    model_negative!(
+        "dropped biome membership",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.biome_index.get_mut(&Biome::Lush).unwrap().pop();
+        }
+    );
+    model_negative!(
+        "wrong edge distance",
+        |model: &mut nms_graph::GalaxyModel| {
+            let edge = model.graph.edge_indices().next().unwrap();
+            *model.graph.edge_weight_mut(edge).unwrap() += 1.0;
+        }
+    );
+    model_negative!(
+        "wrong live system count",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.systems.remove(&b0_id);
+        }
+    );
+    model_negative!("wrong live player", |model: &mut nms_graph::GalaxyModel| {
+        model.player_state.as_mut().unwrap().units += 1;
+    });
+    model_negative!(
+        "wrong base identity",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.bases.get_mut("anchor").unwrap().name = "Wrong Anchor".into();
+        }
+    );
+    model_negative!(
+        "wrong active galaxy",
+        |model: &mut nms_graph::GalaxyModel| {
+            model.active_galaxy = 0;
+        }
+    );
+    let initial_expected_data = expected_cache(ModelStage::Initial, 7);
+    let initial_expected_model = expected_model(ModelStage::Initial);
+    let initial_a0_id = SystemId::from_address(&a0());
+    let mut initial_marker_cleared = expected_model(ModelStage::Initial);
+    if !initial_marker_cleared.is_player_placeholder(&initial_a0_id) {
+        return Err("literal initial A0 model is not marked as a placeholder".into());
+    }
+    initial_marker_cleared.insert_system(nms_core::system::System::new(
+        a0(),
+        None,
+        None,
+        None,
+        vec![],
+    ));
+    if initial_marker_cleared.is_player_placeholder(&initial_a0_id) {
+        return Err("ordinary identical A0 insertion did not clear placeholder provenance".into());
+    }
+    reject_name_model(
+        "derived A0 marker promotion",
+        &initial_marker_cleared,
+        &initial_expected_data,
+        &initial_expected_model,
+    )?;
+    derived_negatives += 1;
+    Ok((raw_negatives, derived_negatives, files))
+}
+
+fn reject_name_model(
+    label: &str,
+    actual: &nms_graph::GalaxyModel,
+    expected_data: &CacheData,
+    expected_model: &nms_graph::GalaxyModel,
+) -> Result<(), Box<dyn std::error::Error>> {
+    if live_mcp::compare_cache_model(expected_data, actual, expected_data, expected_model).is_ok() {
+        return Err(format!("same raw+rebuilt validator accepted {label} derived mismatch").into());
+    }
     Ok(())
 }
 
@@ -1855,7 +3096,7 @@ fn assert_semantic_cache(
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 3,
-                        expected: 4
+                        expected: 5
                     }
                 ))
             ) {
@@ -2047,7 +3288,14 @@ fn reject(
     expected: &CacheData,
     expected_model: &nms_graph::GalaxyModel,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    if live_mcp::compare_cache_model(actual, expected_model, expected, expected_model).is_ok() {
+    let directory = tempfile::tempdir()?;
+    let path = directory.path().join("observed-mutant.rkyv");
+    nms_cache::write_cache(actual, &path)?;
+    let observed_raw = nms_cache::read_cache(&path)?;
+    let observed_rebuilt = nms_cache::rebuild_model(&observed_raw);
+    if live_mcp::compare_cache_model(&observed_raw, &observed_rebuilt, expected, expected_model)
+        .is_ok()
+    {
         return Err(format!("same raw+rebuilt validator accepted {label} mismatch").into());
     }
     Ok(())

@@ -61,7 +61,7 @@ enum Commands {
         #[arg(long)]
         nearest: Option<usize>,
 
-        /// Only show named planets/systems.
+        /// Only show named planets.
         #[arg(long)]
         named: bool,
 
@@ -201,7 +201,7 @@ enum Commands {
         #[arg(long)]
         nearest: Option<usize>,
 
-        /// Only show named planets/systems.
+        /// Only show named planets.
         #[arg(long)]
         named: bool,
 

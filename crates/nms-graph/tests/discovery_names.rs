@@ -954,7 +954,7 @@ fn test_apply_discovery_names_preserves_valid_duplicate_alias_representatives() 
 }
 
 #[test]
-fn test_checked_cold_extraction_remains_unnamed_until_observations_are_applied() {
+fn test_checked_cold_extraction_applies_names_and_legacy_extraction_stays_unnamed() {
     let (source, checked) = checked_save(vec![record(
         "0x00070000000064",
         "SolarSystem",
@@ -962,15 +962,41 @@ fn test_checked_cold_extraction_remains_unnamed_until_observations_are_applied()
     )]);
     let cold_systems = extract_systems_from_validated(&checked);
     assert_eq!(cold_systems.len(), 1);
-    assert_eq!(cold_systems.values().next().unwrap().name, None);
+    assert_eq!(
+        cold_systems.values().next().unwrap().name.as_deref(),
+        Some("opt-in name")
+    );
     let mut model = GalaxyModel::from_validated_save(&checked);
-    assert_eq!(model.systems.values().next().unwrap().name, None);
+    assert_eq!(
+        model.systems.values().next().unwrap().name.as_deref(),
+        Some("opt-in name")
+    );
 
     let names = extract_discovery_names_from_validated(&checked);
     assert_eq!(names.system_names.len(), 1);
-    assert!(model.apply_discovery_names(&names));
+    assert!(!model.apply_discovery_names(&names));
+
+    let legacy = nms_save::parse_save(source.to_string().as_bytes()).unwrap();
+    let legacy_systems = nms_graph::extract::extract_systems(&legacy);
+    assert_eq!(legacy_systems.len(), 1);
+    assert_eq!(legacy_systems.values().next().unwrap().name, None);
+    let mut legacy_model = GalaxyModel::from_save(&legacy);
+    assert_eq!(legacy_model.systems.values().next().unwrap().name, None);
+    let legacy_id = SystemId::from_address(&GalacticAddress::new(100, 0, 0, 0x700, 0, 0));
+    assert!(legacy_model.systems.contains_key(&legacy_id));
+    let mut legacy_names = DiscoveryNames::default();
+    legacy_names
+        .system_names
+        .insert(legacy_id, "opt-in name".to_owned());
+    assert!(legacy_model.apply_discovery_names(&legacy_names));
     assert_eq!(
-        model.systems.values().next().unwrap().name.as_deref(),
+        legacy_model
+            .systems
+            .values()
+            .next()
+            .unwrap()
+            .name
+            .as_deref(),
         Some("opt-in name")
     );
     assert!(SaveDelta::empty().is_empty());
@@ -996,5 +1022,17 @@ fn test_checked_cold_extraction_remains_unnamed_until_observations_are_applied()
     assert_eq!(
         source["DiscoveryManagerData"]["DiscoveryData-v1"]["Store"]["Record"][0]["DM"]["CN"],
         "opt-in name"
+    );
+
+    let (_, empty_checked) = checked_save(vec![
+        record("0x00070000000064", "SolarSystem", Some(json!({"CN": ""}))),
+        record("0x10070000000064", "Planet", Some(json!({"CN": ""}))),
+    ]);
+    let empty_model = GalaxyModel::from_validated_save(&empty_checked);
+    let empty_system_id = id(100, 0, 0, 7, 0);
+    assert_eq!(empty_model.system(&empty_system_id).unwrap().name, None);
+    assert_eq!(
+        empty_model.planets.get(&(empty_system_id, 1)).unwrap().name,
+        None
     );
 }

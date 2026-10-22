@@ -679,7 +679,12 @@ fn run_owned_server_child() {
     assert_ne!(addr.port(), 0);
     let (session, tools) = live_mcp::initialize_http(addr).unwrap();
     assert!(tools.text().contains("where_am_i"));
-    let mut stream = live_mcp::subscribe_sse(addr, &session).unwrap();
+    let mut stream = live_mcp::subscribe_sse_uris(
+        addr,
+        &session,
+        &["nms://player/location", "nms://galaxy/stats"],
+    )
+    .unwrap();
     live_mcp::assert_model_matches(&model.blocking_read(), &expected).unwrap();
 
     let mut contradictory = SaveUpdate {
@@ -706,6 +711,7 @@ fn run_owned_server_child() {
     updates_tx
         .send(AppliedSaveUpdate {
             update: contradictory.clone(),
+            names_changed: false,
             notifications: vec![],
         })
         .unwrap();
@@ -720,6 +726,7 @@ fn run_owned_server_child() {
     updates_tx
         .send(AppliedSaveUpdate {
             update: contradictory,
+            names_changed: false,
             notifications: vec![],
         })
         .unwrap();
@@ -736,6 +743,33 @@ fn run_owned_server_child() {
     assert!(second_end > second_cursor);
     stream
         .wait_quiet_since(second_end, Duration::from_millis(650))
+        .unwrap();
+
+    let names_cursor = stream.cursor();
+    updates_tx
+        .send(AppliedSaveUpdate {
+            update: SaveUpdate {
+                delta: nms_core::SaveDelta::empty(),
+                player_state: contradictory_state(),
+                save_version: 4720,
+            },
+            names_changed: true,
+            notifications: vec![],
+        })
+        .unwrap();
+    let location_end = stream
+        .wait_for_resource_updated_since(names_cursor, "nms://player/location", TEST_TIMEOUT)
+        .unwrap();
+    let stats_end = stream
+        .wait_for_resource_updated_since(location_end, "nms://galaxy/stats", TEST_TIMEOUT)
+        .unwrap();
+    assert!(stats_end > location_end);
+    stream
+        .wait_quiet_uris_since(
+            stats_end,
+            &["nms://player/location", "nms://galaxy/stats"],
+            Duration::from_millis(650),
+        )
         .unwrap();
 
     let (tool_location, resource_location) = live_mcp::location_rpc_pair(addr, &session).unwrap();
@@ -770,6 +804,18 @@ fn run_owned_server_child() {
     drop(third);
     third_stream.wait_closed(TEST_TIMEOUT).unwrap();
     third_stream.close_and_join().unwrap();
+}
+
+fn contradictory_state() -> PlayerState {
+    PlayerState::new(
+        GalacticAddress::new(0, 0, 0, 1, 0, 9),
+        9,
+        None,
+        None,
+        999,
+        998,
+        997,
+    )
 }
 
 fn run_bind_error_child() {

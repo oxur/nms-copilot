@@ -1,9 +1,10 @@
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{SocketAddr, TcpStream};
-use std::sync::mpsc;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Mutex, mpsc};
 use std::thread::{self, JoinHandle};
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use nms_cache::CacheData;
 use nms_cache::data::CachedSystem;
@@ -1083,6 +1084,31 @@ pub fn location_rpc(addr: SocketAddr, session: &str) -> Result<Value, String> {
     Ok(tool_value)
 }
 
+pub fn resource_json(addr: SocketAddr, session: &str, uri: &str) -> Result<Value, String> {
+    let response = rpc_http(
+        addr,
+        session,
+        "resources/read",
+        Some(11),
+        Some(serde_json::json!({"uri":uri})),
+    )?;
+    if response.status != 200 {
+        return Err(format!(
+            "resources/read {uri} status {}: {}",
+            response.status,
+            response.text()
+        ));
+    }
+    let message = json_messages(&response.text())?
+        .into_iter()
+        .find(|message| message["id"] == 11)
+        .ok_or_else(|| format!("resources/read response ID 11 missing for {uri}"))?;
+    let text = message["result"]["contents"][0]["text"]
+        .as_str()
+        .ok_or_else(|| format!("resource text missing for {uri}"))?;
+    serde_json::from_str(text).map_err(|error| error.to_string())
+}
+
 pub fn location_rpc_pair(addr: SocketAddr, session: &str) -> Result<(Value, Value), String> {
     let tool = rpc_http(
         addr,
@@ -1226,19 +1252,29 @@ pub fn assert_location_pair_at(
 }
 
 pub fn subscribe_sse(addr: SocketAddr, session: &str) -> Result<SseStream, String> {
-    let response = rpc_http(
-        addr,
-        session,
-        "resources/subscribe",
-        Some(3),
-        Some(serde_json::json!({"uri":"nms://player/location"})),
-    )?;
-    if response.status != 200 {
-        return Err(format!(
-            "subscribe status {}: {}",
-            response.status,
-            response.text()
-        ));
+    subscribe_sse_uris(addr, session, &["nms://player/location"])
+}
+
+pub fn subscribe_sse_uris(
+    addr: SocketAddr,
+    session: &str,
+    uris: &[&str],
+) -> Result<SseStream, String> {
+    for (offset, uri) in uris.iter().enumerate() {
+        let response = rpc_http(
+            addr,
+            session,
+            "resources/subscribe",
+            Some(3 + offset as u64),
+            Some(serde_json::json!({"uri":uri})),
+        )?;
+        if response.status != 200 {
+            return Err(format!(
+                "subscribe status {} for {uri}: {}",
+                response.status,
+                response.text()
+            ));
+        }
     }
     Ok(SseStream::connect(addr, session))
 }
@@ -1379,6 +1415,23 @@ impl SseStream {
     }
 
     pub fn wait_quiet_since(&mut self, cursor: usize, duration: Duration) -> Result<(), String> {
+        self.wait_quiet_uris_since(cursor, &["nms://player/location"], duration)
+            .map_err(|error| {
+                if error.starts_with("unexpected resource update for") {
+                    "unexpected player-location notification during negative window".into()
+                } else {
+                    error
+                }
+            })
+    }
+
+    /// Consume a bounded quiet window and reject new updates for any named URI.
+    pub fn wait_quiet_uris_since(
+        &mut self,
+        cursor: usize,
+        uris: &[&str],
+        duration: Duration,
+    ) -> Result<(), String> {
         let deadline = std::time::Instant::now() + duration;
         let mut scan = cursor;
         loop {
@@ -1386,12 +1439,17 @@ impl SseStream {
                 scan = end;
                 if frame.as_ref().is_some_and(|message| {
                     message["method"] == "notifications/resources/updated"
-                        && message["params"]["uri"] == "nms://player/location"
+                        && message["params"]["uri"]
+                            .as_str()
+                            .is_some_and(|uri| uris.contains(&uri))
                 }) {
                     self.consumed = end;
-                    return Err(
-                        "unexpected player-location notification during negative window".into(),
-                    );
+                    return Err(format!(
+                        "unexpected resource update for {:?} during negative window",
+                        frame
+                            .as_ref()
+                            .and_then(|message| message["params"]["uri"].as_str())
+                    ));
                 }
                 self.consumed = end;
             }
@@ -1439,6 +1497,16 @@ impl SseStream {
         timeout: Duration,
         uri: &str,
     ) -> Result<(), String> {
+        self.wait_closed_without_resource_updates(timeout, &[uri])
+    }
+
+    /// Wait for remote EOF while rejecting new resource notifications for any
+    /// URI in the same fully consumed stream boundary.
+    pub fn wait_closed_without_resource_updates(
+        &mut self,
+        timeout: Duration,
+        uris: &[&str],
+    ) -> Result<(), String> {
         let deadline = std::time::Instant::now() + timeout;
         let mut scan = self.consumed;
         loop {
@@ -1447,10 +1515,15 @@ impl SseStream {
                 self.consumed = end;
                 if frame.as_ref().is_some_and(|message| {
                     message["method"] == "notifications/resources/updated"
-                        && message["params"]["uri"] == uri
+                        && message["params"]["uri"]
+                            .as_str()
+                            .is_some_and(|uri| uris.contains(&uri))
                 }) {
                     return Err(format!(
-                        "unexpected resource-updated notification for {uri} while awaiting EOF"
+                        "unexpected resource-updated notification for {:?} while awaiting EOF",
+                        frame
+                            .as_ref()
+                            .and_then(|message| message["params"]["uri"].as_str())
                     ));
                 }
             }
@@ -1498,6 +1571,328 @@ impl Drop for SseStream {
     fn drop(&mut self) {
         let _ = self.close_and_join();
     }
+}
+
+enum CursorServerCommand {
+    Write(Vec<u8>, mpsc::SyncSender<Result<(), String>>),
+    Close,
+}
+
+struct PairedSseServer {
+    address: SocketAddr,
+    commands: mpsc::Sender<CursorServerCommand>,
+    stop: Arc<AtomicBool>,
+    active_stream: Arc<Mutex<Option<TcpStream>>>,
+    ready: mpsc::Receiver<Result<(), String>>,
+    completed: mpsc::Receiver<Result<(), String>>,
+    worker: Option<JoinHandle<()>>,
+}
+
+impl PairedSseServer {
+    fn start(initial: Vec<u8>) -> Result<Self, String> {
+        let listener = std::net::TcpListener::bind(("127.0.0.1", 0))
+            .map_err(|error| format!("bind paired SSE server: {error}"))?;
+        listener
+            .set_nonblocking(true)
+            .map_err(|error| format!("set paired SSE listener nonblocking: {error}"))?;
+        let address = listener
+            .local_addr()
+            .map_err(|error| format!("read paired SSE address: {error}"))?;
+        let (commands, receiver) = mpsc::channel();
+        let (ready_tx, ready) = mpsc::channel();
+        let (completed_tx, completed) = mpsc::channel();
+        let stop = Arc::new(AtomicBool::new(false));
+        let worker_stop = Arc::clone(&stop);
+        let active_stream = Arc::new(Mutex::new(None));
+        let worker_stream = Arc::clone(&active_stream);
+        let worker = thread::spawn(move || {
+            let result = (|| -> Result<(), String> {
+                let accept_deadline = Instant::now() + Duration::from_secs(3);
+                let (mut stream, _) = loop {
+                    if worker_stop.load(Ordering::Acquire) {
+                        return Ok(());
+                    }
+                    match listener.accept() {
+                        Ok(accepted) => break accepted,
+                        Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => {
+                            if Instant::now() >= accept_deadline {
+                                return Err("paired SSE accept exceeded three seconds".into());
+                            }
+                            thread::sleep(Duration::from_millis(5));
+                        }
+                        Err(error) if error.kind() == std::io::ErrorKind::Interrupted => continue,
+                        Err(error) => return Err(format!("accept paired SSE client: {error}")),
+                    }
+                };
+                stream
+                    .set_read_timeout(Some(Duration::from_millis(100)))
+                    .map_err(|error| format!("set paired SSE read timeout: {error}"))?;
+                stream
+                    .set_write_timeout(Some(Duration::from_millis(100)))
+                    .map_err(|error| format!("set paired SSE write timeout: {error}"))?;
+                *worker_stream
+                    .lock()
+                    .map_err(|_| "paired SSE active-stream mutex poisoned".to_owned())? = Some(
+                    stream
+                        .try_clone()
+                        .map_err(|error| format!("clone paired SSE active stream: {error}"))?,
+                );
+                let mut request = BufReader::new(
+                    stream
+                        .try_clone()
+                        .map_err(|error| format!("clone paired SSE request stream: {error}"))?,
+                );
+                let request_deadline = Instant::now() + Duration::from_secs(2);
+                let mut line = String::new();
+                loop {
+                    if worker_stop.load(Ordering::Acquire) {
+                        return Ok(());
+                    }
+                    line.clear();
+                    match request.read_line(&mut line) {
+                        Ok(0) => return Err("paired SSE client closed during request".into()),
+                        Ok(_) if line == "\r\n" => break,
+                        Ok(_) => {}
+                        Err(error)
+                            if matches!(
+                                error.kind(),
+                                std::io::ErrorKind::WouldBlock | std::io::ErrorKind::TimedOut
+                            ) =>
+                        {
+                            if Instant::now() >= request_deadline {
+                                return Err(
+                                    "paired SSE request headers exceeded two seconds".into()
+                                );
+                            }
+                        }
+                        Err(error) if error.kind() == std::io::ErrorKind::Interrupted => continue,
+                        Err(error) => return Err(format!("read paired SSE request: {error}")),
+                    }
+                }
+                stream
+                    .write_all(b"HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\n\r\n")
+                    .map_err(|error| format!("write paired SSE headers: {error}"))?;
+                stream
+                    .write_all(&initial)
+                    .map_err(|error| format!("write paired SSE initial events: {error}"))?;
+                let _ = ready_tx.send(Ok(()));
+                loop {
+                    if worker_stop.load(Ordering::Acquire) {
+                        return Ok(());
+                    }
+                    match receiver.recv_timeout(Duration::from_millis(20)) {
+                        Ok(CursorServerCommand::Write(bytes, completed)) => {
+                            let result = stream
+                                .write_all(&bytes)
+                                .map_err(|error| format!("write paired SSE event: {error}"));
+                            let _ = completed.send(result.clone());
+                            result?;
+                        }
+                        Ok(CursorServerCommand::Close) => return Ok(()),
+                        Err(mpsc::RecvTimeoutError::Timeout) => {}
+                        Err(mpsc::RecvTimeoutError::Disconnected) => return Ok(()),
+                    }
+                }
+            })();
+            let _ = completed_tx.send(result);
+        });
+        Ok(Self {
+            address,
+            commands,
+            stop,
+            active_stream,
+            ready,
+            completed,
+            worker: Some(worker),
+        })
+    }
+
+    fn write(&self, bytes: Vec<u8>) -> Result<(), String> {
+        let (completed, result) = mpsc::sync_channel(1);
+        self.commands
+            .send(CursorServerCommand::Write(bytes, completed))
+            .map_err(|error| format!("send paired SSE event: {error}"))?;
+        result
+            .recv_timeout(Duration::from_secs(1))
+            .map_err(|error| format!("paired SSE event write did not complete: {error}"))?
+    }
+
+    fn wait_ready(&self) -> Result<(), String> {
+        self.ready
+            .recv_timeout(Duration::from_secs(2))
+            .map_err(|error| format!("paired SSE server did not become ready: {error}"))?
+    }
+
+    fn close(mut self) -> Result<(), String> {
+        if self.worker.is_none() {
+            return Ok(());
+        }
+        self.commands
+            .send(CursorServerCommand::Close)
+            .map_err(|error| format!("close paired SSE worker: {error}"))?;
+        match self.completed.recv_timeout(Duration::from_secs(1)) {
+            Ok(result) => {
+                self.worker
+                    .take()
+                    .expect("paired SSE worker remains owned")
+                    .join()
+                    .map_err(|_| "paired SSE worker panicked".to_owned())?;
+                result
+            }
+            Err(error) => {
+                self.stop.store(true, Ordering::Release);
+                if let Ok(guard) = self.active_stream.lock()
+                    && let Some(stream) = guard.as_ref()
+                {
+                    let _ = stream.shutdown(std::net::Shutdown::Both);
+                }
+                let join = self
+                    .worker
+                    .take()
+                    .map(|worker| {
+                        worker
+                            .join()
+                            .map_err(|_| "paired SSE worker panicked".to_owned())
+                    })
+                    .unwrap_or(Ok(()));
+                join?;
+                Err(format!(
+                    "paired SSE worker did not close within one second: {error}"
+                ))
+            }
+        }
+    }
+
+    fn stop_and_join(&mut self) -> Result<(), String> {
+        if self.worker.is_none() {
+            return Ok(());
+        }
+        self.stop.store(true, Ordering::Release);
+        let _ = self.commands.send(CursorServerCommand::Close);
+        if let Ok(guard) = self.active_stream.lock()
+            && let Some(stream) = guard.as_ref()
+        {
+            let _ = stream.shutdown(std::net::Shutdown::Both);
+        }
+        let completion = self.completed.recv_timeout(Duration::from_secs(1));
+        let join_result = self
+            .worker
+            .take()
+            .map(|worker| {
+                worker
+                    .join()
+                    .map_err(|_| "paired SSE worker panicked".to_owned())
+            })
+            .unwrap_or(Ok(()));
+        join_result?;
+        match completion {
+            Ok(result) => result,
+            Err(error) => Err(format!(
+                "paired SSE worker did not finish within one second: {error}"
+            )),
+        }
+    }
+}
+
+impl Drop for PairedSseServer {
+    fn drop(&mut self) {
+        let _ = self.stop_and_join();
+    }
+}
+
+fn cursor_check_update(uri: &str) -> Vec<u8> {
+    format!(
+        "data: {{\"jsonrpc\":\"2.0\",\"method\":\"notifications/resources/updated\",\"params\":{{\"uri\":\"{uri}\"}}}}\n\n"
+    )
+    .into_bytes()
+}
+
+/// Exercise consumed-pair cursors, new-event quiet rejection and both EOF boundaries.
+pub fn check_paired_sse_cursor_contract() -> Result<(), String> {
+    const URIS: [&str; 2] = ["nms://player/location", "nms://galaxy/stats"];
+    let location = cursor_check_update("nms://player/location");
+    let stats = cursor_check_update("nms://galaxy/stats");
+    let initial = [location.as_slice(), stats.as_slice()].concat();
+    let server = PairedSseServer::start(initial)?;
+    let mut stream = SseStream::connect(server.address, "slice23-self-check");
+    server.wait_ready()?;
+    let before_action = stream.cursor();
+    let location_end = stream.wait_for_resource_updated_since(
+        before_action,
+        "nms://player/location",
+        Duration::from_secs(2),
+    )?;
+    let stats_end = stream.wait_for_resource_updated_since(
+        location_end,
+        "nms://galaxy/stats",
+        Duration::from_secs(2),
+    )?;
+    stream.wait_quiet_uris_since(
+        stats_end,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(20),
+    )?;
+    for uri in URIS {
+        let second_cursor = stream.cursor();
+        server.write(cursor_check_update(uri))?;
+        match stream.wait_quiet_uris_since(second_cursor, &URIS, Duration::from_secs(2)) {
+            Err(error) if error.starts_with("unexpected resource update for") => {}
+            Err(error) => {
+                return Err(format!(
+                    "fresh {uri} quiet window failed unexpectedly: {error}"
+                ));
+            }
+            Ok(()) => {
+                return Err(format!(
+                    "fresh {uri} event passed a paired-URI quiet window"
+                ));
+            }
+        }
+        let second_end =
+            stream.wait_for_resource_updated_since(second_cursor, uri, Duration::from_secs(2))?;
+        if second_end <= second_cursor {
+            return Err(format!(
+                "fresh {uri} event was not after its captured cursor"
+            ));
+        }
+        stream.wait_quiet_uris_since(second_end, &URIS, Duration::from_millis(20))?;
+    }
+    drop(stream);
+    server.close()?;
+
+    for uri in URIS {
+        let server = PairedSseServer::start(Vec::new())?;
+        let mut stream = SseStream::connect(server.address, "slice23-self-check-eof");
+        server.wait_ready()?;
+        let cursor = stream.cursor();
+        server.write(cursor_check_update(uri))?;
+        server.close()?;
+        match stream.wait_closed_without_resource_updates(Duration::from_secs(2), &URIS) {
+            Err(error) if error.starts_with("unexpected resource-updated notification") => {}
+            Err(error) => {
+                return Err(format!(
+                    "EOF after fresh {uri} failed unexpectedly: {error}"
+                ));
+            }
+            Ok(()) => {
+                return Err(format!(
+                    "EOF with a fresh {uri} update passed the paired boundary"
+                ));
+            }
+        }
+        if stream.cursor() <= cursor {
+            return Err(format!("EOF boundary did not consume the new {uri} event"));
+        }
+        drop(stream);
+    }
+
+    let server = PairedSseServer::start(Vec::new())?;
+    let mut stream = SseStream::connect(server.address, "slice23-self-check-clean-eof");
+    server.wait_ready()?;
+    server.close()?;
+    stream.wait_closed_without_resource_updates(Duration::from_secs(2), &URIS)?;
+    drop(stream);
+    Ok(())
 }
 
 fn read_sse_chunk(stream: &mut BufReader<TcpStream>) -> std::io::Result<Option<Vec<u8>>> {
@@ -1622,5 +2017,11 @@ mod sse_cursor_tests {
             message["method"] == "notifications/resources/updated"
                 && message["params"]["uri"] == "nms://player/location"
         }));
+    }
+
+    #[test]
+    fn test_sse_paired_cursor_quiet_and_eof_boundaries() {
+        super::check_paired_sse_cursor_contract()
+            .expect("shared bounded paired-SSE fixture covers cursor and EOF boundaries");
     }
 }

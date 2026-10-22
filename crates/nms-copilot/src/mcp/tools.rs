@@ -101,7 +101,7 @@ fn search_planets_tool() -> Tool {
                 },
                 "named_only": {
                     "type": "boolean",
-                    "description": "Only include named planets/systems"
+                    "description": "Only include named planets"
                 },
                 "from_base": {
                     "type": "string",

@@ -65,6 +65,7 @@ pub fn drain_watch_events(
 ///         ),
 ///         save_version: 4720,
 ///     },
+///     names_changed: false,
 ///     notifications: vec!["Warped: Origin-0 -> Imported-9".to_owned()],
 /// };
 /// let second = AppliedSaveUpdate {
@@ -75,6 +76,7 @@ pub fn drain_watch_events(
 ///         ),
 ///         save_version: 4720,
 ///     },
+///     names_changed: false,
 ///     notifications: vec!["New planet: Leaf-9".to_owned()],
 /// };
 /// sender.send(first)?;
@@ -116,6 +118,7 @@ mod applied_notification_tests {
                 ),
                 save_version: 4720,
             },
+            names_changed: false,
             notifications: vec![note.to_owned()],
         }
     }

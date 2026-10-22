@@ -846,7 +846,8 @@ async fn observe_applied_updates(receiver: Receiver<AppliedSaveUpdate>, notifier
                     // when the atlas delta is empty, so location is invalidated
                     // for every applied update.
                     notifier.resource_updated(PLAYER_LOCATION_URI).await;
-                    notify_delta_resources(&notifier, &event.update.delta).await;
+                    notify_delta_resources(&notifier, &event.update.delta, event.names_changed)
+                        .await;
                 }
                 Err(std::sync::mpsc::TryRecvError::Empty) => break,
                 Err(std::sync::mpsc::TryRecvError::Disconnected) => return,
@@ -855,7 +856,11 @@ async fn observe_applied_updates(receiver: Receiver<AppliedSaveUpdate>, notifier
     }
 }
 
-async fn notify_delta_resources(notifier: &Notifier, delta: &nms_core::SaveDelta) {
+async fn notify_delta_resources(
+    notifier: &Notifier,
+    delta: &nms_core::SaveDelta,
+    names_changed: bool,
+) {
     if let Some(moved) = &delta.player_moved {
         log::info!("Live update: player moved");
         notifier.log(fabryk_mcp::model::LoggingLevel::Info, "nms-copilot", serde_json::json!({
@@ -908,7 +913,7 @@ async fn notify_delta_resources(notifier: &Notifier, delta: &nms_core::SaveDelta
             )
             .await;
     }
-    if !delta.new_systems.is_empty() || !delta.new_planets.is_empty() {
+    if !delta.new_systems.is_empty() || !delta.new_planets.is_empty() || names_changed {
         notifier.resource_updated(GALAXY_STATS_URI).await;
     }
     if !delta.new_bases.is_empty() || !delta.modified_bases.is_empty() {

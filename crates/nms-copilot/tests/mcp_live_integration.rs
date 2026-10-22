@@ -2,6 +2,8 @@
 
 #[path = "support/live_mcp.rs"]
 pub mod live_mcp;
+#[path = "support/name_observations.rs"]
+pub mod name_observations;
 
 use std::collections::BTreeMap;
 use std::io::{BufRead, BufReader, Read, Write};
@@ -23,12 +25,1155 @@ use nms_watch::{SaveSnapshot, compute_delta};
 use serde_json::{Value, json};
 use tempfile::TempDir;
 
+fn hex_bytes(bytes: &[u8]) -> String {
+    bytes.iter().map(|byte| format!("{byte:02x}")).collect()
+}
+
 type LineReceiver = Receiver<Result<String, String>>;
 type TeedLineReceivers = (LineReceiver, LineReceiver);
 
 const PLAYER_LOCATION_URI: &str = "nms://player/location";
 const PHASE_TIMEOUT: Duration = Duration::from_secs(8);
 const RPC_TIMEOUT: Duration = Duration::from_secs(5);
+
+#[cfg(unix)]
+#[test]
+fn test_headless_stdio_child_applies_names_and_reuses_compatible_restart() {
+    use name_observations::{ModelStage, SourcePhase};
+
+    let dir = tempfile::tempdir().expect("name child fixture directory");
+    let save = dir.path().join("save.json");
+    let cache = dir.path().join("cache.rkyv");
+    std::fs::write(&save, name_observations::source_bytes(SourcePhase::Initial))
+        .expect("write fixed initial name source");
+    let source_time = source_mtime();
+    set_mtime(&save, source_time);
+    nms_cache::write_cache(&name_observations::warm_seed_cache(), &cache)
+        .expect("write independently literal warm cache");
+    set_mtime(&cache, source_time + Duration::from_secs(100));
+    let home = isolated_names_home(&cache, true);
+    let config_path = home.path().join(".nms-copilot/config.toml");
+    let enabled_config = std::fs::read(&config_path).expect("retain enabled child config");
+    let initial_source = name_observations::source_bytes(SourcePhase::Initial);
+    assert_eq!(
+        std::fs::read(&save).expect("read initial source bytes"),
+        initial_source
+    );
+    let (mut process, stdout_capture) =
+        StdioProcess::spawn_with_cache_policy_captured(&save, Some(home), false);
+    initialize_name_stdio(&mut process);
+    assert_name_stdio_stage(&mut process, &cache, ModelStage::Initial);
+
+    run_name_stdio_phase(
+        &mut process,
+        &save,
+        &cache,
+        "overwrite",
+        SourcePhase::Overwrite,
+        ModelStage::Overwrite,
+        true,
+    );
+    run_name_stdio_phase(
+        &mut process,
+        &save,
+        &cache,
+        "promote",
+        SourcePhase::Promote,
+        ModelStage::Promote,
+        true,
+    );
+    run_name_stdio_phase(
+        &mut process,
+        &save,
+        &cache,
+        "rename",
+        SourcePhase::Rename,
+        ModelStage::Rename,
+        true,
+    );
+    run_name_stdio_phase(
+        &mut process,
+        &save,
+        &cache,
+        "clear",
+        SourcePhase::Clear,
+        ModelStage::Clear,
+        true,
+    );
+
+    replace_name_source(&save, SourcePhase::Omit);
+    process.wait_resource_update("nms://player/location", PHASE_TIMEOUT);
+    process.assert_no_name_updates_for(Duration::from_millis(650));
+    assert_name_stdio_stage(&mut process, &cache, ModelStage::Ignore);
+    let omitted_cache = name_cache_checkpoint(&cache);
+
+    for phase in [
+        SourcePhase::Null,
+        SourcePhase::NonString,
+        SourcePhase::NonObject,
+        SourcePhase::NonObjectDm,
+    ] {
+        let cache_before = name_cache_checkpoint(&cache);
+        assert_eq!(
+            cache_before, omitted_cache,
+            "prior rejected form preserved accepted omission cache"
+        );
+        replace_name_source(&save, phase);
+        process.assert_no_name_updates_for(Duration::from_millis(650));
+        assert_name_stdio_stage(&mut process, &cache, ModelStage::Ignore);
+        assert_name_cache_unchanged(&cache, &cache_before, "invalid metadata representation");
+    }
+
+    for attempt in 1..=5 {
+        let cache_before = name_cache_checkpoint(&cache);
+        replace_name_bytes(&save, &name_observations::invalid_address_attempt(attempt));
+        process.assert_no_name_updates_for(Duration::from_millis(650));
+        assert_name_stdio_stage(&mut process, &cache, ModelStage::Ignore);
+        assert_name_cache_unchanged(&cache, &cache_before, "invalid packed address");
+    }
+    assert!(
+        process.wait_for_stderr(
+            "5 consecutive parse failures",
+            Instant::now() + Duration::from_secs(8)
+        ),
+        "five invalid name candidates must produce the bounded parser warning: {}",
+        process.stderr_text()
+    );
+    run_name_stdio_phase(
+        &mut process,
+        &save,
+        &cache,
+        "recover",
+        SourcePhase::Recover,
+        ModelStage::Recover,
+        true,
+    );
+    let recovered = name_observations::source_bytes(SourcePhase::Recover);
+    let recovered_cache = name_cache_checkpoint(&cache);
+    replace_name_bytes(&save, &recovered);
+    process.assert_no_name_updates_for(Duration::from_millis(650));
+    assert_name_stdio_stage(&mut process, &cache, ModelStage::Recover);
+    assert_name_cache_unchanged(&cache, &recovered_cache, "identical valid rewrite");
+    assert_eq!(
+        process
+            .stderr_text()
+            .matches("5 consecutive parse failures")
+            .count(),
+        1,
+        "one five-failure warning is emitted for this uninterrupted failure sequence"
+    );
+
+    let lifecycle_source = recovered.clone();
+    let lifecycle_source_time = std::fs::metadata(&save)
+        .expect("read source metadata before normal EOF")
+        .modified()
+        .expect("read source mtime before normal EOF");
+    let lifecycle_cache = name_cache_checkpoint(&cache);
+    assert_stdio_name_file_boundary(
+        &save,
+        &lifecycle_source,
+        lifecycle_source_time,
+        &cache,
+        &lifecycle_cache,
+        &config_path,
+        &enabled_config,
+    );
+    process.close_stdin_and_wait(Duration::from_secs(5));
+    validate_complete_stdio_stdout(stdout_capture, Instant::now() + Duration::from_secs(5))
+        .expect("complete child stdout contains JSON-RPC only through EOF");
+    assert_stdio_name_file_boundary(
+        &save,
+        &lifecycle_source,
+        lifecycle_source_time,
+        &cache,
+        &lifecycle_cache,
+        &config_path,
+        &enabled_config,
+    );
+
+    let (cache_bytes, cache_time) = lifecycle_cache.clone();
+    replace_name_bytes(&save, br#"{"Version":slice23-warm-malformed"#);
+    set_mtime(&save, cache_time - Duration::from_secs(1));
+    let restart_home = process.take_home().expect("retain child HOME for restart");
+    std::fs::write(
+        restart_home.path().join(".nms-copilot/config.toml"),
+        names_child_config(&cache, false),
+    )
+    .expect("disable watcher for compatible restart");
+    let disabled_config = std::fs::read(&config_path).expect("retain exact disabled config");
+    let restart_source = std::fs::read(&save).expect("retain malformed restart source");
+    let restart_source_time = std::fs::metadata(&save)
+        .expect("read malformed source metadata")
+        .modified()
+        .expect("read malformed source mtime");
+    let restart_cache = (cache_bytes, cache_time);
+    let (mut restarted, restart_stdout) =
+        StdioProcess::spawn_with_cache_policy_captured(&save, Some(restart_home), false);
+    initialize_name_stdio(&mut restarted);
+    assert_name_stdio_stage(&mut restarted, &cache, ModelStage::Recover);
+    restarted.assert_no_name_updates_for(Duration::from_millis(650));
+    assert_stdio_name_file_boundary(
+        &save,
+        &restart_source,
+        restart_source_time,
+        &cache,
+        &restart_cache,
+        &config_path,
+        &disabled_config,
+    );
+    restarted.close_stdin_and_wait(Duration::from_secs(5));
+    validate_complete_stdio_stdout(restart_stdout, Instant::now() + Duration::from_secs(5))
+        .expect("compatible restart stdout remains JSON-RPC through EOF");
+    assert_stdio_name_file_boundary(
+        &save,
+        &restart_source,
+        restart_source_time,
+        &cache,
+        &restart_cache,
+        &config_path,
+        &disabled_config,
+    );
+}
+
+#[cfg(unix)]
+fn isolated_names_home(cache: &Path, watch_enabled: bool) -> TempDir {
+    let home = tempfile::tempdir().expect("isolated names child HOME");
+    let config = home.path().join(".nms-copilot");
+    std::fs::create_dir_all(&config).expect("create names child config");
+    std::fs::write(
+        config.join("config.toml"),
+        names_child_config(cache, watch_enabled),
+    )
+    .expect("write exact names child config");
+    home
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[test]
+fn test_headless_http_child_name_lifecycle_and_fresh_bind_retries() {
+    run_http_names_lifecycle(None);
+    run_http_names_lifecycle(Some(NamesCollisionPoint::Startup));
+    run_http_names_lifecycle(Some(NamesCollisionPoint::Restart));
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn prepare_names_child_files() -> (PathBuf, PathBuf, PathBuf, TempDir) {
+    use name_observations::SourcePhase;
+
+    let fixture = tempfile::tempdir().expect("HTTP name fixture").keep();
+    let save = fixture.join("save.json");
+    let cache = fixture.join("cache.rkyv");
+    std::fs::write(&save, name_observations::source_bytes(SourcePhase::Initial))
+        .expect("write literal HTTP name source");
+    let source_time = source_mtime();
+    set_mtime(&save, source_time);
+    nms_cache::write_cache(&name_observations::warm_seed_cache(), &cache)
+        .expect("write independent HTTP name cache seed");
+    set_mtime(&cache, source_time + Duration::from_secs(100));
+    let home = isolated_names_home(&cache, true);
+    (fixture, save, cache, home)
+}
+
+#[cfg(all(unix, feature = "http"))]
+struct NamesHttpFiles {
+    fixture: PathBuf,
+    save: PathBuf,
+    cache: PathBuf,
+    config: PathBuf,
+}
+
+#[cfg(all(unix, feature = "http"))]
+struct NamesHttpSnapshot {
+    source: Vec<u8>,
+    source_time: SystemTime,
+    cache: Vec<u8>,
+    cache_time: SystemTime,
+    config: Vec<u8>,
+}
+
+#[cfg(all(unix, feature = "http"))]
+struct NamesHttpBindFailure {
+    phase: String,
+    address: SocketAddr,
+    fixture: PathBuf,
+    home: PathBuf,
+    receipt: PathBuf,
+}
+
+#[cfg(all(unix, feature = "http"))]
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum NamesCollisionPoint {
+    Startup,
+    Restart,
+}
+
+#[cfg(all(unix, feature = "http"))]
+enum NamesHttpAttemptError {
+    RetryBind(Box<NamesHttpBindFailure>),
+    Failed(String),
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn is_address_already_in_use(diagnostic: &str) -> bool {
+    diagnostic
+        .to_ascii_lowercase()
+        .contains("address already in use")
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn retain_names_bind_failure(
+    phase: &str,
+    address: SocketAddr,
+    files: &NamesHttpFiles,
+    snapshot: &NamesHttpSnapshot,
+    child: &mut HttpChild,
+    stdout: Receiver<Result<String, String>>,
+) -> Result<NamesHttpBindFailure, String> {
+    let status = child.wait_after_startup_failure_result()?;
+    let diagnostic = child.stderr_text();
+    let is_bind_failure = is_address_already_in_use(&diagnostic);
+    let source = std::fs::read(&files.save).map_err(|e| e.to_string())?;
+    let source_time = std::fs::metadata(&files.save)
+        .and_then(|metadata| metadata.modified())
+        .map_err(|e| e.to_string())?;
+    let cache = std::fs::read(&files.cache).map_err(|e| e.to_string())?;
+    let cache_time = std::fs::metadata(&files.cache)
+        .and_then(|metadata| metadata.modified())
+        .map_err(|e| e.to_string())?;
+    let config = std::fs::read(&files.config).map_err(|e| e.to_string())?;
+    let cache_temp_absent = !files.cache.with_extension("rkyv.tmp").exists();
+    let source_unchanged = source == snapshot.source && source_time == snapshot.source_time;
+    let cache_unchanged = cache == snapshot.cache && cache_time == snapshot.cache_time;
+    let config_unchanged = config == snapshot.config;
+    let home = child
+        .take_home()
+        .ok_or_else(|| "failed HTTP child HOME was not retained".to_owned())?;
+    let home_path = home.keep();
+    let stdout_deadline = Instant::now() + Duration::from_secs(5);
+    let mut stdout_lines = Vec::new();
+    let stdout_eof = loop {
+        let remaining = stdout_deadline.saturating_duration_since(Instant::now());
+        if remaining.is_zero() {
+            break false;
+        }
+        match stdout.recv_timeout(remaining) {
+            Err(RecvTimeoutError::Disconnected) => break true,
+            Err(RecvTimeoutError::Timeout) => break false,
+            Ok(Ok(line)) => stdout_lines.push(line),
+            Ok(Err(error)) => stdout_lines.push(format!("<stdout read error: {error}>")),
+        }
+    };
+    let stdout_empty_through_eof = stdout_eof && stdout_lines.is_empty();
+    let receipt_path = files.fixture.join("http-bind-failure.json");
+    let receipt = json!({
+        "phase": phase,
+        "address": address.to_string(),
+        "fixture": files.fixture.display().to_string(),
+        "save_path": files.save.display().to_string(),
+        "cache_path": files.cache.display().to_string(),
+        "home": home_path.display().to_string(),
+        "config_path": files.config.display().to_string(),
+        "config_hex_before": hex_bytes(&snapshot.config),
+        "config_hex_after": hex_bytes(&config),
+        "stderr_capture": "line-wise available at reap; not byte-exact or stderr-EOF proof",
+        "diagnostic": diagnostic,
+        "bind_failure": is_bind_failure,
+        "child_status": {"debug": format!("{status:?}"), "code": status.code(), "success": status.success()},
+        "stdout_capture": "line-wise through EOF or bounded timeout",
+        "stdout_lines_through_eof": stdout_lines,
+        "source_hex_before": hex_bytes(&snapshot.source),
+        "source_hex_after": hex_bytes(&source),
+        "source_modified_nanos_before": snapshot.source_time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_nanos(),
+        "source_modified_nanos_after": source_time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_nanos(),
+        "source_unchanged": source_unchanged,
+        "cache_hex_before": hex_bytes(&snapshot.cache),
+        "cache_hex_after": hex_bytes(&cache),
+        "cache_modified_nanos_before": snapshot.cache_time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_nanos(),
+        "cache_modified_nanos_after": cache_time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_nanos(),
+        "cache_unchanged": cache_unchanged,
+        "config_unchanged": config_unchanged,
+        "cache_temp_absent": cache_temp_absent,
+        "stdout_empty_through_eof": stdout_empty_through_eof,
+    });
+    std::fs::write(
+        &receipt_path,
+        serde_json::to_vec(&receipt).map_err(|e| e.to_string())?,
+    )
+    .map_err(|e| e.to_string())?;
+    if !source_unchanged || !cache_unchanged || !config_unchanged || !cache_temp_absent {
+        return Err(format!(
+            "HTTP {phase} failure changed a protected boundary: {receipt}"
+        ));
+    }
+    if !status.success() {
+        return Err(format!(
+            "HTTP {phase} child exited unsuccessfully: {receipt}"
+        ));
+    }
+    if !stdout_empty_through_eof {
+        return Err(format!(
+            "HTTP {phase} child stdout was not empty through EOF: {receipt}"
+        ));
+    }
+    if !is_bind_failure {
+        return Err(format!(
+            "HTTP {phase} failure was not an observed bind collision: {receipt}"
+        ));
+    }
+    Ok(NamesHttpBindFailure {
+        phase: phase.to_owned(),
+        address,
+        fixture: files.fixture.clone(),
+        home: home_path,
+        receipt: receipt_path,
+    })
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn assert_names_bind_failure_record(failure: &NamesHttpBindFailure) {
+    let receipt: Value = serde_json::from_slice(
+        &std::fs::read(&failure.receipt).expect("read retained HTTP names bind receipt"),
+    )
+    .expect("parse retained HTTP names bind receipt");
+    assert_eq!(
+        failure.receipt,
+        failure.fixture.join("http-bind-failure.json")
+    );
+    assert_eq!(receipt["phase"].as_str(), Some(failure.phase.as_str()));
+    assert_eq!(
+        receipt["address"].as_str(),
+        Some(failure.address.to_string().as_str())
+    );
+    assert_eq!(
+        receipt["fixture"].as_str(),
+        Some(failure.fixture.display().to_string().as_str())
+    );
+    assert_eq!(
+        receipt["save_path"].as_str(),
+        Some(
+            failure
+                .fixture
+                .join("save.json")
+                .display()
+                .to_string()
+                .as_str()
+        )
+    );
+    assert_eq!(
+        receipt["cache_path"].as_str(),
+        Some(
+            failure
+                .fixture
+                .join("cache.rkyv")
+                .display()
+                .to_string()
+                .as_str()
+        )
+    );
+    assert_eq!(
+        receipt["home"].as_str(),
+        Some(failure.home.display().to_string().as_str())
+    );
+    assert!(failure.fixture.is_dir());
+    assert!(failure.home.is_dir());
+    assert!(failure.home.join(".nms-copilot/config.toml").is_file());
+    assert!(receipt["bind_failure"].as_bool().unwrap_or(false));
+    assert!(
+        receipt["diagnostic"]
+            .as_str()
+            .is_some_and(is_address_already_in_use)
+    );
+    assert_eq!(receipt["child_status"]["success"], json!(true));
+    assert_eq!(receipt["source_unchanged"], json!(true));
+    assert_eq!(receipt["cache_unchanged"], json!(true));
+    assert_eq!(receipt["config_unchanged"], json!(true));
+    assert_eq!(receipt["cache_temp_absent"], json!(true));
+    assert_eq!(receipt["stdout_empty_through_eof"], json!(true));
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_names_lifecycle(controlled_collision: Option<NamesCollisionPoint>) {
+    let mut failures = Vec::new();
+    for attempt in 1..=3 {
+        let controlled_collision = (attempt == 1).then_some(controlled_collision).flatten();
+        match run_http_names_lifecycle_attempt(controlled_collision) {
+            Ok(()) => {
+                assert_eq!(attempt > 1, !failures.is_empty());
+                return;
+            }
+            Err(NamesHttpAttemptError::RetryBind(failure)) => {
+                assert_names_bind_failure_record(&failure);
+                failures.push(failure);
+                assert!(
+                    attempt < 3,
+                    "HTTP names scenario exhausted three fresh bind attempts"
+                );
+            }
+            Err(NamesHttpAttemptError::Failed(error)) => {
+                panic!("HTTP names lifecycle failed without a retryable bind collision: {error}")
+            }
+        }
+    }
+    unreachable!("the third bind collision panics before another attempt")
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn run_http_names_lifecycle_attempt(
+    controlled_collision: Option<NamesCollisionPoint>,
+) -> Result<(), NamesHttpAttemptError> {
+    use name_observations::{ModelStage, SourcePhase};
+
+    let (fixture, save, cache, home) = prepare_names_child_files();
+    let source_before_start = std::fs::read(&save).expect("retain HTTP prelaunch source");
+    let source_time_before_start = std::fs::metadata(&save).unwrap().modified().unwrap();
+    let cache_before_start = std::fs::read(&cache).expect("retain HTTP prelaunch cache");
+    let cache_time_before_start = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    let config_path = home.path().join(".nms-copilot/config.toml");
+    let config_before_start = std::fs::read(&config_path).expect("retain HTTP prelaunch config");
+    let startup_listener = if controlled_collision == Some(NamesCollisionPoint::Startup) {
+        Some(TcpListener::bind(("127.0.0.1", 0)).expect("hold controlled startup port"))
+    } else {
+        None
+    };
+    let address = if let Some(listener) = &startup_listener {
+        listener.local_addr().expect("read held startup address")
+    } else {
+        let reservation = TcpListener::bind(("127.0.0.1", 0)).expect("reserve ordinary HTTP port");
+        let address = reservation.local_addr().unwrap();
+        drop(reservation);
+        address
+    };
+    let (mut child, stdout) =
+        HttpChild::spawn_with_cache_policy_captured(&save, address, Some(home), false);
+    if let Err(_diagnostic) = wait_health(address, &mut child) {
+        let failure = retain_names_bind_failure(
+            "startup",
+            address,
+            &NamesHttpFiles {
+                fixture: fixture.clone(),
+                save: save.clone(),
+                cache: cache.clone(),
+                config: config_path.clone(),
+            },
+            &NamesHttpSnapshot {
+                source: source_before_start.clone(),
+                source_time: source_time_before_start,
+                cache: cache_before_start.clone(),
+                cache_time: cache_time_before_start,
+                config: config_before_start.clone(),
+            },
+            &mut child,
+            stdout,
+        );
+        drop(startup_listener);
+        return match failure {
+            Ok(failure) => Err(NamesHttpAttemptError::RetryBind(Box::new(failure))),
+            Err(error) => Err(NamesHttpAttemptError::Failed(error)),
+        };
+    }
+    if startup_listener.is_some() {
+        return Err(NamesHttpAttemptError::Failed(
+            "controlled startup port was not observed as a bind collision".into(),
+        ));
+    }
+    let mut client = HttpClient::new(address);
+    let initialized = client.post_without_session(initialize_request());
+    assert_eq!(initialized.status, 200);
+    let session = initialized
+        .header("mcp-session-id")
+        .expect("HTTP session")
+        .to_owned();
+    let message = http_json_messages(&initialized.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 1)
+        .expect("HTTP initialize response");
+    assert_initialized(&message["result"]);
+    client.post(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    let mut sse = live_mcp::subscribe_sse_uris(
+        address,
+        &session,
+        &["nms://player/location", "nms://galaxy/stats"],
+    )
+    .expect("subscribe actual HTTP child to both resources");
+    assert_name_http_stage(&mut client, &cache, ModelStage::Initial);
+
+    http_names_phase(
+        &mut client,
+        &mut sse,
+        &save,
+        &cache,
+        SourcePhase::Overwrite,
+        ModelStage::Overwrite,
+        true,
+    );
+    http_names_phase(
+        &mut client,
+        &mut sse,
+        &save,
+        &cache,
+        SourcePhase::Promote,
+        ModelStage::Promote,
+        true,
+    );
+    http_names_phase(
+        &mut client,
+        &mut sse,
+        &save,
+        &cache,
+        SourcePhase::Rename,
+        ModelStage::Rename,
+        true,
+    );
+    http_names_phase(
+        &mut client,
+        &mut sse,
+        &save,
+        &cache,
+        SourcePhase::Clear,
+        ModelStage::Clear,
+        true,
+    );
+
+    let cursor = sse.cursor();
+    replace_name_source(&save, SourcePhase::Omit);
+    let location_end = sse
+        .wait_for_resource_updated_since(cursor, "nms://player/location", PHASE_TIMEOUT)
+        .expect("omitted-map event still invalidates location");
+    sse.wait_quiet_uris_since(
+        location_end,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )
+    .expect("omitted-map transition has no stats update");
+    assert_name_http_stage(&mut client, &cache, ModelStage::Ignore);
+    let omitted_cache = name_cache_checkpoint(&cache);
+    for phase in [
+        SourcePhase::Null,
+        SourcePhase::NonString,
+        SourcePhase::NonObject,
+        SourcePhase::NonObjectDm,
+    ] {
+        let cursor = sse.cursor();
+        let cache_before = name_cache_checkpoint(&cache);
+        assert_eq!(
+            cache_before, omitted_cache,
+            "prior rejected form preserved accepted omission cache"
+        );
+        replace_name_source(&save, phase);
+        sse.wait_quiet_uris_since(
+            cursor,
+            &["nms://player/location", "nms://galaxy/stats"],
+            Duration::from_millis(650),
+        )
+        .expect("equivalent invalid CN representation is quiet");
+        assert_name_http_stage(&mut client, &cache, ModelStage::Ignore);
+        assert_name_cache_unchanged(&cache, &cache_before, "invalid metadata representation");
+    }
+    for attempt in 1..=5 {
+        let cursor = sse.cursor();
+        let cache_before = name_cache_checkpoint(&cache);
+        replace_name_bytes(&save, &name_observations::invalid_address_attempt(attempt));
+        sse.wait_quiet_uris_since(
+            cursor,
+            &["nms://player/location", "nms://galaxy/stats"],
+            Duration::from_millis(650),
+        )
+        .expect("invalid typed address keeps both HTTP resources quiet");
+        assert_name_http_stage(&mut client, &cache, ModelStage::Ignore);
+        assert_name_cache_unchanged(&cache, &cache_before, "invalid packed address");
+    }
+    assert!(
+        child.wait_for_stderr(
+            "5 consecutive parse failures",
+            Instant::now() + Duration::from_secs(8)
+        ),
+        "HTTP child did not report five invalid saves: {}",
+        child.stderr_text()
+    );
+    http_names_phase(
+        &mut client,
+        &mut sse,
+        &save,
+        &cache,
+        SourcePhase::Recover,
+        ModelStage::Recover,
+        true,
+    );
+    let recovered = name_observations::source_bytes(SourcePhase::Recover);
+    let cursor = sse.cursor();
+    let recovered_cache = name_cache_checkpoint(&cache);
+    replace_name_bytes(&save, &recovered);
+    sse.wait_quiet_uris_since(
+        cursor,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )
+    .expect("identical valid rewrite is quiet for both resources");
+    assert_name_http_stage(&mut client, &cache, ModelStage::Recover);
+    assert_name_cache_unchanged(&cache, &recovered_cache, "identical valid rewrite");
+    assert_eq!(
+        child
+            .stderr_text()
+            .matches("5 consecutive parse failures")
+            .count(),
+        1,
+        "one five-failure warning in the uninterrupted HTTP sequence"
+    );
+    let source_after_lifecycle = std::fs::read(&save).expect("retain source at normal EOF");
+    let source_time_after_lifecycle = std::fs::metadata(&save).unwrap().modified().unwrap();
+    let cache_after_lifecycle = std::fs::read(&cache).expect("retain cache at normal EOF");
+    let cache_time_after_lifecycle = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    let config_after_lifecycle = std::fs::read(&config_path).expect("retain config at normal EOF");
+    child.kill_and_wait();
+    sse.wait_closed_without_resource_updates(
+        Duration::from_secs(5),
+        &["nms://player/location", "nms://galaxy/stats"],
+    )
+    .expect("HTTP child EOF has no late name-resource updates");
+    sse.close_and_join()
+        .expect("join HTTP lifecycle SSE reader");
+    assert_http_stdout_empty_to_eof(stdout, Instant::now() + Duration::from_secs(5));
+    assert_eq!(std::fs::read(&save).unwrap(), source_after_lifecycle);
+    assert_eq!(
+        std::fs::metadata(&save).unwrap().modified().unwrap(),
+        source_time_after_lifecycle
+    );
+    assert_eq!(std::fs::read(&cache).unwrap(), cache_after_lifecycle);
+    assert_eq!(
+        std::fs::metadata(&cache).unwrap().modified().unwrap(),
+        cache_time_after_lifecycle
+    );
+    assert_eq!(std::fs::read(&config_path).unwrap(), config_after_lifecycle);
+    assert!(!cache.with_extension("rkyv.tmp").exists());
+    assert!(!save.with_extension("replacement").exists());
+
+    let cache_bytes = std::fs::read(&cache).expect("retain warm cache before restart");
+    let cache_time = std::fs::metadata(&cache).unwrap().modified().unwrap();
+    replace_name_bytes(&save, br#"{"Version":slice23-warm-malformed"#);
+    set_mtime(&save, cache_time - Duration::from_secs(1));
+    let home = child.take_home().expect("reuse actual HTTP child HOME");
+    std::fs::write(
+        home.path().join(".nms-copilot/config.toml"),
+        names_child_config(&cache, false),
+    )
+    .expect("disable watcher for compatible HTTP restart");
+    let config_bytes = std::fs::read(&config_path).expect("retain restart config bytes");
+    let restart_source = std::fs::read(&save).expect("retain exact restart source before spawn");
+    let restart_source_time = std::fs::metadata(&save).unwrap().modified().unwrap();
+    let restart_snapshot = NamesHttpSnapshot {
+        source: restart_source,
+        source_time: restart_source_time,
+        cache: cache_bytes.clone(),
+        cache_time,
+        config: config_bytes.clone(),
+    };
+    let files = NamesHttpFiles {
+        fixture: fixture.clone(),
+        save: save.clone(),
+        cache: cache.clone(),
+        config: config_path.clone(),
+    };
+    if controlled_collision == Some(NamesCollisionPoint::Restart) {
+        let listener = TcpListener::bind(address).expect("hold old HTTP child port at restart");
+        let (mut failed, failed_stdout) =
+            HttpChild::spawn_with_cache_policy_captured(&save, address, Some(home), false);
+        let failure = retain_names_bind_failure(
+            "compatible restart",
+            address,
+            &files,
+            &restart_snapshot,
+            &mut failed,
+            failed_stdout,
+        );
+        drop(listener);
+        return match failure {
+            Ok(failure) => Err(NamesHttpAttemptError::RetryBind(Box::new(failure))),
+            Err(error) => Err(NamesHttpAttemptError::Failed(error)),
+        };
+    } else {
+        let (mut restarted, restart_stdout) =
+            HttpChild::spawn_with_cache_policy_captured(&save, address, Some(home), false);
+        if let Err(_diagnostic) = wait_health(address, &mut restarted) {
+            let failure = retain_names_bind_failure(
+                "compatible restart",
+                address,
+                &files,
+                &restart_snapshot,
+                &mut restarted,
+                restart_stdout,
+            );
+            return match failure {
+                Ok(failure) => Err(NamesHttpAttemptError::RetryBind(Box::new(failure))),
+                Err(error) => Err(NamesHttpAttemptError::Failed(error)),
+            };
+        }
+        let mut restart_client = HttpClient::new(address);
+        let response = restart_client.post_without_session(initialize_request());
+        assert_eq!(response.status, 200);
+        let restart_session = response.header("mcp-session-id").unwrap().to_owned();
+        let initialized = http_json_messages(&response.body_text())
+            .into_iter()
+            .find(|message| message["id"] == 1)
+            .unwrap();
+        assert_initialized(&initialized["result"]);
+        restart_client
+            .post(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+        assert_name_http_stage(&mut restart_client, &cache, ModelStage::Recover);
+        let mut restart_sse = live_mcp::subscribe_sse_uris(
+            address,
+            &restart_session,
+            &["nms://player/location", "nms://galaxy/stats"],
+        )
+        .expect("subscribe compatible HTTP restart");
+        let restart_cursor = restart_sse.cursor();
+        restart_sse
+            .wait_quiet_uris_since(
+                restart_cursor,
+                &["nms://player/location", "nms://galaxy/stats"],
+                Duration::from_millis(650),
+            )
+            .expect("disabled watcher restart remains quiet");
+        restarted.kill_and_wait();
+        restart_sse
+            .wait_closed_without_resource_updates(
+                Duration::from_secs(5),
+                &["nms://player/location", "nms://galaxy/stats"],
+            )
+            .expect("HTTP restart EOF has no late name-resource updates");
+        restart_sse.close_and_join().expect("join restart SSE");
+        assert_http_stdout_empty_to_eof(restart_stdout, Instant::now() + Duration::from_secs(5));
+        assert_eq!(std::fs::read(&cache).unwrap(), cache_bytes);
+        assert_eq!(
+            std::fs::metadata(&cache).unwrap().modified().unwrap(),
+            cache_time
+        );
+        assert_eq!(
+            std::fs::read(&save).unwrap(),
+            br#"{"Version":slice23-warm-malformed"#
+        );
+        assert_eq!(
+            std::fs::metadata(&save).unwrap().modified().unwrap(),
+            restart_snapshot.source_time
+        );
+        assert_eq!(
+            std::fs::read(&config_path).unwrap(),
+            restart_snapshot.config
+        );
+        assert!(!cache.with_extension("rkyv.tmp").exists());
+        assert!(!save.with_extension("replacement").exists());
+    }
+    Ok(())
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn http_names_phase(
+    client: &mut HttpClient,
+    sse: &mut live_mcp::SseStream,
+    save: &Path,
+    cache: &Path,
+    source: name_observations::SourcePhase,
+    stage: name_observations::ModelStage,
+    expect_stats: bool,
+) {
+    let cursor = sse.cursor();
+    replace_name_source(save, source);
+    let location_end = sse
+        .wait_for_resource_updated_since(cursor, "nms://player/location", PHASE_TIMEOUT)
+        .expect("HTTP child location event");
+    let end = if expect_stats {
+        sse.wait_for_resource_updated_since(location_end, "nms://galaxy/stats", PHASE_TIMEOUT)
+            .expect("HTTP child stats event")
+    } else {
+        location_end
+    };
+    sse.wait_quiet_uris_since(
+        end,
+        &["nms://player/location", "nms://galaxy/stats"],
+        Duration::from_millis(650),
+    )
+    .expect("HTTP child stage has exactly one paired update");
+    assert_name_http_stage(client, cache, stage);
+}
+
+#[cfg(all(unix, feature = "http"))]
+fn assert_name_http_stage(
+    client: &mut HttpClient,
+    cache: &Path,
+    stage: name_observations::ModelStage,
+) {
+    let address = client.addr;
+    let session = client.session.as_deref().expect("initialized HTTP session");
+    let (tool, location) =
+        live_mcp::location_rpc_pair(address, session).expect("full HTTP location pair");
+    let expected_location = name_observations::expected_location(stage, false);
+    assert_eq!(tool, expected_location);
+    assert_eq!(location, expected_location);
+    let stats = live_mcp::resource_json(address, session, "nms://galaxy/stats")
+        .expect("HTTP stats resource");
+    assert_eq!(
+        name_observations::normalize_stats_biomes(stats),
+        name_observations::normalize_stats_biomes(name_observations::expected_stats(stage, false))
+    );
+    let response = client.post(json!({
+        "jsonrpc":"2.0", "id":400, "method":"tools/call",
+        "params":{"name":"search_planets", "arguments":{"biome":"Toxic", "infested":true, "named_only":true, "from_base":"Anchor"}}
+    }));
+    assert_eq!(response.status, 200);
+    let message = http_json_messages(&response.body_text())
+        .into_iter()
+        .find(|message| message["id"] == 400)
+        .expect("HTTP named query response");
+    let query: Value = serde_json::from_str(
+        message["result"]["content"][0]["text"]
+            .as_str()
+            .expect("search result text"),
+    )
+    .expect("search result JSON");
+    let expected_name = match stage {
+        name_observations::ModelStage::Promote => Some(("Current", "Current Moon")),
+        name_observations::ModelStage::Rename => Some(("Current Renamed", "Renamed Moon")),
+        name_observations::ModelStage::Recover => Some(("Current Recovered", "Recovered Moon")),
+        _ => None,
+    };
+    assert_eq!(query["count"], usize::from(expected_name.is_some()));
+    let rows = query["results"].as_array().expect("HTTP named query rows");
+    assert_eq!(rows.len(), usize::from(expected_name.is_some()));
+    if let (Some(row), Some((system, planet))) = (rows.first(), expected_name) {
+        assert_eq!(
+            row,
+            &json!({
+                "system": system,
+                "planet": planet,
+                "biome": "Toxic",
+                "infested": true,
+                "distance": "< 1 ly",
+                "distance_ly": 0.0,
+                "portal_glyphs_hex": "000700000064",
+                "portal_glyphs_emoji": nms_query::display::hex_to_emoji("000700000064"),
+                "discoverer": "Explorer"
+            }),
+            "complete named search row from the literal Anchor base"
+        );
+    }
+    let actual = nms_cache::read_cache(cache).expect("HTTP child raw cache");
+    let rebuilt = nms_cache::rebuild_model(&actual);
+    live_mcp::compare_cache_model(
+        &actual,
+        &rebuilt,
+        &name_observations::expected_cache(stage, 7),
+        &name_observations::expected_model(stage),
+    )
+    .expect("HTTP raw cache and rebuilt graph match the complete literal state");
+}
+
+#[cfg(unix)]
+fn names_child_config(cache: &Path, watch_enabled: bool) -> String {
+    format!(
+        "[display]\nshow_banner = false\nshow_system_banner = false\ncolor = false\n\n[watch]\nenabled = {watch_enabled}\ndebounce_ms = 137\n\n[cache]\nenabled = true\npath = {:?}\n",
+        cache.to_string_lossy()
+    )
+}
+
+#[cfg(unix)]
+fn initialize_name_stdio(process: &mut StdioProcess) {
+    process.send(initialize_request());
+    assert_initialized(&process.response(1, RPC_TIMEOUT)["result"]);
+    process.send(json!({"jsonrpc":"2.0", "method":"notifications/initialized", "params":{}}));
+    for (id, uri) in [(20, "nms://player/location"), (21, "nms://galaxy/stats")] {
+        process.send(json!({
+            "jsonrpc":"2.0", "id":id, "method":"resources/subscribe", "params":{"uri":uri}
+        }));
+        assert!(process.response(id, RPC_TIMEOUT)["result"].is_object());
+    }
+}
+
+#[cfg(unix)]
+fn replace_name_source(path: &Path, phase: name_observations::SourcePhase) {
+    replace_name_bytes(path, &name_observations::source_bytes(phase));
+}
+
+#[cfg(unix)]
+fn replace_name_bytes(path: &Path, bytes: &[u8]) {
+    atomic_replace(path, bytes);
+}
+
+#[cfg(unix)]
+fn name_cache_checkpoint(path: &Path) -> (Vec<u8>, SystemTime) {
+    (
+        std::fs::read(path).expect("read name-cache bytes"),
+        std::fs::metadata(path)
+            .expect("read name-cache metadata")
+            .modified()
+            .expect("read name-cache mtime"),
+    )
+}
+
+#[cfg(unix)]
+fn assert_name_cache_unchanged(path: &Path, expected: &(Vec<u8>, SystemTime), phase: &str) {
+    assert_eq!(
+        &name_cache_checkpoint(path),
+        expected,
+        "{phase} must preserve cache bytes and mtime"
+    );
+}
+
+#[cfg(unix)]
+fn assert_stdio_name_file_boundary(
+    save: &Path,
+    expected_source: &[u8],
+    expected_source_time: SystemTime,
+    cache: &Path,
+    expected_cache: &(Vec<u8>, SystemTime),
+    config: &Path,
+    expected_config: &[u8],
+) {
+    assert_eq!(
+        std::fs::read(save).expect("read source bytes at EOF boundary"),
+        expected_source
+    );
+    assert_eq!(
+        std::fs::metadata(save)
+            .expect("read source metadata at EOF boundary")
+            .modified()
+            .expect("read source mtime at EOF boundary"),
+        expected_source_time
+    );
+    assert_eq!(
+        &name_cache_checkpoint(cache),
+        expected_cache,
+        "cache bytes and mtime remain fixed at EOF boundary"
+    );
+    assert_eq!(
+        std::fs::read(config).expect("read config at EOF boundary"),
+        expected_config
+    );
+    assert!(cache.parent().expect("cache parent").is_dir());
+    assert!(!cache.with_extension("rkyv.tmp").exists());
+    assert!(!save.with_extension("replacement").exists());
+}
+
+#[cfg(unix)]
+fn run_name_stdio_phase(
+    process: &mut StdioProcess,
+    save: &Path,
+    cache: &Path,
+    label: &str,
+    source: name_observations::SourcePhase,
+    stage: name_observations::ModelStage,
+    expect_stats: bool,
+) {
+    replace_name_source(save, source);
+    process.wait_resource_update("nms://player/location", PHASE_TIMEOUT);
+    if expect_stats {
+        process.wait_resource_update("nms://galaxy/stats", PHASE_TIMEOUT);
+    }
+    process.assert_no_name_updates_for(Duration::from_millis(650));
+    assert_name_stdio_stage(process, cache, stage);
+    eprintln!("SLICE23_STDIO_NAME_PHASE {label}=pass");
+}
+
+#[cfg(unix)]
+fn assert_name_stdio_stage(
+    process: &mut StdioProcess,
+    cache: &Path,
+    stage: name_observations::ModelStage,
+) {
+    let id = 300;
+    process.send(json!({
+        "jsonrpc":"2.0", "id":id, "method":"tools/call",
+        "params":{"name":"where_am_i", "arguments":{}}
+    }));
+    let tool_response = process.response(id, RPC_TIMEOUT);
+    let tool: Value = serde_json::from_str(
+        tool_response["result"]["content"][0]["text"]
+            .as_str()
+            .expect("location tool text"),
+    )
+    .expect("location tool JSON");
+    process.send(json!({
+        "jsonrpc":"2.0", "id":id + 1, "method":"resources/read",
+        "params":{"uri":"nms://player/location"}
+    }));
+    let location_response = process.response(id + 1, RPC_TIMEOUT);
+    let location: Value = serde_json::from_str(
+        location_response["result"]["contents"][0]["text"]
+            .as_str()
+            .expect("location resource text"),
+    )
+    .expect("location resource JSON");
+    let expected_location = name_observations::expected_location(stage, false);
+    assert_eq!(tool, expected_location, "complete where_am_i tool object");
+    assert_eq!(
+        location, expected_location,
+        "complete location resource object"
+    );
+
+    process.send(json!({
+        "jsonrpc":"2.0", "id":id + 2, "method":"resources/read",
+        "params":{"uri":"nms://galaxy/stats"}
+    }));
+    let stats_response = process.response(id + 2, RPC_TIMEOUT);
+    let stats: Value = serde_json::from_str(
+        stats_response["result"]["contents"][0]["text"]
+            .as_str()
+            .expect("stats resource text"),
+    )
+    .expect("stats resource JSON");
+    assert_eq!(
+        name_observations::normalize_stats_biomes(stats),
+        name_observations::normalize_stats_biomes(name_observations::expected_stats(stage, false))
+    );
+
+    process.send(json!({
+        "jsonrpc":"2.0", "id":id + 3, "method":"tools/call",
+        "params":{"name":"search_planets", "arguments":{"biome":"Toxic", "infested":true, "named_only":true, "from_base":"Anchor"}}
+    }));
+    let query_response = process.response(id + 3, RPC_TIMEOUT);
+    let query: Value = serde_json::from_str(
+        query_response["result"]["content"][0]["text"]
+            .as_str()
+            .expect("search tool text"),
+    )
+    .expect("search tool JSON");
+    let named = matches!(
+        stage,
+        name_observations::ModelStage::Promote
+            | name_observations::ModelStage::Rename
+            | name_observations::ModelStage::Recover
+    );
+    assert_eq!(query["count"], if named { 1 } else { 0 });
+    let results = query["results"].as_array().expect("search results array");
+    assert_eq!(results.len(), usize::from(named));
+    if let Some(result) = results.first() {
+        let name = match stage {
+            name_observations::ModelStage::Promote => ("Current", "Current Moon"),
+            name_observations::ModelStage::Rename => ("Current Renamed", "Renamed Moon"),
+            _ => ("Current Recovered", "Recovered Moon"),
+        };
+        assert_eq!(
+            result,
+            &json!({
+                "system": name.0,
+                "planet": name.1,
+                "biome": "Toxic",
+                "infested": true,
+                "distance": "< 1 ly",
+                "distance_ly": 0.0,
+                "portal_glyphs_hex": "000700000064",
+                "portal_glyphs_emoji": nms_query::display::hex_to_emoji("000700000064"),
+                "discoverer": "Explorer"
+            }),
+            "complete named search row from the literal Anchor base"
+        );
+    }
+
+    let actual = nms_cache::read_cache(cache).expect("read complete name cache");
+    let rebuilt = nms_cache::rebuild_model(&actual);
+    let expected = name_observations::expected_cache(stage, 7);
+    let model = name_observations::expected_model(stage);
+    live_mcp::compare_cache_model(&actual, &rebuilt, &expected, &model)
+        .expect("complete raw and rebuilt model match the independent name oracle");
+}
 
 #[derive(Clone, Copy)]
 struct Phase {
@@ -2436,17 +3581,64 @@ impl StdioProcess {
     }
 
     fn wait_location_update(&mut self, timeout: Duration) {
+        self.wait_resource_update(PLAYER_LOCATION_URI, timeout);
+    }
+
+    fn wait_resource_update(&mut self, uri: &str, timeout: Duration) {
         let deadline = Instant::now() + timeout;
         loop {
-            if let Some(index) = self.pending.iter().position(is_location_update) {
+            if let Some(index) = self
+                .pending
+                .iter()
+                .position(|message| is_resource_update_for(message, uri))
+            {
                 self.pending.remove(index);
                 return;
             }
-            let message = self.read_message(deadline, "resources/updated notification");
-            if is_location_update(&message) {
+            let message = self.read_message(deadline, &format!("resources/updated for {uri}"));
+            if is_resource_update_for(&message, uri) {
                 return;
             }
             self.pending.push(message);
+        }
+    }
+
+    fn assert_no_name_updates_for(&mut self, duration: Duration) {
+        let uris = ["nms://player/location", "nms://galaxy/stats"];
+        let deadline = Instant::now() + duration;
+        loop {
+            if let Some(index) = self
+                .pending
+                .iter()
+                .position(|message| uris.iter().any(|uri| is_resource_update_for(message, uri)))
+            {
+                panic!(
+                    "unexpected queued name-resource update: {}",
+                    self.pending.remove(index)
+                );
+            }
+            let remaining = deadline.saturating_duration_since(Instant::now());
+            if remaining.is_zero() {
+                return;
+            }
+            match self
+                .stdout
+                .recv_timeout(remaining.min(Duration::from_millis(25)))
+            {
+                Ok(Ok(line)) => {
+                    let message: Value = serde_json::from_str(&line).expect("JSON-RPC output");
+                    assert!(
+                        !uris.iter().any(|uri| is_resource_update_for(&message, uri)),
+                        "unexpected name-resource update: {message}"
+                    );
+                    self.pending.push(message);
+                }
+                Ok(Err(error)) => panic!("read stdout during quiet window: {error}"),
+                Err(RecvTimeoutError::Timeout) => {}
+                Err(RecvTimeoutError::Disconnected) => {
+                    panic!("stdout closed during name-resource quiet window")
+                }
+            }
         }
     }
 
@@ -2517,6 +3709,10 @@ impl StdioProcess {
     fn stderr_text(&mut self) -> String {
         self.drain_stderr();
         self.stderr_lines.join("\n")
+    }
+
+    fn take_home(&mut self) -> Option<TempDir> {
+        self._home.take()
     }
 
     fn stdout_is_json_only(&mut self) -> bool {
@@ -2722,7 +3918,7 @@ impl HttpChild {
         );
     }
 
-    fn wait_after_startup_failure(&mut self) {
+    fn wait_after_startup_failure(&mut self) -> ExitStatus {
         let deadline = Instant::now() + Duration::from_secs(5);
         let status = loop {
             if let Some(status) = self.child.try_wait().expect("poll failed HTTP child") {
@@ -2746,6 +3942,26 @@ impl HttpChild {
             "failed HTTP child stdout: {:?}",
             self.stdout_lines
         );
+        status
+    }
+
+    fn wait_after_startup_failure_result(&mut self) -> Result<ExitStatus, String> {
+        let deadline = Instant::now() + Duration::from_secs(5);
+        let status = loop {
+            if let Some(status) = self.child.try_wait().map_err(|error| error.to_string())? {
+                break status;
+            }
+            if Instant::now() >= deadline {
+                return Err(format!(
+                    "HTTP child did not exit after startup failure; stderr: {}",
+                    self.stderr_text()
+                ));
+            }
+            thread::sleep(Duration::from_millis(20));
+        };
+        eprintln!("MCP_BIND_FAILURE_CHILD_EXIT status={status:?}");
+        self.collect();
+        Ok(status)
     }
 }
 
@@ -2860,8 +4076,11 @@ fn test_complete_stdio_stdout_validator_rejects_late_noise_and_non_rpc_json() {
 }
 
 fn is_location_update(message: &Value) -> bool {
-    message["method"] == "notifications/resources/updated"
-        && message["params"]["uri"] == PLAYER_LOCATION_URI
+    is_resource_update_for(message, PLAYER_LOCATION_URI)
+}
+
+fn is_resource_update_for(message: &Value, uri: &str) -> bool {
+    message["method"] == "notifications/resources/updated" && message["params"]["uri"] == uri
 }
 
 fn wait_health(addr: SocketAddr, child: &mut HttpChild) -> Result<(), String> {
@@ -3397,7 +4616,7 @@ fn sentinel_bytes() -> Vec<u8> {
     let model = sentinel_model();
     let data = nms_cache::extract_cache_data(&model, 9999);
     let bytes = nms_cache::serialize::serialize(&data).expect("serialize current sentinel");
-    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+    assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
     let dir = tempfile::tempdir().expect("sentinel verification directory");
     let path = dir.path().join("sentinel.rkyv");
     nms_cache::write_cache(&data, &path).expect("write sentinel through cache API");
@@ -3520,7 +4739,7 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 1,
-                        expected: 4
+                        expected: 5
                     }
                 ))
             ));
@@ -3540,14 +4759,14 @@ fn prepare_startup_case(case: StartupCacheCase) -> StartupCaseFiles {
                 Err(nms_cache::CacheError::Incompatible(
                     nms_cache::CacheCompatibilityError::SemanticMismatch {
                         found: 3,
-                        expected: 4
+                        expected: 5
                     }
                 ))
             ));
             Some(bytes)
         }
         StartupCacheCase::FreshCorrupt => {
-            let bytes = b"NMSCACHE\x03\0\0\0\x04\0\0\0".to_vec();
+            let bytes = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
             std::fs::write(&cache, &bytes).expect("write literal empty current archive");
             set_mtime(&cache, source_mtime() + Duration::from_secs(100));
             assert!(nms_cache::is_cache_fresh(&cache, &save));
@@ -3597,7 +4816,7 @@ fn assert_startup_freshness_precondition(case: StartupCacheCase, files: &Startup
 fn assert_cache_effect(case: StartupCacheCase, files: &StartupCaseFiles) -> &'static str {
     if case.rebuilds_cache() {
         let bytes = std::fs::read(&files.cache).expect("startup wrote current cache");
-        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+        assert_eq!(&bytes[..16], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
         let data = nms_cache::read_cache(&files.cache).expect("checked-read rebuilt cache");
         assert_eq!(data.save_version, 4720, "{} source version", case.label());
         assert_eq!(data.active_galaxy, case.source().reality_index);
