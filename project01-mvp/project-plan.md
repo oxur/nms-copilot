@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.80
+version: 1.81
 project: project01-mvp
 status: active
 depends-on: []
@@ -1079,3 +1079,8 @@ Arc39 rows/21 done/18 open; project25 open. Source8a01b3d7→b290ea31 is local/u
 Version1.80: full original0037/M7.1 reconciliation at acceptedb290 exposes preservedF02: rawDM.CN is retained but extraction discards system/planet names, while additive live deltas lack rename/clear observations. [Arc-plan1.92](arc06-fit-and-finish/arc-plan.md#next-original-export-owner-raw-name-ownership-decision--2026-10-22-utc) contains the concrete recommendedA ownership/clear contract, exact galaxy-qualified imported-overlap examples, live same-parse path, semantic4→5/schema3 rebuild and cache-only-label loss, provenance-awareB/holdC alternatives, and bounded full export/live/restart proof. Consequential explicit-source-versus-imported ownership remains an Operator decision; no new inquiry/source edit/prompt/dispatch before resolution. Routine APIs follow after approval, not another policy gate.
 
 Arc39rows21done18open/project25open; all prior closures/failures/retrospectives and original capability/repair/game-backed/history/finalsemantic/freshness-import/coverage/docs/distribution/higher-independent/Operator/release obligations remain. Same CDC/CC settings and Arc06 endpoint, protected main9line edit/allheld/externalpins/Project02; sourceb290 local/unintegrated. No unchanged-code reruns or other-arc/external authority.
+
+
+## Arc06 raw-name ownership A approved — 2026-10-22 UTC
+
+Version1.81: Operator “agreed and approve” adopts exactly877218c5 A; arc-plan1.93 records authority before dependent work. Explicit sourceCN strings own exact-entity set/empty-clear over imported labels; missing/null/nonstring/nonobject preserve, firstduplicates/rawmetadata/existing lifecycle semantics retained. Application semantic4→5/schema3 rebuild with disclosed cache-only re-import consequence is authorized. CDC resolves bounded names/export owner(s), APIs/oracles and contributor headroom before handoff under same models/Arc06-only authority. No new inquiry/provenance architecture/waiver/integration/release, no source acceptance yet. Arc39rows21done18open/project25open and all protected pins/original remaining obligations preserved.

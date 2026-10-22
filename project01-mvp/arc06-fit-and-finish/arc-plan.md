@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.92, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.93, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -821,3 +821,10 @@ Original M7.1 still requires real-child JSON/CSV export of all12 exact fields (`
 **Why pause:** the applied [project-management skill](/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/SKILL.md) routes this material ambiguity through its [canonical guide](/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/skills/project-management/guides/README.md:167): “When new evidence makes a plan choice too ambiguous to resolve confidently, pause affected work and surface the decision; record the resolution before resuming dependent work.” This is a prospective product-policy decision, not a historical evidence waiver or routine Rust approval. No unchanged-code test reruns are needed for this packet.
 
 Arc39 rows/21 done/18 open; project25 open. Slice21/its retrospective and all prior failed evidence/closures remain intact. Original raw/history/final-semantic/freshness-identical-rewrite-stale-import/export/import/format/UI/docs/distribution/coverage/performance/game-backed/higher independent/Operator/integration/release obligations remain. Protected mainb616's nine-line user edit, all held pins, external03e8d04 and Project02 are untouched; sourceb290 clean/local/unintegrated. No next arc, inquiry, source mutation, contributor dispatch or external action.
+
+
+## Operator adopts raw-name ownership A — 2026-10-22 UTC
+
+The human Operator explicitly says, “agreed and approve”, replying to the 877218c5 packet/question above. This adopts ONLY recommended A: effective DM.CN strings nonempty-set/empty-clear the exact galaxy-qualified system/planet label, including imported overlap; missing/null/nonstring/nonobject observations preserve labels. First-duplicate/raw-metadata/legacy-additive and existing marker/count/anchor/freshness/error/lifetime contracts remain. Application adoption uses schema3/semantic5, rejecting/rebuilding genuine3/4 with the disclosed cache-only import/label re-import consequence. Provenance-aware architecture B and new inquiry C are not adopted; no historical waiver or release/integration authority is granted.
+
+CDC may now resolve routine concrete APIs/oracles and a usable bounded owner or explicitly accounted split for names and original M7.1 export, from acceptedb290ea31. Confirm sole existing CC qualitative headroom and coherent durable intake before source edits. Same actual selected CDCgpt-6.1-solHigh / CCgpt-6-lunaHigh, standing Arc06-only endpoint and serialized source/planning ownership. Required full application/live/cache/native/export successors cannot be silently dropped by foundation acceptance. Preflight planning877218c5/sourceb290 clean/indexempty; main retains ONLY protected9-line native edit/blob2cd450ce; all held/external pins unchanged. No new prompt/source changes/gates yet; no unchanged-code reruns for this approval record. Arc39rows21done18open/project25open and every original parent/remaining gate stay unchanged.
