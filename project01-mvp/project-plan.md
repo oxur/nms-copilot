@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.89
+version: 1.90
 project: project01-mvp
 status: active
 depends-on: []
@@ -1130,3 +1130,10 @@ All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, produ
 Arc-plan1.102/[Slice25](arc06-fit-and-finish/slice25-shell-completions/slice-plan.md) details original shell-generation/README activation within exact two test/docs paths from clean accepted24cd38; production/dependencies frozen, same selected CDC/CC with confirmed headroom. Literal command/flag/context/negative oracles, available Bash/Zsh syntax/registration/candidates and explicit Fish output-only limitation; PATH fish is BSD game, no execution/install/newpolicygate. Raw-first supportcontrols beforecompiler, immediateformatlint hold/fullworksheet/12groups/independentacceptance. Initial0of5; all5SC/R06-S25/M7.2OPEN.
 
 43arcrows25done18open/project25open. All prior24closures/originalM7.1retained; M7.3slots and every other original/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higherindependent/Operator/integration/release obligation retains owner. Protectedmain9line/allheldexternalpins/models/Arc06-onlyendpoint; no otherarc/Project02/integration/push/install/publish/release.
+
+
+## Arc06 original M7.2 / Slice25 independent closure — 2026-10-22 UTC
+
+Arc-plan1.103 recordsall5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productionfrozen), twoordinaryrefinements/12freshCDCgroups/CLI163/full1070runtime+31docs/controller14actualactions. Original0037generation/registration/usage/testsfullleafmapped; actualBash-Zshactivation/candidates andFishgeneration/output-onlylimit explicit. Raw22CC+14CDC/failedlint/metadatarepair/same-modelcapacityrecovery/postpairchronology/byteexactreturns/archive/mandatoryretropreserved, noexception orscopepolicyamendment.
+
+43arcrows27done16open/project25open. NEXT originalM7.3slotsgrounding/boundedowner/headroom understandingArc06authority; allotheroriginal/repair/game/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release gatesretainowners. Main9line/heldexternalpins/samemodels/onearcendpoint protected; isolatedlocalcandidate/nootherarc/Project02/merge/push/install/publish/release.

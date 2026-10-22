@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.102, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.103, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -887,3 +887,10 @@ All6EX/R06-S24andoriginalM7.1acceptedatcleancd38d7e(exact3test/docs paths, produ
 [Slice25](slice25-shell-completions/slice-plan.md) owns actual Bash/Zsh/Fish generation/scoped command-flag-negative proof and usable README activation, with available Bash/Zsh checks and explicit Fish generated-output-only limit (PATH fish is BSD game, never executed/installed). Exact two test/docs paths, production frozen at accepted24cd38; same selected CDC/CC models, CC headroom confirmed, raw-first supportcontrols inspected before firstcompiler, initial0of5/immediatepairhold/fullworksheet/12groups. No policy amendment/new inquiry/dependency or source acceptance.
 
 43arcrows25done18open/project25open; M7.2/R06-S25/all5SCOPEN. OriginalM7.1andall24closures retained. M7.3slots/allotheroriginalcapability/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations remain. Protectedmain9line/allheldexternalpins/onearcendpoint unchanged; nootherarc/Project02/merge/push/install/publish/release.
+
+
+## Original M7.2 / Slice25 independent closure — 2026-10-22 UTC
+
+All5SC/R06-S25/originalM7.2acceptedatclean03b6536(exact2test/docspaths/productionfrozen), twoordinaryrefinements/12freshCDCgroups/CLI163/workspace1070runtime+31docs/controller14actualactions. Completeoriginal0037leafmapping/scopedliteralmanifests/effectivemutants/availableBash-Zshactivationandcandidates/READMEinstructions/Fishgeneration-onlylimit verified. Raw22CC+14CDC/failures/same-modelcapacityretry/postpairauthorship/applicability/metadata-onlytreepreservingrepair/byteexactreturns/archive/finalretro preserved; nowaiver/newdependency/productionchange.
+
+43arcrows27done16open/project25open. ParentcompliantyesM7.2/no structuralchange. NEXT originalM7.3slotsgrounding/boundedowner/headroom beforefreshassignment; no prematureacceptance. All original/repair/raw/history/finalsemantic/strictfreshness-identicalrewrite-staleimport/game-backed/format/UI/docs/distribution/coverage/performance/higher-independent/Operator/integration/release obligations retained. Mainhuman9line/allheldexternalpins/sameCDC-CCmodels/onearcendpoint protected, sourceisolated/nootherarc/Project02/merge/push/install/publish/release.

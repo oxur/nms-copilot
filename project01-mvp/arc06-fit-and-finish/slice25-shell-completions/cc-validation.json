@@ -1,0 +1,45 @@
+{
+  "slice": "Slice25 shell completions",
+  "status": "CC proposed-done; independent CDC disposition pending",
+  "source": {
+    "branch": "codex/shell-completions",
+    "base": "cd38d7e1603b957f862b75c23b60ed5bc713bcf0",
+    "commit": "03b6536636f00a74a52f2d783a9ef80a671d191e",
+    "paths": [
+      "README.md",
+      "crates/nms-cli/tests/completions_integration.rs"
+    ],
+    "index_and_worktree_clean": true,
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
+  },
+  "captures": {
+    "helper": "/private/tmp/nms-slice25-cc-capture.py",
+    "record": "/private/tmp/nms-slice25-cc-attempts.json",
+    "actual_attempt_count": 22,
+    "historical_failures_retained": [
+      "d22fea2195b742d887301263a7a68448",
+      "02f9ad731d8648a19ec9bf061b7bb22e"
+    ],
+    "iteration02": [
+      {"id": "f07d3974000a488cb09d46376ccf1440", "label": "format", "exit_code": 0},
+      {"id": "f064bc6db1de4dc9bc33597d2c8fc73f", "label": "lint", "exit_code": 0},
+      {"id": "312b2a44e93f43fababd556ff9610396", "label": "focused CLI completion integration", "exit_code": 0, "passed": 2},
+      {"id": "54d01964d3a54f1b81781b291e5e15eb", "label": "whole CLI tests", "exit_code": 0, "passed": 163},
+      {"id": "052b003b1f14409c93f6d5ebba226725", "label": "nms binary build", "exit_code": 0},
+      {"id": "139d9344afa745d3b17acaa0e09d631b", "label": "private Bash/Zsh/Fish-generation proof", "exit_code": 0, "inner_actions": 14},
+      {"id": "bc03e52907154bad81914aea1eaf3578", "label": "full workspace make test", "exit_code": 0, "unit_and_integration_passed": 1070, "doctest_passed": 31},
+      {"id": "98822a836b9d4277b71367b449811757", "label": "all-feature workspace build", "exit_code": 0},
+      {"id": "be85717e1f5a4b298c50cd27c1a3f4ab", "label": "all-feature workspace doctests", "exit_code": 0},
+      {"id": "95721a2f296943dba59edee95140b0f5", "label": "strict CLI docs", "exit_code": 0},
+      {"id": "8e092218bc3942868eab631e1edcb522", "label": "working diff check", "exit_code": 0},
+      {"id": "e8e23b1f0b514aaf892c5c01867e6061", "label": "precommit baseline diff check; did not include untracked test", "exit_code": 0},
+      {"id": "5a967e47b67b40029fd9cf34ab0d0075", "label": "postcommit baseline diff check including tracked test", "exit_code": 0}
+    ],
+    "all_raw_completions_and_status_metadata_retained": true
+  },
+  "known_limit": "Fish completion generation and exact output scope were tested; no Fish runtime was claimed. Bash and Zsh syntax, registration, and Bash candidates ran in actual available shells.",
+  "acceptance": "No CC self-acceptance; all five SC ledger rows remain open pending independent CDC review."
+}

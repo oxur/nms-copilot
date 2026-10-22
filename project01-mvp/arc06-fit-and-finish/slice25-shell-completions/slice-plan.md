@@ -1,6 +1,6 @@
 # Slice25 — original M7.2 shell completions
 
-Version1.3,2026-10-22 UTC. OPEN; iteration02 SECONDof5; immutable initial retained. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
+Version1.4,2026-10-22 UTC. CLOSED after iteration02 SECONDof5; immutable initial/history retained. Standing Autonomous Arc06-only, actual selected CDC gpt-6.1-sol High / sole reused CC gpt-6-luna High. CC qualitative headroom/no process confirmed after frozen24. CDC planning/independent review; CC dedicated source/index/gates only after coherent readback. Baseline cd38d7e1603b957f862b75c23b60ed5bc713bcf0, clean new codex/shell-completions worktree. No source acceptance yet.
 
 ## Usable boundary / author readiness
 
@@ -40,3 +40,8 @@ Actual8records, formatc0f2be9a0/layoutchange andlint7b43efaf0/stablede38a362/ful
 ## Settled iteration02 review / original runtime released
 
 Actual10records, f07d3974format0/f064bc6dlint0/fullraw/status/bothstable89a596b9. ExactdeltaONEFishliteral addsClapautohelp/TWOprivatecallsiteasserts; testSHA95175056/controllerSHA39d29bd4/READMEb4145e1frozen. AllO1–O5/F1–F5staticallysatisfied, no otherchangedpath/index. Original12groups released underexistingauthority; CCownssolegatesandrecords, nogenericapproval/runtimeacceptanceinferred. All5SC/M7.2/R06-S25OPENpendingactualproof/commit/independentreproduction/retro. Main9line/allheldexternalpinsrevalidatedunchanged; allparent/highergatesretained.
+
+
+## Independent final closure
+
+All5SC/R06-S25/originalM7.2acceptedatclean03b6536/exact2test-docspaths after2ordinaryrefinements. CDC12freshgroupspass/CLI163/workspace1070runtime+31docs/controller14inneractions; Fishgenerated-output-onlylimitexplicit. Completeoriginal0037leafmapping/raw22CC+14CDC/byteexactreturns/prefixes/initialredlint/capacity/postpairauthorship/metadatarepair/archives/finalretropreserved, no waiver. Parentcompliantyes/no structuralchange/bubbleup43arcrows27done16open/project25open. NextoriginalM7.3sourcegrounding/headroom, allotheroriginal/repair/highergatesremain; main9line/heldexternalpins/models/Arc06endpoint unchanged/nointegrationorrelease.

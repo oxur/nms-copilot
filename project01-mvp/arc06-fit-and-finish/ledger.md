@@ -5,7 +5,7 @@ Created 2026-10-03 during closeout preparation. Original milestone documents rem
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
 | M7.1 | `nms export` command: Export filtered results as JSON, CSV. `--biome`, `--within`, `--format` flags; Scriptable data extraction | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:205](../README.md) | done | [CDC24 full original reconciliation](slice24-export-contract/cdc-verification.md) — reproduced | Complete original0037 M7.1 accepted atcd38d7e; other milestone/higher obligations retained |
-| M7.2 | Shell completions: `clap_complete` for bash, zsh, fish; Install instructions in README | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:206](../README.md) | open | — | No result inferred from test count alone |
+| M7.2 | Shell completions: `clap_complete` for bash, zsh, fish; Install instructions in README | `cargo test -p nms-cli` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:206](../README.md) | done | [CDC25 final verification](slice25-shell-completions/cdc-verification.md) — reproduced | Original0037 M7.2 accepted at03b6536; Fish runtime unclaimed; higher obligations retained |
 | M7.3 | Multi-save support: Detect and list all save slots. `--slot` flag or interactive selector; Choose between save slots | `cargo test -p nms-save` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:207](../README.md) | open | — | No result inferred from test count alone |
 | M7.4 | Multi-galaxy support: Separate spatial index per galaxy, cross-galaxy queries, galaxy switching in REPL; Full 256-galaxy support | `cargo test -p nms-graph` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:208](../README.md) | open | — | No result inferred from test count alone |
 | M7.5 | NomNom format: Parser for NomNom export format (if distinct from standard deobfuscated JSON); Additional format support | `cargo test -p nms-compat` plus independent demonstration of the stated deliverable and original milestone reconciliation | correctness-grade | [README.md:209](../README.md) | open | — | No result inferred from test count alone |
@@ -242,6 +242,11 @@ Slice23 current review: six child criteria independently accepted, two open; R06
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S25 | Original Bash/Zsh/Fish generation and usable installation documentation independently accepted | Five SC rows, literal metadata/negative controls, actual available-shell and12groups/CDC original-leaf reconciliation | correctness-grade | Original0037 M7.2 | open | [Issued plan](slice25-shell-completions/slice-plan.md) | Fish generated-output proof only; no Fish shell runtime claim/install |
+| R06-S25 | Original Bash/Zsh/Fish generation and usable installation documentation independently accepted | Five SC rows, literal metadata/negative controls, actual available-shell and12groups/CDC original-leaf reconciliation | correctness-grade | Original0037 M7.2 | done | [CDC25 final verification](slice25-shell-completions/cdc-verification.md) — reproduced | Original0037 M7.2 accepted at03b6536; Fish runtime unclaimed; higher obligations retained |
 
 43rows25done18open; M7.2 and all prior other open rows retained unchanged. OriginalM7.1 closed, M7.3slots separate; no acceptance from supportcontrols or installed-tool inventory.
+
+
+## Slice25 / original M7.2 independently closed — 2026-10-22 UTC
+
+FiveSC/R06-S25/M7.2doneat03b6536 aftertwoordinaryrefinements/12freshCDCgroups/1070runtime+31docs/controller14actualactions. Originalfull0037mapping/failedlint-andmetadatahistory/raw22CC+14CDC/returns/archive/mandatoryretro preserved; Fishgeneration-onlylimit explicit, noexception.43rows27done16open/project25open; M7.3slotsNEXT, allotheroriginal/repair/highergatesretained. No otherarc/integration/release authority.
