@@ -1,0 +1,10 @@
+{
+  "archive": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice21-checked-save-integration/artifacts/cdc-final-evidence.tar.gz",
+  "archive_sha256": "3a57638203dce0547230c0038465f9a08a7ab56286dc37ebd81fcc05f409d4de",
+  "member": "native-fixtures/ba10df1b291d4e279d724489ce335eb3/cache.rkyv",
+  "bytes": 224,
+  "sha256": "520cd7ad453cf71c3332d640ec3e694f8dd96702f34dbb5060716c2e6fcf81bf",
+  "header_hex": "4e4d5343414348450300000004000000",
+  "provenance": "Byte-exact accepted Slice21 CDC actual normal-native row11 resulting cache, sourceb290 schema3/semantic4; read/checked in accepted21 current native proof. Not a header patch or newly fabricated predecessor. Copy into cachefixture only after issued23assignment.",
+  "limits": "Existing bounded synthetic fixture, no universal format or game-backed nonzero evidence."
+}

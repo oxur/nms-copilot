@@ -1,0 +1,28 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+  "baseline": "753bb3a9a01451e57fff34262acd4ab194d99341",
+  "paths": [
+    "crates/nms-watch/src/watcher.rs",
+    "crates/nms-watch/src/lib.rs",
+    "crates/nms-graph/src/extract.rs",
+    "crates/nms-graph/tests/discovery_names.rs",
+    "crates/nms-copilot/src/coordinator.rs",
+    "crates/nms-copilot/src/watch.rs",
+    "crates/nms-copilot/src/mcp/mod.rs",
+    "crates/nms-cache/src/serialize.rs",
+    "crates/nms-cache/src/lib.rs",
+    "crates/nms-cache/tests/load_integration.rs",
+    "crates/nms-cache/tests/fixtures/predecessor-schema3-semantic4.rkyv",
+    "crates/nms-cache/tests/fixtures/predecessor-schema3-semantic4.md",
+    "crates/nms-copilot/tests/support/name_observations.rs",
+    "crates/nms-copilot/tests/name_observations_integration.rs",
+    "crates/nms-copilot/examples/repl_live_probe.rs",
+    "crates/nms-copilot/tests/query_cache_integration.rs",
+    "crates/nms-copilot/tests/route_cache_integration.rs",
+    "crates/nms-copilot/tests/mcp_live_integration.rs",
+    "crates/nms-copilot/tests/owned_mcp_integration.rs",
+    "crates/nms-copilot/tests/support/live_mcp.rs",
+    "crates/nms-cli/src/main.rs",
+    "README.md"
+  ]
+}

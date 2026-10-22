@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.83
+version: 1.84
 project: project01-mvp
 status: active
 depends-on: []
@@ -1094,3 +1094,8 @@ Version1.82/arc-plan1.94 details approvedA into four-path public runtime literal
 ## Arc06 Slice22 independent name foundation closure — 2026-10-22 UTC
 
 Version1.83/arc-plan1.95: opt-in publicnamesfoundation accepted atclean753bb3a9/exact5paths/all6NF/R06-S22done after two preservedrefinements. Independent12groups pass, workspace1043runtime+30docs plus focused/core/graph/no-default/build/doctest/strictcoregraphdocs/fullbasediffs. All22CC/14CDCrawrecords/failures/hostretry/sourcechronology/returns/archives/rowwalk/mandatoryretrospective retained. No historicalwaiver or parentacceptance.40arcrows22done18open/project25open; mandatory23/CDC realcold/fullsame-parse/name-onlyapplication/cache5schema3/predecessor/warm/normal-stdio-HTTPlive-native remainsNEXT, then24/CDC completeoriginalM7.1export. Existingapplication/cache4 unchanged in22, no F02/exportrepairclaim. All original/repair/game-backed/history/finalsemantic/freshness-import/coverage/docs/distribution/performance/higherindependent/Operator/integration/release gates, same models/Arc06endpoint/main9line/held/externalpins/Project02 retained; localunintegrated/nootherarc/remoteaction.
+
+
+## Arc06 Slice23 actual names application issued — 2026-10-22 UTC
+
+[Slice23](arc06-fit-and-finish/slice23-discovery-name-integration/slice-plan.md) owns approvedA actualcheckedcold/full/name-onlynames/coordinator/cache5schema3/normal-stdio-HTTP-live-restart delivery afterclosed22foundation753. Newdedicatedsourceclean753, soleexistingCCheadroomconfirmed/sameauthorizedmodels; initialimmutableprompt0of5/exact22paths/closedwholeoracles/native13/rawfirstsupportcontrols recorded beforeimplementation. All8NI/R06-S23OPEN,41arcrows22done19open/project25open. Mandatory24/CDC completeoriginalM7.1 realexport andalloriginalparents/highergates retained. No sourceacceptance/policywaiver/inquiry/merge/push/install/release/otherarc/Project02authority; protectedmain9line/heldexternalpins unchanged.
