@@ -11953,5 +11953,18 @@
     "stable_lint_identity": "26004e2f9a96c80ff7e70af0db936f22c05e4a9b709607e1dce577ab5e68d3b0",
     "review": "CDC full changed child/assertion context + exact fullfile inverse comparison: sharedlegacyfixture/other6tests/invocationpredicates unchanged; onlyfive literal fields and fullrestore; cacheexactoneindependentsemanticbyte; graphexactthreecodespans; production/otherpaths/index/untracked frozen",
     "disposition": "release only issued affectedfind/allCLI/wholecache/fullmake/samestrictdocs/twodiffs; no acceptance/no seventh; CC owns stable source/gates until finalreturn"
+  },
+  "final_cc_transfer": {
+    "archive": "artifacts/cc-final-evidence.tar.gz",
+    "archive_bytes": 428936,
+    "archive_sha256": "2e5cee20c220ecae2d40c78483d6e54f8e8dee108193d706715ad997d0a1b01f",
+    "source": "b290ea312f937617546fe7ebab464de786a0dd37",
+    "cc_attempts": 83,
+    "native_receipt_files": 621,
+    "available_native_fixture_files": 155,
+    "manifest_members": 783,
+    "all_records_rawbyte_preserved": true,
+    "source_ownership": "CDC sole source/index/gates; contributor frozen",
+    "current_utc": "2026-10-22; actual capture timestamps govern inherited local-Oct21 headings"
   }
 }
