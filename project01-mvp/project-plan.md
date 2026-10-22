@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.96
+version: 1.97
 project: project01-mvp
 status: active
 depends-on: []
@@ -1177,3 +1177,9 @@ Arc-plan1.108 records bounded ordinary existing-source/archive-manifest readines
 Arc-plan1.109/Slice28 details original Personal/Community source tag/exact labels/flexible CSV/whole atlas/query/CLI read-only/session-only behavior and existing cache integrity in one useful increment. Dedicated clean063c8c65; exact20paths/8CI open/same selected CDC-CC with headroom. Required field preserves constructor signature/first-genuine duplicate/name ownership; cache4/6 rejects genuine old3/5 without origin guesses, cache-only re-import consequence explicit. Authentic predecessor/archive origin and raw-first controls ready; first format/lint then full held review before runtime, original13 normal native+one actual new predecessor/stdio-HTTP composition. No new import persistence/interface/protocol/dependency/inquiry.
 
 46arc31done15open/project25open; M7.5 input dependency independent, all prior27 closures/original criteria and repair/game-backed/history/freshness/coverage/docs/UI/distribution/higher/Operator/integration/release obligations retained. Protectedmainhuman9line/allheldexternalpins/onearc endpoint unchanged. No source result accepted or external action authorized.
+
+## Arc06 Slice28 independently green product / bounded historical decision — 2026-10-22 UTC
+
+Version1.97: original M7.9 candidatebe414 delivers exact source/CSV/query/name/cache/CLI composition; CDC independently accepts CI01–07 after21 required command groups/native14, full1097 runtime+31docs and strictdocs/build/diffs. [CI08 remains open for ONE direct Node diagnostic capture-history decision](arc06-fit-and-finish/slice28-community-import-contract/cdc-verification.md#ci-08-exact-bounded-decision): known exit0/full outer receipt retained, absent direct kernel fields unknown, no current product-proof waiver or future blanket exception. Five actual refinements used; no further automatic correction/closure. Complete failed/current/raw/return/source-incident/transfer/report history and provisional mandatory retrospective retained in one verified archive.
+
+R06-S28/originalM7.9 remain open pending Operator and record-only closure; arc46/31done/15open/project25open. M7.5 attributable actual NomNom full-export input still pending independently; no source-only acceptance. Every original parent/raw/game-backed/finaltransition/history/freshness/import/docs/UI/coverage/platform/performance/distribution/higher-independent/Operator/integration/release gate stays open as applicable. Mainhuman9line/heldpins/external/Project02 and one-arc endpoint protected; no merge/push/install/release.

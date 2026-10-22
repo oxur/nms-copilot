@@ -283,6 +283,8 @@ All6MG/R06-S27/M7.4doneatclean063c8c65, ONEtestfile/productionfrozen/fullorigina
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S28 | Original community import source/flexible CSV/query/cache/CLI composition independently accepted | Eight CI rows/exact literal source and whole atlas/current4-6/genuine3-5/native14/ordered gates/full0038 M7.9 reconciliation | correctness-grade | Original0038 M7.9 and retained source/cache integrity | open | — | Dedicated clean063c8c65; same selected CDC/CC; no implementation or acceptance yet |
+| R06-S28 | Original community import source/flexible CSV/query/cache/CLI composition independently accepted | Eight CI rows/exact literal source and whole atlas/current4-6/genuine3-5/native14/ordered gates/full0038 M7.9 reconciliation | correctness-grade | Original0038 M7.9 and retained source/cache integrity | open | [CDC independent7/8 review](slice28-community-import-contract/cdc-verification.md) | Candidatebe414: all21 groups/native14 green, CI01–07done/CI08 historical Node capture decision only; five actual refinements exhausted; no M7.9/slice closure before Operator disposition |
 
 46arc31done15open/project25open. All45 prior rows/criteria retained. M7.5 authentic-export input remains open/independent; M7.9 and all8CI/child28 open until actual review. No game-backed/repair-parent/final-transition/higher/integration/release claim.
+
+Slice28 current independent disposition2026-10-22: CI01–07done, CI08open; R06-S28/originalM7.9open.46rows31done15open unchanged; all prior closures/parents retained. See child exact packet, provisional retrospective and one verified archive.
