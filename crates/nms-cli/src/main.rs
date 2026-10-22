@@ -22,7 +22,7 @@ mod stats;
 )]
 pub(crate) struct Cli {
     /// Use a specific save slot (1-15) instead of most recent.
-    #[arg(long, global = true)]
+    #[arg(long, global = true, value_parser = clap::value_parser!(u8).range(1..=15))]
     slot: Option<u8>,
 
     #[command(subcommand)]
@@ -442,7 +442,10 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
                 format,
             })
         }
-        Commands::Import { file, save, source } => import::run(file, save, source),
+        Commands::Import { file, save, source } => {
+            let path = resolve_save_with_slot(save, slot)?;
+            import::run(file, Some(path), source)
+        }
         Commands::Completions { shell } => completions::run(shell),
         Commands::Saves => saves::run(),
     }
