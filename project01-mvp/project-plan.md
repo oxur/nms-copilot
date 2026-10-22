@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.95
+version: 1.96
 project: project01-mvp
 status: active
 depends-on: []
@@ -1170,3 +1170,10 @@ Arc-plan1.107/all6MG/R06-S27/originalM7.4doneatcleanisolated063c8c65, oneNEWinte
 ## Arc06 original M7.5 input boundary and ready-work continuation — 2026-10-22 UTC
 
 Arc-plan1.108 records bounded ordinary existing-source/archive-manifest readiness, not a new inquiry: local NomNom has no export source/sample; libNOM.io source serializes mapped JSON, but all six local archive payloads are encrypted and none is a .json export. No payload decryption/exporter/network/install/run or product acceptance occurred. Original0038 requires actual export verification; M7.5 remains OPEN pending an attributable full-save NomNom export/version/settings, not waived by synthetic standard fixtures or heuristic tests. CDC owns that input dependency. Continue independent original M7.9 community-import grounding under unchanged selected CDC/CC/Arc06 authority; final docs/all other original and repair/higher gates remain.45arc31done14open/project25open/source063c8c65/protectedmainhuman9line/allheldpins preserved; no new slice issued or integration/release.
+
+
+## Arc06 original M7.9 / Slice28 usable owner — 2026-10-22 UTC
+
+Arc-plan1.109/Slice28 details original Personal/Community source tag/exact labels/flexible CSV/whole atlas/query/CLI read-only/session-only behavior and existing cache integrity in one useful increment. Dedicated clean063c8c65; exact20paths/8CI open/same selected CDC-CC with headroom. Required field preserves constructor signature/first-genuine duplicate/name ownership; cache4/6 rejects genuine old3/5 without origin guesses, cache-only re-import consequence explicit. Authentic predecessor/archive origin and raw-first controls ready; first format/lint then full held review before runtime, original13 normal native+one actual new predecessor/stdio-HTTP composition. No new import persistence/interface/protocol/dependency/inquiry.
+
+46arc31done15open/project25open; M7.5 input dependency independent, all prior27 closures/original criteria and repair/game-backed/history/freshness/coverage/docs/UI/distribution/higher/Operator/integration/release obligations retained. Protectedmainhuman9line/allheldexternalpins/onearc endpoint unchanged. No source result accepted or external action authorized.

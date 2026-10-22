@@ -277,3 +277,12 @@ All6MS/R06-S26/M7.3doneatbfa2, fulloriginal0037mapped/11freshCDCgroups/1082runti
 ## Slice27 / original M7.4 independently closed — 2026-10-22 UTC
 
 All6MG/R06-S27/M7.4doneatclean063c8c65, ONEtestfile/productionfrozen/fulloriginal0038mapping/11freshCDCgroups/full1085runtime+31docs. Initial+01firstimplementation;02/03twoactualrefinements, no exception/reset. All26CC+13CDCraw/failedhistory/byteexactreturns/archive/mandatoryretro retained.45arc31done14open/project25open. NextoriginalM7.5source/fixtureconditional-formatgrounding; R06-R01game-backed/R02allconsumer/R03allfinaltransition andeveryotheroriginal/highergate stayopen. No integration/release/otherarc authority.
+
+
+## Slice28 original M7.9 opened — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S28 | Original community import source/flexible CSV/query/cache/CLI composition independently accepted | Eight CI rows/exact literal source and whole atlas/current4-6/genuine3-5/native14/ordered gates/full0038 M7.9 reconciliation | correctness-grade | Original0038 M7.9 and retained source/cache integrity | open | — | Dedicated clean063c8c65; same selected CDC/CC; no implementation or acceptance yet |
+
+46arc31done15open/project25open. All45 prior rows/criteria retained. M7.5 authentic-export input remains open/independent; M7.9 and all8CI/child28 open until actual review. No game-backed/repair-parent/final-transition/higher/integration/release claim.
