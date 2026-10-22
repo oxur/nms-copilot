@@ -215,4 +215,10 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 2026-10-22 Slice22 independently closed at753bb3a9:40arcrows22done18open/project25open. All prior rows/criteria remain; mandatory23application/cache5/native and24fulloriginalexport retained, all original/repair parents open.
 
+## Discovery-name application child — 2026-10-22 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
 | R06-S23 | Actual same-parse application names/cache5/live/native composition independently accepted | Eight NI rows and complete O1–O8/current independent gates/native13 | correctness-grade | Approved namingA/required23 | open | — | Required24/full original parents retained |
+
+41arcrows22done19open/project25open at Slice23 issue; no child or original parent acceptance inferred.
