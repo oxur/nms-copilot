@@ -158,11 +158,14 @@ pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
 /// and returns a map of SystemId -> System.
 pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
     let records = &save.discovery_manager_data.discovery_data_v1.store.record;
-    extract_systems_with_records(|| {
-        records
-            .iter()
-            .map(|record| (record, GalacticAddress::from_packed(record.dd.ua.0, 0)))
-    })
+    extract_systems_with_records(
+        || {
+            records
+                .iter()
+                .map(|record| (record, GalacticAddress::from_packed(record.dd.ua.0, 0)))
+        },
+        None,
+    )
 }
 
 /// Extract systems using addresses checked by [`ValidatedSave`].
@@ -178,10 +181,14 @@ pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
 /// # }
 /// ```
 pub fn extract_systems_from_validated(save: &ValidatedSave) -> HashMap<SystemId, System> {
-    extract_systems_with_records(|| save.discoveries())
+    let names = extract_discovery_names_from_validated(save);
+    extract_systems_with_records(|| save.discoveries(), Some(&names))
 }
 
-fn extract_systems_with_records<'a, F, I>(records: F) -> HashMap<SystemId, System>
+fn extract_systems_with_records<'a, F, I>(
+    records: F,
+    names: Option<&DiscoveryNames>,
+) -> HashMap<SystemId, System>
 where
     F: Fn() -> I,
     I: Iterator<Item = (&'a RawDiscoveryRecord, GalacticAddress)>,
@@ -209,7 +216,10 @@ where
 
         builders.entry(sys_id).or_insert_with(|| SystemBuilder {
             address: addr,
-            name: None, // System names aren't in discovery records
+            name: names
+                .and_then(|names| names.system_names.get(&sys_id))
+                .filter(|name| !name.is_empty())
+                .cloned(),
             discoverer,
             timestamp,
             planets: Vec::new(),
@@ -232,7 +242,10 @@ where
             biome,
             None, // BiomeSubType not extractable from VP
             infested,
-            None, // Planet names aren't in discovery records
+            names
+                .and_then(|names| names.planet_names.get(&(sys_id, planet_index)))
+                .filter(|name| !name.is_empty())
+                .cloned(),
             seed_hash,
         );
 

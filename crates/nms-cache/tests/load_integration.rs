@@ -19,6 +19,8 @@ const PREDECESSOR_SCHEMA2_SEMANTIC2: &[u8] =
     include_bytes!("fixtures/predecessor-schema2-semantic2.rkyv");
 const PREDECESSOR_SCHEMA3_SEMANTIC3: &[u8] =
     include_bytes!("fixtures/predecessor-schema3-semantic3.rkyv");
+const PREDECESSOR_SCHEMA3_SEMANTIC4: &[u8] =
+    include_bytes!("fixtures/predecessor-schema3-semantic4.rkyv");
 
 fn rich_marker_addresses() -> (
     GalacticAddress,
@@ -872,7 +874,7 @@ fn mismatched_cache_data(current_reality: u8, address_reality: u8) -> CacheData 
 /// the public writer so reader tests can represent contradictory persisted data.
 fn unchecked_current_envelope(data: &CacheData) -> Vec<u8> {
     let payload = rkyv::to_bytes::<rkyv::rancor::Error>(data).unwrap();
-    let mut bytes = b"NMSCACHE\x03\0\0\0\x04\0\0\0".to_vec();
+    let mut bytes = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
     bytes.extend_from_slice(&payload);
     bytes
 }
@@ -902,7 +904,7 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
     for (current_reality, address_reality) in [(0, 9), (9, 0)] {
         let data = mismatched_cache_data(current_reality, address_reality);
         let bytes = unchecked_current_envelope(&data);
-        assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+        assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
 
         let mut aligned = rkyv::util::AlignedVec::<16>::with_capacity(bytes.len() - HEADER_LEN);
         aligned.extend_from_slice(&bytes[HEADER_LEN..]);
@@ -987,7 +989,7 @@ fn contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries() 
             Err(CacheError::Incompatible(
                 nms_cache::CacheCompatibilityError::SemanticMismatch {
                     found: 1,
-                    expected: 4
+                    expected: 5
                 }
             ))
         ));
@@ -1051,7 +1053,7 @@ fn fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits() {
         let rewritten_bytes = fs::read(&cache_path).unwrap();
         assert_eq!(
             &rewritten_bytes[..HEADER_LEN],
-            b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+            b"NMSCACHE\x03\0\0\0\x05\0\0\0"
         );
         let rewritten = read_cache(&cache_path).unwrap();
         assert_eq!(rewritten.save_version, 4720);
@@ -1194,7 +1196,7 @@ fn load_or_rebuild_from_save_when_no_cache() {
     assert!(cache_path.exists());
     assert_eq!(
         &fs::read(&cache_path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
     );
 }
 
@@ -1574,7 +1576,17 @@ fn headerless_legacy_archive_rebuilds_then_warm_hits() {
 
 #[test]
 fn schema_and_semantic_revision_mismatches_rebuild_then_warm_hit() {
-    for (schema, semantic) in [(2, 4), (3, 2), (2, 2), (1, 4), (3, 1), (3, 3)] {
+    for (schema, semantic) in [
+        (2, 4),
+        (3, 2),
+        (2, 2),
+        (1, 4),
+        (3, 1),
+        (3, 3),
+        (3, 4),
+        (2, 5),
+        (1, 5),
+    ] {
         let dir = tempfile::tempdir().unwrap();
         let (save_path, cache_path) = paths(&dir);
         fs::write(&save_path, test_save_json()).unwrap();
@@ -1589,7 +1601,7 @@ fn corrupt_current_payload_rebuilds_then_warm_hits() {
     let dir = tempfile::tempdir().unwrap();
     let (save_path, cache_path) = paths(&dir);
     fs::write(&save_path, test_save_json()).unwrap();
-    let mut bytes = current_cache_with_revision(3, 4);
+    let mut bytes = current_cache_with_revision(3, 5);
     bytes.truncate(HEADER_LEN);
     fs::write(&cache_path, bytes).unwrap();
     set_fresh(&cache_path, &save_path);
@@ -1677,7 +1689,7 @@ fn direct_file_roundtrip_has_header_and_source_version_is_not_header_version() {
     let data = extract_cache_data(&source_model(), 4720);
     write_cache(&data, &path).unwrap();
     let bytes = fs::read(&path).unwrap();
-    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+    assert_eq!(&bytes[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
     assert_eq!(deserialize(&bytes).unwrap().save_version, 4720);
     assert_eq!(read_cache(&path).unwrap().save_version, 4720);
 }
@@ -1694,7 +1706,7 @@ fn compatible_cache_preserves_populated_model_with_independent_save_version() {
     assert_eq!(restored.save_version, 9999);
     assert_eq!(
         &fs::read(&path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
     );
     assert_raw_source_semantics(&rebuild_model(&restored));
 }
@@ -1752,7 +1764,7 @@ fn actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_
     assert!(rebuilt.model.is_player_placeholder(&ensured_id));
 
     let rewritten = fs::read(&cache_path).unwrap();
-    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
     assert_eq!(deserialize(&rewritten).unwrap().active_galaxy, 9);
     assert!(is_cache_fresh(&cache_path, &save_path));
 
@@ -1792,7 +1804,7 @@ fn actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_
     assert_eq!(rebuilt.save_version, 4720);
     assert_source_semantics(&rebuilt.model);
     let rewritten = fs::read(&cache_path).unwrap();
-    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x04\0\0\0");
+    assert_eq!(&rewritten[..HEADER_LEN], b"NMSCACHE\x03\0\0\0\x05\0\0\0");
     let rewritten_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
     assert!(warm.was_cached);
@@ -1897,7 +1909,7 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SemanticMismatch {
                 found: 3,
-                expected: 4
+                expected: 5
             }
         ))
     ));
@@ -1914,7 +1926,7 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SemanticMismatch {
                 found: 3,
-                expected: 4
+                expected: 5
             }
         ))
     ));
@@ -1926,7 +1938,7 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
     let current_bytes = fs::read(&cache_path).unwrap();
     assert_eq!(
         &current_bytes[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
     );
     let current_mtime = fs::metadata(&cache_path).unwrap().modified().unwrap();
     let original_source_bytes = fs::read(&save_path).unwrap();
@@ -1951,6 +1963,61 @@ fn actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching
         fs::metadata(&save_path).unwrap().modified().unwrap(),
         malformed_source_mtime
     );
+}
+
+#[test]
+fn authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits() {
+    assert_eq!(PREDECESSOR_SCHEMA3_SEMANTIC4.len(), 224);
+    assert_eq!(
+        &PREDECESSOR_SCHEMA3_SEMANTIC4[..HEADER_LEN],
+        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+    );
+    assert!(matches!(
+        deserialize(PREDECESSOR_SCHEMA3_SEMANTIC4),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SemanticMismatch {
+                found: 4,
+                expected: 5
+            }
+        ))
+    ));
+
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    fs::write(&save_path, test_save_json()).unwrap();
+    fs::write(&cache_path, PREDECESSOR_SCHEMA3_SEMANTIC4).unwrap();
+    set_mtime(&save_path, save_mtime());
+    set_mtime(&cache_path, save_mtime() + Duration::from_secs(100));
+    assert!(is_cache_fresh(&cache_path, &save_path));
+    assert!(matches!(
+        read_cache(&cache_path),
+        Err(CacheError::Incompatible(
+            nms_cache::CacheCompatibilityError::SemanticMismatch {
+                found: 4,
+                expected: 5
+            }
+        ))
+    ));
+
+    let rebuilt = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(!rebuilt.was_cached);
+    assert_eq!(rebuilt.save_version, 4720);
+    assert_source_semantics(&rebuilt.model);
+    let current_bytes = fs::read(&cache_path).unwrap();
+    assert_eq!(
+        &current_bytes[..HEADER_LEN],
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
+    );
+
+    let original_source_bytes = fs::read(&save_path).unwrap();
+    fs::write(&save_path, b"malformed source after successful rebuild").unwrap();
+    set_mtime(&save_path, save_mtime());
+    let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm.was_cached);
+    assert_eq!(warm.save_version, 4720);
+    assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
+    assert_eq!(fs::read(&cache_path).unwrap(), current_bytes);
+    assert_ne!(fs::read(&save_path).unwrap(), original_source_bytes);
 }
 
 #[test]
@@ -2089,7 +2156,7 @@ fn semantic3_predecessor_failure_no_cache_and_write_blocker_preserve_all_owned_f
     let current_bytes = fs::read(&cache_path).unwrap();
     assert_eq!(
         &current_bytes[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
     );
     let mut repaired_entries = fs::read_dir(dir.path())
         .unwrap()
@@ -2179,7 +2246,7 @@ fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits(
         Err(CacheError::Incompatible(
             nms_cache::CacheCompatibilityError::SemanticMismatch {
                 found: 1,
-                expected: 4
+                expected: 5
             }
         ))
     ));
@@ -2194,7 +2261,7 @@ fn current_schema3_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits(
     assert_eq!(rebuilt.model.active_galaxy, 9);
     assert_eq!(
         &fs::read(&cache_path).unwrap()[..HEADER_LEN],
-        b"NMSCACHE\x03\0\0\0\x04\0\0\0"
+        b"NMSCACHE\x03\0\0\0\x05\0\0\0"
     );
     set_fresh(&cache_path, &save_path);
     let warm = load_or_rebuild(&cache_path, &save_path, false).unwrap();
@@ -2394,7 +2461,7 @@ fn explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_target
             other => panic!("expected marker serialize error, got {other:?}"),
         }
         let payload = rkyv::to_bytes::<rkyv::rancor::Error>(&data).unwrap();
-        let mut raw = b"NMSCACHE\x03\0\0\0\x04\0\0\0".to_vec();
+        let mut raw = b"NMSCACHE\x03\0\0\0\x05\0\0\0".to_vec();
         raw.extend_from_slice(&payload);
         match deserialize(&raw).unwrap_err() {
             CacheError::Deserialize(message) => assert_eq!(message, expected_message),

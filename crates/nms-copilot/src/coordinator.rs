@@ -17,8 +17,9 @@ use std::time::Duration;
 
 use nms_cache::CacheData;
 use nms_core::SaveUpdate;
+use nms_core::delta::DiscoveryNames;
 use nms_graph::GalaxyModel;
-use nms_watch::{WatchConfig, WatchUpdateHandle, start_watching_updates};
+use nms_watch::{WatchConfig, WatchObservationHandle, start_watching_observations};
 use tokio::sync::RwLock;
 
 /// A complete parsed update after it has been applied to the shared model.
@@ -26,6 +27,8 @@ use tokio::sync::RwLock;
 pub struct AppliedSaveUpdate {
     /// Complete parsed player state, atlas delta, and source version.
     pub update: SaveUpdate,
+    /// Whether an existing entity's discovery name changed after the delta.
+    pub names_changed: bool,
     /// Existing human-readable discovery/movement notes, formatted pre-apply.
     pub notifications: Vec<String>,
 }
@@ -92,7 +95,7 @@ impl LiveSaveCoordinator {
     where
         W: Fn(&CacheData, &Path) -> Result<(), nms_cache::CacheError> + Send + 'static,
     {
-        let watcher = start_watching_updates(watch).map_err(CoordinatorStartError::Watch)?;
+        let watcher = start_watching_observations(watch).map_err(CoordinatorStartError::Watch)?;
         let observers = Arc::new(Mutex::new(Vec::<mpsc::Sender<AppliedSaveUpdate>>::new()));
         let observers_for_worker = Arc::clone(&observers);
         let shutdown = Arc::new(AtomicBool::new(false));
@@ -149,7 +152,7 @@ fn lock_observers(
 
 fn run_worker<W>(
     model: Arc<RwLock<GalaxyModel>>,
-    watcher: WatchUpdateHandle,
+    watcher: WatchObservationHandle,
     cache_path: Option<PathBuf>,
     observers: Arc<Mutex<Vec<mpsc::Sender<AppliedSaveUpdate>>>>,
     shutdown: Arc<AtomicBool>,
@@ -159,10 +162,15 @@ fn run_worker<W>(
 {
     while !shutdown.load(Ordering::Acquire) {
         match watcher.receiver.recv_timeout(Duration::from_millis(100)) {
-            Ok(update) => {
-                let (notifications, cache_data) = {
+            Ok(observation) => {
+                let (notifications, names_changed, cache_data) = {
                     let mut guard = model.blocking_write();
-                    apply_and_snapshot(&mut guard, &update, cache_path.is_some())
+                    apply_and_snapshot(
+                        &mut guard,
+                        &observation.update,
+                        &observation.discovery_names,
+                        cache_path.is_some(),
+                    )
                 };
 
                 if let (Some(path), Some(data)) = (cache_path.as_deref(), cache_data.as_ref())
@@ -174,7 +182,8 @@ fn run_worker<W>(
                 publish(
                     &observers,
                     AppliedSaveUpdate {
-                        update,
+                        update: observation.update,
+                        names_changed,
                         notifications,
                     },
                 );
@@ -192,14 +201,16 @@ fn run_worker<W>(
 fn apply_and_snapshot(
     model: &mut GalaxyModel,
     update: &SaveUpdate,
+    discovery_names: &DiscoveryNames,
     cache_enabled: bool,
-) -> (Vec<String>, Option<CacheData>) {
+) -> (Vec<String>, bool, Option<CacheData>) {
     let notifications = crate::watch::notifications_for_delta(model, &update.delta);
     model.apply_save_update(update);
     model.ensure_player_system();
+    let names_changed = model.apply_discovery_names(discovery_names);
     let cache_data =
         cache_enabled.then(|| nms_cache::extract_cache_data(model, update.save_version));
-    (notifications, cache_data)
+    (notifications, names_changed, cache_data)
 }
 
 fn publish(observers: &Mutex<Vec<mpsc::Sender<AppliedSaveUpdate>>>, event: AppliedSaveUpdate) {
@@ -335,6 +346,64 @@ mod tests {
         receiver
             .recv_timeout(Duration::from_secs(5))
             .expect("coordinator publishes watched update")
+    }
+
+    #[test]
+    fn test_apply_and_snapshot_applies_complete_names_after_player_ensure() {
+        let address = GalacticAddress::new(100, 0, 0, 7, 0, 0);
+        let planet_address = GalacticAddress::new(100, 0, 0, 7, 1, 0);
+        let id = nms_core::system::SystemId::from_address(&address);
+        let mut model = GalaxyModel::new();
+        model.insert_system(nms_core::system::System::new(
+            address,
+            None,
+            None,
+            None,
+            vec![nms_core::system::Planet::new(
+                1,
+                None,
+                None,
+                false,
+                None,
+                Some(171),
+            )],
+        ));
+        model.set_active_galaxy(9);
+        let update = SaveUpdate {
+            delta: nms_core::SaveDelta::empty(),
+            player_state: PlayerState::new(planet_address, 0, None, None, 7, 8, 9),
+            save_version: 4720,
+        };
+        let names = DiscoveryNames {
+            system_names: std::collections::HashMap::from([(id, "Current".to_owned())]),
+            planet_names: std::collections::HashMap::from([((id, 1), "Current Moon".to_owned())]),
+        };
+
+        let (notes, names_changed, cache) = apply_and_snapshot(&mut model, &update, &names, true);
+        assert!(notes.is_empty());
+        assert!(names_changed);
+        assert_eq!(model.active_galaxy, 9);
+        assert_eq!(model.system(&id).unwrap().name.as_deref(), Some("Current"));
+        assert_eq!(
+            model.planets.get(&(id, 1)).unwrap().name.as_deref(),
+            Some("Current Moon")
+        );
+        let cache = cache.unwrap();
+        let cached_system = cache
+            .systems
+            .iter()
+            .find(|system| system.address == address)
+            .unwrap();
+        assert_eq!(cached_system.name.as_deref(), Some("Current"));
+        assert_eq!(
+            cached_system.planets[0].name.as_deref(),
+            Some("Current Moon")
+        );
+
+        let (_, names_changed, repeated_cache) =
+            apply_and_snapshot(&mut model, &update, &names, true);
+        assert!(!names_changed);
+        assert_cache_snapshot_eq(&cache, &repeated_cache.unwrap());
     }
 
     #[test]
@@ -1210,7 +1279,9 @@ mod full_update_component_tests {
             player_state: full_state.clone(),
             save_version: 5011,
         };
-        let (notes, snapshot) = apply_and_snapshot(&mut model, &update, true);
+        let (notes, names_changed, snapshot) =
+            apply_and_snapshot(&mut model, &update, &DiscoveryNames::default(), true);
+        assert!(!names_changed);
         assert_eq!(
             notes,
             vec![
@@ -1261,7 +1332,9 @@ mod full_update_component_tests {
             player_state: cross_state.clone(),
             save_version: 5012,
         };
-        let (_, snapshot) = apply_and_snapshot(&mut model, &cross, true);
+        let (_, names_changed, snapshot) =
+            apply_and_snapshot(&mut model, &cross, &DiscoveryNames::default(), true);
+        assert!(!names_changed);
         assert_eq!(
             model.active_galaxy, 9,
             "cross-galaxy update selects incoming galaxy"
@@ -1349,7 +1422,13 @@ mod full_update_component_tests {
         };
 
         let mut without_cache = make_atlas(initial_state.clone());
-        let (notes, snapshot) = apply_and_snapshot(&mut without_cache, &update, false);
+        let (notes, names_changed, snapshot) = apply_and_snapshot(
+            &mut without_cache,
+            &update,
+            &DiscoveryNames::default(),
+            false,
+        );
+        assert!(!names_changed);
         assert!(notes.is_empty());
         assert!(snapshot.is_none());
         let mut expected_without_cache = make_atlas(state.clone());
@@ -1358,7 +1437,9 @@ mod full_update_component_tests {
         assert_eq!(without_cache.player_state, Some(state.clone()));
 
         let mut with_cache = make_atlas(initial_state);
-        let (notes, snapshot) = apply_and_snapshot(&mut with_cache, &update, true);
+        let (notes, names_changed, snapshot) =
+            apply_and_snapshot(&mut with_cache, &update, &DiscoveryNames::default(), true);
+        assert!(!names_changed);
         assert!(notes.is_empty());
         assert_whole_atlas(&with_cache, &expected_without_cache, false);
         assert_eq!(with_cache.player_state, Some(state.clone()));

@@ -275,8 +275,23 @@ save file → parser → galaxy model → query engine → CLI / REPL / MCP
 
 The galaxy model is the core: a petgraph of systems with an R-tree spatial index, incrementally updated as the game auto-saves. All three interfaces share the same query engine — no duplicated logic.
 
-The `nms-watch` library provides both the compatible `start_watching` delta
-subscription and the additive `start_watching_updates` complete update stream.
+The `nms-watch` library provides the compatible `start_watching` delta
+subscription, the additive `start_watching_updates` complete update stream,
+and `start_watching_observations`, which pairs each accepted update with the
+complete explicit discovery-name map from the same validated parse. Name-only
+save changes are visible to this paired stream while remaining quiet on the
+legacy delta and complete-update streams.
+Checked discovery names come from `DM.CN` on the first system or planet row
+for each exact galaxy-qualified address (and planet index). A string replaces
+that row's displayed label literally, including a label previously imported at
+the same exact key; an empty string clears its visible text. An accepted
+name-only change updates the location resource and invalidates galaxy stats
+once when the names change, while omission or a no-op does not signal discovery
+or a warp. Missing, null, non-string values, or non-object `DM` leave the
+accepted label unchanged. A system name does not supply a planet name, and
+names do not cross system or galaxy boundaries. The `find --named` filter
+selects planets with a present name; it does not infer a planet name from its
+system.
 Each `SaveUpdate` pairs atlas changes with the supported `PlayerState` and save
 version from one parse. Its bounded one-event queue retains updates in order
 while a consumer catches up; dropping its handle stops and joins the watcher
@@ -331,7 +346,7 @@ enabled = true
 path = "/path/to/copilot-cache.rkyv"
 ```
 
-The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. The current cache envelope is schema 3 / semantic 4: it stores an explicit marker for a synthetic player-location placeholder, separate from an ordinary empty discovery record, and records that modeled save addresses were validated before constructing application state. A marked record must have a planet-zero address, no discovery metadata, and no planets. When genuine system or planet data arrives for that exact key, the model promotes the placeholder while retaining its graph and spatial identity. A stale, incompatible, or corrupt cache is rebuilt from the save; schema 2 / semantic 2 and schema 3 / semantic 3 files are incompatible and use the source save rather than being relabelled. A cache-only imported atlas absent from the source save must be re-imported after this rebuild. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
+The cache is fresh when its file modification time is newer than the save's. A fresh file still has to pass the cache format and model checks. The current cache envelope is schema 3 / semantic 5: it stores an explicit marker for a synthetic player-location placeholder, separate from an ordinary empty discovery record, records that modeled save addresses were validated before constructing application state, and includes models built with checked discovery names. A marked record must have a planet-zero address, no discovery metadata, and no planets. When genuine system or planet data arrives for that exact key, the model promotes the placeholder while retaining its graph and spatial identity. A stale, incompatible, or corrupt cache is rebuilt from the save; schema 2 / semantic 2 and schema 3 / semantic 3 or 4 files are incompatible and use the source save rather than being relabelled. A cache-only imported atlas absent from the source save must be re-imported after this rebuild; cache-only labels on source entities can also be lost when the source rebuilds their records. After a successful source parse, the loader writes a current cache for the next startup when the filesystem allows it; a cache write failure produces a warning while startup continues from the parsed save. Pass `--no-cache` to bypass both cache reads and writes:
 
 ```bash
 nms-copilot --headless --no-cache --save /path/to/save.hg

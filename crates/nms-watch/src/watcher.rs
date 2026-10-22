@@ -15,7 +15,7 @@ use std::time::Duration;
 
 use notify_debouncer_mini::{DebouncedEventKind, Debouncer, new_debouncer};
 
-use nms_core::delta::{SaveDelta, SaveUpdate};
+use nms_core::delta::{DiscoveryNames, SaveDelta, SaveUpdate};
 use nms_core::player::PlayerState;
 
 use crate::delta::compute_delta;
@@ -72,6 +72,72 @@ pub struct WatchUpdateHandle {
     pub receiver: mpsc::Receiver<SaveUpdate>,
     /// Owns the debouncer and joined worker lifetime.
     _owner: WatchOwner,
+}
+
+/// A complete supported save update paired with its literal discovery names.
+///
+/// Both values are derived from the same checked parse. `discovery_names` is
+/// the complete set of explicit names in that save, so consumers can replace
+/// their previous observed map even when player state and atlas delta are
+/// unchanged.
+#[derive(Debug, Clone)]
+pub struct SaveObservation {
+    /// Existing movement/discovery/base update and complete player state.
+    pub update: SaveUpdate,
+    /// Complete explicit system and planet names from this parsed save.
+    pub discovery_names: DiscoveryNames,
+}
+
+/// Handle to a watcher that emits complete updates and checked name maps.
+///
+/// The bounded receiver is empty at startup. It holds one observation while
+/// the worker can retain one additional parsed observation; later events stay
+/// in source order. Dropping the handle sets cancellation and joins the
+/// worker. A queued event remains readable before disconnection, while a
+/// pending event can be discarded. File I/O and parsing have no hard
+/// shutdown deadline.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::path::PathBuf;
+/// use std::time::Duration;
+/// use nms_watch::{WatchConfig, WatchError, start_watching_observations};
+///
+/// fn observe(path: PathBuf) -> Result<(), WatchError> {
+///     let handle = start_watching_observations(WatchConfig {
+///         save_path: path,
+///         debounce: Duration::from_millis(500),
+///     })?;
+///     if let Ok(observation) = handle.receiver.recv_timeout(Duration::from_secs(30)) {
+///         let _complete_names = observation.discovery_names;
+///         let _complete_player = observation.update.player_state;
+///     }
+///     Ok(())
+/// }
+/// ```
+///
+/// # Errors
+///
+/// Returns [`WatchError::SaveNotFound`] for a missing path,
+/// [`WatchError::ParseError`] when the initial save cannot be parsed, and
+/// [`WatchError::NotifyError`] when watcher setup fails. Later parse failures
+/// do not advance the baseline or enter the channel; the existing warning and
+/// recovery policy is retained.
+pub struct WatchObservationHandle {
+    /// Receive source-ordered observations; no initial event is sent.
+    pub receiver: mpsc::Receiver<SaveObservation>,
+    /// Owns the debouncer and joined worker lifetime.
+    _owner: WatchOwner,
+}
+
+impl fmt::Debug for WatchObservationHandle {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        formatter
+            .debug_struct("WatchObservationHandle")
+            .field("receiver", &self.receiver)
+            .finish_non_exhaustive()
+    }
 }
 
 impl fmt::Debug for WatchUpdateHandle {
@@ -154,6 +220,7 @@ struct SourceSnapshot {
     snapshot: SaveSnapshot,
     player_state: PlayerState,
     save_version: u32,
+    discovery_names: DiscoveryNames,
 }
 
 impl SourceSnapshot {
@@ -163,6 +230,7 @@ impl SourceSnapshot {
             snapshot: SaveSnapshot::from_validated_save(&save),
             player_state: save.player_state().clone(),
             save_version: save.root().version,
+            discovery_names: nms_graph::extract::extract_discovery_names_from_validated(&save),
         })
     }
 }
@@ -170,6 +238,7 @@ impl SourceSnapshot {
 enum UpdateSender {
     Delta(mpsc::Sender<SaveDelta>),
     Full(mpsc::SyncSender<SaveUpdate>),
+    Observations(mpsc::SyncSender<SaveObservation>),
 }
 
 fn send_full_update(
@@ -186,6 +255,26 @@ fn send_full_update(
             Err(mpsc::TrySendError::Disconnected(_)) => return false,
             Err(mpsc::TrySendError::Full(pending)) => {
                 update = pending;
+                thread::sleep(Duration::from_millis(10));
+            }
+        }
+    }
+}
+
+fn send_observation(
+    sender: &mpsc::SyncSender<SaveObservation>,
+    shutdown: &AtomicBool,
+    mut observation: SaveObservation,
+) -> bool {
+    loop {
+        if shutdown.load(Ordering::Acquire) {
+            return false;
+        }
+        match sender.try_send(observation) {
+            Ok(()) => return true,
+            Err(mpsc::TrySendError::Disconnected(_)) => return false,
+            Err(mpsc::TrySendError::Full(pending)) => {
+                observation = pending;
                 thread::sleep(Duration::from_millis(10));
             }
         }
@@ -233,6 +322,24 @@ pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle, 
     let (sender, receiver) = mpsc::sync_channel(1);
     let owner = start_watching_inner(config, UpdateSender::Full(sender))?;
     Ok(WatchUpdateHandle {
+        receiver,
+        _owner: owner,
+    })
+}
+
+/// Start watching a save and emit complete supported updates with checked names.
+///
+/// The update, source version and complete explicit name map come from the same
+/// validated parse. No initial event is sent. An event is emitted when the
+/// existing full-update predicate or the complete name map changes. The
+/// capacity-one queue, source order, cancellation, and join behavior match
+/// [`start_watching_updates`].
+pub fn start_watching_observations(
+    config: WatchConfig,
+) -> Result<WatchObservationHandle, WatchError> {
+    let (sender, receiver) = mpsc::sync_channel(1);
+    let owner = start_watching_inner(config, UpdateSender::Observations(sender))?;
+    Ok(WatchObservationHandle {
         receiver,
         _owner: owner,
     })
@@ -315,6 +422,7 @@ fn start_watching_inner(
                         let changed = !delta.is_empty()
                             || source.player_state != new_source.player_state
                             || source.save_version != new_source.save_version;
+                        let names_changed = source.discovery_names != new_source.discovery_names;
 
                         let sent = match &sender {
                             UpdateSender::Delta(delta_tx) if !delta.is_empty() => {
@@ -331,6 +439,21 @@ fn start_watching_inner(
                                 },
                             ),
                             UpdateSender::Full(_) => true,
+                            UpdateSender::Observations(update_tx) if changed || names_changed => {
+                                send_observation(
+                                    update_tx,
+                                    &shutdown_worker,
+                                    SaveObservation {
+                                        update: SaveUpdate {
+                                            delta,
+                                            player_state: new_source.player_state.clone(),
+                                            save_version: new_source.save_version,
+                                        },
+                                        discovery_names: new_source.discovery_names.clone(),
+                                    },
+                                )
+                            }
+                            UpdateSender::Observations(_) => true,
                         };
                         if !sent {
                             break;
@@ -428,6 +551,123 @@ mod tests {
             }}"#
         )
         .into_bytes()
+    }
+
+    fn save_bytes_with_system_name(name: &str) -> Vec<u8> {
+        let name = name.replace('\\', "\\\\").replace('"', "\\\"");
+        let row = format!(
+            r#"{{"DD":{{"UA":"0x00070000000064","DT":"SolarSystem","VP":[]}},"DM":{{"CN":"{name}"}},"OWS":{{"LID":"","UID":"1","USN":"Author","PTK":"ST","TS":1700000000}},"FL":{{"U":1}}}}"#
+        );
+        let save = String::from_utf8(save_bytes(0, 0)).expect("watcher fixture is UTF-8");
+        let replaced = save.replace("\"Record\": []", &format!("\"Record\": [{row}]"));
+        assert_ne!(replaced, save, "watcher fixture record placeholder exists");
+        replaced.into_bytes()
+    }
+
+    fn save_bytes_with_system_dm(dm: &str, address: &str, version: u32, units: u64) -> Vec<u8> {
+        let row = format!(
+            r#"{{"DD":{{"UA":"{address}","DT":"SolarSystem","VP":[]}},"DM":{dm},"OWS":{{"LID":"","UID":"1","USN":"Author","PTK":"ST","TS":1700000000}},"FL":{{"U":1}}}}"#
+        );
+        let mut save = String::from_utf8(save_bytes(0, 0)).expect("watcher fixture is UTF-8");
+        save = save.replace("\"Version\": 4720", &format!("\"Version\": {version}"));
+        save = save.replace("\"Units\": 7,", &format!("\"Units\": {units},"));
+        let replaced = save.replace("\"Record\": []", &format!("\"Record\": [{row}]"));
+        assert_ne!(replaced, save, "watcher fixture record placeholder exists");
+        replaced.into_bytes()
+    }
+
+    fn literal_observation(version: u32, name: &str) -> SaveObservation {
+        let address = nms_core::address::GalacticAddress::new(100, 0, 0, 7, 0, 0);
+        let id = nms_core::system::SystemId::from_address(&address);
+        SaveObservation {
+            update: SaveUpdate {
+                delta: SaveDelta::empty(),
+                player_state: PlayerState::new(address, 0, None, None, 7, 8, 9),
+                save_version: version,
+            },
+            discovery_names: DiscoveryNames {
+                system_names: std::collections::HashMap::from([(id, name.to_owned())]),
+                planet_names: std::collections::HashMap::new(),
+            },
+        }
+    }
+
+    struct ObservationWorkerGuard {
+        shutdown: Arc<AtomicBool>,
+        worker: Option<JoinHandle<()>>,
+        receiver: Option<mpsc::Receiver<SaveObservation>>,
+    }
+
+    struct BoundedObservationHandle {
+        handle: Option<WatchObservationHandle>,
+        receiver: Option<mpsc::Receiver<SaveObservation>>,
+        shutdown: Arc<AtomicBool>,
+    }
+
+    impl BoundedObservationHandle {
+        fn new(mut handle: WatchObservationHandle) -> Self {
+            let shutdown = Arc::clone(&handle._owner.shutdown);
+            let receiver = std::mem::replace(&mut handle.receiver, mpsc::sync_channel(1).1);
+            Self {
+                handle: Some(handle),
+                receiver: Some(receiver),
+                shutdown,
+            }
+        }
+
+        fn drop_and_retain_receiver(mut self) -> Result<mpsc::Receiver<SaveObservation>, String> {
+            drop_observation_owner(
+                self.handle
+                    .take()
+                    .expect("bounded owner retains its handle"),
+                self.receiver
+                    .take()
+                    .expect("bounded owner retains its receiver"),
+                Arc::clone(&self.shutdown),
+            )
+        }
+    }
+
+    impl Drop for BoundedObservationHandle {
+        fn drop(&mut self) {
+            if let (Some(handle), Some(receiver)) = (self.handle.take(), self.receiver.take()) {
+                let _ = drop_observation_owner(handle, receiver, Arc::clone(&self.shutdown));
+            }
+        }
+    }
+
+    fn drop_observation_owner(
+        handle: WatchObservationHandle,
+        receiver: mpsc::Receiver<SaveObservation>,
+        shutdown: Arc<AtomicBool>,
+    ) -> Result<mpsc::Receiver<SaveObservation>, String> {
+        let (completed_tx, completed_rx) = mpsc::channel();
+        let dropper = thread::spawn(move || {
+            drop(handle);
+            let _ = completed_tx.send(());
+        });
+        if completed_rx.recv_timeout(Duration::from_secs(1)).is_err() {
+            shutdown.store(true, Ordering::Release);
+            drop(receiver);
+            dropper
+                .join()
+                .map_err(|_| "bounded owner cleanup thread panicked".to_owned())?;
+            return Err("dropping observation owner exceeded one second".into());
+        }
+        dropper
+            .join()
+            .map_err(|_| "bounded owner cleanup thread panicked".to_owned())?;
+        Ok(receiver)
+    }
+
+    impl Drop for ObservationWorkerGuard {
+        fn drop(&mut self) {
+            self.shutdown.store(true, Ordering::Release);
+            drop(self.receiver.take());
+            if let Some(worker) = self.worker.take() {
+                let _ = worker.join();
+            }
+        }
     }
 
     fn save_bytes_with_state(
@@ -601,6 +841,528 @@ mod tests {
             )
         );
         assert_eq!(movement_update.save_version, 4722);
+    }
+
+    #[test]
+    fn test_observation_stream_emits_name_only_changes_and_legacy_streams_stay_quiet() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(&path, save_bytes_with_system_name("First name"))
+            .expect("write initial named save");
+        let config = || WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        };
+        let delta = start_watching(config()).expect("start legacy delta watcher");
+        let full = start_watching_updates(config()).expect("start legacy full watcher");
+        let observations =
+            start_watching_observations(config()).expect("start paired name observation watcher");
+        assert!(matches!(
+            observations
+                .receiver
+                .recv_timeout(Duration::from_millis(250)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(&path, save_bytes_with_system_name("Second name"))
+            .expect("write name-only save change");
+        let observation = observations
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("paired stream emits a name-only change");
+        assert!(observation.update.delta.is_empty());
+        assert_eq!(observation.update.save_version, 4720);
+        assert_eq!(
+            observation.update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                7,
+                8,
+                9,
+            )
+        );
+        assert_eq!(observation.update.save_version, 4720);
+        assert!(observation.update.delta.is_empty());
+        let expected_id = nms_core::system::SystemId::from_address(
+            &nms_core::address::GalacticAddress::new(100, 0, 0, 7, 0, 0),
+        );
+        assert_eq!(
+            observation.discovery_names.system_names,
+            std::collections::HashMap::from([(expected_id, "Second name".to_owned())])
+        );
+        assert!(observation.discovery_names.planet_names.is_empty());
+        assert!(matches!(
+            delta.receiver.recv_timeout(Duration::from_millis(700)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+        assert!(matches!(
+            full.receiver.recv_timeout(Duration::from_millis(700)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+    }
+
+    #[test]
+    fn test_observation_stream_emits_clear_and_omission_but_quiets_equivalent_dm() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm(r#"{"CN":"Present"}"#, "0x00070000000064", 4720, 7),
+        )
+        .expect("write initial explicit name");
+        let observations = start_watching_observations(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start paired watcher");
+        assert!(matches!(
+            observations
+                .receiver
+                .recv_timeout(Duration::from_millis(250)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm(r#"{"CN":""}"#, "0x00070000000064", 4720, 7),
+        )
+        .expect("write explicit empty clear");
+        let clear = observations
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("empty string is an emitted explicit clear");
+        let id = nms_core::system::SystemId::from_address(
+            &nms_core::address::GalacticAddress::new(100, 0, 0, 7, 0, 0),
+        );
+        assert!(clear.update.delta.is_empty());
+        assert_eq!(clear.update.save_version, 4720);
+        assert_eq!(
+            clear.update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                7,
+                8,
+                9,
+            )
+        );
+        assert_eq!(
+            clear.discovery_names.system_names,
+            std::collections::HashMap::from([(id, String::new())])
+        );
+        assert!(clear.discovery_names.planet_names.is_empty());
+
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm("{}", "0x00070000000064", 4720, 7),
+        )
+        .expect("remove the name field");
+        let omitted = observations
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("clear to absent emits the complete empty map");
+        assert!(omitted.update.delta.is_empty());
+        assert_eq!(omitted.update.save_version, 4720);
+        assert_eq!(
+            omitted.update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                7,
+                8,
+                9,
+            )
+        );
+        assert!(omitted.discovery_names.system_names.is_empty());
+        assert!(omitted.discovery_names.planet_names.is_empty());
+
+        for dm in [r#"{"CN":null}"#, r#"{"CN":7}"#, "[]"] {
+            std::fs::write(
+                &path,
+                save_bytes_with_system_dm(dm, "0x00070000000064", 4720, 7),
+            )
+            .expect("write equivalent absent/non-string name map");
+            assert!(matches!(
+                observations
+                    .receiver
+                    .recv_timeout(Duration::from_millis(450)),
+                Err(mpsc::RecvTimeoutError::Timeout)
+            ));
+        }
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm("{}", "0x00070000000064", 4720, 7),
+        )
+        .expect("rewrite identical supported save");
+        assert!(matches!(
+            observations
+                .receiver
+                .recv_timeout(Duration::from_millis(450)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm(
+                r#"{"CN":"Must not advance baseline"}"#,
+                "0x100000000000000",
+                4720,
+                7,
+            ),
+        )
+        .expect("write invalid 57-bit address with attempted name");
+        assert!(matches!(
+            observations
+                .receiver
+                .recv_timeout(Duration::from_millis(450)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm(r#"{"CN":"Recovered"}"#, "0x00070000000064", 4721, 7),
+        )
+        .expect("recover from the rejected address against the last good baseline");
+        let recovered = observations
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("recovery emits the accepted literal name");
+        assert_eq!(recovered.update.save_version, 4721);
+        assert!(recovered.update.delta.is_empty());
+        assert_eq!(
+            recovered.update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                7,
+                8,
+                9,
+            )
+        );
+        assert_eq!(
+            recovered.discovery_names.system_names,
+            std::collections::HashMap::from([(id, "Recovered".to_owned())])
+        );
+    }
+
+    #[test]
+    fn test_observation_stream_forwards_complete_names_on_currency_only_update() {
+        let _guard = native_watch_test_guard();
+        let dir = tempfile::tempdir().expect("temporary directory");
+        let path = dir.path().join("save.json");
+        let initial =
+            save_bytes_with_system_dm(r#"{"CN":"Stable name"}"#, "0x00070000000064", 4720, 7);
+        std::fs::write(&path, &initial).expect("write named source");
+        let observations = start_watching_observations(WatchConfig {
+            save_path: path.clone(),
+            debounce: Duration::from_millis(20),
+        })
+        .expect("start paired watcher");
+        assert!(matches!(
+            observations
+                .receiver
+                .recv_timeout(Duration::from_millis(250)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+        std::fs::write(
+            &path,
+            save_bytes_with_system_dm(r#"{"CN":"Stable name"}"#, "0x00070000000064", 4720, 70),
+        )
+        .expect("write currency-only change with same explicit map");
+        let observation = observations
+            .receiver
+            .recv_timeout(Duration::from_secs(5))
+            .expect("full update predicate emits currency-only event");
+        assert!(observation.update.delta.is_empty());
+        assert_eq!(observation.update.save_version, 4720);
+        assert_eq!(
+            observation.update.player_state,
+            PlayerState::new(
+                nms_core::address::GalacticAddress::new(0, 0, 0, 1, 0, 0),
+                0,
+                None,
+                None,
+                70,
+                8,
+                9,
+            )
+        );
+        let id = nms_core::system::SystemId::from_address(
+            &nms_core::address::GalacticAddress::new(100, 0, 0, 7, 0, 0),
+        );
+        assert_eq!(
+            observation.discovery_names.system_names,
+            std::collections::HashMap::from([(id, "Stable name".to_owned())])
+        );
+        assert!(observation.discovery_names.planet_names.is_empty());
+    }
+
+    #[test]
+    fn test_send_observation_preserves_source_order_and_complete_maps() {
+        let (sender, receiver) = mpsc::sync_channel(1);
+        let shutdown = Arc::new(AtomicBool::new(false));
+        assert!(send_observation(
+            &sender,
+            &shutdown,
+            literal_observation(4721, "First"),
+        ));
+
+        let worker_shutdown = Arc::clone(&shutdown);
+        let worker_sender = sender.clone();
+        let (entered_tx, entered_rx) = mpsc::channel();
+        let (completed_tx, completed_rx) = mpsc::channel();
+        let worker = thread::spawn(move || {
+            entered_tx.send(()).expect("test remains active");
+            let sent = send_observation(
+                &worker_sender,
+                &worker_shutdown,
+                literal_observation(4722, "Second"),
+            );
+            completed_tx.send(sent).expect("test observes completion");
+        });
+        let _worker_guard = ObservationWorkerGuard {
+            shutdown: Arc::clone(&shutdown),
+            worker: Some(worker),
+            receiver: Some(receiver),
+        };
+
+        entered_rx
+            .recv_timeout(Duration::from_secs(1))
+            .expect("second source update worker entered");
+        let first = _worker_guard
+            .receiver
+            .as_ref()
+            .expect("guard retains observation receiver")
+            .recv_timeout(Duration::from_secs(1))
+            .expect("first observation remains ahead of the pending second");
+        assert_eq!(first.update.save_version, 4721);
+        assert_eq!(
+            first.discovery_names.system_names,
+            literal_observation(4721, "First")
+                .discovery_names
+                .system_names
+        );
+        let second = _worker_guard
+            .receiver
+            .as_ref()
+            .expect("guard retains observation receiver")
+            .recv_timeout(Duration::from_secs(1))
+            .expect("second observation follows the first");
+        assert_eq!(second.update.save_version, 4722);
+        assert_eq!(
+            second.discovery_names.system_names,
+            literal_observation(4722, "Second")
+                .discovery_names
+                .system_names
+        );
+        assert!(
+            completed_rx
+                .recv_timeout(Duration::from_secs(1))
+                .expect("second send completes")
+        );
+    }
+
+    #[test]
+    fn test_send_observation_cancellation_preserves_queued_event() {
+        let (sender, receiver) = mpsc::sync_channel(1);
+        let shutdown = Arc::new(AtomicBool::new(false));
+        assert!(send_observation(
+            &sender,
+            &shutdown,
+            literal_observation(4721, "Queued"),
+        ));
+
+        let worker_shutdown = Arc::clone(&shutdown);
+        let worker_sender = sender.clone();
+        let (entered_tx, entered_rx) = mpsc::channel();
+        let (completed_tx, completed_rx) = mpsc::channel();
+        let worker = thread::spawn(move || {
+            entered_tx.send(()).expect("test remains active");
+            let sent = send_observation(
+                &worker_sender,
+                &worker_shutdown,
+                literal_observation(4722, "Pending"),
+            );
+            completed_tx.send(sent).expect("test observes completion");
+        });
+        let _worker_guard = ObservationWorkerGuard {
+            shutdown: Arc::clone(&shutdown),
+            worker: Some(worker),
+            receiver: Some(receiver),
+        };
+
+        entered_rx
+            .recv_timeout(Duration::from_secs(1))
+            .expect("pending sender entered");
+        assert!(matches!(
+            completed_rx.recv_timeout(Duration::from_millis(50)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+        shutdown.store(true, Ordering::Release);
+        assert!(
+            !completed_rx
+                .recv_timeout(Duration::from_secs(1))
+                .expect("canceled pending send completes")
+        );
+        let queued = _worker_guard
+            .receiver
+            .as_ref()
+            .expect("guard retains observation receiver")
+            .recv_timeout(Duration::from_secs(1))
+            .expect("cancellation preserves the already queued event");
+        assert_eq!(queued.update.save_version, 4721);
+        assert_eq!(
+            queued.discovery_names.system_names,
+            literal_observation(4721, "Queued")
+                .discovery_names
+                .system_names
+        );
+        drop(sender);
+        assert!(matches!(
+            _worker_guard
+                .receiver
+                .as_ref()
+                .expect("guard retains observation receiver")
+                .recv_timeout(Duration::from_secs(1)),
+            Err(mpsc::RecvTimeoutError::Disconnected)
+        ));
+    }
+
+    #[test]
+    fn test_observation_handle_drop_joins_idle_queued_and_blocked_workers() {
+        let make_handle = |receiver, shutdown, worker| WatchObservationHandle {
+            receiver,
+            _owner: WatchOwner {
+                debouncer: None,
+                shutdown,
+                worker: Some(worker),
+            },
+        };
+
+        let (idle_sender, idle_receiver) = mpsc::sync_channel(1);
+        let idle_shutdown = Arc::new(AtomicBool::new(false));
+        let worker_shutdown = Arc::clone(&idle_shutdown);
+        let (idle_ready_tx, idle_ready_rx) = mpsc::channel();
+        let idle_worker = thread::spawn(move || {
+            idle_ready_tx.send(()).expect("test remains active");
+            while !worker_shutdown.load(Ordering::Acquire) {
+                thread::sleep(Duration::from_millis(1));
+            }
+            drop(idle_sender);
+        });
+        let idle_owner =
+            BoundedObservationHandle::new(make_handle(idle_receiver, idle_shutdown, idle_worker));
+        idle_ready_rx
+            .recv_timeout(Duration::from_secs(1))
+            .expect("idle worker started");
+        let idle_receiver = idle_owner
+            .drop_and_retain_receiver()
+            .expect("idle owner drops within bound");
+        assert!(matches!(
+            idle_receiver.recv_timeout(Duration::from_secs(1)),
+            Err(mpsc::RecvTimeoutError::Disconnected)
+        ));
+
+        let (queued_sender, queued_receiver) = mpsc::sync_channel(1);
+        let queued_shutdown = Arc::new(AtomicBool::new(false));
+        assert!(send_observation(
+            &queued_sender,
+            &queued_shutdown,
+            literal_observation(4721, "Queued"),
+        ));
+        let worker_sender = queued_sender.clone();
+        let queued_worker = thread::spawn(move || drop(worker_sender));
+        let queued_owner = BoundedObservationHandle::new(make_handle(
+            queued_receiver,
+            queued_shutdown,
+            queued_worker,
+        ));
+        let queued_receiver = queued_owner
+            .drop_and_retain_receiver()
+            .expect("queued owner drops within bound");
+        let queued = queued_receiver
+            .recv_timeout(Duration::from_secs(1))
+            .expect("queued observation survives owner drop");
+        assert_eq!(queued.update.save_version, 4721);
+        assert_eq!(
+            queued.discovery_names.system_names,
+            literal_observation(4721, "Queued")
+                .discovery_names
+                .system_names
+        );
+        drop(queued_sender);
+        assert!(matches!(
+            queued_receiver.recv_timeout(Duration::from_secs(1)),
+            Err(mpsc::RecvTimeoutError::Disconnected)
+        ));
+
+        let (blocked_sender, blocked_receiver) = mpsc::sync_channel(1);
+        let blocked_shutdown = Arc::new(AtomicBool::new(false));
+        assert!(send_observation(
+            &blocked_sender,
+            &blocked_shutdown,
+            literal_observation(4721, "Retained"),
+        ));
+        let worker_shutdown = Arc::clone(&blocked_shutdown);
+        let worker_sender = blocked_sender.clone();
+        let (blocked_entered_tx, blocked_entered_rx) = mpsc::channel();
+        let (blocked_completed_tx, blocked_completed_rx) = mpsc::channel();
+        let blocked_worker = thread::spawn(move || {
+            blocked_entered_tx.send(()).expect("test remains active");
+            let sent = send_observation(
+                &worker_sender,
+                &worker_shutdown,
+                literal_observation(4722, "Discarded"),
+            );
+            blocked_completed_tx
+                .send(sent)
+                .expect("test observes blocked completion");
+        });
+        let blocked_owner = BoundedObservationHandle::new(make_handle(
+            blocked_receiver,
+            blocked_shutdown,
+            blocked_worker,
+        ));
+        blocked_entered_rx
+            .recv_timeout(Duration::from_secs(1))
+            .expect("blocked sender entered");
+        assert!(matches!(
+            blocked_completed_rx.recv_timeout(Duration::from_millis(50)),
+            Err(mpsc::RecvTimeoutError::Timeout)
+        ));
+        let blocked_receiver = blocked_owner
+            .drop_and_retain_receiver()
+            .expect("blocked owner drops within bound");
+        assert!(
+            !blocked_completed_rx
+                .recv_timeout(Duration::from_secs(1))
+                .expect("owner shutdown releases blocked sender")
+        );
+        let retained = blocked_receiver
+            .recv_timeout(Duration::from_secs(1))
+            .expect("blocked pending event does not replace queued event");
+        assert_eq!(retained.update.save_version, 4721);
+        assert_eq!(
+            retained.discovery_names.system_names,
+            literal_observation(4721, "Retained")
+                .discovery_names
+                .system_names
+        );
+        drop(blocked_sender);
+        assert!(matches!(
+            blocked_receiver.recv_timeout(Duration::from_secs(1)),
+            Err(mpsc::RecvTimeoutError::Disconnected)
+        ));
     }
 
     #[test]
