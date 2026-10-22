@@ -124,10 +124,61 @@ fn find_infested_flag_filters_the_real_cli_process_result() {
     let source = test_save_json();
     let original = r#""VP": ["0xCD", 1]"#;
     let modified = r#""VP": ["0xCD", 65536]"#;
-    assert!(source.contains(original));
-    let json = source.replace(original, modified);
+    assert_eq!(source.matches(original).count(), 1);
+    let infested_source = source.replace(original, modified);
+    let original_infested: serde_json::Value = serde_json::from_str(&infested_source).unwrap();
+    let mut json = original_infested.clone();
+
+    const SAVE56_ADDRESSES: [(&str, &str, &str); 5] = [
+        (
+            "/BaseContext/PlayerStateData/PersistentPlayerBases/0/GalacticAddress",
+            "0x001000000064",
+            "0x00100000000064",
+        ),
+        (
+            "/DiscoveryManagerData/DiscoveryData-v1/Store/Record/0/DD/UA",
+            "0x001000000064",
+            "0x00100000000064",
+        ),
+        (
+            "/DiscoveryManagerData/DiscoveryData-v1/Store/Record/1/DD/UA",
+            "0x101000000064",
+            "0x10100000000064",
+        ),
+        (
+            "/DiscoveryManagerData/DiscoveryData-v1/Store/Record/2/DD/UA",
+            "0x002000000C80",
+            "0x00200000000C80",
+        ),
+        (
+            "/DiscoveryManagerData/DiscoveryData-v1/Store/Record/3/DD/UA",
+            "0x102000000C80",
+            "0x10200000000C80",
+        ),
+    ];
+
+    for (pointer, old, new) in SAVE56_ADDRESSES {
+        assert_eq!(
+            json.pointer(pointer).and_then(serde_json::Value::as_str),
+            Some(old)
+        );
+        *json.pointer_mut(pointer).unwrap() = serde_json::Value::String(new.into());
+    }
+    for (pointer, _, new) in SAVE56_ADDRESSES {
+        assert_eq!(
+            json.pointer(pointer).and_then(serde_json::Value::as_str),
+            Some(new)
+        );
+    }
+
+    let mut restored = json.clone();
+    for (pointer, old, _) in SAVE56_ADDRESSES {
+        *restored.pointer_mut(pointer).unwrap() = serde_json::Value::String(old.into());
+    }
+    assert_eq!(restored, original_infested);
+
     let fixture = tempfile::NamedTempFile::new().unwrap();
-    std::fs::write(fixture.path(), json).unwrap();
+    std::fs::write(fixture.path(), serde_json::to_vec(&json).unwrap()).unwrap();
 
     cargo_bin_cmd!("nms")
         .args([
