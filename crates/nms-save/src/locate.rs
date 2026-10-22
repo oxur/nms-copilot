@@ -202,7 +202,8 @@ impl SaveSlot {
 
 /// Parse a save filename into (slot, save_type).
 ///
-/// Returns `None` if the filename doesn't match `save*.hg` or is a metadata file.
+/// Returns `None` unless the name is `save.hg` or a numbered save index from 2 through 30,
+/// or when it names a metadata file.
 fn parse_save_filename(name: &str) -> Option<(u8, SaveType)> {
     if !name.ends_with(".hg") || name.starts_with("mf_") {
         return None;
@@ -217,7 +218,7 @@ fn parse_save_filename(name: &str) -> Option<(u8, SaveType)> {
 
     let num_str = stem.strip_prefix("save")?;
     let file_index: u8 = num_str.parse().ok()?;
-    if file_index < 2 {
+    if !(2..=30).contains(&file_index) {
         return None;
     }
 
@@ -420,10 +421,14 @@ pub fn find_most_recent_save_in(account_dir: &Path) -> Result<SaveFile, LocateEr
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::fs;
+    use std::fs::{self, File, FileTimes};
     use std::thread;
-    use std::time::Duration;
+    use std::time::{Duration, UNIX_EPOCH};
     use tempfile::TempDir;
+
+    fn save_filename(save: Option<&SaveFile>) -> Option<&str> {
+        save.map(|save| save.path().file_name().unwrap().to_str().unwrap())
+    }
 
     // -- Filename parsing --
 
@@ -460,6 +465,13 @@ mod tests {
         let (slot, st) = parse_save_filename("save30.hg").unwrap();
         assert_eq!(slot, 15);
         assert_eq!(st, SaveType::Auto);
+    }
+
+    #[test]
+    fn test_parse_save_indices_above_slot_fifteen_are_rejected() {
+        for name in ["save31.hg", "save255.hg", "save256.hg"] {
+            assert_eq!(parse_save_filename(name), None, "accepted {name}");
+        }
     }
 
     #[test]
@@ -674,5 +686,238 @@ mod tests {
     fn save_type_display() {
         assert_eq!(SaveType::Manual.to_string(), "Manual");
         assert_eq!(SaveType::Auto.to_string(), "Auto");
+    }
+
+    #[test]
+    fn test_list_accounts_reports_exact_sorted_kinds_paths_and_empty_errors() {
+        let root = TempDir::new().unwrap();
+        let gog = root.path().join("DefaultUser");
+        let steam = root.path().join("st_123");
+        let unknown = root.path().join("zz_empty");
+        fs::create_dir(&gog).unwrap();
+        fs::create_dir(&steam).unwrap();
+        fs::create_dir(&unknown).unwrap();
+        fs::write(root.path().join("ordinary-file.txt"), b"not an account").unwrap();
+
+        let accounts = list_accounts(root.path()).unwrap();
+        let actual: Vec<_> = accounts
+            .iter()
+            .map(|account| {
+                (
+                    account.name(),
+                    account.kind().clone(),
+                    account.path().to_path_buf(),
+                )
+            })
+            .collect();
+        assert_eq!(
+            actual,
+            vec![
+                ("DefaultUser", AccountKind::Gog, gog),
+                ("st_123", AccountKind::Steam(123), steam),
+                (
+                    "zz_empty",
+                    AccountKind::Unknown("zz_empty".to_owned()),
+                    unknown.clone()
+                ),
+            ]
+        );
+
+        let empty_root = TempDir::new().unwrap();
+        assert!(matches!(
+            list_accounts(empty_root.path()),
+            Err(LocateError::NoAccountDirs(path)) if path == empty_root.path()
+        ));
+
+        let file_only_root = TempDir::new().unwrap();
+        fs::write(file_only_root.path().join("not-an-account"), b"file").unwrap();
+        assert!(matches!(
+            list_accounts(file_only_root.path()),
+            Err(LocateError::NoAccountDirs(path)) if path == file_only_root.path()
+        ));
+
+        assert!(matches!(
+            list_saves(&unknown),
+            Err(LocateError::NoSaveFiles(path)) if path == unknown
+        ));
+
+        let regular_file = root.path().join("regular-file-account");
+        fs::write(&regular_file, b"not a directory").unwrap();
+        assert!(matches!(
+            list_saves(&regular_file),
+            Err(LocateError::Io(error)) if error.kind() == std::io::ErrorKind::NotADirectory
+        ));
+    }
+
+    #[test]
+    fn test_list_saves_uses_complete_literal_filename_slot_type_table() {
+        let tmp = TempDir::new().unwrap();
+        let account = tmp.path().join("account");
+        fs::create_dir(&account).unwrap();
+        let expected = [
+            ("save.hg", 1, SaveType::Manual),
+            ("save2.hg", 1, SaveType::Auto),
+            ("save3.hg", 2, SaveType::Manual),
+            ("save4.hg", 2, SaveType::Auto),
+            ("save5.hg", 3, SaveType::Manual),
+            ("save6.hg", 3, SaveType::Auto),
+            ("save7.hg", 4, SaveType::Manual),
+            ("save8.hg", 4, SaveType::Auto),
+            ("save9.hg", 5, SaveType::Manual),
+            ("save10.hg", 5, SaveType::Auto),
+            ("save11.hg", 6, SaveType::Manual),
+            ("save12.hg", 6, SaveType::Auto),
+            ("save13.hg", 7, SaveType::Manual),
+            ("save14.hg", 7, SaveType::Auto),
+            ("save15.hg", 8, SaveType::Manual),
+            ("save16.hg", 8, SaveType::Auto),
+            ("save17.hg", 9, SaveType::Manual),
+            ("save18.hg", 9, SaveType::Auto),
+            ("save19.hg", 10, SaveType::Manual),
+            ("save20.hg", 10, SaveType::Auto),
+            ("save21.hg", 11, SaveType::Manual),
+            ("save22.hg", 11, SaveType::Auto),
+            ("save23.hg", 12, SaveType::Manual),
+            ("save24.hg", 12, SaveType::Auto),
+            ("save25.hg", 13, SaveType::Manual),
+            ("save26.hg", 13, SaveType::Auto),
+            ("save27.hg", 14, SaveType::Manual),
+            ("save28.hg", 14, SaveType::Auto),
+            ("save29.hg", 15, SaveType::Manual),
+            ("save30.hg", 15, SaveType::Auto),
+        ];
+        let epoch = UNIX_EPOCH + Duration::from_secs(4_000_000_000);
+        for (offset, (name, _, _)) in expected.iter().enumerate() {
+            let path = account.join(name);
+            fs::write(&path, b"opaque payload").unwrap();
+            File::open(path)
+                .unwrap()
+                .set_times(
+                    FileTimes::new().set_modified(epoch + Duration::from_secs(offset as u64)),
+                )
+                .unwrap();
+        }
+        for name in [
+            "mf_save.hg",
+            "mf_save2.hg",
+            "save.hg.bak",
+            "save3.hg.backup",
+            "save.tmp",
+            "save0.hg",
+            "save1.hg",
+            "save31.hg",
+            "save255.hg",
+            "save256.hg",
+            "notes.txt",
+        ] {
+            let path = account.join(name);
+            fs::write(&path, b"newer ignored payload").unwrap();
+            File::open(path)
+                .unwrap()
+                .set_times(FileTimes::new().set_modified(epoch + Duration::from_secs(10_000)))
+                .unwrap();
+        }
+
+        let saves = list_saves(&account).unwrap();
+        let mut actual: Vec<_> = saves
+            .iter()
+            .map(|save| {
+                (
+                    save.path().file_name().unwrap().to_str().unwrap(),
+                    save.slot(),
+                    save.save_type(),
+                )
+            })
+            .collect();
+        actual.sort_by_key(|row| row.0);
+        let mut literal = expected.to_vec();
+        literal.sort_by_key(|row| row.0);
+        assert_eq!(actual, literal);
+        assert_eq!(saves.len(), 30);
+
+        let slots = group_into_slots(&saves);
+        let actual_groups: Vec<_> = slots
+            .iter()
+            .map(|slot| {
+                (
+                    slot.slot(),
+                    save_filename(slot.manual()),
+                    save_filename(slot.auto()),
+                    save_filename(slot.most_recent()),
+                )
+            })
+            .collect();
+        let expected_groups = [
+            (1, Some("save.hg"), Some("save2.hg"), Some("save2.hg")),
+            (2, Some("save3.hg"), Some("save4.hg"), Some("save4.hg")),
+            (3, Some("save5.hg"), Some("save6.hg"), Some("save6.hg")),
+            (4, Some("save7.hg"), Some("save8.hg"), Some("save8.hg")),
+            (5, Some("save9.hg"), Some("save10.hg"), Some("save10.hg")),
+            (6, Some("save11.hg"), Some("save12.hg"), Some("save12.hg")),
+            (7, Some("save13.hg"), Some("save14.hg"), Some("save14.hg")),
+            (8, Some("save15.hg"), Some("save16.hg"), Some("save16.hg")),
+            (9, Some("save17.hg"), Some("save18.hg"), Some("save18.hg")),
+            (10, Some("save19.hg"), Some("save20.hg"), Some("save20.hg")),
+            (11, Some("save21.hg"), Some("save22.hg"), Some("save22.hg")),
+            (12, Some("save23.hg"), Some("save24.hg"), Some("save24.hg")),
+            (13, Some("save25.hg"), Some("save26.hg"), Some("save26.hg")),
+            (14, Some("save27.hg"), Some("save28.hg"), Some("save28.hg")),
+            (15, Some("save29.hg"), Some("save30.hg"), Some("save30.hg")),
+        ];
+        assert_eq!(actual_groups, expected_groups);
+
+        let edge = tmp.path().join("edge-cases");
+        fs::create_dir(&edge).unwrap();
+        for (name, seconds) in [
+            ("save.hg", 100),
+            ("save2.hg", 100),
+            ("save3.hg", 300),
+            ("save4.hg", 200),
+            ("save5.hg", 200),
+            ("save6.hg", 300),
+            ("save7.hg", 400),
+            ("save30.hg", 500),
+        ] {
+            let path = edge.join(name);
+            fs::write(&path, b"opaque").unwrap();
+            File::open(path)
+                .unwrap()
+                .set_times(FileTimes::new().set_modified(epoch + Duration::from_secs(seconds)))
+                .unwrap();
+        }
+        let edge_slots = group_into_slots(&list_saves(&edge).unwrap());
+        let actual_slot_numbers: Vec<_> = edge_slots.iter().map(SaveSlot::slot).collect();
+        assert_eq!(actual_slot_numbers, [1, 2, 3, 4, 15]);
+        let edge_row = |number| {
+            let slot = edge_slots.iter().find(|slot| slot.slot() == number);
+            slot.map(|slot| {
+                (
+                    number,
+                    save_filename(slot.manual()),
+                    save_filename(slot.auto()),
+                    save_filename(slot.most_recent()),
+                )
+            })
+            .unwrap_or((number, None, None, None))
+        };
+        let actual_edges: Vec<_> = (1..=15).map(edge_row).collect();
+        let expected_edges = [
+            (1, Some("save.hg"), Some("save2.hg"), Some("save.hg")),
+            (2, Some("save3.hg"), Some("save4.hg"), Some("save3.hg")),
+            (3, Some("save5.hg"), Some("save6.hg"), Some("save6.hg")),
+            (4, Some("save7.hg"), None, Some("save7.hg")),
+            (5, None, None, None),
+            (6, None, None, None),
+            (7, None, None, None),
+            (8, None, None, None),
+            (9, None, None, None),
+            (10, None, None, None),
+            (11, None, None, None),
+            (12, None, None, None),
+            (13, None, None, None),
+            (14, None, None, None),
+            (15, None, Some("save30.hg"), Some("save30.hg")),
+        ];
+        assert_eq!(actual_edges, expected_edges);
     }
 }

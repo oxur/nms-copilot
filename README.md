@@ -230,6 +230,15 @@ nms completions fish > "$HOME/.config/fish/completions/nms.fish"
 
 ### Multi-Save Support
 
+The CLI discovers the canonical `save.hg` and `save2.hg` through `save30.hg`
+files as slots 1–15. Use `--slot N` to select the most recent manual or auto
+save in that slot from the first name-sorted account. An empty account or
+missing slot does not fall through to a later account. Within a selected
+slot, the manual save wins an equal-mtime tie. Without `--slot`, commands use
+the most recently modified save across accounts. When both `--save` and
+`--slot` are supplied, the explicit `--save` path takes precedence. `nms saves`
+lists the discovered accounts and their manual/auto slot files.
+
 ```bash
 nms info --slot 3                   # use save slot 3 instead of most recent
 nms find --slot 5 --biome Lush      # search slot 5's discoveries

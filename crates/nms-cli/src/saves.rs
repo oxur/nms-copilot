@@ -3,7 +3,18 @@
 use std::time::SystemTime;
 
 use nms_query::table::{Builder, build_table, nms_theme};
-use nms_save::locate::{group_into_slots, list_accounts, list_saves, nms_save_dir_checked};
+use nms_save::locate::{
+    AccountDir, LocateError, SaveSlot, group_into_slots, list_accounts, list_saves,
+    nms_save_dir_checked,
+};
+
+fn slots_for_account(account: &AccountDir) -> Result<Option<Vec<SaveSlot>>, LocateError> {
+    match list_saves(account.path()) {
+        Ok(saves) => Ok(Some(group_into_slots(&saves))),
+        Err(LocateError::NoSaveFiles(_)) => Ok(None),
+        Err(error) => Err(error),
+    }
+}
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let save_dir = nms_save_dir_checked()?;
@@ -13,14 +24,13 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     for account in &accounts {
         println!("Account: {} ({})", account.name(), account.kind());
 
-        let saves = match list_saves(account.path()) {
-            Ok(s) => s,
-            Err(_) => {
+        let slots = match slots_for_account(account)? {
+            Some(slots) => slots,
+            None => {
                 println!("  No save files found.\n");
                 continue;
             }
         };
-        let slots = group_into_slots(&saves);
 
         if slots.is_empty() {
             println!("  No save slots found.\n");
@@ -85,7 +95,9 @@ fn format_mtime(time: SystemTime) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
     use std::time::Duration;
+    use tempfile::TempDir;
 
     #[test]
     fn test_format_mtime_recent() {
@@ -112,5 +124,47 @@ mod tests {
     fn test_format_mtime_epoch() {
         let result = format_mtime(SystemTime::UNIX_EPOCH);
         assert!(result.contains("d ago"));
+    }
+
+    fn test_account() -> (TempDir, AccountDir) {
+        let root = TempDir::new().unwrap();
+        let account_path = root.path().join("DefaultUser");
+        fs::create_dir(&account_path).unwrap();
+        let account = list_accounts(root.path()).unwrap().remove(0);
+        assert_eq!(account.path(), account_path);
+        (root, account)
+    }
+
+    #[test]
+    fn test_slots_for_account_reports_empty_directory_without_error() {
+        let (_root, account) = test_account();
+        assert_eq!(slots_for_account(&account).unwrap(), None);
+    }
+
+    #[test]
+    fn test_slots_for_account_returns_discovered_slots() {
+        let (_root, account) = test_account();
+        fs::write(account.path().join("save.hg"), b"fixture").unwrap();
+
+        let slots = slots_for_account(&account).unwrap().unwrap();
+        assert_eq!(slots.len(), 1);
+        assert_eq!(slots[0].slot(), 1);
+        assert!(slots[0].manual().is_some());
+        assert!(slots[0].auto().is_none());
+    }
+
+    #[test]
+    fn test_slots_for_account_propagates_not_a_directory_io_error() {
+        let (_root, account) = test_account();
+        let account_path = account.path().to_path_buf();
+        fs::remove_dir(&account_path).unwrap();
+        fs::write(&account_path, b"not a directory").unwrap();
+
+        let error = slots_for_account(&account).unwrap_err();
+        assert!(matches!(
+            error,
+            LocateError::Io(ref io_error)
+                if io_error.kind() == std::io::ErrorKind::NotADirectory
+        ));
     }
 }
