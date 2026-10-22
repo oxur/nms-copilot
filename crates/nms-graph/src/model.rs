@@ -8,7 +8,7 @@ use rstar::RTree;
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
-use nms_core::delta::{SaveDelta, SaveUpdate};
+use nms_core::delta::{DiscoveryNames, SaveDelta, SaveUpdate};
 use nms_core::player::{PlayerBase, PlayerState};
 use nms_core::system::{Planet, System};
 use nms_save::model::SaveRoot;
@@ -445,6 +445,130 @@ impl GalaxyModel {
                 self.biome_index.entry(biome).or_default().push(key);
             }
             self.planets.insert(key, planet.clone());
+        }
+    }
+
+    /// Apply opt-in discovery-name observations to existing genuine entities.
+    ///
+    /// A present nonempty value sets the corresponding name literally, while
+    /// a present empty value clears it. Missing keys preserve existing names.
+    /// Observations for absent entities and marked player placeholders are
+    /// ignored; this method never inserts or promotes systems or planets.
+    /// Planet updates are mirrored in the flattened planet map and the
+    /// containing system. When system names change, the galaxy-qualified name
+    /// index is pruned and filled while preserving every still-valid existing
+    /// representative for duplicate labels.
+    ///
+    /// This is a metadata-only operation: graph, spatial, address, biome,
+    /// player, base, and placeholder state is unchanged. Applications opt in
+    /// by extracting names from a [`nms_save::ValidatedSave`] and applying the
+    /// returned observations after the corresponding entities exist.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::address::GalacticAddress;
+    /// use nms_core::delta::DiscoveryNames;
+    /// use nms_core::system::{Planet, System, SystemId};
+    /// use nms_graph::GalaxyModel;
+    ///
+    /// let address = GalacticAddress::new(0, 0, 0, 7, 0, 0);
+    /// let id = SystemId::from_address(&address);
+    /// let mut model = GalaxyModel::new();
+    /// model.insert_system(System::new(address, None, None, None, vec![
+    ///     Planet::new(1, None, None, false, None, None),
+    /// ]));
+    ///
+    /// let mut observed = DiscoveryNames::default();
+    /// observed.system_names.insert(id, "Synthetic system".into());
+    /// observed.planet_names.insert((id, 1), "Synthetic planet".into());
+    /// assert!(model.apply_discovery_names(&observed));
+    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Synthetic system"));
+    /// assert_eq!(model.planets.get(&(id, 1)).and_then(|planet| planet.name.as_deref()), Some("Synthetic planet"));
+    /// assert!(!model.apply_discovery_names(&observed));
+    /// ```
+    pub fn apply_discovery_names(&mut self, names: &DiscoveryNames) -> bool {
+        if names.is_empty() {
+            return false;
+        }
+
+        let mut changed = false;
+        let mut system_name_changed = false;
+
+        for (system_id, observed_name) in &names.system_names {
+            if self.player_placeholders.contains(system_id) {
+                continue;
+            }
+            let Some(system) = self.systems.get_mut(system_id) else {
+                continue;
+            };
+            let replacement = (!observed_name.is_empty()).then(|| observed_name.clone());
+            if system.name != replacement {
+                system.name = replacement;
+                changed = true;
+                system_name_changed = true;
+            }
+        }
+
+        for ((system_id, planet_index), observed_name) in &names.planet_names {
+            if self.player_placeholders.contains(system_id) {
+                continue;
+            }
+            let key = (*system_id, *planet_index);
+            let replacement = (!observed_name.is_empty()).then(|| observed_name.clone());
+            if let Some(planet) = self.planets.get_mut(&key)
+                && planet.name != replacement
+            {
+                planet.name.clone_from(&replacement);
+                changed = true;
+            }
+            if let Some(system) = self.systems.get_mut(system_id)
+                && let Some(planet) = system
+                    .planets
+                    .iter_mut()
+                    .find(|planet| planet.index == *planet_index)
+                && planet.name != replacement
+            {
+                planet.name = replacement;
+                changed = true;
+            }
+        }
+
+        if system_name_changed {
+            self.reconcile_system_name_index();
+        }
+
+        changed
+    }
+
+    fn reconcile_system_name_index(&mut self) {
+        self.name_index.retain(|(galaxy, indexed_name), system_id| {
+            !self.player_placeholders.contains(system_id)
+                && self.systems.get(system_id).is_some_and(|system| {
+                    system.address.reality_index == *galaxy
+                        && system
+                            .name
+                            .as_ref()
+                            .is_some_and(|name| name.to_lowercase() == *indexed_name)
+                })
+        });
+
+        let mut named_systems: Vec<_> = self
+            .systems
+            .iter()
+            .filter(|(system_id, system)| {
+                !self.player_placeholders.contains(system_id) && system.name.is_some()
+            })
+            .collect();
+        named_systems
+            .sort_by_key(|(system_id, _)| (system_id.reality_index(), system_id.system_address()));
+
+        for (system_id, system) in named_systems {
+            if let Some(name) = &system.name {
+                self.name_index
+                    .entry((system.address.reality_index, name.to_lowercase()))
+                    .or_insert(*system_id);
+            }
         }
     }
 

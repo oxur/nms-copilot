@@ -22,7 +22,7 @@ pub const ROBBINS_CONSTANT: f64 = 0.661_707_182;
 pub const VOXEL_UNCERTAINTY: f64 = ROBBINS_CONSTANT * LY_PER_VOXEL;
 
 /// Standard deviation (1σ) of distance between two random points in one
-/// voxel cube: SD = √(E[D²] − E[D]²) where E[D²] = ½ for unit cube.
+/// voxel cube: `SD = √(E[D²] − E[D]²)` where `E[D²] = ½` for unit cube.
 /// ≈ 0.2494 × 400 ≈ 99.8 ly.
 pub const SAME_VOXEL_SD: f64 = 0.249_4 * LY_PER_VOXEL;
 
@@ -492,7 +492,7 @@ impl From<PortalAddress> for GalacticAddress {
     /// Convert portal address to galactic address.
     ///
     /// Portal glyph layout: `P-SSS-YY-ZZZ-XXX`
-    /// (glyph positions 0-indexed: [0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX).
+    /// (glyph positions 0-indexed: `[0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX`).
     /// Reality index defaults to 0.
     fn from(pa: PortalAddress) -> Self {
         let g = pa.glyphs;
