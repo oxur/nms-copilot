@@ -24,3 +24,5 @@ CDC settled03 targeted review clears F2 and frozen other19paths; actual format/l
 Current04 actual3/5 (TWO remain): four existing testfiles/exact envelope assertion migration after combined1pass/2fail. Other16files/production frozen; applicable completed focused results retained, nativeunrun/all8CI OPEN.
 
 Current05 actual4/5 (ONE remains): private helper-only closed path/three warning literals/unique preparation receipt correction. All20source paths frozen, native0/14: first preparation failed BEFORE fixture/product launch; complete outer receipt retained, no native credit. All8CI remain OPEN.
+
+Current06 actual5/5 ZERO remain: test-probe/private-helper pre-exit→actual SUT exit0→finish handshake, existing8s EOF unchanged. CDC native1–11 passed; first12 EOF timeout retained plus ONE unchanged passing full replay;13/14 pending affected current proof. Source718f frozen before readback/handoff; all8CI still OPEN, direct-first Node history separate.
