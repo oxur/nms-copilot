@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.90, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.91, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -33,6 +33,8 @@ All ledger rows dispositioned; independently reproduced capability demonstration
 Two contributors by default: this context prepares/designs; a fresh CC performs bounded assignments; CDC independently reviews work it did not implement. Higher-scale assembly still needs a separate composition verifier and Operator acceptance. Expedited Mode is active from the user's 2026-10-03 instruction: commit named files promptly, then close/advance when evidence permits. It never waives independent review or scope gates.
 
 ## Version history
+
+- 1.91 (2026-10-22): Slice21 independently closed at b290ea31 after the explicitly approved sixth correction. Record23 fresh major groups/native11 and all8CA, preservation/retrospective and remaining original owners. Routine child completion; no architecture, acceptance-scope or release amendment.
 
 - 1.0 (2026-10-03): reconstructed review units and open acceptance ledger from the preserved project01 documents during project-level closeout preparation; no historical acceptance asserted.
 
@@ -771,3 +773,10 @@ Version1.89 currentassignment slice21-checked-save-integration/cc-prompt-iterati
 ### Slice21 exceptional sixth refinement authorization — 2026-10-21 UTC
 
 Operator “oh, yeah — absolutely, go ahead :-D” approves consolidated packetf0d64ff3: ONE extra test/docs pass over child-onlyfindfixture + literalcachetestsemantic3→4 + threeextractdoccodespans, preservingproduction/legacycontrols/assertions. Currentimmutable Slice21cc-prompt-iteration06.md; onlyfindaddsallowedpath(total39). Fiveordinarypasses/redhistory intact, no automaticseventh/budgetreset/historicalwaiver. Source8a01b3d clean beforehandoff; affected/full/strictdocs and independentacceptance/retro/bubble-up required. All8CA/R06-S21/otherparentrows remainopen (39arcrows20done19open/project25open), mainuser9line/heldpins/models/Arc06-only/nointegrationrelease fences unchanged.
+
+
+## Slice21 independent application closure — 2026-10-22 UTC
+
+The required successor to20 now applies original-JSON address validation before defaults/extraction/publication across real applications. Source8a01b3d7 plus approved test/docs-onlyb290ea31 delivers checked discovery/base/full player pairing, atomic last-good live behavior and schema3/semantic4 predecessor/rebuild/warm composition. All8CA/R06-S21 are independently done:23 major groups/native11, workspace1036runtime/27docs, feature/build/strict-docs/diff gates. Full failures, source chronology, contributor records, native evidence and mandatory CDC retrospective are retained under Slice21; no historical waiver is added.
+
+Arc39 rows/21 done/18 open; project25 open. The child delivers its assigned application piece locally, unintegrated. Fixture/header/docs misses and the attributed/restored wrong-root edit require honest retrospective/status updates, not an unapproved product re-sequencing. All15 original capability rows and three repair parents remain open. Next work is source-grounded selection/reconciliation of those existing obligations under standing Arc06-only authority, with no automatic additional inquiry, model/role, integration or release. Nonzero game-backed, raw names/history, final semantic assembly, freshness/identical rewrite/stale-import history, original export/import/slot/format/UI/docs/distribution/coverage/performance and higher independent/Operator gates remain.

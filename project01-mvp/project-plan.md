@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-21
+updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.78
+version: 1.79
 project: project01-mvp
 status: active
 depends-on: []
@@ -564,6 +564,8 @@ First prepared corrective assignment: `arc06-fit-and-finish/slice01-address-enco
 
 ## 12. Version history
 
+- **1.79 — 2026-10-22:** Arc06 Slice21 application transition independently accepted at b290ea31 after explicit sixth-pass approval; preserve all25 open project rows and original higher-scale obligations. Routine evidence/status bubble-up, no project closure or scope amendment.
+
 - **1.3 — 2026-10-04:** Arc06 Slice05 runtime protection/gates independently reproduce, but three original delivery obligations require iteration01. Record current handoff; approved scope/sequence and all25 project criteria unchanged.
 
 
@@ -1063,3 +1065,10 @@ Version1.77 currentassignment arc06-fit-and-finish/slice21-checked-save-integrat
 ## Arc06 Slice21 complete CLI/header oracle refinement — 2026-10-21 UTC
 
 Version1.78 currentassignment arc06-fit-and-finish/slice21-checked-save-integration/cc-prompt-iteration02.md. Secondof5 beforecompiler; preservephysicalP2/basewhilefind/exportsystemP0oracles followunchangedformatter, complete originalCLIproof, add ONLYtwoexistingtestpaths/fourcurrentheadersemantic4literals to38pathallowlist. Schema3/predecessor2/2/typedcontrols and existinggates remain. No productpolicychange/Operatorgate/newinquiry/waiver/parentclosure. All8CA/R06-S21open,39arcrows20done19open/project25open; same roles/models/Arc06endpoint/ownership/main9line/heldpins/external/Project02.
+
+
+## Arc06 Slice21 checked application closure — 2026-10-22 UTC
+
+ApprovedA now reaches actual application source parsing, model/watch/cache and CLI/normal/stdio/HTTP paths. All8 child CA rows accepted at b290ea31 after independent23 major groups/native11; workspace1036runtime/27docs plus feature/build/strict docs/diffs pass. Authentic3/3 is rejected/rebuilt to3/4 and compatible restart, semantic-invalid full-update retention and recovery are reproduced. Child acceptance does not close P01-R01/R02/R03 or C01/C04/C05: broader original scope, game-backed nonzero evidence and final independent assembly remain. Earlier notes describing the input/reality/error policy as pending are historical; the Operator adoptedA and20/21 deliver its bounded implementation.
+
+Arc39 rows/21 done/18 open; project25 open. Source8a01b3d7→b290ea31 is local/unintegrated. Five ordinary refinements and one explicitly approved sixth, all failed/retried evidence, exact contributor/CDC transfers and the retrospective remain canonical. All original raw/history, final semantic, strict freshness/identical rewrite/stale-import history, export/import/slots/formats/UI/docs/distribution/95%coverage/performance/MSRV/platform/higher independent/Operator/integration/release obligations remain with their existing owners. Same CDC/CC models, protected main nine-line edit, held/external pins and Arc06-only endpoint; no other arc or Project02 starts.

@@ -194,10 +194,12 @@ Previous34rows/16done/18open retained. NewR06-S17 gives35rows/16done/19open; all
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S21 | Checked whole-source save boundary reaches all application consumers and semantic4 lifecycle independently accepted | Eight CArows, typed originalJSON/wholemodel/cache/caller/originalnative10+predecessor11/atomiclastgood proof and independentCDC review | correctness-grade | ApprovedA / required21 / R06-R01/R02/R03 | open | — | Author-ready only; all original parents retained |
+| R06-S21 | Checked whole-source save boundary reaches all application consumers and semantic4 lifecycle independently accepted | Eight CArows, typed originalJSON/wholemodel/cache/caller/originalnative10+predecessor11/atomiclastgood proof and independentCDC review | correctness-grade | ApprovedA / required21 / R06-R01/R02/R03 | done | [final CDC acceptance](slice21-checked-save-integration/cdc-verification.md#final-independent-acceptance--2026-10-22-utc) — reproduced | All8CA done at b290ea31; fresh23groups/native11/workspace1036+27. Approved sixth only; all original/repair parents retained open. |
 
 39arcrows20done19open/project25open. All38previous entire rows/criteria/dispositions preserved.
 
 2026-10-21 Slice21 author discriminator refinement01 before source/compiler: all8CA/R06-S21open;39arcrows20done19open/project25open. Initialprompt preserved, no waived field/control or budget reset.
 
 2026-10-21 Slice21 consolidated CLI/currentheader refinement02 before compiler: secondof5,38currentallowedpaths, same8CA/R06-S21open;39arcrows20done19open/project25open. No row/control/gate removed.
+
+2026-10-22 Slice21 independently closed:39 arc rows/21 done/18 open; all25 project rows remain open. All38 prior entire rows and original criteria remain, including15 original capability rows and three repair parents. No parent/integration/release acceptance is inferred.
