@@ -292,3 +292,11 @@ Slice28 current independent disposition2026-10-22: CI01–07done, CI08open; R06-
 ## Slice28 / original M7.9 closed — 2026-10-24 UTC
 
 Human “I do approve” adopts only pending9ccc915f directNode historical exception. CI08/all8CI/R06-S28/M7.9DONE on unchanged cleanbe414,21independentgroups/native14/full1097runtime+31docs and finalretro; no record-only rerun. All46rows retained:33done13open/project25open. Syncnote reconciled actual27worktrees/mainexactrestoredhumanblob/pinsclean, no rebase/reset. Next originalM7.6documentation readiness; pending M7.5input and allotheroriginal/repair/highergates retained.
+
+## Slice29 user/contributor documentation owner opened — 2026-10-24 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S29 | Accurate user/contributor documentation with attributable real-output usage images | SixUDrows/exact8docpaths/source-grounded commands/actualCLIraw+render/visualreview/orderedgates | correctness-grade | Original0039M7.6 usable increment | open | — | Dedicatedcleanbe414; required30publicAPI/fullM7.6ownerCDC retained; no parentclosure/desktopclaim/install |
+
+47arc33done14open/project25open. Full M7.6 remains open for this delivery+required API-doc/finalreconciliation owner30; alloriginalparents/M7.5input/highergates retained.

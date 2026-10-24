@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.111, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.112, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -967,3 +967,9 @@ Version1.111: the human explicitly “I do approve” adopts ONLY the exact9ccc9
 The Operator sync/rebase/merge/stash-pop note was reconciled BEFORE dependent writes: all27registeredworktrees inspected; current mainb616 has ONLY original restoredhuman9line/blob2cd450ce/indexempty, sourcebe414/planning9ccc and24heldexternalHEADs unchanged/clean. Root separately reports actualoriginmainb616; CDC did not infer additional network/rebase/reset authority or rewrite prior pins. New resumed fence under28artifacts records actual tree/status/source observations.
 
 46arcrows33done13open/project25open. Next ordinary authorized readiness: reconcile full original0039 M7.6 documentation with current accepted candidate before selecting a bounded usable owner; do not assume docs or screenshot completeness from passing rustdoc. M7.5 authentic NomNom full-export input still pending; unrelated work continues. M7.7integration/coverage, M7.8distribution/publication(no external authority), M7.10themes, D0040–43, C06, all repair/game-backed/history/finalsemantic/freshness/higher-independent/Operator/integration/release gates retained. Same selected CDC6.1-solHigh/CC6-lunaHigh and Arc06-only endpoint; no merge/push/install/release/Project02/nextarc. Routine status/evidence/explicit-approval version update; no original scope/architecture reduction.
+
+## Slice29 usable user/contributor documentation / required API follow-on — 2026-10-24 UTC
+
+Version1.112 details [Slice29](slice29-user-documentation-contract/slice-plan.md), exact8docpaths/sixOPENUDrows, clean dedicatedcodex/user-documentation-contract fromacceptedbe414. Same selected/applied CDC6.1-solHigh/CC6-lunaHigh, existingCCqualitativeheadroom/noactiveprocess confirmed. Fulloriginal0039/README/actualCLI-REPL/Make/manifests/fixture grounding finds missingCONTRIBUTING/usageimages and demonstrated command prose errors. Deliver usable user/contributor guide plus honest renderedrealCLIcaptures now; publicAPIrustdoc/keyexamples and finalcompleteM7.6reconciliation remain explicit required30ownerCDC. No parent criterion drop or prematureM7.6closure; all otheroriginal/higherowners remain. ExistingCLIread-only/isolatedcommittedfixture proof and alreadyinstalledPillow/Menlo rendering, no tool-safety bypass/newinstall/hostsave. Actualcapturekernelraw-first/status/NUL0-7controls and rendererAPIpreflight recordedBEFOREproduct/compiler. Firstpair→CDC fullreview→actualgeneratedassets→renewedpair/assetreview prevents stale-pair applicability. No sourceimplementation yet.
+
+47arcrows33done14open/project25open; all46priorrows retained. M7.5actualNomNominputstillunanswered/independent. Mainhuman9line/held/externalpins/Project02 and Arc06-onlyendpoint preserved; no remote/integration/publish/install/nextarc. This is usable-increment scope detail within originalM7.6, not a new investigation or criterion waiver.

@@ -1,0 +1,7 @@
+# Slice29 CDC execution
+
+2026-10-24: after accepted28closure7187876, grounded full original0039M7.6/currentREADME524/actualCLI+REPL grammar/Makefile/manifests/fixtures. SameCC confirms usableheadroom/noactivechildren/edits. Eightdocpaths resolve usable guide+contributor+actualrenderedcaptures, required30publicAPI/finalM7.6ownerretained. No policyask/inquiry/install. CUA Terminal support lookup blocked bytool, IABunavailable/browserinventoryempty; no bypass. InstalledPillow/Menlo metadata found, actualimagegeneration notyetexecuted. CaptionedrenderedrealCLIstdout chosen; notdesktop/game/TTYproof.
+
+Createddedicatedsourcecodex/user-documentation-contract fromcleanbe414, preserving main/heldpins. Read complete3757Baccepted28kernel and copiedonlysource/lognamespace to3759B29helperSHA2d529b2d44880824bf92c30ceeb705630a2ed400f84e1b59ecd7ffc2991d5727. Firstactualsupportcontrols10f308a2(exit7)/9fec95ee(exit0) rawstdout10/stderr5NULbytes explicitbeforeafterstatus+identity/rawfirst/end verifiedbeforeproduct/compiler; fullpreflightrecord retained. No productgate/sourceedit yet. Initialprompt/currentplan/6rowledger/sourceallowlist authorreadinesscomplete; sourceownershippendingcoherentCCintake.
+
+Author renderer API preflight was actually kernel-captured d2232fab118c4425b29dcf01b43a37d2 exit0/fullraw/status/source unchanged: installedPillow10.4.0/Menlo18 getbbox(0,4,99,21)/getlength99 and save/privatePNG succeeded; no productcredit or usageimageclaim. Three support attempts now in capture-preflight.json.

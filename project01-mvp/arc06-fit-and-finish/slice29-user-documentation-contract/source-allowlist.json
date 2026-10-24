@@ -1,0 +1,15 @@
+{
+  "baseline": "be4145b631405ff19c3e403457ecaa581afe805f",
+  "source_worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+  "paths": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "docs/render-cli-capture.py",
+    "docs/captures/README.md",
+    "docs/captures/nms-help.txt",
+    "docs/captures/nms-stats.txt",
+    "docs/captures/nms-help.png",
+    "docs/captures/nms-stats.png"
+  ],
+  "frozen": "Every other tracked path, every Rust/executable/API/cache/fixture/Cargo/CI byte; all main/held/external worktrees."
+}

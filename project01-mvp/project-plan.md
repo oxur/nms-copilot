@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.98
+version: 1.99
 project: project01-mvp
 status: active
 depends-on: []
@@ -1189,3 +1189,7 @@ R06-S28/originalM7.9 remain open pending Operator and record-only closure; arc46
 Version1.98: human “I do approve” resolves ONLY9ccc915f first-directNode historical capture exception; all8CI/R06-S28/originalM7.9DONE at unchanged be414,21independentgroups/native14/full1097runtime+31docs and finalretrospective/bubble-up. Unknown observations remain unknown/no direct-check credit/future waiver; no record-only rerun. Arc46/33done13open/project25open. Operator sync/stash-pop note reconciled against all27actualworktrees; mainb616 exactrestoredhuman9line/blob2cd450ce/indexempty, source/held/externalpins unchanged/clean, no rebase/reset.
 
 Proceed ordinary original0039M7.6documentation readiness under unchanged AutonomousArc06 roles/models/endpoint; M7.5 authentic-export input independent/pending, allotheroriginal/repair/game-backed/history/finaltransition/freshness/UI/coverage/platform/performance/distribution/higher/Operator/integration/release obligations retained. No integration/push/install/release/nextarc/Project02 authority or inferred doc acceptance.
+
+## Arc06 Slice29 user/contributor docs and explicit original M7.6 remainder — 2026-10-24 UTC
+
+Version1.99 opens bounded29 fromacceptedbe414: exact8docpaths/6UDrows; usable README/CONTRIBUTING/captionedactualCLIcapture images with complete source/failure/provenance/visualchecks, productRust/fixtures/CI/Cargo frozen. PublicAPIrustdoc/keyexamples/fulloriginalM7.6reconciliation explicitly required30ownerCDC; M7.6staysopen. Same selectedmodels/headroom/sourceplanningownership/Arc06endpoint; firstactualkernelcontrols/statuses/rawfirst verifiedbeforeproduct, no uncreditedhistoricalreconstruction.47arc33done14open/project25open; prior28closures and everyotheroriginal/repair/game-backed/history/freshness/coverage/UI/distribution/higher/integration/releasegate retained, NomNominputstillpending independently. Protectedmainhuman9line/heldexternalpins unchanged; no install/network/publish/nextarc/Project02.
