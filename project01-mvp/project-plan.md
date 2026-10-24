@@ -9,7 +9,7 @@ updated: 2026-10-22
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.97
+version: 1.98
 project: project01-mvp
 status: active
 depends-on: []
@@ -1183,3 +1183,9 @@ Arc-plan1.109/Slice28 details original Personal/Community source tag/exact label
 Version1.97: original M7.9 candidatebe414 delivers exact source/CSV/query/name/cache/CLI composition; CDC independently accepts CI01–07 after21 required command groups/native14, full1097 runtime+31docs and strictdocs/build/diffs. [CI08 remains open for ONE direct Node diagnostic capture-history decision](arc06-fit-and-finish/slice28-community-import-contract/cdc-verification.md#ci-08-exact-bounded-decision): known exit0/full outer receipt retained, absent direct kernel fields unknown, no current product-proof waiver or future blanket exception. Five actual refinements used; no further automatic correction/closure. Complete failed/current/raw/return/source-incident/transfer/report history and provisional mandatory retrospective retained in one verified archive.
 
 R06-S28/originalM7.9 remain open pending Operator and record-only closure; arc46/31done/15open/project25open. M7.5 attributable actual NomNom full-export input still pending independently; no source-only acceptance. Every original parent/raw/game-backed/finaltransition/history/freshness/import/docs/UI/coverage/platform/performance/distribution/higher-independent/Operator/integration/release gate stays open as applicable. Mainhuman9line/heldpins/external/Project02 and one-arc endpoint protected; no merge/push/install/release.
+
+## Arc06 original M7.9 accepted / next documentation readiness — 2026-10-24 UTC
+
+Version1.98: human “I do approve” resolves ONLY9ccc915f first-directNode historical capture exception; all8CI/R06-S28/originalM7.9DONE at unchanged be414,21independentgroups/native14/full1097runtime+31docs and finalretrospective/bubble-up. Unknown observations remain unknown/no direct-check credit/future waiver; no record-only rerun. Arc46/33done13open/project25open. Operator sync/stash-pop note reconciled against all27actualworktrees; mainb616 exactrestoredhuman9line/blob2cd450ce/indexempty, source/held/externalpins unchanged/clean, no rebase/reset.
+
+Proceed ordinary original0039M7.6documentation readiness under unchanged AutonomousArc06 roles/models/endpoint; M7.5 authentic-export input independent/pending, allotheroriginal/repair/game-backed/history/finaltransition/freshness/UI/coverage/platform/performance/distribution/higher/Operator/integration/release obligations retained. No integration/push/install/release/nextarc/Project02 authority or inferred doc acceptance.

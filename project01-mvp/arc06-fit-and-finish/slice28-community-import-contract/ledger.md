@@ -1,6 +1,6 @@
 # Slice28 acceptance ledger
 
-2026-10-22 UTC. Current CDC disposition: seven done, CI-08 only open; Slice28 remains OPEN. Historical status entries below remain historical. Original0038 M7.9 and full source-grounded slice-plan worksheet govern; no count-only acceptance.
+2026-10-22 UTC. Current CDC disposition2026-10-24: all8 done; Slice28 CLOSED after the one explicitly approved historical Node exception. Historical status entries below remain historical. Original0038 M7.9 and full source-grounded slice-plan worksheet govern; no count-only acceptance.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
@@ -11,7 +11,7 @@
 | CI-05 | Real CLI original flags/stats/read-only/error behavior | I5 actual children/EOF/full input file boundaries | correctness-grade | done | [CDC independent review](cdc-verification.md#row-by-row-disposition), CI-05; actual checks/native applicability below |
 | CI-06 | Normal/stdio/HTTP current cache/live/lifetime and old/new predecessor composition | I6 original13 plus native14/new3/5 retained controls | correctness-grade | done | [CDC independent review](cdc-verification.md#row-by-row-disposition), CI-06; actual checks/native applicability below |
 | CI-07 | Full changed source/helper/oracle/docs review and required gates | I7 settled source and independent actual checks | correctness-grade | done | [CDC independent review](cdc-verification.md#row-by-row-disposition), CI-07; actual checks/native applicability below |
-| CI-08 | Attributable execution/independent acceptance/retrospective/original mapping | I8 raw records/returns/named commits/bottom-up review | correctness-grade | open | [One bounded historical Node decision](cdc-verification.md#ci-08-exact-bounded-decision); known exit0/full outer receipt retained, required direct kernel observations absent |
+| CI-08 | Attributable execution/independent acceptance/retrospective/original mapping | I8 raw records/returns/named commits/bottom-up review | correctness-grade | done | [Operator approval/final close2026-10-24](cdc-verification.md#operator-approval-sync-reconciliation-and-final-close--2026-10-24-utc); exact bounded historical exception only, missing observations remain unknown |
 
 Current assignment cc-prompt-iteration01.md is a pre-edit author clarification of I4 discriminator/stage; initial+01 FIRST implementation, zero actual refinements of five used. All8CI remain OPEN, initial/readback preserved; no new scope or acceptance.
 
@@ -28,3 +28,5 @@ Current05 actual4/5 (ONE remains): private helper-only closed path/three warning
 Current06 actual5/5 ZERO remain: test-probe/private-helper pre-exit→actual SUT exit0→finish handshake, existing8s EOF unchanged. CDC native1–11 passed; first12 EOF timeout retained plus ONE unchanged passing full replay;13/14 pending affected current proof. Source718f frozen before readback/handoff; all8CI still OPEN, direct-first Node history separate.
 
 Final independent review: all21 required command groups/native14 pass on reviewed be414 with explicit retained/fresh applicability; aggregate1097 runtime+31docs. CI01–07 DONE, CI08 only OPEN, source frozen. Five actual refinements used; no further automatic corrective authority. Provisional retrospective and verified single archive present; no slice/parent closure before Operator disposition.
+
+Final2026-10-24: human “I do approve” adopts only the exact pending first-directNode historical exception. CI08done/all8done, originalM7.9/R06-S28done;46arc33done13open/project25open. No source change/unchanged rerun/history reconstruction/future waiver. Fresh ownership/fences reconcile syncnote without rebase; final retrospective and bubble-up complete.

@@ -1,4 +1,6 @@
-# Slice28 CDC retrospective — provisional at CI-08
+# Slice28 CDC retrospective — final after bounded approval
+
+Current completion2026-10-24: all8CI and originalM7.9 accepted after the explicit one-diagnostic capture exception; no source change or repeated product gates. The provisional2026-10-22 analysis below is retained as dated history.
 
 2026-10-22 UTC. Implementation acceptance and retrospective are separate. CI-01–07 pass independently; CI-08 awaits only the precise historical Node capture decision in cdc-verification.md. This retrospective cannot authorize that exception or close M7.9. Same selected CDC gpt-6.1-sol High / CC gpt-6-luna High; root transport only.
 
@@ -17,3 +19,9 @@ Worktree safety failed once again: a mixed absolute-path patch modified main's c
 CDC also made a basename transfer error, temporarily replacing its execution log with CC bytes. Exact CC returns were preserved under role-prefixed names and committed CDC history restored before new writing. Immediate pre-copy working bytes were not observed, so the review states that limit rather than inferring historical equality. Use explicit source/destination role mappings, byte hashes and separate cc-* names before transfer. A current inventory was actually generated and archived; it does not backdate the CC return's unsupported claim that CDC had already inventoried artifacts.
 
 The final archive is need-driven: one lossless bundle with raw captures, distinct failed/current fixtures, helpers, genuine predecessor, exact returns and source/fence evidence. Its4429 file members and the frozen621-file CC manifest were individually checked. No extra report-driven source pass or unchanged broad rerun was added after final acceptance proof. If the Operator accepts the one historical exception, finish CI-08/closure and this retrospective by record-only amendment, retain all original failures, then ground the next original Arc06 owner. M7.5 actual-export input and all parent/game-backed/coverage/distribution/integration gates stay open; no other arc begins.
+
+## Final follow-through — 2026-10-24 UTC
+
+The Operator approved exactly the proposed historical first-directNode exception; no absent observation was reconstructed and no current test weakened. CI08/all8CI and M7.9/R06-S28 close on existing independently green be414 proof. The sync/stash-pop note triggered a fresh bounded all-worktree reconciliation; it found unchanged baseline/pins and the exact protected human edit, so no unnecessary rebase/reset or test rerun followed. This is evidence of correct recovery in this instance, not a controlled efficacy claim.
+
+Recommendations about mutation-root manifests, complete header/caller inventories, actual-input-derived matrix summaries and explicit role-prefixed transfers remain CDC-owned follow-through for next readiness. The current closure does not evaluate their wider effectiveness or change framework rules. Next documentation readiness consumes the accepted current source while all original remaining obligations stay visible; M7.5 awaits real input independently.
