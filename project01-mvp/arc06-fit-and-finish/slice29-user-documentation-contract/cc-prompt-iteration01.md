@@ -1,0 +1,7 @@
+# Slice29 pre-implementation author reading-path clarification
+
+2026-10-24 UTC. Preserve initial cc-prompt.md verbatim; read it, this clarification, current slice-plan.md and ledger.md in full. This is the same first implementation, **zero actual refinements**, not a budget reset: CC explicitly confirms no implementation has started, only prompt/plan/ledger/allowlist reads and read-only inventory. Dedicated source remains clean be414.
+
+The initial required-source manifest's abbreviated `src/dispatch.rs` means exactly **`crates/nms-copilot/src/dispatch.rs`** under `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract`, sections1–130 and660–699 as originally specified. It is the REPL dispatch/help source, not a root-level src path. Record this fully qualified path/loaded extents in intake. This corrects the author's ambiguous relative spelling; no new file/function/behavior/proof is assigned.
+
+Every other initial obligation remains: exact8docpaths, sixUDrows, same roles/models/ownership/mainhumanfences, production/fixtures/Rust frozen, no host saves/install, full originalM7.6/API30 accounting, actual-vs-rendered attribution, kernel-first captures, coherent intake then first format→lint HOLD, controlled real output/render phase and renewed pair/HOLD, final original checks/return/independent review. Proceed under existing initial authority after coherent readback; no routine permission question. Required return home and exact named-path commits/trailers are unchanged.
