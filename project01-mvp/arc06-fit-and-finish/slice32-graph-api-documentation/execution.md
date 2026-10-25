@@ -1,0 +1,7 @@
+# Slice32 CDC execution
+
+2026-10-25 UTC. Opened after formal31close cd3529b/sourceb60e. Source-grounded all9graphproductionsections (model1–705,query1–255,edges1–235,extract1–275,import1–188,route1–593,lib/error/spatialcomplete) and called core constructors/types, original0039M7.6complete. Nine-filegraph usableunit; query33,remainingAPI/fullreconciliation34+ explicitlyretained. Graphunchanged4a→b60e, prioractual772e inventory13authoredoriginsindividuallyreviewed/no generatedexception expected. No newcompilerinventoryrun or readinessacceptancecredit.
+
+Newdedicatedgraph-api-documentation cleanb60e created, accepted31pin retained. PriorCCselfreport largecompactedcontext/notusablefornext; freshsoleSAME6-lunaHigh successorwillreceivefullselfcontainedassignment, CDC6.1-solHigh independentacceptanceunchanged. Initial0actualrefinements, no sourceedit/gate/test launched. W1–W5/E1–E4/API/error/layout/fixture/proofchoices resolvedsourcegrounded; source-derivedwarpcountoverflow/profile/inputlimits documentedonly/P01-G07owner, notexecutedinvalidcase/runtimefix.
+
+Rawfirstkernelsadaptedfrom31beforefirstattempt; stalecapture-ownerlabel caughtbyfullreadandcorrectedBEFOREanyattempt. ActualtwoCDC-installedbinarycontrols2bd3/f963 retainexpected7/0/fullraw/fullmetadataequalcleanb60e, notCCproductgroups. Sourcepreservationauditorsuppliedbeforeuse with10nameddeclarations/opposeddefault-selectionmutation, notyetexecuted/credited. Mainknownagentaddition and allheld/externalpins protected. FullM7.6/everyotheroriginalparentgate remainsopen.

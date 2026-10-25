@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.118, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.119, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1021,3 +1021,9 @@ NewR06-S31 gives49arcrows35done14open/project25open. RequiredfullM7.6 remainsOPE
 Version1.118 closes all6SD/R06-S31 at cleanb60e720a, complete eleven-file save public surface and meaningful literal/isolated examples. Seven independent groups green:130runtime+37docs (28execute/9compile-only), strictsavezero/noexception, exact17layoutpreservation/opposedmutation/diffs.13CC/7CDC raw records/history/twoactualrefinements/same-model-context handoff and finalretro retained. Known32-bit malformed-LZ4 panic documented only; CDC/P01-G07 final reconciliation owns limit. Mainknownagentaddition and allheld/externalpins unchanged.
 
 49arcrows36done13open/project25open. Full original0039M7.6 remains OPEN: planned32graph/query and33remainingAPI/fullreconciliation, CDC, further bounded decomposition allowed. Exact30generatedfieldexception not extended. All original input/game-backed/history/cache/finalsemantic/coverage/distribution/UI/parent/Operator/integration/release obligations remain. See [Slice31 independent close](slice31-save-api-documentation/cdc-verification.md).
+
+## Slice32 complete graph API owner issued — 2026-10-25 UTC
+
+Version1.119 details [Slice32](slice32-graph-api-documentation/slice-plan.md), exactnine graph sourcefiles/Rustdoc+ten namedpayload layouts, sixOPEN GDrows. Clean dedicatedcodex/graph-api-documentation fromacceptedb60e. Complete production/API/error/fixture walkthrough resolved; prioractual13authoredwarning inventory is readinessonly/graphbytesunchanged, strictgraphzero required/no coreexceptionextension. Literalcheckedsource56/3-4-5 query-routing/markedpromotion/ownedCSV examples complete, no implementation claim yet. Capturekernels/actualbinary7-0controls in placebeforefirstcompilerdiagnostic. Initial0actualrefinements.
+
+PriorCCreports compacted/notenoughnext-unitheadroom; freshsole SAMErequested6-lunaHigh context replaces historicalimplementer afterdurableprompt, actuallaunchrecordfollows. CDC6.1-solHigh independentacceptance/Arc06endpoint unchanged. FullM7.6 explicitly decomposed32graph, required33query, required34remaining APIs/full0039reconciliation (CDC, splitfurtherifneeded). No criterion dropped or laternumberacceptedbyplanning.50arcrows36done14open/project25open. Knownwarp_jump_count uncheckedrange/integeroverflow limits are truthfuldocs/platform-finalreconciliationowner, notruntimefix/testpopulationexpansion. Mainknownagentaddition/heldpins/external unaffected; M7.5inputandallhighergates retained.

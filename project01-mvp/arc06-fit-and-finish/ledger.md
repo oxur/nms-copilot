@@ -329,3 +329,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 49rows35done14open/project25open; all48priorrows preserved. Initial0actualrefinements, no sourceimplementation/acceptance atissue.
 
 2026-10-25 formal31close: all6SD/R06-S31DONE onb60e; originalsevenindependentgroups/130runtime+37docs/strictsavezero/noexception.49arc36done13open/project25open; fullM7.6/planned32–33 and higher owners unchanged.
+
+## Slice32 complete graph API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S32 | Complete truthful graph public API documentation and key runnable examples | SixGD/full9fileworksheet/strictgraph/unit+integration+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next usable API increment | open | [Slice32 plan](slice32-graph-api-documentation/slice-plan.md) | FullM7.6/required33query+34remainingAPI/reconciliation and allhighergates stayopen |
+
+50arcrows36done14open/project25open, all49priorrows/criteria/dispositions retained. Initial0actualrefinements, no sourceimplementation/acceptance atissue.

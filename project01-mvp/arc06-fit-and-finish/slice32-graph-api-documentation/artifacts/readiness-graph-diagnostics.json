@@ -1,0 +1,707 @@
+{
+  "original_attempt_id": "772e486724774544a97e7966fc4e7ecc",
+  "original_source_head": "4a935408460349e9aa64fecd570d9960094191b1",
+  "original_record": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/artifacts/nms-slice30-cdc-attempts.json",
+  "current_graph_bytes_identical": true,
+  "purpose": "Prior real compiler inventory only, not current acceptance; all13 authored origins individually inspected",
+  "diagnostics": [
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a module\n  --> crates/nms-graph/src/lib.rs:11:1\n   |\n11 | pub mod error;\n   | ^^^^^^^^^^^^^\n   |\n   = note: requested on the command line with `-W missing-docs`\n\n",
+        "$message_type": "diagnostic",
+        "children": [
+          {
+            "children": [],
+            "code": null,
+            "level": "note",
+            "message": "requested on the command line with `-W missing-docs`",
+            "rendered": null,
+            "spans": []
+          }
+        ],
+        "level": "warning",
+        "message": "missing documentation for a module",
+        "spans": [
+          {
+            "byte_end": 414,
+            "byte_start": 401,
+            "column_end": 14,
+            "column_start": 1,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/lib.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 11,
+            "line_start": 11,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 14,
+                "highlight_start": 1,
+                "text": "pub mod error;"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a module\n  --> crates/nms-graph/src/lib.rs:17:1\n   |\n17 | pub mod spatial;\n   | ^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a module",
+        "spans": [
+          {
+            "byte_end": 509,
+            "byte_start": 494,
+            "column_end": 16,
+            "column_start": 1,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/lib.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 17,
+            "line_start": 17,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 16,
+                "highlight_start": 1,
+                "text": "pub mod spatial;"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n  --> crates/nms-graph/src/edges.rs:19:11\n   |\n19 |     Knn { k: usize },\n   |           ^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 594,
+            "byte_start": 586,
+            "column_end": 19,
+            "column_start": 11,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/edges.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 19,
+            "line_start": 19,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 19,
+                "highlight_start": 11,
+                "text": "    Knn { k: usize },"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n  --> crates/nms-graph/src/edges.rs:21:17\n   |\n21 |     WarpRange { max_ly: f64 },\n   |                 ^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 686,
+            "byte_start": 675,
+            "column_end": 28,
+            "column_start": 17,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/edges.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 21,
+            "line_start": 21,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 28,
+                "highlight_start": 17,
+                "text": "    WarpRange { max_ly: f64 },"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for an enum\n --> crates/nms-graph/src/error.rs:5:1\n  |\n5 | pub enum GraphError {\n  | ^^^^^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for an enum",
+        "spans": [
+          {
+            "byte_end": 84,
+            "byte_start": 65,
+            "column_end": 20,
+            "column_start": 1,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/error.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 5,
+            "line_start": 5,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 20,
+                "highlight_start": 1,
+                "text": "pub enum GraphError {"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a variant\n --> crates/nms-graph/src/error.rs:7:5\n  |\n7 |     SystemNotFound(String),\n  |     ^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a variant",
+        "spans": [
+          {
+            "byte_end": 143,
+            "byte_start": 129,
+            "column_end": 19,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/error.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 7,
+            "line_start": 7,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 19,
+                "highlight_start": 5,
+                "text": "    SystemNotFound(String),"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a variant\n  --> crates/nms-graph/src/error.rs:10:5\n   |\n10 |     BaseNotFound(String),\n   |     ^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a variant",
+        "spans": [
+          {
+            "byte_end": 206,
+            "byte_start": 194,
+            "column_end": 17,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/error.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 10,
+            "line_start": 10,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 17,
+                "highlight_start": 5,
+                "text": "    BaseNotFound(String),"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a variant\n  --> crates/nms-graph/src/error.rs:21:5\n   |\n21 |     NoPlayerPosition,\n   |     ^^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a variant",
+        "spans": [
+          {
+            "byte_end": 531,
+            "byte_start": 515,
+            "column_end": 21,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/error.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 21,
+            "line_start": 21,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 21,
+                "highlight_start": 5,
+                "text": "    NoPlayerPosition,"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n  --> crates/nms-graph/src/route.rs:52:14\n   |\n52 |     NoPath { from: SystemId, to: SystemId },\n   |              ^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 1495,
+            "byte_start": 1481,
+            "column_end": 28,
+            "column_start": 14,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/route.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 52,
+            "line_start": 52,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 28,
+                "highlight_start": 14,
+                "text": "    NoPath { from: SystemId, to: SystemId },"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n  --> crates/nms-graph/src/route.rs:52:30\n   |\n52 |     NoPath { from: SystemId, to: SystemId },\n   |                              ^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 1509,
+            "byte_start": 1497,
+            "column_end": 42,
+            "column_start": 30,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/route.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 52,
+            "line_start": 52,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 42,
+                "highlight_start": 30,
+                "text": "    NoPath { from: SystemId, to: SystemId },"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n --> crates/nms-graph/src/spatial.rs:9:5\n  |\n9 |     pub id: SystemId,\n  |     ^^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 308,
+            "byte_start": 292,
+            "column_end": 21,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/spatial.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 9,
+            "line_start": 9,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 21,
+                "highlight_start": 5,
+                "text": "    pub id: SystemId,"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for a struct field\n  --> crates/nms-graph/src/spatial.rs:10:5\n   |\n10 |     pub point: [f64; 3],\n   |     ^^^^^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for a struct field",
+        "spans": [
+          {
+            "byte_end": 333,
+            "byte_start": 314,
+            "column_end": 24,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/spatial.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 10,
+            "line_start": 10,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 24,
+                "highlight_start": 5,
+                "text": "    pub point: [f64; 3],"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    },
+    {
+      "reason": "compiler-message",
+      "package_id": "path+file:///Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph#0.3.0",
+      "manifest_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "nms_graph",
+        "src_path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/crates/nms-graph/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "message": {
+        "rendered": "warning: missing documentation for an associated function\n  --> crates/nms-graph/src/spatial.rs:14:5\n   |\n14 |     pub fn new(id: SystemId, x: f64, y: f64, z: f64) -> Self {\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+        "$message_type": "diagnostic",
+        "children": [],
+        "level": "warning",
+        "message": "missing documentation for an associated function",
+        "spans": [
+          {
+            "byte_end": 417,
+            "byte_start": 361,
+            "column_end": 61,
+            "column_start": 5,
+            "expansion": null,
+            "file_name": "crates/nms-graph/src/spatial.rs",
+            "is_primary": true,
+            "label": null,
+            "line_end": 14,
+            "line_start": 14,
+            "suggested_replacement": null,
+            "suggestion_applicability": null,
+            "text": [
+              {
+                "highlight_end": 61,
+                "highlight_start": 5,
+                "text": "    pub fn new(id: SystemId, x: f64, y: f64, z: f64) -> Self {"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "code": "missing_docs",
+          "explanation": null
+        }
+      }
+    }
+  ]
+}

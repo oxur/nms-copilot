@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.105
+version: 1.106
 project: project01-mvp
 status: active
 depends-on: []
@@ -1222,3 +1222,7 @@ Version1.104/arc1.117 details Slice31 complete11file nms-save docs/actual source
 ## Arc06 Slice31 save documentation accepted — 2026-10-25 UTC
 
 Complete save public API documentation accepted onb60e720a after seven independent groups,130runtime+37doctests, strictsavezero and executable-preservation proof. All6SD/R06-S31done;49arc36done13open, all25projectrows OPEN. FulloriginalM7.6 retains planned32graph/query and33remainingAPI/fullreconciliation CDC owners; exact30generatedfieldlimit and32-bit parser/glyph panic platform reconciliation retained. No integration/publication/parent acceptance.
+
+## Arc06 Slice32 graph documentation owner — 2026-10-25 UTC
+
+Version1.106/arc1.119 details next required complete9file graphAPI increment fromacceptedb60e, sixOPEN GDrows, same requestedroles/models/freshCCcontext afteroldheadroomreport. Source/error/fixture/layout/capturechoices resolved, no productimplementation yet. FullM7.6 now explicit32graph/33query/34remainingAPIs+fullreconciliation CDC owners, splitfurtherifneeded.50arc36done14open/project25OPEN; exactcoreexception/platform/input/higher/integration/release gates retained.

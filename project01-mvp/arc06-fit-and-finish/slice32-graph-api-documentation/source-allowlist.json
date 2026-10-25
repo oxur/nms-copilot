@@ -1,0 +1,36 @@
+{
+  "baseline": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+  "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+  "paths": [
+    "crates/nms-graph/src/edges.rs",
+    "crates/nms-graph/src/error.rs",
+    "crates/nms-graph/src/extract.rs",
+    "crates/nms-graph/src/import.rs",
+    "crates/nms-graph/src/lib.rs",
+    "crates/nms-graph/src/model.rs",
+    "crates/nms-graph/src/query.rs",
+    "crates/nms-graph/src/route.rs",
+    "crates/nms-graph/src/spatial.rs"
+  ],
+  "allowed_content": "whole-line Rustdoc and blank lines only, plus exact named payload layouts/trailing field comma",
+  "named_payload_layouts": {
+    "crates/nms-graph/src/edges.rs": [
+      "Knn { k: usize },",
+      "WarpRange { max_ly: f64 },"
+    ],
+    "crates/nms-graph/src/error.rs": [
+      "SystemNotFound(String),",
+      "BaseNotFound(String),",
+      "NoSystemsInGalaxy(u8),",
+      "TargetNotFound(String),"
+    ],
+    "crates/nms-graph/src/import.rs": [
+      "Csv(#[from] csv::Error),",
+      "Io(#[from] std::io::Error),"
+    ],
+    "crates/nms-graph/src/route.rs": [
+      "SystemNotFound(SystemId),",
+      "NoPath { from: SystemId, to: SystemId },"
+    ]
+  }
+}
