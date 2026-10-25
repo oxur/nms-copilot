@@ -1,3 +1,20 @@
+//! Discovery event kinds and records extracted from a save.
+//!
+//! A record carries its complete [GalacticAddress], including the galaxy
+//! index. It has no separate reality-index field; construction copies the
+//! supplied address and does not reconcile it with other values.
+//!
+//! # Examples
+//!
+//! ```
+//! use nms_core::{Discovery, DiscoveryRecord, GalacticAddress};
+//!
+//! let address = GalacticAddress::new(0, 0, 0, 0x123, 0, 5);
+//! let record = DiscoveryRecord::new(Discovery::Planet, address, None, None, None, false);
+//! assert_eq!(record.universe_address.reality_index, 5);
+//! assert!(!record.is_uploaded);
+//! ```
+
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt;
@@ -9,11 +26,17 @@ use crate::address::GalacticAddress;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[non_exhaustive]
 pub enum Discovery {
+    /// A discovered planet.
     Planet,
+    /// A discovered solar system.
     SolarSystem,
+    /// A discovered sector.
     Sector,
+    /// A discovered animal.
     Animal,
+    /// A discovered flora specimen.
     Flora,
+    /// A discovered mineral.
     Mineral,
 }
 
@@ -32,7 +55,10 @@ impl fmt::Display for Discovery {
 
 /// Error returned when parsing a discovery type string fails.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct DiscoveryParseError(pub String);
+pub struct DiscoveryParseError(
+    /// The original string that did not match a discovery type.
+    pub String,
+);
 
 impl fmt::Display for DiscoveryParseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -42,6 +68,16 @@ impl fmt::Display for DiscoveryParseError {
 
 impl std::error::Error for DiscoveryParseError {}
 
+/// Parse a discovery type name case-insensitively.
+///
+/// The accepted names are the variant spellings, with solar_system also
+/// accepted for SolarSystem. Input is not trimmed; errors retain the original
+/// string.
+///
+/// # Errors
+///
+/// Returns [DiscoveryParseError] containing the original input when it is not
+/// one of the accepted names.
 impl FromStr for Discovery {
     type Err = DiscoveryParseError;
 
@@ -60,20 +96,31 @@ impl FromStr for Discovery {
 
 /// A single discovery event from the player's save file.
 ///
-/// The `reality_index` is derived from the `universe_address` and kept in sync
-/// by the constructor. Both refer to the galaxy where the discovery was made.
+/// The galaxy is represented by universe_address.reality_index. There is no
+/// separate reality_index field, and the constructor copies the address
+/// without normalizing it.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct DiscoveryRecord {
+    /// Kind of object represented by this discovery.
     pub discovery_type: Discovery,
+    /// Galactic address of the discovery, including its galaxy index.
     pub universe_address: GalacticAddress,
+    /// Optional timestamp recorded for the discovery.
     pub timestamp: Option<DateTime<Utc>>,
+    /// Optional discovered name.
     pub name: Option<String>,
+    /// Optional in-game discoverer name.
     pub discoverer: Option<String>,
+    /// Whether the discovery has been uploaded.
     pub is_uploaded: bool,
 }
 
 impl DiscoveryRecord {
+    /// Copy the supplied discovery fields into a record.
+    ///
+    /// The address is preserved as supplied; no separate galaxy value is
+    /// stored or synchronized.
     pub fn new(
         discovery_type: Discovery,
         universe_address: GalacticAddress,

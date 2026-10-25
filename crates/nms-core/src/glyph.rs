@@ -1,12 +1,41 @@
+//! Portal glyph values, their display table, and prefix parsing.
+//!
+//! The valid glyph indices are 0 through 15. Parsing a complete string accepts
+//! a single hexadecimal character, a table emoji, a glyph name, or its
+//! four-letter abbreviation, case-insensitively for names and abbreviations.
+//!
+//! # Examples
+//!
+//! ```
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! use nms_core::Glyph;
+//!
+//! let rocket: Glyph = "rckt".parse()?;
+//! assert_eq!(rocket.index(), 13);
+//! assert_eq!(rocket.name(), "Rocket");
+//! assert_eq!(rocket.hex_char(), 'D');
+//! assert_eq!(Glyph::try_new(16), None);
+//! # Ok(())
+//! # }
+//! ```
+
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 
+/// Display metadata for one portal glyph.
+///
+/// Entries are indexed by glyph value in [GLYPH_TABLE].
 pub struct GlyphInfo {
+    /// Numeric glyph value from 0 through 15.
     pub index: u8,
+    /// Uppercase hexadecimal character for the value.
     pub hex_char: char,
+    /// Display name recognized by the parsers.
     pub name: &'static str,
+    /// Emoji representation.
     pub emoji: &'static str,
+    /// Four-letter abbreviated name.
     pub abbrev: &'static str,
 }
 
@@ -127,13 +156,20 @@ pub const GLYPH_TABLE: [GlyphInfo; 16] = [
 ];
 
 /// A single portal glyph (value 0-15).
+///
+/// The derived deserializer does not enforce the constructor's range check.
+/// Accessors index [GLYPH_TABLE] directly, so deserialized values outside
+/// 0–15 can panic when converted to display metadata.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct Glyph(u8);
 
 /// Error returned when parsing a glyph string fails.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
-pub struct GlyphParseError(pub String);
+pub struct GlyphParseError(
+    /// Input text or the unrecognized prefix reported by the parser.
+    pub String,
+);
 
 impl fmt::Display for GlyphParseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -144,51 +180,85 @@ impl fmt::Display for GlyphParseError {
 impl std::error::Error for GlyphParseError {}
 
 impl Glyph {
-    /// Create from index 0-15. Panics if out of range.
+    /// Create a glyph from its numeric index.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the index is at least 16.
     pub fn new(index: u8) -> Self {
         assert!(index < 16, "glyph index must be 0-15, got {index}");
         Self(index)
     }
 
-    /// Try to create from index. Returns None if >= 16.
+    /// Try to create a glyph from its numeric index.
+    ///
+    /// Returns [None] for an index outside 0–15.
     pub fn try_new(index: u8) -> Option<Self> {
         if index < 16 { Some(Self(index)) } else { None }
     }
 
-    /// The numeric index (0-15).
+    /// Return the stored numeric glyph value.
+    ///
+    /// Values created by [Glyph::new], [Glyph::try_new], or parsing are in
+    /// 0–15; derived deserialization can preserve an out-of-range value.
     pub fn index(self) -> u8 {
         self.0
     }
 
-    /// The hex character ('0'-'9', 'A'-'F').
+    /// Return the uppercase hexadecimal character for this glyph.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the stored index is outside 0–15, which can occur after
+    /// deserializing a value that bypassed [Glyph::new].
     pub fn hex_char(self) -> char {
         GLYPH_TABLE[self.0 as usize].hex_char
     }
 
-    /// The glyph name ("Sunset", "Bird", etc.).
+    /// Return the display name for this glyph.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the stored index is outside 0–15, which can occur after
+    /// deserializing a value that bypassed [Glyph::new].
     pub fn name(self) -> &'static str {
         GLYPH_TABLE[self.0 as usize].name
     }
 
-    /// The emoji string for this glyph.
+    /// Return the emoji representation for this glyph.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the stored index is outside 0–15, which can occur after
+    /// deserializing a value that bypassed [Glyph::new].
     pub fn emoji(self) -> &'static str {
         GLYPH_TABLE[self.0 as usize].emoji
     }
 
-    /// The 4-character abbreviation for this glyph (e.g., "sset", "bird").
+    /// Return the four-character abbreviation for this glyph.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the stored index is outside 0–15, which can occur after
+    /// deserializing a value that bypassed [Glyph::new].
     pub fn abbrev(self) -> &'static str {
         GLYPH_TABLE[self.0 as usize].abbrev
     }
 }
 
 impl From<u8> for Glyph {
-    /// Panics if value >= 16.
+    /// Convert a numeric index to a glyph.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the value is at least 16.
     fn from(v: u8) -> Self {
         Self::new(v)
     }
 }
 
 impl From<Glyph> for u8 {
+    /// Return the numeric glyph index.
     fn from(g: Glyph) -> u8 {
         g.0
     }
@@ -201,7 +271,15 @@ impl fmt::Display for Glyph {
     }
 }
 
-/// Parse from a single hex character, an emoji, or a glyph name (case-insensitive).
+/// Parse one hexadecimal character, emoji, name, or abbreviation.
+///
+/// Names and abbreviations are case-insensitive. An optional trailing
+/// variation selector is ignored when matching an emoji. The input is not
+/// trimmed.
+///
+/// # Errors
+///
+/// Returns [GlyphParseError] when no supported spelling matches.
 impl FromStr for Glyph {
     type Err = GlyphParseError;
 
@@ -245,14 +323,40 @@ impl FromStr for Glyph {
     }
 }
 
-/// Try to parse a single glyph from the start of `input`.
-/// Returns `(Glyph, remaining_str)` on success.
+/// Parse one glyph from the start of input and return the unconsumed suffix.
 ///
 /// Attempts in order:
 /// 1. Emoji match (longest match first, to handle multi-codepoint emoji)
 /// 2. Glyph name match (case-insensitive, longest name first)
 /// 3. Abbreviation match (case-insensitive, 4-char abbreviations)
 /// 4. Single hex digit
+///
+/// One leading colon is ignored as an abbreviation separator. The parser does
+/// not skip general whitespace.
+///
+/// # Examples
+///
+/// ```
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// use nms_core::glyph::parse_next_glyph;
+///
+/// let (glyph, rest) = parse_next_glyph("Rocket0")?;
+/// assert_eq!(glyph.index(), 13);
+/// assert_eq!(rest, "0");
+/// # Ok(())
+/// # }
+/// ```
+/// # Errors
+///
+/// Returns [GlyphParseError] for empty input, a colon with no following glyph,
+/// or an unrecognized prefix. The error retains the empty-input reason or the
+/// reported prefix.
+///
+/// # Panics
+///
+/// For an unrecognized non-ASCII prefix, constructing the diagnostic can
+/// panic when its 20-byte excerpt ends inside a UTF-8 character.
+///
 pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     if input.is_empty() {
         return Err(GlyphParseError("empty input".to_string()));

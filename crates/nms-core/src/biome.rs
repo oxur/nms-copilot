@@ -1,3 +1,20 @@
+//! Biome classifications and the known biome-subtype names.
+//!
+//! Parsing is case-insensitive and matches the listed full names and aliases.
+//! Inputs are not trimmed. Unknown input is retained in [BiomeParseError].
+//!
+//! # Examples
+//!
+//! ```
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! use nms_core::{Biome, BiomeSubType};
+//!
+//! assert_eq!("GAS_GIANT".parse::<Biome>()?, Biome::GasGiant);
+//! assert_eq!("ocean".parse::<BiomeSubType>()?, BiomeSubType::WaterworldOcean);
+//! # Ok(())
+//! # }
+//! ```
+
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
@@ -57,6 +74,9 @@ pub const ALL_BIOME_SUBTYPES: [BiomeSubType; 31] = [
 ];
 
 /// Planet biome classification matching GcBiomeType from game data.
+///
+/// The parser accepts the variant names without regard to case, plus
+/// gasgiant and gas_giant for [Biome::GasGiant]. It does not trim whitespace.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "archive",
@@ -64,20 +84,35 @@ pub const ALL_BIOME_SUBTYPES: [BiomeSubType; 31] = [
 )]
 #[non_exhaustive]
 pub enum Biome {
+    /// Lush planet biome.
     Lush,
+    /// Toxic planet biome.
     Toxic,
+    /// Scorched planet biome.
     Scorched,
+    /// Radioactive planet biome.
     Radioactive,
+    /// Frozen planet biome.
     Frozen,
+    /// Barren planet biome.
     Barren,
+    /// Dead planet biome.
     Dead,
+    /// Weird planet biome.
     Weird,
+    /// Red planet biome.
     Red,
+    /// Green planet biome.
     Green,
+    /// Blue planet biome.
     Blue,
+    /// Swamp planet biome.
     Swamp,
+    /// Lava planet biome.
     Lava,
+    /// Waterworld planet biome.
     Waterworld,
+    /// Gas-giant biome classification.
     GasGiant,
 }
 
@@ -106,7 +141,10 @@ impl fmt::Display for Biome {
 
 /// Error returned when parsing a biome or biome subtype string fails.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct BiomeParseError(pub String);
+pub struct BiomeParseError(
+    /// The original string that did not match a biome or subtype.
+    pub String,
+);
 
 impl fmt::Display for BiomeParseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -116,6 +154,14 @@ impl fmt::Display for BiomeParseError {
 
 impl std::error::Error for BiomeParseError {}
 
+/// Parse a biome name without regard to case.
+///
+/// Accepted names are the variant spellings, with `gasgiant` and `gas_giant`
+/// both accepted for [Biome::GasGiant]. Input is not trimmed.
+///
+/// # Errors
+///
+/// Returns [BiomeParseError] containing the original input when no name matches.
 impl FromStr for Biome {
     type Err = BiomeParseError;
 
@@ -142,6 +188,9 @@ impl FromStr for Biome {
 }
 
 /// Planet biome subtype matching GcBiomeSubType from game data (31 variants).
+///
+/// Parsing accepts full variant names without regard to case and also accepts
+/// the unique suffixes, such as ice or ocean. Inputs are not trimmed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "archive",
@@ -149,36 +198,67 @@ impl FromStr for Biome {
 )]
 #[non_exhaustive]
 pub enum BiomeSubType {
+    /// Room-temperature Lush subtype.
     LushRoomTemp,
+    /// Humid Lush subtype.
     LushHumid,
+    /// Inactive Lush subtype.
     LushInactive,
+    /// Tentacles Toxic subtype.
     ToxicTentacles,
+    /// Fungus Toxic subtype.
     ToxicFungus,
+    /// Eggs Toxic subtype.
     ToxicEggs,
+    /// Singed Scorched subtype.
     ScorchedSinged,
+    /// Charred Scorched subtype.
     ScorchedCharred,
+    /// Blasted Scorched subtype.
     ScorchedBlasted,
+    /// Fungal Radioactive subtype.
     RadioactiveFungal,
+    /// Contaminated Radioactive subtype.
     RadioactiveContaminated,
+    /// Irradiated Radioactive subtype.
     RadioactiveIrradiated,
+    /// Ice Frozen subtype.
     FrozenIce,
+    /// Snow Frozen subtype.
     FrozenSnow,
+    /// Glacial Frozen subtype.
     FrozenGlacial,
+    /// Dusty Barren subtype.
     BarrenDusty,
+    /// Rocky Barren subtype.
     BarrenRocky,
+    /// Mountainous Barren subtype.
     BarrenMountainous,
+    /// Empty Dead subtype.
     DeadEmpty,
+    /// Corroded Dead subtype.
     DeadCorroded,
+    /// Void Dead subtype.
     DeadVoid,
+    /// Hexagonal Weird subtype.
     WeirdHexagonal,
+    /// Cabled Weird subtype.
     WeirdCabled,
+    /// Bubbling Weird subtype.
     WeirdBubbling,
+    /// Fractured Weird subtype.
     WeirdFractured,
+    /// Shattered Weird subtype.
     WeirdShattered,
+    /// Contorted Weird subtype.
     WeirdContorted,
+    /// Wire-cell Weird subtype.
     WeirdWireCell,
+    /// Murky Swamp subtype.
     SwampMurky,
+    /// Volcanic Lava subtype.
     LavaVolcanic,
+    /// Ocean Waterworld subtype.
     WaterworldOcean,
 }
 
@@ -188,6 +268,15 @@ impl fmt::Display for BiomeSubType {
     }
 }
 
+/// Parse a biome subtype name or its unique suffix without regard to case.
+///
+/// Full variant names and the suffix aliases in the parser are accepted. Input
+/// is not trimmed.
+///
+/// # Errors
+///
+/// Returns [BiomeParseError] containing the original input when no name or
+/// suffix matches.
 impl FromStr for BiomeSubType {
     type Err = BiomeParseError;
 
