@@ -12,3 +12,5 @@
 | UD-06 | Attributable independent acceptance/retro/original parent accounting | Six-row review/CC returns/CDC retrospective/bubble-up/API30 owner/M7.6open | correctness-grade | open | — |
 
 2026-10-25 heldinitialreview: actualformat/lint0 onf6ee50b9, no runtime/imagesyet. All6UDopen; current02firstactualrefinement1/5/4remain, threeMarkdownonly F1–F4 correction, correctrenderer/productionfrozen. Initial+01firstimplementation; no reset/waiver.
+
+Settled02 review2026-10-25 clears F1–F4 and exact renewedpair; originalactualcapture/render/provenance phase RELEASED with finalassetpair/HOLD stillrequired. All6UDremainOPEN; no image/runtime acceptanceyet. Actual1/5 used/fourremain; no newscope/population.
