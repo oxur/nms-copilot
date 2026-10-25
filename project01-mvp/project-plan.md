@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.142
+version: 1.143
 project: project01-mvp
 status: active
 depends-on: []
@@ -1383,3 +1383,7 @@ Version1.140 closes all6TG/R06-S48 on isolated cleanfb2ecebb9b1238c2c4b3d4c790f9
 ## Arc07 initial three results accepted; discussion pause — 2026-10-25
 
 Version1.142 records independently accepted [native map result](arc07-closeout-reconciliation/slice01-map-check/artifacts/map-result.md), [complete49-entry inventory](arc07-closeout-reconciliation/slice02-work-inventory/artifacts/work-inventory.md), and [decision report](arc07-closeout-reconciliation/slice03-decision-report/artifacts/decision-report.md). Source remains cleanfb2ecebb; main/old49 remain untouched. Three results are decision-ready, not final Project01 acceptance. Execution AND further arc planning are paused for Duncan’s joint decisions; no04/new arc/Arc06 restart is authorized. All26 project criteria and12 original/repair Arc06 criteria retain their open dispositions. No recommendation enacts cleanup, removal, compatibility/scope amendment, target waiver or release authority.
+
+## Arc07 adopted remaining closeout scope — 2026-10-25
+
+Version1.143 records Duncan’s adoption of the [Arc07 table and finite04–08 sketch](arc07-closeout-reconciliation/arc-plan.md#table-adopted-finite-cleanup-authorization--2026-10-25). The initial pause and three accepted results remain preserved. Authentic NomNom acceptance is deferred pending attributable export (Duncan input/CDC re-entry); new publication alone is deferred to a separately authorized release (Duncan owner, ready candidate/chosen version/external permission). Local package/isolated-install readiness and historical publication evidence remain in scope, as do all other original criteria. Continue approved Autonomous cleanup toward a finite reviewed candidate/remaining-gates handoff, not an automatic success declaration. No95%/module waiver, new feature/routing redesign, push/integration/publication authority or new arc follows.

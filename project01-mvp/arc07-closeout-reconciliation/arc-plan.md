@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.6. Created: 2026-10-25. Status: initial three accepted; behavior decisions adopted; remaining-obligation table awaits Duncan. Execution and Slice04+ planning remain held. Arc remains open.
+Version: 1.7. Created: 2026-10-25. Status: table adopted; finite remaining cleanup authorized. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -195,6 +195,47 @@ owners in their existing ledgers, amend only the agreed remaining Arc07 scope,
 then sketch the necessary usable increments. **No Slice04+ directory or prompt is
 created by this follow-up.** Execution remains stopped until that gate is met.
 
+## Table adopted; finite cleanup authorization — 2026-10-25
+
+Duncan’s “I agree!” explicitly adopted the two proposed deferrals and the rest of
+the table. This supersedes the table-disposition hold above; the earlier pause
+was observed and remains historical. M7.5 is deferred until an attributable
+NomNom full-save export/version is available (Duncan input owner, CDC reopens the
+bounded comparison). Only **new crates.io publication** is deferred until a ready
+candidate, chosen version and Duncan’s explicit release/external-action authority.
+Local package/isolated-install readiness and historical version/source/registry
+provenance remain required; M7.8 and P01-G06 are mixed obligations and stay open.
+All other table obligations remain in closeout scope. No 95% or module-floor
+waiver was adopted.
+
+The earlier fixed-snapshot map, original graph-consistency/minimal-repair,
+keep/narrow test-mechanics consolidation, remove-only-stray-helper and drop-old49
+execution decisions carry through this Arc07 cleanup. Standing Autonomous Mode
+and approved CDC SolHigh / sole existing CC LunaHigh settings continue for this
+finite endpoint. Source work remains on the existing dedicated non-default
+candidate branch, without a preliminary rebase. Only restoration of the exact
+known stray main edit is allowed on main, after blob/exact-diff guards; any drift
+must be preserved. Old49 stays untracked, byte-preserved and never issued.
+
+| Remaining increment | Usable result and boundary |
+|---|---|
+| 04 — Live atlas consistency | Fixed entry map snapshot releases the shared lock; bounded incremental/full-rebuild real-consumer comparison and smallest necessary graph repair. Preserve routing policy, existing API/terminal behavior and cache compatibility. |
+| 05 — Narrow support cleanup | Consolidate only concrete duplicated test mechanics while retaining discriminating cases/oracles; restore only the guarded nine-line stray main edit. No new harness or cleanup campaign. |
+| 06 — Existing interaction/docs and local distribution | Reconcile existing UI promises, align changed docs/assets, and establish isolated package/install readiness. A substantial missing original feature or unavailable package/input is an explicit affected gate, not permission for feature growth. |
+| 07 — Final candidate validation | Existing feature/MSRV/platform, faithful coverage/module and two original performance checks. Reuse applicable accepted proof. Any coverage/performance shortfall or unavailable host/toolchain stops affected acceptance for a concrete human choice; no automatic hardening/optimization slice. |
+| 08 — Scope/composition handoff | Reconcile original obligations and adopted deferrals; independently review the composed candidate and report completed capability plus genuine remaining gates. Preserve higher-scale independent and Operator acceptance; no automatic project success, integration or release. |
+
+Detail only the next increment. This is a small finite sequence, not five blank
+contracts to fill by momentum. Explain any necessary growth before opening more
+work; do not silently add09+. Hold only missing input/criterion/external-action
+proof while completing independent ready authorized work. No new process,
+emulator/capture/benchmark framework, dependency install, routing redesign,
+feature polish, Project02/new arc, threshold/exclusion weakening, or retrospective
+rebuilding of49 evidence packets. Scratch install roots are authorized for local
+verification; user-installed binaries/global environment are protected. Push,
+merge/rebase/integration/tag, external CI/pipeline effects and publication still
+need explicit separate authority after a concrete candidate is ready.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -211,3 +252,5 @@ created by this follow-up.** Execution remains stopped until that gate is met.
 - 1.5 (2026-10-25): Slice03 recommendations independently accepted; all49 mapped, three results composed into initial handoff and actual stop recorded. No source changes or criterion waivers. Keep/simplify/drop/defer remain recommendations; human joint decisions are required before any later scope or planning. CC metadata/trailer-correction deviation retained in Slice03 review.
 
 - 1.6 (2026-10-25): Recorded Duncan’s adoption of fixed-snapshot map, original graph-consistency/minimal-repair and keep/narrow-cleanup/drop-old49 decisions. Added the requested existing-obligation finish/proposed-deferral/external-gate table; no deferral or numeric waiver adopted and no execution or04+ planning resumed.
+
+- 1.7 (2026-10-25): Duncan adopted the table and its two narrow deferrals. Recorded mixed publishing/readiness obligations, continuing finite Autonomous authority and04–08 usable-increment sketch; only the next actual assignment will be detailed. Original numeric/input/external/acceptance gates remain.
