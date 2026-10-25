@@ -1,0 +1,494 @@
+diff --git a/crates/nms-copilot/src/coordinator.rs b/crates/nms-copilot/src/coordinator.rs
+index d107a99..5159f18 100644
+--- a/crates/nms-copilot/src/coordinator.rs
++++ b/crates/nms-copilot/src/coordinator.rs
+@@ -1,12 +1,41 @@
+-//! One application-owned path from parsed save updates through the live model
+-//! to the optional cache and read-only observers.
++//! Application-owned live-save coordination from checked watcher observations.
+ //!
+-//! Observer channels are unbounded. Slow subscribers therefore do not delay
+-//! application or cache writes, but callers must drain their receiver to bound
+-//! their own memory use. A subscriber receives events published after its
+-//! registration; there is no initial snapshot or replay. An update already in
+-//! flight may be published after subscription because publication follows the
+-//! serialized apply/write operation.
++//! [`LiveSaveCoordinator::start`] takes a model that the application has
++//! already loaded, starts one watcher for that coordinator instance, and runs a
++//! worker that applies each observation before optional cache persistence and
++//! read-only publication. The worker does not seed the model, write an initial
++//! cache, or emit an initial update. Creating another coordinator creates
++//! another watcher; this type does not enforce a process-wide singleton.
++//!
++//! For each accepted observation, the worker formats notes against the
++//! pre-update model, applies the complete player update and additive atlas
++//! delta, ensures the player system, applies explicit discovery-name
++//! observations, and snapshots the cache using that update's source version
++//! when a cache path was supplied. It releases the model write lock before the
++//! serialized cache write. Cache failures are reported to stderr; they do not
++//! roll back the model or prevent the observer event from being published.
++//! With no cache path, the worker skips cache extraction and writing.
++//!
++//! [`AppliedSaveUpdate`] contains the parsed [`SaveUpdate`], whether an
++//! existing discovery name changed, and notes formatted before application.
++//! It does not contain the discovery-name map or a cache-write receipt. A
++//! name-only observation can therefore publish an event with an empty delta
++//! and no notes while changing what later model reads return.
++//!
++//! Each call to [`LiveSaveCoordinator::subscribe`] creates an unbounded
++//! standard-channel receiver. It receives publications made after
++//! registration, with no initial snapshot or replay; an update already in
++//! flight may be published after registration. Publication follows the
++//! serialized application and cache attempt. Slow subscribers do not delay
++//! those operations, so callers must drain receivers to control their own
++//! memory use. Events are not a query snapshot or a durable history.
++//!
++//! Dropping the coordinator signals its worker and joins it; the worker then
++//! drops and joins its watcher. Work already being applied or written finishes
++//! before `drop` returns, but queued observations are not promised to flush.
++//! Parser and disk I/O have no hard shutdown deadline. Release model guards
++//! before dropping the coordinator. A worker panic is joined and reported to
++//! stderr rather than returned from `drop`.
+ 
+ use std::fmt;
+ use std::path::{Path, PathBuf};
+@@ -22,22 +51,83 @@ use nms_graph::GalaxyModel;
+ use nms_watch::{WatchConfig, WatchObservationHandle, start_watching_observations};
+ use tokio::sync::RwLock;
+ 
+-/// A complete parsed update after it has been applied to the shared model.
++/// One parsed update after the coordinator applied it to the shared model.
++///
++/// The event is published after the model update and the optional best-effort
++/// cache-write attempt. It is not a cache-success receipt, a complete model
++/// snapshot, or a record of the explicit discovery-name map. Fields are public
++/// and this value can also be constructed independently of a coordinator.
+ #[derive(Debug, Clone)]
+ pub struct AppliedSaveUpdate {
+-    /// Complete parsed player state, atlas delta, and source version.
++    /// Complete supported player state, additive atlas delta, and source save
++    /// version observed together by one parse.
+     pub update: SaveUpdate,
+-    /// Whether an existing entity's discovery name changed after the delta.
++    /// Whether applying the observation changed a name on an existing entity.
++    ///
++    /// This can be `true` when `update.delta` is empty. A removed name-map
++    /// entry alone does not clear a model name.
+     pub names_changed: bool,
+-    /// Existing human-readable discovery/movement notes, formatted pre-apply.
++    /// Movement and discovery notes formatted against the model before this
++    /// update was applied, in notification order.
++    ///
++    /// The receiver preserves these strings literally; this field does not
++    /// contain cache status or validate how the strings were produced.
+     pub notifications: Vec<String>,
+ }
+ 
+-/// Failure to start the owned live-update producer.
++/// Failure to start a live-save coordinator.
++///
++/// The variants retain the watcher-setup or operating-system thread-creation
++/// error so callers can inspect its typed payload. The display text adds a
++/// coordinator-specific prefix. This type does not expose a nested source
++/// chain.
++///
++/// # Examples
++///
++/// ```
++/// use nms_copilot::coordinator::CoordinatorStartError;
++/// use nms_watch::WatchError;
++/// use std::error::Error;
++/// use std::io;
++/// use std::path::{Path, PathBuf};
++///
++/// let missing = CoordinatorStartError::Watch(WatchError::SaveNotFound(
++///     PathBuf::from("missing.json"),
++/// ));
++/// assert_eq!(
++///     missing.to_string(),
++///     "could not start save update coordinator: save file not found: missing.json",
++/// );
++/// assert!(missing.source().is_none());
++/// let CoordinatorStartError::Watch(WatchError::SaveNotFound(path)) = &missing else {
++///     return Err(io::Error::new(io::ErrorKind::Other, "unexpected watch error").into());
++/// };
++/// assert_eq!(path, Path::new("missing.json"));
++///
++/// let worker = CoordinatorStartError::Worker(io::Error::new(
++///     io::ErrorKind::PermissionDenied,
++///     "denied",
++/// ));
++/// assert_eq!(worker.to_string(), "could not start coordinator worker: denied");
++/// assert!(worker.source().is_none());
++/// let CoordinatorStartError::Worker(error) = &worker else {
++///     return Err(io::Error::new(io::ErrorKind::Other, "unexpected worker error").into());
++/// };
++/// assert_eq!(error.kind(), io::ErrorKind::PermissionDenied);
++/// # Ok::<(), Box<dyn Error>>(())
++/// ```
+ #[derive(Debug)]
+ pub enum CoordinatorStartError {
+-    Watch(nms_watch::WatchError),
+-    Worker(std::io::Error),
++    /// The checked save watcher or native file notification setup failed.
++    Watch(
++        /// Missing path, initial parse, or watcher-setup error from `nms-watch`.
++        nms_watch::WatchError,
++    ),
++    /// The coordinator's application worker could not be created.
++    Worker(
++        /// Operating-system error returned while spawning the worker thread.
++        std::io::Error,
++    ),
+ }
+ 
+ impl fmt::Display for CoordinatorStartError {
+@@ -54,13 +144,33 @@ impl fmt::Display for CoordinatorStartError {
+ 
+ impl std::error::Error for CoordinatorStartError {}
+ 
+-/// Owns the single watcher producer and serialized live cache writer.
++/// Owns one watcher producer and the worker that applies updates and writes
++/// the optional live cache.
++///
++/// Ownership is per value; starting another coordinator starts another
++/// watcher. The application currently chooses to own one for its selected
++/// save. The supplied model must already be loaded. Startup checks and watches
++/// the save but does not apply an initial observation or write a cache.
++///
++/// On each accepted observation, the worker applies the complete player state
++/// and additive atlas delta, ensures the player system, applies explicit names,
++/// and optionally snapshots the model with the observed save version. It
++/// releases the model lock before attempting the serialized cache write, then
++/// publishes an [`AppliedSaveUpdate`] even if that best-effort write fails.
++/// With no cache path, it does not extract or write cache data. The coordinator
++/// does not update a REPL [`crate::session::SessionState`].
++///
++/// Subscribers use unbounded channels and receive no initial snapshot or
++/// replay. Slow receivers do not block model application or cache writing; each
++/// caller is responsible for draining its receiver. A subscription made while
++/// an update is in flight can receive that update after registration.
+ ///
+-/// Drop signals shutdown and joins the worker, which in turn drops and joins
+-/// the watcher. An update already being applied or written is completed before
+-/// Drop returns. Queued updates are not promised to flush, and parser or disk
+-/// I/O has no hard completion deadline. Callers must release model guards
+-/// before dropping this coordinator.
++/// Dropping the value signals shutdown and joins the application worker; the
++/// worker then drops and joins the watcher. In-flight application and disk
++/// writing finish before `drop` returns, but queued observations are not
++/// promised to flush. Parser or disk I/O has no hard completion deadline.
++/// Release model guards before dropping the coordinator. A worker panic is
++/// joined and reported to stderr rather than returned from `drop`.
+ pub struct LiveSaveCoordinator {
+     shutdown: Arc<AtomicBool>,
+     worker: Option<JoinHandle<()>>,
+@@ -77,7 +187,63 @@ impl fmt::Debug for LiveSaveCoordinator {
+ }
+ 
+ impl LiveSaveCoordinator {
+-    /// Start exactly one full-state watcher and its serialized app worker.
++    /// Start a checked watcher and one serialized application worker.
++    ///
++    /// The caller supplies an already loaded shared model. This call does not
++    /// seed it from the save, write an initial cache, or publish an initial
++    /// event. The watcher establishes its checked baseline before the worker
++    /// starts. A second call creates a second independent coordinator instance.
++    ///
++    /// When `cache_path` is `None`, accepted updates skip cache extraction and
++    /// writing. When it is `Some`, cache snapshots use each update's source
++    /// version; later write failures are reported to stderr and do not undo the
++    /// model update or suppress publication.
++    ///
++    /// # Errors
++    ///
++    /// Returns [`CoordinatorStartError::Watch`] if the save path is missing,
++    /// the initial checked parse fails, or watcher/native notification setup
++    /// fails. Returns [`CoordinatorStartError::Worker`] if the operating system
++    /// cannot create the coordinator worker thread.
++    ///
++    /// # Panics
++    ///
++    /// Initial parsing can propagate the parser's documented malformed
++    /// compressed-size offset panic on 32-bit targets or invalid bundled-mapping
++    /// panic. This is the initial parse performed by
++    /// [`nms_watch::start_watching_observations`].
++    ///
++    /// # Examples
++    ///
++    /// This example is compiled without starting a watcher or touching a save
++    /// file.
++    ///
++    /// ```no_run
++    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
++    /// use nms_copilot::coordinator::LiveSaveCoordinator;
++    /// use nms_copilot::watch::drain_applied_notifications;
++    /// use nms_graph::GalaxyModel;
++    /// use nms_watch::WatchConfig;
++    /// use std::path::PathBuf;
++    /// use std::sync::Arc;
++    /// use std::time::Duration;
++    /// use tokio::sync::RwLock;
++    ///
++    /// // Applications normally load their model before starting live updates.
++    /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
++    /// let watch = WatchConfig {
++    ///     save_path: PathBuf::from("save.json"),
++    ///     debounce: Duration::from_millis(500),
++    /// };
++    /// let coordinator = LiveSaveCoordinator::start(model, watch, None)?;
++    /// let receiver = coordinator.subscribe();
++    /// let current_notes = drain_applied_notifications(&receiver);
++    /// drop(receiver);
++    /// drop(coordinator);
++    /// # let _ = current_notes;
++    /// # Ok(())
++    /// # }
++    /// ```
+     pub fn start(
+         model: Arc<RwLock<GalaxyModel>>,
+         watch: WatchConfig,
+@@ -120,8 +286,13 @@ impl LiveSaveCoordinator {
+         })
+     }
+ 
+-    /// Subscribe to future applied updates. The unbounded receiver must be
+-    /// drained by its owner; a slow subscriber never stalls cache writing.
++    /// Subscribe to applied updates published after registration.
++    ///
++    /// The unbounded receiver has no initial snapshot or replay. An update
++    /// already in flight can be published after this method returns. A slow
++    /// subscriber does not stall model application or cache writing, so its
++    /// owner must drain the receiver to control memory use. A disconnected
++    /// receiver is removed when a later event is published.
+     pub fn subscribe(&self) -> mpsc::Receiver<AppliedSaveUpdate> {
+         let (sender, receiver) = mpsc::channel();
+         lock_observers(&self.observers).push(sender);
+diff --git a/crates/nms-copilot/src/watch.rs b/crates/nms-copilot/src/watch.rs
+index f9badf5..adfc1e6 100644
+--- a/crates/nms-copilot/src/watch.rs
++++ b/crates/nms-copilot/src/watch.rs
+@@ -1,8 +1,17 @@
+-//! Watch integration for the REPL.
++//! Watch-related REPL helpers and read-only applied-update notification drains.
+ //!
+-//! Drains pending file-watcher deltas between prompts, applies them to the
+-//! galaxy model, updates session state, and optionally writes through to the
+-//! cache. Notifications are returned as strings for the REPL to print.
++//! [`drain_watch_events`] retains the legacy delta-only REPL path: it applies
++//! queued [`SaveDelta`] values, synchronizes the caller's session, prints
++//! notes, and may write one cache snapshot after the batch. The normal
++//! application path instead uses [`crate::coordinator::LiveSaveCoordinator`]
++//! and gives read-only subscribers [`drain_applied_notifications`]; draining
++//! those notifications does not apply an update or persist a cache.
++//!
++//! [`notifications_for_delta`] formats notes against the model before an
++//! update. [`apply_and_notify`] uses that formatter, then applies a delta and
++//! synchronizes the REPL session. These helpers describe the legacy delta
++//! behavior; they do not provide the coordinator's complete player state,
++//! explicit discovery-name observations, or same-parse cache version.
+ 
+ use std::path::Path;
+ use std::sync::mpsc;
+@@ -14,10 +23,25 @@ use crate::coordinator::AppliedSaveUpdate;
+ use crate::session::SessionState;
+ use nms_core::system::SystemId;
+ 
+-/// Drain all pending deltas from the watcher and apply them to the model.
++/// Drain and apply all currently queued legacy watcher deltas.
++///
++/// For each received delta, this formats notes before application, applies the
++/// additive atlas changes, synchronizes `session`, and prints each note to
++/// stdout. It does not apply the complete player state, source version, or
++/// discovery-name observations carried by the coordinator path. An empty or
++/// disconnected receiver ends the nonblocking drain.
++///
++/// If at least one delta was received, `cache_path` causes one cache snapshot
++/// and best-effort write after the whole batch, using the caller-supplied
++/// `save_version`; no received delta means no cache write. A received empty
++/// delta still counts as a batch item. Cache failures are reported to stderr;
++/// they do not return an error or roll back model/session updates. `None`
++/// skips cache extraction and writing.
+ ///
+-/// Prints notifications for each delta. If any deltas were applied and
+-/// `cache_path` is provided, writes an updated cache.
++/// # Panics
++///
++/// Writing a notification or cache-failure warning to stdout or stderr can
++/// panic if the output stream fails.
+ pub fn drain_watch_events(
+     receiver: &mpsc::Receiver<SaveDelta>,
+     model: &mut GalaxyModel,
+@@ -44,10 +68,15 @@ pub fn drain_watch_events(
+     }
+ }
+ 
+-/// Drain already-applied update notifications into user-facing movement notes.
++/// Drain literal notifications from already-applied updates.
+ ///
+-/// This observer has no access to the model, cache, or session, so consuming
+-/// notifications cannot apply state or persist it a second time.
++/// Repeatedly calls `try_recv` and concatenates each event's `notifications`
++/// in publication order. It stops when the channel is empty or disconnected;
++/// it does not wait for future events. This read-only observer has no access
++/// to the model, cache, or session, so consuming notifications cannot apply
++/// state or persist it a second time. Strings are returned exactly as stored,
++/// even if they were constructed independently of the coordinator's formatter.
++/// This is not a cache-write receipt, replay, or model snapshot.
+ ///
+ /// # Examples
+ ///
+@@ -141,10 +170,21 @@ mod applied_notification_tests {
+     }
+ }
+ 
+-/// Format user-facing notes for an update before applying it to the model.
++/// Format user-facing notes from a delta against the current model.
++///
++/// This function only reads the model and returns strings; it does not apply
++/// the delta, print output, or report cache status. Notes are ordered as
++/// movement, each new system, each new planet, then each new base. Modified
++/// bases, removals, and name-only changes do not produce notes. System lookup
++/// uses the galaxy-qualified, planet-zeroed system key. A movement destination
++/// uses a matching incoming system only when the model has no genuine system
++/// there or has a player placeholder; otherwise the existing system name is
++/// retained. Missing movement names render as `unknown`, unnamed new systems
++/// and planets as `-`, and planets without a biome as `?`. Every generated
++/// note begins with two ASCII spaces. These notes describe the incoming delta,
++/// not a receipt that every duplicate record was inserted.
+ ///
+-/// This is pure with respect to the model and is shared by the coordinator so
+-/// both live paths preserve the same name-resolution behavior.
++/// [`apply_and_notify`] uses this formatter before applying a legacy delta.
+ pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<String> {
+     let mut notes = Vec::new();
+ 
+@@ -207,10 +247,125 @@ pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<St
+     notes
+ }
+ 
+-/// Apply a delta to the model and generate human-readable notifications.
++/// Format notes against the current model, then apply a legacy delta.
++///
++/// Notes are generated before `model.apply_delta`, preserving lookups for the
++/// movement origin. The helper then synchronizes model-derived session fields.
++/// It does not print, apply complete player fields or explicit discovery names,
++/// start a watcher, ensure a player placeholder, or write a cache.
++///
++/// # Examples
++///
++/// This in-memory example formats and applies a cross-galaxy update without
++/// reading a save file, starting a watcher, or writing a cache. The expected
++/// notifications are literal user-facing strings, including their two-space
++/// prefixes.
+ ///
+-/// Notifications are generated *before* the delta is applied so that
+-/// system name lookups for the "from" position still resolve correctly.
++/// ```
++/// use nms_copilot::session::{PositionContext, SessionState};
++/// use nms_copilot::watch::{apply_and_notify, notifications_for_delta};
++/// use nms_core::{BaseType, Biome, GalacticAddress, PlayerBase, PlayerMoved, PlayerState, Planet, SaveDelta, System, SystemId};
++/// use nms_graph::GalaxyModel;
++///
++/// let origin = GalacticAddress::new(3, 0, 0, 1, 2, 0);
++/// let destination = GalacticAddress::new(3, 0, 0, 1, 4, 9);
++/// let origin_id = SystemId::from_address(&origin);
++/// let destination_id = SystemId::from_address(&destination);
++/// let mut model = GalaxyModel::new();
++/// model.set_active_galaxy(7);
++/// model.player_state = Some(PlayerState::new(origin, 0, None, None, 7, 8, 9));
++/// model.insert_system(System::new(
++///     origin,
++///     Some("Origin-0".into()),
++///     None,
++///     None,
++///     vec![],
++/// ));
++/// let mut session = SessionState::from_model(&model);
++/// session.position = Some(PositionContext::Address(origin));
++/// session.biome_filter = Some(Biome::Lush);
++/// session.warp_range = Some(1200.0);
++///
++/// let delta = SaveDelta {
++///     new_systems: vec![System::new(
++///         destination,
++///         Some("Destination-9".into()),
++///         None,
++///         None,
++///         vec![Planet::new(4, Some(Biome::Lush), None, false, Some("Garden-9".into()), None)],
++///     )],
++///     new_planets: vec![(
++///         destination_id,
++///         Planet::new(5, Some(Biome::Toxic), None, false, Some("Leaf-9".into()), None),
++///     )],
++///     player_moved: Some(PlayerMoved { from: origin, to: destination }),
++///     new_bases: vec![PlayerBase::new(
++///         "Outpost-9".into(),
++///         BaseType::HomePlanetBase,
++///         destination,
++///         [0.0, 0.0, 0.0],
++///         None,
++///     )],
++///     modified_bases: vec![],
++/// };
++/// let expected_before = vec![
++///     "  Warped: Origin-0 -> Destination-9".to_owned(),
++///     "  New system: Destination-9 (1 planet)".to_owned(),
++///     "  New scan: \"Leaf-9\" (Toxic) in Destination-9".to_owned(),
++///     "  New base: Outpost-9".to_owned(),
++/// ];
++/// assert_eq!(notifications_for_delta(&model, &delta), expected_before);
++/// assert_eq!((model.system_count(), model.planet_count(), model.bases.len()), (1, 0, 0));
++/// assert_eq!(model.active_galaxy, 7);
++/// let before = model.player_state.as_ref().map(|player| (
++///     player.current_address.packed(), player.current_reality,
++///     player.previous_address, player.freighter_address,
++///     player.units, player.nanites, player.quicksilver,
++/// ));
++/// assert_eq!(before, Some((origin.packed(), 0, None, None, 7, 8, 9)));
++///
++/// let notes = apply_and_notify(&mut model, &mut session, &delta);
++/// assert_eq!(notes, vec![
++///     "  Warped: Origin-0 -> Destination-9".to_owned(),
++///     "  New system: Destination-9 (1 planet)".to_owned(),
++///     "  New scan: \"Leaf-9\" (Toxic) in Destination-9".to_owned(),
++///     "  New base: Outpost-9".to_owned(),
++/// ]);
++/// assert_eq!((model.system_count(), model.planet_count(), model.bases.len()), (2, 2, 1));
++/// assert_eq!(model.active_galaxy, 9);
++/// let after = model.player_state.as_ref().map(|player| (
++///     player.current_address.packed(), player.current_reality,
++///     player.previous_address, player.freighter_address,
++///     player.units, player.nanites, player.quicksilver,
++/// ));
++/// assert_eq!(after, Some((destination.packed(), 9, None, None, 7, 8, 9)));
++/// assert_eq!(model.system(&origin_id).map(|system| system.name.as_deref()), Some(Some("Origin-0")));
++/// assert_eq!(model.system(&destination_id).map(|system| system.name.as_deref()), Some(Some("Destination-9")));
++/// assert_eq!(model.planets.get(&(destination_id, 4)).map(|planet| (planet.name.as_deref(), planet.biome)), Some((Some("Garden-9"), Some(Biome::Lush))));
++/// assert_eq!(model.planets.get(&(destination_id, 5)).map(|planet| (planet.name.as_deref(), planet.biome)), Some((Some("Leaf-9"), Some(Biome::Toxic))));
++/// let mut system_keys: Vec<_> = model.systems.keys()
++///     .map(|id| (id.reality_index(), id.system_address()))
++///     .collect();
++/// system_keys.sort_unstable();
++/// assert_eq!(system_keys, [(0, 0x0001_0000_0003), (9, 0x0001_0000_0003)]);
++/// let mut planet_keys: Vec<_> = model.planets.keys()
++///     .map(|(id, index)| (id.reality_index(), id.system_address(), *index))
++///     .collect();
++/// planet_keys.sort_unstable();
++/// assert_eq!(planet_keys, [(9, 0x0001_0000_0003, 4), (9, 0x0001_0000_0003, 5)]);
++/// let mut base_keys: Vec<_> = model.bases.keys().map(String::as_str).collect();
++/// base_keys.sort_unstable();
++/// assert_eq!(base_keys, ["outpost-9"]);
++/// assert_eq!(model.bases.get("outpost-9").map(|base| (base.name.as_str(), base.address.packed())), Some(("Outpost-9", destination.packed())));
++/// assert_eq!(
++///     (session.galaxy.index, session.galaxy.name, session.galaxy.galaxy_type,
++///      session.system_count, session.planet_count,
++///      session.position.as_ref().map(|position| (position.address().packed(), position.address().reality_index)),
++///      session.biome_filter, session.warp_range),
++///     (9, "Eissentam", nms_core::GalaxyType::Lush, 2, 2,
++///      Some((origin.packed(), 0)), Some(Biome::Lush), Some(1200.0)),
++/// );
++/// ```
+ pub fn apply_and_notify(
+     model: &mut GalaxyModel,
+     session: &mut SessionState,

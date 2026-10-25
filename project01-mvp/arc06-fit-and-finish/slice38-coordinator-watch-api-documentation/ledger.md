@@ -10,3 +10,5 @@
 | CW-04 | Non-doc/API/tests/deps/otherpaths unchanged | Twoorderedcomparisons/2payloadlayouts/opposedmutation | correctness-grade | open | Supplied auditor |
 | CW-05 | Attributable original appropriate validation/commit/fences | Ninegroups/rawfirst/cleanexactcommit | correctness-grade | open | Supportcontrols only |
 | CW-06 | Independent acceptance/retro/bottomup/alloriginalowners | CDC ninegroups/6rowclose/retrospective | correctness-grade | open | RequiredSlice39/fullM7.6 remainsOPEN |
+
+2026-10-25 initialheldreview: all6CW OPEN, fullW1/W2/E1–E4walk closesboundedF1–F4 into immutable01firstactual1/5/fourleft. Format/lintactual0 only; runtimeunreleased. Literalnotes/keypopulationsvalid; no productiondefect/sourcechangeoutside2paths observed.
