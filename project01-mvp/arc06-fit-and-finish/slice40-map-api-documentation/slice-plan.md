@@ -1,6 +1,6 @@
 # Slice40 — map API documentation
 
-Version1.0, 2026-10-25 UTC. Initial0actualrefinements/sixMP OPEN. Current immutablecc-prompt.md is the complete authoritative W1–W4/E1–E4 design/reading/validation/return contract. Standing Autonomous Project01 Arc06 ONLY; selected/applied CDC /root/cdc_arc06 gpt-6.1-sol High, fresh soleCC gpt-6-luna High to be launched after durable issue. Prior39cc_repl_docs completed/frozen recommends fresh same-model context; no extra reviewer/substitution.
+Version1.1, 2026-10-25 UTC. Initial0actualrefinements/sixMP OPEN. Current immutablecc-prompt.md is the complete authoritative W1–W4/E1–E4 design/reading/validation/return contract. Standing Autonomous Project01 Arc06 ONLY; selected/applied CDC /root/cdc_arc06 gpt-6.1-sol High, fresh soleCC /root/cdc_arc06/cc_map_docs gpt-6-luna High actually launched after durable issue. Prior39cc_repl_docs completed/frozen recommends fresh same-model context; no extra reviewer/substitution.
 
 Dedicated `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/map-api-documentation`, branchcodex/map-api-documentation, clean00cfa740c902f5110159a56329b5241dac706a9d/indexempty. CDC planning/independentacceptance; soleCC dedicatedsource/index/gates only after coherent full intake/readback/acknowledgement. EXACT4paths crates/nms-copilot/src/map/{mod,input,render,state}.rs; whole-lineRustdoc/adjacentblanks ONLY. Every ordered non-doc/API/attribute/body/test/dependency/otherpath/layout frozen. No runtime/UTF8/numeric/terminalcleanup repair, hostsave/native/lifecycle replay/new API/dependency.
 
