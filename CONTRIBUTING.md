@@ -27,11 +27,15 @@ To build the workspace and preview its generated API documentation, run:
 
 ```bash
 cargo build --workspace --all-features
-cargo doc --workspace --all-features --no-deps
+cargo doc --workspace --lib --all-features --no-deps
+cargo doc -p nms-cli --bin nms --document-private-items --all-features --no-deps --target-dir target/cli-docs
 ```
 
-The generated documentation starts at
-`target/doc/nms_copilot/index.html`.
+Library documentation starts at `target/doc/nms_copilot/index.html`; the
+umbrella crate has its own page at `target/doc/nms/index.html`. The CLI's
+internal documentation starts at `target/cli-docs/doc/nms/index.html`.
+Keeping the CLI output in its own target directory prevents it from sharing
+the umbrella crate's `nms` documentation namespace.
 
 Name new tests `test_<function>_<scenario>_<expectation>` so their purpose is
 clear in test output.

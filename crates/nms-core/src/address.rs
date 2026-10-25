@@ -24,18 +24,21 @@ pub const SSI_PURPLE_END: u16 = 0x429;
 pub const LY_PER_VOXEL: f64 = 400.0;
 /// Robbins' constant: mean distance between two random points in a unit cube.
 pub const ROBBINS_CONSTANT: f64 = 0.661_707_182;
-/// Estimated distance (in ly) for two systems sharing the same voxel
-/// (Robbins' constant × voxel size).
+/// Estimated distance between systems sharing one voxel, in light-years.
+///
+/// Uses Robbins' constant multiplied by the voxel size.
 pub const VOXEL_UNCERTAINTY: f64 = ROBBINS_CONSTANT * LY_PER_VOXEL;
 
-/// Standard deviation (1σ) of distance between two random points in one
-/// voxel cube: `SD = √(E[D²] − E[D]²)` where `E[D²] = ½` for unit cube.
-/// ≈ 0.2494 × 400 ≈ 99.8 ly.
+/// Standard deviation of distances between random points in one voxel cube.
+///
+/// For a unit cube, `SD = √(E[D²] − E[D]²)` where `E[D²] = ½`.
+/// This is approximately 0.2494 × 400 ≈ 99.8 ly.
 pub const SAME_VOXEL_SD: f64 = 0.249_4 * LY_PER_VOXEL;
 
-/// Standard deviation (1σ) of distance error for two systems in different
-/// voxels: the combined sub-voxel offset projected onto the line between
-/// them has SD = √(2/12) × 400 ≈ 163.3 ly.
+/// Standard deviation of distance error between systems in different voxels, in light-years.
+///
+/// The combined sub-voxel offset projected onto their connecting line has
+/// SD = √(2/12) × 400 ≈ 163.3 ly.
 pub const CROSS_VOXEL_SD: f64 = 0.408_248 * LY_PER_VOXEL;
 
 /// Mask for the 48-bit packed galactic address.

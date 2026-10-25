@@ -218,8 +218,8 @@ impl GalaxyModel {
     }
 
     /// Find every active-galaxy planet within a radius matching `filter`.
-    /// A reference in another galaxy is excluded before distance calculation;
-    /// use [`Self::planets_within_radius_from_address`] for explicit scope.
+    ///
+    /// A reference in another galaxy is excluded before distance calculation; use [`Self::planets_within_radius_from_address`] for explicit scope.
     pub fn planets_within_radius<'a>(
         &'a self,
         from: &GalacticAddress,

@@ -69,9 +69,9 @@ impl Color {
     }
 }
 
-/// A text style combining an optional foreground color and bold flag. Plain
-/// styles return input unchanged; styled output adds SGR and reset sequences
-/// without escaping embedded control characters.
+/// A text style combining an optional foreground color and bold flag.
+///
+/// Plain styles return input unchanged; styled output adds SGR and reset sequences without escaping embedded control characters.
 ///
 /// # Examples
 ///

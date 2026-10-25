@@ -10,8 +10,9 @@ use nms_graph::query::BiomeFilter;
 use nms_graph::route::{Route, RoutingAlgorithm};
 use nms_graph::{GalaxyModel, GraphError, SystemId};
 
-/// How a route query obtains its target systems. See [`execute_route`] for the
-/// executable route example.
+/// How a route query obtains its target systems.
+///
+/// See [`execute_route`] for the executable route example.
 #[derive(Debug, Clone)]
 pub enum TargetSelection {
     /// Match planets, deduplicate their systems, and rank systems from the origin.
@@ -31,8 +32,9 @@ pub enum TargetSelection {
     ),
 }
 
-/// How to select the route origin and its galaxy. See [`execute_route`] for the
-/// explicit-address route example.
+/// How to select the route origin and its galaxy.
+///
+/// See [`execute_route`] for the explicit-address route example.
 #[derive(Debug, Clone, Default)]
 pub enum RouteFrom {
     /// Use the player's current position from the save file.
@@ -51,6 +53,7 @@ pub enum RouteFrom {
 }
 
 /// Inputs controlling start resolution, targets, ordering, and hop reporting.
+///
 /// See [`execute_route`] for a complete query and route projection.
 #[derive(Debug, Clone)]
 pub struct RouteQuery {
@@ -75,8 +78,9 @@ pub struct RouteQuery {
     pub return_to_start: bool,
 }
 
-/// Computed route and query options used to describe it. See [`execute_route`]
-/// for a complete result projection.
+/// Computed route and query options used to describe it.
+///
+/// See [`execute_route`] for a complete result projection.
 #[derive(Debug, Clone)]
 pub struct RouteResult {
     /// Ordered route hops and total distance.

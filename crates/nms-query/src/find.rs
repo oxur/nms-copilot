@@ -29,8 +29,9 @@ pub enum ReferencePoint {
     ),
 }
 
-/// Parameters for a planet/system search. All supplied filters are combined
-/// before the optional nearest-result limit is applied. See the [`crate#examples`] for a complete query and result observation.
+/// Parameters for a planet/system search.
+///
+/// All supplied filters are combined before the optional nearest-result limit is applied. See the [`crate#examples`] for a complete query and result observation.
 #[derive(Debug, Clone, Default)]
 pub struct FindQuery {
     /// Filter by biome type.

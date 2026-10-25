@@ -5,8 +5,9 @@ use std::collections::HashMap;
 use nms_core::biome::Biome;
 use nms_graph::GalaxyModel;
 
-/// Compatibility flags for choosing statistics. The current [`execute_stats`]
-/// implementation computes all fields and ignores both flags; see the [`crate#examples`] for both flag settings.
+/// Compatibility flags for choosing statistics.
+///
+/// The current [`execute_stats`] implementation computes all fields and ignores both flags; see the [`crate#examples`] for both flag settings.
 #[derive(Debug, Clone, Default)]
 pub struct StatsQuery {
     /// Whether to include biome distribution (currently ignored).
@@ -15,9 +16,9 @@ pub struct StatsQuery {
     pub discoveries: bool,
 }
 
-/// Counts computed across all model records and galaxies. Biome-map entry order
-/// is unspecified. See the [`crate#examples`] for complete
-/// expected counts and biome entries.
+/// Counts computed across all model records and galaxies.
+///
+/// Biome-map entry order is unspecified. See the [`crate#examples`] for complete expected counts and biome entries.
 #[derive(Debug, Clone)]
 pub struct StatsResult {
     /// Number of indexed systems across all galaxies.
@@ -39,6 +40,7 @@ pub struct StatsResult {
 }
 
 /// Compute every statistic over the entire model, regardless of active galaxy.
+///
 /// `query.biomes` and `query.discoveries` are currently ignored. The [`crate#examples`] checks both flag settings.
 pub fn execute_stats(model: &GalaxyModel, _query: &StatsQuery) -> StatsResult {
     let mut biome_counts: HashMap<Biome, usize> = HashMap::new();

@@ -19,8 +19,9 @@ use crate::spatial::SystemId;
 /// Statistics from a CSV import operation.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct ImportStats {
-    /// Number of accepted catalog contributions, including marked-placeholder
-    /// promotions. Promotion does not increase [`GalaxyModel::system_count`].
+    /// Number of accepted catalog contributions, including marked-placeholder promotions.
+    ///
+    /// Promotion does not increase [`GalaxyModel::system_count`].
     pub added: usize,
     /// Number of rows that matched an existing genuine system and were skipped.
     pub duplicates: usize,

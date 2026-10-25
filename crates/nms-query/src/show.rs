@@ -9,8 +9,9 @@ use nms_core::system::System;
 use nms_graph::spatial::SystemId;
 use nms_graph::{GalaxyModel, GraphError};
 
-/// What record to resolve for a detail view. See [`execute_show`] and the
-/// [`crate#examples`] for resolution behavior.
+/// What record to resolve for a detail view.
+///
+/// See [`execute_show`] and the [`crate#examples`] for resolution behavior.
 #[derive(Debug, Clone)]
 pub enum ShowQuery {
     /// Resolve a name first, then a packed hexadecimal address in the active galaxy.
@@ -40,8 +41,9 @@ pub enum ShowResult {
     ),
 }
 
-/// Cloned system data and display fields for a system detail view. See the
-/// [`crate#examples`] for its complete system projection.
+/// Cloned system data and display fields for a system detail view.
+///
+/// See the [`crate#examples`] for its complete system projection.
 #[derive(Debug, Clone)]
 pub struct ShowSystemResult {
     /// The cloned system record; its stored address may retain source planet bits.
@@ -54,8 +56,9 @@ pub struct ShowSystemResult {
     pub distance_from_player: Option<f64>,
 }
 
-/// Cloned base data and display fields for a base detail view. See
-/// [`execute_show`] for resolution behavior.
+/// Cloned base data and display fields for a base detail view.
+///
+/// See [`execute_show`] for resolution behavior.
 #[derive(Debug, Clone)]
 pub struct ShowBaseResult {
     /// The cloned base record.
