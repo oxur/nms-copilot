@@ -1,4 +1,17 @@
-//! `nms info` command -- display save file summary.
+//! Display raw save metadata and checked player and base information.
+//!
+//! Discovery counts come from raw `SaveRoot` records. Current address and galaxy come from
+//! checked player state; base coordinates pair checked bases with raw metadata. These are
+//! save-level values, not model or placeholder counts. This handler does not build the query
+//! model or read live or cached state.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms info --save data/test/save56_minimal.json
+//! ```
+//!
+//! Assumes repository root and built `nms` on `PATH`; fixture is synthetic and not executed.
 
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -9,6 +22,26 @@ use nms_query::table::{Builder, build_table, nms_theme};
 use nms_save::ValidatedSave;
 use nms_save::model::{PlayerStateData, SaveRoot};
 
+/// Read a checked save and print metadata, player, discovery, base, and currency details.
+///
+/// Save metadata and discovery counts come from raw structures; current address and galaxy use
+/// checked player state. Base rows pair raw metadata with checked coordinates. Counts are not
+/// model or placeholder counts. This handler builds no query model and reads no live or cached
+/// state; currency sections come from the active player state.
+///
+/// # Examples
+///
+/// ```text
+/// nms info --save data/test/save56_minimal.json
+/// ```
+///
+/// # Errors
+///
+/// Returns save-discovery, validation, or decoding errors.
+///
+/// # Panics
+///
+/// Printing sections may panic if stdout fails.
 pub fn run(save_path: Option<PathBuf>) -> Result<(), Box<dyn std::error::Error>> {
     let path = match save_path {
         Some(p) => p,
