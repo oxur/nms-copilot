@@ -4,12 +4,12 @@
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
-| MP-01 | Complete four-file MCP public surface/navigation/payload docs | FullW1–W3/actualzeroowned/exact19residual | correctness-grade | open | Issued contract/support only |
-| MP-02 | Truthful host/legacy lifetime/errors/config/registry semantics | Source/dependency/caller worksheet | correctness-grade | open | Issued W1–W3 |
-| MP-03 | Meaningful literal key examples/typed negatives/content populations | E1–E4/allfeature+no-defaultdocs | correctness-grade | open | Issued literal oracles |
-| MP-04 | Executable/API/tests/dependencies/otherpaths unchanged | Fourorderedcomparisons/threelayouts/opposedmutation | correctness-grade | open | Supplied scope auditor |
-| MP-05 | Attributable appropriate validation/commit/fences | Ninegroups/rawfirst/exactmessages/cleanfreeze | correctness-grade | open | Support controls only |
-| MP-06 | Independent acceptance/retro/fulloriginalownership | CDC reproduced rows/retrospective/bottomup | correctness-grade | open | Required38/fullM7.6 retained |
+| MP-01 | Complete four-file MCP public surface/navigation/payload docs | FullW1–W3/actualzeroowned/exact19residual | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
+| MP-02 | Truthful host/legacy lifetime/errors/config/registry semantics | Source/dependency/caller worksheet | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
+| MP-03 | Meaningful literal key examples/typed negatives/content populations | E1–E4/allfeature+no-defaultdocs | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
+| MP-04 | Executable/API/tests/dependencies/otherpaths unchanged | Fourorderedcomparisons/threelayouts/opposedmutation | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
+| MP-05 | Attributable appropriate validation/commit/fences | Ninegroups/rawfirst/exactmessages/cleanfreeze | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
+| MP-06 | Independent acceptance/retro/fulloriginalownership | CDC reproduced rows/retrospective/bottomup | correctness-grade | done | [CDC acceptance](cdc-verification.md) — reproduced |
 
 ## Full initial review / first actual refinement — 2026-10-25 UTC
 
@@ -26,3 +26,5 @@ Thirdactual03/current assignment: MP01–06 remain OPEN; actual E1 doctest red12
 Fourthactual04/current assignment: sixMP OPEN; actualallfeaturesdocs13pass/no-default9pass and author-link strict2error retained. Exacttwo prose-link correction, allotherbytesfrozen; fourthactual4/5/one remains, no exception.
 
 Fifthactual05/currentrecordcompletion: allnineCDCgroups green onclean9dc1; allsixMP pendingformalclose/CCcanonicalreportappend. Exactoriginalreport retained; no sourcechanges/reruns, fiveactualrefinements/no remainingautomaticpass.
+
+2026-10-25 formalclose: all6MP DONE/reproduced atclean9dc1, originalnineindependentgroups/235runtime+13allfeaturesdocs+9no-defaultdocs/scoped0owned19residual/preservationopposed/diffs. Fiveactualrefinements, final05record-only; allfailures/raw/exactreturns/finalretro retained. FullM7.6/requiredSlice38/allhigherowners remainOPEN.

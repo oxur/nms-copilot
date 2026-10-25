@@ -1,0 +1,82 @@
+{
+  "created_utc": "2026-10-25",
+  "scope": "actual current Slice37 supporting artifacts; first-class documents excluded",
+  "payloads": [
+    {
+      "path": "author-readiness-attempts.json",
+      "bytes": 519124,
+      "sha256": "ec6a9b92c52621cea4d2917abb3fcc8a7868ca55ec7f1d3efe797870b0baa0f9"
+    },
+    {
+      "path": "capture-preflight.json",
+      "bytes": 9199,
+      "sha256": "08132bb7a3243b7035e83ba9c62048825d429d6343a152fdae1a9de871b41958"
+    },
+    {
+      "path": "cc-capture-preflight.json",
+      "bytes": 9220,
+      "sha256": "4e8a552ab3518510249714a2d5a4f4eab218b57af7864c8e698e0b86f19bb182"
+    },
+    {
+      "path": "cc-closing-report-before05.md",
+      "bytes": 1827,
+      "sha256": "c4305e8556ca89bbf52eea60dacfb05ba9d829ac608da7ddb503032cfa999ef0"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 10120,
+      "sha256": "f973f23574f6560a3fad1809dfd099bf9d0945a123fb7bc4bd09ca74c7156366"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 1119588,
+      "sha256": "4b81ad5f97a64dc9318c89e0cc7cced538abbf4ebc71d152490e1ab69485e5c4"
+    },
+    {
+      "path": "cdc-validation.json",
+      "bytes": 1053215,
+      "sha256": "90a300489cf3828bb0e1043c1d737c38a3bcb721249dcb2d10d63cd5087c17bb"
+    },
+    {
+      "path": "initial-held.diff",
+      "bytes": 36007,
+      "sha256": "01d67a9812b16053b7b5b5c2ec521983feef68f6472d2f966552c6bb8250ab7a"
+    },
+    {
+      "path": "iteration01-held.diff",
+      "bytes": 40774,
+      "sha256": "fedd4e91c94c7f5517234591a702ed36b277c5af8454350a1a887ebff4f9699a"
+    },
+    {
+      "path": "nms-slice37-cc-capture.py",
+      "bytes": 3746,
+      "sha256": "d7b60d0ae8419d4c105f7a14bbe1f5851d9ace17082c4444acfa15a14cd2713b"
+    },
+    {
+      "path": "nms-slice37-cdc-capture.py",
+      "bytes": 3748,
+      "sha256": "78791ccc269b9c5bd5ee0d358d24f732ff76a1ef45af6c4a95c0aa64d0d7a7b4"
+    },
+    {
+      "path": "nms-slice37-doc-check.py",
+      "bytes": 5572,
+      "sha256": "f727ee4de9761527e0bb8ec480c383ad2545e508f09c26987d75a92111047b94"
+    },
+    {
+      "path": "nms-slice37-doc-registry.json",
+      "bytes": 16296,
+      "sha256": "920279892c4c5f6dd0414b841507dd428368fac6c23ab6ef9f9d49eaff2b342f"
+    },
+    {
+      "path": "nms-slice37-scope-audit.py",
+      "bytes": 2291,
+      "sha256": "64835fd547f4d5ae7a6b37eab19058f864ba79702dbb5d106271737cd3521464"
+    },
+    {
+      "path": "source-commit-message.txt",
+      "bytes": 1260,
+      "sha256": "4433f7055cc38bff1701c9bb5e2fd42bafb15ed2bf0ed6c3417dbd0eeb0f60a1"
+    }
+  ],
+  "inventory_self": "archive-inventory.json (excluded from its own digest)"
+}

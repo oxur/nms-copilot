@@ -1,6 +1,6 @@
 # Slice37 — complete MCP public API documentation
 
-Version1.5, 2026-10-25 UTC. ACTIVE fifth/final ACTUAL refinement5/5, record-only current cc-prompt-iteration05.md; initial/01 preserved. Standing Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High, sole new CC successor selected gpt-6-luna High (actual launch identity recorded at dispatch). No model substitution/extra reviewer. Previous cc_graph_docs is completed/frozen; its self-reported headroom considered alongside repeated source-match/path mistakes and continued conflation of message-subject reuse with parser syntax after compaction. CDC chooses a fresh same-model context for this self-contained unit, no causal cure/capability claim or new role.
+Version1.6, 2026-10-25 UTC. CLOSED accepted; fifth/final ACTUAL refinement5/5, record-only current cc-prompt-iteration05.md; initial/01 preserved. Standing Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High, sole new CC successor selected gpt-6-luna High (actual launch identity recorded at dispatch). No model substitution/extra reviewer. Previous cc_graph_docs is completed/frozen; its self-reported headroom considered alongside repeated source-match/path mistakes and continued conflation of message-subject reuse with parser syntax after compaction. CDC chooses a fresh same-model context for this self-contained unit, no causal cure/capability claim or new role.
 
 Dedicated /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-api-documentation, codex/mcp-api-documentation, clean baseline d553037a94055457995d064e02192e9eed0ecb00. Source/index ownership passes to sole CC after coherent readback. CDC owns planning and independent acceptance.
 
@@ -91,3 +91,7 @@ Allfeatures13pass/no-default9pass actual8779c1c4/a7f95357 rawverified. CargoJSON
 ## Independent proof complete / fifth actual record-only close-set completion
 
 AllninefreshCDCgroups onclean9dc1 pass235runtime+13allfeaturesdocs+9no-defaultdocs/zeroownedexact19residual/preservationopposed/diffs. CanonicalCCreport lacks originalperrowwalk/threebubbleupanswers (presentinexecution), miswords requiredSlice38 as38owners and validators-afterpair/example-audit applicability. Immutable05 append-only recordcompletion, source/validationJSON frozen/no reruns; fifthactual5/5. Originalreport retainedbyteexact supportingartifact before05; no productdefect/newcriterion/waiver. SixMP remainOPEN until formalindependentclose.
+
+## Formal close — 2026-10-25 UTC
+
+All6MP DONE/reproduced atclean9dc1/source9dc1a2409c7f0e53712f643bf7b0a61078e17664. Originalnineindependentgroups/235runtime+13allfeaturesdocs+9no-defaultdocs/scopedzeroownedexact19residual/preservationopposed/diffs pass. Fiveactualrefinements/finalrecord-only, exactrawvalues/returns/failures/finalretro archived. No exception/structuralamendment/parentacceptance; requiredSlice38remainingAPIs/fullM7.6strictreconciliation retained.

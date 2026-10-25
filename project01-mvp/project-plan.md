@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.116
+version: 1.117
 project: project01-mvp
 status: active
 depends-on: []
@@ -1266,3 +1266,7 @@ Version1.115/arc1.128 records all6AS/R06-S36 accepted atd553037, eightindependen
 ## Arc06 Slice37 MCP public API owner — 2026-10-25 UTC
 
 Version1.116/arc1.129 issues completefourfileMCPsubtree/sixMP/R06-S37OPEN fromcleand553.55arc41done14open/all25projectrowsOPEN. FreshsameapprovedCCmodel/context forfit, soleimplementer+sameCDC; no modelsubstitution/revieweradded. Actualzeroowned/exact19residual finalscopepredicate, fullstrict/fullM7.6/required38remainingAPIs/fullreconciliation and alloriginalhigherowners retained. No implementation/parentacceptance/integration/release claim.
+
+## Arc06 Slice37 MCP docs accepted — 2026-10-25 UTC
+
+Version1.117/arc1.130 records all6MP/R06-S37accepted at9dc1, nineindependentgroups/235runtime+13allfeaturesdocs+9no-defaultdocs/scoped0owned19residual/preservationopposed/diffs/finalretro.55arc42done13open/all25projectrowsOPEN. FullM7.6/wholecopilotstrict/requiredSlice38remainingAPIs/fullreconciliation and alloriginalhigherowners remainOPEN; no parentacceptance/integration/release. Fiveactualrefinements/finalrecord-only/allfailurehistory retained.

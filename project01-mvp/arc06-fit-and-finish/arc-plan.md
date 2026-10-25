@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.129, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.130, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1075,3 +1075,7 @@ Version1.128 closes all6AS/R06-S36 atd553037a94055457995d064e02192e9eed0ecb00: c
 ## Slice37 complete MCP public API owner issued — 2026-10-25 UTC
 
 Version1.129 details [Slice37](slice37-mcp-api-documentation/slice-plan.md), complete four-file MCPsubtree/Rustdoc+threepayloadlayouts/no executablechange, sixOPENMP/R06-S37. FreshsameapprovedCC6-lunaHighcontext selected after actualreliability/headroom review, CDC6.1-solHighunchanged, soleimplementer/noextra reviewer. Cleandedicatedd553source; exactcurrent24warning baseline/fiveowned19residual/controlchecks supportonly. Nineoriginalgroups and actualzeroowned/exact19residual finalpredicate, no fullcrate strict exception. Required38remainingcoordinator/watch/presentationAPIs/full0039M7.6 strictreconciliation CDC-owned/furtherboundedsplitallowed.55arc41done14open/project25OPEN; alloriginalhigherowners/M7.5input retained. No productimplementation/integration/release atissue.
+
+## Slice37 complete MCP documentation accepted — 2026-10-25 UTC
+
+Version1.130 closes all6MP/R06-S37 atclean9dc1a2409c7f0e53712f643bf7b0a61078e17664: completefourfileMCP publicdocs/keyliteralexamples/threepayloadlayouts. Ninefreshindependentgroups pass235runtime+13allfeaturesdocs(8execute5compile)+9no-defaultdocs(6execute3compile), scopedactualzeroownedexact19residual, preservationopposed/diffs. Fiveactualrefinements/finalrecord-only, all23CC+16CDCrawvalues/exactreturns/failures/authorreviewmisses/finalretro retained. No exception/structural scope or sequence amendment; requiredSlice38coordinator/watch/presentationAPIs/full0039M7.6strictreconciliation staysCDC(furtherusabledecompositionpermitted).55arc42done13open/all25projectrowsOPEN; M7.5authenticinput/alloriginalhigherowners retained, no integration/release. See [CDC37 acceptance](slice37-mcp-api-documentation/cdc-verification.md) and [retrospective](slice37-mcp-api-documentation/cdc-retrospective.md).

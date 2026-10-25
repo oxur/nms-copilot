@@ -384,6 +384,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S37 | Complete truthful MCP host/config/resources/tools public docs/key examples | SixMP/full4fileworksheet/literalexamples/actualscopedpredicate/preservation | correctness-grade | Original0039 M7.6 next bounded application increment | open | [Issued Slice37](slice37-mcp-api-documentation/slice-plan.md) | Fullstrict/fullM7.6/required38remainingAPIs and allhigherowners OPEN |
+| R06-S37 | Complete truthful MCP host/config/resources/tools public docs/key examples | SixMP/full4fileworksheet/literalexamples/actualscopedpredicate/preservation | correctness-grade | Original0039 M7.6 next bounded application increment | done | [CDC37 acceptance](slice37-mcp-api-documentation/cdc-verification.md) — reproduced | Fullstrict/fullM7.6/required38remainingAPIs and allhigherowners OPEN |
 
 55arc41done14open/project25OPEN; initial0actualrefinements/no productproof atissue.
+
+2026-10-25 formal37close: all6MP/R06-S37DONE at9dc1; nineindependentgroups/235runtime+13allfeaturesdocs+9no-defaultdocs/scoped0owned19residual/preservationopposed/diffs.55arc42done13open/project25OPEN; fullM7.6/requiredSlice38/furtherusefulsplit/allhigherowners retained.

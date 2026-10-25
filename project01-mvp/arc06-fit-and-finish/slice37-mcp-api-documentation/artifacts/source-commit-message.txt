@@ -1,0 +1,25 @@
+docs(mcp): complete MCP API documentation
+
+Describe MCP transports, owned and compatibility lifecycles, logging
+configuration, and current-model registry behavior. Add module-level
+literal tool, resource, and logging examples, including typed failures
+and current-model reads. Clarify watcher notifications, readiness and
+error behavior, logging fallbacks, and route overflow behavior.
+
+The tool-name example retains the returned tool vector and borrows its
+Cow name as `&str`; route links use compiler-supported intra-doc links.
+
+Validation: format/lint; all-feature library tests 235 passed on the
+authorized host retry (the earlier sandbox run's 228 passed and 7
+watcher-timeout failures remain recorded); all-feature doctests 13 passed;
+no-default doctests 9 passed; all-feature scoped docs build passed with
+0 owned and exactly 19 residual missing-doc warnings; supplied
+scope/opposed-mutation audit and working and baseline diff checks passed.
+
+The initial strict-doc attempt exposed redundant explicit route-link
+targets before correction. All failed attempts and retries remain in the
+raw execution log at `/private/tmp/nms-slice37-cc-attempts.json`.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>
+
