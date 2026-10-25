@@ -9,3 +9,9 @@ Before FIRSTcompiler/validator, fullactualrawfirstkernels read; CCea69699d7/68de
 Fullself-containedplan/E1–E3literaloracles/nineEXACTgroups/actualhostpermissions/capture/guards/6row+3bubbleupreturns ready. Scopeauditor now checks realunique sourcecapanchor and rejects oldhelpchanges, not syntaxcompileonlycontrol. Required40mapand41banner/setup/root/fullpublicsurface/fullM7.6reconciliation remainCDC/furtherusabledecompositionpermitted. M7.5 authenticNomNominput unanswered/alloriginalhigherowners retained. No newsourceimplementation/integration/publish authority; mainknownagent9lineleftover/heldpins untouched.
 
 Author-preissue EOF normalization only: private/canonical scope helper lost one extra final LF; all Python statements unchanged. Initial support proof used baba1e9360a224ff127a8e901b9e589cbba69b984f29e2d938a241ba01734178; current helper 456253adf31df1eda0bbaf5706bd7d0a64f75cee9e3661581db7be1a4d6418e0. Prior raw records remain unchanged; final actual CC/CDC auditor executes current helper. No source change/new scenario.
+
+## Actual same-model sole successor dispatch — 2026-10-25 UTC
+
+After author-ready507c1271ab51b15358bf8a401313e4ec9d425814, actual collaboration.spawn_agent accepted /root/cdc_arc06/cc_repl_docs with explicitmodelgpt-6-luna/reasoning_efforthigh/fork_turnsnone. Priorcc_coordinator_docs completed/frozen, no overlapping source/gateowner; CDC6.1-solHigh unchanged/roottransportonly. FreshCC must perform actualfullrequiredguide/source/helper intake and coherentCDCack beforeedit/gate. Version1.1 onlyrecordsactualidentity; initial0actualrefinements/same3pathW1–W3/E1–E3/ninegroups/capture/originalhigherowners unchanged.
+
+CDC first dispatch-metadata patch failed its expected-line guard because CDC supplied wrong helper-hash context; actual gitstatus remainedclean/no filewrite. Corrected against the retained actual execution line above; no hash/evidence reconstruction, source/gate attempt or scope change.
