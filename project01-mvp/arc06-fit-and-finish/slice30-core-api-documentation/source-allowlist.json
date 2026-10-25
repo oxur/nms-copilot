@@ -22,5 +22,8 @@
     "crates/nms-core/src/player.rs": "BaseTypeParseError(pub String)",
     "crates/nms-core/src/system.rs": "DiscoverySource::Community { source: String }"
   },
-  "iteration02_frozen_allowed_file": "crates/nms-core/src/lib.rs"
+  "iteration02_frozen_allowed_file": "crates/nms-core/src/lib.rs",
+  "iteration04_allowed_tracked_changes": [],
+  "iteration04_private_validator": "/private/tmp/nms-slice30-cc-approved-archive-check.py",
+  "iteration04_authority": "Operator exactA approval; only new bounded actual JSON/archive output proof, all tracked40e6 bytes frozen"
 }
