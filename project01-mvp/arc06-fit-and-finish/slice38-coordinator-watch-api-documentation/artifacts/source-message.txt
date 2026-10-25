@@ -1,0 +1,6 @@
+docs(nms-copilot): clarify live save coordinator contracts
+
+Document coordinator startup, serialized update and cache ordering, subscriber delivery costs, shutdown behavior, and typed startup errors. Clarify the application and legacy watch paths, formatter precedence, session synchronization, and independent galaxy-address expectations in the existing example.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

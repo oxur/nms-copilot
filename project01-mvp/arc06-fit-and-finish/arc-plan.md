@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.131, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.132, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1083,3 +1083,7 @@ Version1.130 closes all6MP/R06-S37 atclean9dc1a2409c7f0e53712f643bf7b0a61078e176
 ## Slice38 coordinator/watch API owner issued — 2026-10-25 UTC
 
 Version1.131 details [Slice38](slice38-coordinator-watch-api-documentation/slice-plan.md), completeTWOapplication coordinator/watch publicdocfiles/keyexamples/twoerrorpayloadlayouts, allnon-doc/API/tests/depsfrozen. Cleandedicated9dc1; sameapprovedroles/models/CCqualitativefit+retained37handback/noactiveprocess. Actual19warningbaseline/2owned17residual/readinesscontrols supportonly; nineoriginalgroups/doc-firstafterpair+fullreview/actualscopedpredicate/independentacceptance/retro. SixCW/R06-S38OPEN/zeroactualrefinements. Full0039M7.6/wholecopilotstrict remainsOPEN for requiredSlice39remainingpresentationAPIs/fullreconciliation, CDC/furtherusabledecompositionallowed.56arc42done14open/project25OPEN; M7.5authenticinput/alloriginalhigherowners preserved, no implementation/integration/release atissue.
+
+## Slice38 coordinator/watch documentation accepted — 2026-10-25 UTC
+
+Version1.132 closes all6CW/R06-S38 atclean3fc7c3ff7bdd65b6b13d9db087dbeb01a447007a: complete2filecoordinator/watchAPI documentation/keyliteralexamples/twonamedpayloadlayouts. Ninefreshindependentgroups pass235runtime+16allfeaturesdocs(10execute6compile)+12no-defaultdocs(8execute4compile), actualzeroowned/exact17residual/preservationopposed/diffs. TwoACTUALrefinements,02sameunfinished01continuation afterobservedoperationalcontextreplacement/SAMEapprovedCC6-lunaHigh,03privateauditor-only authorlocatorcorrection. All25CC+16CDCrawvalues/exactreturns/failedwrites/restrictedtimeouts/sequencing/metadata/reporthistory/finalretro retained. No exception/structuralscope orsequenceamendment/fullparentacceptance. RequiredSlice39remainingpresentation/publicAPIs/full0039M7.6strictreconciliation remainsCDC(furtherusabledecompositionpermitted).56arc43done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC38 acceptance](slice38-coordinator-watch-api-documentation/cdc-verification.md) and [retrospective](slice38-coordinator-watch-api-documentation/cdc-retrospective.md).

@@ -1,0 +1,98 @@
+{
+  "created_utc": "2026-10-25",
+  "purpose": "Current Slice38 exact supporting payload inventory; historical claims unchanged",
+  "payload_count": 18,
+  "payloads": [
+    {
+      "path": "author-readiness-attempts.json",
+      "bytes": 518480,
+      "sha256": "5e484e9f75fba71b6bce70eedef1537ef24a8aea5dd00cbe4f15541a0061438e"
+    },
+    {
+      "path": "cc-before-context-change-validation.json",
+      "bytes": 19223,
+      "sha256": "7767170891252209e6a6033bdeb24e45a01e4a042d845df167e39e48d29e8ba6"
+    },
+    {
+      "path": "cc-capture-preflight.json",
+      "bytes": 7866,
+      "sha256": "898e6cd8b5ff26977f3d29a3ef1bf674c281746bab59781e60b396fcc6d51f7e"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 9860,
+      "sha256": "42cd1e3e574da02a65efcd928458680ab7e41e749376cde429568c641d0d58b1"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 24787,
+      "sha256": "2450465c30458e34ad1b0cd599dbd4488445e779f740f0a351d025ea2d65997c"
+    },
+    {
+      "path": "cc-prior-context-execution.md",
+      "bytes": 8710,
+      "sha256": "04fd3b83cd37f55e82026ffea9c836562c5d8ecdc77baf091e3a1335e55ed333"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 1154295,
+      "sha256": "aa3f2187696b9141aedfd0dfffc3dd2fed42c76dd75902a92e4cd6e3a3c862c5"
+    },
+    {
+      "path": "cdc-capture-preflight.json",
+      "bytes": 7869,
+      "sha256": "6aecb3a089d4f769ac244783ddd6a8b9a15321bb9dd3b66e4cf30aafacc41565"
+    },
+    {
+      "path": "cdc-validation.json",
+      "bytes": 1060163,
+      "sha256": "20668c39e343d97f2e47930972937688254d5d0aa32e58e09102ced1a180a8fe"
+    },
+    {
+      "path": "context-handoff-held.diff",
+      "bytes": 25785,
+      "sha256": "a3421831d5d99c6abc87013b188f40dfd4ded10a1cb681e2ef8f127951a79cdb"
+    },
+    {
+      "path": "initial-held.diff",
+      "bytes": 24861,
+      "sha256": "93572cb5f766a17a593c9e5b3a1247a25fea965d6a58a71a531a54eb87684b47"
+    },
+    {
+      "path": "nms-slice38-cc-capture.py",
+      "bytes": 3760,
+      "sha256": "0932fe3d9e4719b687f5300f480d1d5c1d042ba1edd3a33470b0e748dd21c448"
+    },
+    {
+      "path": "nms-slice38-cdc-capture.py",
+      "bytes": 3762,
+      "sha256": "abb4fbbf121a0501bbf1e0cd4f62cbc8185e3a8b386c19f68efae060190e286c"
+    },
+    {
+      "path": "nms-slice38-doc-check.py",
+      "bytes": 5586,
+      "sha256": "ad38a368ced57147d01a39b64be53f394cea37f1ebabc6c99a87930b960c8065"
+    },
+    {
+      "path": "nms-slice38-doc-registry.json",
+      "bytes": 13134,
+      "sha256": "813169abf1cddbced565a182179fd66caf4aa17b2c87576166555270231fcf2c"
+    },
+    {
+      "path": "nms-slice38-scope-audit-v2.py",
+      "bytes": 2313,
+      "sha256": "0fbc9ce65d18e1f460fc514f699586a6a14f11c7b02d35053f6384ae65511445"
+    },
+    {
+      "path": "nms-slice38-scope-audit.py",
+      "bytes": 2217,
+      "sha256": "f8e31dc8cdafc90543e410451ae4dbd31538047414fcbe1b1134d229ed883b19"
+    },
+    {
+      "path": "source-message.txt",
+      "bytes": 464,
+      "sha256": "c9c9017a4cbf941a0bffa95d806e3e5b62eae2145bfe52bc3bd799c30a40c2a9"
+    }
+  ],
+  "inventory_self": "archive-inventory.json (self identified; no recursive self-hash)"
+}
