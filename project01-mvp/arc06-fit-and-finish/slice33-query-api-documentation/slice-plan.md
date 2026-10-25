@@ -1,6 +1,6 @@
 # Slice33 — complete nms-query public API documentation
 
-Version1.2,2026-10-25 UTC. OPEN, current cc-prompt-iteration02.md, second actual refinement2/5/three remain. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; same selected/applied CDC gpt-6.1-sol High, sole CC gpt-6-luna High. CDC owns planning/design/independent acceptance, CC dedicated source/index after coherent intake. Same cc_graph_docs reports compacted32history but sufficient qualitative headroom to assess self-contained33; frozen32handback complete/no ownedprocess. No extra role/model. Source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation`, codex/query-api-documentation, clean baselinee30eb49f77565769c0d6fdb61dbe372f686e77d7.
+Version1.3,2026-10-25 UTC. CLOSED, current cc-prompt-iteration02.md, two actual refinements2/5, all six QD independently accepted. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; same selected/applied CDC gpt-6.1-sol High, sole CC gpt-6-luna High. CDC owns planning/design/independent acceptance, CC dedicated source/index after coherent intake. Same cc_graph_docs reports compacted32history but sufficient qualitative headroom to assess self-contained33; frozen32handback complete/no ownedprocess. No extra role/model. Source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation`, codex/query-api-documentation, clean baselinee30eb49f77565769c0d6fdb61dbe372f686e77d7.
 
 ## Usable increment and exact preservation
 
@@ -51,3 +51,7 @@ CDC inspected actualformatd2dfa018/linte7d99662 complete0/fullraw/exit/end/equal
 ## Targeted01 review / second actual refinement — 2026-10-25 UTC
 
 CDC inspected actualformatcdd6311e/lint8b58c3c4 complete0/fullraw/exit/end/equalidentity20ca78ee/diff5e0e6955. Complete8filecurrentdelta/E1–E3 walk closed with no truncatedsection; F1payload/imports/navigation,fullE1/E2oracles/fallibleerror/order and renderliterals repaired. Threeproseblocks remain: tablepaletteif/elsewording, formatfindsummary/subtypeprefixqualifier, biome_style namedgroups/fallback. Immutable02 restricts twofiles/threeblocks only, everyexample/declaration/other6files/executablebyte frozen. Secondactual2/5/threeleft; no runtime/strictdocs/auditor/diffgate or newpolicy. All6QD/fullM7.6/higherownersOPEN.
+
+## Formal independent close — 2026-10-25 UTC
+
+All six QD/R06-S33 done at clean6e5af862 after seven original independent groups,96runtime+7executingdocs/strictqueryzero/no exception. Exact16CC+7CDC raw records/returns/recovered ordinary metadata inspection retained; nested inspection exits unknown/no product credit/no waiver. Two actual refinements. See [CDC verification](cdc-verification.md) and [retrospective](cdc-retrospective.md). Opening6/closing6;51arc38done13open/project25OPEN; required34 remainingAPIs/fulloriginal0039 and every highergate retained. No integration/release/source change after freeze.

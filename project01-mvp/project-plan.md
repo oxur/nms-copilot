@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.108
+version: 1.109
 project: project01-mvp
 status: active
 depends-on: []
@@ -1234,3 +1234,7 @@ Version1.107/arc1.120 records all6GD/R06-S32 independently accepted at e30e, sev
 ## Arc06 Slice33 query documentation owner — 2026-10-25 UTC
 
 Version1.108/arc1.121 details full8filequery publicAPI increment fromaccepted e30e, sixOPEN QDrows, sameapprovedroles/models/usableCCcontext/noownedprocess. Complete worksheet/independentliteralquery-routing/styleoracles/sourcepreservation/capture controls beforehandoff; no implementationclaim. FullM7.6 current33query/required34remainingAPI+full0039reconciliation remainsOPEN.51arc37done14open/project25open; all original input/raw/history/game-backed/finalsemantic/coverage/platform/UI/distribution/parent/Operator/integration/release gates retained. StaticUnicodebyte-truncationlimit documentedonly, laterexistingowner.
+
+## Arc06 Slice33 query documentation accepted — 2026-10-25 UTC
+
+Version1.109/arc1.122 records all6QD/R06-S33 accepted at6e5af862, seven independent groups/96runtime+7executingdocs/strictzero/exactpreservation/finalretro.51arc38done13open/all25projectrows OPEN. FullM7.6 retains required34 remaining APIs/full0039 reconciliation, furtherbounded split allowed; every original/higherowner retained. Byte-truncationpanic documented only; no integration/release/parent acceptance.

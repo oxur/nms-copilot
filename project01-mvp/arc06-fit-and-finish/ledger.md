@@ -344,6 +344,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S33 | Complete truthful query public API docs and meaningful runnable examples | SixQD/full8fileworksheet/strictquery/unit+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | open | [Slice33 plan](slice33-query-api-documentation/slice-plan.md) | FullM7.6/required34remainingAPI/fullreconciliation and allhighergates retained |
+| R06-S33 | Complete truthful query public API docs and meaningful runnable examples | SixQD/full8fileworksheet/strictquery/unit+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | done | [CDC33 acceptance](slice33-query-api-documentation/cdc-verification.md) — reproduced | FullM7.6/required34remainingAPI/fullreconciliation and allhighergates retained |
 
 51rows37done14open/project25open, all50priorrows/criteria/dispositions retained. Initial0actualrefinements; no productimplementation/acceptance atissue.
+
+2026-10-25 formal33close: all6QD/R06-S33DONE on6e5af862, seven independent groups/96runtime+7executingdocs/strictzero/exactpreservation+opposed/diffs.51arc38done13open/project25open; fullM7.6/required34/allhigherowners OPEN.

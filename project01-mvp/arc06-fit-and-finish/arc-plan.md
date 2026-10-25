@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.121, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.122, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1039,3 +1039,9 @@ Version1.120 closes all6GD/R06-S32 at local clean e30eb49f77565769c0d6fdb61dbe37
 Version1.121 details [Slice33](slice33-query-api-documentation/slice-plan.md), eightquerysourcefiles/Rustdoc+eleven namedtuplepayloadlayouts, sixOPEN QDrows. Dedicatedcodex/query-api-documentation cleanaccepted e30e, sameCDC6.1-solHigh/soleCC6-lunaHigh; priorCC reportscompacted32historybutsufficientqualitativeheadroomforselfcontainedintake/noownedprocess. Complete publicproduction/caller/error/display/fixture worksheet resolved; allGGstats/ignoredflags, source-vs-selectedGG/validationorder, storedPportalhex andbackendpalettelimits truthful. Staticbyte-truncationUTF8panic remains originalM7.10/P01-G07finalreconciliationowner, no runtimefix/newinvalidscenario. CapturekernelstwoactualNULbinary7/0controls verified beforefirstcompilerdiagnostic; initial0actualrefinements.
 
 51arcrows37done14open/project25open. FulloriginalM7.6 staysOPEN for current33query and required34remainingAPIs/full0039reconciliation, splitfurtherifneeded; no originalcriterion/drop/nextowneracceptance. AuthenticM7.5input unanswered and all raw/history/game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release obligations retained. Mainknownpre-existingagentaddition/held/externalpins protected. No implementation/acceptance claim atissue.
+
+## Slice33 query API increment accepted — 2026-10-25 UTC
+
+Version1.122 closes all6QD/R06-S33 at clean6e5af862ac51de71c5ceae7e17d49450c678cbfe: complete eight-file public surface/literal runnable examples. Seven fresh independent groups pass,96runtime+7executingdocs/strictqueryzero/noexception/exacteightfile-elevenlayout preservation/opposedmutation/diffs. Two actual refinements/16CC+7CDC rawrecords/exactreturns/recovered metadata inspection unknowns/finalretro retained. No structural/sequence/scope amendment; known UTF8 byte-truncation limitation remains originalM7.10/P01-G07 CDC reconciliation, documented only.
+
+51arcrows38done13open/project25OPEN. Fulloriginal0039M7.6 remains OPEN for required34 remaining public APIs/fullreconciliation, CDC-owned/furtherbounded split permitted. M7.5 authenticNomNominput unanswered; every original raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. Mainknownagentaddition/held/externalpins untouched; no integration/release. See [CDC33 acceptance](slice33-query-api-documentation/cdc-verification.md) and [retrospective](slice33-query-api-documentation/cdc-retrospective.md).

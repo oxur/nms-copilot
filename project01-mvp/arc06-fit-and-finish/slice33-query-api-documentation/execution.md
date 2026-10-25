@@ -17,3 +17,13 @@ CDC inspected actualformatd2dfa018/linte7d99662 complete0/fullraw/exit/end/equal
 ## Targeted01 review / second actual refinement — 2026-10-25 UTC
 
 CDC inspected actualformatcdd6311e/lint8b58c3c4 complete0/fullraw/exit/end/equalidentity20ca78ee/diff5e0e6955. Complete8filecurrentdelta/E1–E3 walk closed with no truncatedsection; F1payload/imports/navigation,fullE1/E2oracles/fallibleerror/order and renderliterals repaired. Threeproseblocks remain: tablepaletteif/elsewording, formatfindsummary/subtypeprefixqualifier, biome_style namedgroups/fallback. Immutable02 restricts twofiles/threeblocks only, everyexample/declaration/other6files/executablebyte frozen. Secondactual2/5/threeleft; no runtime/strictdocs/auditor/diffgate or newpolicy. All6QD/fullM7.6/higherownersOPEN.
+
+## Settled02 release — 2026-10-25 UTC
+
+CDC inspected actualformat6ae4d231ba754982b3e1943dbdcd78f2/linta2bb3b4580c4483092d828950bc43885 complete0/fullraw/hash+length/exit/end/status/equalidentity6db5f9bb76f35998a4af54326669c50d21353236c534d97a4da5588cf5a13483/diff4dbbb1b6a45ee4388aa446502eda0b0060b93be478783f5a7fd0e4034fc35fa5. Threecurrentproseblocks inspected against actualpalettebranch/subtypestrip_prefix/completebiomearms; pass. Priorfull8file/E1–E3 review retained, no example/declaration change authorized or reported. Originalremainingfivegroups released to sameCC, realredstop/noedit withoutdurableassignment; allgreen→exact8pathcommit/prepared+actualparsedtrailers/normalhooks/frozenreturn. Secondactual2/5/threeleft, all6QD remainOPEN pending actualproof/independentacceptance. Date refresh2026-10-25 doesnotchangeauthority/scope.
+
+## Formal independent close — 2026-10-25 UTC
+
+All six QD/R06-S33 done at clean6e5af862 after seven original independent groups,96runtime+7executingdocs/strictqueryzero/no exception. Exact16CC+7CDC raw records/returns/recovered ordinary metadata inspection retained; nested inspection exits unknown/no product credit/no waiver. Two actual refinements. See [CDC verification](cdc-verification.md) and [retrospective](cdc-retrospective.md). Opening6/closing6;51arc38done13open/project25OPEN; required34 remainingAPIs/fulloriginal0039 and every highergate retained. No integration/release/source change after freeze.
+
+Closeout metadata attempt: git commit --only named15 failed exit1 because eight new paths were not yet known to Git; no commit/source mutation. Preserve actual error; add only exact named paths before identical commit retry. Normal hooks/required trailers unchanged.

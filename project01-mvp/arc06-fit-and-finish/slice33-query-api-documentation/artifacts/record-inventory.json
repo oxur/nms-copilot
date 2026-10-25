@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-10-25",
+  "scope": "actual supporting artifacts; first-class prompts/reports and selfinventory excluded",
+  "files": [
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 7922,
+      "sha256": "ce3b4637213fd86c5bac7ac251bcda87f22380e65abb45368176b3755129bda0"
+    },
+    {
+      "path": "artifacts/cc-execution.md",
+      "bytes": 29965,
+      "sha256": "b259498acb2e559493c9de7fc798568a14dcbe70e49faa59c1c5b5f5d803684b"
+    },
+    {
+      "path": "artifacts/cc-validation.json",
+      "bytes": 109083,
+      "sha256": "0da2c21d375a02dd93ae840596fcd327b6caffbf753c5bc04b014fadce1f785e"
+    },
+    {
+      "path": "artifacts/cdc-attempts.json",
+      "bytes": 39534,
+      "sha256": "43bbfeecef5db0768eba8e81c2c8a3e21502aebb3b1d3f8d2e5df4f892a01193"
+    },
+    {
+      "path": "artifacts/initial-held.patch",
+      "bytes": 36108,
+      "sha256": "b0870306e447e85de750c7c03b7bc3aa3a0392bd948479b102ed54c5d22374cb"
+    },
+    {
+      "path": "artifacts/nms-slice33-cc-capture.py",
+      "bytes": 3747,
+      "sha256": "d0be177fea98d33d9aa6bc6595566a250dfb8cf8c934fdae2759e03974bf254c"
+    },
+    {
+      "path": "artifacts/nms-slice33-cdc-capture.py",
+      "bytes": 3750,
+      "sha256": "3f52bf7133c5c9c71659aa3fd57441d1b8c26b3bf18a9eaa43ad75d9f779f143"
+    },
+    {
+      "path": "artifacts/nms-slice33-scope-audit.py",
+      "bytes": 2658,
+      "sha256": "b544164b845aa1a61bc455bc7bddf79e93750611680d96879fa99fba7b5b4fbb"
+    },
+    {
+      "path": "artifacts/precommit-inspection-receipts.jsonl",
+      "bytes": 8115,
+      "sha256": "d7c97972cf1e4daa48041ced32fb618399598f9f15126ee5e8193f6c9528c8b0"
+    }
+  ]
+}
