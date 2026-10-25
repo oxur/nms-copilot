@@ -96,6 +96,11 @@ pub struct LoadResult {
 /// and repair-write failures are warnings followed by source rebuilding or an
 /// in-memory success, as applicable.
 ///
+/// After either a cold parse or a compatible warm rebuild, inserting a missing
+/// player-system key rebuilds the model's default per-galaxy KNN-10 edges before
+/// returning or extracting cache data. Existing keys and saves without player
+/// state do not trigger that additional rebuild.
+///
 /// # Panics
 ///
 /// When source parsing is needed, this can inherit the documented panic conditions
@@ -115,6 +120,7 @@ pub fn load_or_rebuild(
                 let system_count = model.system_count();
                 model.ensure_player_system();
                 if model.system_count() != system_count {
+                    model.build_edges(nms_graph::EdgeStrategy::default());
                     let repaired = crate::extract_cache_data(&model, save_version);
                     if let Err(e) = crate::write_cache(&repaired, cache_path) {
                         eprintln!(
@@ -138,7 +144,11 @@ pub fn load_or_rebuild(
     let save = nms_save::parse_validated_save_file(save_path)?;
     let save_version = save.root().version;
     let mut model = nms_graph::GalaxyModel::from_validated_save(&save);
+    let system_count = model.system_count();
     model.ensure_player_system();
+    if model.system_count() != system_count {
+        model.build_edges(nms_graph::EdgeStrategy::default());
+    }
 
     // Write cache for next time
     if !no_cache {

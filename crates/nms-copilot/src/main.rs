@@ -22,6 +22,7 @@ use nms_copilot::banner;
 use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
 use nms_copilot::config::Config;
 use nms_copilot::coordinator::LiveSaveCoordinator;
+use nms_copilot::map::{self, MapSnapshot};
 use nms_copilot::mcp;
 use nms_copilot::prompt::{CopilotPrompt, PromptState};
 use nms_copilot::session::SessionState;
@@ -31,6 +32,12 @@ use nms_graph::GalaxyModel;
 use nms_watch::WatchConfig;
 
 const DEFAULT_MCP_HTTP_ADDR: &str = "127.0.0.1:5099";
+
+fn capture_map_snapshot(model: &RwLock<GalaxyModel>, session: &mut SessionState) -> MapSnapshot {
+    let guard = model.blocking_read();
+    session.sync_from_model(&guard);
+    MapSnapshot::from_model(&guard, session)
+}
 
 #[derive(Debug, Parser)]
 #[command(
@@ -265,9 +272,8 @@ fn run_repl(
                         break;
                     }
                     if matches!(action, commands::Action::Map) {
-                        let guard = model.blocking_read();
-                        session.sync_from_model(&guard);
-                        if let Err(e) = nms_copilot::map::run_map(&guard, &session) {
+                        let snapshot = capture_map_snapshot(&model, &mut session);
+                        if let Err(e) = map::run_map_snapshot(snapshot) {
                             eprintln!("Map error: {e}");
                         }
                         continue;
@@ -863,6 +869,26 @@ mod tests {
     use nms_core::biome::Biome;
     use nms_core::player::{BaseType, PlayerBase, PlayerState};
     use nms_core::system::{Planet, System};
+
+    #[test]
+    fn test_production_map_capture_releases_model_lock() {
+        let model = RwLock::new(GalaxyModel::new());
+        let mut session = SessionState::from_model(&model.blocking_read());
+
+        let _snapshot = capture_map_snapshot(&model, &mut session);
+
+        let mut guard = model
+            .try_write()
+            .expect("production capture must drop its read guard before returning");
+        guard.insert_system(System::new(
+            GalacticAddress::new(0, 0, 0, 1, 0, 0),
+            Some("Added after capture".into()),
+            None,
+            None,
+            vec![],
+        ));
+        assert_eq!(guard.system_count(), 1);
+    }
 
     #[test]
     fn test_configured_watcher_missing_path_returns_none() {

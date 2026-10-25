@@ -13,6 +13,7 @@ use ratatui::style::{Color, Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::{Block, Borders, Clear, Paragraph, Wrap};
 
+use nms_core::address::GalacticAddress;
 use nms_graph::GalaxyModel;
 
 use super::state::{MapState, ZoomLevel, density_char};
@@ -67,6 +68,23 @@ use super::state::{MapState, ZoomLevel, density_char};
 /// # }
 /// ```
 pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
+    render_with_addresses(
+        frame,
+        state,
+        model.systems.values().map(|system| system.address),
+    );
+}
+
+/// Draw from the owned address snapshot used by the modal map.
+pub(super) fn render_addresses(frame: &mut Frame, state: &MapState, addresses: &[GalacticAddress]) {
+    render_with_addresses(frame, state, addresses.iter().copied());
+}
+
+fn render_with_addresses(
+    frame: &mut Frame,
+    state: &MapState,
+    addresses: impl IntoIterator<Item = GalacticAddress>,
+) {
     let area = frame.area();
 
     // Layout: map area | status bar | legend
@@ -77,7 +95,7 @@ pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
     ])
     .split(area);
 
-    render_map(frame, chunks[0], state, model);
+    render_map(frame, chunks[0], state, addresses);
     render_status(frame, chunks[1], state);
     render_legend(frame, chunks[2], state);
 
@@ -88,7 +106,12 @@ pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
 }
 
 /// Render the map grid into the given area.
-fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyModel) {
+fn render_map(
+    frame: &mut Frame,
+    area: Rect,
+    state: &MapState,
+    addresses: impl IntoIterator<Item = GalacticAddress>,
+) {
     let block = Block::default().borders(Borders::ALL).title(format!(
         " {} — {} ",
         state.galaxy_name,
@@ -102,7 +125,7 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
     }
 
     // Build a density grid by binning systems into cells
-    let grid = bin_systems(state, model, inner.width, inner.height);
+    let grid = bin_systems(state, addresses, inner.width, inner.height);
 
     // Overlay base labels and player position.
     // Each overlay entry maps (col, row) -> (label_string, color).
@@ -409,20 +432,20 @@ fn render_help(frame: &mut Frame, area: Rect) {
 /// Returns a map from (col, row) -> system count.
 fn bin_systems(
     state: &MapState,
-    model: &GalaxyModel,
+    addresses: impl IntoIterator<Item = GalacticAddress>,
     cols: u16,
     rows: u16,
 ) -> HashMap<(u16, u16), usize> {
     let mut grid: HashMap<(u16, u16), usize> = HashMap::new();
 
     // Iterate all systems in the active galaxy
-    for sys in model.systems.values() {
-        if sys.address.reality_index != state.galaxy {
+    for address in addresses {
+        if address.reality_index != state.galaxy {
             continue;
         }
 
-        let vx = f64::from(sys.address.voxel_x());
-        let vz = f64::from(sys.address.voxel_z());
+        let vx = f64::from(address.voxel_x());
+        let vz = f64::from(address.voxel_z());
 
         if let Some((col, row)) = voxel_to_cell(vx, vz, state, cols, rows) {
             *grid.entry((col, row)).or_insert(0) += 1;
@@ -548,7 +571,12 @@ mod tests {
         assert_eq!(state.galaxy, 9);
         assert_eq!(state.grid_size, (10, 6));
         let before = model.systems.clone();
-        let bins = bin_systems(&state, &model, 10, 6);
+        let bins = bin_systems(
+            &state,
+            model.systems.values().map(|system| system.address),
+            10,
+            6,
+        );
         assert_eq!(
             bins,
             HashMap::from([((2, 1), 1), ((5, 1), 2), ((7, 1), 4), ((2, 4), 8)])
@@ -892,7 +920,12 @@ mod tests {
             terminal
                 .draw(|frame| {
                     let area = frame.area();
-                    render_map(frame, area, &state, &model);
+                    render_map(
+                        frame,
+                        area,
+                        &state,
+                        model.systems.values().map(|system| system.address),
+                    );
                 })
                 .unwrap();
             let buffer = terminal.backend().buffer();
