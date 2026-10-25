@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.123, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.124, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1051,3 +1051,7 @@ Version1.122 closes all6QD/R06-S33 at clean6e5af862ac51de71c5ceae7e17d49450c678c
 Version1.123 details [Slice34](slice34-watch-api-documentation/slice-plan.md), complete five-file nms-watch public API Rustdoc/key examples plus three exact existing payload layouts. Dedicatedcodex/watch-api-documentation cleanaccepted6e5a; sameCDC6.1-solHigh/soleCC6-lunaHigh, qualitativeheadroom/noownedprocess confirmed. Complete production/data/error/backpressure/coalescing/join/panic contracts and literal checked-vs-legacy/full-delta/omission oracles resolved. Rawfirst kernels/two actualNULbinary7/0supportcontrols inspected/verified beforefirstcompilerdiagnostic. Initial0actualrefinements; no productimplementation/acceptance atissue.
 
 52arcrows38done14open/project25OPEN. Original0039M7.6 decomposition now current34watch, required35remaining cache/compat/application APIs and full0039reconciliation CDC-owned/furtherbounded split allowed. All originalcriteria/accepted29–33/knownstaticlimitations and every raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. M7.5authenticinput unanswered. Mainknownoldagentaddition/held/externalpins untouched; no newpolicy/amendment/integrationauthority.
+
+## Slice34 formal close — 2026-10-25 UTC
+
+Version1.124 closes all6WD/R06-S34 at clean65ac646db635aa97030c8a21fc46aa8d93f0ecb3: complete five-file watch API docs/key examples. Seven fresh independent groups pass,42runtime+7docs(3execute/4compile), strictzero/exactfivefile-threepayloadlayouts/opposedmutation/diffs. Three actual refinements/20CC+7CDC rawrecords/exactreturns/failurehistory/reportqualification/finalretro retained. No structural/scope/sequence amendment or acceptance waiver. FullM7.6 retains required35 cache/compat/application APIs/full0039 reconciliation (CDC,further usable split permitted); all original/higher owners unchanged.52arc39done13open, all25projectrows OPEN.

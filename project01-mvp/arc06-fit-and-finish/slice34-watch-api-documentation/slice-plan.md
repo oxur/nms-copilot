@@ -1,6 +1,6 @@
 # Slice34 — complete nms-watch public API documentation
 
-Version1.3,2026-10-25 UTC. OPEN; current cc-prompt-iteration03.md, third actual refinement3/5/two remain. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High owns planning/design/independent acceptance; sole CC /root/cdc_arc06/cc_graph_docs selected/applied gpt-6-luna High owns dedicated source/index after coherent intake. Same CC explicitly reports adequate qualitative headroom for one self-contained increment/no owned process; frozen33handback retained. Source /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation, codex/watch-api-documentation, clean baseline6e5af862ac51de71c5ceae7e17d49450c678cbfe. No model substitution/extra role.
+Version1.4,2026-10-25 UTC. CLOSED/ACCEPTED; current cc-prompt-iteration03.md, three actual refinements3/5 retained. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High owns planning/design/independent acceptance; sole CC /root/cdc_arc06/cc_graph_docs selected/applied gpt-6-luna High owns dedicated source/index after coherent intake. Same CC explicitly reports adequate qualitative headroom for one self-contained increment/no owned process; frozen33handback retained. Source /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation, codex/watch-api-documentation, clean baseline6e5af862ac51de71c5ceae7e17d49450c678cbfe. No model substitution/extra role.
 
 ## Usable increment, scope and original owners
 
@@ -67,3 +67,7 @@ CDC verified format6faefd58/lint61aba8b6 complete0/fullraw/exit/end/equalstatus-
 ## Targeted02 exact-delta review / third actual refinement — 2026-10-25 UTC
 
 CDC verified02format2af705e7/lint5823dc9b complete0/fullraw/status/end/equalidentity12df9615/diff28f2eb4c. Read actual added sentence/Errcontinue grounding. First read-only sourceidentity comparison removed only sentence from temporary five-file copy and did NOT reconstruct priorc63c8a17 (exit1/assertion; actual8e3af322); unchanged-copy control reproduced current28f2; removing sentence AND extra emptyRustdocseparator exactly reproduces priorc63c8a17. These are ordinary source-comparison inspections, no source/Git write/SUTgroup/capturewaiver; temporaries removed. Scope mismatch is exactly one extra separator beyond02's one-line fence, no other drift/production defect. Immutable03 removes that separator ONLY inwatcher.rs, allotherbytes/fourfiles frozen; thirdactual3/5/twoleft. PriorfullW/E review retained; no runtime/releasedfive yet, allsixWD OPEN.
+
+## Formal close — 2026-10-25 UTC
+
+All six WD accepted independently on clean65ac646d; seven fresh CDC groups/42runtime+7docs(3executing/4compile-only)/strictzero/scopeopposed/diffs. Source local/unintegrated, all three permitted payload layouts used. Exact20CC+7CDC archives/returns and report qualification preserved. No assigned deferral/no-op/waiver; fullM7.6/required35 and higher owners retained. See cdc-verification.md and cdc-retrospective.md.

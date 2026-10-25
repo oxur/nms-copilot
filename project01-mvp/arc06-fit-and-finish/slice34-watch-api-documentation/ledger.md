@@ -1,15 +1,15 @@
 # Slice34 acceptance ledger
 
-2026-10-25 UTC. Six correctness-grade OPEN rows; CC proposals require CDC independent acceptance. Opening6, no shrinkage.
+2026-10-25 UTC. Six correctness-grade DONE rows, independently accepted. Opening6/closing6, no shrinkage; historical review sections below retain their contemporary OPEN verdicts.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
-| WD-01 | Complete public watch/snapshot/delta/error surface and navigation | Five-file publicwalk/strictwatchdocs | correctness-grade | open | — |
-| WD-02 | Truthful data/error/lifetime/backpressure/omission contracts | W1–W3 actualsource/callers | correctness-grade | open | — |
-| WD-03 | Meaningful runnable key examples and retained filesystem teaching | E1/E2 whole literal populations/error/safecompiled examples | correctness-grade | open | — |
-| WD-04 | Executable/API/tests/data/otherpaths unchanged | Five ordered comparisons/threepayloadlayouts/opposedmutation | correctness-grade | open | — |
-| WD-05 | Attributable appropriate proof/commit/fences | Sevenrawfirstgroups/exactpathcommit/parsedtrailers/cleanpins | correctness-grade | open | — |
-| WD-06 | Independent acceptance/retrospective/bottomupownership | Exactreturns/reproduceddispositions/fullM7.6remainingowners | correctness-grade | open | — |
+| WD-01 | Complete public watch/snapshot/delta/error surface and navigation | Five-file publicwalk/strictwatchdocs | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| WD-02 | Truthful data/error/lifetime/backpressure/omission contracts | W1–W3 actualsource/callers | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| WD-03 | Meaningful runnable key examples and retained filesystem teaching | E1/E2 whole literal populations/error/safecompiled examples | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| WD-04 | Executable/API/tests/data/otherpaths unchanged | Five ordered comparisons/threepayloadlayouts/opposedmutation | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| WD-05 | Attributable appropriate proof/commit/fences | Sevenrawfirstgroups/exactpathcommit/parsedtrailers/cleanpins | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| WD-06 | Independent acceptance/retrospective/bottomupownership | Exactreturns/reproduceddispositions/fullM7.6remainingowners | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
 
 ## Settled initial review / first actual refinement — 2026-10-25 UTC
 
@@ -22,3 +22,5 @@ CDC verified format6faefd58/lint61aba8b6 complete0/fullraw/exit/end/equalstatus-
 ## Targeted02 exact-delta review / third actual refinement — 2026-10-25 UTC
 
 CDC verified02format2af705e7/lint5823dc9b complete0/fullraw/status/end/equalidentity12df9615/diff28f2eb4c. Read actual added sentence/Errcontinue grounding. First read-only sourceidentity comparison removed only sentence from temporary five-file copy and did NOT reconstruct priorc63c8a17 (exit1/assertion; actual8e3af322); unchanged-copy control reproduced current28f2; removing sentence AND extra emptyRustdocseparator exactly reproduces priorc63c8a17. These are ordinary source-comparison inspections, no source/Git write/SUTgroup/capturewaiver; temporaries removed. Scope mismatch is exactly one extra separator beyond02's one-line fence, no other drift/production defect. Immutable03 removes that separator ONLY inwatcher.rs, allotherbytes/fourfiles frozen; thirdactual3/5/twoleft. PriorfullW/E review retained; no runtime/releasedfive yet, allsixWD OPEN.
+
+2026-10-25 formalclose: sixWDdone, threeactualrefinements/noreset/exception. Sevenindependentgroups/42runtime+7docs(3execute/4compile), strictzero, exactfivefile/threepayloadpreservation/opposed/diffs on65ac646d. FullM7.6/required35/allhigherowners retained; see verification and retrospective.

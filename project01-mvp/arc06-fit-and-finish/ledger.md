@@ -354,6 +354,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S34 | Complete truthful watcher/snapshot/delta/error public documentation and key examples | SixWD/full5fileproductionworksheet/strictwatch/unit+integration+doctests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | open | [Slice34 plan](slice34-watch-api-documentation/slice-plan.md) | FullM7.6/required35remainingAPIs/fullreconciliation and allhighergates retained |
+| R06-S34 | Complete truthful watcher/snapshot/delta/error public documentation and key examples | SixWD/full5fileproductionworksheet/strictwatch/unit+integration+doctests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | done | [CDC34 acceptance](slice34-watch-api-documentation/cdc-verification.md) — reproduced | FullM7.6/required35remainingAPIs/fullreconciliation and allhighergates retained |
 
 52rows38done14open/project25OPEN. Prior51rows/criteria/dispositions preserved; initial0actualrefinements/noimplementation atissue.
+
+2026-10-25 formal34close: all6WD/R06-S34DONE at65ac646d; sevenindependentgroups/42runtime+7docs/strictzero/scopeopposed/diffs.52arc39done13open/project25open; fullM7.6/required35/allhigherowners retained.

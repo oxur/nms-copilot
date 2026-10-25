@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-10-25",
+  "scope": "Actual supporting artifacts; first-class prompts/reports and selfinventory excluded. cc-validation is compact index; cc-attempts preserves full raw separately.",
+  "files": [
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 7922,
+      "sha256": "fed7f874e347e0a3c88a32ac5cb3835b804934610634e712f4f5773c01f14470"
+    },
+    {
+      "path": "artifacts/cc-attempts.json",
+      "bytes": 124092,
+      "sha256": "84e14ae075922f03bd765e7733f3e8bb89aee2e8ee09e605136885c937875aaa"
+    },
+    {
+      "path": "artifacts/cc-execution.md",
+      "bytes": 39092,
+      "sha256": "6b3c2afe4b2faf06ab177dc79c91338152930032b5320ccf65e980959792a64f"
+    },
+    {
+      "path": "artifacts/cc-validation.json",
+      "bytes": 44404,
+      "sha256": "1fb9d9bb8495cac18786ef684e43b286ee3ac95b99d00bd8540a39659a39f1ef"
+    },
+    {
+      "path": "artifacts/cdc-attempts.json",
+      "bytes": 34407,
+      "sha256": "2787ba30ffd538d5072ca8bb37d62e6696b34e3e22270f4058712f7a5f541d22"
+    },
+    {
+      "path": "artifacts/initial-held.patch",
+      "bytes": 30494,
+      "sha256": "d6f5765a2ce7687857444899e209b93e12018d2b1fe7b9c1d7ee096abb268556"
+    },
+    {
+      "path": "artifacts/nms-slice34-cc-capture.py",
+      "bytes": 3747,
+      "sha256": "a323ee4e9f98af9e171012cbd01d88e22b0a056a8bc3019a679be14174cc2bd8"
+    },
+    {
+      "path": "artifacts/nms-slice34-cdc-capture.py",
+      "bytes": 3750,
+      "sha256": "440d855542ec486882f50cc5be20b17cdf428ab150c6b0fa4958c10838100e23"
+    },
+    {
+      "path": "artifacts/nms-slice34-scope-audit.py",
+      "bytes": 2284,
+      "sha256": "fc8a689266a7755d977b4f6a44ac06c1755df29b0200c95de3260d4d09776ecb"
+    }
+  ]
+}

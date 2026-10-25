@@ -1,0 +1,989 @@
+{
+  "actual_refinements": "3/5",
+  "attempts": [
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "60bbc9429f11a8dd75c5489d33bc91e0ba13c1db9dfa4c98ebdcc2758ac5c42d"
+      },
+      "argv": [
+        "python3",
+        "-c",
+        "import sys; sys.stdout.buffer.write(b\"out\\x00bytes\\n\"); sys.stderr.buffer.write(b\"err\\x00\\n\"); sys.exit(7)"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "60bbc9429f11a8dd75c5489d33bc91e0ba13c1db9dfa4c98ebdcc2758ac5c42d"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:21:43.453234+00:00",
+      "exit_code": 7,
+      "id": "82ea36fcb42f46fba24d177cf10c44ba",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "CDC author-installed support control, not product proof",
+      "label": "author-support-negative",
+      "overrides": {},
+      "started_utc": "2026-10-25T05:21:43.283095+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 5,
+        "full_base64_in_raw_log": true,
+        "sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383"
+      },
+      "stdout": {
+        "bytes": 10,
+        "full_base64_in_raw_log": true,
+        "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "60bbc9429f11a8dd75c5489d33bc91e0ba13c1db9dfa4c98ebdcc2758ac5c42d"
+      },
+      "argv": [
+        "python3",
+        "-c",
+        "import sys; sys.stdout.buffer.write(b\"out\\x00bytes\\n\"); sys.stderr.buffer.write(b\"err\\x00\\n\"); sys.exit(0)"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "60bbc9429f11a8dd75c5489d33bc91e0ba13c1db9dfa4c98ebdcc2758ac5c42d"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:21:43.671043+00:00",
+      "exit_code": 0,
+      "id": "818c2c0c343440f2b8c182a08e2f1700",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "CDC author-installed support control, not product proof",
+      "label": "author-support-positive",
+      "overrides": {},
+      "started_utc": "2026-10-25T05:21:43.551149+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 5,
+        "full_base64_in_raw_log": true,
+        "sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383"
+      },
+      "stdout": {
+        "bytes": 10,
+        "full_base64_in_raw_log": true,
+        "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "d6f5765a2ce7687857444899e209b93e12018d2b1fe7b9c1d7ee096abb268556",
+        "working_identity_sha256": "dedabbf2c17a6ed0e0ab2303b3974c8a046a6c19f2cc0735954b737158be9cfe"
+      },
+      "argv": [
+        "make",
+        "format"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "d6f5765a2ce7687857444899e209b93e12018d2b1fe7b9c1d7ee096abb268556",
+        "working_identity_sha256": "dedabbf2c17a6ed0e0ab2303b3974c8a046a6c19f2cc0735954b737158be9cfe"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:34:55.711864+00:00",
+      "exit_code": 0,
+      "id": "98c7af2dc4354e70a096a7f70c20ad97",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "format",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:34:54.569536+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 107,
+        "full_base64_in_raw_log": true,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "d6f5765a2ce7687857444899e209b93e12018d2b1fe7b9c1d7ee096abb268556",
+        "working_identity_sha256": "dedabbf2c17a6ed0e0ab2303b3974c8a046a6c19f2cc0735954b737158be9cfe"
+      },
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "d6f5765a2ce7687857444899e209b93e12018d2b1fe7b9c1d7ee096abb268556",
+        "working_identity_sha256": "dedabbf2c17a6ed0e0ab2303b3974c8a046a6c19f2cc0735954b737158be9cfe"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:35:22.561458+00:00",
+      "exit_code": 0,
+      "id": "e1df01e21bed4fe1a9643340aa73d448",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "lint",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:34:57.815898+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 12050,
+        "full_base64_in_raw_log": true,
+        "sha256": "7549f99dc2eddb5de59e205de9e4b3376e82bed5d90acb05022d1aa6e8345eba"
+      },
+      "stdout": {
+        "bytes": 176,
+        "full_base64_in_raw_log": true,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "c63c8a17e1d4a5dfdecf170103cd80bea024056ddb0025701144c95833ea33ec",
+        "working_identity_sha256": "36bbf3166f6809d1cb1f31a08d966566191276e0d31f37ee3ca85c1dffd3d896"
+      },
+      "argv": [
+        "make",
+        "format"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "c63c8a17e1d4a5dfdecf170103cd80bea024056ddb0025701144c95833ea33ec",
+        "working_identity_sha256": "36bbf3166f6809d1cb1f31a08d966566191276e0d31f37ee3ca85c1dffd3d896"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:45:18.292508+00:00",
+      "exit_code": 0,
+      "id": "6faefd584cb4479793302fde45c5bc5d",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "format-iteration01",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:45:17.211413+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 107,
+        "full_base64_in_raw_log": true,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "c63c8a17e1d4a5dfdecf170103cd80bea024056ddb0025701144c95833ea33ec",
+        "working_identity_sha256": "36bbf3166f6809d1cb1f31a08d966566191276e0d31f37ee3ca85c1dffd3d896"
+      },
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "c63c8a17e1d4a5dfdecf170103cd80bea024056ddb0025701144c95833ea33ec",
+        "working_identity_sha256": "36bbf3166f6809d1cb1f31a08d966566191276e0d31f37ee3ca85c1dffd3d896"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:45:23.353679+00:00",
+      "exit_code": 0,
+      "id": "61aba8b67a4c42688ff214fd906bbee7",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "lint-iteration01",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:45:20.032618+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 573,
+        "full_base64_in_raw_log": true,
+        "sha256": "5f4d755bb447fc99a5dd8983c013efad7b8724636fb789cebe557147cca80f04"
+      },
+      "stdout": {
+        "bytes": 176,
+        "full_base64_in_raw_log": true,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "28f2eb4c4d588f31fd8ea82aeaa02c610655e576697f5509ff1e79083c093f4f",
+        "working_identity_sha256": "12df9615fe6ded5b78fb72e1f760dae10b50e525d38dec6975df7ca52366afe3"
+      },
+      "argv": [
+        "make",
+        "format"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "28f2eb4c4d588f31fd8ea82aeaa02c610655e576697f5509ff1e79083c093f4f",
+        "working_identity_sha256": "12df9615fe6ded5b78fb72e1f760dae10b50e525d38dec6975df7ca52366afe3"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:49:45.962369+00:00",
+      "exit_code": 0,
+      "id": "2af705e70ca941ca9545bfa675fdbd86",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "format-iteration02",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:49:44.855000+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 107,
+        "full_base64_in_raw_log": true,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "28f2eb4c4d588f31fd8ea82aeaa02c610655e576697f5509ff1e79083c093f4f",
+        "working_identity_sha256": "12df9615fe6ded5b78fb72e1f760dae10b50e525d38dec6975df7ca52366afe3"
+      },
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "28f2eb4c4d588f31fd8ea82aeaa02c610655e576697f5509ff1e79083c093f4f",
+        "working_identity_sha256": "12df9615fe6ded5b78fb72e1f760dae10b50e525d38dec6975df7ca52366afe3"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:49:51.449995+00:00",
+      "exit_code": 0,
+      "id": "5823dc9bb95a4db9a78af83b21387c98",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "lint-iteration02",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:49:48.210183+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 573,
+        "full_base64_in_raw_log": true,
+        "sha256": "d215c684bbe392edf50936dbb2861d5e6adf69e97f6646eea55e1303de9d20da"
+      },
+      "stdout": {
+        "bytes": 176,
+        "full_base64_in_raw_log": true,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "make",
+        "format"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:53:54.485722+00:00",
+      "exit_code": 0,
+      "id": "e3d5e5fe09d84ef6a5778d34ba9740c4",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "format-iteration03",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:53:53.365362+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 107,
+        "full_base64_in_raw_log": true,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:54:00.001287+00:00",
+      "exit_code": 0,
+      "id": "69c4be5260cd435791872cb44d966e7e",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "lint-iteration03",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:53:56.680942+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 573,
+        "full_base64_in_raw_log": true,
+        "sha256": "dbb64daad4c85b128b1baab8f6abc9b15e0a814b41aa1cdcb9c3457b069ba85a"
+      },
+      "stdout": {
+        "bytes": 176,
+        "full_base64_in_raw_log": true,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      }
+    },
+    {
+      "actual_tool_permission_context": "functions.exec_command with sandbox_permissions omitted; tool default context",
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-watch",
+        "--all-features",
+        "--offline"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:56:28.739617+00:00",
+      "exit_code": 101,
+      "id": "4cebb35c9e684e4da87e96f9e45f2464",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "watch-all-features-tests",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:55:32.211897+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 2526,
+        "full_base64_in_raw_log": true,
+        "sha256": "a00142faa4a1c257c2154bdaaac37f10c86a5a9712046a5564346226dba6dc2e"
+      },
+      "stdout": {
+        "bytes": 6696,
+        "full_base64_in_raw_log": true,
+        "sha256": "46c230807df59ad6d5aae6418cacf16197802702f6cb89241b34e88e23bbe32a"
+      }
+    },
+    {
+      "actual_tool_permission_context": "functions.exec_command with sandbox_permissions=require_escalated; original TMPDIR pinned before same capture kernel; one CDC-authorized retry",
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-watch",
+        "--all-features",
+        "--offline"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:58:12.880005+00:00",
+      "exit_code": 0,
+      "id": "1a39467aaff64755a08e991a17cd1053",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "watch-all-features-tests-host-retry",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:57:55.813823+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 266,
+        "full_base64_in_raw_log": true,
+        "sha256": "a459d125a2d21551a34576af9a11059a4f47940d4094907a61ed4cb596b13714"
+      },
+      "stdout": {
+        "bytes": 4238,
+        "full_base64_in_raw_log": true,
+        "sha256": "fcbe7162f45adefd13116090e656a41ec869d48d8d33c29eeccb77beaa3c6910"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-watch",
+        "--all-features",
+        "--no-deps",
+        "--offline"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:00.820140+00:00",
+      "exit_code": 0,
+      "id": "bef34a022da242678b1938d9ae1db69b",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "strict-watch-rustdoc",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "started_utc": "2026-10-25T05:58:57.015339+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 1524,
+        "full_base64_in_raw_log": true,
+        "sha256": "02c872cbe2310a8a2b0b7f02dd0588ff44aa02ffd4b39c1002c86b46c9c41688"
+      },
+      "stdout": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice34-scope-audit.py"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:18.654208+00:00",
+      "exit_code": 0,
+      "id": "01e5a2da3dc3412a9880320e4147704f",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "ordered-source-scope-audit",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:59:18.361084+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 598,
+        "full_base64_in_raw_log": true,
+        "sha256": "167dde28b7abfa9396147fbf8647147d45c572c8cb195373c9bf561eb5737e2b"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:21.557745+00:00",
+      "exit_code": 0,
+      "id": "93be341780854bfa81c3dd3ea3a000ac",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "working-diff-check",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:59:21.463606+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "git",
+        "diff",
+        "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "--check"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:26.503428+00:00",
+      "exit_code": 0,
+      "id": "9ba15a9710dc48bb8b0f4a4aa73c7a28",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "complete-baseline-diff-check",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:59:26.410885+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "git",
+        "interpret-trailers",
+        "--parse",
+        "/private/tmp/slice34-watch-api-documentation-commit-message.txt"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:42.506466+00:00",
+      "exit_code": 0,
+      "id": "072ae23b5bd44e84824cadbfdf2891a9",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "SUT gate",
+      "label": "prepared-commit-trailer-parse",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:59:42.394998+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 99,
+        "full_base64_in_raw_log": true,
+        "sha256": "f382225081e1d2f42a5761dbea97be95b1ffb998332a2b6e97cf8059a82df61d"
+      }
+    },
+    {
+      "actual_tool_permission_context": "functions.exec_command with sandbox_permissions omitted; default sandbox blocked index.lock creation",
+      "after": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/slice34-watch-api-documentation-commit-message.txt",
+        "--",
+        "crates/nms-watch/src/delta.rs",
+        "crates/nms-watch/src/error.rs",
+        "crates/nms-watch/src/lib.rs",
+        "crates/nms-watch/src/snapshot.rs",
+        "crates/nms-watch/src/watcher.rs"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T05:59:55.225692+00:00",
+      "exit_code": 128,
+      "id": "c1e35cc044ce49f1b034f4b31e934dd0",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "authorized local source commit with normal hooks",
+      "label": "exact-five-path-commit",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T05:59:55.118915+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 138,
+        "full_base64_in_raw_log": true,
+        "sha256": "15cb1e56a8cad0e626ee0c19d8385db232eb9cbdd2e50c45b1aa2d00c2eb3f25"
+      },
+      "stdout": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "actual_tool_permission_context": "functions.exec_command with sandbox_permissions=require_escalated; identical git commit argv and normal hooks",
+      "after": {
+        "head": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "b1bdba6797c4f406ce09359bbdb8dfc2d6d23dcc41ad0671fa7d91de74784680"
+      },
+      "argv": [
+        "git",
+        "commit",
+        "--only",
+        "-F",
+        "/private/tmp/slice34-watch-api-documentation-commit-message.txt",
+        "--",
+        "crates/nms-watch/src/delta.rs",
+        "crates/nms-watch/src/error.rs",
+        "crates/nms-watch/src/lib.rs",
+        "crates/nms-watch/src/snapshot.rs",
+        "crates/nms-watch/src/watcher.rs"
+      ],
+      "before": {
+        "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+        "status": " M crates/nms-watch/src/delta.rs\n M crates/nms-watch/src/error.rs\n M crates/nms-watch/src/lib.rs\n M crates/nms-watch/src/snapshot.rs\n M crates/nms-watch/src/watcher.rs\n",
+        "untracked_files": {},
+        "working_diff_sha256": "ef6d8ccf726abd041ecf235b83fc0ea60e4b84c94e51eb9cd1e70a5e0abc730b",
+        "working_identity_sha256": "511ff5ea7d9b1abc9aae5c0980d7b68421a5f256b1ad449bd962c2e98ae8d354"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T06:00:07.796993+00:00",
+      "exit_code": 0,
+      "id": "87eef5f53a5c431c9c2503a4f357bb10",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "authorized local source commit with normal hooks",
+      "label": "exact-five-path-commit-host-retry",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T06:00:07.656150+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 124,
+        "full_base64_in_raw_log": true,
+        "sha256": "f32b17c24d71884946f738ecaa733e977139db40b3e7b20dc5ad2da6b54a64df"
+      }
+    },
+    {
+      "after": {
+        "head": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "b1bdba6797c4f406ce09359bbdb8dfc2d6d23dcc41ad0671fa7d91de74784680"
+      },
+      "argv": [
+        "bash",
+        "-lc",
+        "git show -s --format=%B HEAD | git interpret-trailers --parse"
+      ],
+      "before": {
+        "head": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+        "status": "",
+        "untracked_files": {},
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "b1bdba6797c4f406ce09359bbdb8dfc2d6d23dcc41ad0671fa7d91de74784680"
+      },
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "ended_utc": "2026-10-25T06:00:17.232254+00:00",
+      "exit_code": 0,
+      "id": "48fc60d6c8fc40ccb1464d8cf7e8af0b",
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "kind": "actual committed-message trailer parse",
+      "label": "actual-commit-trailer-parse",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "started_utc": "2026-10-25T06:00:16.989853+00:00",
+      "status": "complete",
+      "stderr": {
+        "bytes": 0,
+        "full_base64_in_raw_log": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 99,
+        "full_base64_in_raw_log": true,
+        "sha256": "f382225081e1d2f42a5761dbea97be95b1ffb998332a2b6e97cf8059a82df61d"
+      }
+    }
+  ],
+  "cc_proposals": {
+    "WD-01": "propose complete; CDC acceptance pending",
+    "WD-02": "propose complete; CDC acceptance pending",
+    "WD-03": "propose complete; CDC acceptance pending",
+    "WD-04": "propose complete; CDC acceptance pending",
+    "WD-05": "propose complete; CDC acceptance pending; preserve the default-sandbox red plus authorized-host pass",
+    "WD-06": "remain open; independent acceptance, retrospective, and Arc06 ownership are CDC duties"
+  },
+  "commit": {
+    "actual_commit_trailer_parse": "48fc60d6c8fc40ccb1464d8cf7e8af0b",
+    "default_sandbox_attempt": "c1e35cc044ce49f1b034f4b31e934dd0",
+    "host_retry": "87eef5f53a5c431c9c2503a4f357bb10",
+    "parsed_trailers_once_adjacent": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "prepared_trailer_parse": "072ae23b5bd44e84824cadbfdf2891a9",
+    "result": "exact five-path git commit with normal hooks, no bypass"
+  },
+  "evidence_status": "CC proposed complete; CDC independent acceptance remains pending",
+  "gate_dispositions": [
+    {
+      "group": "format",
+      "records": [
+        "98c7af2dc4354e70a096a7f70c20ad97",
+        "6faefd584cb4479793302fde45c5bc5d",
+        "2af705e70ca941ca9545bfa675fdbd86",
+        "e3d5e5fe09d84ef6a5778d34ba9740c4"
+      ],
+      "result": "all captured offline format runs exited 0"
+    },
+    {
+      "group": "lint",
+      "records": [
+        "e1df01e21bed4fe1a9643340aa73d448",
+        "61aba8b67a4c42688ff214fd906bbee7",
+        "5823dc9bb95a4db9a78af83b21387c98",
+        "69c4be5260cd435791872cb44d966e7e"
+      ],
+      "result": "all captured offline lint runs exited 0; stderr includes the retained proc-macro-error2 v2.0.1 future-incompatibility warning"
+    },
+    {
+      "group": "cargo test -p nms-watch --all-features --offline",
+      "records": [
+        "4cebb35c9e684e4da87e96f9e45f2464",
+        "1a39467aaff64755a08e991a17cd1053"
+      ],
+      "result": "default-sandbox attempt exited 101 (29/38 unit pass, 9 native event timeouts); one authorized require_escalated retry with identical argv/cwd/offline override/original TMPDIR exited 0 (38 unit, 4 integration, 7 doctests). Source metadata was identical across both attempts; this distinguishes launch substrate, not a presumed source repair."
+    },
+    {
+      "group": "strict rustdoc",
+      "records": [
+        "bef34a022da242678b1938d9ae1db69b"
+      ],
+      "result": "exit 0 with -D warnings -D missing_docs"
+    },
+    {
+      "group": "ordered source scope and opposed mutation audit",
+      "records": [
+        "01e5a2da3dc3412a9880320e4147704f"
+      ],
+      "result": "exit 0; all five ordered non-doc comparisons and three named payload sites pass; opposed in-memory executable mutation rejected"
+    },
+    {
+      "group": "working diff check",
+      "records": [
+        "93be341780854bfa81c3dd3ea3a000ac"
+      ],
+      "result": "exit 0"
+    },
+    {
+      "group": "full baseline diff check",
+      "records": [
+        "9ba15a9710dc48bb8b0f4a4aa73c7a28"
+      ],
+      "result": "exit 0"
+    }
+  ],
+  "raw_attempt_log": {
+    "attempt_count": 20,
+    "bytes": 124092,
+    "note": "Complete base64 stdout/stderr and all raw metadata remain in this append-only log; entries below index every attempt without duplicating streams.",
+    "path": "/private/tmp/nms-slice34-cc-attempts.json",
+    "sha256": "84e14ae075922f03bd765e7733f3e8bb89aee2e8ee09e605136885c937875aaa"
+  },
+  "slice": "Project01 Arc06 Slice34 \u2014 complete nms-watch public API documentation",
+  "source": {
+    "baseline": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+    "branch": "codex/watch-api-documentation",
+    "commit": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+    "committed_paths": [
+      "crates/nms-watch/src/delta.rs",
+      "crates/nms-watch/src/error.rs",
+      "crates/nms-watch/src/lib.rs",
+      "crates/nms-watch/src/snapshot.rs",
+      "crates/nms-watch/src/watcher.rs"
+    ],
+    "index_clean": true,
+    "parent": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+    "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+    "tree": "c0a8cea7d16769b8f0fa46b5b30c7cb9f84656f2",
+    "untracked_source_files": [],
+    "working_tree_clean": true
+  }
+}
