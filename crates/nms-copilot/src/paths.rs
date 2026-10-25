@@ -1,35 +1,81 @@
-//! Path resolution for NMS Copilot data files.
+//! Build paths for NMS Copilot data files.
+//!
+//! Path builders use the current user's home directory and return lexical
+//! paths; they do not inspect save files or create the returned files. The
+//! account and slot components in [`cache_path_for_save`] come from the
+//! immediate parent directory name and file stem. This mapping is not
+//! canonicalized, and distinct save paths can therefore map to the same cache.
+//!
+//! # Examples
+//!
+//! ```no_run
+//! use nms_copilot::paths::{cache_path, cache_path_for_save, config_path, data_dir, history_path};
+//! use std::path::Path;
+//!
+//! let root = data_dir();
+//! assert_eq!(root.join("history.txt"), history_path());
+//! assert_eq!(root.join("config.toml"), config_path());
+//! assert_eq!(root.join("galaxy.rkyv"), cache_path());
+//! assert_eq!(root.join("st_fixture/save3/galaxy.rkyv"), cache_path_for_save(Path::new("st_fixture/save3.hg")));
+//! assert_eq!(root.join("default/save/galaxy.rkyv"), cache_path_for_save(Path::new("save.hg")));
+//! ```
+//!
+//! [`ensure_data_dir`] is the explicit filesystem operation: it creates only
+//! the data root directory and returns any creation error.
 
 use std::path::PathBuf;
 
-/// Base directory for NMS Copilot data: `~/.nms-copilot/`.
+/// Return `~/.nms-copilot/`.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn data_dir() -> PathBuf {
     dirs::home_dir()
         .expect("Could not determine home directory")
         .join(".nms-copilot")
 }
 
-/// Path to the history file: `~/.nms-copilot/history.txt`.
+/// Return the lexical path `~/.nms-copilot/history.txt` without creating it.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn history_path() -> PathBuf {
     data_dir().join("history.txt")
 }
 
-/// Path to the config file: `~/.nms-copilot/config.toml`.
+/// Return the lexical path `~/.nms-copilot/config.toml` without reading or creating it.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn config_path() -> PathBuf {
     data_dir().join("config.toml")
 }
 
-/// Default cache path (legacy): `~/.nms-copilot/galaxy.rkyv`.
+/// Return the legacy lexical cache path `~/.nms-copilot/galaxy.rkyv`.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn cache_path() -> PathBuf {
     data_dir().join("galaxy.rkyv")
 }
 
 /// Per-save cache path: `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
 ///
-/// Derives cache location from the save file path, using the parent directory
-/// name (account) and file stem (no extension) as path components.
-/// For example, `…/st_76561198025707979/save3.hg` becomes
-/// `~/.nms-copilot/st_76561198025707979/save3/galaxy.rkyv`.
+/// Derive a lexical cache path from a save path without checking that it exists.
+///
+/// The immediate parent directory name supplies the account component (or
+/// `default` when absent or not UTF-8); the file stem supplies the slot (or
+/// `save` when absent or not UTF-8). The result is
+/// `~/.nms-copilot/<account>/<slot>/galaxy.rkyv`. It is not canonicalized, so
+/// different save paths with the same parent name and stem can collide.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn cache_path_for_save(save_path: &std::path::Path) -> PathBuf {
     let save_stem = save_path
         .file_stem()
@@ -46,7 +92,18 @@ pub fn cache_path_for_save(save_path: &std::path::Path) -> PathBuf {
         .join("galaxy.rkyv")
 }
 
-/// Ensure the data directory exists.
+/// Create the data root directory recursively if needed.
+///
+/// This does not create the config, history, or cache files. Resolving the
+/// root inherits [`data_dir`]’s panic if the home directory is unavailable.
+///
+/// # Errors
+///
+/// Returns the filesystem error if creating the data directory fails.
+///
+/// # Panics
+///
+/// Panics if the home directory cannot be determined.
 pub fn ensure_data_dir() -> std::io::Result<()> {
     std::fs::create_dir_all(data_dir())
 }

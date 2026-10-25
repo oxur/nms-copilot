@@ -1,51 +1,125 @@
-//! Session state for the interactive REPL.
+//! Mutable session context for REPL commands.
 //!
-//! Tracks the user's current context: position, filters, and preferences.
-//! Commands like `find` and `route` use this state as defaults when
-//! explicit flags are not provided.
+//! [`SessionState`] stores a reference position, biome and warp preferences,
+//! selected galaxy, and model counts. It is a caller-owned snapshot: public
+//! fields can be changed independently, and values may be inconsistent with
+//! the model until [`SessionState::sync_from_model`] is called. Synchronization
+//! refreshes the selected galaxy and counts, follows a missing/player position,
+//! and preserves base or manually specified address snapshots. These APIs do
+//! not persist state, start background work, or mutate the model.
+//!
+//! # Examples
+//!
+//! ```
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! use nms_copilot::session::{PositionContext, SessionState};
+//! use nms_core::{BaseType, Biome, GalacticAddress, GalaxyType, Planet, PlayerBase, PlayerState, System};
+//! use nms_graph::GalaxyModel;
+//! fn view(s: &SessionState) -> (Option<(&'static str, String, (u64, u8))>, Option<Biome>, Option<f64>, u8, String, GalaxyType, usize, usize) {
+//!     let position = s.position.as_ref().map(|p| {
+//!         let kind = match p {
+//!             PositionContext::Base { .. } => "base",
+//!             PositionContext::PlayerPosition(_) => "player",
+//!             PositionContext::Address(_) => "address",
+//!         };
+//!         let address = p.address();
+//!         (kind, p.label(), (address.packed(), address.reality_index))
+//!     });
+//!     (position, s.biome_filter, s.warp_range, s.galaxy.index, s.galaxy.name.into(), s.galaxy.galaxy_type, s.system_count, s.planet_count)
+//! }
+//! let a = GalacticAddress::new(3,0,0,1,2,0);
+//! let mut m = GalaxyModel::new();
+//! m.insert_system(System::new(a,Some("Atlas".into()),None,None,vec![Planet::new(2,Some(Biome::Lush),None,false,Some("Garden".into()),Some(7))]));
+//! m.insert_base(PlayerBase::new("Home".into(),BaseType::HomePlanetBase,a,[0.0,0.0,0.0],None));
+//! m.player_state=Some(PlayerState::new(GalacticAddress::new(3,0,0,1,5,9),9,None,None,100,20,5)); m.set_active_galaxy(7);
+//! let mut s=SessionState::from_model(&m);
+//! assert_eq!(view(&s),(Some(("player", "player position".into(), (0x5001_0000_0003, 9))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
+//! assert_eq!(s.set_position_base("HOME",&m)?,"Position set to Home");
+//! assert_eq!(view(&s),(Some(("base", "Home".into(), (0x2001_0000_0003, 0))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
+//! assert_eq!(s.set_position_base(" HOME ",&m),Err("Base not found: \" HOME \"".into()));
+//! assert_eq!(view(&s),(Some(("base", "Home".into(), (0x2001_0000_0003, 0))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
+//! assert_eq!(s.set_biome_filter(Biome::Lush),"Biome filter set to Lush");
+//! assert_eq!(view(&s),(Some(("base", "Home".into(), (0x2001_0000_0003, 0))),Some(Biome::Lush),None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
+//! assert_eq!(s.set_warp_range(1200.5),"Warp range set to 1200 ly");
+//! assert_eq!(view(&s),(Some(("base", "Home".into(), (0x2001_0000_0003, 0))),Some(Biome::Lush),Some(1200.5),7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
+//! m.insert_system(System::new(GalacticAddress::new(3,0,0,1,0,9),None,None,None,vec![]));
+//! m.insert_base(PlayerBase::new("HOME".into(),BaseType::HomePlanetBase,GalacticAddress::new(3,0,0,1,4,9),[1.0,2.0,3.0],None));
+//! m.player_state=Some(PlayerState::new(GalacticAddress::new(4,0,0,1,1,0),0,None,None,100,20,5)); m.set_active_galaxy(9); s.sync_from_model(&m);
+//! assert_eq!(view(&s),(Some(("base", "Home".into(), (0x2001_0000_0003, 0))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! let manual=GalacticAddress::new(3,0,0,1,3,7); assert_eq!(s.set_position_address(manual),"Position set to 0x300100000003");
+//! assert_eq!(view(&s),(Some(("address", "0x300100000003".into(), (0x3001_0000_0003, 7))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1)); s.sync_from_model(&m);
+//! assert_eq!(view(&s),(Some(("address", "0x300100000003".into(), (0x3001_0000_0003, 7))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! assert_eq!(s.reset_position(&m),"Position reset to player location");
+//! assert_eq!(view(&s),(Some(("player", "player position".into(), (0x1001_0000_0004, 0))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! assert_eq!(s.format_status(),"Galaxy:      Eissentam (9; Lush)\nModel:       2 systems, 1 planets\nPosition:    player position (Euclid, galaxy 0)\nBiome:       Lush\nWarp range:  1200 ly\n");
+//! assert_eq!(s.reset_all(&m),"Session state reset");
+//! assert_eq!(view(&s),(Some(("player", "player position".into(), (0x1001_0000_0004, 0))),None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! m.player_state=None; s.sync_from_model(&m);
+//! assert_eq!(view(&s),(None,None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! m.player_state=Some(PlayerState::new(GalacticAddress::new(4,0,0,1,1,0),0,None,None,100,20,5)); s.sync_from_model(&m);
+//! assert_eq!(view(&s),(Some(("player", "player position".into(), (0x1001_0000_0004, 0))),None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
+//! # Ok(())
+//! # }
+//! ```
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::Biome;
 use nms_core::galaxy::Galaxy;
 use nms_graph::GalaxyModel;
 
-/// Mutable session state maintained across REPL commands.
+/// Mutable REPL state snapshot used for command defaults.
+///
+/// Public fields can be changed independently and may not match the model.
+/// Call [`sync_from_model`](Self::sync_from_model) to refresh model-derived
+/// values; base and manual address positions remain snapshots.
 #[derive(Debug)]
 pub struct SessionState {
-    /// Current reference position (for distance calculations).
+    /// Reference position used for distance calculations, if one is set.
     pub position: Option<PositionContext>,
 
-    /// Active biome filter (applied to find commands when --biome is not specified).
+    /// Optional biome default for commands that do not specify their own filter.
     pub biome_filter: Option<Biome>,
 
-    /// Default warp range in light-years (for route planning).
+    /// Optional warp-range default in light-years; setters store any `f64`.
     pub warp_range: Option<f64>,
 
-    /// Current galaxy context.
+    /// Selected galaxy metadata, independent of the physical position galaxy.
     pub galaxy: Galaxy,
 
-    /// Number of systems in the model.
+    /// System count across the whole model, including marked systems.
     pub system_count: usize,
 
-    /// Number of planets in the model.
+    /// Flattened planet-map count across the whole model.
     pub planet_count: usize,
 }
 
-/// Where the user's reference position is anchored.
+/// Anchor and stored address for the session reference position.
+///
+/// Base and manual-address variants keep their address snapshots across model
+/// synchronization; only `PlayerPosition` follows the player's current address.
 #[derive(Debug, Clone)]
 pub enum PositionContext {
-    /// At a named base.
+    /// At a named base copied from the model.
     Base {
+        /// Display name copied from the selected base.
         name: String,
+        /// Address copied from the selected base.
         address: GalacticAddress,
     },
-    /// At the player's save file position.
-    PlayerPosition(GalacticAddress),
-    /// At a manually specified address.
-    Address(GalacticAddress),
+    /// At the player's physical save position.
+    PlayerPosition(
+        /// Address copied from the player state.
+        GalacticAddress,
+    ),
+    /// At a manually specified address, independent of the selected galaxy.
+    Address(
+        /// Address supplied by the caller.
+        GalacticAddress,
+    ),
 }
 
 impl PositionContext {
+    /// Borrow the address stored by this position anchor.
     pub fn address(&self) -> &GalacticAddress {
         match self {
             Self::Base { address, .. } => address,
@@ -53,6 +127,9 @@ impl PositionContext {
         }
     }
 
+    /// Return the base name, `player position`, or packed hexadecimal label.
+    ///
+    /// Address labels omit the separate galaxy index.
     pub fn label(&self) -> String {
         match self {
             Self::Base { name, .. } => name.clone(),
@@ -63,7 +140,12 @@ impl PositionContext {
 }
 
 impl SessionState {
-    /// Initialize session state from the loaded model.
+    /// Initialize a session snapshot with counts from the whole model.
+    ///
+    /// Counts span all galaxies. System counts include marked systems; planet
+    /// counts use the entire flat planet map. Position and selected galaxy are
+    /// copied independently. A missing player system is not ensured; filters
+    /// and range start unset.
     pub fn from_model(model: &GalaxyModel) -> Self {
         let position = model
             .player_state
@@ -82,11 +164,13 @@ impl SessionState {
         }
     }
 
-    /// Refresh fields derived from the model while preserving explicit anchors.
+    /// Refresh model-derived fields while preserving explicit anchors.
     ///
-    /// A missing position and a player-following position follow the current
-    /// physical player address. Base and manually specified address anchors
-    /// remain fixed while the selected galaxy and model counts are refreshed.
+    /// The selected galaxy and whole-model system and planet counts are
+    /// refreshed. A missing or player-following position follows the current
+    /// physical player address; base and manual address anchors remain snapshots.
+    /// Biome and warp values are preserved. No placeholder is inserted and the
+    /// model is not otherwise mutated.
     pub fn sync_from_model(&mut self, model: &GalaxyModel) {
         self.galaxy = Galaxy::by_index(model.active_galaxy);
         self.system_count = model.system_count();
@@ -103,7 +187,14 @@ impl SessionState {
         }
     }
 
-    /// Set the reference position to a named base.
+    /// Snapshot a base found by lowercase, untrimmed model name lookup.
+    ///
+    /// The current display name and address are copied into the position.
+    ///
+    /// # Errors
+    ///
+    /// Returns `Base not found: "{name}"` and leaves state unchanged when the
+    /// name does not match a base.
     pub fn set_position_base(&mut self, name: &str, model: &GalaxyModel) -> Result<String, String> {
         let base = model
             .base(name)
@@ -117,46 +208,56 @@ impl SessionState {
         Ok(format!("Position set to {display_name}"))
     }
 
-    /// Set the reference position to an explicit address.
+    /// Set a manual address snapshot without changing selected galaxy.
+    ///
+    /// The confirmation formats the packed address as 12 hexadecimal digits.
     pub fn set_position_address(&mut self, address: GalacticAddress) -> String {
         let label = format!("0x{:012X}", address.packed());
         self.position = Some(PositionContext::Address(address));
         format!("Position set to {label}")
     }
 
-    /// Reset position to the player's save file position.
+    /// Clear the anchor and synchronize to the current player, if available.
+    ///
+    /// Filters and warp range are preserved; without player state the anchor
+    /// remains `None`.
     pub fn reset_position(&mut self, model: &GalaxyModel) -> String {
         self.position = None;
         self.sync_from_model(model);
         "Position reset to player location".into()
     }
 
-    /// Set the active biome filter.
+    /// Store a biome filter and return its Debug-formatted confirmation.
     pub fn set_biome_filter(&mut self, biome: Biome) -> String {
         let name = format!("{biome:?}");
         self.biome_filter = Some(biome);
         format!("Biome filter set to {name}")
     }
 
-    /// Clear the active biome filter.
+    /// Clear the biome filter and return `Biome filter cleared`.
     pub fn clear_biome_filter(&mut self) -> &'static str {
         self.biome_filter = None;
         "Biome filter cleared"
     }
 
-    /// Set the default warp range.
+    /// Store `ly` without validating range or finiteness.
+    ///
+    /// The message casts it to `u64`; the stored value remains the original `f64`.
     pub fn set_warp_range(&mut self, ly: f64) -> String {
         self.warp_range = Some(ly);
         format!("Warp range set to {} ly", ly as u64)
     }
 
-    /// Clear the warp range.
+    /// Clear the warp range and return `Warp range cleared`.
     pub fn clear_warp_range(&mut self) -> &'static str {
         self.warp_range = None;
         "Warp range cleared"
     }
 
-    /// Reset all session state to defaults.
+    /// Refresh model-derived fields and clear biome and warp defaults.
+    ///
+    /// Position follows the current player when available; the model is not
+    /// changed.
     pub fn reset_all(&mut self, model: &GalaxyModel) -> &'static str {
         self.reset_position(model);
         self.biome_filter = None;
@@ -164,7 +265,10 @@ impl SessionState {
         "Session state reset"
     }
 
-    /// Format the current session state for display.
+    /// Format stored state as five lines followed by a final LF.
+    ///
+    /// The selected galaxy and position's physical galaxy are shown separately;
+    /// this reads no model and performs no output operation.
     pub fn format_status(&self) -> String {
         let mut lines = Vec::new();
 
