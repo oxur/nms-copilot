@@ -1,0 +1,5 @@
+# Slice03 retrospective
+
+CDC /root/cdc_arc07,2026-10-25; inspected00441da, accepted inventory/native results and their source witnesses. Outcome: a short49-entry capability mapping and small decision set, with no source change. Initial draft blurred integrated11–14 vs branch-only15–19 and offered an incomplete map choice; review corrected the integration split and identified a fixed entry snapshot that permits coordinator/MCP progress without requiring live map refresh. Original graph-edge promise stayed visible rather than being softened to current docs.
+
+CC exceeded its three-path planning ownership with harmless pending-review metadata and amended its message to fix trailer adjacency. Both commit identities/tree equality are retained in verification. This was a boundary/commit discipline miss, not grounds for new infrastructure or another task merely to make history look cleaner. The earlier proportionality watch item is followed: finite source-grounded report, preserved useful code/evidence, explicit uncertainties, and an actual stop after three results. No framework modification or further arc planning is proposed. Human discussion owns what happens next.
