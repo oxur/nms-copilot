@@ -1,0 +1,22 @@
+NMS Copilot CLI -- search planets, plan routes, convert glyphs
+
+Usage: nms [OPTIONS] <COMMAND>
+
+Commands:
+  info         Display save file summary
+  find         Search planets by biome, distance, name
+  show         Show detailed information about a system or base
+  stats        Display aggregate galaxy statistics
+  route        Plan a route through discovered systems
+  list         List reference data or model collections
+  convert      Convert between NMS coordinate formats
+  export       Export filtered planets as JSON or CSV
+  import       Import community coordinate data
+  completions  Generate shell completions
+  saves        List all save slots
+  help         Print this message or the help of the given subcommand(s)
+
+Options:
+      --slot <SLOT>  Use a specific save slot (1-15) instead of most recent
+  -h, --help         Print help
+  -V, --version      Print version

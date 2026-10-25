@@ -4,7 +4,7 @@
 [![][crate-badge]][crate]
 [![][tag-badge]][tag]
 [![][docs-badge]][docs]
-[![License](https://img.shields.io/crates/l/treadle.svg)](LICENSE-MIT)
+[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
 
 **A real-time galactic copilot for [No Man's Sky](https://www.nomanssky.com/), built in Rust.**
 
@@ -12,7 +12,9 @@
 
 Search planets by biome. Plan warp routes through the stars. Convert portal glyphs with emoji. Watch your save file live as you play — and let an AI explore the galaxy *with* you.
 
-```
+The following is illustrative REPL command and output.
+
+```text
 [Euclid │ 644 planets │ 293 systems] 🚀 find --biome Lush --nearest 5
 
   #  Planet            Biome   System             Distance   Portal Glyphs
@@ -27,7 +29,11 @@ Search planets by biome. Plan warp routes through the stars. Convert portal glyp
 
 ## What is this?
 
-NMS Copilot reads your No Man's Sky save files — either the raw binary format (`save.hg`) directly or exported JSON — and builds a live, in-memory model of every system, planet, and base you've discovered. It's not a save editor. It's a **queryable atlas** of your personal galaxy.
+NMS Copilot reads native `save.hg` files and supported JSON input, then builds
+an in-memory model of discovered systems, planets, and bases. It is not a save
+editor; it is a **queryable atlas**. Start with an explicit save path or the
+committed synthetic fixture shown below so commands do not need to discover a
+save on your machine.
 
 Two ways to use it:
 
@@ -36,9 +42,39 @@ Two ways to use it:
 | **CLI** (`nms`) | One-shot commands for quick lookups and scripted pipelines |
 | **REPL** (`nms-copilot`) | Interactive session with persistent state, built-in MCP server for AI co-exploration |
 
-The copilot watches your save directory for changes. When you warp to a new system, scan a planet, or build a base, it detects the auto-save and updates the model automatically. The built-in MCP server shares the same live model, so your AI copilot knows where you are *right now*.
+In normal REPL mode, the copilot can watch the selected save for changes and
+update its model. The built-in MCP server observes that shared live model. Save
+watching is configurable and can be disabled; the details appear below.
 
 Use `--headless` to run just the MCP server without the REPL (e.g., for Claude Desktop integration).
+
+### Try the committed synthetic save
+
+With Rust 1.91 or later installed, run these commands from the repository root.
+They pass the fixture path explicitly and do not inspect your game-save
+directories:
+
+```bash
+cargo run -p nms-cli --bin nms -- info --save data/test/save56_multi_system.json
+cargo run -p nms-cli --bin nms -- stats --save data/test/save56_multi_system.json --biomes
+```
+
+The fixture is synthetic test data, not a copy of a player's save. For your own
+data, pass a path with `--save`; the application reads save data and does not
+edit it.
+
+The documentation set includes monochrome rendered views of the real CLI help
+and fixture statistics output. Recognized ANSI styling is omitted only from
+image presentation; the complete raw text remains unchanged. These are rendered
+CLI captures, not desktop screenshots. The text and images below come from the
+captured commands described in [the capture notes](docs/captures/README.md):
+
+![Rendered output of nms --help](docs/captures/nms-help.png)
+
+![Rendered statistics output for the synthetic fixture](docs/captures/nms-stats.png)
+
+See [the capture notes](docs/captures/README.md) for their source commands and
+rendering method.
 
 ---
 
@@ -105,7 +141,14 @@ nms convert --ga 0x40050003AB8C07
 
 ## Commands
 
-All commands below work with both the CLI (`nms`) and the REPL (`nms-copilot`), unless noted otherwise. The CLI accepts `--save` and `--slot` flags; the REPL uses its pre-loaded model.
+The CLI (`nms`) and interactive REPL (`nms-copilot`) share `find`, `show`,
+`stats`, `route`, `convert`, and `list`. For commands that read a save, the CLI
+accepts `--save` or `--slot`; the REPL operates on its already loaded model and
+has no save-path flag. CLI-only commands include `saves`, `export`, `import`,
+and `completions`. The `info` command is available in both interfaces: CLI
+`info` summarizes the selected save, while REPL `info` reports loaded model
+counts and the physical current position. REPL session anchors and settings
+appear under `status`. REPL-only commands are listed in the REPL section.
 
 ### Search
 
@@ -122,26 +165,28 @@ nms find --named --discoverer oubiwann         # your named discoveries
 
 ### Route Planning
 
-Plan optimal routes through the galaxy with warp range constraints:
+Plan heuristic routes through discovered systems with warp-range constraints.
+The nearest-neighbor and 2-opt algorithms are route heuristics, not guarantees
+of a globally shortest route:
 
 ```bash
-nms route --biome Scorched                       # visit all scorched, nearest-neighbor
+nms route --biome Scorched --algo nn             # visit all scorched, nearest-neighbor
 nms route --biome Scorched --within 500000       # only within radius
-nms route --biome Lush,Swamp --warp-range 2500   # S-class hyperdrive hops
+nms route --biome Lush --warp-range 2500         # S-class hyperdrive hops
 nms route --biome Frozen --algo 2opt             # improved TSP
 nms route --target "Base A" --target "Base B"    # explicit waypoints
-nms route --round-trip                           # return to start
+nms route --biome Lush --round-trip              # return after visiting Lush targets
 ```
 
-### Info & Details
+### CLI Save Summary & Details
 
 ```bash
-nms info                              # save overview, player location, discovery counts
+nms info                              # save-file overview and discovery counts
 nms show system 369                   # system details + all planets
 nms show base "Acadia National Park"  # base details with portal glyphs
-nms stats --biomes                    # biome distribution table
-nms stats --discoveries               # discovery counts by type
-nms saves                             # list all save slots
+nms stats --biomes                    # overview and available biome distribution
+nms stats --discoveries               # currently the same overview/biome output
+nms saves                             # list discovered save slots
 ```
 
 ### Coordinate Conversion
@@ -265,9 +310,11 @@ nms find --slot 5 --biome Lush      # search slot 5's discoveries
 
 ### Interactive REPL
 
-The REPL (`nms-copilot`) supports all the commands above plus session management and an interactive galaxy map:
+The REPL (`nms-copilot`) provides the shared query commands over its loaded
+model, plus session management and an interactive galaxy map. The following is
+illustrative REPL command and output:
 
-```bash
+```text
 nms-copilot
 
 [Euclid | 644 planets] 🚀 set position "Acadia National Park"
@@ -316,6 +363,12 @@ REPL-only commands:
 | `reset [position\|biome\|warp-range\|all]` | Reset session state |
 | `status` | Show current session state |
 | `map` | Interactive galaxy map (galaxy/region/local zoom) |
+| `help` | Show REPL help. |
+| `exit`, `quit` | End the REPL session. |
+
+The REPL's `info` command reports loaded model counts and the physical current
+position. Use `status` for session anchors and settings; CLI `info` summarizes
+a selected save file.
 
 ---
 
@@ -327,14 +380,18 @@ NMS Copilot is a Rust workspace of focused crates:
 nms/
 ├─ nms-core       Types, enums, address math, glyph emoji
 ├─ nms-save       Raw binary save parser (LZ4 + XXTEA + key mapping)
-├─ nms-compat     Format adapters (NomNom save format detection)
+├─ nms-compat     JSON compatibility boundary; NomNom passthrough is experimental
 ├─ nms-graph      petgraph spatial model, R-tree index, routing
 ├─ nms-query      Shared query engine (find, route, show, stats)
 ├─ nms-watch      File watcher, delta computation, live updates
 ├─ nms-cache      rkyv zero-copy serialization for fast startup
 ├─ nms-cli        clap one-shot CLI (the `nms` binary)
-└─ nms-copilot    reedline interactive REPL + MCP server (the `nms-copilot` binary)
+├─ nms-copilot    reedline interactive REPL + MCP server (the `nms-copilot` binary)
+└─ nms            umbrella metadata/documentation crate
 ```
+
+The `nms` umbrella crate does not provide a re-export API or another
+executable; the one-shot `nms` binary is provided by `nms-cli`.
 
 The data flows in one direction:
 
@@ -450,18 +507,24 @@ The setting applies to headless stdio and HTTP servers and to normal REPL mode. 
 
 ## Installation
 
+If a published release is available, install its packages with:
+
 ```bash
 cargo install nms-copilot    # interactive REPL + MCP server
 cargo install nms-cli        # one-shot CLI (the `nms` binary)
 ```
 
-Or build from source:
+To build this checkout from source:
 
 ```bash
 git clone https://github.com/oxur/nms-copilot
 cd nms-copilot
 make build
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development prerequisites, focused
+validation commands, and fixture guidance. The synthetic CLI examples and their
+rendered output are documented in [CLI captures](docs/captures/README.md).
 
 ---
 
@@ -477,7 +540,7 @@ make build
 
 NMS Copilot builds on a decade of community reverse engineering. Special thanks to:
 
-- **[libNOM.io](https://github.com/zencq/libNOM.io)** / **[NomNom](https://github.com/zencq/NomNom)** by zencq — the most complete save format implementation
+- **[libNOM.io](https://github.com/zencq/libNOM.io)** / **[NomNom](https://github.com/zencq/NomNom)** by zencq — community save-format research. NMS Copilot's current NomNom helper is only a marker heuristic and serde passthrough; it has not been validated against authentic NomNom exports.
 - **[MBINCompiler](https://github.com/monkeyman192/MBINCompiler)** by monkeyman192 — game data decompilation and key mapping
 - **[Chase-san](https://gist.github.com/Chase-san/704284e4acd841471d9836e6bc296f2f)** — the cleanest minimal save decoder
 - **[MetaIdea/nms-savetool](https://github.com/MetaIdea/nms-savetool)** — definitive format 2001 encryption documentation
@@ -491,10 +554,8 @@ NMS Copilot builds on a decade of community reverse engineering. Special thanks 
 
 Licensed under either of
 
-- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
-  <http://www.apache.org/licenses/LICENSE-2.0>)
-- MIT license ([LICENSE-MIT](LICENSE-MIT) or
-  <http://opensource.org/licenses/MIT>)
+- Apache License, Version 2.0 (<http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT license (<http://opensource.org/licenses/MIT>)
 
 at your option.
 
