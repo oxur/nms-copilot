@@ -135,9 +135,9 @@ fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
 /// # Ok::<(), Box<dyn std::error::Error>>(())
 /// ```
 ///
-/// # Panics
-///
-/// Byte-based name truncation can panic when its cut falls inside a UTF-8 code point.
+/// Planet names are limited to 20 Unicode scalar values; biome and system names are
+/// limited to 22. Overlong values end in three ASCII periods. Combining sequences
+/// count as multiple scalars; truncation does not measure grapheme clusters or terminal width.
 pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     if results.is_empty() {
         return "  No results found.\n".to_string();
@@ -375,9 +375,9 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
 /// `  No route computed.\n`; see [`format_find_results`] for the example that
 /// also checks this empty case.
 ///
-/// # Panics
-///
-/// Byte-based name truncation can panic when its cut falls inside a UTF-8 code point.
+/// Ordinary hop names are limited to 21 Unicode scalar values and waypoint names
+/// to 19; overlong values end in three ASCII periods. Combining sequences count as
+/// multiple scalars; truncation does not measure grapheme clusters or terminal width.
 pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme: &Theme) -> String {
     if result.route.hops.is_empty() {
         return "  No route computed.\n".to_string();
@@ -465,13 +465,17 @@ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme:
     out
 }
 
-/// Truncate a string to `max_len` characters, appending "..." if truncated.
+/// Truncate a string to at most `max_len` Unicode scalar values.
+///
+/// Overlong strings end in up to three ASCII periods, bounded by `max_len`.
 fn truncate(s: &str, max_len: usize) -> String {
-    if s.len() <= max_len {
-        s.to_string()
-    } else {
-        format!("{}...", &s[..max_len.saturating_sub(3)])
+    if s.chars().count() <= max_len {
+        return s.to_string();
     }
+
+    let mut output: String = s.chars().take(max_len.saturating_sub(3)).collect();
+    output.push_str(&".".repeat(max_len.min(3)));
+    output
 }
 
 #[cfg(test)]
@@ -855,5 +859,172 @@ mod tests {
         assert!(output.contains("050003AB8C07"));
         assert!(output.contains(&hex_to_emoji("050003AB8C07")));
         assert!(!output.contains("9:050003AB8C07"));
+    }
+
+    #[test]
+    fn test_truncate_unicode_scalar_cases_match_literal_contract() {
+        let cases = [
+            ("", 0, ""),
+            ("hello", 0, ""),
+            ("hello", 1, "."),
+            ("hello", 2, ".."),
+            ("hello", 3, "..."),
+            ("hello", 4, "h..."),
+            ("ééééé", 5, "ééééé"),
+            ("😀😀😀😀😀", 5, "😀😀😀😀😀"),
+            ("éééééé", 5, "éé..."),
+            ("界界界界界界", 5, "界界..."),
+            ("😀😀😀😀😀😀", 5, "😀😀..."),
+            ("1234567890123456ééééé", 20, "1234567890123456é..."),
+            ("123456789012345678ééééé", 22, "123456789012345678é..."),
+            ("12345678901234567ééééé", 21, "12345678901234567é..."),
+            ("123456789012345ééééé", 19, "123456789012345é..."),
+            ("e\u{301}xyz", 4, "e..."),
+            ("👩\u{200d}🚀xyz", 5, "👩\u{200d}..."),
+        ];
+
+        for (input, max_len, expected) in cases {
+            let actual = truncate(input, max_len);
+            assert_eq!(actual, expected, "input {input:?}, limit {max_len}");
+            assert!(
+                actual.chars().count() <= max_len,
+                "output {actual:?} exceeds limit {max_len}"
+            );
+            if input.chars().count() <= max_len {
+                assert_eq!(actual, input, "within-limit input must remain unchanged");
+            }
+        }
+    }
+
+    #[test]
+    fn test_format_find_results_unicode_names_preserve_values_in_both_themes() {
+        let planet_name = "1234567890123456ééééé";
+        let system_name = "123456789012345678ééééé";
+        let address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let results = vec![FindResult {
+            planet: Planet::new(
+                0,
+                Some(Biome::Lush),
+                None,
+                false,
+                Some(planet_name.to_string()),
+                None,
+            ),
+            system: System::new(
+                address,
+                Some(system_name.to_string()),
+                Some("Explorer".to_string()),
+                None,
+                vec![],
+            ),
+            distance_ly: 42.0,
+            portal_hex: "000100000000".to_string(),
+        }];
+
+        for theme in [Theme::none(), Theme::default_dark()] {
+            let output = format_find_results(&results, &theme);
+            assert!(output.contains("SEARCH RESULTS"), "{output}");
+            assert_eq!(
+                output.matches("1234567890123456é...").count(),
+                1,
+                "{output}"
+            );
+            assert_eq!(
+                output.matches("123456789012345678é...").count(),
+                1,
+                "{output}"
+            );
+            assert!(!output.contains(planet_name), "{output}");
+            assert!(!output.contains(system_name), "{output}");
+            assert!(output.contains("Lush"), "{output}");
+            assert!(output.contains("~42 ly (\u{00B1}163)"), "{output}");
+            assert!(output.contains("000100000000"), "{output}");
+        }
+
+        assert_eq!(results[0].planet.name.as_deref(), Some(planet_name));
+        assert_eq!(results[0].system.name.as_deref(), Some(system_name));
+    }
+
+    #[test]
+    fn test_format_route_unicode_normal_and_waypoint_names_preserve_values_in_both_themes() {
+        let normal_name = "12345678901234567ééééé";
+        let waypoint_name = "123456789012345ééééé";
+        let normal_address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let waypoint_address = GalacticAddress::new(0, 0, 0, 2, 0, 0);
+        let normal_id = nms_graph::SystemId::from_address(&normal_address);
+        let waypoint_id = nms_graph::SystemId::from_address(&waypoint_address);
+        let mut model = nms_graph::GalaxyModel::new();
+        model.insert_system(System::new(
+            normal_address,
+            Some(normal_name.to_string()),
+            None,
+            None,
+            vec![],
+        ));
+        model.insert_system(System::new(
+            waypoint_address,
+            Some(waypoint_name.to_string()),
+            None,
+            None,
+            vec![],
+        ));
+        let result = RouteResult {
+            route: nms_graph::Route {
+                hops: vec![
+                    nms_graph::RouteHop {
+                        system_id: normal_id,
+                        leg_distance_ly: 0.0,
+                        cumulative_ly: 0.0,
+                        is_waypoint: false,
+                    },
+                    nms_graph::RouteHop {
+                        system_id: waypoint_id,
+                        leg_distance_ly: 400.0,
+                        cumulative_ly: 400.0,
+                        is_waypoint: true,
+                    },
+                ],
+                total_distance_ly: 400.0,
+            },
+            warp_range: None,
+            warp_jumps: None,
+            algorithm: nms_graph::RoutingAlgorithm::NearestNeighbor,
+            targets_visited: 1,
+        };
+
+        for theme in [Theme::none(), Theme::default_dark()] {
+            let output = format_route(&result, &model, &theme);
+            assert!(output.contains("ROUTE ITINERARY"), "{output}");
+            assert_eq!(
+                output.matches("12345678901234567é...").count(),
+                1,
+                "{output}"
+            );
+            assert_eq!(
+                output.matches("↳ 123456789012345é...").count(),
+                1,
+                "{output}"
+            );
+            assert!(!output.contains(normal_name), "{output}");
+            assert!(!output.contains(waypoint_name), "{output}");
+            assert!(output.contains("*"), "{output}");
+            assert!(output.contains("000100000000"), "{output}");
+            assert!(output.contains("000200000000"), "{output}");
+            assert!(
+                output.contains(
+                    "  Route: 1 targets, ~400 ly (±163) total\n  Algorithm: nearest-neighbor\n"
+                ),
+                "{output}"
+            );
+        }
+
+        assert_eq!(
+            model.system(&normal_id).and_then(|s| s.name.as_deref()),
+            Some(normal_name)
+        );
+        assert_eq!(
+            model.system(&waypoint_id).and_then(|s| s.name.as_deref()),
+            Some(waypoint_name)
+        );
     }
 }

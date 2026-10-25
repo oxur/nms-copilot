@@ -243,9 +243,8 @@ use crate::session::SessionState;
 /// # Panics
 ///
 /// Panics may propagate from [`PortalAddress::parse_mixed`] when its 20-byte excerpt for an
-/// invalid token ends inside a UTF-8 character, from [`format_find_results`] or [`format_route`] when
-/// byte-based name truncation splits a UTF-8 character, and from route jump-count accumulation
-/// on checking builds if a warp-derived total overflows. Invalid embedded theme data could also
+/// invalid token ends inside a UTF-8 character, and from route jump-count accumulation on
+/// checking builds if a warp-derived total overflows. Invalid embedded theme data could also
 /// panic in the theme parser. This API does not promise general panic freedom.
 pub fn dispatch(
     action: &Action,
