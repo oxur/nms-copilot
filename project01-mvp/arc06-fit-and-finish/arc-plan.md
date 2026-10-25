@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.138, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.139, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1117,3 +1117,7 @@ Version1.137 details [Slice41](slice41-banner-setup-api-documentation/slice-plan
 ## Slice41 banner/setup and root navigation accepted — 2026-10-25 UTC
 
 Version1.138 closes all6BS/R06-S41 atclean83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8: complete four-file truthful banner/setup/root docs/keyliteralexamples. Ninefreshindependentgroups pass235runtime+30allfeaturedocs(22execute8compile-only)+26nodefaultdocs(20execute6compile-only), umbrella0/actualstrictzerobothlibraries/fourorderednon-doc/opposedscalar/diffs. Twoactualrefinements/full15CC+13CDCrawrecords/exactreturns/transientrestoration/reportqualifications/finalretro retained, no acceptanceexception/structural/scope/sequence amendment. Required42 CLI namespace/navigation/remainingdispatchkeyfunction and fullpublicsurface/full0039M7.6reconciliation staysCDC/furtherusabledecompositionallowed.59arc46done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC41acceptance](slice41-banner-setup-api-documentation/cdc-verification.md) and [retrospective](slice41-banner-setup-api-documentation/cdc-retrospective.md).
+
+## Slice42 complete CLI documentation owner issued — 2026-10-25 UTC
+
+Version1.139 details [Slice42](slice42-cli-api-documentation/slice-plan.md): exact12CLIbinarysourcefiles/internalhandlerdocumentation/commandtext/navigation, alloldmainbytesincludingClaphelpinputs frozen, onlytwoexactshowpayloadlayouts. Cleanaccepted83e67 source; freshsameapprovedCC6-lunaHigh plannedafter41headroom, CDC6.1-solHigh unchanged. W1–W12/E1–E3 resolved/original7groups/strictisolatedbinarynamespace/rawfirstsupportcontrols/independentacceptance/retro. Initial0actualrefinements/sixCD/R06-S42OPEN/no productimplementationatissue. Required43remainingdispatch/keyfunction/fullpublicsurface/style/strict/full0039M7.6reconciliation staysCDC/furtherusabledecompositionallowed; no library/doctest or parentacceptance invention.60arc46done14open/all25projectrowsOPEN, authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release.

@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.125
+version: 1.126
 project: project01-mvp
 status: active
 depends-on: []
@@ -1302,3 +1302,7 @@ Version1.124/arc1.137 issues complete four-file banner/setup/copilotroot/umbrell
 ## Arc06 Slice41 banner/setup/root docs accepted — 2026-10-25 UTC
 
 Version1.125/arc1.138 records all6BS/R06-S41accepted atclean83e67d62 after nineindependentgroups/235runtime+30/26featuredocs/actualstrictzerobothlibraries/preservationopposed/diffs/finalretro.59arc46done13open/all25projectrowsOPEN. Twoactualrefinements/noexception, complete15CC+13CDCrawhistory/exactreturns retained. Required42CLI namespace/navigation/remainingdispatch/fullpublicsurface/full0039M7.6 and authenticNomNom/alloriginalhigherowners remainOPEN, no cleanup/integration/release.
+
+## Arc06 Slice42 CLI documentation increment issued — 2026-10-25 UTC
+
+Version1.126 details exact12filebinaryCLIinternalAPI/commandnavigation fromaccepted83e67, sameapprovedCDC6.1-solHigh/freshsoleCC6-lunaHigh planned after41headroom. ExistingClaphelp/non-doc/API/tests/depsfrozen/twoexactshowlayouts; original7groups/strictisolatedbinarydocs/independentreview/retro. SixCD/R06-S42OPEN/initial0actualrefinements;60arc46done14open/all25projectrowsOPEN. Required43remainingpublicdispatch/keyfunction/fullsurface/style/strict/fulloriginal0039M7.6reconciliation CDCowned/furtherusabledecompositionallowed; alloriginalhigherowners/authenticNomNominput retained/no integration/release.

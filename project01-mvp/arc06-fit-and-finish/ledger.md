@@ -429,3 +429,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 59arc45done14open/project25OPEN; initialzeroactualrefinements/no implementation or acceptance at issue.
 
 2026-10-25 formal41close: all6BS/R06-S41DONE at83e67d62;59arc46done13open/project25OPEN. Prior issuecounts preserved, required42CLI/dispatch/fullM7.6/higherownersOPEN.
+
+## Original M7.6 complete CLI documentation owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S42 | Complete truthful twelve-file CLI internal API docs/command navigation | SixCD/W1–W12/E1–E3/isolated strict docs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | — | Required43/fullM7.6/allhigherowners OPEN |
+
+60arc46done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance atissue.
