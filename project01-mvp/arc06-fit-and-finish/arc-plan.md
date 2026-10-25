@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.122, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.123, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1045,3 +1045,9 @@ Version1.121 details [Slice33](slice33-query-api-documentation/slice-plan.md), e
 Version1.122 closes all6QD/R06-S33 at clean6e5af862ac51de71c5ceae7e17d49450c678cbfe: complete eight-file public surface/literal runnable examples. Seven fresh independent groups pass,96runtime+7executingdocs/strictqueryzero/noexception/exacteightfile-elevenlayout preservation/opposedmutation/diffs. Two actual refinements/16CC+7CDC rawrecords/exactreturns/recovered metadata inspection unknowns/finalretro retained. No structural/sequence/scope amendment; known UTF8 byte-truncation limitation remains originalM7.10/P01-G07 CDC reconciliation, documented only.
 
 51arcrows38done13open/project25OPEN. Fulloriginal0039M7.6 remains OPEN for required34 remaining public APIs/fullreconciliation, CDC-owned/furtherbounded split permitted. M7.5 authenticNomNominput unanswered; every original raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. Mainknownagentaddition/held/externalpins untouched; no integration/release. See [CDC33 acceptance](slice33-query-api-documentation/cdc-verification.md) and [retrospective](slice33-query-api-documentation/cdc-retrospective.md).
+
+## Slice34 complete watch API owner issued — 2026-10-25 UTC
+
+Version1.123 details [Slice34](slice34-watch-api-documentation/slice-plan.md), complete five-file nms-watch public API Rustdoc/key examples plus three exact existing payload layouts. Dedicatedcodex/watch-api-documentation cleanaccepted6e5a; sameCDC6.1-solHigh/soleCC6-lunaHigh, qualitativeheadroom/noownedprocess confirmed. Complete production/data/error/backpressure/coalescing/join/panic contracts and literal checked-vs-legacy/full-delta/omission oracles resolved. Rawfirst kernels/two actualNULbinary7/0supportcontrols inspected/verified beforefirstcompilerdiagnostic. Initial0actualrefinements; no productimplementation/acceptance atissue.
+
+52arcrows38done14open/project25OPEN. Original0039M7.6 decomposition now current34watch, required35remaining cache/compat/application APIs and full0039reconciliation CDC-owned/furtherbounded split allowed. All originalcriteria/accepted29–33/knownstaticlimitations and every raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. M7.5authenticinput unanswered. Mainknownoldagentaddition/held/externalpins untouched; no newpolicy/amendment/integrationauthority.

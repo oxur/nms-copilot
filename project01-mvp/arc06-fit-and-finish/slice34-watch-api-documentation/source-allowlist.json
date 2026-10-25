@@ -1,0 +1,19 @@
+{
+  "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+  "baseline": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+  "paths": [
+    "crates/nms-watch/src/delta.rs",
+    "crates/nms-watch/src/error.rs",
+    "crates/nms-watch/src/lib.rs",
+    "crates/nms-watch/src/snapshot.rs",
+    "crates/nms-watch/src/watcher.rs"
+  ],
+  "permitted_existing_payload_layouts": {
+    "crates/nms-watch/src/error.rs": [
+      "SaveNotFound(PathBuf),",
+      "NotifyError(String),",
+      "ParseError(String),"
+    ]
+  },
+  "rule": "Whole-line Rustdoc/blanklines only, plus these three exact existing tuple payload layouts/trailing commas; all ordered other bytes frozen."
+}

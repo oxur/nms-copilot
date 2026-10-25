@@ -349,3 +349,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 51rows37done14open/project25open, all50priorrows/criteria/dispositions retained. Initial0actualrefinements; no productimplementation/acceptance atissue.
 
 2026-10-25 formal33close: all6QD/R06-S33DONE on6e5af862, seven independent groups/96runtime+7executingdocs/strictzero/exactpreservation+opposed/diffs.51arc38done13open/project25open; fullM7.6/required34/allhigherowners OPEN.
+
+## Slice34 complete watch API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S34 | Complete truthful watcher/snapshot/delta/error public documentation and key examples | SixWD/full5fileproductionworksheet/strictwatch/unit+integration+doctests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | open | [Slice34 plan](slice34-watch-api-documentation/slice-plan.md) | FullM7.6/required35remainingAPIs/fullreconciliation and allhighergates retained |
+
+52rows38done14open/project25OPEN. Prior51rows/criteria/dispositions preserved; initial0actualrefinements/noimplementation atissue.

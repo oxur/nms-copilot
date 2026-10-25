@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.109
+version: 1.110
 project: project01-mvp
 status: active
 depends-on: []
@@ -1238,3 +1238,7 @@ Version1.108/arc1.121 details full8filequery publicAPI increment fromaccepted e3
 ## Arc06 Slice33 query documentation accepted — 2026-10-25 UTC
 
 Version1.109/arc1.122 records all6QD/R06-S33 accepted at6e5af862, seven independent groups/96runtime+7executingdocs/strictzero/exactpreservation/finalretro.51arc38done13open/all25projectrows OPEN. FullM7.6 retains required34 remaining APIs/full0039 reconciliation, furtherbounded split allowed; every original/higherowner retained. Byte-truncationpanic documented only; no integration/release/parent acceptance.
+
+## Arc06 Slice34 watch documentation owner — 2026-10-25 UTC
+
+Version1.110/arc1.123 details complete5file watch publicAPI increment fromaccepted6e5a, sixOPEN WDrows. Sameapprovedroles/models/adequateCCheadroom/noownedprocess; source-grounded lifecycle/omission/error/literalexamples/preservation/rawfirst controls complete beforehandoff. No implementationclaim.52arc38done14open/project25OPEN; fullM7.6 retains required35remaining cache/compat/application APIs/full0039reconciliation CDC owner/furtherbounded split. All original/highergates retained, no newintegration/publish authority.
