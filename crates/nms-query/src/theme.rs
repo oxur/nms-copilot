@@ -1,10 +1,9 @@
 //! Color themes for terminal output.
 //!
-//! Provides semantic styling for NMS Copilot output using raw ANSI escape codes.
-//! No external color crates are used. The [`Theme`] struct maps semantic elements
-//! (headers, system names, biome types) to [`Style`] values. Two presets are
-//! provided: [`Theme::default_dark`] for interactive terminal use and
-//! [`Theme::none`] for piped or machine-consumed output.
+//! Provides semantic styles and optional stdout terminal detection.
+//!
+//! [`Style::paint`] emits raw ANSI SGR codes for styled text. Theme presets describe
+//! semantic fields; they do not control every renderer or sanitize input strings.
 
 use nms_core::biome::Biome;
 
@@ -15,20 +14,35 @@ const RESET: &str = "\x1b[0m";
 /// Terminal color identifiers mapped to ANSI SGR codes.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Color {
+    /// Red foreground color.
     Red,
+    /// Green foreground color.
     Green,
+    /// Yellow foreground color.
     Yellow,
+    /// Blue foreground color.
     Blue,
+    /// Magenta foreground color.
     Magenta,
+    /// Cyan foreground color.
     Cyan,
+    /// White foreground color.
     White,
+    /// BrightRed foreground color.
     BrightRed,
+    /// BrightGreen foreground color.
     BrightGreen,
+    /// BrightYellow foreground color.
     BrightYellow,
+    /// BrightBlue foreground color.
     BrightBlue,
+    /// BrightMagenta foreground color.
     BrightMagenta,
+    /// BrightCyan foreground color.
     BrightCyan,
+    /// BrightWhite foreground color.
     BrightWhite,
+    /// Gray foreground color.
     Gray,
 }
 
@@ -55,10 +69,23 @@ impl Color {
     }
 }
 
-/// A text style combining an optional foreground color and bold flag.
+/// A text style combining an optional foreground color and bold flag. Plain
+/// styles return input unchanged; styled output adds SGR and reset sequences
+/// without escaping embedded control characters.
+///
+/// # Examples
+///
+/// ```
+/// use nms_query::theme::{Color, Style};
+/// let style = Style { fg: Some(Color::Green), bold: true };
+/// assert_eq!(style.paint("Atlas"), "\x1b[1;32mAtlas\x1b[0m");
+/// assert_eq!(Style::plain().paint("Atlas"), "Atlas");
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Style {
+    /// Optional foreground color.
     pub fg: Option<Color>,
+    /// Whether text is bold.
     pub bold: bool,
 }
 
@@ -94,28 +121,41 @@ impl Style {
     }
 }
 
-/// Semantic color theme for NMS Copilot terminal output.
+/// Semantic color theme for NMS Copilot output.
 ///
-/// Each field corresponds to a semantic element in the output (headers, system
-/// names, biome categories, etc.). Use [`Theme::default_dark`] for dark
-/// terminal backgrounds or [`Theme::none`] for plain text.
+/// Individual formatters may use only a subset of its fields. [`Theme::none`] makes
+/// these styles plain but does not guarantee ANSI-free downstream table rendering.
 #[derive(Debug, Clone)]
 pub struct Theme {
+    /// Heading and header text style.
     pub header: Style,
+    /// System-name style.
     pub system_name: Style,
+    /// Planet-name style.
     pub planet_name: Style,
+    /// Distance-value style.
     pub distance: Style,
+    /// Portal-glyph style.
     pub glyphs: Style,
+    /// Secondary-text style.
     pub muted: Style,
 
     // Biome-specific styles.
+    /// Lush and swamp biome style.
     pub biome_lush: Style,
+    /// Toxic biome style.
     pub biome_toxic: Style,
+    /// Scorched and lava biome style.
     pub biome_scorched: Style,
+    /// Frozen biome style.
     pub biome_frozen: Style,
+    /// Barren biome style.
     pub biome_barren: Style,
+    /// Dead biome style.
     pub biome_dead: Style,
+    /// Weird, red, green, and blue biome style.
     pub biome_exotic: Style,
+    /// Fallback style for other biome classifications.
     pub biome_other: Style,
 }
 
@@ -183,10 +223,10 @@ impl Theme {
         }
     }
 
-    /// A no-op theme that produces plain, uncolored text.
+    /// A theme whose semantic styles are all plain.
     ///
-    /// Suitable for MCP output, piped commands, or contexts where ANSI escapes
-    /// are unwanted.
+    /// Downstream table rendering may still emit ANSI sequences, and this does not
+    /// sanitize input text.
     pub fn none() -> Self {
         Self {
             header: Style::plain(),
@@ -207,6 +247,12 @@ impl Theme {
     }
 
     /// Look up the style for a given biome.
+    ///
+    /// Lush and Swamp use `biome_lush`; Toxic uses `biome_toxic`; Scorched and
+    /// Lava use `biome_scorched`; Frozen uses `biome_frozen`; Barren uses
+    /// `biome_barren`; and Dead uses `biome_dead`. Weird, Red, Green, and Blue
+    /// use `biome_exotic`. Radioactive, Waterworld, GasGiant, and any unmatched
+    /// classification use `biome_other`.
     pub fn biome_style(&self, biome: &Biome) -> &Style {
         match biome {
             Biome::Lush | Biome::Swamp => &self.biome_lush,
@@ -222,11 +268,10 @@ impl Theme {
     }
 }
 
-/// Decide whether to emit ANSI colors based on config preference and terminal
-/// detection.
+/// Decide whether configured color output is allowed for stdout.
 ///
-/// Returns `true` only when `config_colors` is `true` **and** stdout is a
-/// terminal (as determined by [`std::io::IsTerminal`]).
+/// The function returns true only when `config_colors` is true and stdout passes
+/// [`std::io::IsTerminal`]. It does not inspect `NO_COLOR` or `TERM` overrides.
 pub fn should_use_colors(config_colors: bool) -> bool {
     use std::io::IsTerminal;
     config_colors && std::io::stdout().is_terminal()

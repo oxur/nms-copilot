@@ -1,41 +1,45 @@
-//! Aggregate statistics queries.
+//! Aggregate statistics across the complete in-memory model.
 
 use std::collections::HashMap;
 
 use nms_core::biome::Biome;
 use nms_graph::GalaxyModel;
 
-/// What statistics to compute.
+/// Compatibility flags for choosing statistics. The current [`execute_stats`]
+/// implementation computes all fields and ignores both flags; see the [`crate#examples`] for both flag settings.
 #[derive(Debug, Clone, Default)]
 pub struct StatsQuery {
-    /// Show biome distribution.
+    /// Whether to include biome distribution (currently ignored).
     pub biomes: bool,
-    /// Show discovery counts by type.
+    /// Whether to include discovery counts by type (currently ignored).
     pub discoveries: bool,
 }
 
-/// Aggregate statistics result.
+/// Counts computed across all model records and galaxies. Biome-map entry order
+/// is unspecified. See the [`crate#examples`] for complete
+/// expected counts and biome entries.
 #[derive(Debug, Clone)]
 pub struct StatsResult {
-    /// Total systems in model.
+    /// Number of indexed systems across all galaxies.
     pub system_count: usize,
-    /// Total planets in model.
+    /// Number of entries in the model's flattened planet map.
     pub planet_count: usize,
-    /// Total bases.
+    /// Number of indexed bases across all galaxies.
     pub base_count: usize,
-    /// Biome distribution: biome -> count of planets.
+    /// Counts for planets with a known biome.
     pub biome_counts: HashMap<Biome, usize>,
-    /// Planets with no biome assigned.
+    /// Planets whose biome is `None`.
     pub unknown_biome_count: usize,
-    /// Named vs unnamed planets.
+    /// Planets whose name is `Some`, including an empty string.
     pub named_planet_count: usize,
-    /// Named vs unnamed systems.
+    /// Systems whose name is `Some`, including an empty string.
     pub named_system_count: usize,
-    /// Infested planet count.
+    /// Planets with the infested flag set, independent of biome.
     pub infested_count: usize,
 }
 
-/// Execute a stats query.
+/// Compute every statistic over the entire model, regardless of active galaxy.
+/// `query.biomes` and `query.discoveries` are currently ignored. The [`crate#examples`] checks both flag settings.
 pub fn execute_stats(model: &GalaxyModel, _query: &StatsQuery) -> StatsResult {
     let mut biome_counts: HashMap<Biome, usize> = HashMap::new();
     let mut unknown_biome_count = 0;

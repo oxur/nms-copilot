@@ -1,8 +1,11 @@
 //! Output formatting for query results.
 //!
-//! All formatters return `String` -- the caller prints to stdout.
-//! Each formatter accepts a [`Theme`] for API compatibility but uses
-//! `nms_theme()` / `nms_theme_no_color()` for table styling internally.
+//! Formatters return owned strings; callers choose where to write them.
+//! Table formatters always select a built-in palette: the deep-space palette
+//! when `Theme.header.fg.is_some() || Theme.header.bold`, and the black-and-white
+//! palette otherwise. Other semantic styles do not affect table-cell palette
+//! selection. A plain theme does not guarantee ANSI-free backend output or
+//! sanitized input.
 
 use crate::find::FindResult;
 use crate::route::RouteResult;
@@ -11,7 +14,20 @@ use crate::stats::StatsResult;
 use crate::table::{Builder, build_table, nms_theme, nms_theme_no_color};
 use crate::theme::Theme;
 
-/// Format a distance in light-years for display.
+/// Format a distance estimate in light-years for display.
+///
+/// Zero has a special label; same-voxel uncertainty and cross-voxel estimates
+/// use different rounding. Inputs are not validated.
+///
+/// # Examples
+///
+/// ```
+/// use nms_query::format_distance;
+/// assert_eq!(format_distance(0.0), "< 1 ly");
+/// assert_eq!(format_distance(2_000.0), "~2.0K ly (±163)");
+/// assert_eq!(format_distance(4_000.0), "~4.0K ly");
+/// assert_eq!(format_distance(40_000.0), "~40.0K ly");
+/// ```
 ///
 /// - 0.0 (same system): `"< 1 ly"`
 /// - ~265 ly (same voxel): `"~265 ly (±100)"` — SD from Robbins' variance
@@ -50,9 +66,18 @@ pub fn format_distance(ly: f64) -> String {
     }
 }
 
-/// Convert a 12-digit hex portal address to emoji string.
+/// Convert hexadecimal characters in `hex` to portal glyphs.
 ///
-/// Uses `nms_core::glyph::Glyph::new()` and `emoji()`.
+/// Each character is scanned: hexadecimal digits are converted and other
+/// characters are skipped. This is not a strict portal-address parser.
+///
+/// # Examples
+///
+/// ```
+/// use nms_query::hex_to_emoji;
+/// assert_eq!(hex_to_emoji("01"), "🌅🕊");
+/// assert_eq!(hex_to_emoji("0x1?"), "🌅🕊");
+/// ```
 pub fn hex_to_emoji(hex: &str) -> String {
     use nms_core::glyph::Glyph;
     hex.chars()
@@ -63,7 +88,9 @@ pub fn hex_to_emoji(hex: &str) -> String {
         .collect()
 }
 
-/// Select the appropriate table theme based on whether the `Theme` has colors.
+/// Select the built-in table palette from the supplied theme's header style.
+///
+/// Other semantic styles do not affect table-cell palette selection.
 fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
     if theme.header.fg.is_some() || theme.header.bold {
         nms_theme()
@@ -72,7 +99,45 @@ fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
     }
 }
 
-/// Format find results as a themed table.
+/// Format find results as a table.
+///
+/// Rows are numbered from one and use `#`, `Planet`, `Biome`, `System`,
+/// `Distance`, `Address`, and `Portal Glyphs` columns. An empty result returns
+/// exactly `  No results found.\n`. Missing names render as `-`; missing biomes
+/// render as `?`. For a known biome, a subtype appears in parentheses only when
+/// its Debug representation starts with the biome's display name. An infested `*`
+/// appears only when a biome is known and the infested flag is set.
+///
+/// # Examples
+///
+/// ```
+/// use nms_query::{format_distance, format_find_results, format_route, hex_to_emoji, should_use_colors, Theme};
+/// use nms_query::theme::Style;
+/// use nms_query::route::RouteResult;
+/// use nms_graph::route::{Route, RoutingAlgorithm};
+/// use nms_graph::GalaxyModel;
+///
+/// assert_eq!(format_distance(0.0), "< 1 ly");
+/// assert_eq!(format_distance(2_000.0), "~2.0K ly (±163)");
+/// assert_eq!(format_distance(4_000.0), "~4.0K ly");
+/// assert_eq!(format_distance(40_000.0), "~40.0K ly");
+/// assert_eq!(hex_to_emoji("01"), "🌅🕊");
+/// assert_eq!(hex_to_emoji("0x1?"), "🌅🕊");
+/// let theme = Theme::none();
+/// assert_eq!(theme.header, Style::plain());
+/// assert_eq!(theme.header.paint("Atlas"), "Atlas");
+/// assert_eq!(theme.biome_style(&nms_core::Biome::Lush), &Style::plain());
+/// assert!(!should_use_colors(false));
+/// assert_eq!(format_find_results(&[], &theme), "  No results found.\n");
+/// let empty = RouteResult { route: Route { hops: vec![], total_distance_ly: 0.0 },
+///     warp_range: None, warp_jumps: None, algorithm: RoutingAlgorithm::NearestNeighbor, targets_visited: 0 };
+/// assert_eq!(format_route(&empty, &GalaxyModel::new(), &theme), "  No route computed.\n");
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Panics
+///
+/// Byte-based name truncation can panic when its cut falls inside a UTF-8 code point.
 pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     if results.is_empty() {
         return "  No results found.\n".to_string();
@@ -129,7 +194,11 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
     build_table(builder, &["SEARCH RESULTS"], &table_theme, "Results")
 }
 
-/// Format a system detail view.
+/// Format system properties and its planet list as table strings.
+///
+/// Player distance is shown only when present. The optional planet table uses `-`
+/// for absent names and `?` for unknown biomes; systems without planets include
+/// `No planets discovered.`.
 pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     let table_theme = table_theme_for(theme);
     let sys = &result.system;
@@ -203,7 +272,10 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
     out
 }
 
-/// Format a base detail view.
+/// Format base properties and any associated system detail as table strings.
+///
+/// Player distance and associated-system name/count rows are included only when
+/// available; an unnamed associated system is shown as `-`.
 pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     let table_theme = table_theme_for(theme);
     let base = &result.base;
@@ -229,7 +301,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
     out
 }
 
-/// Format a show result (dispatches to system or base).
+/// Format either variant of a [`ShowResult`] detail response.
 pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
     match result {
         ShowResult::System(s) => format_show_system(s, theme),
@@ -237,7 +309,11 @@ pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
     }
 }
 
-/// Format statistics output.
+/// Format the count table and, when biome data exists, a biome-distribution table.
+///
+/// The optional biome table includes an unknown-biome row when its count is
+/// nonzero. Entries are ordered by descending count; equal-count order is
+/// unspecified.
 pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     let table_theme = table_theme_for(theme);
 
@@ -290,7 +366,18 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
     out
 }
 
-/// Format a route result as an itinerary table.
+/// Format a route itinerary with model system names and stored addresses.
+///
+/// If a system key is absent from the model, its canonical key address is shown;
+/// missing names render as `-`. Waypoints use `*` and an arrow and are not numbered;
+/// other hops are numbered from one. The summary shows target count, total distance,
+/// optional jump/range details, and algorithm. Empty routes return exactly
+/// `  No route computed.\n`; see [`format_find_results`] for the example that
+/// also checks this empty case.
+///
+/// # Panics
+///
+/// Byte-based name truncation can panic when its cut falls inside a UTF-8 code point.
 pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme: &Theme) -> String {
     if result.route.hops.is_empty() {
         return "  No route computed.\n".to_string();

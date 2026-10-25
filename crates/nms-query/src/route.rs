@@ -1,4 +1,7 @@
-//! Route query layer -- resolves targets and executes routing algorithms.
+//! Resolve route targets and delegate their ordering to the graph planner.
+//!
+//! Radius and optional hop constraints use model addresses; this module does not
+//! promise a globally optimal or warp-feasible itinerary.
 
 use std::collections::HashSet;
 
@@ -7,60 +10,84 @@ use nms_graph::query::BiomeFilter;
 use nms_graph::route::{Route, RoutingAlgorithm};
 use nms_graph::{GalaxyModel, GraphError, SystemId};
 
-/// How route targets are specified.
+/// How a route query obtains its target systems. See [`execute_route`] for the
+/// executable route example.
 #[derive(Debug, Clone)]
 pub enum TargetSelection {
-    /// Find planets matching a biome filter, use their systems as targets.
-    Biome(BiomeFilter),
-    /// Named bases or systems (looked up case-insensitively).
-    Named(Vec<String>),
-    /// Explicit system IDs.
-    SystemIds(Vec<SystemId>),
+    /// Match planets, deduplicate their systems, and rank systems from the origin.
+    Biome(
+        /// Planet predicate used to select target systems.
+        BiomeFilter,
+    ),
+    /// Resolve bases first, then system names in the start galaxy, case-insensitively.
+    Named(
+        /// Names processed in caller order; each base is tried before a system name.
+        Vec<String>,
+    ),
+    /// Caller-supplied system IDs, validated before radius filtering or target limits.
+    SystemIds(
+        /// IDs validated in caller order before filtering and deduplication.
+        Vec<SystemId>,
+    ),
 }
 
-/// Where the route starts from.
+/// How to select the route origin and its galaxy. See [`execute_route`] for the
+/// explicit-address route example.
 #[derive(Debug, Clone, Default)]
 pub enum RouteFrom {
     /// Use the player's current position from the save file.
     #[default]
     CurrentPosition,
     /// Use a named base's position.
-    Base(String),
+    Base(
+        /// Base name looked up through the global base index.
+        String,
+    ),
     /// Use an explicit galactic address.
-    Address(GalacticAddress),
+    Address(
+        /// Address that determines the starting galaxy and origin.
+        GalacticAddress,
+    ),
 }
 
-/// Parameters for a route query.
+/// Inputs controlling start resolution, targets, ordering, and hop reporting.
+/// See [`execute_route`] for a complete query and route projection.
 #[derive(Debug, Clone)]
 pub struct RouteQuery {
-    /// How targets are selected.
+    /// Target source and selection behavior.
     pub targets: TargetSelection,
-    /// Starting point for the route.
+    /// Current player position, named base, or explicit address.
     pub from: RouteFrom,
-    /// Ship warp range in light-years (for hop constraints and jump counts).
+    /// Optional ship range for hop constraints and jump estimates.
+    ///
+    /// The graph layer does not validate this value; finite positive inputs are
+    /// recommended.
     pub warp_range: Option<f64>,
-    /// Only consider targets within this radius in light-years.
+    /// Optional maximum target distance from the original origin, in light-years.
+    ///
+    /// Negative or NaN values remove all target candidates.
     pub within_ly: Option<f64>,
     /// Maximum number of targets to visit.
     pub max_targets: Option<usize>,
-    /// Which routing algorithm to use.
+    /// Nearest-neighbor or nearest-neighbor followed by 2-opt.
     pub algorithm: RoutingAlgorithm,
-    /// Whether the route should return to the start.
+    /// Whether the ordered route should include a return leg to the start.
     pub return_to_start: bool,
 }
 
-/// Result of a route query.
+/// Computed route and query options used to describe it. See [`execute_route`]
+/// for a complete result projection.
 #[derive(Debug, Clone)]
 pub struct RouteResult {
-    /// The computed route.
+    /// Ordered route hops and total distance.
     pub route: Route,
     /// Warp range used (if any).
     pub warp_range: Option<f64>,
-    /// Total warp jumps needed at the given warp range.
+    /// Sum of per-leg jump estimates when a warp range was supplied.
     pub warp_jumps: Option<usize>,
     /// Which algorithm was used.
     pub algorithm: RoutingAlgorithm,
-    /// Number of non-waypoint targets visited (excluding start).
+    /// Number of selected targets after filtering and limiting (excluding start).
     pub targets_visited: usize,
 }
 
@@ -127,13 +154,74 @@ fn resolve_biome_targets(
 
 /// Execute a route query against the galaxy model.
 ///
-/// Resolves targets, runs the selected routing algorithm, and optionally
-/// applies hop constraints based on warp range.
+/// Resolve the start to its nearest indexed system in that galaxy, then select,
+/// validate, and order targets. [`RouteQuery`], [`TargetSelection`], and
+/// [`RouteResult`] are exercised by this function's example.
+///
+/// # Examples
+///
+/// This route uses fixed 3-4-5 voxel geometry and checks each hop literally.
+///
+/// ```
+/// use nms_core::{GalacticAddress, System};
+/// use nms_graph::{GalaxyModel, RouteError, SystemId};
+/// use nms_graph::route::RoutingAlgorithm;
+/// use nms_query::route::execute_route;
+/// use nms_query::{RouteFrom, RouteQuery, TargetSelection};
+///
+/// let addresses = [GalacticAddress::new(0, 0, 0, 1, 0, 9),
+///     GalacticAddress::new(3, 4, 0, 2, 0, 9),
+///     GalacticAddress::new(6, 8, 0, 3, 0, 9),
+///     GalacticAddress::new(0, 0, 0, 1, 0, 0)];
+/// let ids = addresses.map(|address| SystemId::from_address(&address));
+/// let mut model = GalaxyModel::new();
+/// for (address, name) in addresses.iter().copied().zip(["A", "B", "C", "Opposed"]) {
+///     model.insert_system(System::new(address, Some(name.into()), None, None, vec![]));
+/// }
+/// let query = RouteQuery { targets: TargetSelection::SystemIds(vec![ids[2], ids[1], ids[1]]),
+///     from: RouteFrom::Address(addresses[0]), warp_range: Some(2_500.0), within_ly: Some(4_000.0),
+///     max_targets: Some(2), algorithm: RoutingAlgorithm::NearestNeighbor, return_to_start: false };
+/// let result = execute_route(&model, &query)?;
+/// assert_eq!(model.active_galaxy, 0);
+/// let hops: Vec<_> = result.route.hops.iter().map(|h|
+///     (h.system_id, h.leg_distance_ly, h.cumulative_ly, h.is_waypoint)).collect();
+/// assert_eq!(hops, vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, false),
+///     (ids[2], 2_000.0, 4_000.0, false)]);
+/// assert_eq!(result.route.total_distance_ly, 4_000.0);
+/// assert_eq!(result.targets_visited, 2);
+/// assert_eq!(result.warp_range, Some(2_500.0));
+/// assert_eq!(result.warp_jumps, Some(2));
+/// assert!(matches!(result.algorithm, RoutingAlgorithm::NearestNeighbor));
+/// let opposed = RouteQuery { targets: TargetSelection::SystemIds(vec![ids[3]]), ..query };
+/// let error = match execute_route(&model, &opposed) {
+///     Err(error) => error,
+///     Ok(_) => return Err("expected cross-galaxy route error".into()),
+/// };
+/// assert!(matches!(error.downcast_ref::<RouteError>(), Some(RouteError::NoPath { from, to }) if *from == ids[0] && *to == ids[3]));
+/// assert_eq!(model.active_galaxy, 0);
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// Target IDs are validated before deduplication, radius filtering, or the limit.
+/// Biome targets are ranked from the original address after system deduplication;
+/// named and explicit IDs retain caller order. The algorithm is heuristic, and
+/// optional warp constraints are best effort.
 ///
 /// # Errors
 ///
-/// Returns graph or route errors for an unavailable start, empty start galaxy,
-/// unresolved target, missing system, cross-galaxy target, or empty target set.
+/// The boxed error may contain [`GraphError::NoPlayerPosition`] or
+/// [`GraphError::BaseNotFound`] while resolving a current/base start,
+/// [`GraphError::ReferenceGalaxyMismatch`] for a current position outside the
+/// active galaxy, [`GraphError::NoSystemsInGalaxy`] when the start galaxy has no
+/// indexed system, or [`GraphError::TargetNotFound`] for an unresolved name.
+/// It may contain [`nms_graph::RouteError::SystemNotFound`] for a missing target
+/// ID, [`nms_graph::RouteError::NoPath`] for a cross-galaxy target, or
+/// [`nms_graph::RouteError::TooFewTargets`] after target filtering and limiting.
+///
+/// # Panics
+///
+/// Jump-count accumulation can overflow on build profiles that check integer
+/// overflow when a supplied warp range produces an unrepresentable total.
 pub fn execute_route(
     model: &GalaxyModel,
     query: &RouteQuery,

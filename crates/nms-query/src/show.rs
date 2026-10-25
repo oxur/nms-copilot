@@ -1,4 +1,7 @@
-//! Detail view queries for systems, planets, and bases.
+//! Detail views for systems and bases, resolved from the in-memory model.
+//!
+//! [`execute_show`] checks active-galaxy system names before packed addresses;
+//! base names use the model-wide base index.
 
 use nms_core::address::GalacticAddress;
 use nms_core::player::PlayerBase;
@@ -6,48 +9,80 @@ use nms_core::system::System;
 use nms_graph::spatial::SystemId;
 use nms_graph::{GalaxyModel, GraphError};
 
-/// What to show detail for.
+/// What record to resolve for a detail view. See [`execute_show`] and the
+/// [`crate#examples`] for resolution behavior.
 #[derive(Debug, Clone)]
 pub enum ShowQuery {
-    /// Show a system by name or packed address.
-    System(String),
-    /// Show a base by name.
-    Base(String),
+    /// Resolve a name first, then a packed hexadecimal address in the active galaxy.
+    System(
+        /// System name or packed hexadecimal address text.
+        String,
+    ),
+    /// Resolve a base name through the model-wide base index.
+    Base(
+        /// Base name looked up case-insensitively without trimming.
+        String,
+    ),
 }
 
-/// Result of a show query.
+/// A resolved system or base detail result. See the [`crate#examples`] for the system variant and its observed fields.
 #[derive(Debug, Clone)]
 pub enum ShowResult {
-    System(ShowSystemResult),
-    Base(ShowBaseResult),
+    /// Resolved system detail.
+    System(
+        /// Cloned system and its display metadata.
+        ShowSystemResult,
+    ),
+    /// Resolved base detail.
+    Base(
+        /// Cloned base and optional associated system metadata.
+        ShowBaseResult,
+    ),
 }
 
+/// Cloned system data and display fields for a system detail view. See the
+/// [`crate#examples`] for its complete system projection.
 #[derive(Debug, Clone)]
 pub struct ShowSystemResult {
+    /// The cloned system record; its stored address may retain source planet bits.
     pub system: System,
+    /// Twelve-digit uppercase hex formatted from the stored system address.
     pub portal_hex: String,
+    /// Galaxy display name for the stored address.
     pub galaxy_name: String,
+    /// Distance when player and system addresses share a galaxy.
     pub distance_from_player: Option<f64>,
 }
 
+/// Cloned base data and display fields for a base detail view. See
+/// [`execute_show`] for resolution behavior.
 #[derive(Debug, Clone)]
 pub struct ShowBaseResult {
+    /// The cloned base record.
     pub base: PlayerBase,
+    /// Twelve-digit uppercase hex formatted from the stored base address.
     pub portal_hex: String,
+    /// Galaxy display name for the base address.
     pub galaxy_name: String,
+    /// Cloned associated system, when that canonical key exists in the model.
     pub system: Option<System>,
+    /// Distance when player and base addresses share a galaxy.
     pub distance_from_player: Option<f64>,
 }
 
 /// Execute a show query using active-galaxy system-name and packed-address lookup.
 ///
 /// A player distance is included only when the player and selected item share
-/// a galaxy; otherwise the result has no distance.
+/// a galaxy; otherwise the result has no distance. The [`crate#examples`] exercises name resolution and the missing-base error. Name
+/// lookup lowercases without
+/// trimming and precedes address parsing. Address lookup accepts packed hexadecimal
+/// `u64` text with an optional `0x` or `0X` prefix, not a save-format decoder.
 ///
 /// # Errors
 ///
 /// Returns [`GraphError::SystemNotFound`] or [`GraphError::BaseNotFound`] when
-/// the requested system or base cannot be resolved.
+/// the requested system or base cannot be resolved. A system-name miss is also
+/// attempted as a packed address before `SystemNotFound` is returned.
 pub fn execute_show(model: &GalaxyModel, query: &ShowQuery) -> Result<ShowResult, GraphError> {
     match query {
         ShowQuery::System(name_or_id) => show_system(model, name_or_id),
