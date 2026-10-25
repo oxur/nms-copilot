@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.133, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.134, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1091,3 +1091,7 @@ Version1.132 closes all6CW/R06-S38 atclean3fc7c3ff7bdd65b6b13d9db087dbeb01a44700
 ## Slice39 bounded REPL presentation API owner issued — 2026-10-25 UTC
 
 Version1.133 details [Slice39](slice39-repl-presentation-api-documentation/slice-plan.md), complete3filecommands/completer/prompt publicdocs/keyliteralexamples fromcleanaccepted3fc7. Allnon-doc/API/grammar/defaults/attributes/tests/deps frozen; exactly8newdocsites preserveexistingClaphelpinputs, actualparentoverride-v-directaugmentation prose effect explicit. FreshSAMEapprovedCC6-lunaHigh planned afterpriorCCqualitativeheadroom assessment/complete38handoff, sameCDC6.1-solHigh/noextrareviewer. Currentactual17warning/13owned4residual baseline+rawfirstNULcontrols/negativepredicate/sourceopposedcontrols SUPPORTONLY; finalactualzeroowned/exact4mapresidual required. Initial0actualrefinements/sixRP/R06-S39OPEN. Required40mapAPI and41remainingbanner/setup/root/fullpublicsurface/full0039M7.6strictreconciliation CDC-owned/furtherusabledecompositionallowed.57arc43done14open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no productimplementation/parentacceptance/integration/release claim.
+
+## Slice39 REPL presentation documentation accepted — 2026-10-25 UTC
+
+Version1.134 closes all6RP/R06-S39 atclean00cfa740c902f5110159a56329b5241dac706a9d: complete3filecommands/completer/promptAPI documentation/keyliteralexamples/existingClaphelpinputpreservation+actualoverride-v-directaugmentation. Ninefreshindependentgroups pass235runtime+19allfeaturedocs(13execute6compile-only)+15no-defaultdocs(11execute4compile-only), actual0owned/exact4mapresidual/threeorderednon-doccomparisons/eightsites/bothopposed/diffs. OneACTUALrefinement/all17CC+16CDCrawvalues/exactreturns/initialstaticfindings/failedguard+metadataverifier/transcriptionqualifications/finalretro retained. No exception/structural/scope/sequence amendment. Required40map+41banner/setup/root/fullpublicsurface/full0039M7.6strictreconciliation staysCDC-owned/furtherusabledecompositionallowed.57arc44done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC39acceptance](slice39-repl-presentation-api-documentation/cdc-verification.md) and [retrospective](slice39-repl-presentation-api-documentation/cdc-retrospective.md).

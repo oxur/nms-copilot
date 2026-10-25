@@ -1,0 +1,307 @@
+{
+  "recorded_utc": "2026-10-25T10:33:45.470749+00:00",
+  "scope": "Slice39 actual supporting archive; first-class docs excluded; inventory self excluded",
+  "cc_attempts": 17,
+  "cdc_attempts": 16,
+  "payloads": [
+    {
+      "path": "author-readiness-attempts.json",
+      "bytes": 515538,
+      "sha256": "554d4da1c15b4b91c0ed82ba56acc31b2f72e85aaab7ed947e97e243a041f7c9"
+    },
+    {
+      "path": "cc-capture-preflight.json",
+      "bytes": 7900,
+      "sha256": "4ef5b657e17a95559238b4a97e3b62596ff6db893e98bf4d7f4f85f60279244f"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 5983,
+      "sha256": "905b12912734cef0e0159f382f5efb0b2fa66df2cc6c089e253d88bf2387f1bd"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 7627,
+      "sha256": "6b657963ba721cd76053569180aaacc1f01c349c9cada53b98461b5c3fd09337"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 617347,
+      "sha256": "1c8df3e0f2f5ea96629f2f3e136e0ee8f825dc0d925cbdb3e08b0a8bacca27df"
+    },
+    {
+      "path": "cdc-validation.json",
+      "bytes": 1035872,
+      "sha256": "2705c939ba1e617e27cc8fa00c783916dfcbedb1756f7d0a854f8addcae34598"
+    },
+    {
+      "path": "initial-held-diff.json",
+      "bytes": 24523,
+      "sha256": "fd7724e5af644b6d4cfb310e4890a4fd3be208e438a0ffe5f443d4ee8c34bd33"
+    },
+    {
+      "path": "nms-slice39-cc-capture.py",
+      "bytes": 3760,
+      "sha256": "33f4cf3cc102a6411bd86d0bfe4ec6590b264796078694b30b4943e691c65fb4"
+    },
+    {
+      "path": "nms-slice39-cdc-capture.py",
+      "bytes": 3762,
+      "sha256": "1f01b56d5fd19ba5b57d36693d0fe18550fdceddcfa91c01d24a2ad240529891"
+    },
+    {
+      "path": "nms-slice39-doc-check.py",
+      "bytes": 5584,
+      "sha256": "18b76affcab52c2e6fb07f031a2c12daab9fd0ba32842c9c111479b2fe29c061"
+    },
+    {
+      "path": "nms-slice39-doc-registry.json",
+      "bytes": 7030,
+      "sha256": "cc8e0849d02c1653e6d8aef9c5f0bdba3ea86f3c472802666efbbe1659e25671"
+    },
+    {
+      "path": "nms-slice39-scope-audit.py",
+      "bytes": 4288,
+      "sha256": "456253adf31df1eda0bbaf5706bd7d0a64f75cee9e3661581db7be1a4d6418e0"
+    },
+    {
+      "path": "source-message.txt",
+      "bytes": 357,
+      "sha256": "ce96a249be3c53bf229b1dceae07cbb2d5f83418c1d51d77bb1c43faf5d28893"
+    }
+  ],
+  "worktree_fences": [
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot",
+      "head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+      "branch": "refs/heads/main",
+      "status": " M crates/nms-copilot/tests/mcp_live_integration.rs\n"
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/application-state-api-documentation",
+      "head": "d553037a94055457995d064e02192e9eed0ecb00",
+      "branch": "refs/heads/codex/application-state-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-compat-api-documentation",
+      "head": "48b6bd790f7120f39638b8f55e430d8b52d707c3",
+      "branch": "refs/heads/codex/cache-compat-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+      "head": "a101bd44b277f06c75ed7260b470b31cd5510130",
+      "branch": "refs/heads/codex/cache-player-state-integrity",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+      "head": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+      "branch": "refs/heads/codex/cache-semantic-compatibility",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+      "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+      "branch": "refs/heads/codex/checked-save-integration",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract",
+      "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+      "branch": "refs/heads/codex/community-import-contract",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/complete-live-save-updates",
+      "head": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "branch": "refs/heads/codex/complete-live-save-updates",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/coordinator-watch-api-documentation",
+      "head": "3fc7c3ff7bdd65b6b13d9db087dbeb01a447007a",
+      "branch": "refs/heads/codex/coordinator-watch-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+      "head": "2f2814c780f5022dea3bc1643d99828ba679e8d0",
+      "branch": "refs/heads/codex/discovery-name-integration",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+      "head": "753bb3a9a01451e57fff34262acd4ab194d99341",
+      "branch": "refs/heads/codex/discovery-name-observations",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+      "head": "cd38d7e1603b957f862b75c23b60ed5bc713bcf0",
+      "branch": "refs/heads/codex/export-contract",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+      "head": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+      "branch": "refs/heads/codex/galaxy-qualified-identity",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "head": "7118a486ea43a776aa2451ec0807d43384fb954f",
+      "branch": "refs/heads/codex/galaxy-scoped-queries",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+      "head": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+      "branch": "refs/heads/codex/galaxy-scoped-repl",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+      "head": "f71d607e27e18d7266855a2708449f9d6b90c632",
+      "branch": "refs/heads/codex/galaxy-scoped-routing",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-session",
+      "head": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+      "branch": "refs/heads/codex/galaxy-scoped-session",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+      "head": "e30eb49f77565769c0d6fdb61dbe372f686e77d7",
+      "branch": "refs/heads/codex/graph-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup",
+      "head": "130034e8a6f2e77605058620fea2fb0cae43c608",
+      "branch": "refs/heads/codex/headless-cache-startup",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+      "branch": "refs/heads/codex/headless-live-cache",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-api-documentation",
+      "head": "9dc1a2409c7f0e53712f643bf7b0a61078e17664",
+      "branch": "refs/heads/codex/mcp-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "head": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+      "branch": "refs/heads/codex/mcp-live-watch",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-watch-settings",
+      "head": "16c078725492744db22bae837d87c89489a6add5",
+      "branch": "refs/heads/codex/mcp-watch-settings",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/multi-galaxy-composition",
+      "head": "063c8c658fb07ae04acca7ae2d7a7971c4f85688",
+      "branch": "refs/heads/codex/multi-galaxy-composition",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/placeholder-cache",
+      "head": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+      "branch": "refs/heads/codex/placeholder-cache",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "head": "b16dfd6ed01cbae6eba9d8c32fe9be0344b6ee1a",
+      "branch": "refs/heads/planning",
+      "status": " M project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/execution.md\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/artifacts/cc-closing-report.md\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/artifacts/cc-execution.md\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/artifacts/cc-validation.json\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/artifacts/cdc-validation.json\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/artifacts/source-message.txt\n?? project01-mvp/arc06-fit-and-finish/slice39-repl-presentation-api-documentation/closing-report.md\n"
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/pr-stack-ci",
+      "head": "03e8d04b11d1899f2d66cdca3f26763c406dd275",
+      "branch": "refs/heads/codex/pr-14-headless-cache-startup",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+      "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+      "branch": "refs/heads/codex/public-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation",
+      "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+      "branch": "refs/heads/codex/query-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "head": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+      "branch": "refs/heads/codex/repl-live-cache",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-presentation-api-documentation",
+      "head": "00cfa740c902f5110159a56329b5241dac706a9d",
+      "branch": "refs/heads/codex/repl-presentation-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "head": "0b37d8b41222b8e4a084c088246f777490575756",
+      "branch": "refs/heads/codex/save-address-decoder",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+      "branch": "refs/heads/codex/save-api-documentation",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-slot-contract",
+      "head": "bfa2b3710269b8110a858227ad79202ffdd1d513",
+      "branch": "refs/heads/codex/save-slot-contract",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/shell-completions",
+      "head": "03b6536636f00a74a52f2d783a9ef80a671d191e",
+      "branch": "refs/heads/codex/shell-completions",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+      "head": "4cb745b7190e7463663a0ead29f169060e36dc05",
+      "branch": "refs/heads/codex/unknown-system-lifecycle",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "head": "4a935408460349e9aa64fecd570d9960094191b1",
+      "branch": "refs/heads/codex/user-documentation-contract",
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "head": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+      "branch": "refs/heads/codex/watch-api-documentation",
+      "status": ""
+    }
+  ],
+  "main_native_blob": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e",
+  "main_change_disposition": "known pre-existing agent stray, assessed; protected/no cleanup authority",
+  "source_commit": "00cfa740c902f5110159a56329b5241dac706a9d",
+  "source_tree": "5ababfe74dc9ccad5537a2c7309f02b78819f848"
+}

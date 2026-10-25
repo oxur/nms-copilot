@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.120
+version: 1.121
 project: project01-mvp
 status: active
 depends-on: []
@@ -1282,3 +1282,7 @@ Version1.119/arc1.132 records all6CW/R06-S38accepted atclean3fc7c3ff, nineindepe
 ## Arc06 Slice39 REPL presentation owner — 2026-10-25 UTC
 
 Version1.120/arc1.133 issues complete3filecommands/completer/prompt API unit/sixRP/R06-S39OPEN fromclean3fc7.57arc43done14open/all25projectrowsOPEN. Exactexistingderivehelpinputs+8newdocsites/actualoverride-v-directaugmentation behavior explicit, no grammar/default/API/body/test change. Scopedactualzeroowned/exact4mapresidual required; required40map and41banner/setup/root/fullpublicsurface/fullM7.6strictreconciliation remainCDC/furtherusabledecompositionallowed. Freshsame-modelsoleCCcontext chosenforqualitativeheadroom; actualdispatch recordedafterlaunch. Alloriginalinput/Operator/higherowners retained, no implementation/integration/release claim.
+
+## Arc06 Slice39 REPL presentation docs accepted — 2026-10-25 UTC
+
+Version1.121/arc1.134 records all6RP/R06-S39accepted atclean00cfa740, nineindependentgroups/235runtime+19allfeaturedocs+15no-defaultdocs/actual0owned4residual/threeorderednon-doc+8help-inputsites/bothopposed/diffs/finalretro.57arc44done13open/all25projectrowsOPEN. Oneactualrefinement/noexception, exact17CC+16CDCrawreturns/history/transcriptionqualifications retained. Required40map+41banner/setup/root/fullpublicsurface/full0039M7.6strictreconciliation and alloriginalhigherowners/authenticNomNominput remainOPEN, no cleanup/integration/release.

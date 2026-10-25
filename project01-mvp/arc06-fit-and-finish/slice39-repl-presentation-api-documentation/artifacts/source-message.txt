@@ -1,0 +1,8 @@
+Document REPL command, completion, and prompt APIs
+
+Explain command parsing and errors, completion snapshots and limits, and prompt
+snapshot rendering. Add literal examples for parsed commands, Clap help
+metadata, suggestion projections, and prompt output.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

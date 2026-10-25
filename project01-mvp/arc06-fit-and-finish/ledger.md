@@ -404,6 +404,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Owner/limits |
 |---|---|---|---|---|---|---|---|
-| R06-S39 | Complete truthful REPL command/completion/prompt public docs/keyexamples | SixRP/3fileworksheet/literalexamples/deriveinputpreservation/scopedpredicate | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued39](slice39-repl-presentation-api-documentation/slice-plan.md) | Required40map/41banner-setup-root/fullM7.6strict/allhigherowners OPEN |
+| R06-S39 | Complete truthful REPL command/completion/prompt public docs/keyexamples | SixRP/3fileworksheet/literalexamples/deriveinputpreservation/scopedpredicate | correctness-grade | Original0039 M7.6 next bounded increment | done | [CDC39acceptance](slice39-repl-presentation-api-documentation/cdc-verification.md) — reproduced | Required40map/41banner-setup-root/fullM7.6strict/allhigherowners OPEN |
 
 57arcrows43done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance at issue.
+
+2026-10-25 formal39close: all6RP/R06-S39DONE at00cfa740;57arcrows44done13open/project25OPEN. Priorissuecountsremainhistorical; required40/41/fullM7.6/authenticNomNom/alloriginalhigherownersOPEN.
