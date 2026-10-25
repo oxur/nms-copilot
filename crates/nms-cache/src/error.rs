@@ -1,19 +1,67 @@
-//! Cache error types.
+//! Errors returned by cache envelope, payload, and filesystem operations.
+//!
+//! Envelope incompatibilities are typed separately from serialization,
+//! checked-deserialization, and filesystem failures. The compatibility enum is
+//! non-exhaustive, so downstream matches should include a wildcard.
+//! `CacheError::Io` and `CacheError::Incompatible` expose their nested error
+//! as a source; the string-bearing serialization and deserialization variants
+//! do not retain an underlying error object.
+//!
+//! # Examples
+//!
+//! ```
+//! use nms_cache::{CacheCompatibilityError, CacheError};
+//! use nms_cache::serialize::deserialize;
+//!
+//! assert!(matches!(deserialize(b""), Err(CacheError::Incompatible(
+//!     CacheCompatibilityError::TruncatedHeader { actual: 0 }
+//! ))));
+//! assert!(matches!(deserialize(&[0; 16]), Err(CacheError::Incompatible(
+//!     CacheCompatibilityError::InvalidMagic
+//! ))));
+//! let schema_three = b"NMSCACHE\x03\x00\x00\x00\x05\x00\x00\x00";
+//! assert!(matches!(deserialize(schema_three), Err(CacheError::Incompatible(
+//!     CacheCompatibilityError::SchemaMismatch { found: 3, expected: 4 }
+//! ))));
+//! let semantic_five = b"NMSCACHE\x04\x00\x00\x00\x05\x00\x00\x00";
+//! assert!(matches!(deserialize(semantic_five), Err(CacheError::Incompatible(
+//!     CacheCompatibilityError::SemanticMismatch { found: 5, expected: 6 }
+//! ))));
+//! let current_empty_payload = b"NMSCACHE\x04\x00\x00\x00\x06\x00\x00\x00";
+//! assert!(matches!(deserialize(current_empty_payload), Err(CacheError::Deserialize(_))));
+//! ```
+//!
+//! These are synthetic header controls, not archived witnesses from previous
+//! releases. A current header without a payload passes envelope checks and
+//! fails during payload decoding.
 
 use std::io;
 
-/// Why an on-disk cache cannot be interpreted by this version of the model.
+/// Why an on-disk cache envelope cannot be interpreted by this version.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum CacheCompatibilityError {
     /// The cache does not contain a complete compatibility header.
-    TruncatedHeader { actual: usize },
+    TruncatedHeader {
+        /// Number of bytes supplied; a complete envelope requires 16.
+        actual: usize,
+    },
     /// The bytes do not identify an NMS Copilot cache.
     InvalidMagic,
     /// The archive layout revision is not supported.
-    SchemaMismatch { found: u32, expected: u32 },
+    SchemaMismatch {
+        /// Archive schema revision read from the envelope.
+        found: u32,
+        /// Archive schema revision supported by this reader.
+        expected: u32,
+    },
     /// The meaning of the cached model is not supported.
-    SemanticMismatch { found: u32, expected: u32 },
+    SemanticMismatch {
+        /// Model semantic revision read from the envelope.
+        found: u32,
+        /// Model semantic revision supported by this reader.
+        expected: u32,
+    },
 }
 
 impl std::fmt::Display for CacheCompatibilityError {
@@ -38,16 +86,29 @@ impl std::fmt::Display for CacheCompatibilityError {
 
 impl std::error::Error for CacheCompatibilityError {}
 
+/// Errors from cache encoding, decoding, and filesystem operations.
 #[derive(Debug)]
 pub enum CacheError {
-    /// rkyv serialization failed.
-    Serialize(String),
-    /// rkyv deserialization failed.
-    Deserialize(String),
+    /// Cache-data validation or rkyv serialization failed.
+    Serialize(
+        /// Encoding or pre-serialization cache-data validation detail.
+        String,
+    ),
+    /// Checked payload deserialization or cache-data validation failed.
+    Deserialize(
+        /// Decoding or post-decode cache-data validation detail.
+        String,
+    ),
     /// File I/O error.
-    Io(io::Error),
+    Io(
+        /// Underlying filesystem error.
+        io::Error,
+    ),
     /// The cache envelope uses an unsupported format or model interpretation.
-    Incompatible(CacheCompatibilityError),
+    Incompatible(
+        /// Typed envelope incompatibility, before payload decoding.
+        CacheCompatibilityError,
+    ),
 }
 
 impl std::fmt::Display for CacheError {

@@ -1,17 +1,30 @@
-//! Cache freshness checking.
+//! Cache freshness and cache-or-save model loading.
 //!
-//! Compares the modification time of the save file against the cache file
-//! to determine if the cache is still valid.
+//! Compares save and cache modification times to select a cache candidate;
+//! the checked loader separately validates the candidate's envelope and data.
 
 use std::fs;
 use std::path::Path;
 use std::time::SystemTime;
 
-/// Check if the cache file is fresh relative to the save file.
+/// Compare cache and save modification times.
 ///
-/// Returns `true` if the cache exists and is newer than the save file.
-/// Returns `false` if the cache is missing, older than the save, or if
-/// timestamps can't be read.
+/// This check uses only filesystem modification times: it returns `true` when
+/// the cache time is strictly later than the save time. Equal times, missing
+/// files, and unreadable modification times return `false`. It does not read or
+/// validate either file's contents or the cache envelope.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::path::Path;
+///
+/// let fresh = nms_cache::is_cache_fresh(
+///     Path::new("galaxy.rkyv"),
+///     Path::new("save.hg"),
+/// );
+/// println!("cache is newer: {fresh}");
+/// ```
 pub fn is_cache_fresh(cache_path: &Path, save_path: &Path) -> bool {
     let cache_mtime = match file_mtime(cache_path) {
         Some(t) => t,
@@ -29,36 +42,65 @@ fn file_mtime(path: &Path) -> Option<SystemTime> {
     fs::metadata(path).ok()?.modified().ok()
 }
 
-/// Result of loading or rebuilding a galaxy model.
+/// Model returned by cache loading or source-save rebuilding.
+///
+/// `was_cached` identifies the input used to build the returned model. It can
+/// remain `true` after a best-effort cache repair write, and is `false` when a
+/// parsed save supplied the model even if writing its cache fails.
 pub struct LoadResult {
     /// The loaded galaxy model.
     pub model: nms_graph::GalaxyModel,
     /// Whether the model was loaded from cache.
     pub was_cached: bool,
-    /// The save file version (for cache write-through).
+    /// The version from the chosen cache or parsed source save.
     pub save_version: u32,
 }
 
-/// Load a model from cache if fresh, otherwise parse the save file.
+/// Load a fresh compatible cache or rebuild from the checked source save.
 ///
-/// Freshness is determined only by file modification times. A fresh cache is
-/// still checked for a supported envelope and model semantic revision; if its
-/// read, decode, or duplicated player reality consistency check fails, startup
-/// warns and rebuilds from the save file. This check requires
+/// Modification times select a cache candidate; a fresh candidate is still
+/// checked for a supported envelope and valid cache data. If its read, decode,
+/// or duplicated player-reality consistency check fails, startup warns and
+/// rebuilds from the checked source save. This check requires
 /// `player.current_reality == player.current_address.reality_index`; it does not
 /// compare the independently selected galaxy or previous/freighter addresses.
-/// If a compatible cache lacks the physical player's system key, the returned
-/// in-memory model includes it and the cache is repaired on a best-effort
-/// basis. A failed repair warns but still returns the ensured model with
-/// `was_cached` set to `true`. Cold parsing also ensures the key; cache write
-/// failure warns without discarding the parsed model. With `no_cache`, neither
-/// cache reads nor writes occur, but the parsed model is still ensured.
+/// A successful compatible-cache load does not read or compare source contents
+/// or source save version. The loader ensures the physical player's system key;
+/// it rewrites the cache on a best-effort basis only when that insertion grows
+/// the system count. An existing genuine or marked key, or absent player state,
+/// does not trigger a repair write. A failed repair warns but still returns the
+/// ensured model with `was_cached` set to `true`. Missing or stale caches skip
+/// cache reading; cache read failures warn before checked source rebuilding.
+/// Cold parsing also ensures the key, and a failed cache write warns without
+/// discarding the parsed model. With `no_cache`, all cache I/O is skipped, but
+/// the parsed model is still ensured.
+///
+/// # Examples
+///
+/// ```no_run
+/// use std::path::Path;
+///
+/// let loaded = nms_cache::load_or_rebuild(
+///     Path::new("galaxy.rkyv"),
+///     Path::new("save.hg"),
+///     false,
+/// )?;
+/// println!("loaded from cache: {}", loaded.was_cached);
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
 ///
 /// # Errors
 ///
-/// Returns an error when the source save cannot be read or parsed. Cache read,
-/// compatibility, and repair-write failures are handled as warnings followed
-/// by a source rebuild or an in-memory success, as applicable.
+/// Returns the boxed [`nms_save::SaveError`] when the source save cannot be read,
+/// parsed, or converted to a validated address. Cache read, compatibility,
+/// and repair-write failures are warnings followed by source rebuilding or an
+/// in-memory success, as applicable.
+///
+/// # Panics
+///
+/// When source parsing is needed, this can inherit the documented panic conditions
+/// of [`nms_save::parse_validated_save_file`], including malformed compressed
+/// size offsets on 32-bit targets and an invalid bundled mapping file.
 pub fn load_or_rebuild(
     cache_path: &Path,
     save_path: &Path,
