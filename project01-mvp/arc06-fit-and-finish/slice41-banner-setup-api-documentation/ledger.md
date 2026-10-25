@@ -10,3 +10,5 @@
 | BS-04 | All non-doc/API/tests/layout/deps/other paths preserved | Four ordered comparisons/real scalar increment mutant/diffs | correctness-grade | open | Support controls only at issue |
 | BS-05 | Attributable original nine groups/exact four-path clean commit/fences | Full raw captures/paths/trailers/ownership | correctness-grade | open | No product gate at issue |
 | BS-06 | Independent acceptance/retrospective/bottom-up/all original owners retained | CDC nine groups/six rows/three bubbleups | correctness-grade | open | Required42/fullM7.6/higher owners OPEN |
+
+2026-10-25 current: FIRSTactual1of5/fourleft/currentimmutable01; all6BSOPEN. Initialformat650fe71b/lint4adb87b10/fullraw/equalidentity49c398fc verified; completeheldwalkF1–F4docs-only correction, validE1–E5frozen/no runtime claim. No scope/acceptance exception.
