@@ -12,3 +12,5 @@
 | CD-06 | Independent acceptance/retrospective/bubble-up and original owners | CDC seven groups/six rows/required43/fullM7.6 | correctness-grade | open | — |
 
 2026-10-25 FIRSTactual1of5/current01/all6CDOPEN. Initialactualpair0/equalpin/fullheldwalk; consolidatedF1–F6docs-only plusadditiveauthorW12outputcorrection. No runtime/strict/scope/diff/acceptanceyet; originalseven/required43/higherownersretained.
+
+2026-10-25 SECONDactual2of5/current02/all6CDOPEN. Actual01pair0/equalpin/fulltargetedwalk; fourremainingdocboundariesonly/mainconvert exportimport, other8/non-docfrozen. No runtimeyet/originalsevenrequired.
