@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.0. Created: 2026-10-25. Status: first three slices planned; execution paused.
+Version: 1.1. Created: 2026-10-25. Status: first three slices authorized; Slice01 active.
 
 ## Purpose and authority
 
@@ -33,6 +33,12 @@ every historical gate. Original project criteria and unresolved failures remain
 visible; none is waived by this plan. In particular, the recorded 93.718068%
 workspace coverage is below the existing 95% target. Chasing that target is not an
 initial-phase task. Conclusions about this limited phase cannot close Project01.
+
+## Autonomous execution authorization and current preflight
+
+Duncan approved on 2026-10-25: “Perfect! Go ahead and do these in Autonomous Mode, and then lets confer for slices 4 and later :-)”. Authority ends after the first three reviewed results; execution AND further planning then pause. CDC `/root/cdc_arc07` is requested/applied GPT 6.1 Sol High, CC is requested GPT 6 Luna High, through Codex/OpenAI tools; backend identity beyond reported tool configuration is not asserted. Two contributors: CC executes and authors results; CDC independently inspects/reproduces and records `cdc-verification.md`. Root transports status and guards scope only. No additional reviewer context.
+
+Preflight: planning `4d498081200e2faee0bd069f7ff41110f2bf2a99`, source clean `fb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc` on `codex/workspace-coverage-contract`; main `b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc` and its known helper untouched. Old Arc06 Slice49 is untracked/unissued and protected. Source mutation belongs only to CC in the dedicated source checkout, with explicit handoff before CDC checks; planning index has one writer at a time (CDC preparation/review, CC assigned-result return). Python3 PTY/ioctl and existing binary/fixture are available; native socket/PTY permission follows tools if required. No external action or pipeline is authorized. Existing guard/input/render proof is retained at accepted source; actual owned-PTY observation addresses the missing usability/restoration boundary. Full95/platform/packaging/higher acceptance gates stay open.
 
 ## Initial slices
 
@@ -136,3 +142,5 @@ neither this initial plan nor the recommendation report declares closure.
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
   Arc06; later cleanup planning and execution await the findings and joint decisions.
+
+- 1.1 (2026-10-25): Recorded explicit three-slice Autonomous authorization, approved models, ownership, bounded preflight and endpoint; opened Slice01.
