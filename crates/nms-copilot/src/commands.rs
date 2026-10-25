@@ -1,4 +1,36 @@
 //! REPL command parsing -- reuses clap derive for consistent argument handling.
+//!
+//! This parser accepts one interactive command line after the model is loaded;
+//! it is separate from the one-shot `nms` CLI. Its commands are `find`, `show`,
+//! `stats`, `convert`, `route`, `galaxy`, `set`, `reset`, `list`, `map`,
+//! `status`, `info`, `help`, `exit`, and `quit`.
+//!
+//! `find` accepts optional `--biome`, `--infested`, `--within`, `--nearest`,
+//! `--named`, `--discoverer`, and `--from` values; omitted options are `None`
+//! or `false`. `show` has the `system` and `base` targets, each with a required
+//! name. `stats` has the `--biomes` and `--discoveries` switches, both false
+//! when omitted. `convert` has an optional input group allowing at most one of
+//! `--glyphs`, `--coords`, `--ga`, or `--voxel`; the parser does not require an
+//! input. `--ssi` is a separate optional value; whether a voxel input needs it
+//! is handled later. `--planet` defaults to `0` and `--galaxy` to `"0"`.
+//! `route` accepts repeated `--target` names and
+//! optional `--biome`, `--from`, `--warp-range`, `--within`, `--max-targets`,
+//! `--algo`, and `--round-trip` values; optional values are absent and the
+//! switch is false when omitted. `galaxy` takes an optional index or exact
+//! name. `set` has `position`, `biome`, and `warp-range` targets, each requiring
+//! a value. `reset` has a string target defaulting to `all`; command handling interprets
+//! `position`, `biome`, `warp-range`, or `all`. `list` has `galaxies` (optional
+//! `--type`), `biomes`, `glyphs`, `bases` (limit defaults to `0`, `--all` false),
+//! `systems` (limit defaults to `50`, `--all` false), and `terrain-types`.
+//! These are syntax/default descriptions; command-specific domain checks are
+//! performed later by command handling.
+//!
+//! Input is trimmed, then split by a small local word splitter: ASCII spaces
+//! delimit words outside double quotes, and double quotes are removed. It does
+//! not implement escapes, single-quoted strings, or general shell syntax;
+//! unmatched double quotes are tolerated, empty quoted words are omitted, and
+//! tabs within input are not separators. Clap then parses case-sensitive
+//! command and option names. This is not a validator for all later domain rules.
 
 use clap::{Parser, Subcommand};
 
@@ -17,9 +49,11 @@ use clap::{Parser, Subcommand};
 )]
 pub struct ReplCommand {
     #[command(subcommand)]
+    /// Parsed interactive command, or `None` when no action was supplied.
     pub action: Option<Action>,
 }
 
+/// Commands available in the interactive REPL.
 #[derive(Subcommand, Debug)]
 pub enum Action {
     /// Search planets by biome, distance, name.
@@ -56,6 +90,7 @@ pub enum Action {
     /// Show detailed information about a system or base.
     Show {
         #[command(subcommand)]
+        /// Required nested ShowTarget command.
         target: ShowTarget,
     },
 
@@ -145,6 +180,7 @@ pub enum Action {
     /// Set session context (position, biome filter, warp range).
     Set {
         #[command(subcommand)]
+        /// Required nested SetTarget command.
         target: SetTarget,
     },
 
@@ -158,6 +194,7 @@ pub enum Action {
     /// List reference data or model collections.
     List {
         #[command(subcommand)]
+        /// Required nested ListTarget command.
         target: ListTarget,
     },
 
@@ -180,6 +217,7 @@ pub enum Action {
     Quit,
 }
 
+/// Session context settings accepted by the REPL.
 #[derive(Subcommand, Debug)]
 pub enum SetTarget {
     /// Set reference position to a base name.
@@ -200,6 +238,7 @@ pub enum SetTarget {
     },
 }
 
+/// Reference data and model collections available to list.
 #[derive(Subcommand, Debug)]
 pub enum ListTarget {
     /// List all 256 galaxies.
@@ -237,6 +276,7 @@ pub enum ListTarget {
     TerrainTypes,
 }
 
+/// Detailed system and base views available in the REPL.
 #[derive(Subcommand, Debug)]
 pub enum ShowTarget {
     /// Show system details.
@@ -253,8 +293,99 @@ pub enum ShowTarget {
 
 /// Parse a REPL input line into a command.
 ///
-/// Returns `None` for empty lines.
-/// Returns `Err` with clap's error message for invalid commands.
+/// Surrounding whitespace is trimmed; a blank line returns `Ok(None)`. The
+/// input is split on ASCII spaces outside double quotes, with quote characters
+/// removed. This small splitter has no escape or single-quote syntax, accepts
+/// an unmatched double quote, drops empty quoted words, and does not split on
+/// interior tabs. Clap then parses the resulting case-sensitive command and
+/// option words; semantic validation that belongs to command handling is not
+/// performed here.
+///
+/// When there are at least two words and the final word is exactly `help`, it
+/// is rewritten to `--help` before parsing. Clap's rendered help is printed to
+/// standard output and yields `Ok(None)`. The plain `help` command instead
+/// yields `Some(Action::Help)`. Invalid command syntax returns `Err(String)`
+/// containing Clap's rendered diagnostic and does not dispatch a command.
+///
+/// # Examples
+///
+/// This example uses a small error wrapper so parser errors can be propagated
+/// from a fallible doctest without discarding their text.
+///
+/// ```
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// use clap::{Command, CommandFactory, Subcommand};
+/// use nms_copilot::commands::{parse_line, Action, ListTarget, ReplCommand, SetTarget, ShowTarget};
+///
+/// #[derive(Debug)]
+/// struct ExampleError(String);
+/// impl std::fmt::Display for ExampleError {
+///     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+///         formatter.write_str(&self.0)
+///     }
+/// }
+/// impl std::error::Error for ExampleError {}
+/// fn parse(input: &str) -> Result<Option<Action>, Box<dyn std::error::Error>> {
+///     parse_line(input).map_err(|message| Box::new(ExampleError(message)) as Box<dyn std::error::Error>)
+/// }
+///
+/// let parsed_find = parse("find --biome Toxic --infested --within 800 --nearest 2 --named --discoverer \"Explorer One\" --from \"Alpha Base\"")?;
+/// let find = match &parsed_find {
+///     Some(Action::Find { biome, infested, within, nearest, named, discoverer, from }) => (
+///         biome.as_deref(), *infested, *within, *nearest, *named,
+///         discoverer.as_deref(), from.as_deref(),
+///     ),
+///     other => return Err(Box::new(ExampleError(format!("expected find action, got {other:?}")))),
+/// };
+/// assert_eq!(find, (Some("Toxic"), true, Some(800.0), Some(2), true, Some("Explorer One"), Some("Alpha Base")));
+///
+/// assert!(matches!(parse("galaxy \"Hilbert Dimension\"")?, Some(Action::Galaxy { selection: Some(name) }) if name == "Hilbert Dimension"));
+/// assert!(matches!(parse("list systems")?, Some(Action::List { target: ListTarget::Systems { limit: 50, all: false } })));
+/// assert!(parse("  \t ")?.is_none());
+/// assert!(matches!(parse("help")?, Some(Action::Help)));
+/// let error = match parse_line("find --definitely-nope") {
+///     Err(error) => error,
+///     Ok(other) => return Err(Box::new(ExampleError(format!("expected parse error, got {other:?}")))),
+/// };
+/// assert!(error.contains("unexpected argument '--definitely-nope' found"));
+///
+/// let root = ReplCommand::command();
+/// let wrapper_about = (
+///     root.get_about().map(ToString::to_string),
+///     root.find_subcommand("set").and_then(|c| c.get_about()).map(ToString::to_string),
+///     root.find_subcommand("list").and_then(|c| c.get_about()).map(ToString::to_string),
+///     root.find_subcommand("show").and_then(|c| c.get_about()).map(ToString::to_string),
+/// );
+/// assert_eq!(wrapper_about, (
+///     Some("Top-level REPL command parser".to_owned()),
+///     Some("Set session context (position, biome filter, warp range)".to_owned()),
+///     Some("List reference data or model collections".to_owned()),
+///     Some("Show detailed information about a system or base".to_owned()),
+/// ));
+/// let direct_about = (
+///     Action::augment_subcommands(Command::new("direct")).get_about().map(ToString::to_string),
+///     SetTarget::augment_subcommands(Command::new("direct")).get_about().map(ToString::to_string),
+///     ListTarget::augment_subcommands(Command::new("direct")).get_about().map(ToString::to_string),
+///     ShowTarget::augment_subcommands(Command::new("direct")).get_about().map(ToString::to_string),
+/// );
+/// assert_eq!(direct_about, (
+///     Some("Commands available in the interactive REPL".to_owned()),
+///     Some("Session context settings accepted by the REPL".to_owned()),
+///     Some("Reference data and model collections available to list".to_owned()),
+///     Some("Detailed system and base views available in the REPL".to_owned()),
+/// ));
+/// # Ok(())
+/// # }
+/// ```
+/// # Errors
+///
+/// Returns the rendered Clap diagnostic for an unknown command, unknown or
+/// malformed option, missing required value, or other parse failure.
+///
+/// # Panics
+///
+/// Panics if writing rendered help to standard output fails.
+///
 pub fn parse_line(line: &str) -> Result<Option<Action>, String> {
     let line = line.trim();
     if line.is_empty() {
