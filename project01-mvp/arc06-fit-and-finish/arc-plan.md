@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.117, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.118, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1015,3 +1015,9 @@ Version1.117 details [Slice31](slice31-save-api-documentation/slice-plan.md), el
 NewR06-S31 gives49arcrows35done14open/project25open. RequiredfullM7.6 remainsOPEN: current31save,planned32graph/query,33remainingAPI/full0039reconciliation, allCDC. Exact30generatedresolverexception preserved, not extended tosavewarnings; strictsave mustzero. No otheroriginalinput/game-backed/history/cache/coverage/distribution/UI/parent/Operator/integration/release obligation changes. Mainpre-existingagentaddition/pins/external held; no newpolicygate.
 
 2026-10-25 Slice31 settled initial review: immutable01/firstactual1of5 consolidates source-grounded docs/example omissions; executable bodies/tests/data frozen. Static32-bit malformed-LZ4 payload-offset overflow consequence is documented only, not an executed32-bit result or runtime repair. Original supportedplatformG07/CDC reconciliation owns this knownlimit; fullM7.6/otherownersremainopen.49rows35done14open/project25open.
+
+## Slice31 save API increment accepted — 2026-10-25 UTC
+
+Version1.118 closes all6SD/R06-S31 at cleanb60e720a, complete eleven-file save public surface and meaningful literal/isolated examples. Seven independent groups green:130runtime+37docs (28execute/9compile-only), strictsavezero/noexception, exact17layoutpreservation/opposedmutation/diffs.13CC/7CDC raw records/history/twoactualrefinements/same-model-context handoff and finalretro retained. Known32-bit malformed-LZ4 panic documented only; CDC/P01-G07 final reconciliation owns limit. Mainknownagentaddition and allheld/externalpins unchanged.
+
+49arcrows36done13open/project25open. Full original0039M7.6 remains OPEN: planned32graph/query and33remainingAPI/fullreconciliation, CDC, further bounded decomposition allowed. Exact30generatedfieldexception not extended. All original input/game-backed/history/cache/finalsemantic/coverage/distribution/UI/parent/Operator/integration/release obligations remain. See [Slice31 independent close](slice31-save-api-documentation/cdc-verification.md).

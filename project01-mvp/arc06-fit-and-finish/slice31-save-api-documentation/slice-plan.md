@@ -1,6 +1,6 @@
 # Slice31 — complete nms-save public API documentation
 
-Version1.2, 2026-10-25 UTC. OPEN, current cc-prompt-iteration02.md, second actual refinement2/5/three remain. Same explicitly selected/applied CDC /root/cdc_arc06 gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High. Existing CC confirmed usable qualitative headroom, preserved30 handback and no process/edit/index/gate. Standing Autonomous Project01 Arc06 ONLY. CDC owns planning/index/design and independent acceptance; CC owns dedicated source/index after coherent recorded intake. Source `.worktrees/save-api-documentation`, branch `codex/save-api-documentation`, clean baseline40e6bc8f2b26606393931a232e604ce0e6f38e86, all eleven allowed paths in source-allowlist.json. No main/held/external mutation, integration, network action, dependency installation or release.
+Version1.3, 2026-10-25 UTC. CLOSED after independent acceptance on b60e720a; current completed cc-prompt-iteration02.md, two actual refinements used/three unused. Same explicitly selected/applied CDC /root/cdc_arc06 gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 gpt-6-luna High. Existing CC confirmed usable qualitative headroom, preserved30 handback and no process/edit/index/gate. Standing Autonomous Project01 Arc06 ONLY. CDC owns planning/index/design and independent acceptance; CC owns dedicated source/index after coherent recorded intake. Source `.worktrees/save-api-documentation`, branch `codex/save-api-documentation`, clean baseline40e6bc8f2b26606393931a232e604ce0e6f38e86, all eleven allowed paths in source-allowlist.json. No main/held/external mutation, integration, network action, dependency installation or release.
 
 ## Usable increment and exact ownership
 
@@ -63,3 +63,7 @@ corrected01-held.patch preserves exact8b75c62f… source bytes as unifieddiff da
 ## Same-model contributor context replacement — 2026-10-25 UTC
 
 Repeated wrong-root construction and metadata/literal comparison failures establish operational reliability concerns beyond the previous headroom self-report. Old CC completed the exact02 four-file write (diffa904df30), with no renewed pair/runtime, then froze/no process. One fresh CC at SAME explicitly selected6-lunaHigh replaces old historical/read-only context; no added implementer/reviewer/model, source criterion change or refinement. Twoactual01/02 used/threeleft; existing02 continues from currentbytes. Full attributable intake/target guards/capture/proof/ownership in cc-context-handoff.md. CDC6.1-solHigh remains independentacceptance; all other boundaries unchanged.
+
+## Final independent closure — 2026-10-25 UTC
+
+All6SD/R06-S31 DONE; seven independent groups green,130runtime+37docs (28execute/9compile-only), strictsavezero/noexception. Full review/retrospective/exact13CC+7CDC archive and source/main/pin fences in cdc-verification.md. No remaining source work in31; fullM7.6/planned32–33 and all higher owners retained.

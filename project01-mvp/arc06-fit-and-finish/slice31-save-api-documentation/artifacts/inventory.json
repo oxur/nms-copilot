@@ -1,0 +1,136 @@
+{
+  "created_utc": "2026-10-25T03:29:10.916766+00:00",
+  "purpose": "Current actual closeout inventory; excludes this inventory itself, no historical inventory claim",
+  "files": [
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 7853,
+      "sha256": "8bfa867694e532bca505e9b2b3a7cb9058af18158ce6eec016cb8842ffca4943"
+    },
+    {
+      "path": "artifacts/cc-attempts.json",
+      "bytes": 98425,
+      "sha256": "5145627c3c40b3e7b7b80854e61a6882b0015ed3a1e9b163eedbbffeea102e93"
+    },
+    {
+      "path": "artifacts/cc-context1-attempts.json",
+      "bytes": 44420,
+      "sha256": "cbef00b0535eac6f93ffab030f78ec24c4c2efb487cf0622fe3e378c9da8e24d"
+    },
+    {
+      "path": "artifacts/cdc-attempts.json",
+      "bytes": 46494,
+      "sha256": "0fa55df9db35a87233d5b5882431ab72f5ba8f6d12dd442a7e0c6bb68badfa46"
+    },
+    {
+      "path": "artifacts/corrected01-held.patch",
+      "bytes": 84956,
+      "sha256": "8b75c62ff29d6fdc63c756dfa6fd8e507fa315b776d4a92cbca5aadd6337d723"
+    },
+    {
+      "path": "artifacts/final-fences.json",
+      "bytes": 11830,
+      "sha256": "c69c4e1f5e12f265f301763958c0be9b556d882d88d2a722fb06468102a768f6"
+    },
+    {
+      "path": "artifacts/initial-held.patch",
+      "bytes": 79037,
+      "sha256": "47b8f523ad7bfda6f020e7e49b42e498e8f76375acf291ab64589add25473881"
+    },
+    {
+      "path": "artifacts/nms-slice31-cc-capture.py",
+      "bytes": 3721,
+      "sha256": "9ebce04427bd85df4403c2a78784f207020b76c980cff445f99326242f509f47"
+    },
+    {
+      "path": "artifacts/nms-slice31-cdc-capture.py",
+      "bytes": 3716,
+      "sha256": "f658f34d5174228138a210db772454fa155b4e05c6f05da62118d8b19b3e4ded"
+    },
+    {
+      "path": "artifacts/nms-slice31-scope-audit-template.py",
+      "bytes": 2925,
+      "sha256": "1cf81f01b96920857dd68270f4b7ce69775153b226d4bf862c798121d52ddf87"
+    },
+    {
+      "path": "artifacts/return-transfer.json",
+      "bytes": 1282,
+      "sha256": "71ae8e3e98f963fe95c98278b94a8eeb1277cccaa316b136fb945a2c8745c393"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 5320,
+      "sha256": "f46c3d920a82410ea92124ea5e88686bcbc20262753931f25f0dad6462acf50a"
+    },
+    {
+      "path": "cc-context-handoff.md",
+      "bytes": 5864,
+      "sha256": "95fbfa4fc488e93e1749750aa722d77cab0fcdfb61efb27feb8359f61f9c630e"
+    },
+    {
+      "path": "cc-execution-context1.md",
+      "bytes": 35751,
+      "sha256": "9cdd9f985c9e1f84f8f3d2eac3ce33c01a120ef0671ca408705b8a1bd45a007a"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 47763,
+      "sha256": "87e95da7fa17aed628f501dfba6fad2ac73ea2577194f7be12dc487758290c23"
+    },
+    {
+      "path": "cc-prompt-iteration01.md",
+      "bytes": 11839,
+      "sha256": "5a4be53bf5a95a63f7e6db075d93896bd5752590dc01ef25b3b10d666cd3d914"
+    },
+    {
+      "path": "cc-prompt-iteration02.md",
+      "bytes": 5268,
+      "sha256": "05d0a809eaf05bb0e56b28d3f8bb9d70e2564ac73ff5314ab661eeefedfa62e2"
+    },
+    {
+      "path": "cc-prompt.md",
+      "bytes": 7536,
+      "sha256": "1d6cebde36732e786ad3a53d78cf749e098c1751df294f06854f092036323ac7"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 56719,
+      "sha256": "dbc131346063a0e6711be4b8e247f01c970aa2b8caefef1bc471ec483b360a60"
+    },
+    {
+      "path": "cdc-retrospective.md",
+      "bytes": 3686,
+      "sha256": "bf27572cc8ed69774573ef1f74f38b451b9a38c808aaf549b54e7dc0ca9119d5"
+    },
+    {
+      "path": "cdc-verification.md",
+      "bytes": 7173,
+      "sha256": "3bcbac8b25921ef7115c4c5a839bd906732d2d3a95cd77cbedaf641b7204cf9a"
+    },
+    {
+      "path": "closing-report.md",
+      "bytes": 1505,
+      "sha256": "63f3c50a3f7b1f0b03279717b9799dbaa5eda38f1d4e39008d71b1cee0d51ec0"
+    },
+    {
+      "path": "execution.md",
+      "bytes": 9285,
+      "sha256": "2c35cc57f6d20050aa76df5926894da7630fb3d9eda879f3274fa360bbe3cf5e"
+    },
+    {
+      "path": "ledger.md",
+      "bytes": 4506,
+      "sha256": "6a6a9c3fa8adb9e2eecddaec5d9fe46ac46c4c6b689827e6f3d809ddbb88e838"
+    },
+    {
+      "path": "slice-plan.md",
+      "bytes": 22324,
+      "sha256": "10c34726ed5f283ce7eed20471d7c17227693cd69f795f7a30406488820a4857"
+    },
+    {
+      "path": "source-allowlist.json",
+      "bytes": 882,
+      "sha256": "277125d6134447235bba2b6bad9b1e83b4b99d2b890043e6e915595a483c9bb8"
+    }
+  ]
+}

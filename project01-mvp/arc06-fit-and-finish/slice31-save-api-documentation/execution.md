@@ -27,3 +27,15 @@ Iteration02 editing construction then had two failed apply_patch submissions: fi
 ## Same-model contributor context replacement — 2026-10-25 UTC
 
 Repeated wrong-root construction and metadata/literal comparison failures establish operational reliability concerns beyond the previous headroom self-report. Old CC completed the exact02 four-file write (diffa904df30), with no renewed pair/runtime, then froze/no process. One fresh CC at SAME explicitly selected6-lunaHigh replaces old historical/read-only context; no added implementer/reviewer/model, source criterion change or refinement. Twoactual01/02 used/threeleft; existing02 continues from currentbytes. Full attributable intake/target guards/capture/proof/ownership in cc-context-handoff.md. CDC6.1-solHigh remains independentacceptance; all other boundaries unchanged.
+
+## Exact02 prose delta reviewed before successor pair
+
+CDC compared every changed02 docline against contemporaneously saved01 contents, plus all11fileSHA256s. Only fourallowedfiles changed, otherseven byteexact. All runnable fenced examplebodies remain verbatim. Consumed indented mapping blocks now Examples→Panics/Errors; recursiveunknown-descendant/scalar/collision prose and separatelyloadedfixups truthful. All-NUL sanitizer caveat appears at allthreeissuedsites, coremask/summary/headerword facts match actualsource. No additionalfinding or widenedproof. This is sourceinspection, not compiler/doctest/strictdoc credit; successor must still complete capturedpair then HOLD before originalruntime release.
+
+Successor CC completed required full intake then actual02 format51276a043b4743e7969f81b60b460331/lintaf3057451f374ef0b698df9727877acc, both complete0/fullrawhashes/exit/end/fullbefore==after8b52eb8e…/diffa904df30…. CDC actual raw-record review confirmed historical firstsix JSONvaluesexact, all11status/indexempty/mainfences intact. With targeted02 review met, CDC explicitly released ORIGINAL remainingfivegroups; no newscenario/gate/refinement or postpairsourceedit. Runtime/strictdocs remain uncredited until actual execution.
+
+## Formal independent close — 2026-10-25 UTC
+
+CDC originalseven groups allcomplete0 on cleanb60e, rawhashes/fullmetadataequal;130runtime+37doctests (28execute/9compile-only), strictsavezero/freshisolatedtarget, sourceaudit/opposedmutation/diffs. Exact13CC/7CDC archive, originalsixvalues/context1executionprefix and threecc-*transfers verified. Message-only1bb→b60e repair/currenthookinspection and fulloperationalqualifications in cdc-verification/retrospective; no sourcechange or acceptanceexception. All6SD/R06-S31DONE.49arc36done13open/project25open; fullM7.6/planned32–33 and everyhighergate retained.
+
+CDC closeout construction incident: first writer completed slice/arc records, then used one-too-high parent for project-plan read and stopped FileNotFoundError before any project write. Corrected explicit project root completed only remaining project records; no source/gate touched or historical observation inferred.

@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.104
+version: 1.105
 project: project01-mvp
 status: active
 depends-on: []
@@ -1218,3 +1218,7 @@ Version1.103 / arc1.116 records six-row core API docs closure at40e6 under exact
 ### Arc06 required save API owner issued — 2026-10-25 UTC
 
 Version1.104/arc1.117 details Slice31 complete11file nms-save docs/actual source contracts/keyexamples, same roles/models/dedicated40e6/initial0actualrefinements.49arcrows35done14open/project25open, fullM7.6/32–33 and all otheroriginal/higherowners remain open. No newpolicy/integration authority or implementation claim.
+
+## Arc06 Slice31 save documentation accepted — 2026-10-25 UTC
+
+Complete save public API documentation accepted onb60e720a after seven independent groups,130runtime+37doctests, strictsavezero and executable-preservation proof. All6SD/R06-S31done;49arc36done13open, all25projectrows OPEN. FulloriginalM7.6 retains planned32graph/query and33remainingAPI/fullreconciliation CDC owners; exact30generatedfieldlimit and32-bit parser/glyph panic platform reconciliation retained. No integration/publication/parent acceptance.

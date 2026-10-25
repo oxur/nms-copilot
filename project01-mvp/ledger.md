@@ -47,3 +47,5 @@ Added by the Operator's explicit scope expansion after Slice04. Original22 rows 
 2026-10-22 Arc06 Slice22 all6NF/R06-S22 independently closed at753bb3a9,40arcrows22done18open. All25projectcriteria/statuses remainopen; opt-infoundation only, required23application/cache5/native+24originalexport and all parent/highergates retained. FreshCDC12groups/1043runtime+30docs and substantiveCDCretrospective linked from child, no integration/release/game-backed inference.
 
 2026-10-25 Arc06 Slice30 core documentation child accepted: sixCD/R06-S30done under exact approved generated-field A, source40e6/independent actual output proof. All25project rows remainOPEN, including G04/fullM7.6 pending required31–33; Arc06 now48rows35done13open. No parent/integration/release acceptance implied.
+
+2026-10-25 Arc06 Slice31 accepted: sixSD/R06-S31done onb60e, seven independent groups/130runtime+37docs/strictsavezero.49arc36done13open; all25projectrows stayOPEN including fullM7.6/G04/planned32–33, platform/finalrepair/Operator gates.

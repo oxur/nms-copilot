@@ -1,15 +1,15 @@
 # Slice31 acceptance ledger
 
-2026-10-25 UTC. Six OPEN correctness-grade rows; CC proposed-done requires independent CDC disposition.
+2026-10-25 UTC. Six independently accepted correctness-grade rows; prior OPEN states below remain historical.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
-| SD-01 | Complete save public surface and crate/module navigation | Full eleven-file public-item walk and strict save missing-docs | correctness-grade | open | — |
-| SD-02 | Truthful pipeline/legacy/checked/errors/panics/platform/metadata contracts | Full W1–W6 source-grounded worksheet and actual conditional behavior | correctness-grade | open | — |
-| SD-03 | Meaningful runnable key examples with independent literal expectations | Actual doctests including checked source56, legacy contrast, mapping, bytes, metadata and isolated locator | correctness-grade | open | — |
-| SD-04 | Executable/API/tests/data/all other paths preserved | Exact ordered source audit with17 named layout allowances and opposed in-memory mutation | correctness-grade | open | — |
-| SD-05 | Attributable appropriate gates/commit/fences | Complete raw-first seven groups, correct named-path commit/trailers/cleanworktree/main protection | correctness-grade | open | — |
-| SD-06 | Independent acceptance/retrospective/bubble-up/full original ownership | Exact returns/currentvsprior summaries, independent review/proof, sixrow closure and parent ownership | correctness-grade | open | — |
+| SD-01 | Complete save public surface and crate/module navigation | Full eleven-file public-item walk and strict save missing-docs | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
+| SD-02 | Truthful pipeline/legacy/checked/errors/panics/platform/metadata contracts | Full W1–W6 source-grounded worksheet and actual conditional behavior | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
+| SD-03 | Meaningful runnable key examples with independent literal expectations | Actual doctests including checked source56, legacy contrast, mapping, bytes, metadata and isolated locator | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
+| SD-04 | Executable/API/tests/data/all other paths preserved | Exact ordered source audit with17 named layout allowances and opposed in-memory mutation | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
+| SD-05 | Attributable appropriate gates/commit/fences | Complete raw-first seven groups, correct named-path commit/trailers/cleanworktree/main protection | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
+| SD-06 | Independent acceptance/retrospective/bubble-up/full original ownership | Exact returns/currentvsprior summaries, independent review/proof, sixrow closure and parent ownership | correctness-grade | done | [Independent acceptance](cdc-verification.md) |
 
 ## Settled initial review / first actual refinement — 2026-10-25 UTC
 
@@ -22,3 +22,5 @@ Author additionally identified32-bit compressed-length offset overflow from actu
 Complete actual6CCrecords reviewed; renewed format5af8ff999a0b4030b81ccc5ef86ed5c6/lintf754553dae354e479d536737b1011d76 complete0/fullraw/fullbefore==after55d4edf9… / diff8b75c62f…. F2 executablelocator, exactpopulation/cardinality, same-sourcelegacycontrast, nestedmapping andmetadatafield examples now correct; F3 checkedpresence/traversal/errorbounds/XXTEA/timestamp/32-bitconditional prose reviewed. No runtime/strictdocs yet. Remainingclosed02 batch: two indentedKeyMapping sections stillwrongorder despite claimedscan; recursiveunknownvalue prose remainsfalse (CDC's01guidance also incomplete); originalall-NUL sanitizer qualification absent; two singleline summaries/coremask/header-word facts needcompletion. Fourprosefilesonly, all sevenotherfiles/executable/API/test/data/examples frozen. Secondactual2/5/threeleft. No policy/question/waiver.
 
 corrected01-held.patch preserves exact8b75c62f… source bytes as unifieddiff data, under already recorded byte-fidelity-versus-authored-whitespace rule. Original editing-script AssertionErrors/emptyglob were scopedconstruction attempts, not SUT/compiler results; no out-of-scope mutation or invented exit. All6SD/R06-S31open;49arc35done14open/project25open.
+
+2026-10-25 final: all6SD independently DONE on cleanb60e; original7CDCgroups passed,13CC/7CDC raw records retained. Twoactualrefinements/noreset/newexception; all broader owners retained.

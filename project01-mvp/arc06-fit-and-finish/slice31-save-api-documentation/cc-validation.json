@@ -1,0 +1,421 @@
+{
+  "slice": "Project01 Arc06 Slice31",
+  "assignment": "cc-prompt-iteration02.md",
+  "strength": "attested; CDC independent disposition pending",
+  "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+  "branch": "codex/save-api-documentation",
+  "baseline": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+  "candidate_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+  "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4",
+  "raw_attempt_log": "/private/tmp/nms-slice31-cc-attempts.json",
+  "raw_attempt_count": 13,
+  "historical_prefix_ids": [
+    "53e7f5195b1845ec912342db51e17bf6",
+    "370f4b18a7144616b99a724e9490850f",
+    "dc457f123d6e4bf1986dbfee9ddaa17e",
+    "1c6954e80d1642ecadefff9e9a2ede60",
+    "5af8ff999a0b4030b81ccc5ef86ed5c6",
+    "f754553dae354e479d536737b1011d76"
+  ],
+  "current_attempts": [
+    {
+      "id": "51276a043b4743e7969f81b60b460331",
+      "label": "slice31-iteration02-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:21:02.678668+00:00",
+      "ended_utc": "2026-10-25T03:21:03.796305+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "G1sxOzM0bUZvcm1hdHRpbmcgY29kZS4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIHJ1c3RmbXQgb24gYWxsIGZpbGVzLi4uG1swbQobWzE7MzJt4pyTIENvZGUgZm9ybWF0dGVkG1swbQo=",
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "af3057451f374ef0b698df9727877acc",
+      "label": "slice31-iteration02-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:21:05.839968+00:00",
+      "ended_utc": "2026-10-25T03:21:10.089289+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "G1sxOzM0bVJ1bm5pbmcgbGludGVyIGNoZWNrcy4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIGNsaXBweS4uLhtbMG0KG1sxOzMybeKckyBDbGlwcHkgcGFzc2VkG1swbQobWzE7MzZt4oCiIENoZWNraW5nIGNvZGUgZm9ybWF0dGluZy4uLhtbMG0KG1sxOzMybeKckyBGb3JtYXQgY2hlY2sgcGFzc2VkG1swbQo=",
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "base64": "ICAgIENoZWNraW5nIG5tcy1zYXZlIHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvc2F2ZS1hcGktZG9jdW1lbnRhdGlvbi9jcmF0ZXMvbm1zLXNhdmUpCiAgICBDaGVja2luZyBubXMtZ3JhcGggdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy9zYXZlLWFwaS1kb2N1bWVudGF0aW9uL2NyYXRlcy9ubXMtZ3JhcGgpCiAgICBDaGVja2luZyBubXMtY29tcGF0IHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvc2F2ZS1hcGktZG9jdW1lbnRhdGlvbi9jcmF0ZXMvbm1zLWNvbXBhdCkKICAgIENoZWNraW5nIG5tcy1xdWVyeSB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vY3JhdGVzL25tcy1xdWVyeSkKICAgIENoZWNraW5nIG5tcy1jYWNoZSB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vY3JhdGVzL25tcy1jYWNoZSkKICAgIENoZWNraW5nIG5tcy13YXRjaCB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vY3JhdGVzL25tcy13YXRjaCkKICAgIENoZWNraW5nIG5tcy1jb3BpbG90IHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvc2F2ZS1hcGktZG9jdW1lbnRhdGlvbi9jcmF0ZXMvbm1zLWNvcGlsb3QpCiAgICBDaGVja2luZyBubXMtY2xpIHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvc2F2ZS1hcGktZG9jdW1lbnRhdGlvbi9jcmF0ZXMvbm1zLWNsaSkKICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMy4yNHMKd2FybmluZzogdGhlIGZvbGxvd2luZyBwYWNrYWdlcyBjb250YWluIGNvZGUgdGhhdCB3aWxsIGJlIHJlamVjdGVkIGJ5IGEgZnV0dXJlIHZlcnNpb24gb2YgUnVzdDogcHJvYy1tYWNyby1lcnJvcjIgdjIuMC4xCm5vdGU6IHRvIHNlZSB3aGF0IHRoZSBwcm9ibGVtcyB3ZXJlLCB1c2UgdGhlIG9wdGlvbiBgLS1mdXR1cmUtaW5jb21wYXQtcmVwb3J0YCwgb3IgcnVuIGBjYXJnbyByZXBvcnQgZnV0dXJlLWluY29tcGF0aWJpbGl0aWVzIC0taWQgMWAK",
+        "bytes": 1287,
+        "sha256": "1162952142261f6b20efea045596f900b673ef42860b41022de13c17a68dc1a0"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "a4974addc4be4c59957994b887136c04",
+      "label": "slice31-cargo-test",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-save",
+        "--all-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:21:44.605654+00:00",
+      "ended_utc": "2026-10-25T03:21:52.491573+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "CnJ1bm5pbmcgMTA1IHRlc3RzCnRlc3QgY29udmVydDo6dGVzdHM6OmJhc2VfdG9fY29yZSAuLi4gb2sKdGVzdCBkZWNvbXByZXNzOjp0ZXN0czo6ZGV0ZWN0X2VtcHR5X2lucHV0IC4uLiBvawp0ZXN0IGNvbnZlcnQ6OnRlc3RzOjpnYWxhY3RpY19hZGRyZXNzX29iamVjdF90b19jb3JlIC4uLiBvawp0ZXN0IGNvbnZlcnQ6OnRlc3RzOjpkaXNjb3ZlcnlfcmVjb3JkX3RvX2NvcmUgLi4uIG9rCnRlc3QgY29udmVydDo6dGVzdHM6OnVua25vd25fZGlzY292ZXJ5X3R5cGVfcmV0dXJuc19ub25lIC4uLiBvawp0ZXN0IGRlY29tcHJlc3M6OnRlc3RzOjpkZWNvbXByZXNzX3NhdmVfZmlsZV9ub3RfZm91bmQgLi4uIG9rCnRlc3QgY29udmVydDo6dGVzdHM6OmFjdGl2ZV9jb250ZXh0X2V4cGVkaXRpb24gLi4uIG9rCnRlc3QgY29udmVydDo6dGVzdHM6OnRvX2NvcmVfcGxheWVyX3N0YXRlX3plcm9fcHJldmlvdXNfaXNfbm9uZSAuLi4gb2sKdGVzdCBjb252ZXJ0Ojp0ZXN0czo6dG9fY29yZV9wbGF5ZXJfc3RhdGVfd2l0aF9wcmV2aW91cyAuLi4gb2sKdGVzdCBjb252ZXJ0Ojp0ZXN0czo6YWN0aXZlX2NvbnRleHRfbWFpbiAuLi4gb2sKdGVzdCBkZWNvbXByZXNzOjp0ZXN0czo6ZGV0ZWN0X2x6NF9jb21wcmVzc2VkIC4uLiBvawp0ZXN0IGRlY29tcHJlc3M6OnRlc3RzOjpkZXRlY3RfcGxhaW50ZXh0X2pzb24gLi4uIG9rCnRlc3QgZGVjb21wcmVzczo6dGVzdHM6OmludmFsaWRfbWFnaWNfYXRfc2Vjb25kX2Jsb2NrIC4uLiBvawp0ZXN0IGRlY29tcHJlc3M6OnRlc3RzOjpwYXJzZV9ibG9ja19oZWFkZXJfY2h1bmtfdG9vX2xhcmdlIC4uLiBvawp0ZXN0IGRlY29tcHJlc3M6OnRlc3RzOjpwYXJzZV9ibG9ja19oZWFkZXJfaW52YWxpZF9tYWdpYyAuLi4gb2sKdGVzdCBkZWNvbXByZXNzOjp0ZXN0czo6cGFyc2VfYmxvY2tfaGVhZGVyX3RydW5jYXRlZCAuLi4gb2sKdGVzdCBkZWNvbXByZXNzOjp0ZXN0czo6cGFyc2VfYmxvY2tfaGVhZGVyX3ZhbGlkIC4uLiBvawp0ZXN0IGRlY29tcHJlc3M6OnRlc3RzOjpwbGFpbnRleHRfcGFzc3Rocm91Z2ggLi4uIG9rCnRlc3QgZGVjb21wcmVzczo6dGVzdHM6OnJvdW5kdHJpcF9zaW5nbGVfYmxvY2sgLi4uIG9rCnRlc3QgZGVjb21wcmVzczo6dGVzdHM6OnRydW5jYXRlZF9wYXlsb2FkIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OmFjY291bnRfa2luZF9kaXNwbGF5IC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OmFjY291bnRfa2luZF9nb2cgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6YWNjb3VudF9raW5kX3N0ZWFtIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OmFjY291bnRfa2luZF9zdGVhbV9iYWRfaWQgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6YWNjb3VudF9raW5kX3Vua25vd24gLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6bm1zX3NhdmVfZGlyX2NvbnRhaW5zX2hlbGxvZ2FtZXNfbm1zIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OnBhcnNlX21mX3NhdmVfcmVqZWN0ZWQgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6cGFyc2Vfbm9uc2F2ZV9yZWplY3RlZCAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjpwYXJzZV9zYXZlMl9oZyAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjpwYXJzZV9zYXZlMzBfaGcgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6bGlzdF9hY2NvdW50c19lbXB0eV9yZXR1cm5zX2Vycm9yIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OnBhcnNlX3NhdmUzX2hnIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OnBhcnNlX3NhdmU0X2hnIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OnBhcnNlX3NhdmVfaGcgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6c2F2ZV9maWxlX21ldGFkYXRhX3BhdGggLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6bGlzdF9zYXZlc19lbXB0eV9kaXJfcmV0dXJuc19lcnJvciAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjpzYXZlX3Nsb3RfbW9zdF9yZWNlbnQgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6c2F2ZV90eXBlX2Rpc3BsYXkgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6dGVzdF9wYXJzZV9zYXZlX2luZGljZXNfYWJvdmVfc2xvdF9maWZ0ZWVuX2FyZV9yZWplY3RlZCAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjpsaXN0X2FjY291bnRzX2ZpbmRzX3N0ZWFtX2FuZF9nb2cgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6bGlzdF9hY2NvdW50c19za2lwc19maWxlcyAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjpsaXN0X3NhdmVzX2V4Y2x1ZGVzX21ldGFkYXRhIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpkZW9iZnVzY2F0ZV9hbHJlYWR5X3BsYWludGV4dCAuLi4gb2sKdGVzdCBsb2NhdGU6OnRlc3RzOjp0ZXN0X2xpc3RfYWNjb3VudHNfcmVwb3J0c19leGFjdF9zb3J0ZWRfa2luZHNfcGF0aHNfYW5kX2VtcHR5X2Vycm9ycyAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6ZGVvYmZ1c2NhdGVfYXJyYXkgLi4uIG9rCnRlc3QgbWFwcGluZzo6dGVzdHM6OmRlb2JmdXNjYXRlX2pzb25fYWxyZWFkeV9wbGFpbnRleHQgLi4uIG9rCnRlc3QgZGVjb21wcmVzczo6dGVzdHM6OnJvdW5kdHJpcF9tdWx0aXBsZV9ibG9ja3MgLi4uIG9rCnRlc3QgbWFwcGluZzo6dGVzdHM6OmZyb21fanNvbl9lbXB0eV9tYXBwaW5nIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpkZW9iZnVzY2F0ZV9qc29uX2J5dGVzIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpmcm9tX2pzb25faW52YWxpZCAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6ZnJvbV9qc29uX3ZhbGlkIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjppc19vYmZ1c2NhdGVkX2VtcHR5X29iamVjdCAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6aXNfb2JmdXNjYXRlZF9ub192ZXJzaW9uX2tleSAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6aXNfb2JmdXNjYXRlZF9ub25fb2JqZWN0IC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjppc19vYmZ1c2NhdGVkX3dpdGhfZjJwIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjppc19vYmZ1c2NhdGVkX3dpdGhfdmVyc2lvbiAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6ZGVvYmZ1c2NhdGVfanNvbl9pbnZhbGlkX2pzb24gLi4uIG9rCnRlc3QgbWFwcGluZzo6dGVzdHM6OmRlb2JmdXNjYXRlX25lc3RlZCAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6ZGVvYmZ1c2NhdGVfcHJlc2VydmVzX3Vua25vd25fa2V5cyAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6ZGVvYmZ1c2NhdGVfc2ltcGxlIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6aW52YWxpZF9tZXRhX2xlbmd0aCAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6Om1ldGFfZW5jcnlwdGlvbl9rZXlfdmFsdWVzIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6cGFyc2VfZGVjcnlwdGVkX21ldGFkYXRhX2Zvcm1hdF8yMDAxIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6cGFyc2VfZGVjcnlwdGVkX21ldGFkYXRhX2Zvcm1hdF8yMDAyIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6cmVhZF9tZXRhZGF0YV90cmllc19vdGhlcl9zbG90cyAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnJlYWRfbWV0YWRhdGFfdmFuaWxsYV9sZW5ndGhfdXNlc184X3JvdW5kcyAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6bGVnYWN5X2tleXNfbWVyZ2VkIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6cmVhZF9tZXRhZGF0YV93aXRoX3N5bnRoZXRpY19lbmNyeXB0ZWRfZGF0YSAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnN0b3JhZ2Vfc2xvdF9hbGxfaGFzXzMyX2VudHJpZXMgLi4uIG9rCnRlc3QgbWV0YWRhdGE6OnRlc3RzOjpzdG9yYWdlX3Nsb3RfaXNfYWNjb3VudCAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnVuc3VwcG9ydGVkX3ZhbmlsbGFfZm9ybWF0IC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpsb2FkX2J1bmRsZWRfbWFwcGluZyAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnZlcmlmeV9zaGEyNTZfY29ycmVjdF9oYXNoIC4uLiBvawp0ZXN0IG1ldGFkYXRhOjp0ZXN0czo6dmVyaWZ5X3NoYTI1Nl9ub19oYXNoX3JldHVybnNfdHJ1ZSAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnZlcmlmeV9zaGEyNTZfd3JvbmdfaGFzaCAuLi4gb2sKdGVzdCBtb2RlbDo6dGVzdHM6OnBhcnNlX2NvbW1vbl9zdGF0ZV9kYXRhIC4uLiBvawp0ZXN0IG1vZGVsOjp0ZXN0czo6cGFyc2VfZGlzY292ZXJ5X3JlY29yZCAuLi4gb2sKdGVzdCBtb2RlbDo6dGVzdHM6OnBhcnNlX2Rpc2NvdmVyeV9yZWNvcmRfaW50ZWdlcl91YSAuLi4gb2sKdGVzdCBtb2RlbDo6dGVzdHM6OnBhcnNlX2Rpc2NvdmVyeV9yZWNvcmRfc2VjdG9yIC4uLiBvawp0ZXN0IG1vZGVsOjp0ZXN0czo6cGFyc2VfZ2FsYWN0aWNfYWRkcmVzc19vYmplY3QgLi4uIG9rCnRlc3QgbW9kZWw6OnRlc3RzOjpwYXJzZV9wYWNrZWRfZ2FsYWN0aWNfYWRkcmVzc19oZXhfc3RyaW5nIC4uLiBvawp0ZXN0IG1vZGVsOjp0ZXN0czo6cGFyc2VfbWluaW1hbF9zYXZlX3Jvb3QgLi4uIG9rCnRlc3QgbW9kZWw6OnRlc3RzOjpwYXJzZV9wYWNrZWRfZ2FsYWN0aWNfYWRkcmVzc19pbnRlZ2VyIC4uLiBvawp0ZXN0IG1vZGVsOjp0ZXN0czo6cGFyc2VfcGFja2VkX2dhbGFjdGljX2FkZHJlc3NfemVybyAuLi4gb2sKdGVzdCBtb2RlbDo6dGVzdHM6OnBhcnNlX3BsYXllcl9zdGF0ZV9kYXRhX21pbmltYWwgLi4uIG9rCnRlc3QgbW9kZWw6OnRlc3RzOjpwYXJzZV9wZXJzaXN0ZW50X3BsYXllcl9iYXNlIC4uLiBvawp0ZXN0IG1vZGVsOjp0ZXN0czo6cGFyc2VfdW5pdmVyc2VfYWRkcmVzcyAuLi4gb2sKdGVzdCB4eHRlYTo6dGVzdHM6OmRlbHRhX3JldmVyc2VfZGVsdGFfY2FuY2VsIC4uLiBvawp0ZXN0IHh4dGVhOjp0ZXN0czo6ZGVyaXZlX2tleV9zbG90XzAgLi4uIG9rCnRlc3QgeHh0ZWE6OnRlc3RzOjpkZXJpdmVfa2V5X2FsbF9zbG90c191bmlxdWUgLi4uIG9rCnRlc3QgeHh0ZWE6OnRlc3RzOjpkZXJpdmVfa2V5X3Nsb3RfMSAuLi4gb2sKdGVzdCB4eHRlYTo6dGVzdHM6OmRlcml2ZV9rZXlfc2xvdF8yIC4uLiBvawp0ZXN0IHh4dGVhOjp0ZXN0czo6ZW5jcnlwdF9kZWNyeXB0X3JvdW5kdHJpcF82X3JvdW5kcyAuLi4gb2sKdGVzdCB4eHRlYTo6dGVzdHM6OmVuY3J5cHRfZGVjcnlwdF9yb3VuZHRyaXBfOF9yb3VuZHMgLi4uIG9rCnRlc3QgeHh0ZWE6OnRlc3RzOjpoYXNoX3ByZWNvbXB1dGF0aW9uX2RlZmF1bHQgLi4uIG9rCnRlc3QgeHh0ZWE6OnRlc3RzOjpoYXNoX3ByZWNvbXB1dGF0aW9uX3ZhbmlsbGEgLi4uIG9rCnRlc3QgeHh0ZWE6OnRlc3RzOjplbmNyeXB0X2RlY3J5cHRfcm91bmR0cmlwX2FsbF9zbG90cyAuLi4gb2sKdGVzdCBtZXRhZGF0YTo6dGVzdHM6OnZhbGlkX21ldGFfbGVuZ3Roc19yZWFjaF9kZWNyeXB0aW9uIC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpsb29rdXBfa25vd25fa2V5cyAuLi4gb2sKdGVzdCBtYXBwaW5nOjp0ZXN0czo6bG9va3VwX3Vua25vd25fa2V5IC4uLiBvawp0ZXN0IG1hcHBpbmc6OnRlc3RzOjpzYXZld2l6YXJkX2ZpeHVwIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OnRlc3RfbGlzdF9zYXZlc191c2VzX2NvbXBsZXRlX2xpdGVyYWxfZmlsZW5hbWVfc2xvdF90eXBlX3RhYmxlIC4uLiBvawp0ZXN0IGxvY2F0ZTo6dGVzdHM6OmZpbmRfbW9zdF9yZWNlbnRfc2F2ZV9pbl9waWNrc19uZXdlc3QgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6Z3JvdXBfaW50b19zbG90c19wYWlyc19jb3JyZWN0bHkgLi4uIG9rCnRlc3QgbG9jYXRlOjp0ZXN0czo6bGlzdF9zYXZlc19maW5kc19hbmRfc29ydHNfYnlfbXRpbWUgLi4uIG9rCgp0ZXN0IHJlc3VsdDogb2suIDEwNSBwYXNzZWQ7IDAgZmFpbGVkOyAwIGlnbm9yZWQ7IDAgbWVhc3VyZWQ7IDAgZmlsdGVyZWQgb3V0OyBmaW5pc2hlZCBpbiAwLjExcwoKCnJ1bm5pbmcgOCB0ZXN0cwp0ZXN0IHRlc3RfZGVjb2RlX2Vycm9yX3RyYWl0c19hbmRfZGlhZ25vc3RpY3NfYXJlX3B1YmxpY19hbmRfc3RhYmxlIC4uLiBvawp0ZXN0IHRlc3RfZGVjb2RlX2JvdGhfcGFja2VkX2FwaXNfcmVqZWN0X2ludmFsaWRfdmFsdWVzX3dpdGhfZXhhY3RfcGF0aHMgLi4uIG9rCnRlc3QgdGVzdF9kZWNvZGVfZmllbGRfZmFtaWxpZXNfcHJlc2VydmVfaGlnaF9nYWxheHlfYW5kX3AwX3dpZHRoIC4uLiBvawp0ZXN0IHRlc3RfZGVjb2RlX3BhY2tlZF9pbnRlZ2VyX3N0cmluZ19ib3VuZGFyaWVzX2FuZF9wcmVjaXNpb24gLi4uIG9rCnRlc3QgdGVzdF9kZWNvZGVfcHJldmlvdXNfYWRkcmVzc19hYnNlbmNlX2FuZF9hbGxfc2l4X3plcm9fc2VudGluZWwgLi4uIG9rCnRlc3QgdGVzdF9kZWNvZGVfZXhwYW5kZWRfZnVsbF9vYmplY3RfYW5kX2NvbXBvbmVudF9lZGdlcyAuLi4gb2sKdGVzdCB0ZXN0X2RlY29kZV9pbmRlcGVuZGVudF9jaGlsaV9hbmRfYWxsX2Jhc2Vfb3JhY2xlcyAuLi4gb2sKdGVzdCB0ZXN0X2RlY29kZV9leHBhbmRlZF9yZXF1aXJlZF9wcmVzZW5jZV90eXBlX3BhdGhzX2FuZF9wcmlvcml0eSAuLi4gb2sKCnRlc3QgcmVzdWx0OiBvay4gOCBwYXNzZWQ7IDAgZmFpbGVkOyAwIGlnbm9yZWQ7IDAgbWVhc3VyZWQ7IDAgZmlsdGVyZWQgb3V0OyBmaW5pc2hlZCBpbiAwLjAwcwoKCnJ1bm5pbmcgMTcgdGVzdHMKdGVzdCB0ZXN0X2NoZWNrZWRfcGFyc2VyX3JlamVjdHNfbGF0ZV9iYWRfZGlzY292ZXJ5X2JlZm9yZV9sYXRlcl9jb250ZXh0X2FkZHJlc3NlcyAuLi4gb2sKdGVzdCB0ZXN0X2NoZWNrZWRfcGFyc2VyX3JlamVjdHNfbGF0ZV9sZWdhY3lfYWNjZXB0ZWRfYmFzZV9hZnRlcl92YWxpZF9iYXNlX2FuZF9kaXNjb3ZlcmllcyAuLi4gb2sKdGVzdCB0ZXN0X2NoZWNrZWRfZmlsZV9wYXJzZXJfdXNlc19wbGFpbnRleHRfcGlwZWxpbmVfYW5kX3ByZXNlcnZlc19lcnJvcnMgLi4uIG9rCnRlc3QgdGVzdF9jaGVja2VkX3BhcnNlcl9yZXF1aXJlc190b3BfbGV2ZWxfZGlzY292ZXJ5X21hbmFnZXJfYW5kX3ZhbGlkYXRlc19sYXRlX3Jvd3NfYW5kX2Jhc2VzIC4uLiBvawp0ZXN0IHRlc3RfY2hlY2tlZF9wYXJzZXJfa2VlcHNfdW5uYW1lZF91bmtub3duX3R5cGVfYmFzZV9hbmRfdmFsaWRhdGVzX3Vua25vd25fZGlzY292ZXJ5X2FkZHJlc3MgLi4uIG9rCnRlc3QgdGVzdF9jaGVja2VkX3BhcnNlcl9rZWVwc19hY3RpdmVfc2VsZWN0b3JfYW5kX3JlcXVpcmVkX2NvbnRleHRfY29udGFpbmVyX3J1bGVzIC4uLiBvawp0ZXN0IHRlc3RfY2hlY2tlZF9wYXJzZXJfaGFuZGxlc19pbmFjdGl2ZV9hbmRfcHJldmlvdXNfYWRkcmVzc19wcmVzZW5jZV93aXRob3V0X2RlZmF1bHRpbmdfYmFkX3ZhbHVlcyAuLi4gb2sKdGVzdCB0ZXN0X2xlZ2FjeV9wYXJzZXJfYWNjZXB0c190aGVfc2FtZV81N19iaXRfdTY0X2J1dF9jaGVja2VkX3BhcnNlcl9yZWplY3RzX2F0b21pY2FsbHkgLi4uIG9rCnRlc3QgdGVzdF9jaGVja2VkX3BhcnNlcl92YWxpZGF0ZXNfYmFzZV9jb250ZXh0X2JlZm9yZV9leHBlZGl0aW9uX2NvbnRleHQgLi4uIG9rCnRlc3QgdGVzdF92YWxpZGF0ZWRfc2F2ZV9wYWlyc19vcmlnaW5hbF9kaXNjb3Zlcmllc19hbmRfYnVpbGRzX2NvbXBsZXRlX2FjdGl2ZV9zdGF0ZSAuLi4gb2sKdGVzdCB0ZXN0X2NoZWNrZWRfd2hvbGVfcGFyc2VfcGFpcnNfaW5kZXBlbmRlbnRfcGFja2VkX2xpdGVyYWxzX2FuZF9wcmVzZXJ2ZXNfcmF3X2ludGVnZXIgLi4uIG9rCnRlc3QgdGVzdF9jaGVja2VkX3BhcnNlcl9kaXN0aW5ndWlzaGVzX21pc3NpbmdfbnVsbF9hbmRfd3JvbmdfdHlwZV9iZWZvcmVfc2VyZGVfZGVmYXVsdHMgLi4uIG9rCnRlc3QgdGVzdF9jaGVja2VkX3BhcnNlcl9yZXBvcnRzX2V2ZXJ5X2V4cGFuZGVkX2NvbXBvbmVudF9ib3VuZGFyeV9iZWZvcmVfbmFycm93aW5nIC4uLiBvawp0ZXN0IHRlc3RfY2hlY2tlZF9wYXJzZXJfdmFsaWRhdGVzX2FsbF9wcmV2aW91c19jb21wb25lbnRzX2FuZF9zaXhfY29tcG9uZW50X3NlbnRpbmVsIC4uLiBvawp0ZXN0IHRlc3RfY2hlY2tlZF9wYXJzZXJfcHJlc2VydmVzX2luYWN0aXZlX2FuZF9kZWZhdWx0ZWRfY29udGFpbmVyX3ByZXNlbmNlX3J1bGVzIC4uLiBvawp0ZXN0IHRlc3RfY2hlY2tlZF9wYXJzZXJfcmVxdWlyZXNfZWFjaF9hY3RpdmVfYWRkcmVzc19tZW1iZXJfaW5fYm90aF9jb250ZXh0cyAuLi4gb2sKdGVzdCB0ZXN0X2NoZWNrZWRfZmlsZV9wYXJzZXJfdmFsaWRhdGVzX2FmdGVyX2tleV9tYXBwaW5nX2FuZF9sejRfZGVjb21wcmVzc2lvbiAuLi4gb2sKCnRlc3QgcmVzdWx0OiBvay4gMTcgcGFzc2VkOyAwIGZhaWxlZDsgMCBpZ25vcmVkOyAwIG1lYXN1cmVkOyAwIGZpbHRlcmVkIG91dDsgZmluaXNoZWQgaW4gMC4wMnMKCgpydW5uaW5nIDM3IHRlc3RzCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9jb252ZXJ0LnJzIC0gY29udmVydDo6UGVyc2lzdGVudFBsYXllckJhc2U6OnRvX2NvcmVfYmFzZSAobGluZSA4NCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9hZGRyZXNzLnJzIC0gYWRkcmVzczo6QWRkcmVzc0RlY29kZUVycm9yOjpwYXRoIChsaW5lIDEzOCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9hZGRyZXNzLnJzIC0gYWRkcmVzcyAobGluZSA1OCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9hZGRyZXNzLnJzIC0gYWRkcmVzczo6QWRkcmVzc0RlY29kZUVycm9yIChsaW5lIDgwKSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2RlY29tcHJlc3MucnMgLSBkZWNvbXByZXNzOjpkZWNvbXByZXNzX3NhdmVfZmlsZSAobGluZSA5MCkgLSBjb21waWxlIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvYWRkcmVzcy5ycyAtIGFkZHJlc3M6OmRlY29kZV9jdXJyZW50X2FkZHJlc3MgKGxpbmUgMjI2KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2NvbnZlcnQucnMgLSBjb252ZXJ0OjpTYXZlUm9vdDo6YWN0aXZlX3BsYXllcl9zdGF0ZSAobGluZSAxMjMpIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvYWRkcmVzcy5ycyAtIGFkZHJlc3M6OmRlY29kZV9kaXNjb3ZlcnlfYWRkcmVzcyAobGluZSAxNjYpIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvbGliLnJzIC0gcGFyc2Vfc2F2ZV9maWxlIChsaW5lIDEzNikgLSBjb21waWxlIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvYWRkcmVzcy5ycyAtIGFkZHJlc3M6OmRlY29kZV9wcmV2aW91c19hZGRyZXNzIChsaW5lIDI2MikgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9sb2NhdGUucnMgLSBsb2NhdGU6Om5tc19zYXZlX2RpciAobGluZSAyODYpIC0gY29tcGlsZSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2FkZHJlc3MucnMgLSBhZGRyZXNzOjpkZWNvZGVfYmFzZV9hZGRyZXNzIChsaW5lIDE5NikgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9jb252ZXJ0LnJzIC0gY29udmVydDo6UmF3RGlzY292ZXJ5UmVjb3JkOjp0b19jb3JlX3JlY29yZCAobGluZSAyNikgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9saWIucnMgLSAobGluZSA2NSkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9jb252ZXJ0LnJzIC0gY29udmVydDo6U2F2ZVJvb3Q6OnRvX2NvcmVfcGxheWVyX3N0YXRlIChsaW5lIDE0OCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9kZWNvbXByZXNzLnJzIC0gZGVjb21wcmVzczo6ZGVjb21wcmVzc19zYXZlIChsaW5lIDU1KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2xpYi5ycyAtIHBhcnNlX3NhdmUgKGxpbmUgMTA4KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2xpYi5ycyAtIChsaW5lIDMwKSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL2xvY2F0ZS5ycyAtIGxvY2F0ZTo6bGlzdF9zYXZlcyAobGluZSA0MTApIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvbG9jYXRlLnJzIC0gbG9jYXRlOjpsaXN0X2FjY291bnRzIChsaW5lIDM1NikgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9tYXBwaW5nLnJzIC0gbWFwcGluZzo6S2V5TWFwcGluZzo6ZnJvbV9qc29uIChsaW5lIDEwNikgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy92YWxpZGF0ZWQucnMgLSB2YWxpZGF0ZWQ6OlZhbGlkYXRlZFNhdmU6OmJhc2VzIChsaW5lIDcxKSAtIGNvbXBpbGUgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy92YWxpZGF0ZWQucnMgLSB2YWxpZGF0ZWQ6OlZhbGlkYXRlZFNhdmU6OmRpc2NvdmVyaWVzIChsaW5lIDkwKSAtIGNvbXBpbGUgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy92YWxpZGF0ZWQucnMgLSB2YWxpZGF0ZWQ6OlZhbGlkYXRlZFNhdmU6OnBsYXllcl9zdGF0ZSAobGluZSA1NikgLSBjb21waWxlIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvdmFsaWRhdGVkLnJzIC0gdmFsaWRhdGVkOjpWYWxpZGF0ZWRTYXZlOjpyb290IChsaW5lIDQzKSAtIGNvbXBpbGUgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy92YWxpZGF0ZWQucnMgLSB2YWxpZGF0ZWQ6OnBhcnNlX3ZhbGlkYXRlZF9zYXZlIChsaW5lIDE0NSkgLSBjb21waWxlIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvdmFsaWRhdGVkLnJzIC0gdmFsaWRhdGVkOjpwYXJzZV92YWxpZGF0ZWRfc2F2ZV9maWxlIChsaW5lIDE3NCkgLSBjb21waWxlIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvbWFwcGluZy5ycyAtIG1hcHBpbmc6OktleU1hcHBpbmc6OmJ1bmRsZWQgKGxpbmUgNjUpIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvbWV0YWRhdGEucnMgLSBtZXRhZGF0YTo6dmVyaWZ5X3NoYTI1NiAobGluZSAzMDIpIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMvbWV0YWRhdGEucnMgLSBtZXRhZGF0YTo6U3RvcmFnZVNsb3Q6OmlzX2FjY291bnQgKGxpbmUgMTU4KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL21ldGFkYXRhLnJzIC0gbWV0YWRhdGE6OnJlYWRfbWV0YWRhdGEgKGxpbmUgMjExKSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL21vZGVsLnJzIC0gbW9kZWw6OlBhY2tlZEdhbGFjdGljQWRkcmVzcyAobGluZSAxODMpIC4uLiBvawp0ZXN0IGNyYXRlcy9ubXMtc2F2ZS9zcmMveHh0ZWEucnMgLSB4eHRlYTo6ZGVyaXZlX2tleSAobGluZSA0OCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy9tb2RlbC5ycyAtIG1vZGVsOjpHYWxhY3RpY0FkZHJlc3NPYmplY3Q6OnRvX2dhbGFjdGljX2FkZHJlc3MgKGxpbmUgMTQ0KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL21ldGFkYXRhLnJzIC0gbWV0YWRhdGE6OnJlYWRfbWV0YWRhdGEgKGxpbmUgMjI0KSAuLi4gb2sKdGVzdCBjcmF0ZXMvbm1zLXNhdmUvc3JjL21hcHBpbmcucnMgLSBtYXBwaW5nOjpkZW9iZnVzY2F0ZV9qc29uIChsaW5lIDIzOCkgLi4uIG9rCnRlc3QgY3JhdGVzL25tcy1zYXZlL3NyYy94eHRlYS5ycyAtIHh4dGVhOjp4eHRlYV9lbmNyeXB0IChsaW5lIDEzMCkgLi4uIG9rCgp0ZXN0IHJlc3VsdDogb2suIDM3IHBhc3NlZDsgMCBmYWlsZWQ7IDAgaWdub3JlZDsgMCBtZWFzdXJlZDsgMCBmaWx0ZXJlZCBvdXQ7IGZpbmlzaGVkIGluIDAuMDJzCgphbGwgZG9jdGVzdHMgcmFuIGluIDAuNjJzOyBtZXJnZWQgZG9jdGVzdHMgY29tcGlsYXRpb24gdG9vayAwLjQxcwo=",
+        "bytes": 11705,
+        "sha256": "be7fc6c622c9d4a88e602daabf1597b1adaac7afb59fbb207202ae23b1e167a0"
+      },
+      "stderr": {
+        "base64": "ICAgQ29tcGlsaW5nIGxpYmMgdjAuMi4xODIKICAgQ29tcGlsaW5nIHNlcmRlX2NvcmUgdjEuMC4yMjgKICAgQ29tcGlsaW5nIHNlcmRlIHYxLjAuMjI4CiAgIENvbXBpbGluZyBjb3JlLWZvdW5kYXRpb24tc3lzIHYwLjguNwogICBDb21waWxpbmcgcHJvYy1tYWNybzIgdjEuMC4xMDYKICAgQ29tcGlsaW5nIHF1b3RlIHYxLjAuNDUKICAgQ29tcGlsaW5nIG51bS10cmFpdHMgdjAuMi4xOQogICBDb21waWxpbmcgY2ZnLWlmIHYxLjAuNAogICBDb21waWxpbmcgdHlwZW51bSB2MS4xOS4wCiAgIENvbXBpbGluZyBydXN0aXggdjEuMS40CiAgIENvbXBpbGluZyBvcHRpb24tZXh0IHYwLjIuMAogICBDb21waWxpbmcgZ2V0cmFuZG9tIHYwLjQuMgogICBDb21waWxpbmcgaWFuYS10aW1lLXpvbmUgdjAuMS42NQogICBDb21waWxpbmcgc2VyZGVfanNvbiB2MS4wLjE0OQogICBDb21waWxpbmcgZ2VuZXJpYy1hcnJheSB2MC4xNC43CiAgIENvbXBpbGluZyB6bWlqIHYxLjAuMjEKICAgQ29tcGlsaW5nIG1lbWNociB2Mi44LjAKICAgQ29tcGlsaW5nIGl0b2EgdjEuMC4xNwogICBDb21waWxpbmcgdHdveC1oYXNoIHYyLjEuMgogICBDb21waWxpbmcgYmxvY2stYnVmZmVyIHYwLjEwLjQKICAgQ29tcGlsaW5nIGNyeXB0by1jb21tb24gdjAuMS43CiAgIENvbXBpbGluZyBiaXRmbGFncyB2Mi4xMS4wCiAgIENvbXBpbGluZyBkaWdlc3QgdjAuMTAuNwogICBDb21waWxpbmcgbHo0X2ZsZXggdjAuMTEuNgogICBDb21waWxpbmcgZmFzdHJhbmQgdjIuMy4wCiAgIENvbXBpbGluZyBvbmNlX2NlbGwgdjEuMjEuMwogICBDb21waWxpbmcgc3luIHYyLjAuMTE3CiAgIENvbXBpbGluZyBkaXJzLXN5cyB2MC41LjAKICAgQ29tcGlsaW5nIGVycm5vIHYwLjMuMTQKICAgQ29tcGlsaW5nIGNwdWZlYXR1cmVzIHYwLjIuMTcKICAgQ29tcGlsaW5nIHNoYTIgdjAuMTAuOQogICBDb21waWxpbmcgZGlycyB2Ni4wLjAKICAgQ29tcGlsaW5nIHNlcmRlX2Rlcml2ZSB2MS4wLjIyOAogICBDb21waWxpbmcgdGhpc2Vycm9yLWltcGwgdjIuMC4xOAogICBDb21waWxpbmcgdGVtcGZpbGUgdjMuMjYuMAogICBDb21waWxpbmcgdGhpc2Vycm9yIHYyLjAuMTgKICAgQ29tcGlsaW5nIGNocm9ubyB2MC40LjQ0CiAgIENvbXBpbGluZyBubXMtY29yZSB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vY3JhdGVzL25tcy1jb3JlKQogICBDb21waWxpbmcgbm1zLXNhdmUgdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy9zYXZlLWFwaS1kb2N1bWVudGF0aW9uL2NyYXRlcy9ubXMtc2F2ZSkKICAgIEZpbmlzaGVkIGB0ZXN0YCBwcm9maWxlIFt1bm9wdGltaXplZCArIGRlYnVnaW5mb10gdGFyZ2V0KHMpIGluIDYuMzZzCiAgICAgUnVubmluZyB1bml0dGVzdHMgc3JjL2xpYi5ycyAodGFyZ2V0L2RlYnVnL2RlcHMvbm1zX3NhdmUtYjM1MWM5ZmEyMTljNTg4NikKICAgICBSdW5uaW5nIHRlc3RzL2FkZHJlc3NfZGVjb2RlLnJzICh0YXJnZXQvZGVidWcvZGVwcy9hZGRyZXNzX2RlY29kZS00NjIyYjdjOGZiOTIwZDljKQogICAgIFJ1bm5pbmcgdGVzdHMvdmFsaWRhdGVkX3NhdmUucnMgKHRhcmdldC9kZWJ1Zy9kZXBzL3ZhbGlkYXRlZF9zYXZlLTgwZmFlMGM4OTA3MDhhZDUpCiAgIERvYy10ZXN0cyBubXNfc2F2ZQo=",
+        "bytes": 1709,
+        "sha256": "d052814d81d5df04c1277c80eded77b16840d3a37aa7b798fc77bbf8fc34cf39"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "2c2c9606b93540b5865f5c9628af2439",
+      "label": "slice31-rustdoc-strict",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-save",
+        "--all-features",
+        "--no-deps",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:21:54.325087+00:00",
+      "ended_utc": "2026-10-25T03:21:56.903932+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "ICAgIENoZWNraW5nIHNlcmRlX2NvcmUgdjEuMC4yMjgKICAgIENoZWNraW5nIGxpYmMgdjAuMi4xODIKICAgIENoZWNraW5nIG51bS10cmFpdHMgdjAuMi4xOQogICAgQ2hlY2tpbmcgbWVtY2hyIHYyLjguMAogICAgQ2hlY2tpbmcgdGhpc2Vycm9yIHYyLjAuMTgKICAgIENoZWNraW5nIGNwdWZlYXR1cmVzIHYwLjIuMTcKICAgIENoZWNraW5nIGRpcnMtc3lzIHYwLjUuMAogICAgQ2hlY2tpbmcgc2hhMiB2MC4xMC45CiAgICBDaGVja2luZyBkaXJzIHY2LjAuMAogICAgQ2hlY2tpbmcgc2VyZGUgdjEuMC4yMjgKICAgIENoZWNraW5nIHNlcmRlX2pzb24gdjEuMC4xNDkKICAgIENoZWNraW5nIGNocm9ubyB2MC40LjQ0CiAgICBDaGVja2luZyBubXMtY29yZSB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vY3JhdGVzL25tcy1jb3JlKQogRG9jdW1lbnRpbmcgbm1zLXNhdmUgdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy9zYXZlLWFwaS1kb2N1bWVudGF0aW9uL2NyYXRlcy9ubXMtc2F2ZSkKICAgIEZpbmlzaGVkIGBkZXZgIHByb2ZpbGUgW3Vub3B0aW1pemVkICsgZGVidWdpbmZvXSB0YXJnZXQocykgaW4gMi40NHMKICAgR2VuZXJhdGVkIC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3NhdmUtYXBpLWRvY3VtZW50YXRpb24vdGFyZ2V0L2RvYy9ubXNfc2F2ZS9pbmRleC5odG1sCg==",
+        "bytes": 775,
+        "sha256": "56e2f485e86def16b24343e5aa4a4d33acf961151cddb284ee482225cef0e792"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "eb5b9e0f427749279a8c1b1bf5f17a21",
+      "label": "slice31-scope-audit",
+      "kind": "source preservation and opposed mutation validator",
+      "argv": [
+        "python3",
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/artifacts/nms-slice31-scope-audit-template.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:21:59.163247+00:00",
+      "ended_utc": "2026-10-25T03:21:59.601974+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "eyJzb3VyY2UiOiAiL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvc2F2ZS1hcGktZG9jdW1lbnRhdGlvbiIsICJiYXNlbGluZSI6ICI0MGU2YmM4ZjJiMjY2MDYzOTM5MzFhMjMyZTYwNGNlMGU2ZjM4ZTg2IiwgImhlYWQiOiAiNDBlNmJjOGYyYjI2NjA2MzkzOTMxYTIzMmU2MDRjZTBlNmYzOGU4NiIsICJjaGFuZ2VkX3BhdGhzIjogWyJjcmF0ZXMvbm1zLXNhdmUvc3JjL2FkZHJlc3MucnMiLCAiY3JhdGVzL25tcy1zYXZlL3NyYy9jb252ZXJ0LnJzIiwgImNyYXRlcy9ubXMtc2F2ZS9zcmMvZGVjb21wcmVzcy5ycyIsICJjcmF0ZXMvbm1zLXNhdmUvc3JjL2Vycm9yLnJzIiwgImNyYXRlcy9ubXMtc2F2ZS9zcmMvbGliLnJzIiwgImNyYXRlcy9ubXMtc2F2ZS9zcmMvbG9jYXRlLnJzIiwgImNyYXRlcy9ubXMtc2F2ZS9zcmMvbWFwcGluZy5ycyIsICJjcmF0ZXMvbm1zLXNhdmUvc3JjL21ldGFkYXRhLnJzIiwgImNyYXRlcy9ubXMtc2F2ZS9zcmMvbW9kZWwucnMiLCAiY3JhdGVzL25tcy1zYXZlL3NyYy92YWxpZGF0ZWQucnMiLCAiY3JhdGVzL25tcy1zYXZlL3NyYy94eHRlYS5ycyJdLCAiYWxsXzExX29yZGVyZWRfbm9uX2RvY19jb21wYXJpc29ucyI6IHRydWUsICJwZXJtaXR0ZWRfbmFtZWRfbGF5b3V0X3NpdGVzIjogMTcsICJvcHBvc2VkX2luX21lbW9yeV9leGVjdXRhYmxlX211dGF0aW9uX3JlamVjdGVkIjogdHJ1ZSwgImRpZmZfc2hhMjU2IjogImE5MDRkZjMwMjgxYWY2MzcyYjExMmU3NTU3ZGNlOWFkOWU2ZTI4MTU2YzEwYzBiN2U0OTdhYjBjMjFjYTU2YTUifQo=",
+        "bytes": 800,
+        "sha256": "017e01708d6a6a763571d4a90937f16367b931b247a68b287f7a0ad1b97c061c"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "90f5f5dd88dd4d8fa2238ddb85d6a815",
+      "label": "slice31-working-diff-check",
+      "kind": "working-tree whitespace gate",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:22:01.643816+00:00",
+      "ended_utc": "2026-10-25T03:22:01.782919+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    },
+    {
+      "id": "ed51593803984aadb01680fdb5c45ab4",
+      "label": "slice31-baseline-diff-check",
+      "kind": "full-baseline whitespace gate",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "40e6bc8f2b26606393931a232e604ce0e6f38e86"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "started_utc": "2026-10-25T03:22:03.779736+00:00",
+      "ended_utc": "2026-10-25T03:22:03.919342+00:00",
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "exit_code": 0,
+      "stdout": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "base64": "",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      },
+      "after": {
+        "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "status": " M crates/nms-save/src/address.rs\n M crates/nms-save/src/convert.rs\n M crates/nms-save/src/decompress.rs\n M crates/nms-save/src/error.rs\n M crates/nms-save/src/lib.rs\n M crates/nms-save/src/locate.rs\n M crates/nms-save/src/mapping.rs\n M crates/nms-save/src/metadata.rs\n M crates/nms-save/src/model.rs\n M crates/nms-save/src/validated.rs\n M crates/nms-save/src/xxtea.rs\n",
+        "working_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+        "untracked_files": {},
+        "working_identity_sha256": "8b52eb8e458d442767285182305bcb7bccb0fa50ff292e3443704ff021b2b7b4"
+      }
+    }
+  ],
+  "main_fence": {
+    "head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+    "index_empty": true,
+    "porcelain_nul": " M crates/nms-copilot/tests/mcp_live_integration.rs\\0",
+    "known_preexisting_test_git_oid": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e",
+    "core_lib_git_oid": "affe7713497d7ead37551ebb5942df9f78c0a4a2"
+  },
+  "no_owned_process": true,
+  "no_tests_or_docs_gates_before_cdc_release": true,
+  "all_current_groups_exit_zero": true,
+  "commit": {
+    "original_local_commit": "1bb692f1fc16b221bf079ec5f7ee224d1d9f7939",
+    "final_commit": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+    "parent": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+    "tree": "c86d627a519c5f78a8403e4b4d86faab5f9df5e8",
+    "final_status_clean": true,
+    "baseline_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+    "parsed_trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "each_once_and_consecutive": true,
+    "original_message_trailer_parse_defect": "Original commit had blank line between trailers; only Billo parsed. Final amended message repairs this, preserving tree.",
+    "backup_ref": "codex/slice31-before-trailer-repair-20261025",
+    "backup_ref_target": "1bb692f1fc16b221bf079ec5f7ee224d1d9f7939",
+    "old_to_final_diff_bytes": 0,
+    "final_tree_unchanged": "c86d627a519c5f78a8403e4b4d86faab5f9df5e8",
+    "hook_execution": {
+      "first_commit_command_disabled_hooks": true,
+      "first_commit_reason": "unauthorized bypass choice; disclosed, not treated as validation",
+      "normal_amend_configured_core_hooks_path": null,
+      "hooks_directory_active_scripts": [],
+      "normal_amend_hook_output": "none observed",
+      "hook_effect": "none evidenced; no active hooks installed",
+      "status_only_override_later": "one unnecessary read-only status command also used core.hooksPath=/dev/null; no commit/gate/state change"
+    }
+  },
+  "test_counts": {
+    "unit": 105,
+    "address_integration": 8,
+    "validated_save_integration": 17,
+    "doctest_total": 37,
+    "doctest_executed": 28,
+    "doctest_compile_only_existing_no_run": 9
+  }
+}

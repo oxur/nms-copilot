@@ -324,6 +324,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S31 | Complete truthful save API docs and meaningful runnable key examples | SixSD rows/full eleven-file worksheet/strictsave/unit+integration+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | open | [Slice31 plan](slice31-save-api-documentation/slice-plan.md) | FullM7.6/planned32–33 and all higher obligations remain open |
+| R06-S31 | Complete truthful save API docs and meaningful runnable key examples | SixSD rows/full eleven-file worksheet/strictsave/unit+integration+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | done | [CDC31 acceptance](slice31-save-api-documentation/cdc-verification.md) — reproduced | FullM7.6/planned32–33 and all higher obligations remain open |
 
 49rows35done14open/project25open; all48priorrows preserved. Initial0actualrefinements, no sourceimplementation/acceptance atissue.
+
+2026-10-25 formal31close: all6SD/R06-S31DONE onb60e; originalsevenindependentgroups/130runtime+37docs/strictsavezero/noexception.49arc36done13open/project25open; fullM7.6/planned32–33 and higher owners unchanged.

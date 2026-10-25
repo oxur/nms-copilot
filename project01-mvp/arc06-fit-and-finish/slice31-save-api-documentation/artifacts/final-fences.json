@@ -1,0 +1,282 @@
+{
+  "utc": "2026-10-25T03:27:19.748337+00:00",
+  "worktrees": [
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot",
+        "HEAD b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+        "branch refs/heads/main"
+      ],
+      "status": " M crates/nms-copilot/tests/mcp_live_integration.rs\n"
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+        "HEAD a101bd44b277f06c75ed7260b470b31cd5510130",
+        "branch refs/heads/codex/cache-player-state-integrity"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+        "HEAD decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+        "branch refs/heads/codex/cache-semantic-compatibility"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+        "HEAD b290ea312f937617546fe7ebab464de786a0dd37",
+        "branch refs/heads/codex/checked-save-integration"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract",
+        "HEAD be4145b631405ff19c3e403457ecaa581afe805f",
+        "branch refs/heads/codex/community-import-contract"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/complete-live-save-updates",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/complete-live-save-updates",
+        "HEAD 11cf7e6a8e2a7549a223880820c0bf4543381459",
+        "branch refs/heads/codex/complete-live-save-updates"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+        "HEAD 2f2814c780f5022dea3bc1643d99828ba679e8d0",
+        "branch refs/heads/codex/discovery-name-integration"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+        "HEAD 753bb3a9a01451e57fff34262acd4ab194d99341",
+        "branch refs/heads/codex/discovery-name-observations"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+        "HEAD cd38d7e1603b957f862b75c23b60ed5bc713bcf0",
+        "branch refs/heads/codex/export-contract"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+        "HEAD f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+        "branch refs/heads/codex/galaxy-qualified-identity"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+        "HEAD 7118a486ea43a776aa2451ec0807d43384fb954f",
+        "branch refs/heads/codex/galaxy-scoped-queries"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+        "HEAD e615f25419cc68e367c07eda6ef73d26c4e4839c",
+        "branch refs/heads/codex/galaxy-scoped-repl"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+        "HEAD f71d607e27e18d7266855a2708449f9d6b90c632",
+        "branch refs/heads/codex/galaxy-scoped-routing"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-session",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-session",
+        "HEAD e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+        "branch refs/heads/codex/galaxy-scoped-session"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup",
+        "HEAD 130034e8a6f2e77605058620fea2fb0cae43c608",
+        "branch refs/heads/codex/headless-cache-startup"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+        "HEAD e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+        "branch refs/heads/codex/headless-live-cache"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+        "HEAD 239313cc109ca908f43f34ae5e04ba7e5487161f",
+        "branch refs/heads/codex/mcp-live-watch"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-watch-settings",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-watch-settings",
+        "HEAD 16c078725492744db22bae837d87c89489a6add5",
+        "branch refs/heads/codex/mcp-watch-settings"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/multi-galaxy-composition",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/multi-galaxy-composition",
+        "HEAD 063c8c658fb07ae04acca7ae2d7a7971c4f85688",
+        "branch refs/heads/codex/multi-galaxy-composition"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/placeholder-cache",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/placeholder-cache",
+        "HEAD e592ecf061407cf13a40478c4d05bd78e4dd007f",
+        "branch refs/heads/codex/placeholder-cache"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+        "HEAD 7beeae4479b5922321033d313f53491703841d65",
+        "branch refs/heads/planning"
+      ],
+      "status": " M project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/execution.md\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/artifacts/cc-attempts.json\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/artifacts/cdc-attempts.json\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/artifacts/return-transfer.json\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-closing-report.md\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-execution.md\n?? project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-validation.json\n"
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/pr-stack-ci",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/pr-stack-ci",
+        "HEAD 03e8d04b11d1899f2d66cdca3f26763c406dd275",
+        "branch refs/heads/codex/pr-14-headless-cache-startup"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+        "HEAD 40e6bc8f2b26606393931a232e604ce0e6f38e86",
+        "branch refs/heads/codex/public-api-documentation"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+        "HEAD 61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+        "branch refs/heads/codex/repl-live-cache"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+        "HEAD 0b37d8b41222b8e4a084c088246f777490575756",
+        "branch refs/heads/codex/save-address-decoder"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+        "HEAD b60e720a1ba3095e403ab706efab7fc0d11469ed",
+        "branch refs/heads/codex/save-api-documentation"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-slot-contract",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-slot-contract",
+        "HEAD bfa2b3710269b8110a858227ad79202ffdd1d513",
+        "branch refs/heads/codex/save-slot-contract"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/shell-completions",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/shell-completions",
+        "HEAD 03b6536636f00a74a52f2d783a9ef80a671d191e",
+        "branch refs/heads/codex/shell-completions"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+        "HEAD 4cb745b7190e7463663a0ead29f169060e36dc05",
+        "branch refs/heads/codex/unknown-system-lifecycle"
+      ],
+      "status": ""
+    },
+    {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "inventory": [
+        "worktree /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+        "HEAD 4a935408460349e9aa64fecd570d9960094191b1",
+        "branch refs/heads/codex/user-documentation-contract"
+      ],
+      "status": ""
+    }
+  ],
+  "source_tree": "c86d627a519c5f78a8403e4b4d86faab5f9df5e8",
+  "source_parent": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+  "source_baseline_diff_sha256": "a904df30281af6372b112e7557dce9ad9e6e28156c10c0b7e497ab0c21ca56a5",
+  "source_parsed_trailers": "Co-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n\n",
+  "main_native_working_git_oid": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e",
+  "main_corelib_working_git_oid": "affe7713497d7ead37551ebb5942df9f78c0a4a2",
+  "preserved_pre_trailer_commit": "1bb692f1fc16b221bf079ec5f7ee224d1d9f7939"
+}

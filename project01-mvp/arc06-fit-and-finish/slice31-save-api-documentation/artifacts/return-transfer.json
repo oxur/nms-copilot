@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-25T03:27:19.019098+00:00",
+  "mapping": [
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation/workbench/slice31-return/execution.md",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-execution.md",
+      "bytes": 47763,
+      "sha256": "87e95da7fa17aed628f501dfba6fad2ac73ea2577194f7be12dc487758290c23"
+    },
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation/workbench/slice31-return/validation.json",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-validation.json",
+      "bytes": 56719,
+      "sha256": "dbc131346063a0e6711be4b8e247f01c970aa2b8caefef1bc471ec483b360a60"
+    },
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation/workbench/slice31-return/closing-report.md",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice31-save-api-documentation/cc-closing-report.md",
+      "bytes": 5320,
+      "sha256": "f46c3d920a82410ea92124ea5e88686bcbc20262753931f25f0dad6462acf50a"
+    }
+  ],
+  "original_six_cc_json_values_preserved": true,
+  "context1_execution_exact_byte_prefix": true,
+  "current_cc_validation_first_version": true
+}

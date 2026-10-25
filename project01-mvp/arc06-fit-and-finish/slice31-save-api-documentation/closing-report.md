@@ -1,0 +1,7 @@
+# Slice31 accepted closeout
+
+2026-10-25 UTC. All six SD rows and R06-S31 independently DONE at source b60e720a1ba3095e403ab706efab7fc0d11469ed, clean tree c86d627a519c5f78a8403e4b4d86faab5f9df5e8. Seven current independent groups passed:130 runtime tests,37 doctests (28 executed/9 compile-only), strict save docs, source preservation/opposed mutation, format/lint and complete working/baseline diffs. See cdc-verification.md and exact raw artifacts. Two actual refinements, same approved model/context replacement without budget reset, no new exception.
+
+The full nms-save public surface now documents real source/error/omission/panic semantics and meaningful checked/legacy/mapping/metadata/isolated locator examples. No executable/API/test/data/dependency behavior changed. Source-derived32-bit malformed-input panic remains a separately owned platform/final-reconciliation limit. All construction, metadata, hook-override and report qualifications are retained; original pre-trailer commit1bb and currentb60e share exactly the same tree.
+
+Arc49rows36done13open; project25open. FullM7.6 remains open with planned32graph/query and33remaining API/full reconciliation, CDC owners and further bounded decomposition permitted. Original game/input/history/cache/final semantic/coverage/distribution/UI/parent/Operator/integration/release gates survive. Next action is source-grounded remaining API planning under existing Arc06-only authority. No process or integration/release action remains in this slice.
