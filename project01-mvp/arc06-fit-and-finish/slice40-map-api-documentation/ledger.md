@@ -10,3 +10,5 @@
 | MP-04 | All non-doc/API/tests/dependencies/otherpaths/layouts preserved | Fourorderedcomparisons/opposedrealextent/diffs | correctness-grade | open | Supportcontrols only at issue |
 | MP-05 | Attributable original nine groups/exact scoped clean commit/fences | Fullrawfirst/fourpaths/trailers/ownership | correctness-grade | open | Initialsupport records only |
 | MP-06 | Independent acceptance/retrospective/bottom-up/alloriginalowners retained | CDCninegroups/6rowwalk/3bubbleups | correctness-grade | open | Required41/fullM7.6/authenticinput/higherowners OPEN |
+
+2026-10-25 current: all6MP OPEN; FIRST actual refinement1/5/fourleft/currentimmutable01. Verified initialformat5eceeb51/lintdeac9d72 both0/fullraw/equalidentityc7cfc502/diff269666ec; fullinitialwalk closed F1–F3 static docs findings. Sound E1/E2/E3/E4 literals frozen, no runtime failure/credit, no production/helper/layout/scope change. Author W3/W4 shorthand qualifications retained explicitly in01.
