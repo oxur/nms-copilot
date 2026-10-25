@@ -62,7 +62,6 @@ use state::MapState;
 /// # Panics
 ///
 /// A panic in map processing unwinds without normal terminal teardown. See
-/// [`render::render`] for UTF-8 clipping and
 /// [`state::MapState::move_cursor`] for its numeric limit.
 pub fn run_map(model: &GalaxyModel, session: &SessionState) -> io::Result<()> {
     // Setup terminal
