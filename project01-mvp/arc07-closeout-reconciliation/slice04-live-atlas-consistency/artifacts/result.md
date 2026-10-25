@@ -31,4 +31,4 @@ The owned PTY/MCP run initialized the loopback server, listed `where_am_i`, read
 
 AT-03 stays open. The workspace `make test` population is still 247/7, and this CC candidate does not attest full workspace success or terminal restoration. The independent native replay and final full-workspace gate belong to Arc07's later acceptance work. No threshold or population was narrowed.
 
-Source candidate commit: `8f10d4cbe04f7d781667cc4e37280c333a67ee8d` (`fix: reconcile live atlas graph and map snapshots`). Planning record commit: to be filled after the exact-path commit. Acceptance remains CDC-owned.
+Source candidate commit: `8f10d4cbe04f7d781667cc4e37280c333a67ee8d` (`fix: reconcile live atlas graph and map snapshots`). Initial planning evidence commit: `d1514db4aaff9492b97292b74be1ca1384779a42` (`docs: record slice04 candidate evidence`). Acceptance remains CDC-owned.

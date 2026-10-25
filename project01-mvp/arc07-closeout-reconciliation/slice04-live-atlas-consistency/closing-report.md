@@ -30,4 +30,4 @@ Native map-open evidence proves that a save update became visible through the li
 - AT-02: **proposed done**, pending CDC's source and oracle review.
 - AT-03: **open**, because the workspace gate is not green and independent native exit/terminal restoration is still required.
 
-No self-acceptance is asserted. Source candidate commit: `8f10d4cbe04f7d781667cc4e37280c333a67ee8d`. The planning-record commit is recorded in `artifacts/result.md` after commit. Ownership is returned to CDC for independent disposition. The project-level native-candidate/full-workspace success claim remains open for Arc07's final gate.
+No self-acceptance is asserted. Source candidate commit: `8f10d4cbe04f7d781667cc4e37280c333a67ee8d`. Initial planning evidence commit: `d1514db4aaff9492b97292b74be1ca1384779a42`; the follow-up record will name that hash. Ownership is returned to CDC for independent disposition. The project-level native-candidate/full-workspace success claim remains open for Arc07's final gate.
