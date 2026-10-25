@@ -25,3 +25,4 @@ Author readiness: inspected actual map/mod production guard/loop, render product
 ## Assignment history
 
 - Initial `cc-prompt.md`,2026-10-25, issued; current assignment. Sourcefb2ecebb; predecessor none; zero refinements.
+- `cc-continuation-01.md`,2026-10-25: parent-directed serial fresh same-model continuation after compaction; old CC interrupted before handoff. Five inherited source paths and both actual baseline attempts preserved. Same initial assignment/five-refinement budget; no formal refinement issued or reset. Continuation supersedes only the writer identity/readiness state, not scope or original proof.
