@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.5. Created: 2026-10-25. Status: first three slices independently accepted; execution AND further planning paused for Duncan’s discussion. Arc remains open.
+Version: 1.6. Created: 2026-10-25. Status: initial three accepted; behavior decisions adopted; remaining-obligation table awaits Duncan. Execution and Slice04+ planning remain held. Arc remains open.
 
 ## Purpose and authority
 
@@ -138,6 +138,63 @@ explicit authority, then sketch only the remaining agreed cleanup slices in this
 same arc. Project01 closes only after that cleanup and its applicable final gates;
 neither this initial plan nor the recommendation report declares closure.
 
+## Adopted decisions and remaining-obligation gate — 2026-10-25
+
+After the initial handoff Duncan said “Agreed! Proceed! :-D” to the concrete
+recommendations. The following decisions are adopted; the earlier three-slice
+endpoint and its records remain historical facts:
+
+- Use a fixed map snapshot and release the shared model read guard before modal
+  interaction, allowing coordinator/cache/MCP progress. Live map refresh is later
+  work, outside this correction.
+- Preserve the original graph-consistency promise. Compare incremental state
+  with a full rebuild through real consumers; if they differ, apply the smallest
+  necessary repair. No routing redesign is selected.
+- Keep the reviewed correctness layers, useful docs and discriminating oracles;
+  simplify only duplicated test mechanics. Remove only the known stray main
+  helper, preserving the committed/called candidate version. Drop old Arc06
+  Slice49’s execution contract while preserving its draft bytes/history and
+  every unresolved parent obligation.
+
+**The next gate is this table’s disposition, before any remaining scope or
+Slice04+ sketches/prompts.** Root promised the concrete finish/defer table before
+resuming execution. Agreement with behavior recommendations does not approve a
+specific deferral, numeric-target amendment, external action or an old backlog.
+This follow-up authorizes only this additive plan record/table; no source work,
+CC dispatch, tests/native reruns, install, rebase, push, merge or publishing.
+
+Preflight for this record: planning began at `517fcb6919a10a4f2096527149eb2bd23ae64f8d`;
+source remains clean `fb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc`; main is
+`b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc` with protected helper blob
+`2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e`. Old49 remains untracked/unissued.
+No new inquiry was undertaken. The table reuses the accepted
+[49-entry inventory](slice02-work-inventory/artifacts/work-inventory.md),
+[decision report](slice03-decision-report/artifacts/decision-report.md),
+[Project01 criteria](../ledger.md), and [Arc06 criteria](../arc06-fit-and-finish/ledger.md).
+All 26 project criteria and 12 Arc06 criteria retain their open dispositions.
+
+“Finish” below is a recommendation for the subsequent approved scope, not work
+issued now. **Both proposed deferrals require Duncan’s explicit adoption** with
+the affected clauses recorded; until then those obligations remain open.
+
+| Existing obligation | Owning rows | Recommendation and concrete remaining work | Boundary / owner and re-entry |
+|---|---|---|---|
+| Correctness and live composition | P01-C01–C05, R01–R03; R06-R01–R03, C-06 | **Finish before closure.** Implement the adopted snapshot/graph corrections; reconcile final address/name/galaxy, cache semantic/freshness/history and shared CLI/REPL/MCP behavior using accepted proof plus affected real-consumer checks. Correct atlas identity and current data are the product’s purpose. | CDC owns reconciliation. Missing genuine/game-backed/nonzero input is an explicit input/decision stop; synthetic proof does not silently replace it. No broader redesign or automatic new investigation. |
+| Authentic NomNom format acceptance | M7.5; P01-A06, C07 | **Proposed deferral of only NomNom acceptance while an attributable full-save export is unavailable.** Keep the existing adapter and truthful support limits; do not claim format equivalence from code inspection. | Duncan owns supplying/authorizing the input; CDC owns reopening M7.5 when an attributable export/version is available. Then compare actual format and perform the bounded parser/interface check. |
+| Existing UI promises | D0040–D0043, M7.10; P01-C06, A04, A06 | **Finish bounded reconciliation/verification** of existing banner/configuration, setup/history/completion, themes/table output and map behavior. Reuse native S01 and accepted guard/input/render proof; repair only concrete gaps against original clauses. This establishes usable existing interaction. | CDC owns the original-clause walk. A substantial unimplemented original feature stops for explicit disposition; it does not automatically expand the work. New polish/themes or live map refresh need later scope. No broad “all UI” deferral. |
+| Final tests and coverage | M7.7; P01-G01, G03 | **Finish applicable gates; keep 95% and existing module requirements open.** Record the faithful final workspace denominator and module gaps after authorized changes. Existing result is 24,213/25,836 =93.7180678%. Retain all-command coverage obligations and meaningful regression oracles. | If the final result remains short, **stop for Duncan’s choice**: separately bounded behavior-driven hardening or an explicit criterion amendment. This table commissions neither unbounded hardening nor a lower/excluded denominator. |
+| User/API docs and examples | M7.6 (accepted child scope); P01-G04 | **Finish final-candidate alignment**, strict docs/examples and package links/assets affected by the selected fixes. Reuse accepted S29–44 proof where unchanged; their cost is no reason to discard useful teaching. | CDC owns applicability and changed-contract checks. No wholesale documentation rewrite or replay of every historical capture. |
+| Local package/install readiness | M7.8 readiness clauses; P01-G05 | **Finish before closure.** Supply missing license assets under the already declared terms, inspect archives/dependency order, build from a clean package boundary and smoke an isolated local install. These are concrete distribution-readiness promises. | Future scoped authorization must cover the local install; none is run by this record. Local readiness does not authorize registry publication or a push. |
+| Publication provenance and a new release | M7.8 publication clauses; P01-G06, C07 | **Finish historical version/source/registry provenance; propose deferring new crates.io publication** to a separately authorized release. Distinguish demonstrated historical publication from the current candidate’s readiness; do not infer absence from blocked probes. | Duncan owns the release gate. Re-enter new publication only with a ready candidate, chosen version and explicit external-action authority, including required push/tag/pipeline effects. Deferring that original publication clause needs explicit adoption; readiness alone cannot close it. |
+| Feature, MSRV and platform contract | M7.7; P01-G02, G07 | **Finish existing supported checks**: declared Rust 1.91 and default/all-feature/no-default behavior, plus exact-candidate evidence on declared OS/CI populations. Older default-only CI is insufficient. | CDC owns the matrix; unavailable toolchains/hosts become concrete blockers for Duncan’s choice. A push needed for hosted evidence has a separate external-action gate; this table gives no push/CI-effects permission. No blanket verification deferral. |
+| Original performance promises | P01-G08 | **Finish the two stated measurements**: nearest 10 on 300 systems under 10 ms and cached startup under 100 ms, with toolchain/data/method and actual results. A small direct measurement is sufficient to assess the promises. | CDC owns the bounded measurement. A miss stops for a scoped repair/explicit criterion decision; no benchmark framework or optimization campaign is implied. |
+| Scope reconciliation and final acceptance | P01-A01–A07, C07, G09; C-06 | **Finish the final row/leaf-scope walk and composed candidate demonstration**, retaining applicable accepted evidence, failures and explicit deferrals. Then obtain the prescribed independent and Operator acceptance. | CDC assembles; the existing independent/Operator gates remain separate. Child acceptance and this decision table do not close a project or waive a requirement. |
+
+After Duncan dispositions the table, record the selected finish/defer clauses and
+owners in their existing ledgers, amend only the agreed remaining Arc07 scope,
+then sketch the necessary usable increments. **No Slice04+ directory or prompt is
+created by this follow-up.** Execution remains stopped until that gate is met.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -152,3 +209,5 @@ neither this initial plan nor the recommendation report declares closure.
 - 1.4 (2026-10-25): Slice03 decision report and close returned by CC, all49 mapped and original gates preserved. CDC review pending; no04 or later plan opened. After review, pause for Duncan's discussion.
 
 - 1.5 (2026-10-25): Slice03 recommendations independently accepted; all49 mapped, three results composed into initial handoff and actual stop recorded. No source changes or criterion waivers. Keep/simplify/drop/defer remain recommendations; human joint decisions are required before any later scope or planning. CC metadata/trailer-correction deviation retained in Slice03 review.
+
+- 1.6 (2026-10-25): Recorded Duncan’s adoption of fixed-snapshot map, original graph-consistency/minimal-repair and keep/narrow-cleanup/drop-old49 decisions. Added the requested existing-obligation finish/proposed-deferral/external-gate table; no deferral or numeric waiver adopted and no execution or04+ planning resumed.
