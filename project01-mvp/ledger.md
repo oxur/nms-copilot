@@ -51,3 +51,5 @@ Added by the Operator's explicit scope expansion after Slice04. Original22 rows 
 2026-10-25 Arc06 Slice31 accepted: sixSD/R06-S31done onb60e, seven independent groups/130runtime+37docs/strictsavezero.49arc36done13open; all25projectrows stayOPEN including fullM7.6/G04/planned32–33, platform/finalrepair/Operator gates.
 
 2026-10-25 Arc06 Slice32 accepted: sixGD/R06-S32done on e30e, seven independent groups/186runtime+13docs/strictgraphzero,50arc37done13open; all25projectrows remainOPEN. FullM7.6/required33query+34remaining/fullreconciliation and every higher gate retained.
+
+2026-10-25 Arc06 Slice33 issued: sixQD/R06-S33OPEN, exact8querypaths/11payloadlayouts;51arc37done14open. All25projectcriteria/statuses remainOPEN, fullM7.6/required34 and allhighergates retained; sourceimplementation/acceptance not yet claimed.

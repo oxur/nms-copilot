@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.120, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.121, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1033,3 +1033,9 @@ PriorCCreports compacted/notenoughnext-unitheadroom; freshsole SAMErequested6-lu
 Version1.120 closes all6GD/R06-S32 at local clean e30eb49f77565769c0d6fdb61dbe372f686e77d7. Complete nine-file graph public surface and meaningful literal extraction/query/topology/route/promotion/CSV examples; original seven independent groups pass,186runtime+13doctests(10executed/3compile-only), strictgraphzero/noexception, exactninefile/tenlayout preservation/opposedmutation/diffs. Threeactualrefinements/history/original strict-link red/16CC+7CDC rawrecords and finalretrospective retained. No structural/sequence change; known warp_jump_count uncheckedinput/usizeoverflow limit remains CDC/P01-G07 final reconciliation, documented only.
 
 50arcrows37done13open/project25OPEN. Full original0039M7.6 remains OPEN: required33query,34remaining APIs/fullreconciliation CDC owners, splitfurtherifneeded. M7.5 authenticNomNominput unanswered and every original raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. Mainpre-existingagentaddition/held/externalpins untouched; no integration/release. See [CDC32 acceptance](slice32-graph-api-documentation/cdc-verification.md) and [retrospective](slice32-graph-api-documentation/cdc-retrospective.md).
+
+## Slice33 complete query API owner issued — 2026-10-25 UTC
+
+Version1.121 details [Slice33](slice33-query-api-documentation/slice-plan.md), eightquerysourcefiles/Rustdoc+eleven namedtuplepayloadlayouts, sixOPEN QDrows. Dedicatedcodex/query-api-documentation cleanaccepted e30e, sameCDC6.1-solHigh/soleCC6-lunaHigh; priorCC reportscompacted32historybutsufficientqualitativeheadroomforselfcontainedintake/noownedprocess. Complete publicproduction/caller/error/display/fixture worksheet resolved; allGGstats/ignoredflags, source-vs-selectedGG/validationorder, storedPportalhex andbackendpalettelimits truthful. Staticbyte-truncationUTF8panic remains originalM7.10/P01-G07finalreconciliationowner, no runtimefix/newinvalidscenario. CapturekernelstwoactualNULbinary7/0controls verified beforefirstcompilerdiagnostic; initial0actualrefinements.
+
+51arcrows37done14open/project25open. FulloriginalM7.6 staysOPEN for current33query and required34remainingAPIs/full0039reconciliation, splitfurtherifneeded; no originalcriterion/drop/nextowneracceptance. AuthenticM7.5input unanswered and all raw/history/game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release obligations retained. Mainknownpre-existingagentaddition/held/externalpins protected. No implementation/acceptance claim atissue.

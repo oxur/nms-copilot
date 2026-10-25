@@ -1,0 +1,34 @@
+{
+  "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation",
+  "baseline": "e30eb49f77565769c0d6fdb61dbe372f686e77d7",
+  "paths": [
+    "crates/nms-query/src/display.rs",
+    "crates/nms-query/src/find.rs",
+    "crates/nms-query/src/lib.rs",
+    "crates/nms-query/src/route.rs",
+    "crates/nms-query/src/show.rs",
+    "crates/nms-query/src/stats.rs",
+    "crates/nms-query/src/table.rs",
+    "crates/nms-query/src/theme.rs"
+  ],
+  "permitted_existing_payload_layouts": {
+    "crates/nms-query/src/find.rs": [
+      "Base(String),",
+      "Address(GalacticAddress),"
+    ],
+    "crates/nms-query/src/route.rs": [
+      "Biome(BiomeFilter),",
+      "Named(Vec<String>),",
+      "SystemIds(Vec<SystemId>),",
+      "Base(String),",
+      "Address(GalacticAddress),"
+    ],
+    "crates/nms-query/src/show.rs": [
+      "System(String),",
+      "Base(String),",
+      "System(ShowSystemResult),",
+      "Base(ShowBaseResult),"
+    ]
+  },
+  "rule": "Whole-line Rustdoc/blanklines only; exact eleven named tuple payload layouts/trailing commas only; all ordered other bytes frozen."
+}

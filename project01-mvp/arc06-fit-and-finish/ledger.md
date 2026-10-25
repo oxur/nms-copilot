@@ -339,3 +339,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 50arcrows36done14open/project25open, all49priorrows/criteria/dispositions retained. Initial0actualrefinements, no sourceimplementation/acceptance atissue.
 
 2026-10-25 formal32close: all6GD/R06-S32DONE at e30e, seven independent groups/186runtime+13docs/strictgraphzero/preservation+opposedmutation/diffs.50arc37done13open/project25open; fullM7.6/required33query+34remaining and all higher owners stayOPEN.
+
+## Slice33 complete query API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S33 | Complete truthful query public API docs and meaningful runnable examples | SixQD/full8fileworksheet/strictquery/unit+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | open | [Slice33 plan](slice33-query-api-documentation/slice-plan.md) | FullM7.6/required34remainingAPI/fullreconciliation and allhighergates retained |
+
+51rows37done14open/project25open, all50priorrows/criteria/dispositions retained. Initial0actualrefinements; no productimplementation/acceptance atissue.

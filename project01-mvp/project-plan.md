@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.107
+version: 1.108
 project: project01-mvp
 status: active
 depends-on: []
@@ -1230,3 +1230,7 @@ Version1.106/arc1.119 details next required complete9file graphAPI increment fro
 ## Arc06 Slice32 graph documentation accepted — 2026-10-25 UTC
 
 Version1.107/arc1.120 records all6GD/R06-S32 independently accepted at e30e, seven original groups/186runtime+13docs/strictgraphzero/exactsourcepreservation and finalretrospective.50arc37done13open/all25projectrows OPEN. FulloriginalM7.6 retains required33query/34remaining APIs+fullreconciliation CDC owners; all original input/history/game-backed/platform/coverage/distribution/UI/parent/Operator/integration/release gates remain. Known warp-count input/overflow limitation is documented only, not repaired or platform-proven.
+
+## Arc06 Slice33 query documentation owner — 2026-10-25 UTC
+
+Version1.108/arc1.121 details full8filequery publicAPI increment fromaccepted e30e, sixOPEN QDrows, sameapprovedroles/models/usableCCcontext/noownedprocess. Complete worksheet/independentliteralquery-routing/styleoracles/sourcepreservation/capture controls beforehandoff; no implementationclaim. FullM7.6 current33query/required34remainingAPI+full0039reconciliation remainsOPEN.51arc37done14open/project25open; all original input/raw/history/game-backed/finalsemantic/coverage/platform/UI/distribution/parent/Operator/integration/release gates retained. StaticUnicodebyte-truncationlimit documentedonly, laterexistingowner.
