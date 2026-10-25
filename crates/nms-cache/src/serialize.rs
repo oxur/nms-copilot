@@ -8,6 +8,13 @@
 //! fallback and cache rewriting are handled by [`crate::load_or_rebuild`], not
 //! by the direct decoding functions in this module.
 //!
+//! Checked encoding and decoding validate only that a player state's
+//! `current_reality` equals its `current_address.reality_index`, and that a
+//! marked placeholder is Personal, planet zero, and has no name, discoverer,
+//! timestamp, or planets. Selected galaxy, previous address, and freighter
+//! address remain independent. This is not a general domain, duplicate-key,
+//! or derived-index consistency validator.
+//!
 //! The schema revision describes archive layout, codec, and configuration
 //! compatibility. The semantic revision describes the meaning and identity of
 //! decoded model data. Future address-decoder or galaxy-identity changes must
@@ -21,6 +28,141 @@
 //! semantic 3 predates the application-wide identity boundary. Both
 //! revisions are separate from game save version, crate version, and
 //! `cached_at`.
+//!
+//! # Examples
+//!
+//! This example uses constructed cache data to exercise the checked codec,
+//! model rebuild, and extraction boundaries. It compares complete literal
+//! projections; vector order from hash-map-backed extraction is not promised.
+//!
+//! ```
+//! use chrono::TimeZone;
+//! use nms_cache::data::{CacheData, CachedSystem};
+//! use nms_cache::serialize::{deserialize, serialize};
+//! use nms_cache::{extract_cache_data, rebuild_model};
+//! use nms_core::address::GalacticAddress;
+//! use nms_core::player::{BaseType, PlayerBase, PlayerState};
+//! use nms_core::system::{DiscoverySource, Planet, System, SystemId};
+//!
+//! let community_address = GalacticAddress::new(3, 0, 0, 1, 2, 0);
+//! let empty_address = GalacticAddress::new(3, 0, 0, 1, 0, 7);
+//! let marked_address = GalacticAddress::new(3, 0, 0, 1, 0, 9);
+//! let garden = Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42));
+//! let cache = CacheData {
+//!     systems: vec![
+//!         CachedSystem {
+//!             address: community_address,
+//!             source: DiscoverySource::Community { source: "NMSCE".into() },
+//!             name: Some("Atlas".into()),
+//!             discoverer: Some("Explorer".into()),
+//!             timestamp_secs: Some(1_700_000_000),
+//!             planets: vec![garden.clone()],
+//!             is_player_placeholder: false,
+//!         },
+//!         CachedSystem {
+//!             address: empty_address,
+//!             source: DiscoverySource::Personal,
+//!             name: None,
+//!             discoverer: None,
+//!             timestamp_secs: None,
+//!             planets: vec![],
+//!             is_player_placeholder: false,
+//!         },
+//!         CachedSystem {
+//!             address: marked_address,
+//!             source: DiscoverySource::Personal,
+//!             name: None,
+//!             discoverer: None,
+//!             timestamp_secs: None,
+//!             planets: vec![],
+//!             is_player_placeholder: true,
+//!         },
+//!     ],
+//!     bases: vec![PlayerBase::new(
+//!         "Home".into(), BaseType::HomePlanetBase,
+//!         GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into()),
+//!     )],
+//!     player_state: Some(PlayerState::new(
+//!         GalacticAddress::new(3, 0, 0, 1, 5, 9), 9,
+//!         Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)),
+//!         Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5,
+//!     )),
+//!     active_galaxy: 7,
+//!     save_version: 91,
+//!     cached_at: 123,
+//! };
+//!
+//! let bytes = serialize(&cache)?;
+//! assert_eq!(&bytes[..16], b"NMSCACHE\x04\x00\x00\x00\x06\x00\x00\x00");
+//! let decoded = deserialize(&bytes)?;
+//! let rebuilt = rebuild_model(&decoded);
+//! let extracted = extract_cache_data(&rebuilt, 91);
+//!
+//! fn rows(data: &CacheData) -> Vec<(GalacticAddress, DiscoverySource, Option<String>, Option<String>, Option<i64>, Vec<Planet>, bool)> {
+//!     let mut rows: Vec<_> = data.systems.iter().map(|s| (
+//!         s.address, s.source.clone(), s.name.clone(), s.discoverer.clone(),
+//!         s.timestamp_secs, s.planets.clone(), s.is_player_placeholder,
+//!     )).collect();
+//!     rows.sort_by_key(|r| (r.0.reality_index, r.0.packed()));
+//!     rows
+//! }
+//! let expected_rows = vec![
+//!     (GalacticAddress::new(3, 0, 0, 1, 2, 0), DiscoverySource::Community { source: "NMSCE".into() }, Some("Atlas".into()), Some("Explorer".into()), Some(1_700_000_000), vec![Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42))], false),
+//!     (GalacticAddress::new(3, 0, 0, 1, 0, 7), DiscoverySource::Personal, None, None, None, vec![], false),
+//!     (GalacticAddress::new(3, 0, 0, 1, 0, 9), DiscoverySource::Personal, None, None, None, vec![], true),
+//! ];
+//! assert_eq!(rows(&decoded), expected_rows);
+//! assert_eq!(rows(&extracted), expected_rows);
+//! assert_eq!(decoded.cached_at, 123);
+//! assert_eq!(decoded.active_galaxy, 7);
+//! assert_eq!(decoded.save_version, 91);
+//! assert_eq!(extracted.active_galaxy, 7);
+//! assert_eq!(extracted.save_version, 91);
+//! let expected_base = PlayerBase::new("Home".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into()));
+//! assert_eq!(decoded.bases, vec![expected_base.clone()]);
+//! assert_eq!(extracted.bases, vec![expected_base]);
+//! let expected_player = PlayerState::new(GalacticAddress::new(3, 0, 0, 1, 5, 9), 9, Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)), Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5);
+//! assert_eq!(decoded.player_state, Some(expected_player.clone()));
+//! assert_eq!(extracted.player_state, Some(expected_player));
+//! assert_eq!(rebuilt.player_state, Some(PlayerState::new(GalacticAddress::new(3, 0, 0, 1, 5, 9), 9, Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)), Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5)));
+//!
+//! let mut expected_community = System::new(GalacticAddress::new(3, 0, 0, 1, 2, 0), Some("Atlas".into()), Some("Explorer".into()), Some(chrono::Utc.timestamp_opt(1_700_000_000, 0).single().ok_or("literal timestamp is invalid")?), vec![Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42))]);
+//! expected_community.source = DiscoverySource::Community { source: "NMSCE".into() };
+//! let expected_systems = std::collections::HashMap::from([
+//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 2, 0)), expected_community),
+//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 7)), System::new(GalacticAddress::new(3, 0, 0, 1, 0, 7), None, None, None, vec![])),
+//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9)), System::new(GalacticAddress::new(3, 0, 0, 1, 0, 9), None, None, None, vec![])),
+//! ]);
+//! assert_eq!(rebuilt.systems, expected_systems);
+//! let mut key_projection: Vec<_> = rebuilt.systems.keys()
+//!     .map(|id| (id.reality_index(), id.system_address()))
+//!     .collect();
+//! key_projection.sort_unstable();
+//! assert_eq!(key_projection, vec![
+//!     (0, 0x0001_0000_0003),
+//!     (7, 0x0001_0000_0003),
+//!     (9, 0x0001_0000_0003),
+//! ]);
+//! let id0 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 2, 0));
+//! let id7 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 7));
+//! let id9 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9));
+//! assert_eq!(rebuilt.system_count(), 3);
+//! assert_eq!(rebuilt.planet_count(), 1);
+//! assert_eq!(rebuilt.base_count(), 1);
+//! assert_eq!(rebuilt.graph.node_count(), 3);
+//! assert_eq!(rebuilt.graph.edge_count(), 0);
+//! assert!(rebuilt.is_player_placeholder(&id9));
+//! assert!(!rebuilt.is_player_placeholder(&id7));
+//! assert!(!rebuilt.is_player_placeholder(&id0));
+//! assert_eq!(rebuilt.planets, std::collections::HashMap::from([((id0, 2), Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42)))]));
+//! assert_eq!(rebuilt.bases, std::collections::HashMap::from([("home".into(), PlayerBase::new("Home".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into())))]));
+//! assert_eq!(rebuilt.active_galaxy, 7);
+//!
+//! let mut inconsistent = deserialize(&bytes)?;
+//! inconsistent.player_state.as_mut().ok_or("player state missing")?.current_reality = 3;
+//! assert!(matches!(serialize(&inconsistent), Err(nms_cache::CacheError::Serialize(message)) if message == "player state reality mismatch: current_reality=3 but current_address.reality_index=9"));
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
 
 use std::fs;
 use std::path::Path;
@@ -74,7 +216,18 @@ fn validate_cache_data(data: &CacheData) -> Result<(), String> {
     Ok(())
 }
 
-/// Extract cache data from a GalaxyModel.
+/// Copy the supported galaxy-model subset into cache data.
+///
+/// Systems, bases, player state, and the selected galaxy are copied from the
+/// model; planets remain embedded in their systems. The caller supplies the
+/// save version. The cache timestamp is generated at whole-second precision.
+/// Hash-map iteration makes the returned system and base vector order
+/// unspecified. Custom edges, derived indexes, and flat orphan-planet entries
+/// are not serialized.
+///
+/// # Examples
+///
+/// See the [complete codec and rebuild example](crate::serialize#examples).
 pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
     let systems: Vec<CachedSystem> = model
         .systems
@@ -114,6 +267,10 @@ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
 /// semantic revisions as little-endian `u32` values, followed by the rkyv
 /// payload. The revisions are independent of [`CacheData::save_version`].
 ///
+/// # Examples
+///
+/// See the [complete codec and rebuild example](crate::serialize#examples).
+///
 /// # Errors
 ///
 /// Returns [`CacheError::Serialize`] if player state or placeholder provenance
@@ -137,6 +294,11 @@ pub fn serialize(data: &CacheData) -> Result<Vec<u8>, CacheError> {
 /// A headerless archive is incompatible; this function returns its typed error
 /// without rebuilding from the source save. A 16-byte current header with an
 /// empty payload reaches payload decoding and returns [`CacheError::Deserialize`].
+///
+/// # Examples
+///
+/// See the [complete codec and rebuild example](crate::serialize#examples) and
+/// the [typed envelope errors](crate::error#examples).
 ///
 /// # Errors
 ///
@@ -190,7 +352,20 @@ pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
     Ok(data)
 }
 
-/// Write cache data to a file.
+/// Serialize cache data and replace the file at `path`.
+///
+/// The parent directory is created when needed. The implementation writes to
+/// a sibling path with extension `rkyv.tmp` and then renames it over the
+/// destination; it does not promise fsync durability or isolation between
+/// concurrent writers. Serialization and cache-data validation happen before
+/// filesystem mutation.
+///
+/// # Errors
+///
+/// Returns [`CacheError::Serialize`] before file access when data validation
+/// or encoding fails. Returns [`CacheError::Io`] when directory creation,
+/// temporary-file writing, or rename fails. A failed I/O operation may leave
+/// the created directory or temporary file behind.
 pub fn write_cache(data: &CacheData, path: &Path) -> Result<(), CacheError> {
     let bytes = serialize(data)?;
 
@@ -207,7 +382,16 @@ pub fn write_cache(data: &CacheData, path: &Path) -> Result<(), CacheError> {
     Ok(())
 }
 
-/// Read and deserialize cache data from a file.
+/// Read a cache file and validate its envelope and payload.
+///
+/// This direct API does not check freshness, rebuild from a source save, or
+/// repair the cache. Use [`crate::load_or_rebuild`] when fallback behavior is
+/// desired.
+///
+/// # Errors
+///
+/// Returns [`CacheError::Io`] when the file cannot be read, or the same typed
+/// envelope and payload errors as [`deserialize`].
 pub fn read_cache(path: &Path) -> Result<CacheData, CacheError> {
     let bytes = fs::read(path).map_err(CacheError::Io)?;
     deserialize(&bytes)
@@ -215,12 +399,23 @@ pub fn read_cache(path: &Path) -> Result<CacheData, CacheError> {
 
 /// Rebuild a GalaxyModel from cache data.
 ///
-/// Reconstructs the graph, R-tree, and all HashMap indices.
-///
-/// This infallible function accepts trusted in-memory [`CacheData`]. Valid
-/// placeholder flags restore provenance. A malformed marked record is retained
-/// with its original fields as an ordinary, unmarked system; persisted archives
+/// Reconstructs the graph, R-tree, and derived HashMap indices from trusted
+/// in-memory [`CacheData`]. This infallible function does not validate persisted
+/// data or fall back to a source save. Invalid timestamp seconds convert to
+/// `None`. Systems are inserted in vector order: the first genuine duplicate
+/// key wins, while a later genuine record can promote an earlier placeholder.
+/// A malformed marked record is inserted as an ordinary, unmarked system; its
+/// other modeled data is retained after timestamp conversion. Persisted archives
 /// must instead pass the checked codec, which rejects malformed flags.
+/// Nonempty base names are lowercased without trimming, and a later base with
+/// the same normalized key replaces the earlier one. Player state and selected
+/// galaxy are restored independently. Graph edges use the default per-galaxy
+/// KNN-10 strategy, not custom topology. This function does not ensure a missing
+/// player-system key; the loader performs that separate operation.
+///
+/// # Examples
+///
+/// See the [complete codec and rebuild example](crate::serialize#examples).
 pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
     let mut model = GalaxyModel::new();
 

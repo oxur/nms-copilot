@@ -1,7 +1,7 @@
-//! Format adapters for No Man's Sky save exports.
+//! Compatibility adapters for selected No Man's Sky save representations.
 //!
-//! Handles non-standard save formats, starting with the goatfungus JSON export:
-//! state-machine character walker that fixes `\xNN` → `\u00NN` and invalid
-//! escapes inside strings, producing valid JSON for serde.
+//! This crate currently exposes the [`nomnom`] JSON heuristic and typed
+//! passthrough parser. It does not implement the goatfungus escape fixer or
+//! claim that synthetic JSON demonstrates an authentic NomNom export.
 
 pub mod nomnom;
