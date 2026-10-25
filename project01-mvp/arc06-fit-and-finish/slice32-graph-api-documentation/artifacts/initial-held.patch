@@ -1,0 +1,869 @@
+diff --git a/crates/nms-graph/src/edges.rs b/crates/nms-graph/src/edges.rs
+index 1359626..02f6d0d 100644
+--- a/crates/nms-graph/src/edges.rs
++++ b/crates/nms-graph/src/edges.rs
+@@ -12,15 +12,26 @@ use rstar::PointDistance;
+ use crate::model::GalaxyModel;
+ use crate::spatial::SystemId;
+ 
+-/// Strategy for generating graph edges.
++/// Strategy for generating per-galaxy graph edges.
++///
++/// Both strategies add undirected edges. KNN connects each system to up to
++/// `k` nearest neighbors; because neighbor choices are unioned, a node's final
++/// degree can exceed `k`.
+ #[derive(Debug, Clone, Copy)]
+ pub enum EdgeStrategy {
+-    /// Connect each system to its k nearest neighbors.
++    /// Connect each system to its `k` nearest neighbors in the same galaxy.
++    ///
++    /// `k == 0` adds no edges; undirected neighbor choices are unioned, so a
++    /// system's final degree can be greater than `k`.
+     Knn { k: usize },
+-    /// Connect all systems within warp range (light-years).
++    /// Connect same-galaxy systems whose measured distance is at most `max_ly`.
++    ///
++    /// Negative or NaN ranges produce no edges; positive infinity connects all
++    /// pairs within each indexed galaxy.
+     WarpRange { max_ly: f64 },
+ }
+ 
++/// The default edge strategy uses KNN with `k = 10`.
+ impl Default for EdgeStrategy {
+     fn default() -> Self {
+         EdgeStrategy::Knn { k: 10 }
+@@ -28,7 +39,10 @@ impl Default for EdgeStrategy {
+ }
+ 
+ impl GalaxyModel {
+-    /// Build edges using the given strategy. Clears existing edges first.
++    /// Build edges using the given strategy after clearing every existing edge.
++    ///
++    /// Neighbor searches use each system's galaxy-specific R-tree. This method
++    /// does not add cross-galaxy links or a disconnected-route fallback.
+     pub fn build_edges(&mut self, strategy: EdgeStrategy) {
+         // Remove all existing edges
+         let edge_ids: Vec<_> = self.graph.edge_indices().collect();
+@@ -174,11 +188,12 @@ impl GalaxyModel {
+         }
+     }
+ 
+-    /// Add KNN edges for a single newly inserted system.
++    /// Add KNN edges for one already-indexed system.
+     ///
+-    /// Call this after `insert_system()` to connect the new node to
+-    /// its neighbors without rebuilding the entire graph.
+-    /// Looks up the system's galaxy to use the correct spatial index.
++    /// Call this after [`GalaxyModel::insert_system`] to connect the new node
++    /// to neighbors without rebuilding existing edges. The method uses that
++    /// system's galaxy index; an absent system, spatial index, or graph node is
++    /// a no-op. It does not connect other newly inserted systems.
+     pub fn connect_new_system(&mut self, sys_id: SystemId, k: usize) {
+         let system = match self.systems.get(&sys_id) {
+             Some(s) => s,
+diff --git a/crates/nms-graph/src/error.rs b/crates/nms-graph/src/error.rs
+index 10fa008..40fcf2e 100644
+--- a/crates/nms-graph/src/error.rs
++++ b/crates/nms-graph/src/error.rs
+@@ -1,11 +1,19 @@
++//! Errors returned by graph queries and model operations.
++
+ use thiserror::Error;
+ 
++/// An error returned by a graph lookup or spatial query.
++///
++/// Variants describe the graph API's error vocabulary; an individual method
++/// returns only the variants documented on that method.
+ #[derive(Debug, Error)]
+ #[non_exhaustive]
+ pub enum GraphError {
++    /// A requested system could not be found.
+     #[error("system not found: {0}")]
+     SystemNotFound(String),
+ 
++    /// A requested base could not be found.
+     #[error("base not found: {0}")]
+     BaseNotFound(String),
+ 
+@@ -17,6 +25,7 @@ pub enum GraphError {
+     #[error("target not found: {0}")]
+     TargetNotFound(String),
+ 
++    /// No player position is available for an implicit reference point.
+     #[error("no player position available")]
+     NoPlayerPosition,
+ 
+diff --git a/crates/nms-graph/src/extract.rs b/crates/nms-graph/src/extract.rs
+index ea5c0b0..5979c0a 100644
+--- a/crates/nms-graph/src/extract.rs
++++ b/crates/nms-graph/src/extract.rs
+@@ -1,4 +1,42 @@
+ //! Extract System/Planet data from raw save discovery records.
++//!
++//! The checked entry points preserve parser-validated addresses; the legacy
++//! entry points use the older typed-save address path.
++//!
++//! # Checked extraction example
++//!
++//! ```
++//! use nms_core::{GalacticAddress, SystemId};
++//! use nms_graph::GalaxyModel;
++//!
++//! let json = br#"{
++//!   "Version":4720,"Platform":"Test","ActiveContext":"Main",
++//!   "CommonStateData":{},
++//!   "BaseContext":{"PlayerStateData":{"UniverseAddress":{
++//!     "RealityIndex":9,"GalacticAddress":{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}},
++//!     "Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},
++//!   "ExpeditionContext":{},
++//!   "DiscoveryManagerData":{"DiscoveryData-v1":{"Store":{"Record":[
++//!     {"DD":{"UA":"0x00010900000003","DT":"SolarSystem"},"DM":{"CN":"Atlas"},"OWS":{"USN":"Explorer"}},
++//!     {"DD":{"UA":"0x20010900000003","DT":"Planet","VP":["0x2A","0x10000"]},"DM":{"CN":"Garden"},"OWS":{}}
++//!   ]}}}
++//! }"#;
++//! let checked = nms_save::parse_validated_save(json)?;
++//! let model = GalaxyModel::from_validated_save(&checked);
++//! let expected = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9));
++//! let system = model.system(&expected).ok_or("missing checked system")?;
++//! assert_eq!(expected.to_string(), "9:000100000003");
++//! assert_eq!(system.address.planet_index(), 0);
++//! assert_eq!(system.name.as_deref(), Some("Atlas"));
++//! assert_eq!(system.discoverer.as_deref(), Some("Explorer"));
++//! assert_eq!(system.source, nms_core::DiscoverySource::Personal);
++//! assert_eq!(model.active_galaxy, 9);
++//! assert_eq!(model.player_position().map(|address| (address.reality_index, address.planet_index(), address.voxel_x())), Some((9, 2, 3)));
++//! let planet = model.planets.get(&(expected, 2)).ok_or("missing checked planet")?;
++//! assert_eq!((planet.index, planet.name.as_deref(), planet.biome, planet.infested, planet.seed_hash), (2, Some("Garden"), Some(nms_core::Biome::Lush), true, Some(42)));
++//! assert_eq!(model.planet_count(), 1);
++//! # Ok::<(), Box<dyn std::error::Error>>(())
++//! ```
+ 
+ use std::collections::{HashMap, HashSet};
+ 
+@@ -82,8 +120,23 @@ struct SystemBuilder {
+ ///     - bits 0..15 (mask 0xFFFF): biome type index (GcBiomeType enum)
+ ///     - bit 16 (mask 0x10000): infested flag
+ ///
+-/// Returns `(biome, infested)`. Returns `(None, false)` if VP is empty or
+-/// the format is unrecognized.
++/// Returns `(None, false)` when the VP array has fewer than two entries.
++/// Otherwise returns `(biome, infested)`. Flags accept an unsigned JSON integer or a
++/// hexadecimal string, optionally prefixed with `0x` or `0X`; a bare string is
++/// parsed as hexadecimal, not decimal. Unknown biome indices return `None`
++/// while a recognized infested bit is retained. Invalid flags return
++/// `(None, false)`.
++///
++/// # Examples
++///
++/// ```
++/// use nms_core::Biome;
++/// use nms_graph::extract::extract_biome_from_vp;
++///
++/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("0x10000")]), (Some(Biome::Lush), true));
++/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("0x1000B")]), (None, true));
++/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("not-hex")]), (None, false));
++/// ```
+ pub fn extract_biome_from_vp(vp: &[serde_json::Value]) -> (Option<Biome>, bool) {
+     if vp.len() < 2 {
+         return (None, false);
+@@ -134,7 +187,11 @@ pub fn extract_biome_from_vp(vp: &[serde_json::Value]) -> (Option<Biome>, bool)
+     (biome, infested)
+ }
+ 
+-/// Extract seed hash from `VP[0]`.
++/// Extract a seed hash from `VP[0]` as an unsigned integer or hexadecimal string.
++///
++/// Hexadecimal strings may start with `0x` or `0X`; unprefixed strings are
++/// still parsed as hexadecimal. Missing, malformed, signed, or non-string and
++/// non-unsigned-number values return `None`.
+ pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
+     if vp.is_empty() {
+         return None;
+@@ -154,8 +211,12 @@ pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
+ 
+ /// Build systems and planets from a parsed save file's discovery records.
+ ///
+-/// Groups discovery records by system address, extracts planet biome data,
+-/// and returns a map of SystemId -> System.
++/// Groups discovery records by system key and returns a map of
++/// [`SystemId`] to [`System`]. The first solar-system row for a key supplies
++/// system metadata; planet rows are handled in a second pass, so an orphan
++/// planet row can create a system whose stored address comes from that planet.
++/// The legacy path decodes packed addresses with galaxy 0 and does not extract
++/// literal `DM.CN` discovery names.
+ pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
+     let records = &save.discovery_manager_data.discovery_data_v1.store.record;
+     extract_systems_with_records(
+@@ -168,7 +229,15 @@ pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
+     )
+ }
+ 
+-/// Extract systems using addresses checked by [`ValidatedSave`].
++/// Extract systems using the checked addresses paired by [`ValidatedSave`].
++///
++/// Solar-system and planet rows are processed in separate passes. The first
++/// row for each effective system or planet key supplies its data; an orphan
++/// planet row can create a system, and its stored address can retain that
++/// planet index while the [`SystemId`] key remains planet-zeroed.
++///
++/// See the [module's checked extraction example](crate::extract#checked-extraction-example)
++/// for a complete model and literal identity walkthrough.
+ ///
+ /// # Examples
+ ///
+diff --git a/crates/nms-graph/src/import.rs b/crates/nms-graph/src/import.rs
+index a44f9f5..f870e81 100644
+--- a/crates/nms-graph/src/import.rs
++++ b/crates/nms-graph/src/import.rs
+@@ -28,7 +28,7 @@ pub struct ImportStats {
+     pub skipped: usize,
+ }
+ 
+-/// Errors that can occur during community data import.
++/// Errors that can occur while creating or reading a community CSV reader.
+ #[derive(Debug, thiserror::Error)]
+ pub enum ImportError {
+     /// CSV reading/parsing error.
+@@ -100,6 +100,45 @@ fn resolve_galaxy_index(name: &str) -> u8 {
+ /// - `Platform` (optional, currently ignored)
+ ///
+ /// Returns [`ImportStats`] summarizing what was imported.
++///
++/// A row matching an existing genuine system is counted as a duplicate; a
++/// marked player placeholder is replaced in place and counted as added. Invalid
++/// data rows increment `skipped`, while a failure to create the CSV reader is
++/// returned as [`ImportError::Csv`]. Imported systems do not gain graph edges
++/// here.
++///
++/// # Examples
++///
++/// ```
++/// use std::fs;
++/// use std::path::Path;
++///
++/// use nms_core::{Biome, GalacticAddress, SystemId};
++/// use nms_graph::{GalaxyModel, import::{ImportStats, import_csv}};
++///
++/// let temp = tempfile::tempdir()?;
++/// let path = temp.path().join("catalog.csv");
++/// fs::write(&path, b"System Name,Portal Glyphs,Galaxy,Biome\nAtlas,200100000003,9,Lush\nIgnored,200100000003,9,Toxic\nBad,bad,9,Lush\n")?;
++/// let mut model = GalaxyModel::new();
++/// let stats = import_csv(&mut model, Path::new(&path), "local catalog")?;
++/// assert_eq!(stats, ImportStats { added: 1, duplicates: 1, skipped: 1 });
++/// let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
++/// let id = SystemId::from_address(&address);
++/// let system = model.system(&id).ok_or("missing imported system")?;
++/// assert_eq!(system.name.as_deref(), Some("Atlas"));
++/// assert_eq!(system.source, nms_core::DiscoverySource::Community { source: "local catalog".into() });
++/// assert_eq!(system.address.planet_index(), 2);
++/// assert_eq!(model.planets.get(&(id, 0)).and_then(|planet| planet.biome), Some(Biome::Lush));
++/// assert_eq!(model.graph.edge_count(), 0);
++/// assert_eq!(model.system_count(), 1);
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
++///
++/// # Errors
++///
++/// Returns [`ImportError::Csv`] if the initial CSV reader cannot be created.
++/// Malformed data rows and invalid glyph/biome values are counted as skipped;
++/// they are not returned as errors.
+ pub fn import_csv(
+     model: &mut GalaxyModel,
+     path: &Path,
+diff --git a/crates/nms-graph/src/lib.rs b/crates/nms-graph/src/lib.rs
+index 75b7f83..3e0d3d6 100644
+--- a/crates/nms-graph/src/lib.rs
++++ b/crates/nms-graph/src/lib.rs
+@@ -7,18 +7,32 @@
+ //! - **R-tree** -- geometric layer for nearest-neighbor and radius queries
+ //! - **HashMaps** -- associative layer for fast lookup by name, biome, etc.
+ 
++/// Build and rebuild per-galaxy graph edges.
+ pub mod edges;
++/// Error types returned by graph and query operations.
+ pub mod error;
++/// Extract systems, planets, and discovery names from save records.
+ pub mod extract;
++/// Import community coordinate catalogs from CSV.
+ pub mod import;
++/// The in-memory galaxy model and its mutation methods.
+ pub mod model;
++/// Spatially scoped system and planet queries.
+ pub mod query;
++/// Shortest-path, tour, hop-constrained, and reachability operations.
+ pub mod route;
++/// Galaxy-qualified system identity and voxel-space point types.
+ pub mod spatial;
+ 
++/// Strategy used to construct model graph edges.
+ pub use edges::EdgeStrategy;
++/// Errors from graph lookups and spatial query resolution.
+ pub use error::GraphError;
++/// In-memory model of systems, planets, bases, and graph indexes.
+ pub use model::GalaxyModel;
++/// Planet predicates used by spatial query methods.
+ pub use query::BiomeFilter;
++/// Route result, error, hop, and ordering-algorithm types.
+ pub use route::{Route, RouteError, RouteHop, RoutingAlgorithm};
++/// Canonical galaxy-qualified system identity and associated voxel-space point.
+ pub use spatial::{SystemId, SystemPoint};
+diff --git a/crates/nms-graph/src/model.rs b/crates/nms-graph/src/model.rs
+index 2a83f4e..ae94a99 100644
+--- a/crates/nms-graph/src/model.rs
++++ b/crates/nms-graph/src/model.rs
+@@ -27,9 +27,11 @@ pub type PlanetKey = (SystemId, u8);
+ /// 3. HashMaps -- associative (name, biome, address lookups)
+ ///
+ /// The model owns private placeholder provenance, so downstream crates should
+-/// construct it with [`Self::new`] or [`Self::from_save`] rather than a struct
+-/// literal. [`system_count`](Self::system_count) includes both discoveries and
+-/// explicitly marked player-location placeholders.
++/// construct it with [`Self::new`] or a save constructor rather than a struct
++/// literal. [`system_count`](Self::system_count) includes discoveries and
++/// explicitly marked player-location placeholders. Public maps and graph fields
++/// can be changed directly; such edits do not automatically synchronize the
++/// other indexes. Prefer the model's mutators when their behavior fits.
+ #[derive(Debug)]
+ pub struct GalaxyModel {
+     /// Graph topology: nodes are systems, edge weights are distance in ly.
+@@ -84,7 +86,7 @@ impl Default for GalaxyModel {
+ }
+ 
+ impl GalaxyModel {
+-    /// Create an empty `GalaxyModel`.
++    /// Create an empty `GalaxyModel` with active galaxy 0 and no player state.
+     pub fn new() -> Self {
+         Self {
+             graph: StableGraph::default(),
+@@ -102,7 +104,12 @@ impl GalaxyModel {
+         }
+     }
+ 
+-    /// Build a `GalaxyModel` from a parsed save file.
++    /// Build a `GalaxyModel` from a parsed save file using the legacy extraction path.
++    ///
++    /// Discovery addresses use the legacy 48-bit decoder and Euclid galaxy
++    /// assumption; use [`Self::from_validated_save`] when parser-validated
++    /// source addresses and the active player's galaxy are available. This
++    /// constructor does not insert a player placeholder.
+     pub fn from_save(save: &SaveRoot) -> Self {
+         let extracted = extract_systems(save);
+         let bases = save
+@@ -267,7 +274,7 @@ impl GalaxyModel {
+         self.player_placeholders.contains(id)
+     }
+ 
+-    /// Insert a planet-zero placeholder for a player's system when it is absent.
++    /// Insert a marked planet-zero placeholder when the player's system is absent.
+     ///
+     /// A genuine system with the same ID is left unchanged and is never marked
+     /// as synthetic. Explicit provenance distinguishes a placeholder from a
+@@ -305,12 +312,15 @@ impl GalaxyModel {
+         self.player_placeholders.insert(id);
+     }
+ 
+-    /// Number of planets in the model.
++    /// Number of entries in the flattened planet map.
++    ///
++    /// Direct public-field edits can make this differ from the systems' planet
++    /// vectors.
+     pub fn planet_count(&self) -> usize {
+         self.planets.len()
+     }
+ 
+-    /// Number of bases in the model.
++    /// Number of bases indexed by lowercase name.
+     pub fn base_count(&self) -> usize {
+         self.bases.len()
+     }
+@@ -322,16 +332,17 @@ impl GalaxyModel {
+ 
+     /// Look up a system by name in the currently active galaxy.
+     ///
+-    /// Names are matched case-insensitively. Use
++    /// Names are lowercased without trimming. Use
+     /// [`system_by_name_in_galaxy`](Self::system_by_name_in_galaxy) to select
+-    /// a specific galaxy without changing the active selection.
++    /// a specific galaxy without changing the active selection. If duplicate
++    /// names exist in one galaxy, the derived index stores one representative.
+     pub fn system_by_name(&self, name: &str) -> Option<(&SystemId, &System)> {
+         self.system_by_name_in_galaxy(name, self.active_galaxy)
+     }
+ 
+     /// Look up a system by name in `galaxy` without changing active selection.
+     ///
+-    /// Names are matched case-insensitively. This lookup never falls back to a
++    /// Names are lowercased without trimming. This lookup never falls back to a
+     /// system with the same name in another galaxy.
+     pub fn system_by_name_in_galaxy(&self, name: &str, galaxy: u8) -> Option<(&SystemId, &System)> {
+         self.name_index
+@@ -339,7 +350,7 @@ impl GalaxyModel {
+             .and_then(|id| self.systems.get(id).map(|s| (id, s)))
+     }
+ 
+-    /// Look up a base by name (case-insensitive).
++    /// Look up a base by lowercased name without trimming.
+     pub fn base(&self, name: &str) -> Option<&PlayerBase> {
+         self.bases.get(&name.to_lowercase())
+     }
+@@ -359,19 +370,28 @@ impl GalaxyModel {
+         self.spatial.get(&galaxy)
+     }
+ 
+-    /// Switch the active galaxy.
++    /// Select the galaxy used by unqualified query methods.
++    ///
++    /// This assigns the supplied index without checking whether that galaxy
++    /// has systems and does not move the player or rebuild any index.
+     pub fn set_active_galaxy(&mut self, galaxy: u8) {
+         self.active_galaxy = galaxy;
+     }
+ 
+-    /// List galaxies that have at least one discovered system.
++    /// Return sorted keys of the per-galaxy spatial indexes.
++    ///
++    /// A key can exist because of an explicitly inserted player placeholder;
++    /// this is not restricted to galaxies with save discoveries.
+     pub fn discovered_galaxies(&self) -> Vec<u8> {
+         let mut galaxies: Vec<u8> = self.spatial.keys().copied().collect();
+         galaxies.sort();
+         galaxies
+     }
+ 
+-    /// Rebuild all per-galaxy R-trees from the systems HashMap.
++    /// Rebuild only the per-galaxy R-trees from the systems map.
++    ///
++    /// Graph topology and the name, address, planet, and biome indexes are not
++    /// rebuilt by this method.
+     pub fn rebuild_spatial(&mut self) {
+         let mut galaxy_points: HashMap<u8, Vec<SystemPoint>> = HashMap::new();
+         for system in self.systems.values() {
+@@ -390,7 +410,10 @@ impl GalaxyModel {
+         self.spatial.values().map(|t| t.size()).sum()
+     }
+ 
+-    /// Get all planets with a given biome.
++    /// Return flattened planet-map entries indexed under `biome`.
++    ///
++    /// Results reflect the biome index; direct edits to public fields can make
++    /// that derived index stale.
+     pub fn planets_by_biome(&self, biome: Biome) -> Vec<&Planet> {
+         self.biome_index
+             .get(&biome)
+@@ -404,7 +427,35 @@ impl GalaxyModel {
+     /// it by replacing its contents and discovery indexes while preserving its
+     /// graph node, address mapping, and spatial point. A genuine system that
+     /// already has the same key remains unchanged, including a genuinely empty
+-    /// system.
++    /// system. New systems receive a graph node and spatial point but no edges.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_core::{GalacticAddress, Planet, System, SystemId};
++    /// use nms_graph::GalaxyModel;
++    ///
++    /// let address = GalacticAddress::new(0, 0, 0, 1, 5, 9);
++    /// let id = SystemId::from_address(&address);
++    /// let mut model = GalaxyModel::new();
++    /// model.insert_player_placeholder(address);
++    /// let node = *model.node_map.get(&id).ok_or("missing graph node")?;
++    /// let point = model.spatial_for(9).and_then(|tree| tree.iter().next()).copied().ok_or("missing spatial point")?;
++    /// let point_count = model.spatial_size();
++    /// model.insert_system(System::new(address, Some("Promoted".into()), None, None, vec![
++    ///     Planet::new(3, None, None, false, Some("Third".into()), None),
++    /// ]));
++    /// assert!(!model.is_player_placeholder(&id));
++    /// assert_eq!(model.system_count(), 1);
++    /// assert_eq!(model.node_map.get(&id), Some(&node));
++    /// assert_eq!(model.spatial_for(9).and_then(|tree| tree.iter().next()).copied(), Some(point));
++    /// assert_eq!(model.spatial_size(), point_count);
++    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Promoted"));
++    /// assert_eq!(model.planets.get(&(id, 3)).and_then(|planet| planet.name.as_deref()), Some("Third"));
++    /// model.insert_system(System::new(address, Some("Ignored duplicate".into()), None, None, vec![]));
++    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Promoted"));
++    /// # Ok::<(), Box<dyn std::error::Error>>(())
++    /// ```
+     pub fn insert_system(&mut self, system: System) {
+         let sys_id = SystemId::from_address(&system.address);
+ 
+@@ -486,6 +537,12 @@ impl GalaxyModel {
+     /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Synthetic system"));
+     /// assert_eq!(model.planets.get(&(id, 1)).and_then(|planet| planet.name.as_deref()), Some("Synthetic planet"));
+     /// assert!(!model.apply_discovery_names(&observed));
++    /// let mut clear_system_only = DiscoveryNames::default();
++    /// clear_system_only.system_names.insert(id, String::new());
++    /// assert!(model.apply_discovery_names(&clear_system_only));
++    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), None);
++    /// assert_eq!(model.planets.get(&(id, 1)).and_then(|planet| planet.name.as_deref()), Some("Synthetic planet"));
++    /// assert!(!model.apply_discovery_names(&clear_system_only));
+     /// ```
+     pub fn apply_discovery_names(&mut self, names: &DiscoveryNames) -> bool {
+         if names.is_empty() {
+@@ -596,11 +653,11 @@ impl GalaxyModel {
+         }
+     }
+ 
+-    /// Ensure the player's current system exists in the model.
++    /// Ensure the player's current system exists, using a marked planet-zero placeholder.
+     ///
+-    /// If the player's system has no discovery record, this inserts a
+-    /// placeholder system at the player's address so that distance queries
+-    /// correctly return 0.0 for in-system results.
++    /// If the player's system has no model entry, this inserts a marked
++    /// planet-zero placeholder so distance queries return 0.0 in-system. With
++    /// no player state, it does nothing; it does not create graph edges.
+     pub fn ensure_player_system(&mut self) {
+         let current_address = self
+             .player_state
+@@ -611,7 +668,8 @@ impl GalaxyModel {
+         }
+     }
+ 
+-    /// Insert a base into the model.
++    /// Insert or replace a nonempty base under its lowercase, untrimmed name.
++    /// A later base with the same normalized name replaces the previous value.
+     pub fn insert_base(&mut self, base: PlayerBase) {
+         if !base.name.is_empty() {
+             self.bases.insert(base.name.to_lowercase(), base);
+@@ -620,9 +678,14 @@ impl GalaxyModel {
+ 
+     /// Apply a delta from the file watcher to update the model incrementally.
+     ///
+-    /// Inserts new systems and planets, updates player position, and
+-    /// adds/updates bases. Does NOT rebuild graph edges -- call
+-    /// `build_edges()` afterward if needed for routing.
++    /// Inserts new systems and only new planet keys, applies player movement when
++    /// player state already exists, and adds or updates nonempty bases. Existing
++    /// planet contents are not replaced and deletions are not removed. A physical
++    /// galaxy change selects the destination only when player state was updated;
++    /// new systems receive no edges. New planet keys can be stored even when
++    /// their system is absent; they are mirrored into a system only when that
++    /// system exists and has no planet with the same index. This does not refresh
++    /// discovery-name metadata, ensure a player placeholder, or persist a cache.
+     pub fn apply_delta(&mut self, delta: &SaveDelta) {
+         // 1. Insert new systems (with their planets)
+         for system in &delta.new_systems {
+@@ -678,13 +741,13 @@ impl GalaxyModel {
+         }
+     }
+ 
+-    /// Apply a complete parsed save update while preserving imported atlas data.
++    /// Apply a complete save update while preserving additive atlas contributions.
+     ///
+-    /// The event's player state is authoritative for physical location and
+-    /// selection decisions; its delta remains the additive source for atlas
+-    /// changes. A prior physical galaxy change selects the incoming galaxy.
+-    /// When the prior player state is absent, or the physical galaxy is
+-    /// unchanged, the caller's selected view is retained.
++    /// The event's complete player state replaces the previous player state;
++    /// its delta remains the additive source for atlas changes. A prior physical
++    /// galaxy change selects the incoming galaxy. When the prior player state is
++    /// absent, or the physical galaxy is unchanged, the caller's selected view
++    /// is retained. This does not rebuild graph edges or store the save version.
+     pub fn apply_save_update(&mut self, update: &SaveUpdate) {
+         let previous_reality = self
+             .player_state
+diff --git a/crates/nms-graph/src/query.rs b/crates/nms-graph/src/query.rs
+index 2b8abb1..0302c72 100644
+--- a/crates/nms-graph/src/query.rs
++++ b/crates/nms-graph/src/query.rs
+@@ -1,4 +1,8 @@
+ //! Spatial query methods on the GalaxyModel.
++//!
++//! These methods scan the model's maps and compute system-coordinate
++//! distances; they do not query the R-tree. For a runnable query, topology,
++//! and route example, see the [routing module example](crate::route#example).
+ 
+ use nms_core::address::GalacticAddress;
+ use nms_core::biome::{Biome, BiomeSubType};
+@@ -17,15 +21,17 @@ pub struct BiomeFilter {
+     pub biome_subtype: Option<BiomeSubType>,
+     /// Require the planet's infested flag to equal this value when set.
+     pub infested: Option<bool>,
+-    /// Require a planet name; a containing system name does not count.
++    /// Require `planet.name` to be `Some`; an empty string qualifies, and a
++    /// containing system name does not count.
+     pub named_only: bool,
+ }
+ 
+ impl BiomeFilter {
+     /// Return whether `planet` satisfies every configured planet predicate.
+     ///
+-    /// `named_only` requires a planet name; a containing system name does not
+-    /// satisfy this filter. `Some(false)` matches non-infested planets.
++    /// `named_only` requires `planet.name` to be `Some`, including `Some("")`;
++    /// a containing system name does not satisfy it. `Some(false)` matches
++    /// non-infested planets.
+     pub fn matches(&self, planet: &Planet) -> bool {
+         if let Some(biome) = self.biome
+             && planet.biome != Some(biome)
+@@ -52,7 +58,15 @@ impl BiomeFilter {
+ impl GalaxyModel {
+     /// Resolve a reference point to a `GalacticAddress`.
+     ///
+-    /// Accepts a direct address, a base name, or neither to use player position.
++    /// Accepts a direct address, then a base name, or neither to use player
++    /// position. An explicit address takes precedence if both are supplied;
++    /// this resolver does not compare the result with the active galaxy.
++    ///
++    /// # Errors
++    ///
++    /// Returns [`GraphError::BaseNotFound`] for an unknown supplied base, or
++    /// [`GraphError::NoPlayerPosition`] when neither reference is supplied and
++    /// the model has no player position.
+     pub fn resolve_position(
+         &self,
+         address: Option<&GalacticAddress>,
+@@ -87,6 +101,9 @@ impl GalaxyModel {
+ 
+     /// Find the N nearest systems in `from`'s galaxy without changing selection.
+     ///
++    /// This scans the systems map. `n == 0` returns an empty vector; equal
++    /// distances are ordered by the galaxy-qualified system identity.
++    ///
+     /// Returns `(SystemId, distance_in_ly)` pairs ordered by distance and then
+     /// by galaxy-qualified system identity.
+     pub fn nearest_systems_from_address(
+@@ -126,6 +143,9 @@ impl GalaxyModel {
+ 
+     /// Find every system within `radius_ly` in `from`'s galaxy.
+     ///
++    /// Results include known-location placeholders. Distances are measured to
++    /// the containing system address, not to individual planets.
++    ///
+     /// The radius boundary is inclusive. Negative and NaN radii return no rows;
+     /// positive infinity includes every system in the selected galaxy.
+     pub fn systems_within_radius_from_address(
+@@ -167,6 +187,9 @@ impl GalaxyModel {
+     }
+ 
+     /// Find the N nearest matching planets in `from`'s galaxy without selection changes.
++    ///
++    /// The scan skips flattened planet keys whose containing system is absent.
++    /// Distances are to that system's address; `n == 0` returns no rows.
+     pub fn nearest_planets_from_address<'a>(
+         &'a self,
+         from: &GalacticAddress,
+@@ -208,6 +231,9 @@ impl GalaxyModel {
+     }
+ 
+     /// Find every matching planet within `radius_ly` in `from`'s galaxy.
++    ///
++    /// The boundary is inclusive; negative and NaN radii return no rows, and
++    /// positive infinity includes every matching planet in the galaxy.
+     pub fn planets_within_radius_from_address<'a>(
+         &'a self,
+         from: &GalacticAddress,
+diff --git a/crates/nms-graph/src/route.rs b/crates/nms-graph/src/route.rs
+index b674f34..eeab19e 100644
+--- a/crates/nms-graph/src/route.rs
++++ b/crates/nms-graph/src/route.rs
+@@ -1,7 +1,63 @@
+ //! Graph routing algorithms for galactic navigation.
+ //!
+ //! Provides shortest-path, TSP, and warp-range-constrained routing
+-//! over the petgraph topology.
++//! over the petgraph topology. Graph topology is built by [`crate::edges`];
++//! a disconnected same-galaxy route may still use a direct Euclidean fallback.
++//!
++//! # Example
++//!
++//! This executable example keeps query ranking, edge topology, and route legs
++//! as separate observations.
++//!
++//! ```
++//! use nms_core::{Biome, GalacticAddress, Planet, System, SystemId};
++//! use nms_graph::{BiomeFilter, EdgeStrategy, GalaxyModel};
++//!
++//! let addresses = [
++//!     GalacticAddress::new(0, 0, 0, 1, 0, 9),
++//!     GalacticAddress::new(3, 4, 0, 2, 0, 9),
++//!     GalacticAddress::new(6, 8, 0, 3, 0, 9),
++//!     GalacticAddress::new(0, 0, 0, 1, 0, 0),
++//! ];
++//! let ids = addresses.map(|address| SystemId::from_address(&address));
++//! let mut model = GalaxyModel::new();
++//! model.insert_system(System::new(addresses[0], Some("Atlas".into()), None, None, vec![
++//!     Planet::new(1, Some(Biome::Lush), None, false, Some("A1".into()), None),
++//! ]));
++//! model.insert_system(System::new(addresses[1], Some("Beta".into()), None, None, vec![
++//!     Planet::new(2, Some(Biome::Toxic), None, true, Some("B2".into()), None),
++//! ]));
++//! model.insert_system(System::new(addresses[2], Some("Gamma".into()), None, None, vec![]));
++//! model.insert_system(System::new(addresses[3], Some("Atlas".into()), None, None, vec![]));
++//! assert_eq!(addresses[0].distance_ly(&addresses[1]), 2_000.0);
++//! assert_eq!(addresses[0].distance_ly(&addresses[2]), 4_000.0);
++//! let ranked = model.nearest_systems_from_address(&addresses[0], 3);
++//! assert_eq!(ranked, vec![(ids[0], 0.0), (ids[1], 2_000.0), (ids[2], 4_000.0)]);
++//! model.set_active_galaxy(0);
++//! assert!(model.nearest_systems(&addresses[0], 3).is_empty());
++//! model.set_active_galaxy(9);
++//! assert_eq!(model.systems_within_radius_from_address(&addresses[0], 2_000.0), vec![(ids[0], 0.0), (ids[1], 2_000.0)]);
++//! assert!(model.systems_within_radius_from_address(&addresses[0], f64::NAN).is_empty());
++//! let filter = BiomeFilter { biome: Some(Biome::Lush), named_only: true, ..Default::default() };
++//! let planets = model.nearest_planets_from_address(&addresses[0], 5, &filter);
++//! assert_eq!(planets.iter().map(|(key, planet, distance)| (*key, planet.name.as_deref(), planet.biome, planet.infested, *distance)).collect::<Vec<_>>(), vec![((ids[0], 1), Some("A1"), Some(Biome::Lush), false, 0.0)]);
++//! model.build_edges(EdgeStrategy::WarpRange { max_ly: 2_500.0 });
++//! assert_eq!(model.graph.edge_count(), 2);
++//! let route = model.shortest_path(ids[0], ids[2])?;
++//! let project = |route: &nms_graph::Route| route.hops.iter().map(|hop| (hop.system_id, hop.leg_distance_ly, hop.cumulative_ly, hop.is_waypoint)).collect::<Vec<_>>();
++//! assert_eq!(project(&route), vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, false), (ids[2], 2_000.0, 4_000.0, false)]);
++//! let direct = model.build_route_from_order(&[ids[0], ids[2]])?;
++//! let constrained = model.constrain_hops(&direct, 2_500.0)?;
++//! assert_eq!(project(&constrained), vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, true), (ids[2], 2_000.0, 4_000.0, false)]);
++//! assert_eq!(GalaxyModel::warp_jump_count(&constrained, 2_500.0), 2);
++//! assert_eq!(model.reachable_systems(&addresses[0], 2_500.0), vec![ids[0], ids[1], ids[2]]);
++//! let tour = model.tsp_nearest_neighbor(ids[0], &[ids[2], ids[1]], false)?;
++//! assert_eq!(tour.hops.iter().map(|hop| hop.system_id).collect::<Vec<_>>(), vec![ids[0], ids[1], ids[2]]);
++//! assert_eq!(tour.total_distance_ly, 4_000.0);
++//! assert!(matches!(model.tsp_nearest_neighbor(ids[0], &[], false), Err(nms_graph::RouteError::TooFewTargets)));
++//! assert!(matches!(model.shortest_path(ids[0], ids[3]), Err(nms_graph::RouteError::NoPath { from, to }) if from == ids[0] && to == ids[3]));
++//! # Ok::<(), Box<dyn std::error::Error>>(())
++//! ```
+ 
+ use std::collections::HashSet;
+ 
+@@ -46,11 +102,11 @@ pub enum RoutingAlgorithm {
+ /// Errors that can occur during routing.
+ #[derive(Debug, Clone)]
+ pub enum RouteError {
+-    /// A system ID was not found in the model.
++    /// A system ID or its graph node index is absent from the model.
+     SystemNotFound(SystemId),
+-    /// No same-galaxy path exists, or the requested systems are in different galaxies.
++    /// A requested route would cross galaxy boundaries.
+     NoPath { from: SystemId, to: SystemId },
+-    /// Too few targets to form a route.
++    /// An empty target list was supplied to a TSP planner.
+     TooFewTargets,
+ }
+ 
+@@ -78,8 +134,9 @@ impl GalaxyModel {
+     ///
+     /// # Errors
+     ///
+-    /// Returns [`RouteError::SystemNotFound`] when either ID is absent and
+-    /// [`RouteError::NoPath`] when the IDs belong to different galaxies.
++    /// Returns [`RouteError::SystemNotFound`] when either ID or node-map entry
++    /// is absent, and [`RouteError::NoPath`] when the IDs belong to different
++    /// galaxies. A same-ID query returns one zero-distance hop.
+     pub fn shortest_path(&self, from: SystemId, to: SystemId) -> Result<Route, RouteError> {
+         if !self.systems.contains_key(&from) {
+             return Err(RouteError::SystemNotFound(from));
+@@ -229,6 +286,8 @@ impl GalaxyModel {
+     /// Plan a route visiting all targets using nearest-neighbor greedy.
+     ///
+     /// Uses Euclidean distances directly (not graph edges) for the TSP ordering.
++    /// Duplicate targets are retained, and the nearest-neighbor heuristic does
++    /// not promise a globally shortest tour.
+     ///
+     /// # Errors
+     ///
+@@ -280,7 +339,9 @@ impl GalaxyModel {
+ 
+     /// Convert a validated ordered list of system IDs into a route.
+     ///
+-    /// Empty input produces an empty zero-distance route.
++    /// Empty input produces an empty zero-distance route. Repeated IDs in a
++    /// nonempty order are retained, and leg distances are recomputed directly
++    /// from system addresses rather than read from graph edges.
+     ///
+     /// # Errors
+     ///
+@@ -317,7 +378,8 @@ impl GalaxyModel {
+     /// Improve a route using 2-opt local search.
+     ///
+     /// Iteratively reverses segments when doing so reduces total distance.
+-    /// Runs until no improvement is found (local optimum).
++    /// Runs until no improvement is found (local optimum); orders with fewer
++    /// than four entries are returned without a 2-opt pass.
+     ///
+     /// # Errors
+     ///
+@@ -404,6 +466,8 @@ impl GalaxyModel {
+     /// # Errors
+     ///
+     /// Returns a typed error if a route system is missing or the route spans galaxies.
++    /// The range is not validated; the returned route is best effort and can
++    /// retain an over-range final leg when no known same-galaxy waypoint helps.
+     pub fn constrain_hops(&self, route: &Route, max_ly: f64) -> Result<Route, RouteError> {
+         let order: Vec<_> = route.hops.iter().map(|hop| hop.system_id).collect();
+         self.validate_order(&order)?;
+@@ -529,7 +593,16 @@ impl GalaxyModel {
+         Ok(())
+     }
+ 
+-    /// Count the number of warp jumps needed for a route at a given range.
++    /// Count jumps as the sum of `ceil(leg_distance / warp_range)` for route legs after the start.
++    ///
++    /// The range is not validated; callers should supply a finite positive
++    /// value. Floating-point-to-`usize` casts follow Rust cast semantics, and
++    /// the accumulated count can overflow on some build profiles.
++    ///
++    /// # Panics
++    ///
++    /// Can panic on builds with integer overflow checks when the accumulated
++    /// `usize` jump count exceeds its representable range.
+     pub fn warp_jump_count(route: &Route, warp_range: f64) -> usize {
+         route
+             .hops
+@@ -543,7 +616,9 @@ impl GalaxyModel {
+ 
+     /// Find all systems reachable from `start` within a given warp range.
+     ///
+-    /// Uses DFS over the spatial index (no graph clone needed).
++    /// Uses a depth-first search over map-based radius queries, independent of
++    /// graph edges and without cloning the graph. The start is included even
++    /// when the range is negative or NaN; results are sorted by system identity.
+     ///
+     /// # Errors
+     ///
+diff --git a/crates/nms-graph/src/spatial.rs b/crates/nms-graph/src/spatial.rs
+index 4f967cd..9006424 100644
+--- a/crates/nms-graph/src/spatial.rs
++++ b/crates/nms-graph/src/spatial.rs
+@@ -1,16 +1,34 @@
++//! Spatial identity and point types used by the galaxy model.
++
+ use rstar::{AABB, PointDistance, RTreeObject};
+ 
+ // Re-export SystemId from nms-core (canonical definition lives there).
++/// Canonical galaxy-qualified, planet-zeroed identity for a system.
+ pub use nms_core::system::SystemId;
+ 
+ /// A system's position in 3D voxel space, stored in the R-tree.
+ #[derive(Debug, Clone, Copy, PartialEq)]
+ pub struct SystemPoint {
++    /// Galaxy-qualified identity associated with these coordinates.
+     pub id: SystemId,
++    /// Voxel-space coordinates in X, Y, Z order.
+     pub point: [f64; 3],
+ }
+ 
+ impl SystemPoint {
++    /// Store the supplied identity and voxel coordinates without validation.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_core::{GalacticAddress, SystemId};
++    /// use nms_graph::SystemPoint;
++    ///
++    /// let address = GalacticAddress::new(3, -4, 5, 1, 0, 9);
++    /// let point = SystemPoint::new(SystemId::from_address(&address), 3.0, -4.0, 5.0);
++    /// assert_eq!(point.point, [3.0, -4.0, 5.0]);
++    /// assert_eq!(point.id.reality_index(), 9);
++    /// ```
+     pub fn new(id: SystemId, x: f64, y: f64, z: f64) -> Self {
+         Self {
+             id,
+@@ -18,7 +36,7 @@ impl SystemPoint {
+         }
+     }
+ 
+-    /// Create from a `GalacticAddress`.
++    /// Create from an address, deriving the canonical system ID and voxel point.
+     pub fn from_address(addr: &nms_core::address::GalacticAddress) -> Self {
+         let id = SystemId::from_address(addr);
+         Self::new(
