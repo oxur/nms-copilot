@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.103
+version: 1.104
 project: project01-mvp
 status: active
 depends-on: []
@@ -1214,3 +1214,7 @@ Core docs candidate40e6 has8of9independentgroups green; strictarchive docs red o
 ### Arc06 Slice30 core API increment accepted — 2026-10-25 UTC
 
 Version1.103 / arc1.116 records six-row core API docs closure at40e6 under exact approved generated-field A, actual independent JSON/archive output and negative controls. Original strict reds retained, no runtime/source suppression. Arc48rows35done13open/project25open. Full originalM7.6 remains open with31save/32graph-query/33remaining API+full0039 reconciliation ownedCDC; all other original/higher obligations remain. Final review/retrospective and exact record-version qualification live in Slice30.
+
+### Arc06 required save API owner issued — 2026-10-25 UTC
+
+Version1.104/arc1.117 details Slice31 complete11file nms-save docs/actual source contracts/keyexamples, same roles/models/dedicated40e6/initial0actualrefinements.49arcrows35done14open/project25open, fullM7.6/32–33 and all otheroriginal/higherowners remain open. No newpolicy/integration authority or implementation claim.

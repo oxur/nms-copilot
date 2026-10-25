@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.116, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.117, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1007,3 +1007,9 @@ Same CDC6.1-solHigh/CC6-lunaHigh/onearc authority.48arc34done14open/project25ope
 Version1.116 closes all6CD/R06-S30 at clean40e6bc8f under the explicitly approved exact generated DiscoverySourceResolver::Community.source exception. Original strict reds remain red; new independent fresh archive JSON/output plus exactly-one/extra/wrong-origin proof passes with supported force-warn mechanics, other warnings fatal. Ten positive current groups include the original eight byte-applicable groups and two new approved-A groups; default89/archive90 units and14 doctests each overlap. Full21CC/17CDC raw records, four actual refinements, exact return versions/transfer and final retrospective retained. No source change after approval or historical waiver. See [final independent acceptance](slice30-core-api-documentation/cdc-verification.md#final-independent-acceptance-and-bubble-up--2026-10-25-utc).
 
 48arc rows/35done/13open; project25open. Full originalM7.6 remains OPEN: planned31 save,32 graph/query,33 remaining public APIs/full0039 reconciliation, allCDC. Slice30 surfaced exact generated-field and flag-precedence readiness misses, so later owners must classify actual generated origins and preserve this approved limit explicitly; this version records that scope/acceptance feedback before next planning. Known glyph UTF8 panic remains separately owned reconciliation, no runtime fix silently added. Main ownership correction and root's CC15 attribution remain recorded; protected pre-existing agent addition was not changed. All other original input/game-backed/cache/history/coverage/distribution/UI/parent/Operator/integration/release obligations survive.
+
+## Slice31 complete save API documentation issued — 2026-10-25 UTC
+
+Version1.117 details [Slice31](slice31-save-api-documentation/slice-plan.md), eleven nms-save source paths/comments-only plus17 exact existingpayload layout sites, six OPEN SD rows. Clean dedicatedcodex/save-api-documentation from accepted40e6; same selected/applied CDC6.1-solHigh/CC6-lunaHigh, usablecontext/noactiveprocess confirmed. All98 prior save warnings point to authoreditems; wholeAPI/source contracts and literalchecked-vs-legacy/byte/mapping/metadata/isolatedlocator examples resolved beforehandoff. Actual7/0capturecontrols installedbeforefirstdiagnostic. Initial0actualrefinements; pair→fullCDCworksheethold→sevenappropriategroups→freeze/independentreview/retro. No sourceimplementation/acceptance yet.
+
+NewR06-S31 gives49arcrows35done14open/project25open. RequiredfullM7.6 remainsOPEN: current31save,planned32graph/query,33remainingAPI/full0039reconciliation, allCDC. Exact30generatedresolverexception preserved, not extended tosavewarnings; strictsave mustzero. No otheroriginalinput/game-backed/history/cache/coverage/distribution/UI/parent/Operator/integration/release obligation changes. Mainpre-existingagentaddition/pins/external held; no newpolicygate.

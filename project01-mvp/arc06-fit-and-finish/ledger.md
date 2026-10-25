@@ -319,3 +319,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 [Exact generated-field decision](slice30-core-api-documentation/cdc-verification.md); no Slice30 closure before resolution.
 
 2026-10-25 formal30close: all6CD/R06-S30DONE on40e6 with exact Operator-approved generated-field A exception and fresh independent actual archive output. Original strict reds retained; ten positive current groups/21CC+17CDC full raw records/final retrospective.48rows35done13open/project25open; fullM7.6/31–33 and all higher obligations remain OPEN.
+
+## Slice31 complete save API documentation owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S31 | Complete truthful save API docs and meaningful runnable key examples | SixSD rows/full eleven-file worksheet/strictsave/unit+integration+doctests/executablepreservation | correctness-grade | Original0039 M7.6 next required API increment | open | [Slice31 plan](slice31-save-api-documentation/slice-plan.md) | FullM7.6/planned32–33 and all higher obligations remain open |
+
+49rows35done14open/project25open; all48priorrows preserved. Initial0actualrefinements, no sourceimplementation/acceptance atissue.

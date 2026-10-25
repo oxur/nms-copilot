@@ -1,0 +1,19 @@
+{
+  "source_worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+  "branch": "codex/save-api-documentation",
+  "baseline": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+  "paths": [
+    "crates/nms-save/src/address.rs",
+    "crates/nms-save/src/convert.rs",
+    "crates/nms-save/src/decompress.rs",
+    "crates/nms-save/src/error.rs",
+    "crates/nms-save/src/lib.rs",
+    "crates/nms-save/src/locate.rs",
+    "crates/nms-save/src/mapping.rs",
+    "crates/nms-save/src/metadata.rs",
+    "crates/nms-save/src/model.rs",
+    "crates/nms-save/src/validated.rs",
+    "crates/nms-save/src/xxtea.rs"
+  ],
+  "change_kind": "Whole-line rustdoc and blank lines only, plus exact 17 existing payload declaration layout/trailing-comma normalizations identified in supplied scope auditor; types, attributes, signatures, bodies, tests and all other paths frozen."
+}
