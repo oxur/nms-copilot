@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.141, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.142, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1129,3 +1129,7 @@ Version1.140 closesall6CD/R06-S42atclean2ce768fc390810eac4bc3d59c7cefd85a2ddce14
 ## Slice43 dispatcher documentation owner issued — 2026-10-25 UTC
 
 Version1.141 details [Slice43](slice43-repl-dispatch-api-documentation/slice-plan.md), EXACTonepublicdispatchsourcefile/module/keyliteralexamples fromaccepted2ce768fc. SameapprovedCDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42handoff/contextfitassessment. FullW1–W4/E1–E2caller/default/scope/converter/error/panic/wholeobservationchoicesresolved; no production/API/Clap/test/dependencychange. Originalninegroups/rawfirstsupportcontrols/independentacceptance/retro; sixRD/R06-S43OPEN/initial0actualrefinements. Required44fullpublicsurface/style/strict/fulloriginal0039M7.6reconciliation CDCowned/furtherusabledecompositionallowed, exactcoregenerated-fieldexception/isolatedCLI/current29capturemethod/knownformatterlimitsretained.61arc47done14open/all25projectrowsOPEN, authenticNomNominput/alloriginalhigherownerspreserved/no cleanup/integration/release.
+
+## Slice43 dispatcher documentation accepted — 2026-10-25 UTC
+
+Version1.142 closes all6RD/R06-S43 at clean a3f74a86f0ceeb523d7cda62c8c2bc38215669de: complete one-file public dispatcher documentation/two pure literal examples, all non-doc/API/tests/deps/Clap inputs preserved. Nine fresh CDC groups pass235runtime+32all-feature docs(24executing8compile-only)+28no-default docs(22executing6compile-only), strictzero/preservation/opposed/diffs. Two actual refinements/all15CC+13CDC raw values/exact returns/before01/02 snapshots/attribution and operational qualifications/final retrospective retained; no exception or structural scope/sequence amendment. Required44 full public-surface/style/strict/original0039M7.6 reconciliation remains CDC-owned/further usable decomposition allowed.61arc48done13open/all25projectrowsOPEN; authentic NomNom input/all original higher owners retained/no cleanup/integration/release. See [CDC43 acceptance](slice43-repl-dispatch-api-documentation/cdc-verification.md) and [retrospective](slice43-repl-dispatch-api-documentation/cdc-retrospective.md).

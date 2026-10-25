@@ -1,6 +1,6 @@
 # Slice43 — REPL dispatcher API documentation
 
-Version1.0,2026-10-25UTC. ACTIVE/initial0ACTUALrefinements/sixRDOPEN. StandingAutonomousArc06only, CDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42completedhandback/observedcontextdensityandreliabilityhistory. No modelsubstitution/extra reviewer. CDCplanning/independentacceptance; CCONEsource/index/gatesafterfinitefullrequiredintake/source-citedreadbackACK.
+Version1.3,2026-10-25UTC. CLOSED/all6RD DONE at a3f74a86; twoACTUALrefinements. Opening authority and prior iteration states below are historical. StandingAutonomousArc06only, CDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42completedhandback/observedcontextdensityandreliabilityhistory. No modelsubstitution/extra reviewer. CDCplanning/independentacceptance; CCONEsource/index/gatesafterfinitefullrequiredintake/source-citedreadbackACK.
 
 Dedicatedcodex/repl-dispatch-api-documentation cleanaccepted2ce768fc, EXACTcrates/nms-copilot/src/dispatch.rs: module/publicdispatchwholelineRustdoc/adjacentblanksonly, allorderednon-doc/privatehelpers/API/layouts/tests/deps/otherpaths/ClapinputsFROZEN. Everywrite resolveddedicatedroot+allowlist+actualbytes/countguards/explicitcwd/abspath/inmemoryfirst. Mainknownagentstray9line2cd450ce/held/externalpinsprotected/nocleanup.
 
@@ -19,3 +19,7 @@ Version1.1/currentimmutable01/FIRSTactual1of5/fourleft. Initialactualpair0/pinef
 ## First correction complete / second narrow correction
 
 Version1.2/currentimmutable02/SECONDactual2of5/threeleft. Actual01pair0/fulltargetedwalk/E1exact/E2onlyintendedStatusrepairverified. Exactly3docsentences(privatehelperlink/plaincode, 12/4bitmaskdetail,u64confirmation); allotherprose/examples/code/helpersfrozen. Originalnine/required44/fullM7.6binding, all6RDOPEN/noexception/runtimeyet.
+
+## Final acceptance
+
+All six RD rows accepted at clean a3f74a86; nine independent groups235runtime/32+28 separate doctest configurations/strictzero/preservation/opposed/diffs. Full original15CC+13CDC raw values, exact handbacks, before01/02 source snapshots, metadata/attribution qualifications and final retrospective archived. Arc61rows48done13open/project25open; required44/fullM7.6 and all higher/input/Operator gates retained. No acceptance exception or integration/release.

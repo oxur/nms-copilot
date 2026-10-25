@@ -1,0 +1,66 @@
+{
+  "created_utc": "2026-10-25T14:01:40.030099+00:00",
+  "meaning": "Actual present archived supporting payload bytes; first-class assignments excluded; no earlier inventory claimed",
+  "files": {
+    "before01-source-inventory.json": {
+      "bytes": 46763,
+      "sha256": "eb3a4fef688f566aa991b170e0b17e55373a5f2b7c1e9c1cbd2410cbe2a9118f"
+    },
+    "before02-source-inventory.json": {
+      "bytes": 49463,
+      "sha256": "786adc3d705163c30dd415e3865d40c485c7f908930a445516c731679ffcea16"
+    },
+    "cc-attempts-final.json": {
+      "bytes": 126632,
+      "sha256": "3479289dceb21d2bf3d7261b46780d97e36088fc32d08e86e0ba89f6f0fa5861"
+    },
+    "cc-attempts.json": {
+      "bytes": 9042,
+      "sha256": "f122d91a37a56be0b87caa2013afca37586590c13169e16bee1ab0666d6a3675"
+    },
+    "cc-capture.py": {
+      "bytes": 3756,
+      "sha256": "7b2ce2db22e896671b8042c9abb57082f9898d46ac7fbab7fd9c6d42541c1519"
+    },
+    "cc-closing-report.md": {
+      "bytes": 4244,
+      "sha256": "64c5c97dbf600405784b3805cb1afda19d5c485f562f9c6679dcee908c7ad803"
+    },
+    "cc-execution.md": {
+      "bytes": 29659,
+      "sha256": "2e59142f19a5187f3e128669a81d6f6cbb0c87e018a681bff0a169539f2ef6cf"
+    },
+    "cc-source-message.txt": {
+      "bytes": 391,
+      "sha256": "f167dd01db72debcc852dc17711e214e9421971a1909c6d062b23285582e8280"
+    },
+    "cc-validation.json": {
+      "bytes": 17424,
+      "sha256": "2b0d3e26d5af5782c9a81ad15dc403127b23d72589fcbdbf51e8051b9ea9236c"
+    },
+    "cdc-attempts-final.json": {
+      "bytes": 83780,
+      "sha256": "57c50afc1f12472186d8b7a1521bd090944d525583af7ecc2a7401145ae2c28c"
+    },
+    "cdc-attempts.json": {
+      "bytes": 18100,
+      "sha256": "fa59430401f3dcb3665abea109960552ff44faa711ea83d660251525cab68014"
+    },
+    "cdc-capture.py": {
+      "bytes": 3720,
+      "sha256": "dd1d0b0c5b0e378ef0d0a5e4af655e0823377f2cd5a11a8f18c807125b2990df"
+    },
+    "closing-worktrees.json": {
+      "bytes": 10537,
+      "sha256": "fdbb7fbec57405d4e895098b9570f14bb77d47cead0730462076c7973f269224"
+    },
+    "issued-worktree-inventory.json": {
+      "bytes": 10268,
+      "sha256": "7ec0f880988b2d78ab61db545f484afdbd7180cd738a400d9babf91f8d2185e4"
+    },
+    "scope-audit.py": {
+      "bytes": 1762,
+      "sha256": "49bef2e1f2cd802947de111428730ad3c1070b5ba8263846e271c0cf26970b1b"
+    }
+  }
+}

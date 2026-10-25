@@ -1,0 +1,376 @@
+{
+  "schema_version": 1,
+  "issue": "db44c7ab11bbad55caebd3ded1e638eef96fedf7",
+  "source": {
+    "path": "crates/nms-copilot/src/dispatch.rs",
+    "baseline": "2ce768fc390810eac4bc3d59c7cefd85a2ddce14",
+    "commit": "a3f74a86f0ceeb523d7cda62c8c2bc38215669de",
+    "parent": "2ce768fc390810eac4bc3d59c7cefd85a2ddce14",
+    "tree": "12758ea4ec8605d1f7b678f9668fba532f918319",
+    "source_lf": 919,
+    "source_sha256": "0913189d01941503d807fb74083253db271e57db4fccd431417acd0777f03690",
+    "baseline_source_sha256": "3addf3cb3cfa20640d449abc3b2356d03227b9b06b6ca58940833b8c89627455",
+    "binary_diff_sha256": "87682e14325d5728e72bfd53e10c3f757f6d4df385ff461547d1522f6b4ceec3",
+    "changed_paths": [
+      "crates/nms-copilot/src/dispatch.rs"
+    ],
+    "ordered_non_doc_equal": true,
+    "tracked_clean": true
+  },
+  "gate_attempts": [
+    {
+      "label": "slice43-make-format",
+      "id": "49a155f183cd4035bfe7badf844d6d4c",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 107,
+      "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "ef1291a6eafff51017abcf1073717140af264d48e3b778bc5e045e3bb8420c2f",
+      "after_identity": "ef1291a6eafff51017abcf1073717140af264d48e3b778bc5e045e3bb8420c2f",
+      "started_utc": "2026-10-25T13:33:49.769875+00:00",
+      "ended_utc": "2026-10-25T13:33:50.994983+00:00"
+    },
+    {
+      "label": "slice43-make-lint",
+      "id": "d39a610c43b046a8abf62b3178306609",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 176,
+      "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+      "stderr_bytes": 12130,
+      "stderr_sha256": "59c89475fe5871b605ee2b951cdda87d9d4811cc41db6c4e3a1ebc82eb13d1c1",
+      "before_identity": "ef1291a6eafff51017abcf1073717140af264d48e3b778bc5e045e3bb8420c2f",
+      "after_identity": "ef1291a6eafff51017abcf1073717140af264d48e3b778bc5e045e3bb8420c2f",
+      "started_utc": "2026-10-25T13:33:54.414994+00:00",
+      "ended_utc": "2026-10-25T13:34:22.134211+00:00"
+    },
+    {
+      "label": "slice43-refinement01-make-format",
+      "id": "fcefd80333114d2690556cc57529483d",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 107,
+      "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "0457a40b3bb997139cc631d2942225bebc4a23ab1ec7137932c10d7e2de507b5",
+      "after_identity": "0457a40b3bb997139cc631d2942225bebc4a23ab1ec7137932c10d7e2de507b5",
+      "started_utc": "2026-10-25T13:40:49.779848+00:00",
+      "ended_utc": "2026-10-25T13:40:50.894668+00:00"
+    },
+    {
+      "label": "slice43-refinement01-make-lint",
+      "id": "dfc1d46fdc5a4173b63562d3a65605ba",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 176,
+      "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+      "stderr_bytes": 460,
+      "stderr_sha256": "08943dc79d1e5f85f60b2e9e95603cc1512df38b936efec182104f4832c48ad1",
+      "before_identity": "0457a40b3bb997139cc631d2942225bebc4a23ab1ec7137932c10d7e2de507b5",
+      "after_identity": "0457a40b3bb997139cc631d2942225bebc4a23ab1ec7137932c10d7e2de507b5",
+      "started_utc": "2026-10-25T13:40:52.783859+00:00",
+      "ended_utc": "2026-10-25T13:40:56.378610+00:00"
+    },
+    {
+      "label": "slice43-refinement02-make-format",
+      "id": "1d65222b7e544629bc1b12184db05bf9",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 107,
+      "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:49:25.079464+00:00",
+      "ended_utc": "2026-10-25T13:49:26.275320+00:00"
+    },
+    {
+      "label": "slice43-refinement02-make-lint",
+      "id": "1a72e70fc99a47af8b7f551ec091d1a3",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 176,
+      "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+      "stderr_bytes": 460,
+      "stderr_sha256": "e991dfb37df1971c3ef62e03c9204ccaff24aba06ad14fc932d85954bab21630",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:49:28.463147+00:00",
+      "ended_utc": "2026-10-25T13:49:31.822033+00:00"
+    },
+    {
+      "label": "slice43-doctest-all-features",
+      "id": "6c2df481c84b4b5990032f5eceef629d",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 2861,
+      "stdout_sha256": "4a22083cb0f5fae8757010ae12aaf0ef1a77383c9a04550b94fb0b7d05fa4033",
+      "stderr_bytes": 11189,
+      "stderr_sha256": "6a15a215f28dd857fb2fa9d52501ca0bfe5c9a826362719502291f3dc128d3d1",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:49:57.953832+00:00",
+      "ended_utc": "2026-10-25T13:50:31.440924+00:00"
+    },
+    {
+      "label": "slice43-doctest-no-default-features",
+      "id": "8ac37da4c3584065806fc9f2bf2f2760",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 2498,
+      "stdout_sha256": "442486964fc746e642ba69610bc36f04dd82c14973828263681ed9647bb17e66",
+      "stderr_bytes": 1529,
+      "stderr_sha256": "2e2a7189b08755a972aee4dc3765d7614ef6000ec236e6508a3515bdaa0d636c",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:50:56.942261+00:00",
+      "ended_utc": "2026-10-25T13:51:09.196690+00:00"
+    },
+    {
+      "label": "slice43-lib-tests-all-features",
+      "id": "2a2ec1e6a26e4fc8b09da1e2ea0dfb24",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 15598,
+      "stdout_sha256": "8a32b1055737cc9e4c4ce664b9dfdd1390b6fea0e2790067f14d1e07107d83ae",
+      "stderr_bytes": 544,
+      "stderr_sha256": "f0aa8c77bb1b8a9753d1c545e4c6adc37684131f4c4c91075636042e013a388d",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:51:20.270504+00:00",
+      "ended_utc": "2026-10-25T13:51:25.193913+00:00"
+    },
+    {
+      "label": "slice43-strict-copilot-docs",
+      "id": "21bcc6e634f34f40b9511c5bfe22bba8",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 1728,
+      "stderr_sha256": "3efe5ffb009b4075ea697c953c3012aff75cf4471886bccae24ba7e20f3572ac",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:51:28.849068+00:00",
+      "ended_utc": "2026-10-25T13:51:33.085867+00:00"
+    },
+    {
+      "label": "slice43-scope-audit",
+      "id": "8c5c878119544f249076871f25c09569",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 435,
+      "stdout_sha256": "83d2b54a943db65748965816f5577984e5f461cadb69ba5cfdeab41528632afc",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:51:35.882986+00:00",
+      "ended_utc": "2026-10-25T13:51:36.086007+00:00"
+    },
+    {
+      "label": "slice43-working-diff-check",
+      "id": "3f2230d9b0014dcf90078fa35c269320",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:51:38.646975+00:00",
+      "ended_utc": "2026-10-25T13:51:38.739797+00:00"
+    },
+    {
+      "label": "slice43-baseline-diff-check",
+      "id": "613adc3953424f5d97c3896a17239dc1",
+      "exit_code": 0,
+      "status": "complete",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "before_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "after_identity": "81c9ab526d4f1dc5c069fe56473dc20a19cb49919e72efc5ab3ad46676412485",
+      "started_utc": "2026-10-25T13:51:40.987329+00:00",
+      "ended_utc": "2026-10-25T13:51:41.077121+00:00"
+    }
+  ],
+  "results": {
+    "all_feature_doctests": {
+      "passed": 32,
+      "failed": 0,
+      "ignored": 0
+    },
+    "no_default_feature_doctests": {
+      "passed": 28,
+      "failed": 0,
+      "ignored": 0
+    },
+    "authorized_host_library_tests": {
+      "passed": 235,
+      "failed": 0,
+      "ignored": 0
+    },
+    "strict_rustdoc": {
+      "exit_code": 0,
+      "flags": "-D warnings -D missing_docs",
+      "copilot_warnings": 0,
+      "dependency_notice": "proc-macro-error2 future-incompatibility; not a Rustdoc warning"
+    },
+    "scope_audit": {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-dispatch-api-documentation",
+      "baseline": "2ce768fc390810eac4bc3d59c7cefd85a2ddce14",
+      "head": "2ce768fc390810eac4bc3d59c7cefd85a2ddce14",
+      "exact_changed_paths": [
+        "crates/nms-copilot/src/dispatch.rs"
+      ],
+      "ordered_non_doc_equal": true,
+      "actual_status_empty_response_mutation_rejected": true,
+      "diff_sha256": "87682e14325d5728e72bfd53e10c3f757f6d4df385ff461547d1522f6b4ceec3"
+    },
+    "working_diff_check_exit": 0,
+    "baseline_diff_check_exit": 0
+  },
+  "frozen_examples": {
+    "E1_sha256": "a892c223266c14f5e0c5614726c1294f432a3ef4b01fa5607eb0d57572d4dd36",
+    "E2_sha256": "7037230cb69be22524428a7c4b093c91ad5f3ae0290edf7aa6763cc2356fed0a",
+    "CDC_verified": "E1 exact; E2 exact outside Status RHS; concat! contains the five issued literals"
+  },
+  "raw_capture_records": {
+    "cc": {
+      "path": "/private/tmp/nms-slice43-cc-attempts.json",
+      "bytes": 126632,
+      "sha256": "3479289dceb21d2bf3d7261b46780d97e36088fc32d08e86e0ba89f6f0fa5861",
+      "entry_count": 15,
+      "support_attempts": [
+        {
+          "label": "support NUL raw-channel exit 7",
+          "id": "2c36f78dd8334cfaab3773680e0abf43",
+          "exit_code": 7,
+          "status": "complete",
+          "stdout_bytes": 10,
+          "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+          "stderr_bytes": 5,
+          "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:53.553500+00:00",
+          "ended_utc": "2026-10-25T13:19:53.891968+00:00"
+        },
+        {
+          "label": "support NUL raw-channel exit 0",
+          "id": "777bdb14006849039c2315fde60b3bf3",
+          "exit_code": 0,
+          "status": "complete",
+          "stdout_bytes": 10,
+          "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+          "stderr_bytes": 5,
+          "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:54.012798+00:00",
+          "ended_utc": "2026-10-25T13:19:54.146027+00:00"
+        }
+      ]
+    },
+    "cdc_support": {
+      "path": "/private/tmp/nms-slice43-cdc-attempts.json",
+      "bytes": 18100,
+      "sha256": "fa59430401f3dcb3665abea109960552ff44faa711ea83d660251525cab68014",
+      "entry_count": 4,
+      "support_attempts": [
+        {
+          "label": "support NUL raw-channel exit 7",
+          "id": "1362442e562944879d37dc5c24c899e4",
+          "exit_code": 7,
+          "status": "complete",
+          "stdout_bytes": 10,
+          "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+          "stderr_bytes": 5,
+          "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:54.258853+00:00",
+          "ended_utc": "2026-10-25T13:19:54.387414+00:00"
+        },
+        {
+          "label": "support NUL raw-channel exit 0",
+          "id": "a99b0dd4748e4d12b8949d3078f37be5",
+          "exit_code": 0,
+          "status": "complete",
+          "stdout_bytes": 10,
+          "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+          "stderr_bytes": 5,
+          "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:54.496401+00:00",
+          "ended_utc": "2026-10-25T13:19:54.623499+00:00"
+        },
+        {
+          "label": "support helper py_compile",
+          "id": "188a7c7264f845eeba162de7d178b849",
+          "exit_code": 0,
+          "status": "complete",
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:54.826730+00:00",
+          "ended_utc": "2026-10-25T13:19:54.979151+00:00"
+        },
+        {
+          "label": "support preservation opposed self-test",
+          "id": "59a08d6011624a9fa16d18592257622e",
+          "exit_code": 0,
+          "status": "complete",
+          "stdout_bytes": 137,
+          "stdout_sha256": "c8fb1835032b7481ed49034f28a14079778d8beb585ed2b194908c1437f0ae98",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "before_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "after_identity": "2d62f2c6de840191e82f39a982fe553be03e1be8c3d4054ea5c12c73b1306f2d",
+          "started_utc": "2026-10-25T13:19:55.176546+00:00",
+          "ended_utc": "2026-10-25T13:19:55.356157+00:00"
+        }
+      ]
+    }
+  },
+  "support_inventory": {
+    "cc": "Two NUL controls, expected exits 7 and 0; each 10-byte stdout and 5-byte stderr.",
+    "cdc": "Two NUL controls plus helper py_compile and synthetic ordered-non-doc/opposed-mutation self-test.",
+    "product_gate_credit": false
+  },
+  "commit_message": {
+    "path": "/private/tmp/nms-slice43-cc-source-message.txt",
+    "bytes": 391,
+    "sha256": "f167dd01db72debcc852dc17711e214e9421971a1909c6d062b23285582e8280",
+    "raw_body_matches": true,
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
+  },
+  "rd_disposition": {
+    "RD-01": "proposed-done",
+    "RD-02": "proposed-done",
+    "RD-03": "proposed-done",
+    "RD-04": "proposed-done",
+    "RD-05": "proposed-done",
+    "RD-06": "open-pending-CDC"
+  },
+  "remaining": [
+    "Canonical six rows remain open pending CDC disposition.",
+    "CDC fresh original-nine verification, closure, and retrospective remain outstanding.",
+    "Required44/full M7.6, authentic NomNom inputs, higher-scale owners, integration, and release remain open.",
+    "No push, merge, publish, integration, or release was performed."
+  ]
+}

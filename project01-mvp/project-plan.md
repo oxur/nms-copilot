@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.128
+version: 1.129
 project: project01-mvp
 status: active
 depends-on: []
@@ -1314,3 +1314,7 @@ Version1.127 recordscomplete12fileCLIinternalAPI/commandnavigation atclean2ce768
 ## Arc06 Slice43 dispatcher documentation increment issued — 2026-10-25 UTC
 
 Version1.128 detailsONEdispatchpublicAPI/module/keyliteralexamples fromaccepted2ce768fc, sameCDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42headroom. Non-doc/API/tests/Clap/depsfrozen; originalninegroups/strictcopilotzero/independentacceptance/retro. SixRD/R06-S43OPEN/initialzeroactualrefinements,61arc47done14open/all25projectrowsOPEN. Required44fullpublicsurface/style/strict/full0039M7.6reconciliation remainsCDC/furtherusabledecompositionallowed, authenticNomNominput/alloriginalhigherownersretained/no integration/release.
+
+## Arc06 Slice43 independently accepted — 2026-10-25 UTC
+
+Version1.129 records complete one-file public dispatcher documentation/keyliteral examples at clean a3f74a86/all6RD/R06-S43. Nine fresh CDC groups235runtime/32+28 separate feature-doc denominators/strictzero/preservation/opposed/diffs; twoactualrefinements/exact raw records/return qualifications/final retrospective/noexception. Required44 fullpublicsurface/style/strict/original0039M7.6 reconciliation remains CDC/further usable decomposition allowed.61arc48done13open/all25projectrowsOPEN; authentic NomNom input/all original higher owners retained/no integration/release.

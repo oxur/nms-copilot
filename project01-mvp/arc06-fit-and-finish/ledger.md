@@ -444,6 +444,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S43 | Complete truthful public REPL dispatcher docs/keyexamples | SixRD/W1–W4/E1–E2/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | — | Required44/fullM7.6/allhigherowners OPEN |
+| R06-S43 | Complete truthful public REPL dispatcher docs/keyexamples | SixRD/W1–W4/E1–E2/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | done | [CDC43 acceptance](slice43-repl-dispatch-api-documentation/cdc-verification.md) — reproduced | Required44/fullM7.6/allhigherowners OPEN |
 
 61arc47done14open/project25OPEN/initial0actualrefinements/noimplementationatissue.
+
+2026-10-25 formal43close: all6RD/R06-S43DONE at a3f74a86;61arc48done13open/project25OPEN. Prior issue/iteration counts preserved; required44/fullM7.6/higher owners OPEN.

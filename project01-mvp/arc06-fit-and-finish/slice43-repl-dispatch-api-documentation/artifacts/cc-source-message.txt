@@ -1,0 +1,6 @@
+Document REPL dispatcher contract and examples
+
+Clarify caller ownership, query defaults, state changes, conversion behavior, errors, and actual panic limits for the public dispatcher. Add literal pure examples for returned text, mutation, stored session state, and caller-handled failures.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>
