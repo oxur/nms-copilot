@@ -1,0 +1,28 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-compat-api-documentation",
+  "baseline": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+  "paths": [
+    "crates/nms-cache/src/data.rs",
+    "crates/nms-cache/src/error.rs",
+    "crates/nms-cache/src/freshness.rs",
+    "crates/nms-cache/src/lib.rs",
+    "crates/nms-cache/src/serialize.rs",
+    "crates/nms-compat/src/lib.rs",
+    "crates/nms-compat/src/nomnom.rs"
+  ],
+  "permitted_payload_layouts": {
+    "crates/nms-cache/src/error.rs": [
+      "TruncatedHeader { actual: usize },",
+      "SchemaMismatch { found: u32, expected: u32 },",
+      "SemanticMismatch { found: u32, expected: u32 },",
+      "Serialize(String),",
+      "Deserialize(String),",
+      "Io(io::Error),",
+      "Incompatible(CacheCompatibilityError),"
+    ],
+    "crates/nms-compat/src/nomnom.rs": [
+      "Json(#[from] serde_json::Error),"
+    ]
+  },
+  "change_kind": "whole-line Rustdoc and blankline documentation only, plus exactly eight payload declarations layout/trailingcomma expansion for payload docs; all other ordered bytes frozen"
+}

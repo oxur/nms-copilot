@@ -359,3 +359,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 52rows38done14open/project25OPEN. Prior51rows/criteria/dispositions preserved; initial0actualrefinements/noimplementation atissue.
 
 2026-10-25 formal34close: all6WD/R06-S34DONE at65ac646d; sevenindependentgroups/42runtime+7docs/strictzero/scopeopposed/diffs.52arc39done13open/project25open; fullM7.6/required35/allhigherowners retained.
+
+## Slice35 cache/compat API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S35 | Complete truthful cache/compat public documentation and key fallible examples | SixKC/full7fileworksheet/strictbothdocs/tests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | open | [Slice35 plan](slice35-cache-compat-api-documentation/slice-plan.md) | FullM7.6/required36applicationAPIs/fullreconciliation/M7.5input/allhigherowners retained |
+
+53arc39done14open/project25open; no sourceimplementation/acceptanceatissue.

@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.111
+version: 1.112
 project: project01-mvp
 status: active
 depends-on: []
@@ -1246,3 +1246,7 @@ Version1.110/arc1.123 details complete5file watch publicAPI increment fromaccept
 ## Arc06 Slice34 accepted — 2026-10-25 UTC
 
 Version1.111/arc1.124 records all6WD/R06-S34accepted at65ac646d, sevenindependentgroups/42runtime+7docs(3execute/4compile)/strictzero/exactpreservation/finalretro.52arc39done13open/all25projectrowsOPEN. FullM7.6 retains required35 cache/compat/application APIs/full0039 reconciliation; alloriginal/higherowners retained. No integration/release/parentacceptance.
+
+## Arc06 Slice35 cache/compat API owner — 2026-10-25 UTC
+
+Version1.112/arc1.125 issues sevenfile completecache/compatdoc increment/sixKC andR06-S35OPEN,53arc39done14open/all25projectrowsOPEN. Eightpayloadlayouts/completekeyoracles/actualAPIs/capture/independence resolved. FullM7.6/required36applicationAPIs/fullreconciliation remainsCDC; M7.5authenticexportinput unanswered/allhigherowners retained. No sourceimplementation/acceptance/integration/release claim.

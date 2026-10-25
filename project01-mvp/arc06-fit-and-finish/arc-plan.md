@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.124, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.125, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1055,3 +1055,7 @@ Version1.123 details [Slice34](slice34-watch-api-documentation/slice-plan.md), c
 ## Slice34 formal close — 2026-10-25 UTC
 
 Version1.124 closes all6WD/R06-S34 at clean65ac646db635aa97030c8a21fc46aa8d93f0ecb3: complete five-file watch API docs/key examples. Seven fresh independent groups pass,42runtime+7docs(3execute/4compile), strictzero/exactfivefile-threepayloadlayouts/opposedmutation/diffs. Three actual refinements/20CC+7CDC rawrecords/exactreturns/failurehistory/reportqualification/finalretro retained. No structural/scope/sequence amendment or acceptance waiver. FullM7.6 retains required35 cache/compat/application APIs/full0039 reconciliation (CDC,further usable split permitted); all original/higher owners unchanged.52arc39done13open, all25projectrows OPEN.
+
+## Slice35 cache/compat API owner issued — 2026-10-25 UTC
+
+Version1.125 details [Slice35](slice35-cache-compat-api-documentation/slice-plan.md): complete sevenfile cache/compat public docs/keycodec-rebuild-error/heuristictypedpassthrough examples, eight exact payloadlayouts, no executable/API/test/dependencychange. Dedicatedcodex/cache-compat-api-documentation cleanaccepted65ac; sameCDC6.1-solHigh/soleCC6-lunaHigh with qualitativeheadroom/noactiveprocessconfirmed. Complete W1–W3/E1–E3 grounded beforeinitialprompt. No authenticNomNomformat proof fromsyntheticexamples; M7.5input remainsOPEN. Required36applicationAPIs/full0039 reconciliation staysCDC,furtherboundedsplitsallowed. Sevenoriginalgroups/rawfirstsupportpreflight/independentacceptance/retro retained. Initial0actualrefinements/no productimplementationatissue.53arc39done14open/project25open; alloriginal/highergates unchanged.
