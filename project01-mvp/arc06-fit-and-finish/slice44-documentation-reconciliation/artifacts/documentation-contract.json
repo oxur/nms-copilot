@@ -1,0 +1,619 @@
+{
+  "created_utc": "2026-10-25T14:10:06.486323+00:00",
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+  "baseline": "a3f74a86f0ceeb523d7cda62c8c2bc38215669de",
+  "scope": [
+    "CONTRIBUTING.md",
+    "crates/nms-copilot/src/config.rs",
+    "crates/nms-core/src/address.rs",
+    "crates/nms-graph/src/import.rs",
+    "crates/nms-graph/src/model.rs",
+    "crates/nms-graph/src/query.rs",
+    "crates/nms-graph/src/spatial.rs",
+    "crates/nms-query/src/find.rs",
+    "crates/nms-query/src/route.rs",
+    "crates/nms-query/src/show.rs",
+    "crates/nms-query/src/stats.rs",
+    "crates/nms-query/src/theme.rs"
+  ],
+  "changes": [
+    {
+      "path": "crates/nms-copilot/src/config.rs",
+      "line": 171,
+      "old": "    /// Custom banner text. `None` = use default embedded banner.\n    /// Empty string = disable banner.\n",
+      "new": "    /// Custom banner text.\n    ///\n    /// `None` = use default embedded banner. Empty string = disable banner.\n",
+      "next_source_lines": "    pub banner: Option<String>,\n\n    /// Whether a consumer should show its startup art banner (default `true`).\n    pub show_banner: bool,\n\n"
+    },
+    {
+      "path": "crates/nms-core/src/address.rs",
+      "line": 27,
+      "old": "/// Estimated distance (in ly) for two systems sharing the same voxel\n/// (Robbins' constant \u00d7 voxel size).\n",
+      "new": "/// Estimated distance between systems sharing one voxel, in light-years.\n///\n/// Uses Robbins' constant multiplied by the voxel size.\n",
+      "next_source_lines": "pub const VOXEL_UNCERTAINTY: f64 = ROBBINS_CONSTANT * LY_PER_VOXEL;\n\n/// Standard deviation (1\u03c3) of distance between two random points in one\n/// voxel cube: `SD = \u221a(E[D\u00b2] \u2212 E[D]\u00b2)` where `E[D\u00b2] = \u00bd` for unit cube.\n/// \u2248 0.2494 \u00d7 400 \u2248 99.8 ly.\n"
+    },
+    {
+      "path": "crates/nms-core/src/address.rs",
+      "line": 31,
+      "old": "/// Standard deviation (1\u03c3) of distance between two random points in one\n/// voxel cube: `SD = \u221a(E[D\u00b2] \u2212 E[D]\u00b2)` where `E[D\u00b2] = \u00bd` for unit cube.\n/// \u2248 0.2494 \u00d7 400 \u2248 99.8 ly.\n",
+      "new": "/// Standard deviation of distances between random points in one voxel cube.\n///\n/// For a unit cube, `SD = \u221a(E[D\u00b2] \u2212 E[D]\u00b2)` where `E[D\u00b2] = \u00bd`.\n/// This is approximately 0.2494 \u00d7 400 \u2248 99.8 ly.\n",
+      "next_source_lines": "pub const SAME_VOXEL_SD: f64 = 0.249_4 * LY_PER_VOXEL;\n\n/// Standard deviation (1\u03c3) of distance error for two systems in different\n/// voxels: the combined sub-voxel offset projected onto the line between\n/// them has SD = \u221a(2/12) \u00d7 400 \u2248 163.3 ly.\n"
+    },
+    {
+      "path": "crates/nms-core/src/address.rs",
+      "line": 36,
+      "old": "/// Standard deviation (1\u03c3) of distance error for two systems in different\n/// voxels: the combined sub-voxel offset projected onto the line between\n/// them has SD = \u221a(2/12) \u00d7 400 \u2248 163.3 ly.\n",
+      "new": "/// Standard deviation of distance error between systems in different voxels, in light-years.\n///\n/// The combined sub-voxel offset projected onto their connecting line has\n/// SD = \u221a(2/12) \u00d7 400 \u2248 163.3 ly.\n",
+      "next_source_lines": "pub const CROSS_VOXEL_SD: f64 = 0.408_248 * LY_PER_VOXEL;\n\n/// Mask for the 48-bit packed galactic address.\nconst PACKED_MASK: u64 = 0xFFFF_FFFF_FFFF;\n\n"
+    },
+    {
+      "path": "crates/nms-graph/src/import.rs",
+      "line": 22,
+      "old": "    /// Number of accepted catalog contributions, including marked-placeholder\n    /// promotions. Promotion does not increase [`GalaxyModel::system_count`].\n",
+      "new": "    /// Number of accepted catalog contributions, including marked-placeholder promotions.\n    ///\n    /// Promotion does not increase [`GalaxyModel::system_count`].\n",
+      "next_source_lines": "    pub added: usize,\n    /// Number of rows that matched an existing genuine system and were skipped.\n    pub duplicates: usize,\n    /// Number of rows that could not be parsed (skipped).\n    pub skipped: usize,\n"
+    },
+    {
+      "path": "crates/nms-graph/src/model.rs",
+      "line": 696,
+      "old": "    /// Insert or replace a nonempty base under its lowercase, untrimmed name.\n    /// A later base with the same normalized name replaces the previous value.\n",
+      "new": "    /// Insert or replace a nonempty base under its lowercase, untrimmed name.\n    ///\n    /// A later base with the same normalized name replaces the previous value.\n",
+      "next_source_lines": "    pub fn insert_base(&mut self, base: PlayerBase) {\n        if !base.name.is_empty() {\n            self.bases.insert(base.name.to_lowercase(), base);\n        }\n    }\n"
+    },
+    {
+      "path": "crates/nms-graph/src/query.rs",
+      "line": 220,
+      "old": "    /// Find every active-galaxy planet within a radius matching `filter`.\n    /// A reference in another galaxy is excluded before distance calculation;\n    /// use [`Self::planets_within_radius_from_address`] for explicit scope.\n",
+      "new": "    /// Find every active-galaxy planet within a radius matching `filter`.\n    ///\n    /// A reference in another galaxy is excluded before distance calculation; use [`Self::planets_within_radius_from_address`] for explicit scope.\n",
+      "next_source_lines": "    pub fn planets_within_radius<'a>(\n        &'a self,\n        from: &GalacticAddress,\n        radius_ly: f64,\n        filter: &BiomeFilter,\n"
+    },
+    {
+      "path": "crates/nms-graph/src/spatial.rs",
+      "line": 14,
+      "old": "    /// Voxel-space coordinates in X, Y, Z order. R-tree point distance is\n    /// squared Euclidean distance in voxel units.\n",
+      "new": "    /// Voxel-space coordinates in X, Y, Z order.\n    ///\n    /// R-tree point distance is squared Euclidean distance in voxel units.\n",
+      "next_source_lines": "    pub point: [f64; 3],\n}\n\nimpl SystemPoint {\n    /// Create a point from a system ID and voxel coordinates.\n"
+    },
+    {
+      "path": "crates/nms-query/src/find.rs",
+      "line": 32,
+      "old": "/// Parameters for a planet/system search. All supplied filters are combined\n/// before the optional nearest-result limit is applied. See the [`crate#examples`] for a complete query and result observation.\n",
+      "new": "/// Parameters for a planet/system search.\n///\n/// All supplied filters are combined before the optional nearest-result limit is applied. See the [`crate#examples`] for a complete query and result observation.\n",
+      "next_source_lines": "#[derive(Debug, Clone, Default)]\npub struct FindQuery {\n    /// Filter by biome type.\n    pub biome: Option<Biome>,\n    /// Filter by biome subtype/variant.\n"
+    },
+    {
+      "path": "crates/nms-query/src/route.rs",
+      "line": 13,
+      "old": "/// How a route query obtains its target systems. See [`execute_route`] for the\n/// executable route example.\n",
+      "new": "/// How a route query obtains its target systems.\n///\n/// See [`execute_route`] for the executable route example.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub enum TargetSelection {\n    /// Match planets, deduplicate their systems, and rank systems from the origin.\n    Biome(\n        /// Planet predicate used to select target systems.\n"
+    },
+    {
+      "path": "crates/nms-query/src/route.rs",
+      "line": 34,
+      "old": "/// How to select the route origin and its galaxy. See [`execute_route`] for the\n/// explicit-address route example.\n",
+      "new": "/// How to select the route origin and its galaxy.\n///\n/// See [`execute_route`] for the explicit-address route example.\n",
+      "next_source_lines": "#[derive(Debug, Clone, Default)]\npub enum RouteFrom {\n    /// Use the player's current position from the save file.\n    #[default]\n    CurrentPosition,\n"
+    },
+    {
+      "path": "crates/nms-query/src/route.rs",
+      "line": 53,
+      "old": "/// Inputs controlling start resolution, targets, ordering, and hop reporting.\n/// See [`execute_route`] for a complete query and route projection.\n",
+      "new": "/// Inputs controlling start resolution, targets, ordering, and hop reporting.\n///\n/// See [`execute_route`] for a complete query and route projection.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub struct RouteQuery {\n    /// Target source and selection behavior.\n    pub targets: TargetSelection,\n    /// Current player position, named base, or explicit address.\n"
+    },
+    {
+      "path": "crates/nms-query/src/route.rs",
+      "line": 78,
+      "old": "/// Computed route and query options used to describe it. See [`execute_route`]\n/// for a complete result projection.\n",
+      "new": "/// Computed route and query options used to describe it.\n///\n/// See [`execute_route`] for a complete result projection.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub struct RouteResult {\n    /// Ordered route hops and total distance.\n    pub route: Route,\n    /// Warp range used (if any).\n"
+    },
+    {
+      "path": "crates/nms-query/src/show.rs",
+      "line": 12,
+      "old": "/// What record to resolve for a detail view. See [`execute_show`] and the\n/// [`crate#examples`] for resolution behavior.\n",
+      "new": "/// What record to resolve for a detail view.\n///\n/// See [`execute_show`] and the [`crate#examples`] for resolution behavior.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub enum ShowQuery {\n    /// Resolve a name first, then a packed hexadecimal address in the active galaxy.\n    System(\n        /// System name or packed hexadecimal address text.\n"
+    },
+    {
+      "path": "crates/nms-query/src/show.rs",
+      "line": 43,
+      "old": "/// Cloned system data and display fields for a system detail view. See the\n/// [`crate#examples`] for its complete system projection.\n",
+      "new": "/// Cloned system data and display fields for a system detail view.\n///\n/// See the [`crate#examples`] for its complete system projection.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub struct ShowSystemResult {\n    /// The cloned system record; its stored address may retain source planet bits.\n    pub system: System,\n    /// Twelve-digit uppercase hex formatted from the stored system address.\n"
+    },
+    {
+      "path": "crates/nms-query/src/show.rs",
+      "line": 57,
+      "old": "/// Cloned base data and display fields for a base detail view. See\n/// [`execute_show`] for resolution behavior.\n",
+      "new": "/// Cloned base data and display fields for a base detail view.\n///\n/// See [`execute_show`] for resolution behavior.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub struct ShowBaseResult {\n    /// The cloned base record.\n    pub base: PlayerBase,\n    /// Twelve-digit uppercase hex formatted from the stored base address.\n"
+    },
+    {
+      "path": "crates/nms-query/src/stats.rs",
+      "line": 8,
+      "old": "/// Compatibility flags for choosing statistics. The current [`execute_stats`]\n/// implementation computes all fields and ignores both flags; see the [`crate#examples`] for both flag settings.\n",
+      "new": "/// Compatibility flags for choosing statistics.\n///\n/// The current [`execute_stats`] implementation computes all fields and ignores both flags; see the [`crate#examples`] for both flag settings.\n",
+      "next_source_lines": "#[derive(Debug, Clone, Default)]\npub struct StatsQuery {\n    /// Whether to include biome distribution (currently ignored).\n    pub biomes: bool,\n    /// Whether to include discovery counts by type (currently ignored).\n"
+    },
+    {
+      "path": "crates/nms-query/src/stats.rs",
+      "line": 18,
+      "old": "/// Counts computed across all model records and galaxies. Biome-map entry order\n/// is unspecified. See the [`crate#examples`] for complete\n/// expected counts and biome entries.\n",
+      "new": "/// Counts computed across all model records and galaxies.\n///\n/// Biome-map entry order is unspecified. See the [`crate#examples`] for complete expected counts and biome entries.\n",
+      "next_source_lines": "#[derive(Debug, Clone)]\npub struct StatsResult {\n    /// Number of indexed systems across all galaxies.\n    pub system_count: usize,\n    /// Number of entries in the model's flattened planet map.\n"
+    },
+    {
+      "path": "crates/nms-query/src/stats.rs",
+      "line": 41,
+      "old": "/// Compute every statistic over the entire model, regardless of active galaxy.\n/// `query.biomes` and `query.discoveries` are currently ignored. The [`crate#examples`] checks both flag settings.\n",
+      "new": "/// Compute every statistic over the entire model, regardless of active galaxy.\n///\n/// `query.biomes` and `query.discoveries` are currently ignored. The [`crate#examples`] checks both flag settings.\n",
+      "next_source_lines": "pub fn execute_stats(model: &GalaxyModel, _query: &StatsQuery) -> StatsResult {\n    let mut biome_counts: HashMap<Biome, usize> = HashMap::new();\n    let mut unknown_biome_count = 0;\n    let mut named_planet_count = 0;\n    let mut infested_count = 0;\n"
+    },
+    {
+      "path": "crates/nms-query/src/theme.rs",
+      "line": 72,
+      "old": "/// A text style combining an optional foreground color and bold flag. Plain\n/// styles return input unchanged; styled output adds SGR and reset sequences\n/// without escaping embedded control characters.\n",
+      "new": "/// A text style combining an optional foreground color and bold flag.\n///\n/// Plain styles return input unchanged; styled output adds SGR and reset sequences without escaping embedded control characters.\n",
+      "next_source_lines": "///\n/// # Examples\n///\n/// ```\n/// use nms_query::theme::{Color, Style};\n"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "line": 26,
+      "old": "To build the workspace and preview its generated API documentation, run:\n\n```bash\ncargo build --workspace --all-features\ncargo doc --workspace --all-features --no-deps\n```\n\nThe generated documentation starts at\n`target/doc/nms_copilot/index.html`.\n",
+      "new": "To build the workspace and preview its generated API documentation, run:\n\n```bash\ncargo build --workspace --all-features\ncargo doc --workspace --lib --all-features --no-deps\ncargo doc -p nms-cli --bin nms --document-private-items --all-features --no-deps --target-dir target/cli-docs\n```\n\nLibrary documentation starts at `target/doc/nms_copilot/index.html`; the\numbrella crate has its own page at `target/doc/nms/index.html`. The CLI's\ninternal documentation starts at `target/cli-docs/doc/nms/index.html`.\nKeeping the CLI output in its own target directory prevents it from sharing\nthe umbrella crate's `nms` documentation namespace.\n"
+    }
+  ],
+  "source_files": {
+    "crates/nms/src/lib.rs": {
+      "bytes": 1415,
+      "sha256": "e122c5876aca5375fe75e2619057492526307ed30f1b6d48ec940dd76f70dc9c"
+    },
+    "crates/nms-cache/src/data.rs": {
+      "bytes": 4090,
+      "sha256": "b494dda841c8bc3593aecc8e980e02211ff57417cf7a4cf4cf60137bd011cdb3"
+    },
+    "crates/nms-cache/src/error.rs": {
+      "bytes": 5054,
+      "sha256": "8bc142b2c3248764e954896d8420f424757a9e60564deb4aec95bfba5fa79626"
+    },
+    "crates/nms-cache/src/freshness.rs": {
+      "bytes": 7542,
+      "sha256": "26b67191442b0e789d21683dd260e75f76e6c542862eb0c6913bf8dddfe36ed4"
+    },
+    "crates/nms-cache/src/lib.rs": {
+      "bytes": 5321,
+      "sha256": "5989d1956d7c6c081e89494d0493047d77ca4cbe495aec7409dda0d021ea6679"
+    },
+    "crates/nms-cache/src/serialize.rs": {
+      "bytes": 39215,
+      "sha256": "004231600bf12ab5b6fa44be5c5c0a2917a28a9bf06739ec73fdf3a3fc952d62"
+    },
+    "crates/nms-cli/src/completions.rs": {
+      "bytes": 2059,
+      "sha256": "eeb9cf86aa46d609e13058efaff6a0208d202a7e0f023a309f99757236ace8a1"
+    },
+    "crates/nms-cli/src/convert.rs": {
+      "bytes": 16300,
+      "sha256": "30487a3739e5b01f5ba5d022771de7340f90923ffa29e2dd37a38c02b9be5a42"
+    },
+    "crates/nms-cli/src/export.rs": {
+      "bytes": 13996,
+      "sha256": "3ffcca8b4e0732be0a8a6bf78ae8e0fdc82756bc798c04ebd265e08baf46b746"
+    },
+    "crates/nms-cli/src/find.rs": {
+      "bytes": 3927,
+      "sha256": "1a61e4c1bf72f7cb2e6b2d2cd43d521469344f3ce0e5c31623843caa3ca1f6a1"
+    },
+    "crates/nms-cli/src/import.rs": {
+      "bytes": 1971,
+      "sha256": "7ecab808c6b340b78cd5719983a804cb60d4c0cec41a1c423fc3456bf8af558b"
+    },
+    "crates/nms-cli/src/info.rs": {
+      "bytes": 9175,
+      "sha256": "97894c5de7f56e35faf2814c8b45c91108da28fe693dd86bd55cd64104097e63"
+    },
+    "crates/nms-cli/src/list.rs": {
+      "bytes": 10581,
+      "sha256": "6e3ebfcd61db0e19ad145cc9594de161f5fa57a8d1c19a854e768825bfb12335"
+    },
+    "crates/nms-cli/src/main.rs": {
+      "bytes": 13947,
+      "sha256": "425e7ee387df9e642ab86ead08bd322dd6275dc7a1379f0cce6b967fb0c2e5e9"
+    },
+    "crates/nms-cli/src/route.rs": {
+      "bytes": 4991,
+      "sha256": "7d8941fc2797d9ce8de2679471339ea12bce54c803cdea362c78a44944a05237"
+    },
+    "crates/nms-cli/src/saves.rs": {
+      "bytes": 6691,
+      "sha256": "278858471b548091ad5304e674f847d179f2a73aef990631812e1d09962f4a83"
+    },
+    "crates/nms-cli/src/show.rs": {
+      "bytes": 2446,
+      "sha256": "3f51e6c263ff0cbc51b346d02652ff703077a8451eb1e4d2fbd27c02bc63f6b0"
+    },
+    "crates/nms-cli/src/stats.rs": {
+      "bytes": 2025,
+      "sha256": "04c4bd9aec469cb7d9b2e39b77bb0e366978822b9a0753feb88b6e1b3d0f9347"
+    },
+    "crates/nms-compat/src/lib.rs": {
+      "bytes": 317,
+      "sha256": "f6f070ef0591a22d75ec3c399bd0964f4338c6f17f6686c00026b1d70b99e606"
+    },
+    "crates/nms-compat/src/nomnom.rs": {
+      "bytes": 10293,
+      "sha256": "665e06843a42aa09db8bbb299924c22e3ab6211f452f3c3e7f17519270bf436d"
+    },
+    "crates/nms-copilot/src/banner.rs": {
+      "bytes": 14475,
+      "sha256": "f7b874b50e2db6a271d810edd963c4c2d9e70b74487ced6d5c16fc0a384b0948"
+    },
+    "crates/nms-copilot/src/commands.rs": {
+      "bytes": 25565,
+      "sha256": "a5db372fb18fbfd11f525c4e617d5c1d522a61263f2a0da029030671c1167911"
+    },
+    "crates/nms-copilot/src/completer.rs": {
+      "bytes": 27213,
+      "sha256": "91d29ebe83ffa2e68d8a8af12469307e31c7e3fc168085309ee1b68b852299a8"
+    },
+    "crates/nms-copilot/src/config.rs": {
+      "bytes": 27687,
+      "sha256": "8267161aee3248e21d6dfb92e43cdc06d6e0da47565703f62107de918a432913"
+    },
+    "crates/nms-copilot/src/coordinator.rs": {
+      "bytes": 63712,
+      "sha256": "c1253e38dd45f4983df372c67d06c7a2a4ccc7749eb43da9077e8097571b51e8"
+    },
+    "crates/nms-copilot/src/dispatch.rs": {
+      "bytes": 36932,
+      "sha256": "0913189d01941503d807fb74083253db271e57db4fccd431417acd0777f03690"
+    },
+    "crates/nms-copilot/src/lib.rs": {
+      "bytes": 1771,
+      "sha256": "2b30a65f4638c4885630c7c9e04c86cfbf94d68b4d9a03c75c3eee338ea8f192"
+    },
+    "crates/nms-copilot/src/main.rs": {
+      "bytes": 40782,
+      "sha256": "e2dc38707cff739362ade34c399f9883e297adf8d82bbee4e63f2daf0b4dbd3b"
+    },
+    "crates/nms-copilot/src/map/input.rs": {
+      "bytes": 3535,
+      "sha256": "a251cf81b18897cddcf5e35410d8ef17e84fcba718583c50ab48276cae82c3f4"
+    },
+    "crates/nms-copilot/src/map/mod.rs": {
+      "bytes": 3404,
+      "sha256": "40c6f479aafb14758e2b523ea21aada1e43b41709b2c06e0babfafe13acc064a"
+    },
+    "crates/nms-copilot/src/map/render.rs": {
+      "bytes": 16404,
+      "sha256": "f7f9c404e51ec8a9c0921d8defed8905e662a8d7912bfed216318d16c1ce322c"
+    },
+    "crates/nms-copilot/src/map/state.rs": {
+      "bytes": 24643,
+      "sha256": "dee3394b06b2f424e2888a58861c0bd85cfc9e7999827fab7953e77e38fcf223"
+    },
+    "crates/nms-copilot/src/mcp/config.rs": {
+      "bytes": 8526,
+      "sha256": "daafe3808d62f9e503e9fb0ca928ed20a4984bdc94974538f179fc9610d84810"
+    },
+    "crates/nms-copilot/src/mcp/mod.rs": {
+      "bytes": 50717,
+      "sha256": "4d01cd8ab01f9fa3f2b05a93ceab7d3a25a58b80155cf20ee82412852a6b68db"
+    },
+    "crates/nms-copilot/src/mcp/resources.rs": {
+      "bytes": 32667,
+      "sha256": "271ae352afe4510c6a5360ef98f29cdfef4196db61753b7624b3c76180ce3679"
+    },
+    "crates/nms-copilot/src/mcp/tools.rs": {
+      "bytes": 66935,
+      "sha256": "69f0add6f0623d2fb7dabe0a6c5df051ab47b011a1fb56e1b471deb1ad5ea066"
+    },
+    "crates/nms-copilot/src/paths.rs": {
+      "bytes": 5129,
+      "sha256": "62cfccab12785a763f21531fb143a911a11d72aa0e32b5eb9f92fecaaae00758"
+    },
+    "crates/nms-copilot/src/prompt.rs": {
+      "bytes": 9403,
+      "sha256": "f26a74d673fd928291baff1aa95751ee8dcba6cd2025fd8bbd77d31d3b751e71"
+    },
+    "crates/nms-copilot/src/session.rs": {
+      "bytes": 23609,
+      "sha256": "eaecf4e81f63d0e81f0d95ad07a2f9ce26054356b0416f4422656df115e10d4f"
+    },
+    "crates/nms-copilot/src/setup.rs": {
+      "bytes": 17056,
+      "sha256": "39e0ee60cf316ee7846cc291ae316bb9c2796604a64b3ff4aac7ff14a8532f8f"
+    },
+    "crates/nms-copilot/src/watch.rs": {
+      "bytes": 40759,
+      "sha256": "0f5ca7710a74e73c64693b12216e776b1e5e6ea39855a36f72865c640397700c"
+    },
+    "crates/nms-core/src/address.rs": {
+      "bytes": 39182,
+      "sha256": "3eba380ed882acfa32a2d4fcd17fc2e56b3a1540412173f4d813e2f285bd93b0"
+    },
+    "crates/nms-core/src/biome.rs": {
+      "bytes": 14978,
+      "sha256": "09d529b80b55ed36f08ef2e4ec143028558814717a7c661188e7fd4a2ee6c45d"
+    },
+    "crates/nms-core/src/delta.rs": {
+      "bytes": 7064,
+      "sha256": "049d6dd95c14577dedebb68d38123ca4c4beb3d0bae52015802a85a04fe149bf"
+    },
+    "crates/nms-core/src/discovery.rs": {
+      "bytes": 5579,
+      "sha256": "9193754b67a15210aedc891c5b07fd42ace2bdc18bd3e4157802efd4f0edec6e"
+    },
+    "crates/nms-core/src/galaxy.rs": {
+      "bytes": 17394,
+      "sha256": "40b10a17f7630448c5df7049df681d30c0d85d3d6dcc30912bb6fc271fd9f156"
+    },
+    "crates/nms-core/src/glyph.rs": {
+      "bytes": 16147,
+      "sha256": "ac740a966426950ebe86c3b153f7b685aed93c1019b8adc0e611ff9d628e4c91"
+    },
+    "crates/nms-core/src/lib.rs": {
+      "bytes": 2232,
+      "sha256": "d100427b24c6bda20c5dc6ebca33cc68c63e45e43f518b860c79eb1803d0c630"
+    },
+    "crates/nms-core/src/player.rs": {
+      "bytes": 7153,
+      "sha256": "22b5115a21153ad4fab5109c5429dc050ec00752a232a19e61c1741318b1b1aa"
+    },
+    "crates/nms-core/src/system.rs": {
+      "bytes": 14328,
+      "sha256": "5abde4bb5ea0e35c5669069a75140694bbd99edab5763c313032d1b626ce30f3"
+    },
+    "crates/nms-graph/src/edges.rs": {
+      "bytes": 19309,
+      "sha256": "587ef3ec58dca55a09b0ffffcf0ed855c56c0533325b9acbb0b223a8e444c527"
+    },
+    "crates/nms-graph/src/error.rs": {
+      "bytes": 1799,
+      "sha256": "a439385420e9c92804dc489d0810169627bc666d2457518fdaf9f093dba980b0"
+    },
+    "crates/nms-graph/src/extract.rs": {
+      "bytes": 18061,
+      "sha256": "a5687249cec38ee1aa9588d04978fc432297db8fde3881dbda7e3ff1d942392a"
+    },
+    "crates/nms-graph/src/import.rs": {
+      "bytes": 26488,
+      "sha256": "fcfaaaab4fbfc3b5bd8eedde6bb0e723525bb16da427636089634acef23bf6e8"
+    },
+    "crates/nms-graph/src/lib.rs": {
+      "bytes": 1859,
+      "sha256": "f4142ce2c64e36976ae97ba0a37802e2fd098492cc84436ee0f28aa732d243a0"
+    },
+    "crates/nms-graph/src/model.rs": {
+      "bytes": 95859,
+      "sha256": "0162aa723584a355226ee4efdb551e6f74f438a0162dabebc828d558438676a7"
+    },
+    "crates/nms-graph/src/query.rs": {
+      "bytes": 55923,
+      "sha256": "7015465c36475093fc9d4c3a2ab2b33ebb65d3b2d962a53fbe2578db3b406f7a"
+    },
+    "crates/nms-graph/src/route.rs": {
+      "bytes": 70176,
+      "sha256": "ae13ed046b01c1a1ea5885ad564e6478b8b84bcd2e4a23416851a906326940d4"
+    },
+    "crates/nms-graph/src/spatial.rs": {
+      "bytes": 4595,
+      "sha256": "34416af9b2e7706a014f3e737621e3c537d4c1fc091d5602fbc31323a7068fc8"
+    },
+    "crates/nms-query/src/display.rs": {
+      "bytes": 31132,
+      "sha256": "b23176d81400ca6b73f100c24f457e15e3a4502cc4647cad17a37d24c0c3ebb3"
+    },
+    "crates/nms-query/src/find.rs": {
+      "bytes": 35882,
+      "sha256": "83e81f2b700854fd22342d9ee021c0c50bf4abf4d147f76f3fadd73d94a062ed"
+    },
+    "crates/nms-query/src/lib.rs": {
+      "bytes": 6611,
+      "sha256": "d43ab8f7a4fa2ed861a6671eaf29b7ab1cdca94b6fd66a532e746910febaf514"
+    },
+    "crates/nms-query/src/route.rs": {
+      "bytes": 56024,
+      "sha256": "b5f7059bccd809381d000f70c75fce9f82c69912e06433896e4b1a0b0ffd4a3d"
+    },
+    "crates/nms-query/src/show.rs": {
+      "bytes": 14408,
+      "sha256": "73aa2c70e9e61044b55ddc476251f1a02afd8d31707f4d2dd2919bfcd865ceb1"
+    },
+    "crates/nms-query/src/stats.rs": {
+      "bytes": 4961,
+      "sha256": "5a3ff08facd665c59e7099d2e55f8c2dd346f8a3d6dcc7068ca517d8ab7e62b4"
+    },
+    "crates/nms-query/src/table.rs": {
+      "bytes": 9622,
+      "sha256": "0377bc7abab9ccc17f5f616808d70c13df7e4f8fa78bf0b7209ae0f57821e2a1"
+    },
+    "crates/nms-query/src/theme.rs": {
+      "bytes": 13441,
+      "sha256": "f6dffdb10d2640940d8dc69f082641315a84125c5fdf21ef0311109f0731b2f3"
+    },
+    "crates/nms-save/src/address.rs": {
+      "bytes": 17385,
+      "sha256": "bac15edb8966d0f2d0feef26aaa5f9b3d9583759ad6d6c97c9472af65f2f3d65"
+    },
+    "crates/nms-save/src/convert.rs": {
+      "bytes": 15297,
+      "sha256": "1274428c1d2c5635216e5abfda3618dd1341ccd862a0edef244aefaa491d3b75"
+    },
+    "crates/nms-save/src/decompress.rs": {
+      "bytes": 11616,
+      "sha256": "74dbbbae5624744cf77077c0d006a6cf9ccc084c89c6a2ad2bf704104017bb03"
+    },
+    "crates/nms-save/src/error.rs": {
+      "bytes": 3211,
+      "sha256": "bd3c3a03f25145b9ea1647b3a25ee02af49fe9fabad74ed8bd132e2874176880"
+    },
+    "crates/nms-save/src/lib.rs": {
+      "bytes": 8976,
+      "sha256": "022be70f4319f799251e2d702a7e22e4a26fcd6937fc234499f8ad22cdac57e6"
+    },
+    "crates/nms-save/src/locate.rs": {
+      "bytes": 36753,
+      "sha256": "33b2396d567008e2b1a81e3bd350261488f96816f35235cd87fea64779f0b193"
+    },
+    "crates/nms-save/src/mapping.rs": {
+      "bytes": 15164,
+      "sha256": "a94ab8d6ab201bbefcea44c070838bfdafbbe59368f157b26b7f09c9b227fb79"
+    },
+    "crates/nms-save/src/metadata.rs": {
+      "bytes": 20915,
+      "sha256": "7483b0bfa2eb677e8bd0fedc0ecb202998ccb7e90a3d3496cbedfdb6b3ce5b1f"
+    },
+    "crates/nms-save/src/model.rs": {
+      "bytes": 23780,
+      "sha256": "93b68004976c68e8264a93a71e0233a8b2807c4f5cdef64b49601f3506afcb00"
+    },
+    "crates/nms-save/src/validated.rs": {
+      "bytes": 16901,
+      "sha256": "9bc3a865c281f25945fbb772f58458282b0e3f75cd4c28089813feb0fb64ee66"
+    },
+    "crates/nms-save/src/xxtea.rs": {
+      "bytes": 9899,
+      "sha256": "889e2c8dac61c3810d85c26879eecf53f36d309e8e4f70fc8079a4d29a4ca846"
+    },
+    "crates/nms-watch/src/delta.rs": {
+      "bytes": 22585,
+      "sha256": "83b915fce1bfc3c458e095b768c68fa85b24fbe9cc9d01512c0189ba99b882ac"
+    },
+    "crates/nms-watch/src/error.rs": {
+      "bytes": 2135,
+      "sha256": "198d18424e32aee05db09173a5ed63f7b7ee0142c3392cca1b124ddabfd00a3b"
+    },
+    "crates/nms-watch/src/lib.rs": {
+      "bytes": 1718,
+      "sha256": "a34ac1e4941fb60b2a424bc70d867b97c6c10efd26059b000b8bebf2243aff60"
+    },
+    "crates/nms-watch/src/snapshot.rs": {
+      "bytes": 13027,
+      "sha256": "dcd6c5990a6a692a4101a74cc3a26e59a4eb61a0e100a413035e7784aa2dd08e"
+    },
+    "crates/nms-watch/src/watcher.rs": {
+      "bytes": 72183,
+      "sha256": "4795e9c62d672f3b9a641966615fa2248a71f4c72ca7284d91d6f5acffd72d4f"
+    }
+  },
+  "library_packages": [
+    "nms-core",
+    "nms-save",
+    "nms-compat",
+    "nms-graph",
+    "nms-query",
+    "nms-watch",
+    "nms-cache",
+    "nms-copilot",
+    "nms"
+  ],
+  "library_landing_pages": [
+    "nms_core/address/index.html",
+    "nms_core/biome/index.html",
+    "nms_core/delta/index.html",
+    "nms_core/discovery/index.html",
+    "nms_core/galaxy/index.html",
+    "nms_core/glyph/index.html",
+    "nms_core/index.html",
+    "nms_core/player/index.html",
+    "nms_core/system/index.html",
+    "nms_save/address/index.html",
+    "nms_save/convert/index.html",
+    "nms_save/decompress/index.html",
+    "nms_save/error/index.html",
+    "nms_save/index.html",
+    "nms_save/locate/index.html",
+    "nms_save/mapping/index.html",
+    "nms_save/metadata/index.html",
+    "nms_save/model/index.html",
+    "nms_save/validated/index.html",
+    "nms_save/xxtea/index.html",
+    "nms_compat/index.html",
+    "nms_compat/nomnom/index.html",
+    "nms_graph/edges/index.html",
+    "nms_graph/error/index.html",
+    "nms_graph/extract/index.html",
+    "nms_graph/import/index.html",
+    "nms_graph/index.html",
+    "nms_graph/model/index.html",
+    "nms_graph/query/index.html",
+    "nms_graph/route/index.html",
+    "nms_graph/spatial/index.html",
+    "nms_query/display/index.html",
+    "nms_query/find/index.html",
+    "nms_query/index.html",
+    "nms_query/route/index.html",
+    "nms_query/show/index.html",
+    "nms_query/stats/index.html",
+    "nms_query/table/index.html",
+    "nms_query/theme/index.html",
+    "nms_watch/delta/index.html",
+    "nms_watch/error/index.html",
+    "nms_watch/index.html",
+    "nms_watch/snapshot/index.html",
+    "nms_watch/watcher/index.html",
+    "nms_cache/data/index.html",
+    "nms_cache/error/index.html",
+    "nms_cache/freshness/index.html",
+    "nms_cache/index.html",
+    "nms_cache/serialize/index.html",
+    "nms_copilot/banner/index.html",
+    "nms_copilot/commands/index.html",
+    "nms_copilot/completer/index.html",
+    "nms_copilot/config/index.html",
+    "nms_copilot/coordinator/index.html",
+    "nms_copilot/dispatch/index.html",
+    "nms_copilot/index.html",
+    "nms_copilot/map/input/index.html",
+    "nms_copilot/map/index.html",
+    "nms_copilot/map/render/index.html",
+    "nms_copilot/map/state/index.html",
+    "nms_copilot/mcp/config/index.html",
+    "nms_copilot/mcp/index.html",
+    "nms_copilot/mcp/resources/index.html",
+    "nms_copilot/mcp/tools/index.html",
+    "nms_copilot/paths/index.html",
+    "nms_copilot/prompt/index.html",
+    "nms_copilot/session/index.html",
+    "nms_copilot/setup/index.html",
+    "nms_copilot/watch/index.html",
+    "nms/index.html"
+  ],
+  "retained_user_evidence_inputs": {
+    "README.md": {
+      "bytes": 30557,
+      "sha256": "e599d3647b5598c694b14a7eeee4ffb3c3312da13b15efc812d0b253d7152ef5"
+    },
+    "docs/captures/README.md": {
+      "bytes": 5702,
+      "sha256": "03f12bf774170796fcb788b22998aae480676dcc641381c40cdedbbc38d506c8"
+    },
+    "docs/captures/nms-help.txt": {
+      "bytes": 887,
+      "sha256": "2bba2f1030814740c5063af89546e4b214b0cbfd77332829cb7215da737f00bb"
+    },
+    "docs/captures/nms-stats.txt": {
+      "bytes": 2029,
+      "sha256": "d6ae97e45f6007dffd6a467bc074b86717d2502cb3fb7e9b9f5beca01519db53"
+    },
+    "docs/captures/nms-help.png": {
+      "bytes": 65711,
+      "sha256": "83a6528fc9e621c9273452753547090d7ba85051d626839d8185bc8cbbfce2f2"
+    },
+    "docs/captures/nms-stats.png": {
+      "bytes": 38823,
+      "sha256": "19acabe53dd1adaf8aba9ee4d1fe0709508393a774a0a244ad7d52760a00ebba"
+    },
+    "docs/render-cli-capture.py": {
+      "bytes": 3874,
+      "sha256": "2b7a92d12c5844a4d4c1c8850b0761052a403caa2b7ceb815c23a98a6b3b6baf"
+    },
+    "data/test/save56_multi_system.json": {
+      "bytes": 13145,
+      "sha256": "66fdbda21fb47cb5459d210613a08e14abfb1505d00ee849b20241cae75019a1"
+    }
+  },
+  "limits": "83-source inventory and20 actual public paragraph layouts are readiness, not acceptance. Entire docblock consumption corrects an earlier incidental scanner that incorrectly restarted at each blank ///; its860 candidates were not defects or acceptance evidence. Two actual private paragraphs excluded: copilot apply_and_snapshot and CLI derive-visible Info.save."
+}

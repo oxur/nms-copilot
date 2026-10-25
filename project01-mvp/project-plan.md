@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.129
+version: 1.130
 project: project01-mvp
 status: active
 depends-on: []
@@ -1318,3 +1318,7 @@ Version1.128 detailsONEdispatchpublicAPI/module/keyliteralexamples fromaccepted2
 ## Arc06 Slice43 independently accepted — 2026-10-25 UTC
 
 Version1.129 records complete one-file public dispatcher documentation/keyliteral examples at clean a3f74a86/all6RD/R06-S43. Nine fresh CDC groups235runtime/32+28 separate feature-doc denominators/strictzero/preservation/opposed/diffs; twoactualrefinements/exact raw records/return qualifications/final retrospective/noexception. Required44 fullpublicsurface/style/strict/original0039M7.6 reconciliation remains CDC/further usable decomposition allowed.61arc48done13open/all25projectrowsOPEN; authentic NomNom input/all original higher owners retained/no integration/release.
+
+## Arc06 Slice44 original M7.6 reconciliation issued — 2026-10-25 UTC
+
+Version1.130 owns exact12doc paths/20 public summary layouts+contributor namespace recipe and complete original0039M7.6 proof. Full current workspace tests/feature docs, actual nine-library70-page output/exact existing core generated-field exception, strict isolatedCLI and original29 input retention plus complete criterion review; compiler/style counts alone insufficient. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh planned after43 context-fit handoff. SixDR/R06-S44/M7.6OPEN/zeroactualrefinements/supportonly at issue;62arc48done14open/all25projectrowsOPEN. All original higher/input/Operator gates preserved/no cleanup/integration/release.

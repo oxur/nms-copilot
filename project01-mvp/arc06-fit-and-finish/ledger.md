@@ -449,3 +449,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 61arc47done14open/project25OPEN/initial0actualrefinements/noimplementationatissue.
 
 2026-10-25 formal43close: all6RD/R06-S43DONE at a3f74a86;61arc48done13open/project25OPEN. Prior issue/iteration counts preserved; required44/fullM7.6/higher owners OPEN.
+
+## Original M7.6 full documentation reconciliation owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S44 | Reconcile complete original M7.6 docs and remaining20 public summaries/preview namespace | SixDR/full0039/current11/actual output/retained29 | correctness-grade | Required44 from Slice43/original0039 | open | — | M7.6/higher/input/Operator owners open |
+
+62arc48done14open/project25OPEN; initial0ACTUALrefinements/no implementation or acceptance at issue.

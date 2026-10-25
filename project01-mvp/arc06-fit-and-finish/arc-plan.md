@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.142, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.143, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1133,3 +1133,7 @@ Version1.141 details [Slice43](slice43-repl-dispatch-api-documentation/slice-pla
 ## Slice43 dispatcher documentation accepted — 2026-10-25 UTC
 
 Version1.142 closes all6RD/R06-S43 at clean a3f74a86f0ceeb523d7cda62c8c2bc38215669de: complete one-file public dispatcher documentation/two pure literal examples, all non-doc/API/tests/deps/Clap inputs preserved. Nine fresh CDC groups pass235runtime+32all-feature docs(24executing8compile-only)+28no-default docs(22executing6compile-only), strictzero/preservation/opposed/diffs. Two actual refinements/all15CC+13CDC raw values/exact returns/before01/02 snapshots/attribution and operational qualifications/final retrospective retained; no exception or structural scope/sequence amendment. Required44 full public-surface/style/strict/original0039M7.6 reconciliation remains CDC-owned/further usable decomposition allowed.61arc48done13open/all25projectrowsOPEN; authentic NomNom input/all original higher owners retained/no cleanup/integration/release. See [CDC43 acceptance](slice43-repl-dispatch-api-documentation/cdc-verification.md) and [retrospective](slice43-repl-dispatch-api-documentation/cdc-retrospective.md).
+
+## Slice44 original M7.6 reconciliation owner issued — 2026-10-25 UTC
+
+Version1.143 details [Slice44](slice44-documentation-reconciliation/slice-plan.md): exact12doc paths/20 public summary paragraphs plus CONTRIBUTING namespace preview; every other doc/example/non-doc/API/help/test/dependency frozen. Full83source/nine libraries70pages/isolated11CLI inventory and original0039 criterion mapping resolved; accepted29 byte-applicable user/capture proof retained, current full-workspace/all-feature/no-default/actual rendered strict output required. Only existing exact core generated-field A carried with complete one-origin/extra+wrong/new archive proof, no new exception. Fresh same-approved CC6-lunaHigh planned after43 context-fit recommendation; CDC6.1-solHigh unchanged. SixDR/R06-S44OPEN/zeroactualrefinements/eleven original groups/supportonly at issue. OriginalM7.6 remainsOPEN until independently demonstrated; all higher/input/Operator owners retained.62arc48done14open/project25OPEN/no cleanup/integration/release.
