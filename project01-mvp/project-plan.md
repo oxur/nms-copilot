@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.133
+version: 1.134
 project: project01-mvp
 status: active
 depends-on: []
@@ -1334,3 +1334,7 @@ Three-path usable originalM7.7/D0043 child on accepted9b632b66: shared query pri
 ## Slice45 Unicode query formatting accepted — 2026-10-25 UTC
 
 All6UF/R06-S45DONE on clean isolatedfe5e9d1287a353bcfbf67fc8db6c5445102c03f5: exactthreepaths/scalar-safe private truncation/truthful propagatedpanic teaching/two real checked-save CLI regressions. ExistingASCIIreal19–22budgets/allotherformatter/query/API/grammar/tests/fences/cache/schema/deps preserved; no grapheme/displaywidth/ANSI promise. Nine fresh CDC groups pass3focused+2actualchildren/1102runtime+118allfeaturedocs(91execute27compile)/35separatenodefaultdocs(29execute6compile)/strictaffectedzero/diffs. OneACTUALrefinement; originalcompilerred/restrictedpartial228pass7fail/authorizedhostretry/actualreadingextentmiss+timelyfullcompletion/exact14CC+11CDC returns+rawrecords/currentHTML/retro retained. No newexception/structuralamendment. FullM7.7allcommands/95%coverage/platformCI and D0043tables/themes/otherUnicodeparser-map debt remainCDC-ownedOPEN; authenticNomNominput/M7.8/M7.10/UI/R01–03/raw/history/nonzero-game/finalsemantic/cache/freshness/higherOperator owners unchanged.63arc51done12open/all25projectrowsOPEN; no maincleanup/integration/release/otherarc. See [CDC45acceptance](arc06-fit-and-finish/slice45-unicode-query-formatting/cdc-verification.md) and [retrospective](arc06-fit-and-finish/slice45-unicode-query-formatting/cdc-retrospective.md).
+
+## Arc06 original M7.7 coverage readiness — 2026-10-25 UTC
+
+CDC prepares one attributable native/offline all-workspace all-feature installedLLVMcoverage baseline at accepted45fe5e9d1, existing95%line threshold/no exclusions, to select the next usable hardening owner. Tool0.6.21/llvm-tools/rustc1.99.1LLVM23 verified raw-first; no coverage result or source assignment yet. ExistingMakecoveragecopilotlib-only/CIdefaultfeatures remain gaps; originalcoverage/CI/platform/fullcommands/remainingoriginal/input/Operator gates OPEN.63arc51done12open/project25OPEN; no install/network/integration/release/maincleanup. See arc current readiness record.
