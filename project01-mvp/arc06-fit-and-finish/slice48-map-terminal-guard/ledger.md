@@ -1,6 +1,6 @@
 # Slice48 acceptance ledger
 
-SixOPEN/initialzeroACTUALrefinements. Actualnative49/modulefloor/D0042/M7.7 remainOPEN.
+SixOPEN/first ACTUAL refinement issued/four further available. Initial full478line held review finds one test-message literal deviation (TG-01/02); production/loop/example/imports reviewed, initial pair0 is not runtime proof. Actualnative49/modulefloor/D0042/M7.7 remainOPEN.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
