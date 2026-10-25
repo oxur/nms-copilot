@@ -1,4 +1,16 @@
-//! `nms completions` command -- generate shell completions.
+//! Generate shell completion text from the current `Cli` definition.
+//!
+//! Output goes to stdout; generation returns `Ok(())` without reporting stdout write failures.
+//! Pinned Bash, Zsh, and Fish generators may panic on generation errors. This command does not
+//! install or source output.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms completions bash > nms.bash
+//! ```
+//!
+//! The caller chooses the destination; this command-text example is not executed here.
 
 use std::io;
 
@@ -7,6 +19,24 @@ use clap_complete::{Shell, generate};
 
 use crate::Cli;
 
+/// Generate completions for `shell` from the current command definition.
+///
+/// Writes to stdout and returns `Ok(())` after generation; its `Result` does not report stdout
+/// write failures.
+///
+/// # Examples
+///
+/// ```text
+/// nms completions bash > nms.bash
+/// ```
+///
+/// # Errors
+///
+/// The result is currently always `Ok(())` after generation returns.
+///
+/// # Panics
+///
+/// Command construction or a pinned generator may panic on failure.
 pub fn run(shell: Shell) -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Cli::command();
     let name = cmd.get_name().to_string();

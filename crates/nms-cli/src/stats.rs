@@ -1,4 +1,16 @@
-//! `nms stats` command -- aggregate galaxy statistics.
+//! Print aggregate statistics for the complete checked-save model.
+//!
+//! The handler builds `biomes || !discoveries` and `discoveries || !biomes` query inputs. The
+//! shared query currently ignores both and computes all aggregates across every galaxy. The
+//! handler does not ensure a player-system record.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms stats --save data/test/save56_minimal.json --biomes
+//! ```
+//!
+//! `--biomes` is currently ignored; this synthetic-fixture command is not executed.
 
 use std::path::PathBuf;
 
@@ -7,6 +19,25 @@ use nms_query::display::format_stats;
 use nms_query::stats::{StatsQuery, execute_stats};
 use nms_query::theme::{Theme, should_use_colors};
 
+/// Print aggregate statistics for the complete checked-save model.
+///
+/// The handler builds `biomes || !discoveries` and `discoveries || !biomes` inputs. The shared
+/// query currently ignores both flags and computes all aggregates across every galaxy. No
+/// player-system record is ensured.
+///
+/// # Examples
+///
+/// ```text
+/// nms stats --save data/test/save56_minimal.json --biomes
+/// ```
+///
+/// # Errors
+///
+/// Returns save-discovery or validation errors.
+///
+/// # Panics
+///
+/// Printing may panic if stdout fails.
 pub fn run(
     save: Option<PathBuf>,
     biomes: bool,

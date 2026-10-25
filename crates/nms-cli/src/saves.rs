@@ -1,4 +1,17 @@
-//! `nms saves` command -- list all save slots.
+//! Enumerate accounts and occupied manual or auto save slots.
+//!
+//! Slots appear in ascending slot number. Within each slot, “Most Recent” selects the manual or
+//! auto save by modification time and prefers manual on a tie. Output shows account labels,
+//! presence indicators, and the selected save type and formatted time, not filenames, internal
+//! save names, or contents. Accounts without accepted save files are reported and skipped.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms saves
+//! ```
+//!
+//! Illustrative host-discovery syntax only; command accesses the caller's save root.
 
 use std::time::SystemTime;
 
@@ -16,6 +29,27 @@ fn slots_for_account(account: &AccountDir) -> Result<Option<Vec<SaveSlot>>, Loca
     }
 }
 
+/// Enumerate accounts and occupied save slots in ascending slot order.
+///
+/// Rows show manual and auto presence as `yes` or `-`. “Most Recent” displays `Manual` or `Auto`
+/// with formatted modification time; it selects the newer file within that slot and prefers
+/// manual on equal timestamps. It does not display filenames, internal save names, or contents.
+/// Accounts without accepted save files get a normal message and are skipped; other save-listing
+/// I/O errors are returned, possibly after earlier output.
+///
+/// # Examples
+///
+/// ```text
+/// nms saves
+/// ```
+///
+/// # Errors
+///
+/// Returns save-root, account-listing, or account save-listing I/O errors.
+///
+/// # Panics
+///
+/// Printing tables may panic if stdout fails.
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let save_dir = nms_save_dir_checked()?;
     let accounts = list_accounts(&save_dir)?;

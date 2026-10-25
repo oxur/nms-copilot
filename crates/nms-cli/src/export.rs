@@ -1,4 +1,18 @@
-//! `nms export` command -- export filtered planets as JSON or CSV.
+//! Export filtered planet matches from a checked save as JSON or CSV.
+//!
+//! The handler exposes the `find` filters and does not insert a player-system record. Flat
+//! records use the stored system address and galaxy, including stored planet-index bits. JSON
+//! ends with a newline; empty results produce `[]` plus newline in JSON and zero bytes in CSV,
+//! whose header appears with the first row.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms export --save data/test/save56_multi_system.json --format json --biome Lush
+//! nms export --save data/test/save56_multi_system.json --format csv --biome Lush
+//! ```
+//!
+//! These synthetic-fixture commands are illustrative text, not executed here.
 
 use std::io::{self, Write};
 use std::path::PathBuf;
@@ -8,27 +22,53 @@ use nms_core::galaxy::Galaxy;
 use nms_query::display::hex_to_emoji;
 use nms_query::find::{FindQuery, FindResult, ReferencePoint, execute_find};
 
-/// Arguments for the export command.
+/// Filters, reference, and format accepted by the export handler.
 pub struct ExportArgs {
+    /// Optional checked-save path; absent resolves most-recent directly; CLI may pass a slot-resolved path.
     pub save: Option<PathBuf>,
+    /// Optional biome filter.
     pub biome: Option<String>,
+    /// Whether to require infested planets.
     pub infested: bool,
+    /// Optional maximum reference distance in light-years.
     pub within: Option<f64>,
+    /// Optional result limit after filtering.
     pub nearest: Option<usize>,
+    /// Whether a planet name must be present.
     pub named: bool,
+    /// Optional substring matched against the system discoverer.
     pub discoverer: Option<String>,
+    /// Optional base reference; absent uses current position.
     pub from: Option<String>,
+    /// Output format: `json` or `csv`, case-insensitively.
     pub format: String,
 }
 
+/// Supported flat-record serialization formats.
+///
+/// # Examples
+///
+/// ```text
+/// nms export --save data/test/save56_minimal.json --format json
+/// nms export --save data/test/save56_minimal.json --format csv
+/// ```
+///
+/// These are command-text examples, not Rust doctests.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub enum ExportFormat {
+    /// Pretty JSON array with a trailing newline.
     #[default]
     Json,
+    /// CSV records; a header is written when a row is serialized.
     Csv,
 }
 
 impl ExportFormat {
+    /// Parse `json` or `csv` after lowercasing, without trimming whitespace.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error containing the lowercased input when the format is unsupported.
     pub fn parse(s: &str) -> Result<Self, String> {
         match s.to_lowercase().as_str() {
             "json" => Ok(Self::Json),
@@ -38,20 +78,35 @@ impl ExportFormat {
     }
 }
 
-/// A flat record for serialization (no nested objects).
+/// Flat fields for one exported planet match.
+///
+/// Missing names, biome, or discoverer become empty strings; address-derived fields use the
+/// stored system address.
 #[derive(Debug, serde::Serialize)]
 pub struct ExportRecord {
+    /// Planet name, or empty when absent.
     pub planet_name: String,
+    /// Biome label, or empty when unknown.
     pub biome: String,
+    /// System name, or empty when absent.
     pub system_name: String,
+    /// Distance from the selected reference in light-years.
     pub distance_ly: f64,
+    /// Twelve-digit uppercase hex from the stored system address.
     pub portal_glyphs: String,
+    /// Emoji rendered from `portal_glyphs`.
     pub portal_emoji: String,
+    /// Decoded voxel X from the stored address.
     pub coords_x: i16,
+    /// Decoded voxel Y from the stored address.
     pub coords_y: i8,
+    /// Decoded voxel Z from the stored address.
     pub coords_z: i16,
+    /// Display name for the stored address galaxy.
     pub galaxy: String,
+    /// System discoverer name, or empty when absent.
     pub discoverer: String,
+    /// Whether the matched planet is infested.
     pub infested: bool,
 }
 
@@ -76,6 +131,27 @@ impl From<&FindResult> for ExportRecord {
     }
 }
 
+/// Filter a checked-save model and write matching records in the selected format.
+///
+/// Format parsing precedes this handler's save resolution; main may resolve `--slot` first and
+/// pass a path. Direct calls use an explicit path or most-recent discovery and have no slot.
+/// Filters are biome, infested, distance, nearest count, named-only, system discoverer substring,
+/// and base or current-position reference. False `infested` means no filter; `named` accepts any
+/// present name, including empty. Records retain stored system address and galaxy. JSON writes a
+/// pretty array plus newline, including `[]` when empty. Empty CSV is zero bytes; its header
+/// appears with the first row. Output uses locked stdout; serialization, write, and flush errors
+/// return, and a failure may leave partial output without rollback.
+///
+/// # Examples
+///
+/// ```text
+/// nms export --save data/test/save56_multi_system.json --format json --biome Lush
+/// nms export --save data/test/save56_multi_system.json --format csv --biome Lush
+/// ```
+///
+/// # Errors
+///
+/// Returns format, save, validation, biome, query, serialization, CSV, or stdout errors.
 pub fn run(args: ExportArgs) -> Result<(), Box<dyn std::error::Error>> {
     let format = ExportFormat::parse(&args.format)?;
 

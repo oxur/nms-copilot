@@ -1,4 +1,18 @@
-//! `nms list` command -- list reference data and model collections.
+//! List static reference data or bases and systems from a checked model.
+//!
+//! Galaxy, biome, glyph, and terrain targets need no save. Bases and systems include all model
+//! galaxies and do not require a player-system entry. Bases sort by case-folded name. Systems
+//! put nonempty names first, then empty or missing names; case-folded ties retain unspecified
+//! map order. Zero limit or `--all` requests every row. Reference lists contain 256 galaxies,
+//! 16 glyphs, and 32 terrain types.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms list galaxies --type Lush
+//! ```
+//!
+//! Static-list command text only; it is not executed here.
 
 use std::path::PathBuf;
 
@@ -12,6 +26,29 @@ use nms_query::table::{Builder, build_table, nms_theme};
 
 use crate::ListTargetCmd;
 
+/// List static reference data or model-backed bases and systems.
+///
+/// Reference targets need no save; model-backed targets include all model galaxies and do not
+/// ensure a player-system entry. Bases sort by case-folded name. Systems put nonempty names
+/// first and empty or missing names afterward; case-folded ties retain unspecified map order.
+/// `all` or limit zero requests every row. Empty models print no-bases/no-systems messages;
+/// truncated output reports shown and total counts. Reference lists contain 256 galaxies, 16
+/// glyphs, and 32 terrain types. Addresses and glyphs reflect stored values; styling may emit
+/// control characters.
+///
+/// # Examples
+///
+/// ```text
+/// nms list galaxies --type Lush
+/// ```
+///
+/// # Errors
+///
+/// Returns reference-filter parsing or model-backed save/loading errors.
+///
+/// # Panics
+///
+/// Printing tables may panic if stdout fails.
 pub fn run(
     target: ListTargetCmd,
     save: Option<PathBuf>,

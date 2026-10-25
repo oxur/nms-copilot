@@ -1,8 +1,52 @@
-//! `nms convert` command — coordinate format converter.
+//! Convert portal glyphs, signal-booster coordinates, packed galactic addresses, or voxel coordinates.
+//!
+//! Galaxy resolution happens first. Direct-handler priority is glyphs, coordinates, packed
+//! address, then voxel; Clap makes these inputs mutually exclusive. Glyphs accept twelve mixed
+//! hexadecimal, emoji, name, or abbreviation tokens after trimming and an optional `0x` prefix.
+//! Signal-booster input is trimmed. Packed input is trimmed `u64` hexadecimal and keeps only its
+//! low 48 bits; it is not the save-format 56-bit decoder. Voxel X/Z are -2048..2047, Y is
+//! -128..127, and SSI is 0..4094 (`0xFFE`). Planet is a `u8` masked to four bits by address
+//! construction rather than checked as 0..15. Output includes nine address representations.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms convert --glyphs 01717D8A4EA2
+//! ```
+//!
+//! This is command text, not an executed command or Rust doctest.
 
 use nms_core::address::{GalacticAddress, PortalAddress};
 use nms_core::galaxy::Galaxy;
 
+/// Parse an input representation and print its supported coordinate forms.
+///
+/// Galaxy input is trimmed and resolves as an index from 0 to 255 or a case-insensitive name
+/// before input selection. Direct calls prioritize glyphs, coordinates, packed address, then
+/// voxel; the CLI rejects multiple input flags. Glyphs are trimmed, may use `0x` or `0X`, and
+/// contain exactly twelve mixed hex, emoji, glyph-name, or abbreviation tokens. Signal-booster
+/// text is trimmed. `--ga` is trimmed `u64` hex masked to low 48 bits, not the save-format
+/// 56-bit decoder. Voxel X/Z range -2048..2047, Y -128..127, and SSI 0..4094 (`0xFFE`). Planet
+/// is a `u8` masked to four bits by construction, not checked as 0..15. The nine output rows are
+/// portal glyph emoji, hexadecimal glyphs, abbreviated glyphs, signal-booster coordinates,
+/// galactic address, voxel position, system index (decimal and hexadecimal), planet index, and
+/// galaxy.
+///
+/// # Examples
+///
+/// ```text
+/// nms convert --glyphs 01717D8A4EA2
+/// ```
+///
+/// # Errors
+///
+/// Returns galaxy errors, missing input or voxel SSI errors, and selected-input parse or range
+/// errors.
+///
+/// # Panics
+///
+/// Printing may panic if stdout fails. The inherited `PortalAddress::parse_mixed` invalid-token
+/// diagnostic may panic when its 20-byte excerpt boundary splits a UTF-8 character.
 pub fn run(
     glyphs: Option<String>,
     coords: Option<String>,

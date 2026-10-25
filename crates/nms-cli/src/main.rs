@@ -1,3 +1,27 @@
+//! The `nms` binary provides one-shot commands from package `nms-cli`.
+//!
+//! This binary is not an importable library facade. The separate `nms` package is a
+//! documentation and navigation landing page, not this binary or a re-export facade. The
+//! private command handlers are documented in [`completions`], [`convert`], [`export`],
+//! [`find`], [`import`], [`info`], [`list`], [`route`], [`saves`], [`show`], and [`stats`].
+//!
+//! Save-backed handlers inspect validated saves or build a model for shared queries; no live
+//! watcher or model-cache writer is used. Reference lists, conversion, and completions need no
+//! save. Main resolves explicit `--save` before `--slot`; a slot uses the first sorted account
+//! and its newest manual or auto file, preferring manual on a tie. Otherwise it selects the
+//! newest discovered save. `saves` lists accounts and occupied slots.
+//!
+//! # Examples
+//!
+//! ```text
+//! nms info --save data/test/save56_minimal.json
+//! nms find --save data/test/save56_multi_system.json --biome Lush --nearest 3
+//! nms list galaxies --type Lush
+//! ```
+//!
+//! Assumes repository root and built `nms` on `PATH`; fixtures are synthetic and commands are
+//! not executed here. Main prints errors to stderr as `Error: ...` and exits 1.
+
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::process;
