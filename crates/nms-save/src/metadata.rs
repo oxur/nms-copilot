@@ -34,49 +34,84 @@ const VALID_META_LENGTHS: [usize; 4] = [
 // StorageSlot
 // ---------------------------------------------------------------------------
 
-/// Storage slot enum values used for XXTEA key derivation.
+/// Storage-file indices used to derive XXTEA keys for metadata files.
 ///
-/// Each value corresponds to a file index. The numeric value is XOR'd
-/// with a constant during key derivation.
+/// The enum has 32 values: `UserSettings` is 0, `AccountData` is 1, and
+/// `PlayerState1` through `PlayerState30` are 2 through 31. These are file
+/// indices, not the 15 user-visible paired save slots. Metadata fallback tries
+/// the requested index first, then only other indices of the same account-
+/// versus-player kind.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
 pub enum StorageSlot {
+    /// Account-level metadata file index 0.
     UserSettings = 0,
+    /// Account-level metadata file index 1.
     AccountData = 1,
+    /// Player-state metadata file index 2.
     PlayerState1 = 2,
+    /// Player-state metadata file index 3.
     PlayerState2 = 3,
+    /// Player-state metadata file index 4.
     PlayerState3 = 4,
+    /// Player-state metadata file index 5.
     PlayerState4 = 5,
+    /// Player-state metadata file index 6.
     PlayerState5 = 6,
+    /// Player-state metadata file index 7.
     PlayerState6 = 7,
+    /// Player-state metadata file index 8.
     PlayerState7 = 8,
+    /// Player-state metadata file index 9.
     PlayerState8 = 9,
+    /// Player-state metadata file index 10.
     PlayerState9 = 10,
+    /// Player-state metadata file index 11.
     PlayerState10 = 11,
+    /// Player-state metadata file index 12.
     PlayerState11 = 12,
+    /// Player-state metadata file index 13.
     PlayerState12 = 13,
+    /// Player-state metadata file index 14.
     PlayerState13 = 14,
+    /// Player-state metadata file index 15.
     PlayerState14 = 15,
+    /// Player-state metadata file index 16.
     PlayerState15 = 16,
+    /// Player-state metadata file index 17.
     PlayerState16 = 17,
+    /// Player-state metadata file index 18.
     PlayerState17 = 18,
+    /// Player-state metadata file index 19.
     PlayerState18 = 19,
+    /// Player-state metadata file index 20.
     PlayerState19 = 20,
+    /// Player-state metadata file index 21.
     PlayerState20 = 21,
+    /// Player-state metadata file index 22.
     PlayerState21 = 22,
+    /// Player-state metadata file index 23.
     PlayerState22 = 23,
+    /// Player-state metadata file index 24.
     PlayerState23 = 24,
+    /// Player-state metadata file index 25.
     PlayerState24 = 25,
+    /// Player-state metadata file index 26.
     PlayerState25 = 26,
+    /// Player-state metadata file index 27.
     PlayerState26 = 27,
+    /// Player-state metadata file index 28.
     PlayerState27 = 28,
+    /// Player-state metadata file index 29.
     PlayerState28 = 29,
+    /// Player-state metadata file index 30.
     PlayerState29 = 30,
+    /// Player-state metadata file index 31.
     PlayerState30 = 31,
 }
 
 impl StorageSlot {
-    /// All valid slot values.
+    /// All 32 supported storage-file indices in numeric order.
     pub const ALL: [StorageSlot; 32] = [
         Self::UserSettings,
         Self::AccountData,
@@ -112,7 +147,19 @@ impl StorageSlot {
         Self::PlayerState30,
     ];
 
-    /// Whether this slot represents account-level data (not a save slot).
+    /// Whether this index is one of the two account-level files.
+    ///
+    /// `UserSettings` and `AccountData` return `true`; all 30 player-state
+    /// indices return `false`. This classification controls same-kind fallback
+    /// during [`read_metadata`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_save::StorageSlot;
+    /// assert!(StorageSlot::UserSettings.is_account());
+    /// assert!(!StorageSlot::PlayerState1.is_account());
+    /// ```
     pub fn is_account(&self) -> bool {
         matches!(self, Self::UserSettings | Self::AccountData)
     }
@@ -125,7 +172,7 @@ impl StorageSlot {
 /// Decrypted and parsed metadata from an `mf_save*.hg` file.
 #[derive(Debug, Clone)]
 pub struct SaveMetadata {
-    /// Format version: 0x7D1 (2001), 0x7D2 (2002), 0x7D3 (2003), 0x7D4 (2004).
+    /// Decrypted format value; only `0x7D0` is rejected by the parser.
     pub format_version: u32,
     /// Decompressed JSON size in bytes.
     pub decompressed_size: u32,
@@ -133,9 +180,9 @@ pub struct SaveMetadata {
     pub compressed_size: u32,
     /// Profile hash (0 if none).
     pub profile_hash: u32,
-    /// SpookyHash V2 keys (format 2001 only, None for 2002+).
+    /// SpookyHash V2 key pair, populated for `0x7D1` and absent otherwise.
     pub spooky_hash: Option<[u64; 2]>,
-    /// SHA-256 of the raw storage file (format 2001 only, None for 2002+).
+    /// SHA-256 of raw storage bytes for `0x7D1`, absent for other accepted values.
     pub sha256_hash: Option<[u8; 32]>,
     /// The storage slot that successfully decrypted this metadata.
     pub decrypted_with_slot: StorageSlot,
@@ -147,12 +194,61 @@ pub struct SaveMetadata {
 
 /// Decrypt and parse a metadata file.
 ///
-/// `data` is the raw bytes of the `mf_save*.hg` file.
-/// `slot` is the expected storage slot for this file.
+/// `data` is the complete raw content of an `mf_save*.hg` file. Accepted
+/// lengths are 104, 360, 384, and 432 bytes. `slot` is the expected
+/// storage-file index. The expected index is tried first, followed by other
+/// indices of the same account-versus-player kind.
 ///
-/// The function first tries decryption with the given `slot`. If the magic
-/// sentinel is not found, it tries all other valid slots (in case the file
-/// was manually moved between save directories).
+/// A 104-byte file uses eight XXTEA rounds; the other accepted sizes use six.
+/// The first decrypted value with the magic sentinel is parsed immediately.
+/// Only metadata version `0x7D0` is rejected; this parser does not enforce a
+/// closed version range.
+///
+/// # Examples
+///
+/// A 50-byte input is rejected before any decryption attempt:
+///
+/// ```
+/// use nms_save::{SaveError, StorageSlot, read_metadata};
+/// let error = read_metadata(&[0; 50], StorageSlot::PlayerState1)
+///     .err()
+///     .ok_or_else(|| std::io::Error::other("expected an invalid-length error"))?;
+/// assert!(matches!(error, SaveError::InvalidMetaLength { length: 50 }));
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// This synthetic 360-byte record is encrypted for `PlayerState5`. The
+/// requested `PlayerState1` index is tried first, then same-kind player files.
+/// It illustrates the fallback result; it is not an authentic game metadata file.
+///
+/// ```
+/// use nms_save::{StorageSlot, read_metadata};
+/// use nms_save::xxtea::{derive_key, xxtea_encrypt};
+/// let mut words = vec![0_u32; 90];
+/// words[0] = 0xEEEEEEBE;
+/// words[1] = 0x7D2;
+/// words[14] = 1000;
+/// words[15] = 500;
+/// words[16] = 0x12345678;
+/// let key = derive_key(StorageSlot::PlayerState5);
+/// xxtea_encrypt(&mut words, &key, 6);
+/// let bytes: Vec<u8> = words.iter().flat_map(|word| word.to_le_bytes()).collect();
+/// let metadata = read_metadata(&bytes, StorageSlot::PlayerState1)?;
+/// assert_eq!(metadata.decrypted_with_slot, StorageSlot::PlayerState5);
+/// assert_eq!(metadata.format_version, 0x7D2);
+/// assert_eq!(metadata.decompressed_size, 1000);
+/// assert_eq!(metadata.compressed_size, 500);
+/// assert_eq!(metadata.profile_hash, 0x12345678);
+/// assert!(metadata.spooky_hash.is_none());
+/// assert!(metadata.sha256_hash.is_none());
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`SaveError::InvalidMetaLength`] for an unsupported length,
+/// [`SaveError::MetaDecryptionFailed`] when no same-kind key yields the
+/// sentinel, or the parse error for a decrypted unsupported version.
 pub fn read_metadata(data: &[u8], slot: StorageSlot) -> Result<SaveMetadata, SaveError> {
     if !VALID_META_LENGTHS.contains(&data.len()) {
         return Err(SaveError::InvalidMetaLength { length: data.len() });
@@ -193,10 +289,30 @@ pub fn read_metadata(data: &[u8], slot: StorageSlot) -> Result<SaveMetadata, Sav
     Err(SaveError::MetaDecryptionFailed)
 }
 
-/// Verify the SHA-256 hash stored in metadata against the raw save file bytes.
+/// Compare a stored SHA-256 digest with supplied raw save-file bytes.
 ///
-/// Only applicable for format 2001 (Foundation through Prisms). For format 2002+,
-/// SHA-256 is not used and this function returns `true`.
+/// When metadata contains a digest (the 2001 format), this returns whether the
+/// computed digest matches it. When no digest is stored, it returns `true`;
+/// that means there was no digest to compare, not that the bytes were
+/// independently verified. This function does not read a file or return an
+/// error.
+///
+/// # Examples
+///
+/// ```
+/// let mut metadata = nms_save::SaveMetadata {
+///     format_version: 0x7D2,
+///     decompressed_size: 0,
+///     compressed_size: 0,
+///     profile_hash: 0,
+///     spooky_hash: None,
+///     sha256_hash: None,
+///     decrypted_with_slot: nms_save::StorageSlot::PlayerState1,
+/// };
+/// assert!(nms_save::verify_sha256(&metadata, b"no stored digest"));
+/// metadata.sha256_hash = Some([0; 32]);
+/// assert!(!nms_save::verify_sha256(&metadata, b"abc"));
+/// ```
 pub fn verify_sha256(metadata: &SaveMetadata, raw_save_bytes: &[u8]) -> bool {
     use sha2::{Digest, Sha256};
 

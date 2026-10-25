@@ -1,8 +1,14 @@
-//! Key deobfuscation for NMS save file JSON.
+//! Key deobfuscation for NMS save-file JSON.
 //!
-//! NMS save files (format 2002+) have obfuscated JSON keys (e.g., `"F2P"` instead
-//! of `"Version"`). This module loads mapping files and recursively replaces
-//! obfuscated keys with their readable equivalents.
+//! Some save files store obfuscated object keys such as `"F2P"` in place of
+//! `"Version"`. [`KeyMapping`] combines the primary mapping, older-key
+//! compatibility entries, and Save Wizard spelling fixups. Deobfuscation
+//! traverses objects and arrays recursively, so nested keys may be renamed even
+//! when their parent key is unknown. Unknown key spellings and scalar values
+//! are otherwise preserved. If keys map to the same output name, the later
+//! processed entry replaces the earlier value, so the result is not lossless.
+//! This module handles JSON keys only; it does not decompress a save or validate
+//! address fields.
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -27,10 +33,14 @@ struct MappingFile {
     mapping: Vec<MappingEntry>,
 }
 
-/// Bidirectional key mapping for NMS save file deobfuscation.
+/// Key mapping used to deobfuscate NMS save JSON.
 ///
-/// Maps obfuscated 3-character keys (e.g., `"F2P"`) to readable names
-/// (e.g., `"Version"`).
+/// The primary direction maps obfuscated keys such as `"F2P"` to readable
+/// names such as `"Version"`. [`Self::bundled`] adds older keys only when the
+/// primary mapping lacks them and loads separate Save Wizard spelling fixups
+/// for later deobfuscation. Those fixups are not mapping entries returned by
+/// [`Self::get`] or counted by [`Self::len`]. [`Self::from_json`] loads one
+/// mapping file without those additional sources.
 #[derive(Debug, Clone)]
 pub struct KeyMapping {
     /// Version string from the primary mapping file.
@@ -44,10 +54,23 @@ pub struct KeyMapping {
 impl KeyMapping {
     /// Load the bundled (compiled-in) mapping.
     ///
-    /// Merges all three mapping sources:
-    /// - `mapping_mbincompiler.json` (primary)
-    /// - `mapping_legacy.json` (older keys)
-    /// - `mapping_savewizard.json` (name fixups)
+    /// Loads `mapping_mbincompiler.json` first, then adds keys from
+    /// `mapping_legacy.json` only when the primary mapping lacks that key. It
+    /// also loads separate spelling fixups from `mapping_savewizard.json` for
+    /// use during later deobfuscation; they do not alter a JSON value here or
+    /// count as entries returned by [`Self::get`] or [`Self::len`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let mapping = nms_save::KeyMapping::bundled();
+    /// assert_eq!(mapping.get("F2P"), Some("Version"));
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// Panics if any of the mapping files compiled into this crate is invalid.
+    /// Those files are project data and are expected to be valid at build time.
     pub fn bundled() -> Self {
         let primary_json = include_str!("../data/mapping_mbincompiler.json");
         let legacy_json = include_str!("../data/mapping_legacy.json");
@@ -71,7 +94,31 @@ impl KeyMapping {
         mapping
     }
 
-    /// Load a mapping from a JSON string (single mapping file).
+    /// Parse one mapping file from JSON text.
+    ///
+    /// The file must contain `libMBIN_version` and a `Mapping` array whose
+    /// entries have `Key` and `Value` strings. When a key occurs more than once,
+    /// the first entry is retained. This constructor does not merge the bundled
+    /// legacy keys or Save Wizard fixups.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let mapping = nms_save::KeyMapping::from_json(
+    ///     r#"{"libMBIN_version":"test","Mapping":[{"Key":"abc","Value":"Alpha"},{"Key":"abc","Value":"Wrong"}]}"#,
+    /// )?;
+    /// assert_eq!(mapping.get("abc"), Some("Alpha"));
+    /// assert_eq!(mapping.len(), 1);
+    /// let mut nested = serde_json::json!({"items": [{"abc": 1, "untouched": "literal"}]});
+    /// mapping.deobfuscate(&mut nested);
+    /// assert_eq!(nested, serde_json::json!({"items": [{"Alpha": 1, "untouched": "literal"}]}));
+    /// # Ok::<(), nms_save::SaveError>(())
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// Returns [`SaveError::MappingParseError`] when the JSON is malformed or
+    /// does not have the expected mapping-file shape.
     pub fn from_json(json: &str) -> Result<Self, SaveError> {
         let file: MappingFile =
             serde_json::from_str(json).map_err(|e| SaveError::MappingParseError {
@@ -90,32 +137,45 @@ impl KeyMapping {
         })
     }
 
-    /// Load a mapping from a file on disk.
+    /// Read and parse one mapping file from disk.
+    ///
+    /// This has the same single-file behavior as [`Self::from_json`]; it does
+    /// not add bundled compatibility entries or fixups.
+    ///
+    /// # Errors
+    ///
+    /// Returns an I/O error if the path cannot be read, or
+    /// [`SaveError::MappingParseError`] if its contents are not a valid mapping.
     pub fn from_file(path: &Path) -> Result<Self, SaveError> {
         let json = std::fs::read_to_string(path)?;
         Self::from_json(&json)
     }
 
     /// Look up the readable name for an obfuscated key.
+    ///
+    /// Returns `None` when this mapping has no entry for `obfuscated`.
     pub fn get(&self, obfuscated: &str) -> Option<&str> {
         self.entries.get(obfuscated).map(|s| s.as_str())
     }
 
-    /// Return the number of mapping entries.
+    /// Return the number of distinct obfuscated keys in this mapping.
     pub fn len(&self) -> usize {
         self.entries.len()
     }
 
-    /// Return whether the mapping is empty.
+    /// Return whether the mapping contains no obfuscated keys.
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
     }
 
-    /// Deobfuscate all keys in a [`serde_json::Value`] tree in place.
+    /// Deobfuscate keys in a [`serde_json::Value`] tree in place.
     ///
-    /// Walks the tree recursively. For each JSON object, replaces obfuscated
-    /// keys with their readable equivalents. Unknown keys are preserved as-is.
-    /// After key replacement, applies any fixups (e.g., case corrections).
+    /// Walks objects and arrays recursively. For each object key, applies the
+    /// obfuscated-key mapping and then any spelling fixup. Unknown key spellings
+    /// are retained, but their object or array values are still traversed and
+    /// may contain renamed keys; scalar values remain unchanged. If two entries
+    /// produce the same output name, the later processed entry replaces the
+    /// earlier value, so the result is not lossless.
     pub fn deobfuscate(&self, value: &mut serde_json::Value) {
         self.walk(value);
     }
@@ -146,10 +206,12 @@ impl KeyMapping {
     }
 }
 
-/// Detect whether a parsed JSON value has obfuscated keys.
+/// Heuristically detect obfuscated keys in a parsed JSON value.
 ///
-/// Checks the top-level object for known obfuscated keys (`"F2P"`, `"6f="`, `"8>q"`)
-/// vs the plaintext `"Version"` key.
+/// Only the top-level object is inspected. `"F2P"` is a positive marker even if
+/// `"Version"` is also present; otherwise, a top-level `"Version"` selects the
+/// plaintext result. If neither is present, `"6f="` or `"8>q"` is treated as an
+/// obfuscation marker. Non-object values return `false`.
 pub fn is_obfuscated(json: &serde_json::Value) -> bool {
     match json.as_object() {
         Some(map) => {
@@ -165,9 +227,26 @@ pub fn is_obfuscated(json: &serde_json::Value) -> bool {
     }
 }
 
-/// Deobfuscate JSON bytes: parse, detect obfuscation, apply mapping if needed.
+/// Parse JSON bytes and deobfuscate them when the top-level shape looks obfuscated.
 ///
-/// Returns the (potentially deobfuscated) parsed JSON value.
+/// Returns the parsed value, unchanged when [`is_obfuscated`] returns `false`.
+/// The heuristic is deliberately limited to the marker keys documented on
+/// [`is_obfuscated`].
+///
+/// # Examples
+///
+/// ```
+/// let mapping = nms_save::KeyMapping::bundled();
+/// let value = nms_save::deobfuscate_json(br#"{"F2P":6726}"#, &mapping)?;
+/// assert_eq!(value["Version"], 6726);
+/// # Ok::<(), nms_save::SaveError>(())
+/// ```
+/// # Errors
+///
+/// Returns [`SaveError::JsonParseError`] when `json_bytes` is not valid JSON.
+/// This function does not perform save-file decompression or typed
+/// deserialization.
+///
 pub fn deobfuscate_json(
     json_bytes: &[u8],
     mapping: &KeyMapping,

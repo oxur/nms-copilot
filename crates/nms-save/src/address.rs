@@ -161,12 +161,6 @@ impl AddressDecodeError {
 /// See the module-level [packed-field contract](index.html#packed-save-field-values) for
 /// accepted JSON types, lexical rules, width, and bit layout.
 ///
-/// # Errors
-///
-/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
-/// malformed hexadecimal string, packed value wider than 56 bits, or negative
-/// integer.
-///
 /// # Examples
 ///
 /// ```
@@ -177,6 +171,12 @@ impl AddressDecodeError {
 /// assert_eq!(address.voxel_x(), 1130);
 /// # Ok::<(), Box<dyn std::error::Error>>(())
 /// ```
+/// # Errors
+///
+/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
+/// malformed hexadecimal string, packed value wider than 56 bits, or negative
+/// integer.
+///
 pub fn decode_discovery_address(
     value: Option<&Value>,
     path: &str,
@@ -191,12 +191,6 @@ pub fn decode_discovery_address(
 /// See the module-level [packed-field contract](index.html#packed-save-field-values) for
 /// accepted JSON types, lexical rules, width, and bit layout.
 ///
-/// # Errors
-///
-/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
-/// malformed hexadecimal string, packed value wider than 56 bits, or negative
-/// integer.
-///
 /// # Examples
 ///
 /// ```
@@ -207,6 +201,12 @@ pub fn decode_discovery_address(
 /// assert_eq!(address.voxel_x(), -1017);
 /// # Ok::<(), Box<dyn std::error::Error>>(())
 /// ```
+/// # Errors
+///
+/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
+/// malformed hexadecimal string, packed value wider than 56 bits, or negative
+/// integer.
+///
 pub fn decode_base_address(
     value: Option<&Value>,
     path: &str,
@@ -220,12 +220,6 @@ pub fn decode_base_address(
 /// object. Validation occurs before the core constructor narrows components.
 /// See the module-level [expanded-object contract](index.html#expanded-address-objects)
 /// for required members, ranges, validation order, and diagnostic paths.
-///
-/// # Errors
-///
-/// Returns [`AddressDecodeError`] when the wrapper or any required member is
-/// absent, has the wrong JSON kind, or falls outside its encoded component
-/// range.
 ///
 /// # Examples
 ///
@@ -243,6 +237,12 @@ pub fn decode_base_address(
 /// assert_eq!(address.voxel_z(), -1244);
 /// # Ok::<(), Box<dyn std::error::Error>>(())
 /// ```
+/// # Errors
+///
+/// Returns [`AddressDecodeError`] when the wrapper or any required member is
+/// absent, has the wrong JSON kind, or falls outside its encoded component
+/// range.
+///
 pub fn decode_current_address(
     value: Option<&Value>,
     path: &str,
@@ -256,11 +256,6 @@ pub fn decode_current_address(
 /// Every present wrapper is fully validated before that sentinel is applied.
 /// See the module-level [presence contract](index.html#presence-paths-and-scope) for the
 /// distinction between absence and JSON null.
-///
-/// # Errors
-///
-/// Returns [`AddressDecodeError`] when a present wrapper or required member is
-/// invalid or outside its encoded component range.
 ///
 /// # Examples
 ///
@@ -276,6 +271,11 @@ pub fn decode_current_address(
 /// assert!(decode_previous_address(Some(&value), "/Player/PreviousUniverseAddress")?.is_none());
 /// # Ok::<(), Box<dyn std::error::Error>>(())
 /// ```
+/// # Errors
+///
+/// Returns [`AddressDecodeError`] when a present wrapper or required member is
+/// invalid or outside its encoded component range.
+///
 pub fn decode_previous_address(
     value: Option<&Value>,
     path: &str,

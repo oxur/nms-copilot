@@ -27,11 +27,12 @@ struct BlockHeader {
     decompressed_size: u32,
 }
 
-/// Detect whether raw save file bytes are LZ4-compressed or plaintext JSON.
+/// Classify raw bytes using only their first byte.
 ///
-/// Checks the first byte for `{` (ASCII 0x7B). No valid NMS LZ4 save starts
-/// with `{` — they start with the block magic `0xFEEDA1E5` (first byte `0xE5`).
-/// This handles both compact (`{"Version":...}`) and pretty-printed JSON.
+/// A first byte of `{` selects [`SaveFormat::PlaintextJson`]; every other
+/// value, including empty input and JSON with leading whitespace, selects
+/// [`SaveFormat::Lz4Compressed`]. The function does not validate JSON or
+/// inspect an LZ4 header.
 pub fn detect_format(data: &[u8]) -> SaveFormat {
     if !data.is_empty() && data[0] == 0x7B {
         SaveFormat::PlaintextJson
@@ -40,13 +41,39 @@ pub fn detect_format(data: &[u8]) -> SaveFormat {
     }
 }
 
-/// Decompress an entire NMS save file.
+/// Decompress NMS LZ4 blocks or pass through first-byte-classified JSON bytes.
 ///
-/// - If the data is plaintext JSON (starts with `{"`), returns a clone of the input.
-/// - If the data is LZ4 compressed, parses all blocks and returns concatenated
-///   decompressed bytes.
+/// When the first byte is `{`, this returns an exact copy of the input without
+/// checking UTF-8 or JSON syntax. Otherwise it parses consecutive 16-byte LZ4
+/// headers with little-endian magic `0xFEEDA1E5`, validates each block, and
+/// concatenates decompressed payloads; the fourth reserved header word is
+/// ignored. An empty slice is classified as compressed input and produces an
+/// empty output.
 ///
-/// The returned bytes are UTF-8 JSON.
+/// # Examples
+///
+/// ```
+/// use nms_save::{SaveError, SaveFormat, decompress_save, detect_format};
+/// assert_eq!(decompress_save(b"{}")?, b"{}");
+/// assert_eq!(decompress_save(&[])?, b"");
+/// assert_eq!(detect_format(b" {}"), SaveFormat::Lz4Compressed);
+/// assert!(matches!(decompress_save(b" {}"), Err(SaveError::UnexpectedEof { offset: 0, expected: 16 })));
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`SaveError::UnexpectedEof`] for an incomplete header or payload,
+/// [`SaveError::InvalidMagic`] for a wrong block magic,
+/// [`SaveError::ChunkTooLarge`] for a declared block above 0x80000 bytes, or
+/// [`SaveError::DecompressionFailed`] when the LZ4 decoder rejects a payload.
+///
+/// # Panics
+///
+/// On 32-bit targets, adding a declared compressed size to the payload offset
+/// uses unchecked `usize` arithmetic. A 16-byte header declaring
+/// `u32::MAX` compressed bytes can overflow that end offset and panic while
+/// slicing the input.
 pub fn decompress_save(data: &[u8]) -> Result<Vec<u8>, SaveError> {
     match detect_format(data) {
         SaveFormat::PlaintextJson => Ok(data.to_vec()),
@@ -54,7 +81,29 @@ pub fn decompress_save(data: &[u8]) -> Result<Vec<u8>, SaveError> {
     }
 }
 
-/// Convenience function: read a file from disk and decompress it.
+/// Read a file and apply [`decompress_save`] to its bytes.
+///
+/// This reads the file but does not parse the returned bytes as UTF-8 or JSON.
+///
+/// # Examples
+///
+/// ```no_run
+/// # fn read(path: &std::path::Path) -> Result<(), nms_save::SaveError> {
+/// let bytes = nms_save::decompress_save_file(path)?;
+/// println!("{} decompressed bytes", bytes.len());
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// Returns [`SaveError::Io`] when reading fails, or the decompression error
+/// returned by [`decompress_save`].
+///
+/// # Panics
+///
+/// Propagates the conditional 32-bit malformed-offset panic documented on
+/// [`decompress_save`].
 pub fn decompress_save_file(path: &std::path::Path) -> Result<Vec<u8>, SaveError> {
     let data = std::fs::read(path)?;
     decompress_save(&data)

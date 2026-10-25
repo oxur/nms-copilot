@@ -1,7 +1,10 @@
-//! XXTEA encryption/decryption for NMS metadata files.
+//! Modified XXTEA helpers used for NMS metadata files.
 //!
-//! Implements the modified XXTEA variant used by No Man's Sky for
-//! `mf_save*.hg` metadata encryption.
+//! The routines operate in place on little-endian `u32` words and perform no
+//! file I/O, format detection, authentication, or metadata validation. The
+//! caller chooses the storage-slot key and round count. [`crate::read_metadata`]
+//! uses eight rounds for the 104-byte format and six rounds for other supported
+//! metadata lengths; these low-level functions do not select those values.
 
 use crate::metadata::StorageSlot;
 
@@ -31,12 +34,24 @@ pub(crate) const META_ENCRYPTION_KEY: [u32; 4] = [
     0x47524E54, // "TNRG" as LE u32
 ];
 
-/// Derive the 4-element XXTEA key from a storage slot.
+/// Derive the four-word XXTEA key for a metadata storage-file index.
 ///
-/// `key[0]` is computed from the slot value:
-///   `key[0] = rotate_left((slot_value ^ 0x1422CB8C), 13) * 5 + 0xE6546B64`
+/// The first word uses wrapping 32-bit arithmetic:
 ///
-/// `key[1..3]` are the fixed values from `META_ENCRYPTION_KEY[1..3]`.
+/// `rotate_left((slot as u32 ^ 0x1422CB8C), 13) * 5 + 0xE6546B64`
+///
+/// The remaining words are fixed from `META_ENCRYPTION_KEY`. A slot is a
+/// storage-file index, not one of the 15 user-visible paired save slots.
+///
+/// # Examples
+///
+/// ```
+/// use nms_save::{StorageSlot, xxtea::derive_key};
+///
+/// assert_eq!(derive_key(StorageSlot::PlayerState1), [
+///     0xA58D37F8, 0x44415645, 0x5259414E, 0x47524E54,
+/// ]);
+/// ```
 pub fn derive_key(slot: StorageSlot) -> [u32; 4] {
     let slot_value = slot as u32;
     let key0 = (slot_value ^ KEY_XOR)
@@ -51,11 +66,20 @@ pub fn derive_key(slot: StorageSlot) -> [u32; 4] {
     ]
 }
 
-/// XXTEA decrypt a u32 slice in place.
+/// Decrypt a non-empty `u32` word slice in place with modified XXTEA.
 ///
-/// `data` is the metadata as a mutable slice of little-endian u32 values.
-/// `key` is the 4-element key from [`derive_key`].
-/// `iterations` is 8 for vanilla (104-byte) meta, 6 for all others.
+/// `data` contains words prepared by the caller, typically by interpreting
+/// metadata bytes as little-endian `u32` values. `key` is normally returned by
+/// [`derive_key`]. `iterations` is used exactly as supplied; this function does
+/// not verify that it matches a metadata format. It mutates `data` and does
+/// not check a sentinel or authenticate the result.
+///
+/// # Panics
+///
+/// An empty slice underflows while calculating its final index in debug builds.
+/// With positive `iterations`, it also indexes the empty slice in release
+/// builds. With zero iterations no element is indexed; an empty slice therefore
+/// has no release-mode panic guarantee, while a nonempty slice is unchanged.
 pub fn xxtea_decrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
     let last = data.len() - 1;
     let mut hash: u32 = 0;
@@ -93,9 +117,35 @@ pub fn xxtea_decrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
     }
 }
 
-/// XXTEA encrypt a u32 slice in place.
+/// Encrypt a `u32` word slice in place with modified XXTEA.
 ///
-/// Forward direction of the NMS-modified XXTEA. Used for testing round-trips.
+/// This is the forward direction corresponding to [`xxtea_decrypt`], primarily
+/// useful for constructing synthetic metadata and testing round trips. Words
+/// are supplied by the caller; this helper does not convert bytes, perform
+/// file I/O, or establish compatibility with an authentic game save.
+/// `iterations` is used exactly as supplied.
+///
+/// # Examples
+///
+/// ```
+/// use nms_save::{StorageSlot, xxtea::{derive_key, xxtea_decrypt, xxtea_encrypt}};
+///
+/// let original = [0xEEEEEEBE, 0x7D2, 42];
+/// let key = derive_key(StorageSlot::PlayerState1);
+/// let mut words = original;
+/// xxtea_encrypt(&mut words, &key, 6);
+/// assert_ne!(words, original);
+/// xxtea_decrypt(&mut words, &key, 6);
+/// assert_eq!(words, original);
+/// ```
+///
+/// # Panics
+///
+/// An empty slice underflows while calculating its final index in debug builds.
+/// With positive `iterations`, it also indexes an empty slice in release builds
+/// and requires at least two words. With zero iterations no element is indexed;
+/// an empty slice therefore has no release-mode panic guarantee, while a
+/// nonempty slice is left unchanged.
 pub fn xxtea_encrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
     let last = data.len() - 1;
     let mut hash: u32 = 0;

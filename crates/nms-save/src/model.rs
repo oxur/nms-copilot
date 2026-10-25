@@ -13,12 +13,19 @@ use std::fmt;
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct SaveRoot {
+    /// Save version from the `Version` member.
     pub version: u32,
+    /// Platform string from `Platform`, preserved verbatim.
     pub platform: String,
+    /// Active context name, such as `Main` or `Expedition`.
     pub active_context: String,
+    /// Shared save name and play-time data.
     pub common_state_data: CommonStateData,
+    /// Typed subset of the `BaseContext` object.
     pub base_context: GameContext,
+    /// Typed subset of the `ExpeditionContext` object.
     pub expedition_context: GameContext,
+    /// Modeled discovery-manager subset; unknown source members are not retained.
     pub discovery_manager_data: DiscoveryManagerData,
 }
 
@@ -27,8 +34,10 @@ pub struct SaveRoot {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct CommonStateData {
+    /// Save display name from `SaveName`, defaulting to empty when absent.
     #[serde(default)]
     pub save_name: String,
+    /// Accumulated play time from `TotalPlayTime`, defaulting to zero.
     #[serde(default)]
     pub total_play_time: u64,
 }
@@ -38,8 +47,10 @@ pub struct CommonStateData {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct GameContext {
+    /// Numeric `GameMode` value, defaulting to zero when absent.
     #[serde(default)]
     pub game_mode: u32,
+    /// Modeled player-state subset, defaulting to its empty value.
     #[serde(default)]
     pub player_state_data: PlayerStateData,
 }
@@ -49,32 +60,39 @@ pub struct GameContext {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct PlayerStateData {
+    /// Current universe address; legacy serde defaults it when absent.
     #[serde(default)]
     pub universe_address: UniverseAddress,
 
+    /// Previous universe address; legacy conversion applies its own zero sentinel.
     #[serde(default)]
     pub previous_universe_address: UniverseAddress,
 
+    /// Opaque save-summary text, defaulting to empty.
     #[serde(default)]
     pub save_summary: String,
 
-    /// Units can be negative in actual saves.
+    /// Units can be negative in saves; legacy conversion casts this to `u64`.
     #[serde(default)]
     pub units: i64,
 
+    /// Nanites balance, defaulting to zero.
     #[serde(default)]
     pub nanites: i64,
 
-    /// Quicksilver is stored as "Specials" in the JSON.
+    /// Quicksilver is stored as `Specials` in JSON; legacy conversion casts to `u64`.
     #[serde(default)]
     pub specials: i64,
 
+    /// Persistent bases modeled from this player-state object.
     #[serde(default)]
     pub persistent_player_bases: Vec<PersistentPlayerBase>,
 
+    /// Health value, defaulting to zero.
     #[serde(default)]
     pub health: u32,
 
+    /// Elapsed lifetime value, defaulting to zero.
     #[serde(default)]
     pub time_alive: u64,
 }
@@ -84,8 +102,10 @@ pub struct PlayerStateData {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct UniverseAddress {
+    /// Reality/galaxy index, defaulting to zero in legacy serde parsing.
     #[serde(default)]
     pub reality_index: u8,
+    /// Expanded address components, defaulting component-by-component to zero.
     #[serde(default)]
     pub galactic_address: GalacticAddressObject,
 }
@@ -95,20 +115,45 @@ pub struct UniverseAddress {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct GalacticAddressObject {
+    /// Signed X voxel coordinate using the legacy Rust `i16` range.
     #[serde(default)]
     pub voxel_x: i16,
+    /// Signed Y voxel coordinate using the legacy Rust `i8` range.
     #[serde(default)]
     pub voxel_y: i8,
+    /// Signed Z voxel coordinate using the legacy Rust `i16` range.
     #[serde(default)]
     pub voxel_z: i16,
+    /// Solar-system index, defaulting to zero.
     #[serde(default)]
     pub solar_system_index: u16,
+    /// Planet index, defaulting to zero.
     #[serde(default)]
     pub planet_index: u8,
 }
 
 impl GalacticAddressObject {
-    /// Convert to the core `GalacticAddress` type.
+    /// Convert stored components to a core address with the supplied galaxy index.
+    ///
+    /// Core construction masks components to their encoded widths. This
+    /// conversion does not validate original JSON member presence or narrower
+    /// packed-save coordinate ranges.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_save::model::GalacticAddressObject;
+    /// let source: GalacticAddressObject = serde_json::from_str(
+    ///     r#"{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}"#,
+    /// )?;
+    /// let address = source.to_galactic_address(9);
+    /// assert_eq!(address.reality_index, 9);
+    /// assert_eq!(address.voxel_x(), 3);
+    /// assert_eq!(address.solar_system_index(), 1);
+    /// assert_eq!(address.planet_index(), 2);
+    /// assert_eq!(address.packed(), 0x200100000003);
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {
         nms_core::GalacticAddress::new(
             self.voxel_x,
@@ -121,9 +166,35 @@ impl GalacticAddressObject {
     }
 }
 
-/// Galactic address in packed form — hex string `"0x..."` or bare integer.
+/// Legacy packed galactic-address value used by typed bases and discoveries.
 ///
-/// Used for bases and discoveries where the address is a single value.
+/// Serde accepts an unsigned JSON integer, casts a signed integer to `u64`, or
+/// parses a hexadecimal string with an optional `0x`/`0X` prefix. This
+/// compatibility representation does not enforce the checked decoder's 56-bit
+/// bound or validate original field presence before serde defaults.
+/// Serialization emits the numeric `u64`, not a hexadecimal string.
+///
+/// Conversion masks into the core 48-bit portal layout and uses the galaxy
+/// index supplied by the caller; it does not recover the galaxy byte from the
+/// save's 56-bit discovery/base layout.
+///
+/// # Examples
+///
+/// ```
+/// use nms_save::address::decode_discovery_address;
+/// use nms_save::model::PackedGalacticAddress;
+/// let source: serde_json::Value = serde_json::from_str(r#""0x20010900000003""#)?;
+/// let legacy: PackedGalacticAddress = serde_json::from_value(source.clone())?;
+/// assert_eq!(legacy.0, 0x20010900000003);
+/// assert_eq!(legacy.to_galactic_address(0).reality_index, 0);
+/// let checked = decode_discovery_address(Some(&source), "/DD/UA")?;
+/// assert_eq!(checked.reality_index, 9);
+/// assert_eq!(checked.planet_index(), 2);
+/// assert_eq!(checked.voxel_x(), 3);
+/// assert_eq!(checked.solar_system_index(), 1);
+/// assert_eq!(checked.packed(), 0x200100000003);
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
 #[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct PackedGalacticAddress(pub u64);
 
@@ -160,7 +231,12 @@ impl<'de> Deserialize<'de> for PackedGalacticAddress {
 }
 
 impl PackedGalacticAddress {
-    /// Convert to the core `GalacticAddress` type.
+    /// Convert the legacy packed value using the supplied galaxy index.
+    ///
+    /// This masks into the core 48-bit portal layout; it does not recover the
+    /// source 56-bit galaxy byte or validate the original packed value. Use
+    /// [`crate::address::decode_discovery_address`] or the corresponding
+    /// checked decoder when the source JSON is available.
     pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {
         nms_core::GalacticAddress::from_packed(self.0, reality_index)
     }
@@ -170,6 +246,7 @@ impl PackedGalacticAddress {
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct DiscoveryManagerData {
+    /// Version-1 discovery payload, defaulting when absent.
     #[serde(rename = "DiscoveryData-v1", default)]
     pub discovery_data_v1: DiscoveryDataV1,
 }
@@ -179,10 +256,13 @@ pub struct DiscoveryManagerData {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct DiscoveryDataV1 {
+    /// Reserved store count from `ReserveStore`, defaulting to zero.
     #[serde(default)]
     pub reserve_store: u32,
+    /// Reserved managed count from `ReserveManaged`, defaulting to zero.
     #[serde(default)]
     pub reserve_managed: u32,
+    /// Discovery rows held by this versioned container.
     #[serde(default)]
     pub store: DiscoveryStore,
 }
@@ -192,6 +272,7 @@ pub struct DiscoveryDataV1 {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct DiscoveryStore {
+    /// Modeled discovery rows from `Record`, defaulting to an empty list.
     #[serde(default)]
     pub record: Vec<RawDiscoveryRecord>,
 }
@@ -202,23 +283,23 @@ pub struct DiscoveryStore {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct RawDiscoveryRecord {
-    /// Discovery data.
+    /// Discovery payload from the actual, non-obfuscated `DD` key.
     #[serde(rename = "DD")]
     pub dd: DiscoveryData,
 
-    /// Discovery metadata (usually empty object).
+    /// Opaque value from `DM`; serde defaults it to JSON null when absent.
     #[serde(rename = "DM", default)]
     pub dm: serde_json::Value,
 
-    /// Ownership data.
+    /// Observed ownership fields from `OWS`; these do not establish identity.
     #[serde(rename = "OWS")]
     pub ows: OwnershipData,
 
-    /// Flags (C=created, U=uploaded).
+    /// Optional creation/upload flags from `FL`, defaulting when absent.
     #[serde(rename = "FL", default)]
     pub fl: DiscoveryFlags,
 
-    /// Record ID (base64 hash).
+    /// Optional record identifier from `RID`; its contents remain opaque.
     #[serde(rename = "RID", default)]
     pub rid: Option<String>,
 }
@@ -227,15 +308,15 @@ pub struct RawDiscoveryRecord {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct DiscoveryData {
-    /// Universe address (packed galactic address).
+    /// Packed address from `UA`; typed conversion uses the legacy 48-bit layout.
     #[serde(rename = "UA")]
     pub ua: PackedGalacticAddress,
 
-    /// Discovery type: "Flora", "Planet", "Sector", "SolarSystem", "Mineral", "Animal".
+    /// Source discovery-type string; the compatibility converter recognizes six exact values.
     #[serde(rename = "DT")]
     pub dt: String,
 
-    /// Variable-purpose data array — opaque for now.
+    /// Opaque variable-purpose values from `VP`; no typed interpretation is applied.
     #[serde(rename = "VP", default)]
     pub vp: Vec<serde_json::Value>,
 }
@@ -244,23 +325,23 @@ pub struct DiscoveryData {
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct OwnershipData {
-    /// Local ID (may be empty).
+    /// Source-local identifier, defaulting to empty.
     #[serde(rename = "LID", default)]
     pub lid: String,
 
-    /// User ID (Steam ID, PSN ID, etc.).
+    /// Platform account identifier, defaulting to empty; it is observed metadata.
     #[serde(rename = "UID", default)]
     pub uid: String,
 
-    /// Username.
+    /// Source username, defaulting to empty.
     #[serde(rename = "USN", default)]
     pub usn: String,
 
-    /// Platform token: "ST" = Steam, "PS" = PlayStation, etc.
+    /// Source platform token such as `ST` or `PS`, defaulting to empty.
     #[serde(rename = "PTK", default)]
     pub ptk: String,
 
-    /// Timestamp (Unix epoch seconds).
+    /// Source timestamp in Unix epoch seconds, defaulting to zero.
     #[serde(rename = "TS", default)]
     pub ts: u64,
 }
@@ -269,11 +350,13 @@ pub struct OwnershipData {
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct DiscoveryFlags {
-    /// Created flag.
+    /// Optional numeric created flag as represented in the source JSON.
     #[serde(rename = "C", default)]
     pub created: Option<u8>,
 
-    /// Uploaded flag.
+    /// Optional numeric uploaded flag.
+    ///
+    /// The legacy conversion treats values greater than zero as uploaded.
     #[serde(rename = "U", default)]
     pub uploaded: Option<u8>,
 }
@@ -283,42 +366,54 @@ pub struct DiscoveryFlags {
 #[serde(rename_all = "PascalCase")]
 #[non_exhaustive]
 pub struct PersistentPlayerBase {
+    /// Base schema version, defaulting to zero when absent.
     #[serde(default)]
     pub base_version: u32,
 
+    /// Packed source address; legacy conversion supplies galaxy zero.
     pub galactic_address: PackedGalacticAddress,
 
+    /// Three stored position coordinates, defaulting to zeroes.
     #[serde(default)]
     pub position: [f32; 3],
 
+    /// Three stored forward-vector coordinates, defaulting to zeroes.
     #[serde(default)]
     pub forward: [f32; 3],
 
+    /// Last-update Unix timestamp, defaulting to zero.
     #[serde(default)]
     pub last_update_timestamp: u64,
 
-    /// Base objects — stored as opaque JSON.
+    /// Base-object values retained as opaque JSON, not interpreted by this model.
     #[serde(default)]
     pub objects: Vec<serde_json::Value>,
 
+    /// Record identifier from `RID`, defaulting to an empty string.
     #[serde(default, rename = "RID")]
     pub rid: String,
 
+    /// Observed owner metadata; no stronger identity inference is made.
     #[serde(default)]
     pub owner: OwnershipData,
 
+    /// Base display name, defaulting to empty.
     #[serde(default)]
     pub name: String,
 
+    /// Persistent base-type string, defaulting to its empty wrapper.
     #[serde(default)]
     pub base_type: BaseTypeWrapper,
 
+    /// Last-editor identifier, defaulting to empty.
     #[serde(default)]
     pub last_edited_by_id: String,
 
+    /// Last-editor name, defaulting to empty.
     #[serde(default)]
     pub last_edited_by_username: String,
 
+    /// Optional preset game-mode wrapper; missing or JSON null becomes `None`.
     #[serde(default)]
     pub game_mode: Option<GameModeWrapper>,
 }
@@ -327,6 +422,7 @@ pub struct PersistentPlayerBase {
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct BaseTypeWrapper {
+    /// Raw `PersistentBaseTypes` value, defaulting to empty.
     #[serde(rename = "PersistentBaseTypes", default)]
     pub persistent_base_types: String,
 }
@@ -335,6 +431,7 @@ pub struct BaseTypeWrapper {
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 #[non_exhaustive]
 pub struct GameModeWrapper {
+    /// Raw `PresetGameMode` value, defaulting to empty.
     #[serde(rename = "PresetGameMode", default)]
     pub preset_game_mode: String,
 }
