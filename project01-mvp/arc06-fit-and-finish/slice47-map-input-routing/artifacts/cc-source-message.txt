@@ -1,0 +1,6 @@
+test(nms-copilot): cover map input routing
+
+Route map events through a private FnOnce seam so timeout, error, resize, and key behavior can be verified without terminal access. Add seven literal full-state regressions for the existing input policy.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

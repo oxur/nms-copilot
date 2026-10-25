@@ -1,0 +1,1153 @@
+{
+  "slice": "Project01 Arc06 Slice47 map input routing",
+  "actual_refinement_count": 1,
+  "initial_attempt_finding": "Initial source write omitted constructed tests module; initial format/lint exits were 0 but earned no I1-I7 credit. The omitted-module defect was disclosed, preserved, and corrected only under immutable iteration01.",
+  "source": {
+    "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+    "branch": "codex/workspace-coverage-contract",
+    "baseline": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+    "commit": "3e8dd6b426d024adb9318497db49a35281b419cb",
+    "parent": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+    "tree": "d0b1613493d8963e2888cbd53b69649d9cd50cca",
+    "paths": [
+      "crates/nms-copilot/src/map/input.rs"
+    ],
+    "clean_after_commit": true
+  },
+  "captured_attempt_log": "/private/tmp/nms-slice47-cc-attempts.json",
+  "attempts": [
+    {
+      "id": "1a99735fde7047619b7617cda832886c",
+      "label": "Support capture control exit7",
+      "kind": "support control",
+      "argv": [
+        "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+        "-c",
+        "import os,sys;os.write(1,b'first\\x00last');os.write(2,b'error');sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:15:05.321798+00:00",
+      "ended_utc": "2026-10-25T17:15:05.435140+00:00",
+      "status": "complete",
+      "exit_code": 7,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "5d233a338ee52f692380af6743c778a241b1d93d5d6c7c567bb7c5f18e5ce6c5"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "5d233a338ee52f692380af6743c778a241b1d93d5d6c7c567bb7c5f18e5ce6c5"
+      },
+      "stdout": {
+        "bytes": 10,
+        "sha256": "ca926364f0d61f92894a8633893650aaffd2b29cfda636e7fbd075b44a6353d2"
+      },
+      "stderr": {
+        "bytes": 5,
+        "sha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+      }
+    },
+    {
+      "id": "9ccb1a550e17473181380687805744fd",
+      "label": "Support capture control exit0",
+      "kind": "support control",
+      "argv": [
+        "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+        "-c",
+        "import os,sys;os.write(1,b'first\\x00last');os.write(2,b'error');sys.exit(0)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:15:05.512567+00:00",
+      "ended_utc": "2026-10-25T17:15:05.605233+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "5d233a338ee52f692380af6743c778a241b1d93d5d6c7c567bb7c5f18e5ce6c5"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "5d233a338ee52f692380af6743c778a241b1d93d5d6c7c567bb7c5f18e5ce6c5"
+      },
+      "stdout": {
+        "bytes": 10,
+        "sha256": "ca926364f0d61f92894a8633893650aaffd2b29cfda636e7fbd075b44a6353d2"
+      },
+      "stderr": {
+        "bytes": 5,
+        "sha256": "ca00fccfb408989eddc401062c4d1219a6aceb6b9b55412357f1790862e8f178"
+      }
+    },
+    {
+      "id": "c385f47e075e4643b4112a0c777e9d04",
+      "label": "format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:25:37.597144+00:00",
+      "ended_utc": "2026-10-25T17:25:38.781926+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "ebba2cbcd73a365d2b736492f80a409e7e6dfd4abc7bce2dc06bcb77264a411b",
+        "untracked_files": {},
+        "working_identity_sha256": "8b459845851e655313377302e87ddcc3fd1afdf297c0890e42fa5e5558e27f4f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "ebba2cbcd73a365d2b736492f80a409e7e6dfd4abc7bce2dc06bcb77264a411b",
+        "untracked_files": {},
+        "working_identity_sha256": "8b459845851e655313377302e87ddcc3fd1afdf297c0890e42fa5e5558e27f4f"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "761fd0205f184a9686e33bb79d3c436b",
+      "label": "lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:25:43.248965+00:00",
+      "ended_utc": "2026-10-25T17:25:47.652256+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "ebba2cbcd73a365d2b736492f80a409e7e6dfd4abc7bce2dc06bcb77264a411b",
+        "untracked_files": {},
+        "working_identity_sha256": "8b459845851e655313377302e87ddcc3fd1afdf297c0890e42fa5e5558e27f4f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "ebba2cbcd73a365d2b736492f80a409e7e6dfd4abc7bce2dc06bcb77264a411b",
+        "untracked_files": {},
+        "working_identity_sha256": "8b459845851e655313377302e87ddcc3fd1afdf297c0890e42fa5e5558e27f4f"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 456,
+        "sha256": "3aaec204141d6565cd8320455af5a0e4af0214ddf208bb782308d86a5e166fd9"
+      }
+    },
+    {
+      "id": "c10db590d5b742f0ac1d723af1efc45e",
+      "label": "iteration01-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:31:13.758749+00:00",
+      "ended_utc": "2026-10-25T17:31:14.950051+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "04f3e419382d9c0014c8a7049b7462c49ee4d3ac082132da89b14016b3747388",
+        "untracked_files": {},
+        "working_identity_sha256": "0f1bd853e7f2f731e9ea62272e2ee3d9eeca1eda22bc2840624c7da49bf02659"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "364286df12fb40e78ac411a72368f89b",
+      "label": "iteration01-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:31:17.170973+00:00",
+      "ended_utc": "2026-10-25T17:31:21.044513+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 456,
+        "sha256": "f7bbee6a10794ae9d544d373a12f6414c2f2fa4115507fe814f072a33110ea7e"
+      }
+    },
+    {
+      "id": "8d7037d0c9974c32bab490e693e7e193",
+      "label": "focused-all-features",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "map::input::tests",
+        "--all-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:32:47.105533+00:00",
+      "ended_utc": "2026-10-25T17:32:52.549446+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 723,
+        "sha256": "91a3115ddfc75ead8f21944f78b711cb43a7d8189bb6882b0c257c633fe5c61f"
+      },
+      "stderr": {
+        "bytes": 540,
+        "sha256": "fbfb0c4f7c4c634abac6f21e8b85ebe3cc5ec67f64799676fc7fcc5aacb6d5ec"
+      }
+    },
+    {
+      "id": "b5965b141eb5408cab378acccb0a8775",
+      "label": "workspace-all-features-native",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:33:01.204479+00:00",
+      "ended_utc": "2026-10-25T17:34:52.550968+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 89821,
+        "sha256": "b9fef6faa0d55d2252675eb85ec84e2a8cd12136ba9f0026efa9625948fdb02f"
+      },
+      "stderr": {
+        "bytes": 4436,
+        "sha256": "ff2976b099aaf48e89972460f27b4249a206d4865e0e8478d18972f1a85f7a7f"
+      }
+    },
+    {
+      "id": "fa67455cdd054c5b9e7dcde08702e26d",
+      "label": "focused-no-default",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "map::input::tests",
+        "--no-default-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:34:56.648014+00:00",
+      "ended_utc": "2026-10-25T17:35:00.289659+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 723,
+        "sha256": "0b24153a36f79734d0591eaee98f0428e638eee03822c6899a0854689d82c652"
+      },
+      "stderr": {
+        "bytes": 540,
+        "sha256": "522034331ac53274158720f0dede958b44e209fafb13670956ea2325b2284726"
+      }
+    },
+    {
+      "id": "6c97d0021e8a4d2f832068a455a02a05",
+      "label": "doctest-no-default",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-copilot",
+        "--doc",
+        "--no-default-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:35:02.346762+00:00",
+      "ended_utc": "2026-10-25T17:35:06.382659+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 2498,
+        "sha256": "8730143d504972f42cb584ab7292b56c8ccc0c31395f40c07dff491d07ca8548"
+      },
+      "stderr": {
+        "bytes": 482,
+        "sha256": "30a7a2ea68604f3f08da658e78cc7ce4da7cd5f7bb9a7033f0fdc5ba5e6c4b42"
+      }
+    },
+    {
+      "id": "c895d74bd51e48e5b54cf77d03d53e68",
+      "label": "strict-rustdoc",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "--all-features",
+        "--no-deps",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:35:09.243608+00:00",
+      "ended_utc": "2026-10-25T17:35:10.974582+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 579,
+        "sha256": "1374fbb82fc7241408d8790afd8ee8c926bcfff13d15304515d6723564df7852"
+      }
+    },
+    {
+      "id": "654059c3d6db4706ba19764ffdbc97e2",
+      "label": "workspace-coverage-native",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "llvm-cov",
+        "--workspace",
+        "--all-features",
+        "--offline",
+        "--json",
+        "--output-path",
+        "/private/tmp/nms-slice47-cc-workspace-coverage.json",
+        "--fail-under-lines",
+        "95"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:35:18.312545+00:00",
+      "ended_utc": "2026-10-25T17:37:56.892800+00:00",
+      "status": "complete",
+      "exit_code": 1,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 78475,
+        "sha256": "6685ea75537879c0840f5cd42d78d9a00d18f23d9d53a67958399c5816e01ac1"
+      },
+      "stderr": {
+        "bytes": 6166,
+        "sha256": "ca9a704f9be64c942c28cd3fd862005b406d6fe8b80a5d42d67c6cf06d6d16e0"
+      }
+    },
+    {
+      "id": "7d2db5201f584c3d8bbb3d42e20ec926",
+      "label": "diff-check-working",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:38:34.808117+00:00",
+      "ended_utc": "2026-10-25T17:38:34.929293+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "df610e4d943c47598170b5fada430ec0",
+      "label": "diff-check-baseline",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T17:38:37.086829+00:00",
+      "ended_utc": "2026-10-25T17:38:37.179746+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "before": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "after": {
+        "head": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+        "status": " M crates/nms-copilot/src/map/input.rs\n",
+        "working_diff_sha256": "57b8245d9c0c1ce2fcc7ecc8334f66ab6932f6c6c2f905496aa4c6786e207786",
+        "untracked_files": {},
+        "working_identity_sha256": "8b1f2b8f18edf520773724e838fafbb72cd8ce4c5a3e10fe462423f98729344f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "workspace_test_population": {
+    "attempt_id": "b5965b141eb5408cab378acccb0a8775",
+    "exit_code": 0,
+    "runtime_tests": {
+      "passed": 1114,
+      "failed": 0,
+      "ignored": 0
+    },
+    "doctest_targets": 9,
+    "doctest_cases": {
+      "total": 118,
+      "compile_only": 27,
+      "executed": 91
+    },
+    "result_rows": 49,
+    "do_not_add_populations": true
+  },
+  "focused_all_features": {
+    "attempt_id": "8d7037d0c9974c32bab490e693e7e193",
+    "passed": 7,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 240
+  },
+  "focused_no_default": {
+    "attempt_id": "fa67455cdd054c5b9e7dcde08702e26d",
+    "passed": 7,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 239
+  },
+  "no_default_doctest": {
+    "attempt_id": "6c97d0021e8a4d2f832068a455a02a05",
+    "passed": 28,
+    "failed": 0,
+    "ignored": 0
+  },
+  "strict_rustdoc": {
+    "attempt_id": "c895d74bd51e48e5b54cf77d03d53e68",
+    "exit_code": 0,
+    "rustdocflags": "-D warnings -D missing_docs"
+  },
+  "coverage_gate": {
+    "attempt_id": "654059c3d6db4706ba19764ffdbc97e2",
+    "exit_code": 1,
+    "threshold_lines": 95,
+    "parent_gate": "RED",
+    "known_context": "14 source files remain below 90% line coverage; workspace overall 93.73657698465382%; preserve M7.7/CI and independent criteria as open"
+  },
+  "coverage_projection": {
+    "path": "/private/tmp/nms-slice47-cc-workspace-coverage.json",
+    "bytes": 76884636,
+    "sha256": "27c70c9d1b1197808c024d2644157e2bf65e4aba1cc25e10dbf6be52e3f92117",
+    "gzip_path": "/private/tmp/nms-slice47-cc-workspace-coverage.json.gz",
+    "gzip_bytes": 7450595,
+    "gzip_sha256": "398801ec341984fd959a9f43b0eaef27deb506acd4fc5ea5f8997289aa6ec6d3",
+    "format": "llvm.coverage.json.export",
+    "version": "3.1.0",
+    "llvm_cov_version": "0.6.21",
+    "file_count": 72,
+    "totals": {
+      "branches": {
+        "count": 0,
+        "covered": 0,
+        "notcovered": 0,
+        "percent": 0
+      },
+      "functions": {
+        "count": 2202,
+        "covered": 2030,
+        "percent": 92.188919164396
+      },
+      "instantiations": {
+        "count": 3220,
+        "covered": 2483,
+        "percent": 77.11180124223603
+      },
+      "lines": {
+        "count": 25609,
+        "covered": 24005,
+        "percent": 93.73657698465382
+      },
+      "mcdc": {
+        "count": 0,
+        "covered": 0,
+        "notcovered": 0,
+        "percent": 0
+      },
+      "regions": {
+        "count": 41346,
+        "covered": 38630,
+        "notcovered": 2716,
+        "percent": 93.43104532481982
+      }
+    },
+    "map_file_summaries": {
+      "input.rs": {
+        "branches": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "mcdc": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "functions": {
+          "count": 25,
+          "covered": 22,
+          "percent": 88.0
+        },
+        "instantiations": {
+          "count": 31,
+          "covered": 25,
+          "percent": 80.64516129032258
+        },
+        "lines": {
+          "count": 416,
+          "covered": 407,
+          "percent": 97.83653846153845
+        },
+        "regions": {
+          "count": 608,
+          "covered": 590,
+          "notcovered": 18,
+          "percent": 97.03947368421053
+        }
+      },
+      "mod.rs": {
+        "branches": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "mcdc": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "functions": {
+          "count": 3,
+          "covered": 0,
+          "percent": 0.0
+        },
+        "instantiations": {
+          "count": 6,
+          "covered": 0,
+          "percent": 0.0
+        },
+        "lines": {
+          "count": 30,
+          "covered": 0,
+          "percent": 0.0
+        },
+        "regions": {
+          "count": 57,
+          "covered": 0,
+          "notcovered": 57,
+          "percent": 0.0
+        }
+      },
+      "render.rs": {
+        "branches": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "mcdc": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "functions": {
+          "count": 32,
+          "covered": 32,
+          "percent": 100.0
+        },
+        "instantiations": {
+          "count": 40,
+          "covered": 32,
+          "percent": 80.0
+        },
+        "lines": {
+          "count": 617,
+          "covered": 614,
+          "percent": 99.51377633711506
+        },
+        "regions": {
+          "count": 1389,
+          "covered": 1384,
+          "notcovered": 5,
+          "percent": 99.64002879769619
+        }
+      },
+      "state.rs": {
+        "branches": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "mcdc": {
+          "count": 0,
+          "covered": 0,
+          "notcovered": 0,
+          "percent": 0.0
+        },
+        "functions": {
+          "count": 45,
+          "covered": 39,
+          "percent": 86.66666666666667
+        },
+        "instantiations": {
+          "count": 66,
+          "covered": 39,
+          "percent": 59.09090909090909
+        },
+        "lines": {
+          "count": 386,
+          "covered": 373,
+          "percent": 96.6321243523316
+        },
+        "regions": {
+          "count": 495,
+          "covered": 464,
+          "notcovered": 31,
+          "percent": 93.73737373737374
+        }
+      }
+    },
+    "below_90_percent_line_files": [
+      {
+        "path": "nms-cache/src/error.rs",
+        "covered": 18,
+        "count": 23,
+        "percent": 78.26086956521739
+      },
+      {
+        "path": "nms-cli/src/find.rs",
+        "covered": 32,
+        "count": 36,
+        "percent": 88.88888888888889
+      },
+      {
+        "path": "nms-cli/src/list.rs",
+        "covered": 118,
+        "count": 223,
+        "percent": 52.91479820627802
+      },
+      {
+        "path": "nms-cli/src/route.rs",
+        "covered": 37,
+        "count": 48,
+        "percent": 77.08333333333334
+      },
+      {
+        "path": "nms-cli/src/show.rs",
+        "covered": 14,
+        "count": 18,
+        "percent": 77.77777777777779
+      },
+      {
+        "path": "nms-cli/src/stats.rs",
+        "covered": 18,
+        "count": 22,
+        "percent": 81.81818181818183
+      },
+      {
+        "path": "nms-copilot/src/dispatch.rs",
+        "covered": 313,
+        "count": 572,
+        "percent": 54.72027972027972
+      },
+      {
+        "path": "nms-copilot/src/main.rs",
+        "covered": 670,
+        "count": 897,
+        "percent": 74.69342251950948
+      },
+      {
+        "path": "nms-copilot/src/map/mod.rs",
+        "covered": 0,
+        "count": 30,
+        "percent": 0.0
+      },
+      {
+        "path": "nms-copilot/src/mcp/mod.rs",
+        "covered": 525,
+        "count": 775,
+        "percent": 67.74193548387096
+      },
+      {
+        "path": "nms-copilot/src/mcp/tools.rs",
+        "covered": 1243,
+        "count": 1387,
+        "percent": 89.61788031723144
+      },
+      {
+        "path": "nms-copilot/src/prompt.rs",
+        "covered": 110,
+        "count": 125,
+        "percent": 88.0
+      },
+      {
+        "path": "nms-copilot/src/setup.rs",
+        "covered": 122,
+        "count": 259,
+        "percent": 47.1042471042471
+      },
+      {
+        "path": "nms-save/src/lib.rs",
+        "covered": 29,
+        "count": 35,
+        "percent": 82.85714285714286
+      }
+    ],
+    "input_functions": [
+      {
+        "name": "_RNvNtNtCs23HCTJ1q8qP_11nms_copilot3map5input10handle_key",
+        "count": 0,
+        "first_line": 79,
+        "last_line": 113
+      },
+      {
+        "name": "_RNvNtNtCs23HCTJ1q8qP_11nms_copilot3map5input12handle_input",
+        "count": 0,
+        "first_line": 51,
+        "last_line": 53
+      },
+      {
+        "name": "_RINvNtNtCs23HCTJ1q8qP_11nms_copilot3map5input17handle_input_withNvNtCsbNtTgvcgzti_9crossterm5event4pollNvB12_4readEB6_",
+        "count": 0,
+        "first_line": 56,
+        "last_line": 76
+      },
+      {
+        "name": "_RINvNtNtCslWJu1dE1Gej_11nms_copilot3map5input17handle_input_withNCNvNtB2_5tests11route_event0NCB12_s_0EB6_",
+        "count": 56,
+        "first_line": 56,
+        "last_line": 76
+      },
+      {
+        "name": "_RINvNtNtCslWJu1dE1Gej_11nms_copilot3map5input17handle_input_withNCNvNtB2_5testss_44test_handle_input_read_error_preserves_state0NCB12_s_0EB6_",
+        "count": 1,
+        "first_line": 56,
+        "last_line": 76
+      },
+      {
+        "name": "_RINvNtNtCslWJu1dE1Gej_11nms_copilot3map5input17handle_input_withNCNvNtB2_5testss_55test_handle_input_poll_timeout_and_error_preserve_state0NCB12_s_0EB6_",
+        "count": 1,
+        "first_line": 56,
+        "last_line": 76
+      },
+      {
+        "name": "_RINvNtNtCslWJu1dE1Gej_11nms_copilot3map5input17handle_input_withNCNvNtB2_5testss_55test_handle_input_poll_timeout_and_error_preserve_states0_0NCB12_s1_0EB6_",
+        "count": 1,
+        "first_line": 56,
+        "last_line": 76
+      },
+      {
+        "name": "_RNvNtNtCslWJu1dE1Gej_11nms_copilot3map5input12handle_input",
+        "count": 0,
+        "first_line": 51,
+        "last_line": 53
+      },
+      {
+        "name": "_RNvNtNtCslWJu1dE1Gej_11nms_copilot3map5input10handle_key",
+        "count": 47,
+        "first_line": 79,
+        "last_line": 113
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests11route_event0B9_",
+        "count": 56,
+        "first_line": 188,
+        "last_line": 192
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests11route_events_0B9_",
+        "count": 56,
+        "first_line": 193,
+        "last_line": 196
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests8snapshot0B9_",
+        "count": 107,
+        "first_line": 168,
+        "last_line": 175
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_44test_handle_input_read_error_preserves_state0B9_",
+        "count": 1,
+        "first_line": 266,
+        "last_line": 270
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_44test_handle_input_read_error_preserves_states_0B9_",
+        "count": 1,
+        "first_line": 271,
+        "last_line": 277
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_55test_handle_input_poll_timeout_and_error_preserve_state0B9_",
+        "count": 1,
+        "first_line": 224,
+        "last_line": 228
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_55test_handle_input_poll_timeout_and_error_preserve_states0_0B9_",
+        "count": 1,
+        "first_line": 238,
+        "last_line": 245
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_55test_handle_input_poll_timeout_and_error_preserve_states1_0B9_",
+        "count": 0,
+        "first_line": 246,
+        "last_line": 246
+      },
+      {
+        "name": "_RNCNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_55test_handle_input_poll_timeout_and_error_preserve_states_0B9_",
+        "count": 0,
+        "first_line": 229,
+        "last_line": 229
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests10seed_state",
+        "count": 48,
+        "first_line": 136,
+        "last_line": 155
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests11assert_none",
+        "count": 50,
+        "first_line": 205,
+        "last_line": 207
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests11route_event",
+        "count": 56,
+        "first_line": 184,
+        "last_line": 203
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests15assert_snapshot",
+        "count": 59,
+        "first_line": 213,
+        "last_line": 215
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests3key",
+        "count": 44,
+        "first_line": 209,
+        "last_line": 211
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5tests8snapshot",
+        "count": 107,
+        "first_line": 157,
+        "last_line": 182
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_44test_handle_input_read_error_preserves_state",
+        "count": 1,
+        "first_line": 260,
+        "last_line": 288
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_51test_handle_input_help_consumes_keys_but_not_resize",
+        "count": 1,
+        "first_line": 526,
+        "last_line": 558
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_53test_handle_input_zoom_aliases_restore_literal_states",
+        "count": 1,
+        "first_line": 388,
+        "last_line": 454
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_55test_handle_input_poll_timeout_and_error_preserve_state",
+        "count": 1,
+        "first_line": 218,
+        "last_line": 257
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_56test_handle_input_command_modifiers_and_quit_persistence",
+        "count": 1,
+        "first_line": 457,
+        "last_line": 523
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_60test_handle_input_navigation_edges_and_key_kinds_move_cursor",
+        "count": 1,
+        "first_line": 331,
+        "last_line": 385
+      },
+      {
+        "name": "_RNvNtNtNtCslWJu1dE1Gej_11nms_copilot3map5input5testss_65test_handle_input_resize_and_ignored_events_update_expected_state",
+        "count": 1,
+        "first_line": 291,
+        "last_line": 328
+      }
+    ],
+    "line_claim": "map/input.rs 407/416 = 97.836538%; private injected handle_input_with count 56; test-harness handle_key count 47; real handle_input wrapper count 0"
+  },
+  "diff_checks": {
+    "working": {
+      "attempt_id": "7d2db5201f584c3d8bbb3d42e20ec926",
+      "exit_code": 0
+    },
+    "baseline": {
+      "attempt_id": "df610e4d943c47598170b5fada430ec0",
+      "exit_code": 0
+    }
+  },
+  "commit_message_path": "/private/tmp/nms-slice47-cc-source-message.txt",
+  "commit_message": "test(nms-copilot): cover map input routing\n\nRoute map events through a private FnOnce seam so timeout, error, resize, and key behavior can be verified without terminal access. Add seven literal full-state regressions for the existing input policy.\n\nCo-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n",
+  "raw_capture_inventory": {
+    "kernel": "/private/tmp/nms-slice47-cc-capture.py",
+    "attempts": "/private/tmp/nms-slice47-cc-attempts.json",
+    "coverage_json": "/private/tmp/nms-slice47-cc-workspace-coverage.json",
+    "coverage_gzip": "/private/tmp/nms-slice47-cc-workspace-coverage.json.gz",
+    "source_message": "/private/tmp/nms-slice47-cc-source-message.txt",
+    "returns": [
+      "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract/workbench/slice47-return/execution.md",
+      "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract/workbench/slice47-return/validation.json",
+      "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract/workbench/slice47-return/closing-report.md"
+    ]
+  },
+  "known_open_owners": [
+    "CDC independent replay/acceptance/retrospective/Arc06 bubble-up",
+    "CDC D0042 real terminal setup/partial setup/cleanup-error/panic/restoration and interactive behavior",
+    "Arc06 M7.7 >=95% overall coverage and hosted CI",
+    "remaining original Project01 UI/distribution/theme/data/game-backed/cache/freshness/higher approval criteria"
+  ],
+  "cc_proposals": "Proposed dispositions are in closing-report.md; CC proposal is not CDC acceptance."
+}

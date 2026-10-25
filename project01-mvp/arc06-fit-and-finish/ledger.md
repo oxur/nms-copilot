@@ -484,6 +484,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S47 | Map event routing/error/whole-state transitions preserved through private testable seam | SixIR/I1–I7/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 input coverage gap | open | — | Actual terminalIO/lifecycle/95coverage/CI/fullparent gates OPEN |
+| R06-S47 | Map event routing/error/whole-state transitions preserved through private testable seam | SixIR/I1–I7/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 input coverage gap | done | [CDC47 acceptance](slice47-map-input-routing/cdc-verification.md) — reproduced | Actual terminalIO/lifecycle/95coverage/CI/fullparent gates OPEN |
 
 65arc52done13open/project25OPEN/initialzeroACTUALrefinements/no product validation or acceptance at issue.
+
+2026-10-25formal47close: all6IR/R06-S47DONE/oneACTUALrefinement/noexception;65arc53done12open/project25OPEN. Current95parentRED93.736577%/14below90/fullM7.7,D0042/lifecycle/CI/alloriginalhigher owners OPEN.

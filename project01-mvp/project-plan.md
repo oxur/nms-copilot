@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.137
+version: 1.138
 project: project01-mvp
 status: active
 depends-on: []
@@ -1352,3 +1352,7 @@ All6MR/R06-S46 DONE at isolated clean85a80ca1bf77e80f071c6036e6e187a214228dea: e
 ## Slice47 input routing owner — 2026-10-25UTC
 
 OriginalM7.7/D0042 next usable child: exactonefile map/input.rs, private FnOnce poll/read seam and seven meaningful callback/error/event/whole-state regressions; publicsignature/docs/enum/handle_key and allotherbytes frozen. Literal aliases/zoom/resize/help/modifier/key-kind/error/timeout policy resolved; no terminalbehavior/dependency change. FreshsameapprovedCC6-lunaHigh/CDC6.1-solHigh, serial ownership+capturedpair/heldfullreview/nineoriginalgroups+independentacceptance/retro. Baselineclean85a80ca/95parentRED93.531510%/input0of37; current measurement required, inlinebody/defaultdoctest qualifications preserved. ActualCrosstermIO/elapsedtimeout and terminalsetup/cleanupfailure/panic lifetime/fullD0042 stayexplicitCDCseparateowner, not inferred from callbacks. Alloriginalcoverage/hostedCI/non-doc/input/Operator gates remainOPEN;65arc52done13open/project25OPEN. No integration/maincleanup/release. [Issued prompt](arc06-fit-and-finish/slice47-map-input-routing/cc-prompt.md).
+
+## Slice47 input routing accepted — 2026-10-25UTC
+
+All6IR/R06-S47 DONE at isolatedclean3e8dd6b426d024adb9318497db49a35281b419cb: exactonefile/private FnOnce seam/seven literal complete-state/error/event tests, public docs/signature/enum/handle_key/allotherbytes frozen. Nine fresh independentgroups complete7focusedbothfeatures/1114runtime+118docs(91execute27compile)/28separate nodefaultdocs/strict+diffs0; coverage1 retains95parentRED24005/25609=93.736577%, input407/41697.836538%/injectedprivatepositive/realwrapper0/14filesbelow90. Inlinebody/defaultdoctest/provenance qualifications explicit, actualterminalIO/elapsed100ms/setup/cleanup/panic lifetime not inferred. OneACTUALrefinement appends omitted initialtests; green-but-incompleteinitialpair/originalprompts/raw14CC+12CDC/returns/countcorrection/retro preserved, no exception.65arc53done12open/project25OPEN. CDC next originalD0042/M7.7 lifecycle/remainingbehavior owner under existingauthority; full95/modulefloors/hostedCI/all originalhigher/input/Operator gates OPEN. No integration/maincleanup/release. [Acceptance](arc06-fit-and-finish/slice47-map-input-routing/cdc-verification.md), [retrospective](arc06-fit-and-finish/slice47-map-input-routing/cdc-retrospective.md).
