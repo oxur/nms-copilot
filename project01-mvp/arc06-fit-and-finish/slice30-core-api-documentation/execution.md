@@ -7,3 +7,5 @@ Readiness capture: inspected3718B CDC kernelc39d1bb2031a7c5ebf1cc313eb3c29039e7c
 
 
 Supplied CC kernel3723B/SHA2569ca6bf1302b0f82ae2c47ee7594a46b7caa9d70fa367e0ac4f39b4d4f9d89224 fully inspected before actual controls4ec0f61bf36e4de1810208c1ae099cf5(expected7)/f9443dbf625b49efad4c2783c918fa1f(expected0). Both complete exact stdout10/stderr5 NUL bytes/hash/status/sourceclean/equal before-after verified; archived original preflight and kernel. CC independently verifies these retained support controls before first product gate; no need to repeat known-command controls merely for new role. No product acceptance credit.
+
+2026-10-25 pre-edit01: author digits-only wording superseded by exact12-byte payload then standard radix parser (optional+ accepted), source body/API/scenarios unchanged. CC explicitly no implementation began; sourceclean4a. Initial+01 FIRST implementation, zero actual refinements/five remain; all six rows OPEN. Original prompt preserved, current01 proceeds to original edits/pair/HOLD.

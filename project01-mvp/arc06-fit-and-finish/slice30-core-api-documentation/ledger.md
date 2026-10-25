@@ -10,3 +10,5 @@
 | CD-05 | Attributable scoped gates/commits/fences | Raw-first actual attempts, format/lint/unit/docs/diffs, exact names/trailers/clean main protection | correctness-grade | open | Pending |
 | CD-06 | Independent acceptance/retro and full original parent ownership | Exact CC return transfer, CDC review/appropriate reproduction/retrospective/bubble-up, required later API owners | correctness-grade | open | Pending |
 
+
+2026-10-25 pre-edit01: author digits-only wording superseded by exact12-byte payload then standard radix parser (optional+ accepted), source body/API/scenarios unchanged. CC explicitly no implementation began; sourceclean4a. Initial+01 FIRST implementation, zero actual refinements/five remain; all six rows OPEN. Original prompt preserved, current01 proceeds to original edits/pair/HOLD.

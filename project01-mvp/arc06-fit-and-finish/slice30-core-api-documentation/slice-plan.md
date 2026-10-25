@@ -1,6 +1,6 @@
 # Slice30 — complete nms-core public API documentation
 
-Version1.0,2026-10-25 UTC. OPEN. Initial implementation, zero actual refinements of five. CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 selected/applied gpt-6-luna High. CC has explicitly confirmed usable qualitative headroom, prior handback preserved and no active process/edit. Same Operator-authorized Autonomous Project01 Arc06 ONLY. CDC owns planning/index/design/independent acceptance; CC owns dedicated source/index after coherent intake.
+Version1.1,2026-10-25 UTC. OPEN. Current assignment cc-prompt-iteration01.md pre-edit author clarification; initial+01 FIRST implementation, zero actual refinements of five. CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 selected/applied gpt-6-luna High. CC has explicitly confirmed usable qualitative headroom, prior handback preserved and no active process/edit. Same Operator-authorized Autonomous Project01 Arc06 ONLY. CDC owns planning/index/design/independent acceptance; CC owns dedicated source/index after coherent intake.
 
 Source /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation, branch codex/public-api-documentation, clean baseline4a935408460349e9aa64fecd570d9960094191b1. Exact nine paths in source-allowlist.json. Only line rustdoc comments (`///`, `//!`) and blank lines may change. Every nonblank/non-rustdoc line remains byte-exact in order, including attributes, signatures, bodies, tests, non-doc comments, derives, reexports and table data. No Cargo/dependency/visibility/doc-hidden/lint-suppression/API/runtime/test/fixture change.
 
@@ -37,3 +37,4 @@ If sandbox substrate blocks test, preserve failed attempt and identical authoriz
 
 Main b616/indexempty/only human native9line blob2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e, all held/external pins protected. Resolve EVERY mutation's full absolute path under dedicated root AND nine-path manifest; no mixed-root patch. CDC owns planning exclusively; CC must not copy to planning. No otherarc, dependencyinstall, hostsave, merge/push/release authority.
 
+2026-10-25 pre-edit01: author digits-only wording superseded by exact12-byte payload then standard radix parser (optional+ accepted), source body/API/scenarios unchanged. CC explicitly no implementation began; sourceclean4a. Initial+01 FIRST implementation, zero actual refinements/five remain; all six rows OPEN. Original prompt preserved, current01 proceeds to original edits/pair/HOLD.
