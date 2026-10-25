@@ -1,7 +1,7 @@
 //! Interactive ASCII galaxy map using Ratatui.
 //!
 //! This module joins [`input`] handling, [`render`]ing, and [`state`] for a
-//! borrowed snapshot of a [`GalaxyModel`] and [`SessionState`]. Its zoom tiers
+//! owned [`MapSnapshot`] captured from a [`GalaxyModel`] and [`SessionState`]. Its zoom tiers
 //! are [`state::ZoomLevel::Galaxy`], [`state::ZoomLevel::Region`], and
 //! [`state::ZoomLevel::Local`]. The map projects voxel X/Z and does not update
 //! the model or session.
@@ -21,10 +21,35 @@ use crossterm::terminal::{EnterAlternateScreen, LeaveAlternateScreen};
 use ratatui::Terminal;
 use ratatui::backend::CrosstermBackend;
 
+use nms_core::address::GalacticAddress;
 use nms_graph::GalaxyModel;
 
 use crate::session::SessionState;
 use state::MapState;
+
+/// Owned map-only view captured before entering the interactive terminal.
+///
+/// It copies display state and system addresses, so neither the model nor a
+/// lock guard remains borrowed while the modal map runs.
+#[derive(Debug)]
+pub struct MapSnapshot {
+    state: MapState,
+    addresses: Vec<GalacticAddress>,
+}
+
+impl MapSnapshot {
+    /// Capture the current map display state and system addresses.
+    pub fn from_model(model: &GalaxyModel, session: &SessionState) -> Self {
+        Self {
+            state: MapState::new(model, session),
+            addresses: model
+                .systems
+                .values()
+                .map(|system| system.address)
+                .collect(),
+        }
+    }
+}
 
 /// Enter the interactive map, returning when the user exits.
 ///
@@ -71,10 +96,46 @@ use state::MapState;
 /// forgotten guard, or a second panic while unwinding. See
 /// [`state::MapState::move_cursor`] for its numeric limit.
 pub fn run_map(model: &GalaxyModel, session: &SessionState) -> io::Result<()> {
+    run_map_snapshot(MapSnapshot::from_model(model, session))
+}
+
+/// Enter the interactive map from an owned snapshot.
+///
+/// The snapshot owns copied map state and addresses; no model lock is held
+/// while input is read. Terminal setup, rendering, input, and restoration
+/// follow the same lifecycle as [`run_map`].
+///
+/// # Examples
+///
+/// This terminal entry example is checked but not run because it requires an
+/// interactive terminal.
+/// ```no_run
+/// use std::io;
+/// use nms_copilot::{map::{MapSnapshot, run_map_snapshot}, session::SessionState};
+/// use nms_graph::GalaxyModel;
+/// # fn main() -> io::Result<()> {
+/// let model = GalaxyModel::new();
+/// let session = SessionState::from_model(&model);
+/// run_map_snapshot(MapSnapshot::from_model(&model, &session))?;
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// Returns I/O errors from terminal setup, construction or sizing, drawing,
+/// event polling or reading, or terminal restoration. Cleanup errors retain
+/// the same precedence described by [`run_map`].
+///
+/// # Panics
+///
+/// A panic in map processing unwinds through the terminal guard, which makes
+/// best-effort restoration attempts. See [`state::MapState::move_cursor`].
+pub fn run_map_snapshot(snapshot: MapSnapshot) -> io::Result<()> {
     with_terminal_control(CrosstermControl, || {
         let backend = CrosstermBackend::new(io::stdout());
         let mut terminal = Terminal::new(backend)?;
-        run_map_loop(&mut terminal, model, session)
+        run_map_loop(&mut terminal, snapshot)
     })
 }
 
@@ -185,16 +246,18 @@ where
 /// Main event loop for the interactive map.
 fn run_map_loop(
     terminal: &mut Terminal<CrosstermBackend<io::Stdout>>,
-    model: &GalaxyModel,
-    session: &SessionState,
+    snapshot: MapSnapshot,
 ) -> io::Result<()> {
     let size = terminal.size()?;
-    let mut state = MapState::new(model, session);
+    let MapSnapshot {
+        mut state,
+        addresses,
+    } = snapshot;
     state.resize(size.width, size.height);
 
     loop {
         terminal.draw(|frame| {
-            render::render(frame, &state, model);
+            render::render_addresses(frame, &state, &addresses);
         })?;
 
         input::handle_input(&mut state)?;
@@ -213,8 +276,71 @@ mod tests {
     use std::panic::{AssertUnwindSafe, catch_unwind};
     use std::rc::Rc;
 
+    use super::{MapSnapshot, render};
     use super::{TerminalControl, with_terminal_control};
+    use crate::map::state::MapState;
+    use crate::session::SessionState;
+    use nms_core::address::GalacticAddress;
+    use nms_core::system::System;
+    use nms_graph::GalaxyModel;
+    use ratatui::Terminal;
+    use ratatui::backend::TestBackend;
     use std::io;
+
+    fn rendered_symbols(snapshot: &MapSnapshot) -> String {
+        let backend = TestBackend::new(48, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+        terminal
+            .draw(|frame| render::render_addresses(frame, &snapshot.state, &snapshot.addresses))
+            .unwrap();
+        terminal
+            .backend()
+            .buffer()
+            .content()
+            .iter()
+            .map(|cell| cell.symbol())
+            .collect()
+    }
+
+    fn rendered_model_symbols(model: &GalaxyModel, session: &SessionState) -> String {
+        let backend = TestBackend::new(48, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let state = MapState::new(model, session);
+        terminal
+            .draw(|frame| render::render(frame, &state, model))
+            .unwrap();
+        terminal
+            .backend()
+            .buffer()
+            .content()
+            .iter()
+            .map(|cell| cell.symbol())
+            .collect()
+    }
+
+    #[test]
+    fn test_map_snapshot_owns_fixed_display_and_address_view() {
+        let address = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(address, Some("A".into()), None, None, vec![]));
+        let mut session = SessionState::from_model(&model);
+        let snapshot = MapSnapshot::from_model(&model, &session);
+        let before = rendered_symbols(&snapshot);
+        assert_eq!(before, rendered_model_symbols(&model, &session));
+        assert_eq!(snapshot.addresses, vec![address]);
+
+        model.insert_system(System::new(
+            GalacticAddress::new(1_000, 0, 1_000, 2, 0, 0),
+            Some("B".into()),
+            None,
+            None,
+            vec![],
+        ));
+        session.set_position_address(GalacticAddress::new(20, 0, 20, 3, 0, 0));
+
+        assert_eq!(rendered_symbols(&snapshot), before);
+        assert_ne!(rendered_model_symbols(&model, &session), before);
+    }
 
     struct MockControl {
         trace: Rc<RefCell<Vec<&'static str>>>,

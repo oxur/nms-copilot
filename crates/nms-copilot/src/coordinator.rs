@@ -159,8 +159,12 @@ impl std::error::Error for CoordinatorStartError {}
 /// On each accepted observation, the worker applies the complete player state
 /// and additive atlas delta, ensures the player system, applies explicit names,
 /// and optionally snapshots the model with the observed save version. It
-/// releases the model lock before attempting the serialized cache write, then
-/// publishes an [`AppliedSaveUpdate`] even if that best-effort write fails.
+/// rebuilds the supplied model's default per-galaxy KNN-10 edges once when that
+/// update adds systems or ensures a missing player system. An update that adds
+/// no system preserves the existing edges, including a caller-selected
+/// topology. It releases the model lock before attempting the serialized cache
+/// write, then publishes an [`AppliedSaveUpdate`] even if that best-effort write
+/// fails.
 /// With no cache path, it does not extract or write cache data. The coordinator
 /// does not update a REPL [`crate::session::SessionState`].
 ///
@@ -392,8 +396,12 @@ fn apply_and_snapshot(
     cache_enabled: bool,
 ) -> (Vec<String>, bool, Option<CacheData>) {
     let notifications = crate::watch::notifications_for_delta(model, &update.delta);
+    let system_count = model.system_count();
     model.apply_save_update(update);
     model.ensure_player_system();
+    if model.system_count() > system_count {
+        model.build_edges(nms_graph::EdgeStrategy::default());
+    }
     let names_changed = model.apply_discovery_names(discovery_names);
     let cache_data =
         cache_enabled.then(|| nms_cache::extract_cache_data(model, update.save_version));
@@ -1203,6 +1211,7 @@ mod observer_and_drop_tests {
 #[cfg(test)]
 mod full_update_component_tests {
     use super::*;
+    use nms_core::address::GalacticAddress;
     use nms_core::delta::{SaveDelta, SaveUpdate};
     use nms_core::player::{BaseType, PlayerBase, PlayerState};
     use nms_core::system::{Planet, System};
@@ -1210,6 +1219,10 @@ mod full_update_component_tests {
 
     fn address(x: i16, reality: u8) -> nms_core::address::GalacticAddress {
         nms_core::address::GalacticAddress::new(x, 0, 0, 1, 0, reality)
+    }
+
+    fn address_with_system(x: i16, solar_system_index: u16, reality: u8) -> GalacticAddress {
+        GalacticAddress::new(x, 0, 0, solar_system_index, 0, reality)
     }
 
     fn atlas_system(name: &str, x: i16, reality: u8) -> System {
@@ -1258,6 +1271,7 @@ mod full_update_component_tests {
         model.insert_base(base("New Base", 0));
         model.player_state = Some(player_state);
         model.set_active_galaxy(selected);
+        model.build_edges(nms_graph::EdgeStrategy::default());
         model
     }
 
@@ -1409,6 +1423,130 @@ mod full_update_component_tests {
         assert_eq!(rebuilt.player_state, expected.player_state);
         assert_eq!(rebuilt.active_galaxy, expected.active_galaxy);
         assert_eq!(checked.save_version, version);
+    }
+
+    #[test]
+    fn test_added_system_default_edges_match_full_rebuild_consumers_and_topology() {
+        let address = |voxel_x, solar_system_index, reality| {
+            address_with_system(voxel_x, solar_system_index, reality)
+        };
+        let system =
+            |name: &str, location| System::new(location, Some(name.into()), None, None, vec![]);
+        let a = address(0, 1, 0);
+        let b = address(4, 2, 0);
+        let c = address(2, 3, 0);
+        let foreign = address(2, 3, 9);
+        let a_id = SystemId::from_address(&a);
+        let b_id = SystemId::from_address(&b);
+        let c_id = SystemId::from_address(&c);
+
+        let mut incrementally_updated = GalaxyModel::new();
+        incrementally_updated.insert_system(system("A", a));
+        incrementally_updated.insert_system(system("B", b));
+        incrementally_updated.insert_system(system("Foreign decoy", foreign));
+        incrementally_updated.build_edges(nms_graph::EdgeStrategy::default());
+        let update = SaveUpdate {
+            delta: SaveDelta {
+                new_systems: vec![system("C", c)],
+                ..SaveDelta::empty()
+            },
+            player_state: PlayerState::new(a, 0, None, None, 7, 8, 9),
+            save_version: 4720,
+        };
+        apply_and_snapshot(
+            &mut incrementally_updated,
+            &update,
+            &DiscoveryNames::default(),
+            false,
+        );
+
+        let mut rebuilt = GalaxyModel::new();
+        rebuilt.insert_system(system("A", a));
+        rebuilt.insert_system(system("B", b));
+        rebuilt.insert_system(system("C", c));
+        rebuilt.insert_system(system("Foreign decoy", foreign));
+        rebuilt.player_state = Some(update.player_state.clone());
+        rebuilt.build_edges(nms_graph::EdgeStrategy::default());
+
+        let route_projection = |model: &GalaxyModel| {
+            let route = model.shortest_path(a_id, c_id).expect("same-galaxy route");
+            (
+                route
+                    .hops
+                    .iter()
+                    .map(|hop| (hop.system_id, hop.leg_distance_ly, hop.cumulative_ly))
+                    .collect::<Vec<_>>(),
+                route.total_distance_ly,
+            )
+        };
+        assert_eq!(
+            route_projection(&incrementally_updated),
+            route_projection(&rebuilt)
+        );
+        assert_eq!(
+            route_projection(&incrementally_updated),
+            (vec![(a_id, 0.0, 0.0), (c_id, 800.0, 800.0)], 800.0),
+            "same-galaxy direct fallback remains the literal 800ly A→C route"
+        );
+        assert_eq!(
+            incrementally_updated
+                .reachable_systems(a_id, 800.0)
+                .expect("live radius query"),
+            rebuilt
+                .reachable_systems(a_id, 800.0)
+                .expect("rebuilt radius query"),
+            "map-based reachability remains equivalent even when graph topology differs"
+        );
+        assert_eq!(
+            incrementally_updated
+                .reachable_systems(a_id, 800.0)
+                .unwrap(),
+            vec![a_id, b_id, c_id],
+            "the literal 800ly radius reaches A, C and B via spatial radius queries"
+        );
+        let full_rebuild_edges = normalized_edge_rows(&rebuilt);
+        assert_eq!(
+            full_rebuild_edges,
+            literal_edge_rows(&[
+                (a_id, b_id, 1_600.0),
+                (a_id, c_id, 800.0),
+                (b_id, c_id, 800.0),
+            ]),
+            "full default KNN-10 rebuild connects all three same-galaxy systems"
+        );
+        assert_eq!(
+            normalized_edge_rows(&incrementally_updated),
+            full_rebuild_edges,
+            "application update graph must match a full rebuild"
+        );
+    }
+
+    #[test]
+    fn test_no_node_update_preserves_existing_custom_edges() {
+        let a = address_with_system(0, 1, 0);
+        let b = address_with_system(4, 2, 0);
+        let a_id = SystemId::from_address(&a);
+        let b_id = SystemId::from_address(&b);
+        let mut model = GalaxyModel::new();
+        model.insert_system(System::new(a, Some("A".into()), None, None, vec![]));
+        model.insert_system(System::new(b, Some("B".into()), None, None, vec![]));
+        model.build_edges(nms_graph::EdgeStrategy::WarpRange { max_ly: 1.0 });
+        model.player_state = Some(PlayerState::new(a, 0, None, None, 7, 8, 9));
+        let before = normalized_edge_rows(&model);
+        assert!(before.is_empty());
+
+        let update = SaveUpdate {
+            delta: SaveDelta::empty(),
+            player_state: PlayerState::new(a, 0, None, None, 70, 80, 90),
+            save_version: 4721,
+        };
+        apply_and_snapshot(&mut model, &update, &DiscoveryNames::default(), false);
+
+        assert_eq!(model.system_count(), 2);
+        assert_eq!(model.player_state.as_ref().unwrap().units, 70);
+        assert_eq!(normalized_edge_rows(&model), before);
+        assert!(model.node_map.contains_key(&a_id));
+        assert!(model.node_map.contains_key(&b_id));
     }
 
     #[test]
@@ -1620,6 +1758,7 @@ mod full_update_component_tests {
         assert!(snapshot.is_none());
         let mut expected_without_cache = make_atlas(state.clone());
         expected_without_cache.insert_player_placeholder(full_address(2, 0, 0));
+        expected_without_cache.build_edges(nms_graph::EdgeStrategy::default());
         assert_whole_atlas(&without_cache, &expected_without_cache, false);
         assert_eq!(without_cache.player_state, Some(state.clone()));
 

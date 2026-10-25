@@ -433,7 +433,11 @@ fn assert_source_semantics_against(
     let raw_data = nms_cache::extract_cache_data(source, 4720);
     let raw = nms_cache::rebuild_model(&raw_data);
     let mut first_ensure = raw;
+    let system_count = first_ensure.system_count();
     first_ensure.ensure_player_system();
+    if first_ensure.system_count() > system_count {
+        first_ensure.build_edges(nms_graph::EdgeStrategy::default());
+    }
     let expected = if matches!(stage, SourceModelStage::RebuiltWarm) {
         let ensured_data = nms_cache::extract_cache_data(&first_ensure, 4720);
         nms_cache::rebuild_model(&ensured_data)
@@ -555,10 +559,9 @@ fn assert_source_semantics_against(
     };
     assert_eq!(graph_edges(actual), graph_edges(&expected));
     match stage {
-        SourceModelStage::InitialEnsure => {
-            assert_eq!(actual.graph.edge_count(), 0);
-        }
-        SourceModelStage::RebuiltWarm if physical_id.reality_index() == 0 => {
+        SourceModelStage::InitialEnsure | SourceModelStage::RebuiltWarm
+            if physical_id.reality_index() == 0 =>
+        {
             assert_eq!(actual.graph.edge_count(), 1);
             let edge = actual.graph.edge_indices().next().unwrap();
             let (left, right) = actual.graph.edge_endpoints(edge).unwrap();
@@ -575,7 +578,9 @@ fn assert_source_semantics_against(
                 "literal rebuilt same-galaxy edge distance"
             );
         }
-        SourceModelStage::RebuiltWarm => assert_eq!(actual.graph.edge_count(), 0),
+        SourceModelStage::InitialEnsure | SourceModelStage::RebuiltWarm => {
+            assert_eq!(actual.graph.edge_count(), 0)
+        }
     }
     assert_eq!(actual.systems.len(), 2);
     assert_eq!(actual.planets.len(), 2);
@@ -672,23 +677,18 @@ fn assert_dual_galaxy_model_after_ensure(
         assert_eq!(actual.spatial_for(0).unwrap().size(), 2);
         assert_eq!(actual.spatial_for(9).unwrap().size(), 1);
         assert_eq!(actual.graph.node_count(), 3);
-        match stage {
-            SourceModelStage::InitialEnsure => assert_eq!(actual.graph.edge_count(), 0),
-            SourceModelStage::RebuiltWarm => {
-                assert_eq!(actual.graph.edge_count(), 1);
-                let edge = actual.graph.edge_indices().next().unwrap();
-                let (left, right) = actual.graph.edge_endpoints(edge).unwrap();
-                let endpoints = std::collections::HashSet::from([
-                    *actual.graph.node_weight(left).unwrap(),
-                    *actual.graph.node_weight(right).unwrap(),
-                ]);
-                assert_eq!(endpoints, std::collections::HashSet::from([player_id, id0]));
-                assert!(
-                    (*actual.graph.edge_weight(edge).unwrap() - 676_721.744_884_853).abs() < 1e-9,
-                    "literal rebuilt same-galaxy Zero-current edge distance"
-                );
-            }
-        }
+        assert_eq!(actual.graph.edge_count(), 1);
+        let edge = actual.graph.edge_indices().next().unwrap();
+        let (left, right) = actual.graph.edge_endpoints(edge).unwrap();
+        let endpoints = std::collections::HashSet::from([
+            *actual.graph.node_weight(left).unwrap(),
+            *actual.graph.node_weight(right).unwrap(),
+        ]);
+        assert_eq!(endpoints, std::collections::HashSet::from([player_id, id0]));
+        assert!(
+            (*actual.graph.edge_weight(edge).unwrap() - 676_721.744_884_853).abs() < 1e-9,
+            "literal rebuilt same-galaxy Zero-current edge distance"
+        );
         assert_eq!(actual.active_galaxy, 9);
         assert_eq!(actual.system(&id0).unwrap().name.as_deref(), Some("Zero"));
         assert_eq!(actual.system(&id9).unwrap().name.as_deref(), Some("Nine"));
@@ -710,6 +710,7 @@ fn assert_dual_galaxy_model_after_ensure(
             .expect("dual fixture player")
             .current_address;
         expected.insert_player_placeholder(physical_address);
+        expected.build_edges(nms_graph::EdgeStrategy::default());
     }
     if with_player && matches!(stage, SourceModelStage::RebuiltWarm) {
         let data = extract_cache_data(&expected, 9999);
@@ -2130,6 +2131,63 @@ fn authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits() {
     assert_source_semantics_at(&warm.model, SourceModelStage::RebuiltWarm);
     assert_eq!(fs::read(&cache_path).unwrap(), current_bytes);
     assert_ne!(fs::read(&save_path).unwrap(), original_source_bytes);
+}
+
+#[test]
+fn unknown_player_system_edges_match_cold_no_cache_and_warm_repair() {
+    let mut save: serde_json::Value = serde_json::from_str(test_save_json()).unwrap();
+    save["BaseContext"]["PlayerStateData"]["UniverseAddress"]["GalacticAddress"]["SolarSystemIndex"] =
+        serde_json::json!(91);
+    let save_text = serde_json::to_string(&save).unwrap();
+
+    let dir = tempfile::tempdir().unwrap();
+    let (save_path, cache_path) = paths(&dir);
+    fs::write(&save_path, &save_text).unwrap();
+
+    // A compatible warm archive without the newly ensured player key reaches
+    // the same default graph as cold parsing and --no-cache startup.
+    let pre_ensure = source_model_from_json(&save_text);
+    assert_eq!(pre_ensure.system_count(), 1);
+    write_cache(&extract_cache_data(&pre_ensure, 4720), &cache_path).unwrap();
+    set_fresh(&cache_path, &save_path);
+
+    let warm_repaired = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm_repaired.was_cached);
+    let cold = load_or_rebuild(&cache_path, &save_path, true).unwrap();
+    assert!(!cold.was_cached);
+    let warm_roundtrip = load_or_rebuild(&cache_path, &save_path, false).unwrap();
+    assert!(warm_roundtrip.was_cached);
+
+    let discovered = SystemId::from_address(&GalacticAddress::from_packed(0x050003AB8C07, 0));
+    let player = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 91, 0, 0));
+    for result in [&warm_repaired, &cold, &warm_roundtrip] {
+        let model = &result.model;
+        assert_eq!(model.system_count(), 2);
+        assert_eq!(model.graph.node_count(), 2);
+        assert_eq!(model.graph.edge_count(), 1);
+        assert_eq!(model.node_map.len(), 2);
+        assert!(model.node_map.contains_key(&discovered));
+        assert!(model.node_map.contains_key(&player));
+        let edge = model.graph.edge_indices().next().unwrap();
+        let (left, right) = model.graph.edge_endpoints(edge).unwrap();
+        let endpoints = std::collections::HashSet::from([
+            *model.graph.node_weight(left).unwrap(),
+            *model.graph.node_weight(right).unwrap(),
+        ]);
+        assert_eq!(
+            endpoints,
+            std::collections::HashSet::from([discovered, player])
+        );
+        assert_eq!(*model.graph.edge_weight(edge).unwrap(), 676_721.744_884_853);
+        assert_eq!(
+            model
+                .reachable_systems(discovered, 676_721.744_884_853)
+                .unwrap()
+                .into_iter()
+                .collect::<std::collections::HashSet<_>>(),
+            std::collections::HashSet::from([discovered, player])
+        );
+    }
 }
 
 #[test]

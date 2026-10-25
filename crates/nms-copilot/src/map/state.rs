@@ -95,6 +95,7 @@ pub struct BaseLabel {
 /// Fields are public and independently mutable; direct changes can create
 /// combinations methods do not produce. Galaxy, labels, and player position
 /// are copied on construction, not live model views. Geometry uses voxel X/Z.
+#[derive(Debug)]
 pub struct MapState {
     /// Current X/Z viewport scale.
     pub zoom: ZoomLevel,
