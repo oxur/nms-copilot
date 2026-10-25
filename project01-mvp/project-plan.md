@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.121
+version: 1.122
 project: project01-mvp
 status: active
 depends-on: []
@@ -1286,3 +1286,7 @@ Version1.120/arc1.133 issues complete3filecommands/completer/prompt API unit/six
 ## Arc06 Slice39 REPL presentation docs accepted — 2026-10-25 UTC
 
 Version1.121/arc1.134 records all6RP/R06-S39accepted atclean00cfa740, nineindependentgroups/235runtime+19allfeaturedocs+15no-defaultdocs/actual0owned4residual/threeorderednon-doc+8help-inputsites/bothopposed/diffs/finalretro.57arc44done13open/all25projectrowsOPEN. Oneactualrefinement/noexception, exact17CC+16CDCrawreturns/history/transcriptionqualifications retained. Required40map+41banner/setup/root/fullpublicsurface/full0039M7.6strictreconciliation and alloriginalhigherowners/authenticNomNominput remainOPEN, no cleanup/integration/release.
+
+## Arc06 Slice40 map API owner — 2026-10-25 UTC
+
+Version1.122/arc1.135 issues complete4mapfiledocs/keyliteralexamples/strictzero/preservation/independentninegroup unit fromaccepted00cfa, sixMP/R06-S40OPEN.58arc44done14open/all25projectrowsOPEN. Sameapprovedmodels/freshsoleCC plannedforheadroom; no runtime/API/layout/testchange or terminalreplay. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6reconciliation staysCDC/furtherboundedsplitallowed; actualstrictcheckalone isnotparentacceptance. AuthenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release.

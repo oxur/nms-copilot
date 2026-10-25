@@ -409,3 +409,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 57arcrows43done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance at issue.
 
 2026-10-25 formal39close: all6RP/R06-S39DONE at00cfa740;57arcrows44done13open/project25OPEN. Priorissuecountsremainhistorical; required40/41/fullM7.6/authenticNomNom/alloriginalhigherownersOPEN.
+
+## Bounded original M7.6 map API owner — 2026-10-25
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S40 | Complete truthful four-file map public docs/keyexamples | SixMP/W1–W4/E1–E4/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued40](slice40-map-api-documentation/slice-plan.md) | Required41/fullM7.6/allhigherowners OPEN |
+
+58arcrows44done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance at issue.

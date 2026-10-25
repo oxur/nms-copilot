@@ -1,0 +1,12 @@
+# Slice40 acceptance ledger
+
+2026-10-25 UTC. Opening6/current6 OPEN; zeroactualrefinements/currentcc-prompt.md. No implementation or acceptance at issue.
+
+| ID | Criterion | Verify | Significance | Status | Evidence |
+|---|---|---|---|---|---|
+| MP-01 | Complete four-file public map docs/navigation, including four BaseLabel fields | W1–W4/fullsurface/actualstrictdocs | correctness-grade | open | Author source/API grounding only |
+| MP-02 | Truthful terminal/input/state/geometry/label/render failure and ownership contracts | Source/known limitations/heldreview | correctness-grade | open | No runtime repair or blanket restoration claim |
+| MP-03 | Meaningful literal state/population/geometry/zoom/density/render examples | E1–E4/entry no_run/bothfeaturedocs | correctness-grade | open | Exact independent expectations, not observed-derived |
+| MP-04 | All non-doc/API/tests/dependencies/otherpaths/layouts preserved | Fourorderedcomparisons/opposedrealextent/diffs | correctness-grade | open | Supportcontrols only at issue |
+| MP-05 | Attributable original nine groups/exact scoped clean commit/fences | Fullrawfirst/fourpaths/trailers/ownership | correctness-grade | open | Initialsupport records only |
+| MP-06 | Independent acceptance/retrospective/bottom-up/alloriginalowners retained | CDCninegroups/6rowwalk/3bubbleups | correctness-grade | open | Required41/fullM7.6/authenticinput/higherowners OPEN |
