@@ -1,6 +1,6 @@
 # Slice38 — complete application coordinator/watch API documentation
 
-Version1.3, 2026-10-25 UTC. ACTIVE same first actual refinement1/5/four remain; fresh-context continuation current cc-prompt-iteration02.md, initial/01 preserved. Standing Autonomous Project01 Arc06 only, same CDC `/root/cdc_arc06` gpt-6.1-sol High and current sole CC `/root/cdc_arc06/cc_coordinator_docs` gpt-6-luna High (fresh same-model launch accepted). Prior cc_mcp_docs is completed/frozen after operational guard failures; exact handback retained, no extra role/reviewer/model substitution. Dedicated `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/coordinator-watch-api-documentation`, branch `codex/coordinator-watch-api-documentation`, clean baseline `9dc1a2409c7f0e53712f643bf7b0a61078e17664`. Source/index ownership only after coherent readback; CDC planning/independent acceptance.
+Version1.4, 2026-10-25 UTC. ACTIVE second actual refinement2/5/three remain; private-auditor-only current cc-prompt-iteration03.md, initial/01/02 preserved. Standing Autonomous Project01 Arc06 only, same CDC `/root/cdc_arc06` gpt-6.1-sol High and current sole CC `/root/cdc_arc06/cc_coordinator_docs` gpt-6-luna High (fresh same-model launch accepted). Prior cc_mcp_docs is completed/frozen after operational guard failures; exact handback retained, no extra role/reviewer/model substitution. Dedicated `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/coordinator-watch-api-documentation`, branch `codex/coordinator-watch-api-documentation`, clean baseline `9dc1a2409c7f0e53712f643bf7b0a61078e17664`. Source/index ownership only after coherent readback; CDC planning/independent acceptance.
 
 ## Usable scope / original owners
 
@@ -84,3 +84,9 @@ Seven actualprewrite failures (1initialcoordinator schema+6watchguards) correcte
 ## Actual successor dispatch metadata — 2026-10-25 UTC
 
 After preserved03a7f3f contextcontinuation, collaboration.spawn_agent accepted /root/cdc_arc06/cc_coordinator_docs with explicitgpt-6-luna/reasoning_efforthigh/fork_turnsnone. SameapprovedCCrole/modelreplacescompletedoldcontext; CDCgpt-6.1-solHighunchanged, roottransportonly. FreshCCacknowledgesfullactualguide/source intake BEFOREreadback/edits. Version1.3 onlyrecordsactualdispatchidentity; current02/samefirstactual1/5/fullF1–F4/capture/gates/sourcefreeze unchanged.
+
+## Actual first-pass release / author auditor correction — 2026-10-25 UTC
+
+FreshCCfullguide/source readback acknowledged; one guarded watchwrite succeeded, priorcoordinatorpartial correct. Actualformatab521bac/lint ec7d18f2 both0/fullraw/equalidentityc692f0bf/diff84bc2238 verified; fullF1–F4targeted reviewclosed. Original ordered doctests16(10execute6compile)/12(8execute4compile), hostlibrary235, actualCargoJSON761c81d8+predicate4f4d2757 zeroowned/exact17residual verified. Out-of-order JSON39573e25 noorderedcredit; two restricted228pass7timeout libraryfailures2981e83c/8719e768 (secondredundant) retained/notrelabeledhost;7355e26c firstactualhost235. No source repair.
+
+Original scope54470cc4 fails AUTHOR-helper whole-file100msuniqueness after bothcomparisons; eight legitimate occurrences include oldtests. Immutable03 SECOND ACTUAL2/5/threeleft creates ONLY privatev2auditor, exactunique realworker statement100→0/opposedcomparison preserved; originalhelper/artifact/source/kernel/registry frozen. Capturedpair→targetedhelperreview→supportcompile+correctedscope, unchangedotherCCgroups byte-applicable; originalCDCninegroupsfreshoncommit. All6CWOPEN/fullhigherowners unchanged.
