@@ -1,0 +1,67 @@
+{
+  "observed_utc": "2026-10-25T11:24:34.849839+00:00",
+  "source_commit": "fff40ed23c02184e70f175cc3fc2dc687862ec34",
+  "payloads": [
+    {
+      "path": "author-readiness-attempts.json",
+      "bytes": 15728,
+      "sha256": "c89aaa0ebb403007068e91e4f728dea0c8dfac16ead6d84aaa8c906522d3f3e1"
+    },
+    {
+      "path": "cc-capture-preflight.json",
+      "bytes": 7872,
+      "sha256": "cd0473b8feb189c0a66c80a53606e8bdf0d7268e9a6dc8c4d2c0549edc4c4cfe"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 7314,
+      "sha256": "30aa9b0c697a0524b001271b1d5dff31baf09a723ab30b4c7b68b573a240d4f6"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 25516,
+      "sha256": "e7f3b33ba89fb65b5ecc04c644c8e74c84f9ae57ab6c54060b1e3ed8afd3d651"
+    },
+    {
+      "path": "cc-source-message.txt",
+      "bytes": 282,
+      "sha256": "a7f16a50f78d4108d7580325c3873e1218e9a0bd7ae57f18226771a8d7efe160"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 148529,
+      "sha256": "213050d02dc09f658c963a19a8b55e9e77a1045891b78b32c3cec6cddbdc5af0"
+    },
+    {
+      "path": "cdc-validation.json",
+      "bytes": 80415,
+      "sha256": "e8c7a667c401dda27b9a515212f5467f8bc85e016a3679bee0867d90a1a9ccce"
+    },
+    {
+      "path": "closing-worktrees.json",
+      "bytes": 8288,
+      "sha256": "0d082d1f3e021183adfd8b21d3d34c47630982a5c055c7f8716531bd6d83ae6c"
+    },
+    {
+      "path": "initial-held-diff.json",
+      "bytes": 29753,
+      "sha256": "4d6e330df4adc893e2e6812100f9da3351195778e0a0fc97caf500ee71d88eb4"
+    },
+    {
+      "path": "nms-slice40-cc-capture.py",
+      "bytes": 3746,
+      "sha256": "cc50566ebf3de4a0696ac18aca598d92b92e4dd8428f3b0394fae2731ccdd7a6"
+    },
+    {
+      "path": "nms-slice40-cdc-capture.py",
+      "bytes": 3748,
+      "sha256": "2fa2dddd95b0788c5a242f278c27ba822339832f2bf7979fcf1680338e8a698e"
+    },
+    {
+      "path": "nms-slice40-scope-audit.py",
+      "bytes": 2011,
+      "sha256": "4bb3a61b66a7d03da94edf9738247b294bec88822d36ff10d7597f0d44c04f00"
+    }
+  ],
+  "first_class_slice_records_excluded": true
+}

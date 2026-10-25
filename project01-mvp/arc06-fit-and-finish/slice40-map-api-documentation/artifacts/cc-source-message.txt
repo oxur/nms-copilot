@@ -1,0 +1,6 @@
+Complete map API documentation
+
+Document the interactive map entry point, input behavior, viewport state, and rendered output with source-grounded contracts and executable examples.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

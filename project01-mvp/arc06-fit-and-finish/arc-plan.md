@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.135, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.136, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -33,6 +33,8 @@ All ledger rows dispositioned; independently reproduced capability demonstration
 Two contributors by default: this context prepares/designs; a fresh CC performs bounded assignments; CDC independently reviews work it did not implement. Higher-scale assembly still needs a separate composition verifier and Operator acceptance. Expedited Mode is active from the user's 2026-10-03 instruction: commit named files promptly, then close/advance when evidence permits. It never waives independent review or scope gates.
 
 ## Version history
+
+- 1.136 (2026-10-25): Slice40 map documentation independently accepted at fff40ed2/all6MP; routine close/bubble-up, no scope/structural/sequence amendment. Required41/fullM7.6 and all higher owners remain open.
 
 - 1.91 (2026-10-22): Slice21 independently closed at b290ea31 after the explicitly approved sixth correction. Record23 fresh major groups/native11 and all8CA, preservation/retrospective and remaining original owners. Routine child completion; no architecture, acceptance-scope or release amendment.
 
@@ -1099,3 +1101,7 @@ Version1.134 closes all6RP/R06-S39 atclean00cfa740c902f5110159a56329b5241dac706a
 ## Slice40 complete map API owner issued — 2026-10-25 UTC
 
 Version1.135 details [Slice40](slice40-map-api-documentation/slice-plan.md), complete4filemapAPI documentation/keyliteralstate/labels/geometry/zoom/density/in-memoryrenderexamples and compiledterminalentry. Allnon-doc/API/tests/deps/layouts frozen ataccepted00cfa; known falliblecleanup/UTF8/numeric/publicstate limitations documented, no runtimefix/newterminalscenario. FreshsameapprovedCC6-lunaHigh plannedafter39qualitativeheadroom recommendation; CDC6.1-solHigh unchanged/noextrareviewer. NULrawfirst/helper/opposedextentcontrols supportonly; finalactualstrictcopilotdocs zero is required, no residualexception. Nineoriginalgroups/independentacceptance/mandatoryretro; initial0actualrefinements/sixMP/R06-S40OPEN. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6reconciliation remainsCDC/furtherusabledecompositionallowed; strictcompilercheckalone doesnotcloseparent.58arc44done14open/all25projectrowsOPEN. AuthenticNomNominput/alloriginalhigherowners retained; no cleanup/integration/release.
+
+## Slice40 map documentation accepted — 2026-10-25 UTC
+
+Version1.136 closes all6MP/R06-S40 at cleanfff40ed23c02184e70f175cc3fc2dc687862ec34: complete four-file map API docs/keyliteralexamples. Nine fresh independent groups pass235runtime+25allfeaturedocs(18execute7compile-only)+21no-defaultdocs(16execute5compile-only), actualstrictzero/fourorderednon-doc/opposedextent/diffs. Two actual refinements/all16CC+13CDCrawvalues/exactreturns/strictred/authorreviewmisses/finalretro retained; no exception or structural/scope/sequence amendment. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6 reconciliation remainsCDC/furtherusabledecompositionallowed.58arcrows45done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC40acceptance](slice40-map-api-documentation/cdc-verification.md) and [retrospective](slice40-map-api-documentation/cdc-retrospective.md).

@@ -414,6 +414,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S40 | Complete truthful four-file map public docs/keyexamples | SixMP/W1–W4/E1–E4/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued40](slice40-map-api-documentation/slice-plan.md) | Required41/fullM7.6/allhigherowners OPEN |
+| R06-S40 | Complete truthful four-file map public docs/keyexamples | SixMP/W1–W4/E1–E4/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | done | [CDC40acceptance](slice40-map-api-documentation/cdc-verification.md) — reproduced | Required41/fullM7.6/allhigherowners OPEN |
 
 58arcrows44done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance at issue.
+
+2026-10-25 formal40close: all6MP/R06-S40DONE;58arcrows45done13open/all25projectrowsOPEN. Prior issue counts retained historically; required41/fullM7.6/alloriginalhigherowners OPEN.

@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.122
+version: 1.123
 project: project01-mvp
 status: active
 depends-on: []
@@ -1290,3 +1290,7 @@ Version1.121/arc1.134 records all6RP/R06-S39accepted atclean00cfa740, nineindepe
 ## Arc06 Slice40 map API owner — 2026-10-25 UTC
 
 Version1.122/arc1.135 issues complete4mapfiledocs/keyliteralexamples/strictzero/preservation/independentninegroup unit fromaccepted00cfa, sixMP/R06-S40OPEN.58arc44done14open/all25projectrowsOPEN. Sameapprovedmodels/freshsoleCC plannedforheadroom; no runtime/API/layout/testchange or terminalreplay. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6reconciliation staysCDC/furtherboundedsplitallowed; actualstrictcheckalone isnotparentacceptance. AuthenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release.
+
+## Arc06 Slice40 map API documentation accepted — 2026-10-25 UTC
+
+Version1.123/arc1.136 records all6MP/R06-S40accepted atcleanfff40ed2, nineindependentgroups/235runtime+25allfeaturedocs+21no-defaultdocs/actualstrictzero/fourorderednon-doc/opposedextent/diffs/finalretro.58arc45done13open/all25projectrowsOPEN. Twoactualrefinements/noexception, full16CC+13CDCrawhistory/exactreturns preserved. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6reconciliation and authenticNomNominput/alloriginalhigherowners remainOPEN, no cleanup/integration/release.
