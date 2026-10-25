@@ -1,10 +1,23 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.153, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.154, created 2026-10-03. Status: paused for scope reconciliation; arc not closed.
 
 ## Capability
 
 Exports, slot/galaxy support, format adapters/imports, documentation, distribution, and later UI refinements meet their original contracts.
+
+## Current hold — 2026-10-25
+
+Duncan halted further execution after questioning the size and direction of this
+arc. Slices01–48 retain their recorded acceptance; Slice49's untracked prompt is
+an unissued draft and no implementer launched. Preserve it without executing it.
+The new [Arc07 reconciliation plan](../arc07-closeout-reconciliation/arc-plan.md)
+covers the requested bounded map finish, assessment and recommendations. Its
+discussion gate controls any later cleanup planning. No older automatic-advance
+instruction below overrides this hold; no existing criterion is silently waived.
+
+Version1.154 (2026-10-25): record the human pause and replacement initial planning
+route; preserve the historical execution and acceptance record below.
 
 ## Preserved authority and review units
 

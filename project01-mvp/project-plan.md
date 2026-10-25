@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.140
+version: 1.141
 project: project01-mvp
 status: active
 depends-on: []
@@ -562,7 +562,22 @@ Two-Contributor Workflow applies by default. Expedited Mode is active: commit ex
 
 First prepared corrective assignment: `arc06-fit-and-finish/slice01-address-encoding-evidence/cc-prompt.md`. It is a bounded evidence investigation that will establish the address contracts needed for a safe repair. It authorizes no production-code edits.
 
+## Current closeout route — 2026-10-25
+
+Arc06 execution is paused after accepted Slice48; its Slice49 prompt is an
+unissued draft. Duncan requested [Arc07 — closeout reconciliation](arc07-closeout-reconciliation/arc-plan.md):
+01 finish the interrupted map check proportionately, 02 assess all accumulated
+work, 03 recommend keep/simplify/revert/defer. These are the only initially planned
+slices. Present the findings, then stop execution and further arc planning for
+joint decisions about the 49 entries. Only then amend Arc07 with the agreed
+remaining cleanup and slice sketches. No source removal or existing acceptance
+criterion is approved merely by a recommendation; Project01 remains open.
+
 ## 12. Version history
+
+- **1.141 — 2026-10-25:** Duncan halted the overgrown Arc06 and requested a
+  three-slice initial reconciliation route. Add Arc07 and its explicit discussion
+  gate; preserve all existing obligations, records and acceptance dispositions.
 
 - **1.79 — 2026-10-22:** Arc06 Slice21 application transition independently accepted at b290ea31 after explicit sixth-pass approval; preserve all25 open project rows and original higher-scale obligations. Routine evidence/status bubble-up, no project closure or scope amendment.
 

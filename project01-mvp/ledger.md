@@ -10,6 +10,7 @@ Created 2026-10-03 during closeout recovery. Status: **all rows open**. Baseline
 | P01-A04 | REPL/session arc accepted with configuration, history, and cache lifecycle | Independent arc ledger/leaf walk and session lifecycle demonstration | correctness-grade | arc04-repl-and-session | open | — | Interactive behavior must be witnessed |
 | P01-A05 | Routing/watch/MCP arc accepted across supported transports | Independent arc ledger/leaf walk and live composition demonstration | serious | arc05-graph-and-mcp | open | — | Help/unit dispatch are insufficient |
 | P01-A06 | Fit/finish arc accepted including later UI refinement documents | Independent arc ledger/leaf walk, package/documentation and UI checks | correctness-grade | arc06-fit-and-finish | open | — | Includes original source-tagging promise |
+| P01-A07 | Accumulated closeout work has reviewed value/complexity recommendations and an explicit Operator disposition | Arc07 initial results, complete slice inventory, recommendation review and recorded joint decisions | correctness-grade | Duncan's 2026-10-25 reconciliation request | open | — | Three initial slices; cleanup planning follows the discussion; original criteria remain |
 | P01-C01 | Real save-packed addresses produce correct planet/system/galaxy through parser, graph, and all interfaces | Independent golden fixtures, nonzero galaxy case, and typed-caller audit | serious | Original coordinate/model promises; F01/F10 | open | [baseline](artifacts/closeout-2026-10-03/baseline-report.md), attested failure | Caller investigation [accepted](arc06-fit-and-finish/slice01-address-encoding-evidence/cdc-verification.md); primary-source investigation [slice02](arc06-fit-and-finish/slice02-packed-format-authority/slice-plan.md) accepted; decoded witnesses [slice03](arc06-fit-and-finish/slice03-decoded-location-witnesses/slice-plan.md) open after iteration01 CDC review (six accepted, one narrative correction row); this composition row remains open |
 | P01-C02 | Biome/name/discoverer/location queries retain exact entity associations and names | Golden multi-system fixture; filtered/unfiltered comparison; name-bearing raw records | serious | Search promises; F02/F03 | open | [probe](artifacts/closeout-2026-10-03/biome-filter-probe.json), attested failure | Counting matches alone insufficient |
 | P01-C03 | Routes obey warp range, visit targets, and expose usable glyphs | Independent multi-stop itinerary with measured hop constraints | correctness-grade | Phase 4 composition | open | — | Include unreachable and cross-galaxy cases |
@@ -28,6 +29,11 @@ Created 2026-10-03 during closeout recovery. Status: **all rows open**. Baseline
 | P01-G09 | Final project assembly is independently reproduced and accepted by Operator | Full row walk, arc reports, attributed independent composition gate and Operator verdict | serious | Project closure discipline | open | — | No success records pre-created |
 
 Statuses become `done`, `deferred`, or `no-op` only with the appropriate evidence/rationale. `done` requires independent reproduction for this ledgered closeout; deferred rows require explicit authority, reason, owner, and re-entry condition. This preparation does not discharge any row.
+
+2026-10-25: Arc06 is paused; Arc07 has only its first three slices planned. The
+25 prior project criteria retain their complete meanings and statuses; new
+P01-A07 is the 26th open criterion. Recommendations are not source-removal,
+scope-waiver or release authority. Later cleanup planning awaits joint decisions.
 
 ## Approved repair requirements — 2026-10-04
 
