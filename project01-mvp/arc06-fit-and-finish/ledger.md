@@ -434,6 +434,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S42 | Complete truthful twelve-file CLI internal API docs/command navigation | SixCD/W1–W12/E1–E3/isolated strict docs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | — | Required43/fullM7.6/allhigherowners OPEN |
+| R06-S42 | Complete truthful twelve-file CLI internal API docs/command navigation | SixCD/W1–W12/E1–E3/isolated strict docs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | done | [CDC42 acceptance](slice42-cli-api-documentation/cdc-verification.md) — reproduced | Required43/fullM7.6/allhigherowners OPEN |
 
 60arc46done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance atissue.
+
+2026-10-25 formal42close: all6CD/R06-S42DONE at2ce768fc;60arc47done13open/project25OPEN. Priorissuecounts preserved; required43/fullM7.6/higherownersOPEN.

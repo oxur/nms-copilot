@@ -1,0 +1,591 @@
+{
+  "slice": "Project01 Arc06 Slice42 CLI API documentation",
+  "status": "CC proposed-done; CDC independent disposition pending",
+  "baseline": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+  "commit": "2ce768fc390810eac4bc3d59c7cefd85a2ddce14",
+  "parent": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+  "tree": "2082aca1e5db5a55233a4dde2f43bc1f5d24e8d6",
+  "source_paths": [
+    "crates/nms-cli/src/main.rs",
+    "crates/nms-cli/src/completions.rs",
+    "crates/nms-cli/src/convert.rs",
+    "crates/nms-cli/src/export.rs",
+    "crates/nms-cli/src/find.rs",
+    "crates/nms-cli/src/import.rs",
+    "crates/nms-cli/src/info.rs",
+    "crates/nms-cli/src/list.rs",
+    "crates/nms-cli/src/route.rs",
+    "crates/nms-cli/src/saves.rs",
+    "crates/nms-cli/src/show.rs",
+    "crates/nms-cli/src/stats.rs"
+  ],
+  "working_tree_clean": true,
+  "commit_body_equals_prepared_message": true,
+  "commit_trailers": [
+    "Co-authored-by: Codex <noreply@openai.com>",
+    "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+  ],
+  "actual_refinements_after_initial": 2,
+  "actual_refinements_remaining_of_five": 3,
+  "final_seven_gates": [
+    {
+      "id": "69be0336e4e541699b1b30940c8327e5",
+      "label": "make format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:59:46.421098+00:00",
+      "ended_utc": "2026-10-25T12:59:47.570731+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "56a82dff5b4046d3bbf6c3c9bec3167b",
+      "label": "make lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:59:49.506976+00:00",
+      "ended_utc": "2026-10-25T12:59:52.047372+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 442,
+        "sha256": "ac2e42ec2885c7982fd4a059f510bc29e06ad03fd1b593f834cd83e7173f89b7"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "e07fa4aeaf814482bffdb661bf570f87",
+      "label": "cargo test -p nms-cli --all-features --offline",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-cli",
+        "--all-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T13:01:16.932400+00:00",
+      "ended_utc": "2026-10-25T13:01:39.985127+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 11706,
+        "sha256": "37cfee69897521d698acadd3a6b913bdb8c6add629109717d964eee17f4b2114"
+      },
+      "stderr": {
+        "bytes": 7739,
+        "sha256": "340cfbd534112cf470c26075bcb9da2bc6c485272f484149b4f2c1e1eff74ee3"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "3727098a2af4429d8311414e2b370d5c",
+      "label": "strict isolated binary docs",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-cli",
+        "--bin",
+        "nms",
+        "--document-private-items",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--target-dir",
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation/target/cli-docs"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T13:01:53.689801+00:00",
+      "ended_utc": "2026-10-25T13:02:08.944149+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 6659,
+        "sha256": "6b6996933892f64b7751e49e0dfe1dd1b34d963f5122af575e23f51741724365"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "72c2f0dc3aa44bfb835e21b0886441cd",
+      "label": "source scope audit",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice42-scope-audit.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T13:02:15.760343+00:00",
+      "ended_utc": "2026-10-25T13:02:16.146803+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "stdout": {
+        "bytes": 845,
+        "sha256": "ed2bfd57be679f830f3dfcd93c988159903e66d65f4ba845789d1f2661318345"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "fbfc0d9526a84da2b7255cbe99672a4c",
+      "label": "working diff check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T13:02:18.844530+00:00",
+      "ended_utc": "2026-10-25T13:02:18.942274+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "066644c867f44bdf947e49e444bbd14b",
+      "label": "baseline diff check",
+      "argv": [
+        "git",
+        "diff",
+        "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T13:02:21.655278+00:00",
+      "ended_utc": "2026-10-25T13:02:21.755134+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {},
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    }
+  ],
+  "cli_package_test_summary": {
+    "harness_suites": 13,
+    "passed": 174,
+    "failed": 0,
+    "ignored": 0,
+    "per_suite_passed": [
+      73,
+      3,
+      34,
+      2,
+      4,
+      7,
+      2,
+      1,
+      6,
+      29,
+      5,
+      5,
+      3
+    ]
+  },
+  "pair_history": [
+    {
+      "id": "e57dc8f1c5694360a3e99329931c6313",
+      "label": "make format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:44:18.320364+00:00",
+      "ended_utc": "2026-10-25T12:44:19.518614+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "14b9a3ca1092be4bbdc78752c67853855f406a9fdfad7aa7c01d0e1706ca8361",
+        "working_identity_sha256": "f0b9ec44c102d096656ef69d2d51a671ee0ae247ad6527010900b7af6e675cd2",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "14b9a3ca1092be4bbdc78752c67853855f406a9fdfad7aa7c01d0e1706ca8361",
+        "working_identity_sha256": "f0b9ec44c102d096656ef69d2d51a671ee0ae247ad6527010900b7af6e675cd2",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "0090292bd60043558dd3d29bb0406aa5",
+      "label": "make lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:44:25.478079+00:00",
+      "ended_utc": "2026-10-25T12:44:52.945580+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 12030,
+        "sha256": "8e0a95b93e242c39d1c7c03119938d9695348709837b1baa7ccfc35f24c91821"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "14b9a3ca1092be4bbdc78752c67853855f406a9fdfad7aa7c01d0e1706ca8361",
+        "working_identity_sha256": "f0b9ec44c102d096656ef69d2d51a671ee0ae247ad6527010900b7af6e675cd2",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "14b9a3ca1092be4bbdc78752c67853855f406a9fdfad7aa7c01d0e1706ca8361",
+        "working_identity_sha256": "f0b9ec44c102d096656ef69d2d51a671ee0ae247ad6527010900b7af6e675cd2",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "745f562b89b1489d8e92cbf186a1cb56",
+      "label": "make format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:55:37.712040+00:00",
+      "ended_utc": "2026-10-25T12:55:38.857219+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e96d0c2bde0b1c64a8af3c2f0172e541f52cdd5e59291fdb36a3607c8b898ee8",
+        "working_identity_sha256": "be7e42d634de63c2486f0d34652bbcafe30c24fb4bd831c6bbcc71bc8847f093",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e96d0c2bde0b1c64a8af3c2f0172e541f52cdd5e59291fdb36a3607c8b898ee8",
+        "working_identity_sha256": "be7e42d634de63c2486f0d34652bbcafe30c24fb4bd831c6bbcc71bc8847f093",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "3bdeeef13239408a8e42ce64766ad0f9",
+      "label": "make lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:55:40.557149+00:00",
+      "ended_utc": "2026-10-25T12:55:43.178929+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 442,
+        "sha256": "cc909c7bef27090d7d0066eeef220f9ef3a7c578db5c607118c21fb4a36b1904"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e96d0c2bde0b1c64a8af3c2f0172e541f52cdd5e59291fdb36a3607c8b898ee8",
+        "working_identity_sha256": "be7e42d634de63c2486f0d34652bbcafe30c24fb4bd831c6bbcc71bc8847f093",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e96d0c2bde0b1c64a8af3c2f0172e541f52cdd5e59291fdb36a3607c8b898ee8",
+        "working_identity_sha256": "be7e42d634de63c2486f0d34652bbcafe30c24fb4bd831c6bbcc71bc8847f093",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "69be0336e4e541699b1b30940c8327e5",
+      "label": "make format",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:59:46.421098+00:00",
+      "ended_utc": "2026-10-25T12:59:47.570731+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    },
+    {
+      "id": "56a82dff5b4046d3bbf6c3c9bec3167b",
+      "label": "make lint",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cli-api-documentation",
+      "started_utc": "2026-10-25T12:59:49.506976+00:00",
+      "ended_utc": "2026-10-25T12:59:52.047372+00:00",
+      "status": "complete",
+      "exit_code": 0,
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 442,
+        "sha256": "ac2e42ec2885c7982fd4a059f510bc29e06ad03fd1b593f834cd83e7173f89b7"
+      },
+      "before": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      },
+      "after": {
+        "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+        "status": " M crates/nms-cli/src/completions.rs\n M crates/nms-cli/src/convert.rs\n M crates/nms-cli/src/export.rs\n M crates/nms-cli/src/find.rs\n M crates/nms-cli/src/import.rs\n M crates/nms-cli/src/info.rs\n M crates/nms-cli/src/list.rs\n M crates/nms-cli/src/main.rs\n M crates/nms-cli/src/route.rs\n M crates/nms-cli/src/saves.rs\n M crates/nms-cli/src/show.rs\n M crates/nms-cli/src/stats.rs\n",
+        "working_diff_sha256": "e5d029afdf32e6c7c33800f96b398d497eb0d40ec0c6a179b19e2605f78f07ed",
+        "working_identity_sha256": "5822225044b5723b6414de410c21d7f53726d79ec97dc4ad7bee90a81e9e8da9",
+        "untracked_files": {}
+      }
+    }
+  ],
+  "all_eleven_product_attempts_exit_zero": true,
+  "raw_first_record_file": "/private/tmp/nms-slice42-cc-attempts.json",
+  "source_scope_result": {
+    "changed_paths_exactly_twelve": true,
+    "ordered_non_doc_comparisons": 12,
+    "old_main_bytes_preserved": true,
+    "only_two_show_payload_layouts": true,
+    "opposed_csv_mutant_rejected": true,
+    "opposed_derive_help_mutant_rejected": true
+  },
+  "limitations_and_pending": {
+    "no_runtime_or_new_scenarios": true,
+    "command_text_examples_not_executed_by_docs_gate": true,
+    "required43_and_original_M7_6_open": true,
+    "cdc_independent_replay_review_retrospective_and_bottom_up_verification_pending": true,
+    "unaccepted_source_gates": 0
+  }
+}

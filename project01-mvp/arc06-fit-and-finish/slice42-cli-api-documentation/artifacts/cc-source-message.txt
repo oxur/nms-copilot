@@ -1,0 +1,6 @@
+docs(nms-cli): document CLI handler APIs
+
+Document the one-shot binary's internal command handlers, conversion and query semantics, save and output behavior, and command-text examples. Keep runtime behavior and Clap help inputs unchanged.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

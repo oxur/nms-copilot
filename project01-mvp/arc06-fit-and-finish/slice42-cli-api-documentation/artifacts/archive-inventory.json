@@ -1,0 +1,62 @@
+{
+  "created_utc": "2026-10-25T13:11:02.436232+00:00",
+  "meaning": "actual current archived supporting payloads; first-class plans/prompts are not supporting artifacts; no earlier inventory claimed",
+  "files": {
+    "before02-source-inventory.json": {
+      "bytes": 118348,
+      "sha256": "df7e805453a3266824e91432ea7daefa62eb5318f3ab24c1d4ea0764dac129d0"
+    },
+    "cc-attempts-final.json": {
+      "bytes": 113449,
+      "sha256": "31d601e298b4c2365835fd26fcbbc7b048c45bf0d0bd3d6fbe21a0bd54a04a95"
+    },
+    "cc-attempts.json": {
+      "bytes": 9022,
+      "sha256": "b6569622b987155ac907cec77adca195831467ed17906d992eac53b12e7c03f6"
+    },
+    "cc-capture.py": {
+      "bytes": 3746,
+      "sha256": "c4a797a6e051095100831930f840882cfa5ab0d94e30f56ad60711adf45b603f"
+    },
+    "cc-closing-report.md": {
+      "bytes": 6846,
+      "sha256": "b9e2940e5848a723f74e1670e00a402f69ce11a903fc77181620c016ef67085a"
+    },
+    "cc-execution.md": {
+      "bytes": 32250,
+      "sha256": "9622ac33c28b7130fd02e66d57e6d9fb16bb687edcd4a9efac11ce1ce28458d6"
+    },
+    "cc-source-message.txt": {
+      "bytes": 339,
+      "sha256": "42899fac5b8fb4d55429515409c5807b551acba4acbb6cdc2783a14bbb93e803"
+    },
+    "cc-validation.json": {
+      "bytes": 32083,
+      "sha256": "018835c225200b7421d36943a8403d5b020ae885127b2bb66777e2e87b238bab"
+    },
+    "cdc-attempts-final.json": {
+      "bytes": 65047,
+      "sha256": "bb48652fc6813fb412ed947abd9a5fb2294dffc471673cc42d8e5be42ad3f99d"
+    },
+    "cdc-attempts.json": {
+      "bytes": 18113,
+      "sha256": "41fdf48623f9544f23ec921830b24026b8c8e12fb591eb1a8355625fb5f65133"
+    },
+    "cdc-capture.py": {
+      "bytes": 3710,
+      "sha256": "a2ce1c80957310d698e3f075b9351e02b6037698f8e17b1e811f9dacb9a27906"
+    },
+    "closing-worktrees.json": {
+      "bytes": 10293,
+      "sha256": "9bb108ccfbf5ca66b68ec435c505cf9d20ba2fce1447931e9afbfc14f2e73e77"
+    },
+    "issued-worktree-inventory.json": {
+      "bytes": 10009,
+      "sha256": "8401c7338c387f9d0d46a0483922cc0aa38cf25e0c087a61465ccfd5e35bb0c9"
+    },
+    "scope-audit.py": {
+      "bytes": 3414,
+      "sha256": "92b9dec612ea9217c6ab2a76302da20cb661bd495d97dac5397217a3f7d4bcce"
+    }
+  }
+}

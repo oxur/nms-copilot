@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.126
+version: 1.127
 project: project01-mvp
 status: active
 depends-on: []
@@ -1306,3 +1306,7 @@ Version1.125/arc1.138 records all6BS/R06-S41accepted atclean83e67d62 after ninei
 ## Arc06 Slice42 CLI documentation increment issued — 2026-10-25 UTC
 
 Version1.126 details exact12filebinaryCLIinternalAPI/commandnavigation fromaccepted83e67, sameapprovedCDC6.1-solHigh/freshsoleCC6-lunaHigh planned after41headroom. ExistingClaphelp/non-doc/API/tests/depsfrozen/twoexactshowlayouts; original7groups/strictisolatedbinarydocs/independentreview/retro. SixCD/R06-S42OPEN/initial0actualrefinements;60arc46done14open/all25projectrowsOPEN. Required43remainingpublicdispatch/keyfunction/fullsurface/style/strict/fulloriginal0039M7.6reconciliation CDCowned/furtherusabledecompositionallowed; alloriginalhigherowners/authenticNomNominput retained/no integration/release.
+
+## Arc06 Slice42 independently accepted — 2026-10-25 UTC
+
+Version1.127 recordscomplete12fileCLIinternalAPI/commandnavigation atclean2ce768fc/all6CD/R06-S42. SevenfreshCDCgroups174runtime/strictisolatedbinaryzero/preservationopposed/diffs; twoactualrefinements/exactrawreturns/failurehistory/finalretro/noexception. Original0039M7.6remainsOPENforrequired43dispatch/keyfunction/fullsurface/style/strict/fullreconciliation, CDC/furtherusabledecompositionallowed.60arc47done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherownersretained/no integration/release.
