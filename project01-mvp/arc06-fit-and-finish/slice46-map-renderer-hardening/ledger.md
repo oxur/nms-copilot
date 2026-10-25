@@ -1,6 +1,6 @@
 # Slice46 acceptance ledger
 
-SixOPEN/initialzeroactualrefinements. FullM7.7/D0042 remainOPEN.
+SixOPEN/oneACTUALrefinementissued(1of5). FullM7.7/D0042 remainOPEN.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
@@ -10,3 +10,5 @@ SixOPEN/initialzeroactualrefinements. FullM7.7/D0042 remainOPEN.
 | MR-04 | Exact two-path/source/docs/doctest preservation | Complete diff/public/executable/oldexample review and strictdocs | correctness-grade | open | — |
 | MR-05 | Attributable nine groups/current coverage/clean source/pins | Rawfirst/currentfunctioncounts/rendererfloor/parent95red retained | correctness-grade | open | — |
 | MR-06 | Independent acceptance/retro/bottomup/remaining original owners | Fresh CDCnine/sixMR/explicit M7.7,D0042,parentlimits | correctness-grade | open | — |
+
+Currentiteration01F1–F5 repairs MR01–04proof/docs gaps plus MR05lintred; MR01–06allremainOPEN/no runtimeclaim. Initialsourcefullreview/executablemechanicsmatchesdesign; currentproductionbodyfreezeexplicit.

@@ -1,0 +1,235 @@
+{
+  "capture_owner": "Slice46 cc execution log",
+  "attempts": [
+    {
+      "id": "7d3348d9bd2b4db3b89ee72b866fe5f7",
+      "label": "support raw-channel control 7",
+      "kind": "support only; no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:04:43.762337+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "xterm-256color",
+        "PATH": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 7,
+        "ended_utc": "2026-10-25T16:04:43.872257+00:00",
+        "stdout": {
+          "base64": "b3V0AGJ5dGVzCg==",
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "base64": "ZXJyIQo=",
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      }
+    },
+    {
+      "id": "c452a708829f4e22bdef1f9b673ad606",
+      "label": "support raw-channel control 0",
+      "kind": "support only; no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(0)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:04:43.951378+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "xterm-256color",
+        "PATH": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-25T16:04:44.045883+00:00",
+        "stdout": {
+          "base64": "b3V0AGJ5dGVzCg==",
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "base64": "ZXJyIQo=",
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      }
+    },
+    {
+      "id": "55e894df1a8f463d8bcad7c353f2d99c",
+      "label": "G1 make format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:19:43.307002+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+        "working_diff_sha256": "056b493f93e50d59245ee6292078b387716f2087eee065b2f987c88ca75a0124",
+        "untracked_files": {},
+        "working_identity_sha256": "c56ce6ab60623bfc8faa8b53f6b753e86b922d786f96bcff5d9b4ba6f6942a04"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-25T16:19:44.522440+00:00",
+        "stdout": {
+          "base64": "G1sxOzM0bUZvcm1hdHRpbmcgY29kZS4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIHJ1c3RmbXQgb24gYWxsIGZpbGVzLi4uG1swbQobWzE7MzJt4pyTIENvZGUgZm9ybWF0dGVkG1swbQo=",
+          "bytes": 107,
+          "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+        "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+        "untracked_files": {},
+        "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+      }
+    },
+    {
+      "id": "e2812d61a31e4162871628503427d232",
+      "label": "G2 make lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:19:50.461604+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+        "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+        "untracked_files": {},
+        "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 2,
+        "ended_utc": "2026-10-25T16:20:19.769681+00:00",
+        "stdout": {
+          "base64": "G1sxOzM0bVJ1bm5pbmcgbGludGVyIGNoZWNrcy4uLhtbMG0KG1sxOzM2beKAoiBSdW5uaW5nIGNsaXBweS4uLhtbMG0K",
+          "bytes": 69,
+          "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+        },
+        "stderr": {
+          "base64": "ICAgQ29tcGlsaW5nIHByb2MtbWFjcm8yIHYxLjAuMTA2CiAgIENvbXBpbGluZyBxdW90ZSB2MS4wLjQ1CiAgIENvbXBpbGluZyB1bmljb2RlLWlkZW50IHYxLjAuMjQKICAgQ29tcGlsaW5nIGxpYmMgdjAuMi4xODIKICAgQ29tcGlsaW5nIHNlcmRlX2NvcmUgdjEuMC4yMjgKICAgIENoZWNraW5nIGNmZy1pZiB2MS4wLjQKICAgIENoZWNraW5nIG1lbWNociB2Mi44LjAKICAgIENoZWNraW5nIGl0b2EgdjEuMC4xNwogICBDb21waWxpbmcgc2VyZGUgdjEuMC4yMjgKICAgIENoZWNraW5nIGFsbG9jYXRvci1hcGkyIHYwLjIuMjEKICAgIENoZWNraW5nIGVxdWl2YWxlbnQgdjEuMC4yCiAgICBDaGVja2luZyBmb2xkaGFzaCB2MC4yLjAKICAgQ29tcGlsaW5nIHRoaXNlcnJvciB2Mi4wLjE4CiAgICBDaGVja2luZyBsb2cgdjAuNC4yOQogICBDb21waWxpbmcgem1paiB2MS4wLjIxCiAgICBDaGVja2luZyBoYXNoYnJvd24gdjAuMTYuMQogICAgQ2hlY2tpbmcgc21hbGx2ZWMgdjEuMTUuMQogICBDb21waWxpbmcgbGlibSB2MC4yLjE2CiAgIENvbXBpbGluZyBhdXRvY2ZnIHYxLjUuMAogICBDb21waWxpbmcgc2VyZGVfanNvbiB2MS4wLjE0OQogICAgQ2hlY2tpbmcgY29yZS1mb3VuZGF0aW9uLXN5cyB2MC44LjcKICAgQ29tcGlsaW5nIG51bS10cmFpdHMgdjAuMi4xOQogICAgQ2hlY2tpbmcgcGluLXByb2plY3QtbGl0ZSB2MC4yLjE3CiAgICBDaGVja2luZyBpYW5hLXRpbWUtem9uZSB2MC4xLjY1CiAgICBDaGVja2luZyBvcHRpb24tZXh0IHYwLjIuMAogICAgQ2hlY2tpbmcgb25jZV9jZWxsIHYxLjIxLjMKICAgQ29tcGlsaW5nIHBhcmtpbmdfbG90X2NvcmUgdjAuOS4xMgogICAgQ2hlY2tpbmcgc2NvcGVndWFyZCB2MS4yLjAKICAgQ29tcGlsaW5nIHZlcnNpb25fY2hlY2sgdjAuOS41CiAgICBDaGVja2luZyBsb2NrX2FwaSB2MC40LjE0CiAgICBDaGVja2luZyByeXUgdjEuMC4yMwogICAgQ2hlY2tpbmcgZXJybm8gdjAuMy4xNAogICAgQ2hlY2tpbmcgc2lnbmFsLWhvb2stcmVnaXN0cnkgdjEuNC44CiAgICBDaGVja2luZyBkaXJzLXN5cyB2MC41LjAKICAgIENoZWNraW5nIG1pbyB2MS4xLjEKICAgIENoZWNraW5nIGRpcnMgdjYuMC4wCiAgIENvbXBpbGluZyBjcm9zc2JlYW0tdXRpbHMgdjAuOC4yMQogICAgQ2hlY2tpbmcgZmFzdHJhbmQgdjIuMy4wCiAgICBDaGVja2luZyBieXRlcyB2MS4xMS4xCiAgICBDaGVja2luZyBpbmRleG1hcCB2Mi4xMy4wCiAgIENvbXBpbGluZyBzeW4gdjIuMC4xMTcKICAgQ29tcGlsaW5nIGdldHJhbmRvbSB2MC40LjIKICAgIENoZWNraW5nIHJhbmRfY29yZSB2MC4xMC4wCiAgIENvbXBpbGluZyB0eXBlbnVtIHYxLjE5LjAKICAgQ29tcGlsaW5nIGdlbmVyaWMtYXJyYXkgdjAuMTQuNwogICBDb21waWxpbmcgcnVzdGl4IHYxLjEuNAogICAgQ2hlY2tpbmcgc29ja2V0MiB2MC42LjMKICAgIENoZWNraW5nIHBhcmtpbmdfbG90IHYwLjEyLjUKICAgIENoZWNraW5nIHNpbWR1dGY4IHYwLjEuNQogICAgQ2hlY2tpbmcgY3B1ZmVhdHVyZXMgdjAuMi4xNwogICBDb21waWxpbmcgaGVjayB2MC41LjAKICAgIENoZWNraW5nIGJpdGZsYWdzIHYyLjExLjAKICAgIENoZWNraW5nIGJ5dGVvcmRlciB2MS41LjAKICAgIENoZWNraW5nIHR3b3gtaGFzaCB2Mi4xLjIKICAgIENoZWNraW5nIHN0YWJsZV9kZXJlZl90cmFpdCB2MS4yLjEKICAgIENoZWNraW5nIHVuaWNvZGUtd2lkdGggdjAuMi4yCiAgICBDaGVja2luZyBmb2xkaGFzaCB2MC4xLjUKICAgIENoZWNraW5nIGVpdGhlciB2MS4xNS4wCiAgICBDaGVja2luZyBsejRfZmxleCB2MC4xMS42CiAgICBDaGVja2luZyBoYXNoYnJvd24gdjAuMTUuNQogICAgQ2hlY2tpbmcgYWhvLWNvcmFzaWNrIHYxLjEuNAogICAgQ2hlY2tpbmcgZml4ZWRiaXRzZXQgdjAuNS43CiAgICBDaGVja2luZyBmdXR1cmVzLWNvcmUgdjAuMy4zMgogICBDb21waWxpbmcgc2hsZXggdjEuMy4wCiAgICBDaGVja2luZyByZWdleC1zeW50YXggdjAuOC4xMAogICBDb21waWxpbmcgcnVzdHZlcnNpb24gdjEuMC4yMgogICBDb21waWxpbmcgaGVhcGxlc3MgdjAuOC4wCiAgICBDaGVja2luZyBoYXNoMzIgdjAuMy4xCiAgICBDaGVja2luZyBjc3YtY29yZSB2MC4xLjEzCiAgIENvbXBpbGluZyBnbG9iIHYwLjMuMwogICAgQ2hlY2tpbmcgcGV0Z3JhcGggdjAuOC4zCiAgICBDaGVja2luZyB1bmljYXNlIHYyLjkuMAogICAgQ2hlY2tpbmcgY3N2IHYxLjQuMAogICBDb21waWxpbmcgY2xhbmctc3lzIHYxLjguMQogICBDb21waWxpbmcgc2lnbmFsLWhvb2sgdjAuMy4xOAogICAgQ2hlY2tpbmcgYmxvY2stYnVmZmVyIHYwLjEwLjQKICAgIENoZWNraW5nIGNyeXB0by1jb21tb24gdjAuMS43CiAgICBDaGVja2luZyByc3RhciB2MC4xMi4yCiAgICBDaGVja2luZyBkaWdlc3QgdjAuMTAuNwogICAgQ2hlY2tpbmcgc2hhMiB2MC4xMC45CiAgICBDaGVja2luZyBhbnN0eWxlIHYxLjAuMTMKICAgIENoZWNraW5nIHRlbXBmaWxlIHYzLjI2LjAKICAgIENoZWNraW5nIHVuaWNvZGUtc2VnbWVudGF0aW9uIHYxLjEyLjAKICAgQ29tcGlsaW5nIG1pbmltYWwtbGV4aWNhbCB2MC4yLjEKICAgQ29tcGlsaW5nIGxpYmxvYWRpbmcgdjAuOC45CiAgICBDaGVja2luZyByZWdleC1hdXRvbWF0YSB2MC40LjE0CiAgIENvbXBpbGluZyBub20gdjcuMS4zCiAgICBDaGVja2luZyB1dWlkIHYxLjIyLjAKICAgIENoZWNraW5nIHV0ZjhwYXJzZSB2MC4yLjIKICAgQ29tcGlsaW5nIGNvbnZlcnRfY2FzZSB2MC4xMC4wCiAgIENvbXBpbGluZyBiaW5kZ2VuIHYwLjcyLjEKICAgQ29tcGlsaW5nIGl0ZXJ0b29scyB2MC4xMy4wCiAgICBDaGVja2luZyBhbnN0eWxlLXBhcnNlIHYwLjIuNwogICAgQ2hlY2tpbmcgc2lnbmFsLWhvb2stbWlvIHYwLjIuNQogICBDb21waWxpbmcgemVyb2NvcHkgdjAuOC40MAogICBDb21waWxpbmcgbGl0cnMgdjEuMC4wCiAgIENvbXBpbGluZyBydXN0Yy1oYXNoIHYyLjEuMQogICAgQ2hlY2tpbmcgY29sb3JjaG9pY2UgdjEuMC40CiAgIENvbXBpbGluZyBydXN0aXggdjAuMzguNDQKICAgIENoZWNraW5nIGlzX3Rlcm1pbmFsX3BvbHlmaWxsIHYxLjcwLjIKICAgIENoZWNraW5nIGZ1dHVyZXMtaW8gdjAuMy4zMgogICBDb21waWxpbmcgc2VtdmVyIHYxLjAuMjcKICAgIENoZWNraW5nIGFuc3R5bGUtcXVlcnkgdjEuMS41CiAgIENvbXBpbGluZyBkb2N1bWVudC1mZWF0dXJlcyB2MC4yLjEyCiAgICBDaGVja2luZyBhbnN0cmVhbSB2MC42LjIxCiAgIENvbXBpbGluZyBydXN0Y192ZXJzaW9uIHYwLjQuMQogICAgQ2hlY2tpbmcgY3Jvc3NiZWFtLWVwb2NoIHYwLjkuMTgKICAgQ29tcGlsaW5nIHNlcmRlX2Rlcml2ZSB2MS4wLjIyOAogICBDb21waWxpbmcgdGhpc2Vycm9yLWltcGwgdjIuMC4xOAogICBDb21waWxpbmcgcHRyX21ldGFfZGVyaXZlIHYwLjMuMQogICBDb21waWxpbmcgdG9raW8tbWFjcm9zIHYyLjYuMQogICBDb21waWxpbmcgYnl0ZWNoZWNrX2Rlcml2ZSB2MC44LjIKICAgQ29tcGlsaW5nIG11bmdlX21hY3JvIHYwLjQuNwogICBDb21waWxpbmcgcmt5dl9kZXJpdmUgdjAuOC4xNQogICAgQ2hlY2tpbmcgcHRyX21ldGEgdjAuMy4xCiAgIENvbXBpbGluZyBhc3luYy10cmFpdCB2MC4xLjg5CiAgICBDaGVja2luZyByYW5jb3IgdjAuMS4xCiAgICBDaGVja2luZyByZWdleCB2MS4xMi4zCiAgICBDaGVja2luZyB0b2tpbyB2MS41MC4wCiAgICBDaGVja2luZyBieXRlY2hlY2sgdjAuOC4yCiAgICBDaGVja2luZyBtdW5nZSB2MC40LjcKICAgQ29tcGlsaW5nIGNleHByIHYwLjYuMAogICAgQ2hlY2tpbmcgcmVuZCB2MC41LjMKICAgQ29tcGlsaW5nIGRlcml2ZV9tb3JlLWltcGwgdjIuMS4xCiAgIENvbXBpbGluZyBwcm9jLW1hY3JvLWVycm9yLWF0dHIyIHYyLjAuMAogICBDb21waWxpbmcgYWhhc2ggdjAuOC4xMgogICBDb21waWxpbmcgdGhpc2Vycm9yIHYxLjAuNjkKICAgIENoZWNraW5nIGNsYXBfbGV4IHYxLjAuMAogICAgQ2hlY2tpbmcgc3Ryc2ltIHYwLjExLjEKICAgQ29tcGlsaW5nIHJheW9uLWNvcmUgdjEuMTMuMAogICAgQ2hlY2tpbmcgZnV0dXJlcy1zaW5rIHYwLjMuMzIKICAgIENoZWNraW5nIGNsYXBfYnVpbGRlciB2NC41LjYwCiAgIENvbXBpbGluZyBwcm9jLW1hY3JvLWVycm9yMiB2Mi4wLjEKICAgIENoZWNraW5nIGRlcml2ZV9tb3JlIHYyLjEuMQogICAgQ2hlY2tpbmcgY3Jvc3NiZWFtLWRlcXVlIHYwLjguNgogICBDb21waWxpbmcgY2xhcF9kZXJpdmUgdjQuNS41NQogICBDb21waWxpbmcgdGhpc2Vycm9yLWltcGwgdjEuMC42OQogICBDb21waWxpbmcgaGVhcGxlc3MgdjAuNy4xNwogICBDb21waWxpbmcgc3luIHYxLjAuMTA5CiAgICBDaGVja2luZyBjaHJvbm8gdjAuNC40NAogICAgQ2hlY2tpbmcgY3Jvc3N0ZXJtIHYwLjI5LjAKICAgIENoZWNraW5nIGZudiB2MS4wLjcKICAgQ29tcGlsaW5nIHByZXR0eXBsZWFzZSB2MC4yLjM3CiAgIENvbXBpbGluZyBybGltaXQgdjAuMTEuMAogICAgQ2hlY2tpbmcgcmt5diB2MC44LjE1CiAgICBDaGVja2luZyBieXRlY291bnQgdjAuNi45CiAgICBDaGVja2luZyB3aW5ub3cgdjAuNy4xNQogICBDb21waWxpbmcgYW55aG93IHYxLjAuMTAyCiAgICBDaGVja2luZyBjbGFwIHY0LjUuNjAKICAgIENoZWNraW5nIGZ1dHVyZXMtY2hhbm5lbCB2MC4zLjMyCiAgICBDaGVja2luZyBoYXNoMzIgdjAuMi4xCiAgICBDaGVja2luZyB2dGUgdjAuMTQuMQogICAgQ2hlY2tpbmcgb3h1ci1zbWFwIHYwLjIuMAogICAgQ2hlY2tpbmcgcmF5b24gdjEuMTEuMAogICAgQ2hlY2tpbmcgc3RyaXAtYW5zaS1lc2NhcGVzIHYwLjIuMQogICAgQ2hlY2tpbmcgb3h1ci1sYW5nIHYwLjIuMAogICAgQ2hlY2tpbmcgc2VyZGVfc3Bhbm5lZCB2MC42LjkKICAgIENoZWNraW5nIHRvbWxfZGF0ZXRpbWUgdjAuNi4xMQogICAgQ2hlY2tpbmcgY29icyB2MC4zLjAKICAgQ29tcGlsaW5nIHN0cnVtX21hY3JvcyB2MC4yNi40CiAgICBDaGVja2luZyBmZC1sb2NrIHY0LjAuNAogICAgQ2hlY2tpbmcgZGlycy1zeXMgdjAuNC4xCiAgICBDaGVja2luZyB1bmljb2RlLXdpZHRoIHYwLjEuMTQKICAgIENoZWNraW5nIG1ldHJpY3MgdjAuMjQuMwogICAgQ2hlY2tpbmcgbnUtYW5zaS10ZXJtIHYwLjUwLjMKICAgIENoZWNraW5nIGhvbWUgdjAuNS4xMQogICAgQ2hlY2tpbmcgeWFuc2kgdjEuMC4xCiAgICBDaGVja2luZyBtYWNoMiB2MC42LjAKICAgIENoZWNraW5nIHRvbWxfd3JpdGUgdjAuMS4yCiAgIENvbXBpbGluZyBoZWNrIHYwLjQuMQogICAgQ2hlY2tpbmcgc3RydW0gdjAuMjYuMwogICAgQ2hlY2tpbmcgdG9tbF9lZGl0IHYwLjIyLjI3CiAgICBDaGVja2luZyB3aGljaCB2Ni4wLjMKICAgIENoZWNraW5nIGFyaWFkbmUgdjAuNC4xCiAgICBDaGVja2luZyBwb3N0Y2FyZCB2MS4xLjMKICAgIENoZWNraW5nIG94dXItY29tcCB2MC4yLjAKICAgIENoZWNraW5nIGRpcnMgdjUuMC4xCiAgICBDaGVja2luZyBwYXBlcmdyaWQgdjAuMTMuMAogICBDb21waWxpbmcgZnV0dXJlcy1tYWNybyB2MC4zLjMyCiAgIENvbXBpbGluZyBsaWJwcm9jIHYwLjE0LjExCiAgICBDaGVja2luZyBmczIgdjAuNC4zCiAgICBDaGVja2luZyBzbGFiIHYwLjQuMTIKICAgIENoZWNraW5nIG5tcy1jb3JlIHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvd29ya3NwYWNlLWNvdmVyYWdlLWNvbnRyYWN0L2NyYXRlcy9ubXMtY29yZSkKICAgIENoZWNraW5nIGF0b21pYy13YWtlciB2MS4xLjIKICAgIENoZWNraW5nIGZ1dHVyZXMtdGFzayB2MC4zLjMyCiAgICBDaGVja2luZyBwYXJraW5nIHYyLjIuMQogICAgQ2hlY2tpbmcgbGF6eV9zdGF0aWMgdjEuNS4wCiAgIENvbXBpbGluZyBpZGVudF9jYXNlIHYxLjAuMQogICAgQ2hlY2tpbmcgZnV0dXJlcy11dGlsIHYwLjMuMzIKICAgIENoZWNraW5nIGNvbG9yZWQgdjIuMi4wCiAgICBDaGVja2luZyB0b21sX3BhcnNlciB2MS4wLjkrc3BlYy0xLjEuMAogICAgQ2hlY2tpbmcgY3Jvc3N0ZXJtIHYwLjI4LjEKICAgIENoZWNraW5nIHN5c2luZm8gdjAuMzAuMTMKICAgIENoZWNraW5nIHJlZWRsaW5lIHYwLjQ0LjAKICAgIENoZWNraW5nIHRlcm1pbmFsX3NpemUgdjAuMy4wCiAgICBDaGVja2luZyBjb25jdXJyZW50LXF1ZXVlIHYyLjUuMAogICAgQ2hlY2tpbmcgdG9tbCB2MC44LjIzCiAgICBDaGVja2luZyBzZXJkZV9zcGFubmVkIHYxLjAuNAogICAgQ2hlY2tpbmcgdG9tbF9kYXRldGltZSB2MS4wLjArc3BlYy0xLjEuMAogICAgQ2hlY2tpbmcgdG9tbF93cml0ZXIgdjEuMC42K3NwZWMtMS4xLjAKICAgIENoZWNraW5nIGV2ZW50LWxpc3RlbmVyIHY1LjQuMQogICAgQ2hlY2tpbmcgcGFwZXJncmlkIHYwLjE3LjAKICAgIENoZWNraW5nIHRvbWwgdjEuMC42K3NwZWMtMS4xLjAKICAgIENoZWNraW5nIG5tcy1zYXZlIHYwLjMuMCAoL1VzZXJzL291Yml3YW5uL2xhYi9veHVyL25tcy1jb3BpbG90Ly53b3JrdHJlZXMvd29ya3NwYWNlLWNvdmVyYWdlLWNvbnRyYWN0L2NyYXRlcy9ubXMtc2F2ZSkKICAgQ29tcGlsaW5nIHRhYmxlZF9kZXJpdmUgdjAuMTEuMAogICAgQ2hlY2tpbmcgZXZlbnQtbGlzdGVuZXItc3RyYXRlZ3kgdjAuNS40CiAgICBDaGVja2luZyB0ZXN0aW5nX3RhYmxlIHYwLjMuMAogICAgQ2hlY2tpbmcgaHR0cCB2MS40LjAKICAgIENoZWNraW5nIHByZWRpY2F0ZXMtY29yZSB2MS4wLjEwCiAgICBDaGVja2luZyBhc3luYy1jaGFubmVsIHYyLjUuMAogICAgQ2hlY2tpbmcgZnV0dXJlcy1saXRlIHYyLjYuMQogICAgQ2hlY2tpbmcgcGlwZXIgdjAuMi41CiAgICBDaGVja2luZyBmbG9hdC1jbXAgdjAuMTAuMAogICAgQ2hlY2tpbmcgZGlmZmxpYiB2MC40LjAKICAgQ29tcGlsaW5nIGFzc2VydF9jbWQgdjIuMS4yCiAgICBDaGVja2luZyB0ZXJtdHJlZSB2MC41LjEKICAgIENoZWNraW5nIGh0dHAtYm9keSB2MS4wLjEKICAgIENoZWNraW5nIG5tcy1ncmFwaCB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3dvcmtzcGFjZS1jb3ZlcmFnZS1jb250cmFjdC9jcmF0ZXMvbm1zLWdyYXBoKQogICAgQ2hlY2tpbmcgYXN5bmMtdGFzayB2NC43LjEKICAgIENoZWNraW5nIG5vcm1hbGl6ZS1saW5lLWVuZGluZ3MgdjAuMy4wCiAgICBDaGVja2luZyBwcmVkaWNhdGVzIHYzLjEuNAogICAgQ2hlY2tpbmcgdGFibGVkIHYwLjIwLjAKICAgIENoZWNraW5nIHByZWRpY2F0ZXMtdHJlZSB2MS4wLjEzCiAgICBDaGVja2luZyBhc3luYy1sb2NrIHYzLjQuMgogICAgQ2hlY2tpbmcgYnN0ciB2MS4xMi4xCiAgICBDaGVja2luZyB3YWl0LXRpbWVvdXQgdjAuMi4xCiAgIENvbXBpbGluZyB0YWJsZWRfZGVyaXZlIHYwLjkuMAogICAgQ2hlY2tpbmcgYmxvY2tpbmcgdjEuNi4yCiAgICBDaGVja2luZyBsaWJ5YW1sLXJzIHYwLjMuMAogICBDb21waWxpbmcgaHR0cGFyc2UgdjEuMTAuMQogICAgQ2hlY2tpbmcgdG93ZXItc2VydmljZSB2MC4zLjMKICAgIENoZWNraW5nIGh0dHAtYm9keS11dGlsIHYwLjEuMwogICAgQ2hlY2tpbmcgYXN5bmMtZnMgdjIuMi4wCiAgIENvbXBpbGluZyB0cmFjaW5nLWF0dHJpYnV0ZXMgdjAuMS4zMQogICAgQ2hlY2tpbmcgYXN5bmMtd2Fsa2RpciB2Mi4xLjAKICAgIENoZWNraW5nIHNoZWxsZXhwYW5kIHYzLjEuMgogICAgQ2hlY2tpbmcgdHJhY2luZy1jb3JlIHYwLjEuMzYKICAgQ29tcGlsaW5nIGRhcmxpbmdfY29yZSB2MC4yMy4wCiAgICBDaGVja2luZyB5YW1sX3NlcmRlIHYwLjEwLjcKICAgIENoZWNraW5nIHBpbi11dGlscyB2MC4xLjAKICAgQ29tcGlsaW5nIHJlZi1jYXN0IHYxLjAuMjUKICAgIENoZWNraW5nIHN5bmNfd3JhcHBlciB2MS4wLjIKICAgIENoZWNraW5nIHRhYmxlZCB2MC4xNy4wCiAgICBDaGVja2luZyBodHRwZGF0ZSB2MS4wLjMKICAgIENoZWNraW5nIHRvd2VyLWxheWVyIHYwLjMuMwogICAgQ2hlY2tpbmcgaHlwZXIgdjEuOC4xCiAgICBDaGVja2luZyBtZXRyaWNzLXByb2Nlc3MgdjIuNC4zCiAgICBDaGVja2luZyBveHVyLXJlcGwgdjAuMi4wCiAgICBDaGVja2luZyBmdXR1cmVzLWV4ZWN1dG9yIHYwLjMuMzIKICAgIENoZWNraW5nIGZ1dHVyZXMgdjAuMy4zMgogICAgQ2hlY2tpbmcgZmFicnlrLWNvcmUgdjAuNC4yCiAgIENvbXBpbGluZyByZWYtY2FzdC1pbXBsIHYxLjAuMjUKICAgQ29tcGlsaW5nIHNlcmRlX2Rlcml2ZV9pbnRlcm5hbHMgdjAuMjkuMQogICAgQ2hlY2tpbmcgdHJhY2luZyB2MC4xLjQ0CiAgICBDaGVja2luZyBtaW1lIHYwLjMuMTcKICAgQ29tcGlsaW5nIHB1bGxkb3duLWNtYXJrIHYwLjEzLjEKICAgIENoZWNraW5nIGh5cGVyLXV0aWwgdjAuMS4yMAogICAgQ2hlY2tpbmcgdG93ZXIgdjAuNS4zCiAgIENvbXBpbGluZyBzY2hlbWFyc19kZXJpdmUgdjEuMi4xCiAgICBDaGVja2luZyBzZXJkZV9wYXRoX3RvX2Vycm9yIHYwLjEuMjAKICAgIENoZWNraW5nIGNoYWNoYTIwIHYwLjEwLjIKICAgQ29tcGlsaW5nIGRhcmxpbmdfbWFjcm8gdjAuMjMuMAogICAgQ2hlY2tpbmcgbWF0Y2hpdCB2MC44LjQKICAgIENoZWNraW5nIGR5bi1jbG9uZSB2MS4wLjIwCiAgICBDaGVja2luZyBwZXJjZW50LWVuY29kaW5nIHYyLjMuMgogICBDb21waWxpbmcgZGFybGluZyB2MC4yMy4wCiAgIENvbXBpbGluZyBybWNwIHYxLjEuMQogICBDb21waWxpbmcgZGFybGluZ19jb3JlIHYwLjIwLjExCiAgICBDaGVja2luZyByYW5kIHYwLjEwLjAKICAgIENoZWNraW5nIGF4dW0tY29yZSB2MC41LjYKICAgIENoZWNraW5nIHNzZS1zdHJlYW0gdjAuMi4xCiAgICBDaGVja2luZyBzY2hlbWFycyB2MS4yLjEKICAgIENoZWNraW5nIHRva2lvLXV0aWwgdjAuNy4xOAogICAgQ2hlY2tpbmcgdG9raW8tc3RyZWFtIHYwLjEuMTgKICAgIENoZWNraW5nIGJhc2U2NCB2MC4yMi4xCiAgIENvbXBpbGluZyBwYXN0ZXkgdjAuMi4xCiAgIENvbXBpbGluZyBmaW5kLW1zdmMtdG9vbHMgdjAuMS45CiAgIENvbXBpbGluZyBzdHJ1bV9tYWNyb3MgdjAuMjcuMgogICAgQ2hlY2tpbmcgY2FzdGF3YXkgdjAuMi40CiAgIENvbXBpbGluZyBjYyB2MS4yLjU2CiAgIENvbXBpbGluZyBybWNwLW1hY3JvcyB2MS4xLjEKICAgIENoZWNraW5nIGZhYnJ5ay1jb250ZW50IHYwLjQuMgogICAgQ2hlY2tpbmcgaXRlcnRvb2xzIHYwLjE0LjAKICAgQ29tcGlsaW5nIGluZG9jIHYyLjAuNwogICAgQ2hlY2tpbmcgb3h1ci1jbGkgdjAuMi4wCiAgICBDaGVja2luZyBzYW1lLWZpbGUgdjEuMC42CiAgICBDaGVja2luZyBzdGF0aWNfYXNzZXJ0aW9ucyB2MS4xLjAKICAgIENoZWNraW5nIGF4dW0gdjAuOC44CiAgIENvbXBpbGluZyBpbnN0YWJpbGl0eSB2MC4zLjEwCiAgICBDaGVja2luZyBjb21wYWN0X3N0ciB2MC45LjAKICAgIENoZWNraW5nIHdhbGtkaXIgdjIuNS4wCiAgICBDaGVja2luZyBrYXN1YXJpIHYwLjQuMTEKICAgIENoZWNraW5nIG5vdGlmeS10eXBlcyB2Mi4xLjAKICAgIENoZWNraW5nIGZzZXZlbnQtc3lzIHY0LjEuMAogICAgQ2hlY2tpbmcgbHJ1IHYwLjE2LjMKICAgIENoZWNraW5nIHBvd2VyZm10IHYwLjIuMAogICAgQ2hlY2tpbmcgbm90aWZ5IHY4LjIuMAogICAgQ2hlY2tpbmcgbnVtX3RocmVhZHMgdjAuMS43CiAgICBDaGVja2luZyBkZXJhbmdlZCB2MC41LjgKICAgIENoZWNraW5nIG51bS1jb252IHYwLjEuMAogICAgQ2hlY2tpbmcgY29uc3RhbnRfdGltZV9lcSB2MC40LjIKICAgIENoZWNraW5nIGlzX2NpIHYxLjIuMAogICAgQ2hlY2tpbmcgdGltZS1jb3JlIHYwLjEuNwogICAgQ2hlY2tpbmcgYXJyYXlyZWYgdjAuMy45CiAgICBDaGVja2luZyBhcnJheXZlYyB2MC43LjYKICAgIENoZWNraW5nIHVuaWNvZGUtdHJ1bmNhdGUgdjIuMC4xCiAgICBDaGVja2luZyBub3RpZnktZGVib3VuY2VyLW1pbmkgdjAuNy4wCiAgICBDaGVja2luZyBubXMtcXVlcnkgdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy93b3Jrc3BhY2UtY292ZXJhZ2UtY29udHJhY3QvY3JhdGVzL25tcy1xdWVyeSkKICAgQ29tcGlsaW5nIGJsYWtlMyB2MS44LjMKICAgIENoZWNraW5nIGZhYnJ5ay1mdHMgdjAuNC4yCiAgICBDaGVja2luZyBsaW5lLWNsaXBwaW5nIHYwLjMuNQogICAgQ2hlY2tpbmcgaXMtdGVybWluYWwgdjAuNC4xNwogICBDb21waWxpbmcgZGFybGluZ19tYWNybyB2MC4yMC4xMQogICBDb21waWxpbmcgb3dvLWNvbG9ycyB2NC4zLjAKICAgIENoZWNraW5nIHN1cHBvcnRzLWNvbG9yIHYyLjEuMAogICAgQ2hlY2tpbmcgc3VwcG9ydHMtY29sb3IgdjMuMC4yCiAgICBDaGVja2luZyBmYWJyeWstZ3JhcGggdjAuNC4yCiAgICBDaGVja2luZyBubXMtd2F0Y2ggdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy93b3Jrc3BhY2UtY292ZXJhZ2UtY29udHJhY3QvY3JhdGVzL25tcy13YXRjaCkKICAgIENoZWNraW5nIG5tcy1jYWNoZSB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3dvcmtzcGFjZS1jb3ZlcmFnZS1jb250cmFjdC9jcmF0ZXMvbm1zLWNhY2hlKQogICBDb21waWxpbmcgZGFybGluZyB2MC4yMC4xMQogICAgQ2hlY2tpbmcgc3RydW0gdjAuMjcuMgogICAgQ2hlY2tpbmcgY29uc29sZSB2MC4xNi4yCiAgICBDaGVja2luZyB6ZXJvaXplIHYxLjguMgogICAgQ2hlY2tpbmcgdGltZSB2MC4zLjQ1CiAgICBDaGVja2luZyBzaGVsbC13b3JkcyB2MS4xLjEKICAgIENoZWNraW5nIHJlZWRsaW5lIHYwLjQ2LjAKICAgIENoZWNraW5nIGRpYWxvZ3VlciB2MC4xMi4wCiAgICBDaGVja2luZyBjbGFwX2NvbXBsZXRlIHY0LjUuNjYKICAgIENoZWNraW5nIHJhdGF0dWktY29yZSB2MC4xLjAKICAgIENoZWNraW5nIG5tcy1jbGkgdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy93b3Jrc3BhY2UtY292ZXJhZ2UtY29udHJhY3QvY3JhdGVzL25tcy1jbGkpCiAgICBDaGVja2luZyB0d3lnIHYwLjYuMwogICAgQ2hlY2tpbmcgcmF0YXR1aS13aWRnZXRzIHYwLjMuMAogICAgQ2hlY2tpbmcgcmF0YXR1aS1jcm9zc3Rlcm0gdjAuMS4wCiAgICBDaGVja2luZyBmYWJyeWstbWNwLWF1dGggdjAuNC4yCiAgICBDaGVja2luZyBmYWJyeWstdmVjdG9yIHYwLjQuMgogICAgQ2hlY2tpbmcgbm1zLWNvbXBhdCB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3dvcmtzcGFjZS1jb3ZlcmFnZS1jb250cmFjdC9jcmF0ZXMvbm1zLWNvbXBhdCkKICAgIENoZWNraW5nIG5tcyB2MC4zLjAgKC9Vc2Vycy9vdWJpd2Fubi9sYWIvb3h1ci9ubXMtY29waWxvdC8ud29ya3RyZWVzL3dvcmtzcGFjZS1jb3ZlcmFnZS1jb250cmFjdC9jcmF0ZXMvbm1zKQogICAgQ2hlY2tpbmcgcmF0YXR1aS1tYWNyb3MgdjAuNy4wCiAgICBDaGVja2luZyByYXRhdHVpIHYwLjMwLjAKICAgIENoZWNraW5nIGZhYnJ5ay1tY3AtY29yZSB2MC40LjIKICAgIENoZWNraW5nIGZhYnJ5ay1tY3Atc2VtYW50aWMgdjAuNC4yCiAgICBDaGVja2luZyBmYWJyeWstbWNwLWdyYXBoIHYwLjQuMgogICAgQ2hlY2tpbmcgZmFicnlrLW1jcC1mdHMgdjAuNC4yCiAgICBDaGVja2luZyBmYWJyeWstbWNwLWNvbnRlbnQgdjAuNC4yCiAgICBDaGVja2luZyBmYWJyeWstbWNwIHYwLjQuMgogICAgQ2hlY2tpbmcgbm1zLWNvcGlsb3QgdjAuMy4wICgvVXNlcnMvb3ViaXdhbm4vbGFiL294dXIvbm1zLWNvcGlsb3QvLndvcmt0cmVlcy93b3Jrc3BhY2UtY292ZXJhZ2UtY29udHJhY3QvY3JhdGVzL25tcy1jb3BpbG90KQplcnJvcjogdW51c2VkIGltcG9ydDogYGxheW91dDo6UmVjdGAKICAgLS0+IGNyYXRlcy9ubXMtY29waWxvdC9zcmMvbWFwL3JlbmRlci5yczo0Njg6NjcKICAgIHwKNDY4IHwgICAgIHVzZSByYXRhdHVpOjp7VGVybWluYWwsIGJhY2tlbmQ6OlRlc3RCYWNrZW5kLCBidWZmZXI6OkJ1ZmZlciwgbGF5b3V0OjpSZWN0fTsKICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eCiAgICB8CiAgICA9IG5vdGU6IGAtRCB1bnVzZWQtaW1wb3J0c2AgaW1wbGllZCBieSBgLUQgd2FybmluZ3NgCiAgICA9IGhlbHA6IHRvIG92ZXJyaWRlIGAtRCB3YXJuaW5nc2AgYWRkIGAjW2FsbG93KHVudXNlZF9pbXBvcnRzKV1gCgplcnJvcjogY291bGQgbm90IGNvbXBpbGUgYG5tcy1jb3BpbG90YCAobGliIHRlc3QpIGR1ZSB0byAxIHByZXZpb3VzIGVycm9yCndhcm5pbmc6IGJ1aWxkIGZhaWxlZCwgd2FpdGluZyBmb3Igb3RoZXIgam9icyB0byBmaW5pc2guLi4KbWFrZTogKioqIFtsaW50XSBFcnJvciAxMDEK",
+          "bytes": 12321,
+          "sha256": "44bcc56ab8395e8bd6c35d5d8d320f4472bd7edf5bba44bf9d0e056a1542365c"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+        "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+        "untracked_files": {},
+        "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+      }
+    }
+  ]
+}
