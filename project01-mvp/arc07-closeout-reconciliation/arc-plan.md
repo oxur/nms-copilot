@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.3. Created: 2026-10-25. Status: first three slices authorized; Slices01–02 accepted, Slice03 active.
+Version: 1.4. Created: 2026-10-25. Status: first three slices authorized; Slices01–02 accepted, Slice03 returned for CDC review. After review, pause execution and planning for Duncan.
 
 ## Purpose and authority
 
@@ -148,3 +148,5 @@ neither this initial plan nor the recommendation report declares closure.
 - 1.2 (2026-10-25): Slice01 independently accepted with actual owned-PTY map/continued-REPL and shell-boundary restoration observations; native evidence limits retained. Source unchanged. Open Slice02 single inventory pass; no structural scope change.
 
 - 1.3 (2026-10-25): Slice02 complete49-entry inventory independently accepted. Original open criteria preserved; map-lock/no-edge/update/support-cost findings feed only03 recommendations. Open final initial-phase Slice03; no source cleanup or further slice authorized.
+
+- 1.4 (2026-10-25): Slice03 decision report and close returned by CC, all49 mapped and original gates preserved. CDC review pending; no04 or later plan opened. After review, pause for Duncan's discussion.
