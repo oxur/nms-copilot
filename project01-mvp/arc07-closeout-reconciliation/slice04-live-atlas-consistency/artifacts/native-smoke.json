@@ -1,0 +1,35 @@
+{
+  "scope": "Slice04 owned PTY, live watcher/cache, and loopback HTTP MCP evidence",
+  "attempts": [
+    {
+      "method": "existing direct PTY plus CPR method",
+      "outcome": "partial native proof; runner ended on an overstrict status predicate",
+      "observed": {
+        "http_mcp_initialized": true,
+        "where_am_i_listed": true,
+        "initial_voxel_x": 100,
+        "save_changed_to_voxel_x": 101,
+        "where_am_i_observed_voxel_x": 101,
+        "map_remained_open_during_update": "map screen still showed Cursor:",
+        "map_quit_input": "q",
+        "returned_to_repl_status": "Position: player position (Euclid, galaxy 0)",
+        "cache_archive": "runner checked the updated NMSCACHE archive before exiting the map"
+      },
+      "limitation": "The predicate incorrectly required 101 in ordinary REPL status, which reports a position label without voxel coordinates. The shell had returned and status ran. Because the runner aborted on that predicate, this attempt did not establish normal process exit or terminal-mode restoration. Its exception transcript is retained in the task tool history, not as a raw artifact."
+    },
+    {
+      "method": "predicate-correction replay with a locally authored PTY reader",
+      "outcome": "runner failed before map entry; not a product failure and not counted as the smoke",
+      "observed": {
+        "http_mcp_initialized": true,
+        "where_am_i_listed": true,
+        "initial_voxel_x": 100,
+        "PTY_reported": "Input error: The cursor position could not be read within a normal duration",
+        "termios_before_equals_after": true,
+        "process_exit_status": 0
+      },
+      "limitation": "This local reader did not answer the application CPR query correctly. Its failed transcript was preserved during the run but is not used as evidence for map/update behavior. No further terminal-driver exploration was authorized."
+    }
+  ],
+  "remaining_independent_check": "CDC direct-PTY/CPR smoke should verify normal map exit and terminal restoration against the source-qualified HTTP binary."
+}
