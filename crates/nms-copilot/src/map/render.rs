@@ -30,11 +30,12 @@ use super::state::{MapState, ZoomLevel, density_char};
 ///
 /// Base labels are the stored A–Z snapshot and are yellow. At every zoom,
 /// colliding base cells are spread down adjacent rows; at Local zoom the
-/// labels also include names. A collision reaching the last row can overwrite
-/// an earlier base, so separation is not guaranteed. The player `@` is green
-/// and can overwrite a base cell. The cursor uses reverse styling; density
-/// glyphs are cyan for occupied cells and dark gray for empty cells. The
-/// legend reflects stored labels and whether a player position is present.
+/// labels also include names, which are clipped at the map edge on complete
+/// grapheme boundaries. A collision reaching the last row can overwrite an
+/// earlier base, so separation is not guaranteed. The player `@` is green and
+/// can overwrite a base cell. The cursor uses reverse styling; density glyphs
+/// are cyan for occupied cells and dark gray for empty cells. The legend
+/// reflects stored labels and whether a player position is present.
 ///
 /// # Examples
 ///
@@ -65,13 +66,6 @@ use super::state::{MapState, ZoomLevel, density_char};
 /// # Ok(())
 /// # }
 /// ```
-///
-/// # Panics
-///
-/// At Local zoom, the formatted base label is clipped at the available byte
-/// width. Clipping and multi-cell skipping use string byte lengths, not
-/// Unicode display width. If a clipping boundary falls inside a multibyte
-/// UTF-8 character, slicing can panic. Names and widths are not validated.
 pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
     let area = frame.area();
 
@@ -131,13 +125,7 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
                 row += 1;
             }
             let label = if show_names {
-                let max_len = (inner.width - col) as usize;
-                let full = format!("{} {}", bl.letter, bl.name);
-                if full.len() > max_len {
-                    full[..max_len].to_string()
-                } else {
-                    full
-                }
+                format!("{} {}", bl.letter, bl.name)
             } else {
                 bl.letter.to_string()
             };
@@ -184,7 +172,11 @@ fn render_map(frame: &mut Frame, area: Rect, state: &MapState, model: &GalaxyMod
                     };
                     spans.push(Span::styled(first.to_string(), first_style));
                     let rest: String = chars.collect();
-                    skip = rest.len() as u16;
+                    let available_cols = usize::from(inner.width - col);
+                    skip = Span::raw(label.as_str())
+                        .width()
+                        .min(available_cols)
+                        .saturating_sub(1) as u16;
                     spans.push(Span::styled(rest, style));
                 } else {
                     let style = if is_cursor {
@@ -456,5 +448,467 @@ fn voxel_to_cell(vx: f64, vz: f64, state: &MapState, cols: u16, rows: u16) -> Op
         Some((col as u16, row as u16))
     } else {
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::map::state::BaseLabel;
+    use crate::session::SessionState;
+    use nms_core::{GalacticAddress, System};
+    use nms_graph::GalaxyModel;
+    use ratatui::{Terminal, backend::TestBackend, buffer::Buffer, layout::Rect};
+
+    fn map_state(model: &GalaxyModel, width: u16, height: u16) -> MapState {
+        let session = SessionState::from_model(model);
+        let mut state = MapState::new(model, &session);
+        state.zoom = ZoomLevel::Local;
+        state.galaxy = 9;
+        state.galaxy_name = "Eissentam".to_owned();
+        state.center = (0.0, 0.0);
+        state.cursor = (0, 0);
+        state.grid_size = (10, 6);
+        state.base_labels.clear();
+        state.player_pos = None;
+        state.resize(width, height);
+        state
+    }
+
+    fn insert_system(model: &mut GalaxyModel, x: i16, y: i8, z: i16, ssi: u16, galaxy: u8) {
+        model.insert_system(System::new(
+            GalacticAddress::new(x, y, z, ssi, 0, galaxy),
+            None,
+            None,
+            None,
+            vec![],
+        ));
+    }
+
+    fn draw(state: &MapState, model: &GalaxyModel, width: u16, height: u16) -> Buffer {
+        let backend = TestBackend::new(width, height);
+        let mut terminal = Terminal::new(backend).expect("test backend terminal");
+        terminal
+            .draw(|frame| render(frame, state, model))
+            .expect("in-memory render");
+        terminal.backend().buffer().clone()
+    }
+
+    fn row(buffer: &Buffer, y: u16, width: u16) -> String {
+        row_slice(buffer, y, 0, width)
+    }
+
+    fn row_slice(buffer: &Buffer, y: u16, start: u16, width: u16) -> String {
+        (start..start + width)
+            .map(|x| buffer.cell((x, y)).expect("cell in buffer").symbol())
+            .collect()
+    }
+
+    fn cell(buffer: &Buffer, x: u16, y: u16) -> &ratatui::buffer::Cell {
+        buffer.cell((x, y)).expect("cell in buffer")
+    }
+
+    fn base(letter: char, name: &str, x: i16, z: i16) -> BaseLabel {
+        BaseLabel {
+            letter,
+            name: name.to_owned(),
+            voxel_x: x,
+            voxel_z: z,
+        }
+    }
+
+    fn local_model() -> GalaxyModel {
+        let mut model = GalaxyModel::new();
+        model.set_active_galaxy(9);
+        model
+    }
+
+    #[test]
+    fn test_render_model_projection_density_and_bounds_are_literal() {
+        let mut model = local_model();
+        let mut ssi = 1;
+        for (x, y, z, count) in [
+            (-16, -7, -16, 1),
+            (0, 0, -16, 2),
+            (16, 4, -16, 4),
+            (-16, 0, 16, 8),
+        ] {
+            for _ in 0..count {
+                insert_system(&mut model, x, y, z, ssi, 9);
+                ssi += 1;
+            }
+        }
+        insert_system(&mut model, 0, 0, 0, ssi, 0);
+        insert_system(&mut model, 60, 0, 0, ssi + 1, 9);
+        model.set_active_galaxy(0);
+        assert_eq!(model.systems.len(), 17);
+
+        let state = map_state(&model, 12, 11);
+        assert_eq!(model.active_galaxy, 0);
+        assert_eq!(state.galaxy, 9);
+        assert_eq!(state.grid_size, (10, 6));
+        let before = model.systems.clone();
+        let bins = bin_systems(&state, &model, 10, 6);
+        assert_eq!(
+            bins,
+            HashMap::from([((2, 1), 1), ((5, 1), 2), ((7, 1), 4), ((2, 4), 8)])
+        );
+        let buffer = draw(&state, &model, 12, 11);
+
+        let expected_rows = [
+            "          ",
+            "  ·  + *  ",
+            "          ",
+            "          ",
+            "  #       ",
+            "          ",
+        ];
+        for (row_index, expected) in expected_rows.iter().enumerate() {
+            assert_eq!(row_slice(&buffer, row_index as u16 + 1, 1, 10), *expected);
+            for (col, symbol) in expected.chars().enumerate() {
+                let cell = cell(&buffer, col as u16 + 1, row_index as u16 + 1);
+                assert_eq!(cell.symbol(), symbol.to_string());
+                assert_eq!(
+                    cell.fg,
+                    if symbol == ' ' {
+                        Color::DarkGray
+                    } else {
+                        Color::Cyan
+                    }
+                );
+                assert!(!cell.modifier.contains(Modifier::BOLD));
+                assert_eq!(
+                    cell.modifier.contains(Modifier::REVERSED),
+                    col == 0 && row_index == 0
+                );
+            }
+        }
+        assert_eq!(row(&buffer, 0, 12), "┌ Eissentam┐");
+        assert_eq!(buffer.cell((0, 4)).unwrap().symbol(), "│");
+        assert_eq!(buffer.cell((11, 4)).unwrap().symbol(), "│");
+        assert_eq!(model.systems, before);
+        assert_eq!(model.systems.len(), 17);
+
+        let bounds = [
+            ((0.0, 0.0), Some((5, 3))),
+            ((-32.0, -32.0), Some((0, 0))),
+            ((32.0, 0.0), None),
+            ((0.0, 32.0), None),
+            ((-40.0, 0.0), None),
+            ((-33.0, 0.0), Some((0, 3))),
+        ];
+        for ((x, z), expected) in bounds {
+            assert_eq!(voxel_to_cell(x, z, &state, 10, 6), expected, "({x}, {z})");
+        }
+        assert_eq!(voxel_to_cell(0.0, 0.0, &state, 0, 6), None);
+        assert_eq!(voxel_to_cell(0.0, 0.0, &state, 10, 0), None);
+    }
+
+    #[test]
+    fn test_render_local_labels_clip_graphemes_and_preserve_ascii() {
+        for (name, expected) in [
+            ("ééé", vec!["A", " ", "é", "é", "é"]),
+            ("界界", vec!["A", " ", "界", " ", " "]),
+            ("😀x", vec!["A", " ", "😀", " ", "x"]),
+            ("👩\u{200d}🚀x", vec!["A", " ", "👩\u{200d}🚀", " ", "x"]),
+            ("ABCDE", vec!["A", " ", "A", "B", "C"]),
+            ("abc", vec!["A", " ", "a", "b", "c"]),
+        ] {
+            let visible_offsets: &[u16] = match name {
+                "界界" => &[0, 1, 2],
+                "😀x" | "👩\u{200d}🚀x" => &[0, 1, 2, 4],
+                _ => &[0, 1, 2, 3, 4],
+            };
+            let model = local_model();
+            let mut state = map_state(&model, 12, 11);
+            state.cursor = (5, 3);
+            state.base_labels = vec![base('A', name, 0, 0)];
+            let original_names: Vec<_> = state
+                .base_labels
+                .iter()
+                .map(|item| item.name.clone())
+                .collect();
+            let buffer = draw(&state, &model, 12, 11);
+            for (offset, symbol) in expected.iter().enumerate() {
+                assert_eq!(
+                    cell(&buffer, 6 + offset as u16, 4).symbol(),
+                    *symbol,
+                    "name={name}"
+                );
+            }
+            for offset in visible_offsets {
+                let visible = cell(&buffer, 6 + offset, 4);
+                assert_eq!(visible.fg, Color::Yellow, "name={name}, offset={offset}");
+                assert!(visible.modifier.contains(Modifier::BOLD));
+                assert_eq!(visible.modifier.contains(Modifier::REVERSED), *offset == 0);
+            }
+            assert_eq!(cell(&buffer, 11, 4).symbol(), "│");
+            assert_eq!(
+                state
+                    .base_labels
+                    .iter()
+                    .map(|item| item.name.clone())
+                    .collect::<Vec<_>>(),
+                original_names
+            );
+        }
+
+        let mut model = local_model();
+        insert_system(&mut model, 0, 0, 0, 1, 9);
+        let mut state = map_state(&model, 12, 11);
+        state.cursor = (2, 3);
+        state.base_labels = vec![base('A', "é", -16, 0)];
+        let buffer = draw(&state, &model, 12, 11);
+        assert_eq!(row_slice(&buffer, 4, 3, 4), "A é·");
+        let marker = cell(&buffer, 3, 4);
+        assert_eq!(marker.symbol(), "A");
+        assert_eq!(marker.fg, Color::Yellow);
+        assert!(marker.modifier.contains(Modifier::BOLD));
+        assert!(marker.modifier.contains(Modifier::REVERSED));
+        for x in [4, 5] {
+            let name_cell = cell(&buffer, x, 4);
+            assert_eq!(name_cell.fg, Color::Yellow);
+            assert!(name_cell.modifier.contains(Modifier::BOLD));
+            assert!(!name_cell.modifier.contains(Modifier::REVERSED));
+        }
+        let density = cell(&buffer, 6, 4);
+        assert_eq!(density.symbol(), "·");
+        assert_eq!(density.fg, Color::Cyan);
+        assert!(!density.modifier.contains(Modifier::BOLD));
+        assert!(!density.modifier.contains(Modifier::REVERSED));
+    }
+
+    #[test]
+    fn test_render_overlays_keep_collision_and_player_precedence() {
+        let model = local_model();
+        let mut state = map_state(&model, 12, 11);
+        state.cursor = (5, 3);
+        state.base_labels = vec![
+            base('A', "First", 0, 0),
+            base('B', "Second", 0, 0),
+            base('C', "Third", 0, 0),
+            base('D', "Fourth", 0, 0),
+        ];
+        let original = state
+            .base_labels
+            .iter()
+            .map(|item| (item.letter, item.name.clone(), item.voxel_x, item.voxel_z))
+            .collect::<Vec<_>>();
+        let buffer = draw(&state, &model, 12, 11);
+        assert_eq!(row_slice(&buffer, 4, 6, 5), "A Fir");
+        assert_eq!(row_slice(&buffer, 5, 6, 5), "B Sec");
+        assert_eq!(row_slice(&buffer, 6, 6, 5), "D Fou");
+        for (y, reversed) in [(4, true), (5, false), (6, false)] {
+            for x in 6..11 {
+                let visible = cell(&buffer, x, y);
+                assert_eq!(visible.fg, Color::Yellow);
+                assert!(visible.modifier.contains(Modifier::BOLD));
+                assert_eq!(
+                    visible.modifier.contains(Modifier::REVERSED),
+                    reversed && x == 6
+                );
+            }
+        }
+        assert_eq!(
+            state
+                .base_labels
+                .iter()
+                .map(|item| (item.letter, item.name.clone(), item.voxel_x, item.voxel_z))
+                .collect::<Vec<_>>(),
+            original
+        );
+
+        state.player_pos = Some((0, 0));
+        let buffer = draw(&state, &model, 12, 11);
+        assert_eq!(row_slice(&buffer, 4, 6, 5), "@    ");
+        let player = cell(&buffer, 6, 4);
+        assert_eq!(player.fg, Color::Green);
+        assert!(player.modifier.contains(Modifier::BOLD));
+        assert!(player.modifier.contains(Modifier::REVERSED));
+        assert_eq!(row_slice(&buffer, 5, 6, 5), "B Sec");
+        assert_eq!(row_slice(&buffer, 6, 6, 5), "D Fou");
+        assert_eq!(
+            state
+                .base_labels
+                .iter()
+                .map(|item| (item.letter, item.name.clone(), item.voxel_x, item.voxel_z))
+                .collect::<Vec<_>>(),
+            original
+        );
+
+        for zoom in [ZoomLevel::Galaxy, ZoomLevel::Region] {
+            let mut state = map_state(&model, 12, 11);
+            state.zoom = zoom;
+            state.cursor = (5, 3);
+            state.base_labels = vec![base('A', "界 Long name", 0, 0)];
+            let buffer = draw(&state, &model, 12, 11);
+            assert_eq!(row_slice(&buffer, 4, 6, 5), "A    ");
+            for x in 6..11 {
+                let visible = cell(&buffer, x, 4);
+                if x == 6 {
+                    assert_eq!(visible.fg, Color::Yellow);
+                    assert!(visible.modifier.contains(Modifier::BOLD));
+                    assert!(visible.modifier.contains(Modifier::REVERSED));
+                } else {
+                    assert_eq!(visible.fg, Color::DarkGray);
+                    assert!(!visible.modifier.contains(Modifier::BOLD));
+                    assert!(!visible.modifier.contains(Modifier::REVERSED));
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn test_render_status_legend_and_help_are_complete_and_repeatable() {
+        let model = local_model();
+        let mut state = map_state(&model, 80, 24);
+        state.cursor = (39, 9);
+        state.base_labels = vec![base('A', "Alpha", 0, 0), base('B', "Beta", 16, 0)];
+        state.player_pos = Some((0, 0));
+        let mut terminal = Terminal::new(TestBackend::new(80, 24)).expect("test backend terminal");
+        terminal
+            .draw(|frame| render(frame, &state, &model))
+            .unwrap();
+        let normal = terminal.backend().buffer().clone();
+        assert_eq!(
+            row(&normal, 21, 80),
+            " [Eissentam]  [Local]  Cursor: X=+0 Z=-2  Scale: 1 vox/cell                     "
+        );
+        assert_eq!(
+            row(&normal, 22, 80),
+            "A=Alpha  B=Beta  @=You  ?=Help  q=Quit                                          "
+        );
+        for x in 0..80 {
+            assert_eq!(cell(&normal, x, 21).bg, Color::DarkGray);
+        }
+        for x in 0..59 {
+            assert_eq!(cell(&normal, x, 21).fg, Color::White);
+        }
+        for x in 0..7 {
+            assert_eq!(cell(&normal, x, 22).fg, Color::Yellow);
+        }
+        for x in 9..15 {
+            assert_eq!(cell(&normal, x, 22).fg, Color::Yellow);
+        }
+        for x in 17..22 {
+            assert_eq!(cell(&normal, x, 22).fg, Color::Green);
+        }
+        for x in 24..38 {
+            assert_eq!(cell(&normal, x, 22).fg, Color::DarkGray);
+        }
+
+        state.show_help = true;
+        terminal
+            .draw(|frame| render(frame, &state, &model))
+            .unwrap();
+        let help = terminal.backend().buffer();
+        let expected = [
+            "┌────────────────────────────────────────────────────────────────────┐",
+            "│ Galaxy Map                                                         │",
+            "│                                                                    │",
+            "│  Keys:                                 Density:                    │",
+            "│  Arrow keys    Move cursor             ·  1 system                 │",
+            "│  Enter / +     Zoom in                 +  2-3 systems              │",
+            "│  Esc / -       Zoom out (exit)         *  4-7 systems              │",
+            "│  c             Center on player        #  8+ systems               │",
+            "│  ?             Toggle this help        @  Your position            │",
+            "│  q / Ctrl+C    Exit map                A-Z  Base locations         │",
+            "│                                                                    │",
+            "│                                        Zoom Levels:                │",
+            "│                                        Galaxy  4096×4096 vox       │",
+            "│                                        Region   512×512  vox  8×   │",
+            "│                                        Local     64×64   vox 64×   │",
+            "│                                                                    │",
+            "│  Press any key to close                                            │",
+            "└────────────────────────────────────────────────────────────────────┘",
+        ];
+        for (offset, expected_row) in expected.iter().enumerate() {
+            assert_eq!(
+                row_slice(help, offset as u16 + 3, 5, 70),
+                *expected_row,
+                "help row {offset}"
+            );
+        }
+        for y in 3..21 {
+            for x in 5..75 {
+                assert_eq!(
+                    cell(help, x, y).bg,
+                    Color::Black,
+                    "help background at ({x}, {y})"
+                );
+            }
+        }
+        for (x, y, symbol) in [(7, 4, "G"), (8, 6, "K"), (46, 6, "D"), (46, 14, "Z")] {
+            let header = cell(help, x, y);
+            assert_eq!(header.symbol(), symbol, "help header at ({x}, {y})");
+            assert_eq!(
+                header.fg,
+                Color::White,
+                "help header foreground at ({x}, {y})"
+            );
+            assert!(
+                header.modifier.contains(Modifier::BOLD),
+                "help header weight at ({x}, {y})"
+            );
+        }
+        assert_eq!(cell(help, 6, 5).bg, Color::Black);
+        assert!(cell(help, 8, 6).modifier.contains(Modifier::BOLD));
+        assert_eq!(cell(help, 46, 7).fg, Color::Cyan);
+        assert_eq!(cell(help, 46, 11).fg, Color::Green);
+        assert_eq!(cell(help, 46, 12).fg, Color::Yellow);
+        assert_eq!(cell(help, 48, 12).fg, Color::Yellow);
+        assert_eq!(cell(help, 8, 19).fg, Color::DarkGray);
+
+        state.show_help = false;
+        terminal
+            .draw(|frame| render(frame, &state, &model))
+            .unwrap();
+        assert_eq!(terminal.backend().buffer(), &normal);
+        let restored = terminal.backend().buffer();
+        assert_eq!(
+            row(restored, 21, 80),
+            " [Eissentam]  [Local]  Cursor: X=+0 Z=-2  Scale: 1 vox/cell                     "
+        );
+        assert_eq!(
+            row(restored, 22, 80),
+            "A=Alpha  B=Beta  @=You  ?=Help  q=Quit                                          "
+        );
+    }
+
+    #[test]
+    fn test_render_map_zero_inner_axes_keep_only_borders() {
+        let mut model = local_model();
+        insert_system(&mut model, 0, 0, 0, 1, 9);
+        let mut state = map_state(&model, 12, 11);
+        state.base_labels = vec![base('A', "Origin", 0, 0)];
+        state.player_pos = Some((0, 0));
+        state.cursor = (0, 0);
+
+        for (width, height, expected) in [
+            (2, 8, vec!["┌┐", "││", "││", "││", "││", "││", "││", "└┘"]),
+            (8, 2, vec!["┌ Eisse┐", "└──────┘"]),
+        ] {
+            let mut terminal = Terminal::new(TestBackend::new(width, height)).unwrap();
+            terminal
+                .draw(|frame| {
+                    let area = frame.area();
+                    render_map(frame, area, &state, &model);
+                })
+                .unwrap();
+            let buffer = terminal.backend().buffer();
+            assert_eq!(buffer.area, Rect::new(0, 0, width, height));
+            for (y, expected_row) in expected.iter().enumerate() {
+                assert_eq!(row(buffer, y as u16, width), *expected_row);
+            }
+            for y in 0..height {
+                for x in 0..width {
+                    let symbol = cell(buffer, x, y).symbol();
+                    assert!(
+                        !["·", "+", "*", "#", "@", "A"].contains(&symbol),
+                        "unexpected content {symbol:?} at {x},{y}"
+                    );
+                }
+            }
+        }
     }
 }
