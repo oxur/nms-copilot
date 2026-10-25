@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.149, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.150, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1167,3 +1167,7 @@ Actual FIRST offline native workspaceallfeature coverage98059f18 atcleanfe5e9d1:
 ## Slice46 map renderer accepted — 2026-10-25 UTC
 
 All6MR/R06-S46 DONE at isolated clean85a80ca1bf77e80f071c6036e6e187a214228dea: exact two paths, grapheme-safe Local clipping/display-column advance, meaningful M1–M5 literal buffer/population/style regressions and truthful inherited panic documentation. Nine fresh CDC groups complete:5 focused all-feature+5 no-default/1107runtime+118docs(91execute27compile)/28 separate no-defaultdocs/strictaffected+diffs0. Full coverage runtime passes but95 parent threshold remains RED23598/25230=93.531510%; renderer614/617 and eight unique existing production functions positive;15 files below90 remain. Inline test-body lines/default-doctest exclusion qualified, prior40 executing render example preserved. Three ACTUAL refinements(2code/doc+1record-only), no exception/reset. Initial lint reds, coverage red, complete raw16CC+12CDC, immutable prompts/returns and prose corrections preserved. Full M7.7/D0042/input/terminal/table-theme/hostedCI/all original non-doc/input/Operator owners remain OPEN; next bounded remaining M7.7 owner is CDC source-grounding duty under existing one-arc authority.64arc52done12open/all25projectrowsOPEN. No integration/maincleanup/release. See [CDC46 acceptance](slice46-map-renderer-hardening/cdc-verification.md) and [retrospective](slice46-map-renderer-hardening/cdc-retrospective.md).
+
+## Slice47 input routing owner — 2026-10-25UTC
+
+OriginalM7.7/D0042 next usable child: exactonefile map/input.rs, private FnOnce poll/read seam and seven meaningful callback/error/event/whole-state regressions; publicsignature/docs/enum/handle_key and allotherbytes frozen. Literal aliases/zoom/resize/help/modifier/key-kind/error/timeout policy resolved; no terminalbehavior/dependency change. FreshsameapprovedCC6-lunaHigh/CDC6.1-solHigh, serial ownership+capturedpair/heldfullreview/nineoriginalgroups+independentacceptance/retro. Baselineclean85a80ca/95parentRED93.531510%/input0of37; current measurement required, inlinebody/defaultdoctest qualifications preserved. ActualCrosstermIO/elapsedtimeout and terminalsetup/cleanupfailure/panic lifetime/fullD0042 stayexplicitCDCseparateowner, not inferred from callbacks. Alloriginalcoverage/hostedCI/non-doc/input/Operator gates remainOPEN;65arc52done13open/project25OPEN. No integration/maincleanup/release. [Issued prompt](slice47-map-input-routing/cc-prompt.md).

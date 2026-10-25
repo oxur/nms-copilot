@@ -479,3 +479,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 64arc51done13open/project25OPEN/initialzeroACTUALrefinements/no acceptanceatissue.
 
 2026-10-25 formal46close: all6MR/R06-S46DONE/threeACTUALrefinements/noexception;64arc52done12open/project25OPEN. Current95parentcoverageRED93.531510%/15below90, fullM7.7,D0042/input/terminal/CI/alloriginalhigher owners OPEN.
+
+## Original input testing child — 2026-10-25UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S47 | Map event routing/error/whole-state transitions preserved through private testable seam | SixIR/I1–I7/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 input coverage gap | open | — | Actual terminalIO/lifecycle/95coverage/CI/fullparent gates OPEN |
+
+65arc52done13open/project25OPEN/initialzeroACTUALrefinements/no product validation or acceptance at issue.
