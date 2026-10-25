@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.126, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.127, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1063,3 +1063,7 @@ Version1.125 details [Slice35](slice35-cache-compat-api-documentation/slice-plan
 ## Slice35 formal close — 2026-10-25 UTC
 
 Version1.126 closes all6KC/R06-S35 at48b6bd790f7120f39638b8f55e430d8b52d707c3: complete sevenfile cache/compat publicdocs/sixactualchangedpaths. Seven independent groups/57runtime+8docs(5execute/3compile)/strictbothzero/preservation8layouts/opposed/diffs accepted. Oneactualrefinement/15CC+7CDC exactrecords/retainedfailures/reportqualifications/finalretro. No structural/scope/sequence amendment/waiver. Required **Slice36** remainingapplicationAPIs/full0039reconciliation remainsCDC(furtherusabledecompositionallowed), not a countof36APIs; M7.5authenticinput and alloriginal/higherowners retained.53arc40done13open/project25allOPEN.
+
+## Slice36 configuration/path/session owner issued — 2026-10-25 UTC
+
+Version1.127 details [Slice36](slice36-application-state-api-documentation/slice-plan.md): complete three-file state/config public docs/key literal examples, five named payload layouts, no executable/API/test/dependency change. Same approved CDC6.1-solHigh/soleCC6-lunaHigh with qualitativeheadroom/noownedprocess confirmed; isolated clean48b6 source. Six AS/R06-S36 OPEN, zero actual refinements. Original whole-copilot strict readiness30error red preserved; component proof requires actual zeroowned/exact24 residual warnings with failclosed checker, not fullcrate acceptance or waiver. Required37remainingapplicationAPIs/full0039M7.6 reconciliation CDC-owned/furtherbounded split allowed.54arc40done14open/project25OPEN; all original/higher owners/M7.5input retained. No implementation at issue/integration/release authority.

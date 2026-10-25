@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.113
+version: 1.114
 project: project01-mvp
 status: active
 depends-on: []
@@ -1254,3 +1254,7 @@ Version1.112/arc1.125 issues sevenfile completecache/compatdoc increment/sixKC a
 ## Arc06 Slice35 accepted — 2026-10-25 UTC
 
 Version1.113/arc1.126 records all6KC/R06-S35accepted at48b6bd79, sevenindependentgroups/57runtime+8docs(5execute/3compile)/strictbothzero/exactpreservation/finalretro.53arc40done13open/all25projectrowsOPEN. RequiredSlice36remainingapplicationAPIs/fulloriginalM7.6reconciliation and alloriginal/higherowners retained; no integration/release/parentacceptance.
+
+## Arc06 Slice36 application-state docs owner — 2026-10-25 UTC
+
+Version1.114/arc1.127 issues three-file config/path/session increment/sixAS/R06-S36 OPEN from48b6.54arc40done14open/all25projectrowsOPEN. Scoped zeroowned/exact24residual diagnostics retains original30error wholecrate strict/fullM7.6 owner required37, no exception/parentacceptance. Same approved roles/models/alloriginalhighergates unchanged; no productimplementation/integration/release claim.

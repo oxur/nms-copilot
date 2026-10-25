@@ -1,0 +1,21 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/application-state-api-documentation",
+  "baseline": "48b6bd790f7120f39638b8f55e430d8b52d707c3",
+  "paths": [
+    "crates/nms-copilot/src/config.rs",
+    "crates/nms-copilot/src/paths.rs",
+    "crates/nms-copilot/src/session.rs"
+  ],
+  "permitted_payload_layouts": {
+    "crates/nms-copilot/src/config.rs": [
+      "Io(std::io::Error),",
+      "Parse(toml::de::Error),"
+    ],
+    "crates/nms-copilot/src/session.rs": [
+      "Base { name: String, address: GalacticAddress },",
+      "PlayerPosition(GalacticAddress),",
+      "Address(GalacticAddress),"
+    ]
+  },
+  "change_kind": "whole-line Rustdoc/documentation blanklines plus five named payload declaration layouts/trailing commas only; all other ordered bytes frozen"
+}

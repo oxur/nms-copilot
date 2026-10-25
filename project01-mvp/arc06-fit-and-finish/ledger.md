@@ -369,3 +369,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 53arc39done14open/project25open; no sourceimplementation/acceptanceatissue.
 
 2026-10-25 formal35close: all6KC/R06-S35DONE at48b6bd79, sevenindependentgroups/57runtime+8docs(5execute/3compile)/strictbothzero/preservationopposed/diffs.53arc40done13open/project25open; fullM7.6/requiredSlice36/allhigherowners retained.
+
+## Slice36 configuration/path/session API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S36 | Complete truthful configuration/path/session public docs and key examples | SixAS/full3fileworksheet/exactscopeddiagnostics/tests/preservation | correctness-grade | Original0039 M7.6 bounded application increment | open | [Issued Slice36](slice36-application-state-api-documentation/slice-plan.md) | Fullstrict30error baseline retained; required37/fullM7.6 allhigherowners OPEN |
+
+54rows40done14open/project25OPEN; initial0actualrefinements/no implementation at issue.
