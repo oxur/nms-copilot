@@ -1,0 +1,782 @@
+diff --git a/crates/nms-copilot/src/config.rs b/crates/nms-copilot/src/config.rs
+index 379dd59..8242a3b 100644
+--- a/crates/nms-copilot/src/config.rs
++++ b/crates/nms-copilot/src/config.rs
+@@ -1,8 +1,70 @@
+-//! Configuration file support for NMS Copilot.
++//! Read and resolve NMS Copilot configuration.
+ //!
+-//! Config file location: `~/.nms-copilot/config.toml`
++//! Configuration is read from `~/.nms-copilot/config.toml`; this module does
++//! not write configuration files. Missing fields use the defaults described
++//! on [`Config`] and its nested types. TOML strings such as save formats,
++//! table styles, and routing algorithms are stored as supplied and are not
++//! validated here. Unknown TOML keys are ignored by deserialization.
+ //!
+-//! All fields are optional -- sensible defaults are used when not specified.
++//! [`Config::load_from`] is useful when an application already has a config
++//! path. Environment overrides are read after the file or defaults, and only
++//! the three documented `NMS_SAVE_*` variables are recognized. Path getters
++//! return configured or lexically derived paths; they do not check the
++//! returned paths or create files.
++//!
++//! # Examples
++//!
++//! ```
++//! use nms_copilot::config::Config;
++//! use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
++//! use std::path::{Path, PathBuf};
++//! use std::time::Duration;
++//!
++//! let mut config = Config::default();
++//! assert_eq!(config.save.path, None);
++//! assert_eq!(config.save.dir, None);
++//! assert_eq!(config.save.file, None);
++//! assert_eq!(config.save.format, "auto");
++//! assert!(config.display.emoji_glyphs);
++//! assert!(config.display.color);
++//! assert_eq!(config.display.table_style, "rounded");
++//! assert_eq!(config.display.banner, None);
++//! assert!(config.display.show_banner);
++//! assert!(config.display.show_system_banner);
++//! assert_eq!(config.defaults.galaxy, 0);
++//! assert_eq!(config.defaults.warp_range, None);
++//! assert_eq!(config.defaults.tsp_algorithm, "2opt");
++//! assert_eq!(config.defaults.find_limit, None);
++//! assert!(config.cache.enabled);
++//! assert_eq!(config.cache.path, None);
++//! assert!(config.watch.enabled);
++//! assert_eq!(config.watch.debounce_ms, 500);
++//! assert_eq!(config.mcp.host, IpAddr::V4(Ipv4Addr::LOCALHOST));
++//! assert_eq!(config.mcp.port, 5099);
++//! assert_eq!(config.mcp_http_addr(), SocketAddr::new(IpAddr::V4(Ipv4Addr::LOCALHOST), 5099));
++//! assert!(config.cache_enabled());
++//! assert!(config.watch_enabled());
++//! assert_eq!(config.watch_debounce(), Duration::from_millis(500));
++//!
++//! config.save.file = Some(PathBuf::from("chosen.hg"));
++//! config.save.path = Some(PathBuf::from("legacy.hg"));
++//! config.save.dir = Some(PathBuf::from("account"));
++//! assert_eq!(config.effective_save_file(), Some(PathBuf::from("chosen.hg")));
++//! assert_eq!(config.save_path(), Some(PathBuf::from("chosen.hg")));
++//! config.cache.path = Some(PathBuf::from("override.rkyv"));
++//! assert_eq!(config.cache_path_for(Some(Path::new("account/save3.hg"))), PathBuf::from("override.rkyv"));
++//! assert_eq!(config.cache_path_for(None), PathBuf::from("override.rkyv"));
++//!
++//! config.cache.enabled = false;
++//! config.watch.enabled = false;
++//! config.watch.debounce_ms = 0;
++//! config.mcp.host = IpAddr::V6(Ipv6Addr::LOCALHOST);
++//! config.mcp.port = 0;
++//! assert!(!config.cache_enabled());
++//! assert!(!config.watch_enabled());
++//! assert_eq!(config.watch_debounce(), Duration::ZERO);
++//! assert_eq!(config.mcp_http_addr(), SocketAddr::new(IpAddr::V6(Ipv6Addr::LOCALHOST), 0));
++//! ```
+ 
+ use std::fs;
+ use std::net::{IpAddr, Ipv4Addr, SocketAddr};
+@@ -13,43 +75,48 @@ use serde::Deserialize;
+ 
+ use crate::paths;
+ 
+-/// Top-level configuration.
++/// Top-level configuration loaded from TOML and environment overrides.
++///
++/// Each nested section has serde defaults, so omitted fields use that section's
++/// [`Default`] implementation. Unknown TOML keys are ignored. Values such as
++/// format and algorithm names remain strings and are not validated here.
+ #[derive(Debug, Deserialize, Default)]
+ #[serde(default)]
+ pub struct Config {
+-    /// Save file configuration.
++    /// Save paths and the save format (`"auto"` by default).
+     pub save: SaveConfig,
+ 
+-    /// Display preferences.
++    /// Display preferences; defaults enable glyph emoji, color, and banners.
+     pub display: DisplayConfig,
+ 
+-    /// Default values for commands.
++    /// Command defaults: galaxy 0, `"2opt"`, and no range or result limit.
+     pub defaults: DefaultsConfig,
+ 
+-    /// Cache settings.
++    /// Cache enablement and an optional explicit cache path.
+     pub cache: CacheConfig,
+ 
+-    /// File watcher settings.
++    /// File watcher enablement and debounce milliseconds (default 500).
+     pub watch: WatchConfig,
+ 
+-    /// MCP server settings.
++    /// MCP HTTP host and port; constructing the address does not bind a socket.
+     pub mcp: McpConfig,
+ }
+ 
+-/// Save file location and format.
++/// Save path settings and the unvalidated format string.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct SaveConfig {
+-    /// DEPRECATED: Old combined path. Treated as `file` for backward compat.
++    /// Legacy combined path, checked as a file and later as a directory after
++    /// the explicit `file` and `dir` fields. This path is not canonicalized.
+     pub path: Option<PathBuf>,
+ 
+-    /// Path to the NMS save directory (account dir containing `save*.hg`).
++    /// Directory searched for its most recent save after the legacy file check.
+     pub dir: Option<PathBuf>,
+ 
+-    /// Path to a specific NMS save file.
++    /// Explicit save file returned literally, even when it does not exist.
+     pub file: Option<PathBuf>,
+ 
+-    /// Save format: "auto", "raw", "goatfungus".
++    /// Unvalidated save format string; defaults to `"auto"`.
+     pub format: String,
+ }
+ 
+@@ -64,27 +131,27 @@ impl Default for SaveConfig {
+     }
+ }
+ 
+-/// Display preferences.
++/// Display settings with serde defaults; strings are not validated here.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct DisplayConfig {
+     /// Use emoji for portal glyphs (true) or hex digits (false).
+     pub emoji_glyphs: bool,
+ 
+-    /// Enable ANSI color output.
++    /// Whether consumers should enable ANSI color output; defaults to `true`.
+     pub color: bool,
+ 
+-    /// Table border style.
++    /// Unvalidated table border style string; defaults to `"rounded"`.
+     pub table_style: String,
+ 
+     /// Custom banner text. `None` = use default embedded banner.
+     /// Empty string = disable banner.
+     pub banner: Option<String>,
+ 
+-    /// Whether to show the art banner at startup (default: true).
++    /// Whether a consumer should show its startup art banner (default `true`).
+     pub show_banner: bool,
+ 
+-    /// Whether to show the system info line after the banner (default: true).
++    /// Whether a consumer should show the system line after its banner (default `true`).
+     pub show_system_banner: bool,
+ }
+ 
+@@ -101,7 +168,7 @@ impl Default for DisplayConfig {
+     }
+ }
+ 
+-/// Default values for commands.
++/// Defaults consumed by command frontends; values are stored without validation.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct DefaultsConfig {
+@@ -111,7 +178,7 @@ pub struct DefaultsConfig {
+     /// Default warp range in light-years for routing.
+     pub warp_range: Option<f64>,
+ 
+-    /// Default TSP algorithm: "nearest-neighbor" or "2opt".
++    /// Unvalidated TSP algorithm name; defaults to `"2opt"`.
+     pub tsp_algorithm: String,
+ 
+     /// Default number of results for find.
+@@ -129,14 +196,15 @@ impl Default for DefaultsConfig {
+     }
+ }
+ 
+-/// Cache settings.
++/// Cache settings. An explicit `path` overrides derived and legacy cache paths.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct CacheConfig {
+-    /// Enable caching (default: true).
++    /// Whether a consumer should use its cache (default `true`).
+     pub enabled: bool,
+ 
+-    /// Cache file path (default: ~/.nms-copilot/galaxy.rkyv).
++    /// Optional literal cache override. When absent, per-save resolution uses
++    /// an account/slot path; without a save it uses the legacy `galaxy.rkyv`.
+     pub path: Option<PathBuf>,
+ }
+ 
+@@ -149,13 +217,13 @@ impl Default for CacheConfig {
+     }
+ }
+ 
+-/// File watcher settings.
++/// File watcher settings; a zero-millisecond debounce is accepted.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct WatchConfig {
+-    /// Enable file watching (default: true).
++    /// Whether a consumer should watch for file changes (default `true`).
+     pub enabled: bool,
+-    /// Debounce duration in milliseconds (default: 500).
++    /// Debounce duration in milliseconds, converted directly to [`Duration`].
+     pub debounce_ms: u64,
+ }
+ 
+@@ -168,14 +236,14 @@ impl Default for WatchConfig {
+     }
+ }
+ 
+-/// MCP server settings.
++/// MCP HTTP listener settings. These values form an address but do not start a listener.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct McpConfig {
+-    /// Host/IP address for the MCP HTTP server.
++    /// Host/IP address for the MCP HTTP server; defaults to IPv4 localhost.
+     pub host: IpAddr,
+ 
+-    /// Port for the MCP HTTP server.
++    /// Port for the MCP HTTP server; defaults to 5099 and is not bound here.
+     pub port: u16,
+ }
+ 
+@@ -189,16 +257,35 @@ impl Default for McpConfig {
+ }
+ 
+ impl Config {
+-    /// Load config from the default path (`~/.nms-copilot/config.toml`).
++    /// Load configuration from [`paths::config_path`].
++    ///
++    /// A missing file selects defaults; an existing file is read as UTF-8 and
++    /// parsed before the supported environment overrides are applied. Resolving
++    /// the default path inherits [`paths::data_dir`]'s panic if no home directory
++    /// is available. This function does not write configuration.
++    ///
++    /// # Errors
+     ///
+-    /// Returns the default config if the file doesn't exist.
+-    /// Returns an error if the file exists but can't be parsed.
++    /// Returns [`ConfigError::Io`] when reading the file fails and
++    /// [`ConfigError::Parse`] when its contents cannot be deserialized.
++    ///
++    /// # Panics
++    ///
++    /// Panics if the home directory cannot be determined while resolving the default path.
+     pub fn load() -> Result<Self, ConfigError> {
+         let path = paths::config_path();
+         Self::load_from(&path)
+     }
+ 
+-    /// Load config from a specific path.
++    /// Load configuration from `path`, using defaults when it does not exist.
++    ///
++    /// Environment overrides are applied after either defaults or file values.
++    /// This method does not create or write the path.
++    ///
++    /// # Errors
++    ///
++    /// Returns [`ConfigError::Io`] for a read/UTF-8 error and
++    /// [`ConfigError::Parse`] when TOML cannot be deserialized.
+     pub fn load_from(path: &Path) -> Result<Self, ConfigError> {
+         let mut config = if !path.exists() {
+             Self::default()
+@@ -210,12 +297,15 @@ impl Config {
+         Ok(config)
+     }
+ 
+-    /// Apply environment variable overrides to the config.
++    /// Apply supported Unicode environment overrides in place.
+     ///
+     /// Reads:
+     /// - `NMS_SAVE_DIR` -> `self.save.dir`
+     /// - `NMS_SAVE_FILE` -> `self.save.file`
+     /// - `NMS_SAVE_FORMAT` -> `self.save.format`
++    ///
++    /// Values are copied literally without trimming, expansion, or validation;
++    /// non-Unicode values and all other environment variables are ignored.
+     pub fn apply_env_overrides(&mut self) {
+         if let Ok(val) = std::env::var("NMS_SAVE_DIR") {
+             self.save.dir = Some(PathBuf::from(val));
+@@ -228,7 +318,7 @@ impl Config {
+         }
+     }
+ 
+-    /// Resolve the effective save file path from all configured sources.
++    /// Resolve the effective save path using the documented precedence.
+     ///
+     /// Priority:
+     /// 1. `save.file` (explicit file path)
+@@ -236,6 +326,11 @@ impl Config {
+     /// 3. `save.dir` — find most recent save in that directory
+     /// 4. `save.path` if it points to a directory (backward compat)
+     /// 5. `None` if nothing is configured or resolvable
++    ///
++    /// The explicit file is returned literally without checking existence.
++    /// Directory searches use the save locator and failures fall through to
++    /// the next source. This performs filesystem checks/searches for legacy
++    /// paths and configured directories; it does not canonicalize the result.
+     pub fn effective_save_file(&self) -> Option<PathBuf> {
+         // 1. Explicit file
+         if let Some(ref file) = self.save.file {
+@@ -267,12 +362,13 @@ impl Config {
+         None
+     }
+ 
+-    /// Resolve the effective cache path.
++    /// Resolve an effective cache path without checking or creating it.
+     ///
+-    /// If `cache.path` is explicitly set in config, uses that (single override).
+-    /// Otherwise, derives a per-save cache path from the save file path:
++    /// If `cache.path` is set, returns it literally. Otherwise a supplied save
++    /// path derives a per-save cache path from its lexical components:
+     /// `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
+-    /// Falls back to the legacy `~/.nms-copilot/galaxy.rkyv` if no save path given.
++    /// With no save path, it falls back to the legacy
++    /// `~/.nms-copilot/galaxy.rkyv` path.
+     pub fn cache_path_for(&self, save_path: Option<&std::path::Path>) -> PathBuf {
+         if let Some(p) = &self.cache.path {
+             return p.clone();
+@@ -283,7 +379,7 @@ impl Config {
+         }
+     }
+ 
+-    /// Resolve the effective save path (if configured).
++    /// Return the effective save path, if configured or found.
+     ///
+     /// Delegates to [`Self::effective_save_file`]. For backward compatibility,
+     /// also checks the legacy `save.path` field.
+@@ -291,22 +387,22 @@ impl Config {
+         self.effective_save_file()
+     }
+ 
+-    /// Whether caching is enabled.
++    /// Return the stored cache-enabled flag.
+     pub fn cache_enabled(&self) -> bool {
+         self.cache.enabled
+     }
+ 
+-    /// Whether file watching is enabled.
++    /// Return the stored file-watcher enabled flag.
+     pub fn watch_enabled(&self) -> bool {
+         self.watch.enabled
+     }
+ 
+-    /// The configured debounce duration for file watching.
++    /// Convert the stored debounce milliseconds directly to a [`Duration`].
+     pub fn watch_debounce(&self) -> Duration {
+         Duration::from_millis(self.watch.debounce_ms)
+     }
+ 
+-    /// The configured MCP HTTP bind address.
++    /// Construct the configured MCP HTTP socket address without binding it.
+     pub fn mcp_http_addr(&self) -> SocketAddr {
+         SocketAddr::new(self.mcp.host, self.mcp.port)
+     }
+@@ -323,11 +419,21 @@ fn parse_config(content: &str) -> Result<Config, toml::de::Error> {
+     }
+ }
+ 
+-/// Config loading errors.
++/// Errors returned while reading or deserializing configuration.
++///
++/// Both variants expose their contained error through [`std::error::Error::source`].
+ #[derive(Debug)]
+ pub enum ConfigError {
+-    Io(std::io::Error),
+-    Parse(toml::de::Error),
++    /// Reading the configuration file or decoding its UTF-8 contents failed.
++    Io(
++        /// Underlying filesystem or UTF-8 decoding error.
++        std::io::Error,
++    ),
++    /// The TOML document could not be deserialized into configuration values.
++    Parse(
++        /// Underlying TOML deserialization error.
++        toml::de::Error,
++    ),
+ }
+ 
+ impl std::fmt::Display for ConfigError {
+diff --git a/crates/nms-copilot/src/paths.rs b/crates/nms-copilot/src/paths.rs
+index 44fe1e8..da9ae54 100644
+--- a/crates/nms-copilot/src/paths.rs
++++ b/crates/nms-copilot/src/paths.rs
+@@ -1,35 +1,81 @@
+-//! Path resolution for NMS Copilot data files.
++//! Build paths for NMS Copilot data files.
++//!
++//! Path builders use the current user's home directory and return lexical
++//! paths; they do not inspect save files or create the returned files. The
++//! account and slot components in [`cache_path_for_save`] come from the
++//! immediate parent directory name and file stem. This mapping is not
++//! canonicalized, and distinct save paths can therefore map to the same cache.
++//!
++//! # Examples
++//!
++//! ```no_run
++//! use nms_copilot::paths::{cache_path, cache_path_for_save, config_path, data_dir, history_path};
++//! use std::path::Path;
++//!
++//! let root = data_dir();
++//! assert_eq!(root.join("history.txt"), history_path());
++//! assert_eq!(root.join("config.toml"), config_path());
++//! assert_eq!(root.join("galaxy.rkyv"), cache_path());
++//! assert_eq!(root.join("st_fixture/save3/galaxy.rkyv"), cache_path_for_save(Path::new("st_fixture/save3.hg")));
++//! assert_eq!(root.join("default/save/galaxy.rkyv"), cache_path_for_save(Path::new("save.hg")));
++//! ```
++//!
++//! [`ensure_data_dir`] is the explicit filesystem operation: it creates only
++//! the data root directory and returns any creation error.
+ 
+ use std::path::PathBuf;
+ 
+-/// Base directory for NMS Copilot data: `~/.nms-copilot/`.
++/// Return `~/.nms-copilot/`.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn data_dir() -> PathBuf {
+     dirs::home_dir()
+         .expect("Could not determine home directory")
+         .join(".nms-copilot")
+ }
+ 
+-/// Path to the history file: `~/.nms-copilot/history.txt`.
++/// Return the lexical path `~/.nms-copilot/history.txt` without creating it.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn history_path() -> PathBuf {
+     data_dir().join("history.txt")
+ }
+ 
+-/// Path to the config file: `~/.nms-copilot/config.toml`.
++/// Return the lexical path `~/.nms-copilot/config.toml` without reading or creating it.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn config_path() -> PathBuf {
+     data_dir().join("config.toml")
+ }
+ 
+-/// Default cache path (legacy): `~/.nms-copilot/galaxy.rkyv`.
++/// Return the legacy lexical cache path `~/.nms-copilot/galaxy.rkyv`.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn cache_path() -> PathBuf {
+     data_dir().join("galaxy.rkyv")
+ }
+ 
+ /// Per-save cache path: `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
+ ///
+-/// Derives cache location from the save file path, using the parent directory
+-/// name (account) and file stem (no extension) as path components.
+-/// For example, `…/st_76561198025707979/save3.hg` becomes
+-/// `~/.nms-copilot/st_76561198025707979/save3/galaxy.rkyv`.
++/// Derive a lexical cache path from a save path without checking that it exists.
++///
++/// The immediate parent directory name supplies the account component (or
++/// `default` when absent or not UTF-8); the file stem supplies the slot (or
++/// `save` when absent or not UTF-8). The result is
++/// `~/.nms-copilot/<account>/<slot>/galaxy.rkyv`. It is not canonicalized, so
++/// different save paths with the same parent name and stem can collide.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn cache_path_for_save(save_path: &std::path::Path) -> PathBuf {
+     let save_stem = save_path
+         .file_stem()
+@@ -46,7 +92,18 @@ pub fn cache_path_for_save(save_path: &std::path::Path) -> PathBuf {
+         .join("galaxy.rkyv")
+ }
+ 
+-/// Ensure the data directory exists.
++/// Create the data root directory recursively if needed.
++///
++/// This does not create the config, history, or cache files. Resolving the
++/// root inherits [`data_dir`]’s panic if the home directory is unavailable.
++///
++/// # Errors
++///
++/// Returns the filesystem error if creating the data directory fails.
++///
++/// # Panics
++///
++/// Panics if the home directory cannot be determined.
+ pub fn ensure_data_dir() -> std::io::Result<()> {
+     std::fs::create_dir_all(data_dir())
+ }
+diff --git a/crates/nms-copilot/src/session.rs b/crates/nms-copilot/src/session.rs
+index 11785b3..61c1d41 100644
+--- a/crates/nms-copilot/src/session.rs
++++ b/crates/nms-copilot/src/session.rs
+@@ -1,51 +1,117 @@
+-//! Session state for the interactive REPL.
++//! Mutable session context for REPL commands.
+ //!
+-//! Tracks the user's current context: position, filters, and preferences.
+-//! Commands like `find` and `route` use this state as defaults when
+-//! explicit flags are not provided.
++//! [`SessionState`] stores a reference position, biome and warp preferences,
++//! selected galaxy, and model counts. It is a caller-owned snapshot: public
++//! fields can be changed independently, and values may be inconsistent with
++//! the model until [`SessionState::sync_from_model`] is called. Synchronization
++//! refreshes the selected galaxy and counts, follows a missing/player position,
++//! and preserves base or manually specified address snapshots. These APIs do
++//! not persist state, start background work, or mutate the model.
++//!
++//! # Examples
++//!
++//! ```
++//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
++//! use nms_copilot::session::{PositionContext, SessionState};
++//! use nms_core::{BaseType, Biome, GalacticAddress, GalaxyType, Planet, PlayerBase, PlayerState, System};
++//! use nms_graph::GalaxyModel;
++//! fn view(s: &SessionState) -> (Option<(&'static str, Option<String>, Option<(u64,u8)>)>, Option<Biome>, Option<f64>, u8, String, GalaxyType, usize, usize) {
++//!     let p = match &s.position { None => None, Some(PositionContext::Base{name,address}) => Some(("base",Some(name.clone()),Some((address.packed(),address.reality_index)))), Some(PositionContext::PlayerPosition(a)) => Some(("player",None,Some((a.packed(),a.reality_index)))), Some(PositionContext::Address(a)) => Some(("address",None,Some((a.packed(),a.reality_index)))) };
++//!     (p,s.biome_filter,s.warp_range,s.galaxy.index,s.galaxy.name.into(),s.galaxy.galaxy_type,s.system_count,s.planet_count)
++//! }
++//! let a = GalacticAddress::new(3,0,0,1,2,0);
++//! let mut m = GalaxyModel::new();
++//! m.insert_system(System::new(a,Some("Atlas".into()),None,None,vec![Planet::new(2,Some(Biome::Lush),None,false,Some("Garden".into()),Some(7))]));
++//! m.insert_base(PlayerBase::new("Home".into(),BaseType::HomePlanetBase,a,[0.0,0.0,0.0],None));
++//! m.player_state=Some(PlayerState::new(GalacticAddress::new(3,0,0,1,5,9),9,None,None,100,20,5)); m.set_active_galaxy(7);
++//! let mut s=SessionState::from_model(&m);
++//! assert_eq!(view(&s),(Some(("player",None,Some((0x5001_0000_0003,9)))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
++//! assert_eq!(s.set_position_base("HOME",&m)?,"Position set to Home");
++//! assert_eq!(view(&s),(Some(("base",Some("Home".into()),Some((0x2001_0000_0003,0)))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
++//! assert_eq!(s.set_position_base(" HOME ",&m),Err("Base not found: \" HOME \"".into()));
++//! assert_eq!(view(&s),(Some(("base",Some("Home".into()),Some((0x2001_0000_0003,0)))),None,None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
++//! assert_eq!(s.set_biome_filter(Biome::Lush),"Biome filter set to Lush");
++//! assert_eq!(view(&s),(Some(("base",Some("Home".into()),Some((0x2001_0000_0003,0)))),Some(Biome::Lush),None,7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
++//! assert_eq!(s.set_warp_range(1200.5),"Warp range set to 1200 ly");
++//! assert_eq!(view(&s),(Some(("base",Some("Home".into()),Some((0x2001_0000_0003,0)))),Some(Biome::Lush),Some(1200.5),7,"Kikolgallr".into(),GalaxyType::Norm,1,1));
++//! m.insert_system(System::new(GalacticAddress::new(3,0,0,1,0,9),None,None,None,vec![]));
++//! m.insert_base(PlayerBase::new("HOME".into(),BaseType::HomePlanetBase,GalacticAddress::new(3,0,0,1,4,9),[1.0,2.0,3.0],None));
++//! m.player_state=Some(PlayerState::new(GalacticAddress::new(4,0,0,1,1,0),0,None,None,100,20,5)); m.set_active_galaxy(9); s.sync_from_model(&m);
++//! assert_eq!(view(&s),(Some(("base",Some("Home".into()),Some((0x2001_0000_0003,0)))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! let manual=GalacticAddress::new(3,0,0,1,3,7); assert_eq!(s.set_position_address(manual),"Position set to 0x300100000003");
++//! assert_eq!(view(&s),(Some(("address",None,Some((0x3001_0000_0003,7)))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1)); s.sync_from_model(&m);
++//! assert_eq!(view(&s),(Some(("address",None,Some((0x3001_0000_0003,7)))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! assert_eq!(s.reset_position(&m),"Position reset to player location");
++//! assert_eq!(view(&s),(Some(("player",None,Some((0x1001_0000_0004,0)))),Some(Biome::Lush),Some(1200.5),9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! assert_eq!(s.format_status(),"Galaxy:      Eissentam (9; Lush)\nModel:       2 systems, 1 planets\nPosition:    player position (Euclid, galaxy 0)\nBiome:       Lush\nWarp range:  1200 ly\n");
++//! assert_eq!(s.reset_all(&m),"Session state reset");
++//! assert_eq!(view(&s),(Some(("player",None,Some((0x1001_0000_0004,0)))),None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! m.player_state=None; s.sync_from_model(&m);
++//! assert_eq!(view(&s),(None,None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! m.player_state=Some(PlayerState::new(GalacticAddress::new(4,0,0,1,1,0),0,None,None,100,20,5)); s.sync_from_model(&m);
++//! assert_eq!(view(&s),(Some(("player",None,Some((0x1001_0000_0004,0)))),None,None,9,"Eissentam".into(),GalaxyType::Lush,2,1));
++//! # Ok(())
++//! # }
++//! ```
+ 
+ use nms_core::address::GalacticAddress;
+ use nms_core::biome::Biome;
+ use nms_core::galaxy::Galaxy;
+ use nms_graph::GalaxyModel;
+ 
+-/// Mutable session state maintained across REPL commands.
++/// Mutable REPL state snapshot used for command defaults.
++///
++/// Public fields can be changed independently and may not match the model.
++/// Call [`sync_from_model`](Self::sync_from_model) to refresh model-derived
++/// values; base and manual address positions remain snapshots.
+ #[derive(Debug)]
+ pub struct SessionState {
+-    /// Current reference position (for distance calculations).
++    /// Reference position used for distance calculations, if one is set.
+     pub position: Option<PositionContext>,
+ 
+-    /// Active biome filter (applied to find commands when --biome is not specified).
++    /// Optional biome default for commands that do not specify their own filter.
+     pub biome_filter: Option<Biome>,
+ 
+-    /// Default warp range in light-years (for route planning).
++    /// Optional warp-range default in light-years; setters store any `f64`.
+     pub warp_range: Option<f64>,
+ 
+-    /// Current galaxy context.
++    /// Selected galaxy metadata, independent of the physical position galaxy.
+     pub galaxy: Galaxy,
+ 
+-    /// Number of systems in the model.
++    /// System count copied from the model when initialized or synchronized.
+     pub system_count: usize,
+ 
+-    /// Number of planets in the model.
++    /// Flattened planet-map count copied from the model when initialized or synchronized.
+     pub planet_count: usize,
+ }
+ 
+-/// Where the user's reference position is anchored.
++/// Anchor and stored address for the session reference position.
++///
++/// Base and manual-address variants keep their address snapshots across model
++/// synchronization; only `PlayerPosition` follows the player's current address.
+ #[derive(Debug, Clone)]
+ pub enum PositionContext {
+-    /// At a named base.
++    /// At a named base copied from the model.
+     Base {
++        /// Display name copied from the selected base.
+         name: String,
++        /// Address copied from the selected base.
+         address: GalacticAddress,
+     },
+-    /// At the player's save file position.
+-    PlayerPosition(GalacticAddress),
+-    /// At a manually specified address.
+-    Address(GalacticAddress),
++    /// At the player's physical save position.
++    PlayerPosition(
++        /// Address copied from the player state.
++        GalacticAddress,
++    ),
++    /// At a manually specified address, independent of the selected galaxy.
++    Address(
++        /// Address supplied by the caller.
++        GalacticAddress,
++    ),
+ }
+ 
+ impl PositionContext {
++    /// Borrow the address stored by this position anchor.
+     pub fn address(&self) -> &GalacticAddress {
+         match self {
+             Self::Base { address, .. } => address,
+@@ -53,6 +119,9 @@ impl PositionContext {
+         }
+     }
+ 
++    /// Return the base name, `player position`, or packed hexadecimal label.
++    ///
++    /// Address labels omit the separate galaxy index.
+     pub fn label(&self) -> String {
+         match self {
+             Self::Base { name, .. } => name.clone(),
+@@ -63,7 +132,10 @@ impl PositionContext {
+ }
+ 
+ impl SessionState {
+-    /// Initialize session state from the loaded model.
++    /// Initialize a session snapshot from the model without changing it.
++    ///
++    /// Position, selected galaxy, and counts are copied independently. A
++    /// missing player system is not ensured; filters and range start unset.
+     pub fn from_model(model: &GalaxyModel) -> Self {
+         let position = model
+             .player_state
+@@ -82,7 +154,11 @@ impl SessionState {
+         }
+     }
+ 
+-    /// Refresh fields derived from the model while preserving explicit anchors.
++    /// Refresh selected galaxy and counts, following only a missing or
++    /// player-following position.
++    ///
++    /// Base and manual address anchors remain snapshots. Biome and warp values
++    /// are preserved, and no model mutation or placeholder insertion occurs.
+     ///
+     /// A missing position and a player-following position follow the current
+     /// physical player address. Base and manually specified address anchors
+@@ -103,7 +179,14 @@ impl SessionState {
+         }
+     }
+ 
+-    /// Set the reference position to a named base.
++    /// Snapshot a base found by lowercase, untrimmed model name lookup.
++    ///
++    /// The current display name and address are copied into the position.
++    ///
++    /// # Errors
++    ///
++    /// Returns `Base not found: \"{name}\"` and leaves state unchanged when
++    /// the name does not match a base.
+     pub fn set_position_base(&mut self, name: &str, model: &GalaxyModel) -> Result<String, String> {
+         let base = model
+             .base(name)
+@@ -117,46 +200,56 @@ impl SessionState {
+         Ok(format!("Position set to {display_name}"))
+     }
+ 
+-    /// Set the reference position to an explicit address.
++    /// Set a manual address snapshot without changing selected galaxy.
++    ///
++    /// The confirmation formats the packed address as 12 hexadecimal digits.
+     pub fn set_position_address(&mut self, address: GalacticAddress) -> String {
+         let label = format!("0x{:012X}", address.packed());
+         self.position = Some(PositionContext::Address(address));
+         format!("Position set to {label}")
+     }
+ 
+-    /// Reset position to the player's save file position.
++    /// Clear the anchor and synchronize to the current player, if available.
++    ///
++    /// Filters and warp range are preserved; without player state the anchor
++    /// remains `None`.
+     pub fn reset_position(&mut self, model: &GalaxyModel) -> String {
+         self.position = None;
+         self.sync_from_model(model);
+         "Position reset to player location".into()
+     }
+ 
+-    /// Set the active biome filter.
++    /// Store a biome filter and return its Debug-formatted confirmation.
+     pub fn set_biome_filter(&mut self, biome: Biome) -> String {
+         let name = format!("{biome:?}");
+         self.biome_filter = Some(biome);
+         format!("Biome filter set to {name}")
+     }
+ 
+-    /// Clear the active biome filter.
++    /// Clear the biome filter and return `Biome filter cleared`.
+     pub fn clear_biome_filter(&mut self) -> &'static str {
+         self.biome_filter = None;
+         "Biome filter cleared"
+     }
+ 
+-    /// Set the default warp range.
++    /// Store `ly` without validating range or finiteness.
++    ///
++    /// The message casts it to `u64`; the stored value remains the original `f64`.
+     pub fn set_warp_range(&mut self, ly: f64) -> String {
+         self.warp_range = Some(ly);
+         format!("Warp range set to {} ly", ly as u64)
+     }
+ 
+-    /// Clear the warp range.
++    /// Clear the warp range and return `Warp range cleared`.
+     pub fn clear_warp_range(&mut self) -> &'static str {
+         self.warp_range = None;
+         "Warp range cleared"
+     }
+ 
+-    /// Reset all session state to defaults.
++    /// Refresh model-derived fields and clear biome and warp defaults.
++    ///
++    /// Position follows the current player when available; the model is not
++    /// changed.
+     pub fn reset_all(&mut self, model: &GalaxyModel) -> &'static str {
+         self.reset_position(model);
+         self.biome_filter = None;
+@@ -164,7 +257,10 @@ impl SessionState {
+         "Session state reset"
+     }
+ 
+-    /// Format the current session state for display.
++    /// Format stored state as five lines followed by a final LF.
++    ///
++    /// The selected galaxy and position's physical galaxy are shown separately;
++    /// this reads no model and performs no output operation.
+     pub fn format_status(&self) -> String {
+         let mut lines = Vec::new();
+ 
