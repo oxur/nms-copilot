@@ -1,4 +1,9 @@
 //! Ratatui rendering for the interactive galaxy map.
+//!
+//! [`render`] draws a model/state snapshot into a caller-owned Ratatui frame.
+//! It does not poll input or manage the terminal. Coordinates use voxel X/Z.
+//! Call [`MapState::resize`] with the complete
+//! outer frame or terminal dimensions; that method derives the usable grid.
 
 use std::collections::HashMap;
 
@@ -12,7 +17,61 @@ use nms_graph::GalaxyModel;
 
 use super::state::{MapState, ZoomLevel, density_char};
 
-/// Bin systems into grid cells and render the full map frame.
+/// Draw the map, status bar, legend, and optional help overlay into `frame`.
+///
+/// Systems are selected by `state.galaxy` and projected on voxel X/Z. The
+/// outer frame is divided into map, status, and legend areas, then help is
+/// painted over them last. If the map area's inner width or height is zero,
+/// its map contents are skipped. The grid used to bin systems comes from the
+/// frame's map area, while status and cursor calculations use
+/// `state.grid_size`; resize state from the complete outer frame or terminal
+/// dimensions to keep them synchronized. Rendering does not resize or validate
+/// state and uses fixed colors.
+///
+/// Base labels are the stored A–Z snapshot and are yellow. At every zoom,
+/// colliding base cells are spread down adjacent rows; at Local zoom the
+/// labels also include names. A collision reaching the last row can overwrite
+/// an earlier base, so separation is not guaranteed. The player `@` is green
+/// and can overwrite a base cell. The cursor uses reverse styling; density
+/// glyphs are cyan for occupied cells and dark gray for empty cells. The
+/// legend reflects stored labels and whether a player position is present.
+///
+/// # Examples
+///
+/// This executing in-memory example checks a player cell and the complete
+/// legend without opening a terminal.
+///
+/// ```
+/// use nms_copilot::{map::{render::render, state::MapState}, session::SessionState};
+/// use nms_graph::GalaxyModel;
+/// use ratatui::{backend::TestBackend, style::{Color, Modifier}, Terminal};
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let model = GalaxyModel::new();
+/// let session = SessionState::from_model(&model);
+/// let mut state = MapState::new(&model, &session);
+/// state.resize(80, 24);
+/// state.player_pos = Some((0, 0));
+/// let mut terminal = Terminal::new(TestBackend::new(80, 24))?;
+/// terminal.draw(|frame| render(frame, &state, &model))?;
+/// let buffer = terminal.backend().buffer();
+/// assert_eq!(
+///     buffer.cell((40, 10)).map(|cell| (cell.symbol(), cell.fg, cell.modifier.contains(Modifier::BOLD))),
+///     Some(("@", Color::Green, true)),
+/// );
+/// let legend = buffer.content().chunks(80).nth(22).map(|row|
+///     row.iter().map(|cell| cell.symbol()).collect::<String>().trim_end().to_owned()
+/// );
+/// assert_eq!(legend, Some("@=You  ?=Help  q=Quit".to_owned()));
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Panics
+///
+/// At Local zoom, the formatted base label is clipped at the available byte
+/// width. Clipping and multi-cell skipping use string byte lengths, not
+/// Unicode display width. If a clipping boundary falls inside a multibyte
+/// UTF-8 character, slicing can panic. Names and widths are not validated.
 pub fn render(frame: &mut Frame, state: &MapState, model: &GalaxyModel) {
     let area = frame.area();
 
