@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.140, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.141, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1125,3 +1125,7 @@ Version1.139 details [Slice42](slice42-cli-api-documentation/slice-plan.md): exa
 ## Slice42 CLI documentation accepted — 2026-10-25 UTC
 
 Version1.140 closesall6CD/R06-S42atclean2ce768fc390810eac4bc3d59c7cefd85a2ddce14: complete12fileCLIinternalAPIdocs/textusage/elevenmodulelinks, unchangednon-doc/Claphelp/tests/twoexplicitshowlayouts. Sevenfreshindependentgroupspass174runtime/13harnesses/strictisolatedbinaryzero/preservationtwoopposed/diffs; all13CC+11CDCvalues/exactreturns/authorW12overclaim/failedguards/metadataqualifications/finalretroretained. TwoACTUALrefinements/noexception/structuralscopeorsequenceamendment. Required43remainingdispatch/keyfunction/publicsurface/style/strict/fulloriginal0039M7.6reconciliation staysCDC(furtherusabledecompositionallowed).60arc47done13open/all25projectrowsOPEN, authenticNomNominput/alloriginalhigherownersretained/no cleanup/integration/release. See [CDC42acceptance](slice42-cli-api-documentation/cdc-verification.md) and [retrospective](slice42-cli-api-documentation/cdc-retrospective.md).
+
+## Slice43 dispatcher documentation owner issued — 2026-10-25 UTC
+
+Version1.141 details [Slice43](slice43-repl-dispatch-api-documentation/slice-plan.md), EXACTonepublicdispatchsourcefile/module/keyliteralexamples fromaccepted2ce768fc. SameapprovedCDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42handoff/contextfitassessment. FullW1–W4/E1–E2caller/default/scope/converter/error/panic/wholeobservationchoicesresolved; no production/API/Clap/test/dependencychange. Originalninegroups/rawfirstsupportcontrols/independentacceptance/retro; sixRD/R06-S43OPEN/initial0actualrefinements. Required44fullpublicsurface/style/strict/fulloriginal0039M7.6reconciliation CDCowned/furtherusabledecompositionallowed, exactcoregenerated-fieldexception/isolatedCLI/current29capturemethod/knownformatterlimitsretained.61arc47done14open/all25projectrowsOPEN, authenticNomNominput/alloriginalhigherownerspreserved/no cleanup/integration/release.

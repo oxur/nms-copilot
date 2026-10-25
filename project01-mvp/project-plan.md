@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.127
+version: 1.128
 project: project01-mvp
 status: active
 depends-on: []
@@ -1310,3 +1310,7 @@ Version1.126 details exact12filebinaryCLIinternalAPI/commandnavigation fromaccep
 ## Arc06 Slice42 independently accepted — 2026-10-25 UTC
 
 Version1.127 recordscomplete12fileCLIinternalAPI/commandnavigation atclean2ce768fc/all6CD/R06-S42. SevenfreshCDCgroups174runtime/strictisolatedbinaryzero/preservationopposed/diffs; twoactualrefinements/exactrawreturns/failurehistory/finalretro/noexception. Original0039M7.6remainsOPENforrequired43dispatch/keyfunction/fullsurface/style/strict/fullreconciliation, CDC/furtherusabledecompositionallowed.60arc47done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherownersretained/no integration/release.
+
+## Arc06 Slice43 dispatcher documentation increment issued — 2026-10-25 UTC
+
+Version1.128 detailsONEdispatchpublicAPI/module/keyliteralexamples fromaccepted2ce768fc, sameCDC6.1-solHigh/freshsoleCC6-lunaHighplannedafter42headroom. Non-doc/API/tests/Clap/depsfrozen; originalninegroups/strictcopilotzero/independentacceptance/retro. SixRD/R06-S43OPEN/initialzeroactualrefinements,61arc47done14open/all25projectrowsOPEN. Required44fullpublicsurface/style/strict/full0039M7.6reconciliation remainsCDC/furtherusabledecompositionallowed, authenticNomNominput/alloriginalhigherownersretained/no integration/release.

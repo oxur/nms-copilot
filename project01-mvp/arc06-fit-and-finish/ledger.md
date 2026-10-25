@@ -439,3 +439,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 60arc46done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance atissue.
 
 2026-10-25 formal42close: all6CD/R06-S42DONE at2ce768fc;60arc47done13open/project25OPEN. Priorissuecounts preserved; required43/fullM7.6/higherownersOPEN.
+
+## Original M7.6 dispatcher documentation owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S43 | Complete truthful public REPL dispatcher docs/keyexamples | SixRD/W1–W4/E1–E2/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | — | Required44/fullM7.6/allhigherowners OPEN |
+
+61arc47done14open/project25OPEN/initial0actualrefinements/noimplementationatissue.
