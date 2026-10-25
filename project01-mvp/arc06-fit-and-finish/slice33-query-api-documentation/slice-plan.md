@@ -1,6 +1,6 @@
 # Slice33 — complete nms-query public API documentation
 
-Version1.1,2026-10-25 UTC. OPEN, current cc-prompt-iteration01.md, first actual refinement1/5/four remain. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; same selected/applied CDC gpt-6.1-sol High, sole CC gpt-6-luna High. CDC owns planning/design/independent acceptance, CC dedicated source/index after coherent intake. Same cc_graph_docs reports compacted32history but sufficient qualitative headroom to assess self-contained33; frozen32handback complete/no ownedprocess. No extra role/model. Source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation`, codex/query-api-documentation, clean baselinee30eb49f77565769c0d6fdb61dbe372f686e77d7.
+Version1.2,2026-10-25 UTC. OPEN, current cc-prompt-iteration02.md, second actual refinement2/5/three remain. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; same selected/applied CDC gpt-6.1-sol High, sole CC gpt-6-luna High. CDC owns planning/design/independent acceptance, CC dedicated source/index after coherent intake. Same cc_graph_docs reports compacted32history but sufficient qualitative headroom to assess self-contained33; frozen32handback complete/no ownedprocess. No extra role/model. Source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation`, codex/query-api-documentation, clean baselinee30eb49f77565769c0d6fdb61dbe372f686e77d7.
 
 ## Usable increment and exact preservation
 
@@ -47,3 +47,7 @@ Exactnamedchangedsourcepaths localcommitonly afterproof, normalhooks (NEVERdisab
 ## Settled initial review / first actual refinement — 2026-10-25 UTC
 
 CDC inspected actualformatd2dfa018/linte7d99662 complete0/fullraw/exit/end/equalidentityf145a16f/diffb0870306. Full8file W1–W4/E1–E3 currentdelta/statementwalk complete, no truncation. Found nonexistentrootfunctionimports, elevenstill-inlineundocumentedpayloads, wrongdiscovererfieldprose, partialcontaining/showobservations, newunwrap_err/headingorder, misdirecteddisplayexamplelink and remainingissuedpubliccontract/summary/palette/projection omissions. Immutable01 consolidates exactdocs/examples/11layouts in same8paths, production/API/tests/data frozen, no newscenarios orpolicy. Firstactual1/5/fourleft; no runtime/strictdocs/auditor/diffgate yet. Byteexactinitialpatch b087 preservedasdata. All6QD/R06-S33OPEN,51arc37done14open/project25open.
+
+## Targeted01 review / second actual refinement — 2026-10-25 UTC
+
+CDC inspected actualformatcdd6311e/lint8b58c3c4 complete0/fullraw/exit/end/equalidentity20ca78ee/diff5e0e6955. Complete8filecurrentdelta/E1–E3 walk closed with no truncatedsection; F1payload/imports/navigation,fullE1/E2oracles/fallibleerror/order and renderliterals repaired. Threeproseblocks remain: tablepaletteif/elsewording, formatfindsummary/subtypeprefixqualifier, biome_style namedgroups/fallback. Immutable02 restricts twofiles/threeblocks only, everyexample/declaration/other6files/executablebyte frozen. Secondactual2/5/threeleft; no runtime/strictdocs/auditor/diffgate or newpolicy. All6QD/fullM7.6/higherownersOPEN.
