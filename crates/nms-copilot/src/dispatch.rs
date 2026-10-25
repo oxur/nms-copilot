@@ -1,4 +1,7 @@
-//! Command dispatch -- executes REPL commands against the loaded GalaxyModel.
+//! Dispatch parsed REPL actions against the loaded galaxy model and caller-owned session.
+//!
+//! [`dispatch`] returns owned response text or an error; the REPL caller owns input parsing,
+//! snapshot synchronization, printing, and process or terminal control.
 
 use nms_core::BaseType;
 use nms_core::address::{GalacticAddress, PortalAddress};
@@ -23,10 +26,227 @@ use nms_core::glyph::GLYPH_TABLE;
 use crate::commands::{Action, ListTarget, SetTarget, ShowTarget};
 use crate::session::SessionState;
 
-/// Execute a parsed REPL action against the shared model, returning output text.
+/// Execute one parsed REPL action synchronously and return owned response text.
 ///
-/// The mutable model parameter supports changing the selected galaxy view.
-/// Callers sharing the model must hold a write guard only for this call.
+/// The caller supplies the already parsed [`Action`], shared [`GalaxyModel`], and mutable
+/// [`SessionState`]. This function does not parse a command line, load or save files, refresh
+/// from disk, start background work, print, open a map, exit, or control the terminal. It does
+/// not unconditionally synchronize the session on entry. A caller sharing the model should
+/// hold its write guard only for this call, then release it before displaying the returned text.
+/// The REPL's `dispatch_repl_action` synchronizes its session immediately before dispatch and
+/// prints the owned result after releasing that guard. Refresh and snapshot coherence belong to
+/// that caller. `Status` reports the stored session snapshot; `Info` reports whole-model counts
+/// and the physical player address. `Help` returns static text. Direct calls for `Map`, `Exit`,
+/// and `Quit` return an empty string; the binary intercepts those actions before dispatch.
+///
+/// # Query behavior
+///
+/// `Find` parses an explicit biome before using the session biome default, so an invalid
+/// explicit value is an error even when a default exists. The infested switch adds only the
+/// positive filter; subtype and name-pattern filters are unset. An explicit `from` names a
+/// base. Otherwise, stored base and address positions use their stored address, while an absent
+/// or player-following position uses the model's current player position. The latter is scoped
+/// to the active galaxy and can fail when that position belongs to another galaxy. A named or
+/// address reference uses its own galaxy without selecting it.
+///
+/// For `Route`, nonempty named targets take precedence over and suppress biome parsing;
+/// without targets, an explicit or session biome is required. Origin selection follows the
+/// `Find` rules. An explicit warp range takes precedence over the session default. The `nn` and
+/// `nearest-neighbor` spellings select nearest-neighbor routing; `2opt` and `two-opt` select
+/// two-opt, which is also the default. Distance, target limits, and round-trip options are
+/// forwarded without additional dispatcher validation. Routing is heuristic and best-effort;
+/// it does not promise a globally optimal route or warp feasibility.
+///
+/// `Show` resolves system names before packed addresses in the active galaxy; base names use
+/// the model-wide, case-insensitive lookup without trimming. `Stats` constructs its two flags,
+/// but the shared query ignores them and summarizes the whole model. List reference data comes
+/// from static galaxy, biome, glyph, and terrain catalogs; bases and systems are model-wide.
+/// The galaxy catalog contains 256 entries and can be filtered by galaxy type; glyph and
+/// terrain catalogs contain 16 and 32 entries. Bases and systems come from the model across all
+/// galaxies. Bases sort by case-folded name. Systems sort named entries before missing or empty
+/// names, then compare names case-insensitively; equal-name ordering follows map iteration and
+/// is unspecified. A limit of zero or `all` shows every entry; otherwise the requested limit
+/// applies. Empty models return the existing “No bases found.” or “No systems found.” message,
+/// and truncated lists add the existing `Showing … of …` footer. The table format and fields
+/// remain those produced by the existing formatter. Embedded themes may emit ANSI styling; this
+/// API adds no caller color, piping, or plain-text policy.
+///
+/// # State changes
+///
+/// `Galaxy` without a selection reports the active and discovered galaxy views. A selection is
+/// trimmed and resolved as a galaxy index from 0 through 255 or a case-insensitive name before
+/// changing the model's selected view. The selected galaxy may contain no systems; its count
+/// is still reported as zero, without creating a placeholder or moving the physical player.
+/// Session synchronization refreshes selected-galaxy metadata and model counts, follows the
+/// player's current position (or clears a missing player position), and preserves stored base
+/// or manual-address positions, biome, and warp defaults. Selecting a galaxy and resetting
+/// position or all state invoke this synchronization on their respective paths; dispatch does
+/// not perform an unconditional entry refresh.
+///
+/// `Set Position` looks up a base name only, despite the parser's broader help wording; it is
+/// not a direct address-setting action. Biome text is parsed before its session value changes.
+/// Warp range stores any `f64`, while its confirmation text casts that value to `u64`.
+/// Reset targets are lowercased before matching: `position` and `pos` reset position;
+/// `biome` clears the biome; `warp-range` and `warp` clear warp range; and `all` or the empty
+/// target resets all session state. An unknown target returns `Ok` with explanatory text, not
+/// an error. `Status` formats the stored snapshot with its existing trailing newline;
+/// `Info` reads the current model directly.
+///
+/// # Conversion behavior
+///
+/// `Convert` resolves the selected galaxy first, trimming the value and accepting an index
+/// from 0 through 255 or a case-insensitive galaxy name. If multiple inputs are present, the
+/// dispatcher checks glyphs, coordinates, galactic-address text, then voxel coordinates; the
+/// parser normally permits at most one. Glyphs and galactic-address text both use
+/// `parse_glyphs`: input is trimmed, an optional `0x` or `0X` is removed, and the remaining
+/// text is parsed as twelve mixed portal glyph tokens. The galactic-address option does not
+/// use the CLI packed-`u64` parser or accept its low-48-bit truncation behavior. Coordinates
+/// delegate to signal-booster parsing after trimming. Voxel input requires an SSI and exactly
+/// three comma-separated integers parsed as `i16`, `i8`, and `i16`; [`GalacticAddress::new`]
+/// then retains 12 bits for X/Z and SSI and 4 bits for the planet. The dispatcher adds no CLI-style voxel
+/// range checks. A successful conversion returns the existing nine-row format table; missing
+/// input, SSI, and parse failures are returned as `String` errors.
+///
+/// # Examples
+///
+/// The returned strings are owned by the caller. `Map`, `Exit`, and `Quit` have no UI or
+/// process effect when dispatched directly.
+///
+/// ```
+/// # fn main() -> Result<(), String> {
+/// use nms_copilot::commands::Action;
+/// use nms_copilot::dispatch::dispatch;
+/// use nms_copilot::session::SessionState;
+/// use nms_graph::GalaxyModel;
+///
+/// let mut model = GalaxyModel::new();
+/// let mut session = SessionState::from_model(&model);
+/// assert_eq!(
+///     dispatch(&Action::Info, &mut model, &mut session)?,
+///     "Loaded model: 0 systems, 0 planets, 0 bases\nCurrent position: unknown\n",
+/// );
+/// let responses: Result<Vec<String>, String> = [Action::Map, Action::Exit, Action::Quit]
+///     .iter()
+///     .map(|action| dispatch(action, &mut model, &mut session))
+///     .collect();
+/// assert_eq!(responses?, vec![String::new(), String::new(), String::new()]);
+/// assert_eq!(model.active_galaxy, 0);
+/// assert_eq!((model.systems.len(), model.planets.len(), model.bases.len()), (0, 0, 0));
+/// assert!(model.player_state.is_none());
+/// assert!(session.position.is_none());
+/// assert_eq!((session.biome_filter, session.warp_range), (None, None));
+/// assert_eq!(
+///     (session.galaxy.index, session.system_count, session.planet_count),
+///     (0, 0, 0),
+/// );
+/// # Ok(())
+/// # }
+/// ```
+///
+/// Mutations update the supplied model view or session. This example observes a manual
+/// position from galaxy 7 while selecting galaxy 9, then checks the complete bounded session
+/// projection after each of the specified error and unknown-reset outcomes.
+///
+/// ```
+/// # fn main() -> Result<(), String> {
+/// use nms_copilot::commands::{Action, SetTarget};
+/// use nms_copilot::dispatch::dispatch;
+/// use nms_copilot::session::{PositionContext, SessionState};
+/// use nms_core::{Biome, GalacticAddress, GalaxyType};
+/// use nms_graph::GalaxyModel;
+///
+/// type View = (
+///     u8, usize, usize, usize, Option<(&'static str, String, u64, u8)>,
+///     Option<Biome>, Option<f64>, u8, &'static str, GalaxyType, usize, usize,
+/// );
+/// fn view(model: &GalaxyModel, session: &SessionState) -> View {
+///     let position = session.position.as_ref().map(|position| {
+///         let kind = match position {
+///             PositionContext::Base { .. } => "base",
+///             PositionContext::PlayerPosition(_) => "player",
+///             PositionContext::Address(_) => "address",
+///         };
+///         let address = position.address();
+///         (kind, position.label(), address.packed(), address.reality_index)
+///     });
+///     (
+///         model.active_galaxy,
+///         model.systems.len(), model.planets.len(), model.bases.len(), position,
+///         session.biome_filter, session.warp_range,
+///         session.galaxy.index, session.galaxy.name, session.galaxy.galaxy_type,
+///         session.system_count, session.planet_count,
+///     )
+/// }
+///
+/// let mut model = GalaxyModel::new();
+/// let mut session = SessionState::from_model(&model);
+/// let manual = GalacticAddress::new(3, 0, 0, 1, 3, 7);
+/// assert_eq!(session.set_position_address(manual), "Position set to 0x300100000003");
+/// assert_eq!(
+///     dispatch(&Action::Set { target: SetTarget::Biome { name: "Lush".into() } },
+///              &mut model, &mut session)?,
+///     "Biome filter set to Lush",
+/// );
+/// assert_eq!(
+///     dispatch(&Action::Set { target: SetTarget::WarpRange { ly: 1200.5 } },
+///              &mut model, &mut session)?,
+///     "Warp range set to 1200 ly",
+/// );
+/// assert_eq!(
+///     dispatch(&Action::Galaxy { selection: Some("9".into()) }, &mut model, &mut session)?,
+///     "Switched to Eissentam (galaxy 9). 0 systems loaded.\n",
+/// );
+/// let expected: View = (
+///     9, 0, 0, 0,
+///     Some(("address", "0x300100000003".into(), 0x3001_0000_0003, 7)),
+///     Some(Biome::Lush), Some(1200.5), 9, "Eissentam", GalaxyType::Lush, 0, 0,
+/// );
+/// assert_eq!(view(&model, &session), expected);
+/// assert!(model.player_state.is_none());
+/// assert_eq!(
+///     dispatch(&Action::Status, &mut model, &mut session)?,
+///     concat!(
+///         "Galaxy:      Eissentam (9; Lush)\n",
+///         "Model:       0 systems, 0 planets\n",
+///         "Position:    0x300100000003 (Kikolgallr, galaxy 7)\n",
+///         "Biome:       Lush\n",
+///         "Warp range:  1200 ly\n",
+///     ),
+/// );
+///
+/// let cases: [(Action, Result<String, String>); 3] = [
+///     (Action::Galaxy { selection: Some("256".into()) },
+///      Err("Galaxy index out of range: 256 (must be 0-255)".into())),
+///     (Action::Set { target: SetTarget::Position { name: "Missing".into() } },
+///      Err("Base not found: \"Missing\"".into())),
+///     (Action::Reset { target: "mystery".into() },
+///      Ok("Unknown reset target: mystery. Use: position, biome, warp-range, all".into())),
+/// ];
+/// for (action, expected_result) in cases {
+///     assert_eq!(dispatch(&action, &mut model, &mut session), expected_result);
+///     assert_eq!(view(&model, &session), expected);
+///     assert!(model.player_state.is_none());
+/// }
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// Returns existing parse, missing-input, missing-SSI, missing-base, current-position,
+/// galaxy-scope, route-target, algorithm, or shared-query errors as `String`, using the existing
+/// error display conversion. Query formatters return `String` rather than a fallible result and
+/// may panic as described below. The exact branches and messages depend on the action and
+/// existing parser/query contracts; errors are not typed and carry no promised source chain.
+/// This API makes no general transaction or rollback guarantee.
+///
+/// # Panics
+///
+/// Panics may propagate from [`PortalAddress::parse_mixed`] when its 20-byte excerpt for an
+/// invalid token ends inside a UTF-8 character, from [`format_find_results`] or [`format_route`] when
+/// byte-based name truncation splits a UTF-8 character, and from route jump-count accumulation
+/// on checking builds if a warp-derived total overflows. Invalid embedded theme data could also
+/// panic in the theme parser. This API does not promise general panic freedom.
 pub fn dispatch(
     action: &Action,
     model: &mut GalaxyModel,
