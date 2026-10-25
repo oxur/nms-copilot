@@ -15,3 +15,7 @@ ActualfreshsoleCC /root/cdc_arc06/cc_dispatch_docs acceptedexplicitgpt-6-lunaHig
 ## Complete initial held review / first actual correction
 
 Version1.1/currentimmutable01/FIRSTactual1of5/fourleft. Initialactualpair0/pinef1291a6/fullwalkclosedF1absentconversionsemantics/F2Listresetdetail/F3Statusliteralconstruction. ExactonefileRustdoc-only/ALLnon-docandprivatehelpersfrozen, validexamplesexceptStatusRHSfrozen. No runtimeyet; originalnine/required44/fullM7.6binding. SixRDOPEN/noexception.
+
+## First correction complete / second narrow correction
+
+Version1.2/currentimmutable02/SECONDactual2of5/threeleft. Actual01pair0/fulltargetedwalk/E1exact/E2onlyintendedStatusrepairverified. Exactly3docsentences(privatehelperlink/plaincode, 12/4bitmaskdetail,u64confirmation); allotherprose/examples/code/helpersfrozen. Originalnine/required44/fullM7.6binding, all6RDOPEN/noexception/runtimeyet.

@@ -12,3 +12,5 @@
 | RD-06 | Independent acceptance/retro/bubbleup/originalowners retained | CDCninegroups/sixrows/required44/fullM7.6 | correctness-grade | open | — |
 
 2026-10-25current01/FIRSTactual1of5/all6RDOPEN. Initialactualpair0/fullonefilewalkclosed3doc/examplegroups; sameonefile/non-docfrozen/no runtime/strict/scope/diffyet. Originalnine/required44/fullM7.6retained.
+
+2026-10-25current02/SECONDactual2of5/all6RDOPEN. Actual01pair0/fulltargetedwalk/soundexactE1E2; threeexistingdocsentencesonly/allrestfrozen. No runtimeyet/originalninebinding.
