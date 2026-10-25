@@ -1,17 +1,33 @@
-//! Error types for the file watcher.
+//! Errors reported while preparing a file watcher.
+//!
+//! These errors cover path existence, initial checked parsing, and watcher
+//! setup. Later parse failures are handled by the running worker and are not
+//! sent as [`WatchError`] values.
 
 use std::fmt;
 use std::path::PathBuf;
 
-/// Errors from the file watch system.
+/// An error encountered before a watcher starts.
+///
+/// The string payloads preserve the underlying setup or parser message, but
+/// this type does not expose a typed [`std::error::Error::source`] chain.
 #[derive(Debug)]
 pub enum WatchError {
-    /// Save file not found at the expected path.
-    SaveNotFound(PathBuf),
-    /// File system notification error.
-    NotifyError(String),
-    /// Error parsing the save file during watch.
-    ParseError(String),
+    /// The configured path did not exist when watcher setup began.
+    SaveNotFound(
+        /// Configured path that failed the existence check.
+        PathBuf,
+    ),
+    /// Debouncer, parent-directory, watch-registration, or worker setup failed.
+    NotifyError(
+        /// Display message from the setup failure.
+        String,
+    ),
+    /// The initial checked save parse failed.
+    ParseError(
+        /// Display message from the parser.
+        String,
+    ),
 }
 
 impl fmt::Display for WatchError {

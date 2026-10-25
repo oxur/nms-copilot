@@ -1,16 +1,99 @@
-//! Delta computation between save snapshots.
+//! Additive delta computation between save snapshots.
 //!
-//! Compares two `SaveSnapshot` values and produces a `SaveDelta` listing
-//! all changes: new discoveries, player movement, new/modified bases.
+//! [`compute_delta`] reports newly keyed systems, planets, and bases,
+//! changed bases under an existing lowercase name key, and player movement.
+//! It does not report removals or changed metadata under existing system or
+//! planet keys; result-vector order follows hash-map iteration.
+//!
+//! # Examples
+//!
+//! The literal snapshots below show the positive, reverse, and unchanged
+//! cases. The changed Atlas/Garden metadata at an existing key is not a
+//! reported change, while the new Beta/Cinder records and base changes are.
+//!
+//! ```
+//! use std::collections::HashMap;
+//! use nms_core::address::GalacticAddress;
+//! use nms_core::biome::Biome;
+//! use nms_core::player::{BaseType, PlayerBase};
+//! use nms_core::system::{Planet, System, SystemId};
+//! use nms_watch::{compute_delta, SaveSnapshot};
+//!
+//! fn address(planet: u8, galaxy: u8) -> GalacticAddress {
+//!     GalacticAddress::new(3, 0, 0, 1, planet, galaxy)
+//! }
+//! fn original() -> SaveSnapshot {
+//!     let address = address(2, 9);
+//!     let id = SystemId::from_address(&address);
+//!     let planet = Planet::new(2, Some(Biome::Lush), None, false, Some("Garden".into()), Some(7));
+//!     let system = System::new(address, Some("Atlas".into()), None, None, vec![planet.clone()]);
+//!     let base = PlayerBase::new("Home".into(), BaseType::HomePlanetBase, address, [0.0, 0.0, 0.0], None);
+//!     SaveSnapshot {
+//!         systems: HashMap::from([(id, system)]),
+//!         planets: HashMap::from([((id, 2), planet)]),
+//!         bases: HashMap::from([("home".into(), base)]),
+//!         player_address: address,
+//!     }
+//! }
+//! fn changed() -> SaveSnapshot {
+//!     let old_address = address(2, 9);
+//!     let old_id = SystemId::from_address(&old_address);
+//!     let old_planet = Planet::new(2, Some(Biome::Lush), None, false, Some("Renamed Garden".into()), Some(7));
+//!     let old_system = System::new(old_address, Some("Renamed".into()), None, None, vec![old_planet.clone()]);
+//!     let new_address = address(1, 0);
+//!     let new_id = SystemId::from_address(&new_address);
+//!     let new_planet = Planet::new(1, Some(Biome::Toxic), None, false, Some("Cinder".into()), Some(8));
+//!     let new_system = System::new(new_address, Some("Beta".into()), None, None, vec![new_planet.clone()]);
+//!     let home = PlayerBase::new("HOME".into(), BaseType::HomePlanetBase, old_address, [1.0, 2.0, 3.0], None);
+//!     let outpost = PlayerBase::new("Outpost".into(), BaseType::ExternalPlanetBase, new_address, [4.0, 5.0, 6.0], None);
+//!     SaveSnapshot {
+//!         systems: HashMap::from([(old_id, old_system), (new_id, new_system)]),
+//!         planets: HashMap::from([((old_id, 2), old_planet), ((new_id, 1), new_planet)]),
+//!         bases: HashMap::from([("home".into(), home), ("outpost".into(), outpost)]),
+//!         player_address: new_address,
+//!     }
+//! }
+//! let old = original();
+//! let new = changed();
+//! let forward = compute_delta(&old, &new);
+//! let beta_address = GalacticAddress::new(3, 0, 0, 1, 1, 0);
+//! let beta_planet = Planet::new(1, Some(Biome::Toxic), None, false, Some("Cinder".into()), Some(8));
+//! let beta = System::new(beta_address, Some("Beta".into()), None, None, vec![beta_planet.clone()]);
+//! assert_eq!(forward.new_systems, vec![beta]);
+//! assert_eq!(forward.new_planets, vec![(SystemId::from_address(&beta_address), beta_planet)]);
+//! assert_eq!(forward.player_moved.as_ref().map(|m| (m.from, m.to)), Some((GalacticAddress::new(3, 0, 0, 1, 2, 9), GalacticAddress::new(3, 0, 0, 1, 1, 0))));
+//! assert_eq!(forward.new_bases, vec![PlayerBase::new("Outpost".into(), BaseType::ExternalPlanetBase, beta_address, [4.0, 5.0, 6.0], None)]);
+//! assert_eq!(forward.modified_bases, vec![PlayerBase::new("HOME".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 9), [1.0, 2.0, 3.0], None)]);
+//! assert_eq!(forward.change_count(), 5);
+//! assert!(!forward.is_empty());
+//! let reverse = compute_delta(&new, &old);
+//! assert!(reverse.new_systems.is_empty());
+//! assert!(reverse.new_planets.is_empty());
+//! assert_eq!(reverse.player_moved.as_ref().map(|m| (m.from, m.to)), Some((GalacticAddress::new(3, 0, 0, 1, 1, 0), GalacticAddress::new(3, 0, 0, 1, 2, 9))));
+//! assert!(reverse.new_bases.is_empty());
+//! assert_eq!(reverse.modified_bases, vec![PlayerBase::new("Home".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 9), [0.0, 0.0, 0.0], None)]);
+//! assert_eq!(reverse.change_count(), 2);
+//! let unchanged = compute_delta(&new, &new);
+//! assert!(unchanged.is_empty());
+//! assert_eq!(unchanged.change_count(), 0);
+//! ```
 
 use nms_core::delta::{PlayerMoved, SaveDelta};
 
 use crate::snapshot::SaveSnapshot;
 
-/// Compute the delta between two snapshots.
+/// Compute additive observations between two snapshots.
 ///
-/// Compares discovery records by system address, player position, and base
-/// lists. Checks player position first (O(1)) since it changes most often.
+/// New system and planet records are selected by absent map keys, not by
+/// comparing values at keys already present in `old`. Base changes use the
+/// lowercase name key, and movement compares the full galactic address.
+/// Removed records and changes to existing system or planet metadata are
+/// omitted. Vectors are collected from hash maps and have no stable order.
+///
+/// # Examples
+///
+/// See the [module example](crate::delta#examples) for complete literal
+/// forward, reverse, and unchanged expectations.
 pub fn compute_delta(old: &SaveSnapshot, new: &SaveSnapshot) -> SaveDelta {
     // 1. Check player position change (cheapest check first)
     let player_moved = if old.player_address != new.player_address {

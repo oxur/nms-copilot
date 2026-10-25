@@ -1,8 +1,49 @@
-//! File system watcher for NMS save files.
+//! File watcher for a selected NMS save file.
 //!
-//! Uses `notify` with debouncing to detect save file modifications.
-//! Includes robustness features: file stability checks, consecutive
-//! failure counting, and graceful error recovery.
+//! # Watch behavior
+//!
+//! The entry points synchronously check and parse the configured path, then
+//! watch its parent directory nonrecursively. Only `Any`-kind events for the
+//! configured path match: paths compare exactly first, with canonicalization
+//! as a fallback only when both paths still exist.
+//! Backend notification error batches are ignored by the worker.
+//!
+//! A file is considered stable after two successful equal-size reads 100 ms
+//! apart; this is a heuristic, not a lock or complete-write guarantee.
+//! Debouncing and backend coalescing can hide intermediate writes. Quiet
+//! successful parses still advance the last-good baseline; failed parses do
+//! not advance it or emit updates. The fifth consecutive parse failure warns
+//! once on stderr, and a later successful parse resets the count.
+//!
+//! The legacy [`start_watching`] stream is unbounded and sends only nonempty
+//! additive deltas. [`start_watching_updates`] and
+//! [`start_watching_observations`] use capacity-one queues and can each have
+//! one worker-held pending event. When full, these senders retry every 10 ms
+//! and check cancellation; receiver disconnection is noticed only when an
+//! attempted send observes it, not by a separate quiet-parse poll.
+//!
+//! Dropping a handle cancels and joins its worker. A queued event remains
+//! readable before disconnection only if its receiver is retained separately;
+//! dropping the whole handle also drops that receiver. A worker-held pending
+//! event can be discarded. File I/O, parsing, and backend teardown have no
+//! hard shutdown deadline. Worker panics are not sent as [`WatchError`] values;
+//! owner drop warns best-effort to stderr if joining reports a panic. This
+//! library does not write saves, models, or application caches, and emits no
+//! normal update output to stdout.
+//!
+//! # Examples
+//!
+//! ```
+//! use std::path::PathBuf;
+//! use nms_watch::{WatchConfig, WatchError};
+//!
+//! let config = WatchConfig::default();
+//! assert!(config.save_path.as_os_str().is_empty());
+//! assert_eq!(config.debounce, std::time::Duration::from_millis(500));
+//! let error = WatchError::SaveNotFound(PathBuf::from("save.hg"));
+//! assert_eq!(error.to_string(), "save file not found: save.hg");
+//! ```
+//!
 
 use std::fmt;
 use std::io::Write;
@@ -28,11 +69,14 @@ const MAX_CONSECUTIVE_FAILURES: usize = 5;
 /// Milliseconds to wait between file size checks for stability.
 const FILE_STABILITY_CHECK_MS: u64 = 100;
 
-/// Handle to a running file watcher.
+/// Owner and receiver for the legacy additive-delta stream.
 ///
-/// Dropping this stops the watcher thread.
+/// The channel is unbounded. It emits only nonempty [`SaveDelta`] values,
+/// with no initial event; player-state, source-version, and explicit-name-only
+/// changes may therefore produce no message. Dropping the handle cancels and
+/// joins the worker. See the [module watch contract](crate::watcher#watch-behavior).
 pub struct WatchHandle {
-    /// Receive deltas from the watcher thread.
+    /// Receive nonempty additive deltas from the watcher thread.
     pub receiver: mpsc::Receiver<SaveDelta>,
     /// Owns the debouncer and joined worker lifetime.
     _owner: WatchOwner,
@@ -44,10 +88,10 @@ pub struct WatchHandle {
 /// update. Supported state/version changes arrive in source order, while an
 /// unchanged parsed save is suppressed. The bounded queue holds one event and
 /// the worker may retain one additional parsed event while waiting to enqueue
-/// it. Dropping this handle stops and joins the worker, so a pending unsent
-/// event may be discarded during shutdown; an event already in the queue
-/// remains readable before the receiver disconnects. File I/O and parsing are
-/// not subject to a hard shutdown deadline.
+/// it. Dropping this handle stops and joins the worker; a worker-held pending
+/// event may be discarded during shutdown. File I/O and parsing are
+/// not subject to a hard shutdown deadline. See the
+/// [module watch contract](crate::watcher#watch-behavior).
 ///
 /// # Examples
 ///
@@ -68,7 +112,7 @@ pub struct WatchHandle {
 /// }
 /// ```
 pub struct WatchUpdateHandle {
-    /// Receive complete parsed updates in source order.
+    /// Receive updates in source order; the capacity-one queue starts empty.
     pub receiver: mpsc::Receiver<SaveUpdate>,
     /// Owns the debouncer and joined worker lifetime.
     _owner: WatchOwner,
@@ -76,15 +120,17 @@ pub struct WatchUpdateHandle {
 
 /// A complete supported save update paired with its literal discovery names.
 ///
-/// Both values are derived from the same checked parse. `discovery_names` is
-/// the complete set of explicit names in that save, so consumers can replace
-/// their previous observed map even when player state and atlas delta are
-/// unchanged.
+/// Both values come from the same checked parse. The complete explicit-name
+/// observation map can be replaced as a whole: a present empty string means
+/// clear, while a missing entry means preserve the model value.
 #[derive(Debug, Clone)]
 pub struct SaveObservation {
-    /// Existing movement/discovery/base update and complete player state.
+    /// Additive atlas delta, complete supported player state, and source version.
     pub update: SaveUpdate,
-    /// Complete explicit system and planet names from this parsed save.
+    /// Complete explicit system and planet names from the same checked parse.
+    ///
+    /// See [`nms_core::delta::DiscoveryNames`]: a present empty string means
+    /// clear, while a missing map entry means preserve the model value.
     pub discovery_names: DiscoveryNames,
 }
 
@@ -92,9 +138,10 @@ pub struct SaveObservation {
 ///
 /// The bounded receiver is empty at startup. It holds one observation while
 /// the worker can retain one additional parsed observation; later events stay
-/// in source order. Dropping the handle sets cancellation and joins the
-/// worker. A queued event remains readable before disconnection, while a
-/// pending event can be discarded. File I/O and parsing have no hard
+/// in source order. See the [module watch contract](crate::watcher#watch-behavior).
+/// Dropping the handle sets cancellation and joins the
+/// worker. A worker-held pending event can be discarded during shutdown.
+/// File I/O and parsing have no hard
 /// shutdown deadline.
 ///
 /// # Examples
@@ -125,7 +172,7 @@ pub struct SaveObservation {
 /// do not advance the baseline or enter the channel; the existing warning and
 /// recovery policy is retained.
 pub struct WatchObservationHandle {
-    /// Receive source-ordered observations; no initial event is sent.
+    /// Receive complete observations in source order; starts empty.
     pub receiver: mpsc::Receiver<SaveObservation>,
     /// Owns the debouncer and joined worker lifetime.
     _owner: WatchOwner,
@@ -170,12 +217,14 @@ impl Drop for WatchOwner {
     }
 }
 
-/// Configuration for the file watcher.
+/// Path and debounce interval for a watcher.
+///
+/// The default path is empty and is not a discovered save location.
 #[derive(Debug, Clone)]
 pub struct WatchConfig {
-    /// Path to the save file to watch.
+    /// Exact save-file path to parse and match against notifications.
     pub save_path: PathBuf,
-    /// Debounce duration (default: 500ms).
+    /// Backend debounce interval; the default is 500 milliseconds.
     pub debounce: Duration,
 }
 
@@ -188,10 +237,10 @@ impl Default for WatchConfig {
     }
 }
 
-/// Check that a file's size is stable (not being actively written).
+/// Check whether two file-size reads 100 ms apart both succeed and match.
 ///
-/// Takes two size readings separated by `FILE_STABILITY_CHECK_MS` and
-/// returns `true` only if both readings succeed and match.
+/// This is only a stability heuristic: equal sizes do not prove an atomic
+/// write, complete contents, or a lock against a later change.
 fn is_file_stable(path: &Path) -> bool {
     let size1 = std::fs::metadata(path).map(|m| m.len()).ok();
     thread::sleep(Duration::from_millis(FILE_STABILITY_CHECK_MS));
@@ -281,16 +330,44 @@ fn send_observation(
     }
 }
 
-/// Start watching a save file for changes.
+/// Start a watcher that sends nonempty additive atlas deltas.
 ///
-/// Returns a `WatchHandle` whose `receiver` yields `SaveDelta` values
-/// whenever the save file is modified.
+/// The returned unbounded receiver starts empty. A successful parse sends a
+/// delta only when it contains new keyed records, a base change, or player
+/// movement; changes only to existing system/planet metadata, supported
+/// player fields, source version, or explicit names can remain quiet. Backend
+/// coalescing means this is not a lossless record of every file write.
+///
+/// # Examples
+///
+/// ```no_run
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// use std::path::PathBuf;
+/// use std::time::Duration;
+/// use nms_watch::{start_watching, WatchConfig};
+///
+/// let handle = start_watching(WatchConfig {
+///     save_path: PathBuf::from("save.hg"),
+///     debounce: Duration::from_millis(500),
+/// })?;
+/// if let Ok(delta) = handle.receiver.recv_timeout(Duration::from_secs(30)) {
+///     println!("{} changes", delta.change_count());
+/// }
+/// # Ok(())
+/// # }
+/// ```
 ///
 /// # Errors
 ///
-/// Returns `WatchError::SaveNotFound` if the save file does not exist,
-/// `WatchError::ParseError` if the initial parse fails, or
-/// `WatchError::NotifyError` if the file watcher cannot be created.
+/// Returns [`WatchError::SaveNotFound`] when the configured path is missing,
+/// [`WatchError::ParseError`] when the initial checked parse fails, or
+/// [`WatchError::NotifyError`] when debouncer, parent-directory, registration,
+/// or worker setup fails. Later parser failures are not returned here.
+///
+/// # Panics
+///
+/// The initial parser can propagate its documented malformed compressed-size
+/// offset panic on 32-bit targets or invalid bundled-mapping panic.
 pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
     let (sender, receiver) = mpsc::channel();
     let owner = start_watching_inner(config, UpdateSender::Delta(sender))?;
@@ -300,7 +377,12 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
     })
 }
 
-/// Start watching a save and emit complete supported player updates.
+/// Start watching and emit complete supported player updates.
+///
+/// This includes all represented [`nms_core::player::PlayerState`] fields and source version
+/// when either differs, even if the atlas delta is empty. It does not include
+/// discovery-name observations; use [`start_watching_observations`] for that
+/// stream.
 ///
 /// Each event pairs the existing additive atlas delta with the complete
 /// supported player state and source version from one parse. No initial event
@@ -308,16 +390,25 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
 /// delta changes; unchanged parsed saves are suppressed. The capacity-one
 /// queue preserves source order and the worker can hold one additional parsed
 /// event while waiting for capacity. Dropping the returned handle stops and
-/// joins the worker. A pending unsent event may be discarded on shutdown, but
-/// a queued event remains readable before disconnection. File I/O and parsing
-/// have no hard shutdown deadline. This library API does not coordinate
-/// application cache writers.
+/// joins the worker; a worker-held pending event may be discarded on shutdown.
+/// File I/O and parsing have no hard shutdown deadline. This library API does
+/// not coordinate application cache writers. See the
+/// [module watch contract](crate::watcher#watch-behavior).
+///
+/// # Examples
+///
+/// See [`WatchUpdateHandle`] for a compiled filesystem example.
 ///
 /// # Errors
 ///
 /// Returns [`WatchError::SaveNotFound`] when the path is missing,
 /// [`WatchError::ParseError`] when the initial save cannot be parsed, or
 /// [`WatchError::NotifyError`] when notification or worker setup fails.
+///
+/// # Panics
+///
+/// The initial parser can propagate its documented malformed compressed-size
+/// offset panic on 32-bit targets or invalid bundled-mapping panic.
 pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle, WatchError> {
     let (sender, receiver) = mpsc::sync_channel(1);
     let owner = start_watching_inner(config, UpdateSender::Full(sender))?;
@@ -327,13 +418,33 @@ pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle, 
     })
 }
 
-/// Start watching a save and emit complete supported updates with checked names.
+/// Start watching and emit complete supported updates with checked names.
 ///
-/// The update, source version and complete explicit name map come from the same
-/// validated parse. No initial event is sent. An event is emitted when the
-/// existing full-update predicate or the complete name map changes. The
-/// capacity-one queue, source order, cancellation, and join behavior match
-/// [`start_watching_updates`].
+/// The emitted name map is the complete set of explicit names from the same
+/// parse as its update. It can report name-only changes, removed map entries,
+/// and explicitly empty names. Absence from the map is not itself a request
+/// for the consumer to clear a model value. The existing complete-update
+/// predicate also emits when player state, source version, or atlas delta
+/// changes. The update, source version, and complete explicit name map come
+/// from the same validated parse. No initial event is sent. The capacity-one
+/// queue and worker-held pending event use the complete-update stream's
+/// ordering and shutdown behavior.
+///
+/// # Examples
+///
+/// See [`WatchObservationHandle`] for a compiled filesystem example showing
+/// the complete names and player state received together.
+///
+/// # Errors
+///
+/// Returns [`WatchError::SaveNotFound`] for a missing path,
+/// [`WatchError::ParseError`] for an initial parse failure, or
+/// [`WatchError::NotifyError`] for watcher setup failures.
+///
+/// # Panics
+///
+/// The initial parser can propagate its documented malformed compressed-size
+/// offset panic on 32-bit targets or invalid bundled-mapping panic.
 pub fn start_watching_observations(
     config: WatchConfig,
 ) -> Result<WatchObservationHandle, WatchError> {
