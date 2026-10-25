@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.119, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.120, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1027,3 +1027,9 @@ Version1.118 closes all6SD/R06-S31 at cleanb60e720a, complete eleven-file save p
 Version1.119 details [Slice32](slice32-graph-api-documentation/slice-plan.md), exactnine graph sourcefiles/Rustdoc+ten namedpayload layouts, sixOPEN GDrows. Clean dedicatedcodex/graph-api-documentation fromacceptedb60e. Complete production/API/error/fixture walkthrough resolved; prioractual13authoredwarning inventory is readinessonly/graphbytesunchanged, strictgraphzero required/no coreexceptionextension. Literalcheckedsource56/3-4-5 query-routing/markedpromotion/ownedCSV examples complete, no implementation claim yet. Capturekernels/actualbinary7-0controls in placebeforefirstcompilerdiagnostic. Initial0actualrefinements.
 
 PriorCCreports compacted/notenoughnext-unitheadroom; freshsole SAMErequested6-lunaHigh context replaces historicalimplementer afterdurableprompt, actuallaunchrecordfollows. CDC6.1-solHigh independentacceptance/Arc06endpoint unchanged. FullM7.6 explicitly decomposed32graph, required33query, required34remaining APIs/full0039reconciliation (CDC, splitfurtherifneeded). No criterion dropped or laternumberacceptedbyplanning.50arcrows36done14open/project25open. Knownwarp_jump_count uncheckedrange/integeroverflow limits are truthfuldocs/platform-finalreconciliationowner, notruntimefix/testpopulationexpansion. Mainknownagentaddition/heldpins/external unaffected; M7.5inputandallhighergates retained.
+
+## Slice32 graph API increment accepted — 2026-10-25 UTC
+
+Version1.120 closes all6GD/R06-S32 at local clean e30eb49f77565769c0d6fdb61dbe372f686e77d7. Complete nine-file graph public surface and meaningful literal extraction/query/topology/route/promotion/CSV examples; original seven independent groups pass,186runtime+13doctests(10executed/3compile-only), strictgraphzero/noexception, exactninefile/tenlayout preservation/opposedmutation/diffs. Threeactualrefinements/history/original strict-link red/16CC+7CDC rawrecords and finalretrospective retained. No structural/sequence change; known warp_jump_count uncheckedinput/usizeoverflow limit remains CDC/P01-G07 final reconciliation, documented only.
+
+50arcrows37done13open/project25OPEN. Full original0039M7.6 remains OPEN: required33query,34remaining APIs/fullreconciliation CDC owners, splitfurtherifneeded. M7.5 authenticNomNominput unanswered and every original raw/history/nonzero game-backed/finalsemantic/cache/freshness/coverage/platform/UI/distribution/parent/Operator/integration/release gate retained. Mainpre-existingagentaddition/held/externalpins untouched; no integration/release. See [CDC32 acceptance](slice32-graph-api-documentation/cdc-verification.md) and [retrospective](slice32-graph-api-documentation/cdc-retrospective.md).

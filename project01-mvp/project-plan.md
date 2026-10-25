@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.106
+version: 1.107
 project: project01-mvp
 status: active
 depends-on: []
@@ -1226,3 +1226,7 @@ Complete save public API documentation accepted onb60e720a after seven independe
 ## Arc06 Slice32 graph documentation owner — 2026-10-25 UTC
 
 Version1.106/arc1.119 details next required complete9file graphAPI increment fromacceptedb60e, sixOPEN GDrows, same requestedroles/models/freshCCcontext afteroldheadroomreport. Source/error/fixture/layout/capturechoices resolved, no productimplementation yet. FullM7.6 now explicit32graph/33query/34remainingAPIs+fullreconciliation CDC owners, splitfurtherifneeded.50arc36done14open/project25OPEN; exactcoreexception/platform/input/higher/integration/release gates retained.
+
+## Arc06 Slice32 graph documentation accepted — 2026-10-25 UTC
+
+Version1.107/arc1.120 records all6GD/R06-S32 independently accepted at e30e, seven original groups/186runtime+13docs/strictgraphzero/exactsourcepreservation and finalretrospective.50arc37done13open/all25projectrows OPEN. FulloriginalM7.6 retains required33query/34remaining APIs+fullreconciliation CDC owners; all original input/history/game-backed/platform/coverage/distribution/UI/parent/Operator/integration/release gates remain. Known warp-count input/overflow limitation is documented only, not repaired or platform-proven.

@@ -25,3 +25,11 @@ CDC inspected actual format38b923b31a6a4e609e3fbefaf0bd5c42/lint66464dc8d5de4692
 ## First runtime/doc gates / third actual refinement — 2026-10-25 UTC
 
 CDC verified actualbb55dde5322a45ea9cd14e89c2d87b69 complete0/fullraw/equalmetadata:186runtime(176+7+3),13doctests(10executed3compileonly), nonefailed/ignored. Exact strictdoc8320f17403f24d8cb41c9a6d90e78306 complete101/fullraw/equalmetadata: new extract.rs232 DiscoverySource::Personal link lacks scope. Immutable03 permits only full nms_core qualification of that one Rustdoc link, all other bytes/examples frozen. Thirdactual3/5/twoleft. Format/lint renewal+CDC exact review before strictdocs/auditor/diffs; unchanged CC runtime/example proof retained by byte applicability, independent originalseven still required. No suppression/waiver/newpolicy/runtime defect. All6GD remain OPEN.
+
+## Iteration03 exact correction release — 2026-10-25 UTC
+
+CDC inspected actual formatf4cf6b390a194dc9b8939a431e7187ff/lint72c421a6fed14f2499e4d14e53a7bfb1 complete0/fullraw/exit/end/status/equal identity59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72, diff971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0. Ordinary source-review inspection reversed solely the qualified link and recomputed prior blob-index text: exact previous patchSHA d5f02083 matched; this is review inspection, not product/scope-auditor gate credit. All examples/executable bytes unchanged, prior186runtime/13doctest proof applicable. Released exact strictdocs/auditor/working+baseline diffchecks and named commit/fullreturn ifgreen; thirdactual3/5/twoleft, all6GD OPEN. Original strict red preserved.
+
+## Formal acceptance — 2026-10-25 UTC
+
+Exact frozen CC transfer and all16raw records/catalog reconciled; seven fresh independent groups on clean e30e complete0/fullraw/equalcleanmetadata,186runtime+13docs. All6GD done, final verification/retrospective/arc-project bubble-up committed together; original strict red and pre-write edit failure preserved. Source remains isolated/unintegrated. Minor return prose residue/inventory classification qualified in CDC verification without rewriting returns/new pass.

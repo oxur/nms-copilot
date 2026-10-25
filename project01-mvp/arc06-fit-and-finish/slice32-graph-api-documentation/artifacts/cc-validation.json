@@ -1,0 +1,622 @@
+{
+  "record_type": "CC proposed-done validation; not independent acceptance",
+  "assignment": {
+    "slice": "Project01 Arc06 Slice32 \u2014 complete nms-graph public API documentation",
+    "current_prompt": "cc-prompt-iteration03.md",
+    "actual_refinements": 3,
+    "maximum_actual_refinements": 5,
+    "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+    "branch": "codex/graph-api-documentation"
+  },
+  "source_history": {
+    "baseline": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+    "precommit_working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72",
+    "precommit_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+    "commit": "e30eb49f77565769c0d6fdb61dbe372f686e77d7",
+    "parent": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+    "tree": "41b48e3388272c1e41561d31d22464d92eaeafec",
+    "commit_paths": [
+      "crates/nms-graph/src/edges.rs",
+      "crates/nms-graph/src/error.rs",
+      "crates/nms-graph/src/extract.rs",
+      "crates/nms-graph/src/import.rs",
+      "crates/nms-graph/src/lib.rs",
+      "crates/nms-graph/src/model.rs",
+      "crates/nms-graph/src/query.rs",
+      "crates/nms-graph/src/route.rs",
+      "crates/nms-graph/src/spatial.rs"
+    ],
+    "postcommit_status": "clean",
+    "postcommit_index": "empty",
+    "parsed_trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ]
+  },
+  "proof_groups": [
+    {
+      "group": "format",
+      "result": "pass",
+      "records": [
+        "3e4b13b39474436ba2b6927cbc74ea99",
+        "fb5b264c901f40509dcda9d72770789a",
+        "38b923b31a6a4e609e3fbefaf0bd5c42",
+        "f4cf6b390a194dc9b8939a431e7187ff"
+      ]
+    },
+    {
+      "group": "lint",
+      "result": "pass",
+      "records": [
+        "0530bd2e18884f57b740052cefeeb364",
+        "2e6e2287620d4c9fb9418637bee619d7",
+        "66464dc8d5de4692aebe21787ae280db",
+        "72c421a6fed14f2499e4d14e53a7bfb1"
+      ]
+    },
+    {
+      "group": "graph_all_features_tests_and_doctests",
+      "result": "pass; unchanged executable/example bytes retained across the one-link correction",
+      "record": "bb55dde5322a45ea9cd14e89c2d87b69",
+      "population": "186 runtime tests (176+7+3), 13 doctests (10 executed, 3 compile-only)"
+    },
+    {
+      "group": "strict_graph_docs",
+      "result": "pass after bounded correction; earlier failure retained",
+      "records": [
+        {
+          "id": "8320f17403f24d8cb41c9a6d90e78306",
+          "exit_code": 101,
+          "finding": "unresolved DiscoverySource::Personal link at extract.rs:232"
+        },
+        {
+          "id": "73116438160c466a8dcd4560a3d9ee2a",
+          "exit_code": 0,
+          "finding": "zero strict graph-doc warnings after nms_core qualification"
+        }
+      ]
+    },
+    {
+      "group": "supplied_scope_auditor",
+      "result": "pass; all nine ordered non-doc comparisons, ten permitted layouts, opposed in-memory executable mutation rejected",
+      "record": "dd5d449aec084970b2301194531be614"
+    },
+    {
+      "group": "working_diff_check",
+      "result": "pass",
+      "record": "32305d50b9534f8791884f8f72d06a55"
+    },
+    {
+      "group": "complete_baseline_diff_check",
+      "result": "pass",
+      "record": "38d6d8c8589444ae85bbee20a4e46519"
+    }
+  ],
+  "attempt_catalog": {
+    "raw_log_path": "/private/tmp/nms-slice32-cc-attempts.json",
+    "raw_log_sha256": "a437ad3123220c4efe8a12b762513a82bfcfed50e7352d504efa1176a31bf8ad",
+    "capture_owner": "Slice32 CC execution log; initial author-installed support controls by CDC",
+    "count": 16,
+    "records": [
+      {
+        "id": "2bd3f64b0050424f8f27e6a633845478",
+        "label": "author-support-negative",
+        "status": "complete",
+        "exit_code": 7,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 10,
+        "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+        "stderr_bytes": 5,
+        "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+        "started_utc": "2026-10-25T03:34:41.241825+00:00",
+        "ended_utc": "2026-10-25T03:34:41.414181+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "untracked_files": {},
+          "working_identity_sha256": "c5fba0b10e48238b56d53e372b9f64c39802894d8fe5133c3758d00694b63428"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "untracked_files": {},
+          "working_identity_sha256": "c5fba0b10e48238b56d53e372b9f64c39802894d8fe5133c3758d00694b63428"
+        }
+      },
+      {
+        "id": "f963768eb429473684a63fa2fb5439c6",
+        "label": "author-support-positive",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 10,
+        "stdout_sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980",
+        "stderr_bytes": 5,
+        "stderr_sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383",
+        "started_utc": "2026-10-25T03:34:41.681055+00:00",
+        "ended_utc": "2026-10-25T03:34:41.801470+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "untracked_files": {},
+          "working_identity_sha256": "c5fba0b10e48238b56d53e372b9f64c39802894d8fe5133c3758d00694b63428"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "untracked_files": {},
+          "working_identity_sha256": "c5fba0b10e48238b56d53e372b9f64c39802894d8fe5133c3758d00694b63428"
+        }
+      },
+      {
+        "id": "3e4b13b39474436ba2b6927cbc74ea99",
+        "label": "slice32-make-format",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T03:51:03.792130+00:00",
+        "ended_utc": "2026-10-25T03:51:04.858947+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "da02797989f09829ac92498d6d90d47340a2bcbae0f46845c0e63441ce6602f7",
+          "untracked_files": {},
+          "working_identity_sha256": "2bab5fe6496617549a862c6fd3aae40b062b7494f235f9d564c88151f88aa10f"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "da02797989f09829ac92498d6d90d47340a2bcbae0f46845c0e63441ce6602f7",
+          "untracked_files": {},
+          "working_identity_sha256": "2bab5fe6496617549a862c6fd3aae40b062b7494f235f9d564c88151f88aa10f"
+        }
+      },
+      {
+        "id": "0530bd2e18884f57b740052cefeeb364",
+        "label": "slice32-make-lint",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 12050,
+        "stderr_sha256": "2b7a920cd8def015ba7f5f277ecf77399ba23d1428b3f00a210a2594fd973beb",
+        "started_utc": "2026-10-25T03:51:14.223840+00:00",
+        "ended_utc": "2026-10-25T03:51:40.161686+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "da02797989f09829ac92498d6d90d47340a2bcbae0f46845c0e63441ce6602f7",
+          "untracked_files": {},
+          "working_identity_sha256": "2bab5fe6496617549a862c6fd3aae40b062b7494f235f9d564c88151f88aa10f"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "da02797989f09829ac92498d6d90d47340a2bcbae0f46845c0e63441ce6602f7",
+          "untracked_files": {},
+          "working_identity_sha256": "2bab5fe6496617549a862c6fd3aae40b062b7494f235f9d564c88151f88aa10f"
+        }
+      },
+      {
+        "id": "fb5b264c901f40509dcda9d72770789a",
+        "label": "iteration01-format",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:04:06.447541+00:00",
+        "ended_utc": "2026-10-25T04:04:07.597832+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "4cf938f2f977e01782910dec7dee51c9d607f7e503e7251f2a596ff546d6b75c",
+          "untracked_files": {},
+          "working_identity_sha256": "709609e12e8fe0b00b9dc79c6defa42f37ab6f34f945b0a675a36a371b794045"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "4cf938f2f977e01782910dec7dee51c9d607f7e503e7251f2a596ff546d6b75c",
+          "untracked_files": {},
+          "working_identity_sha256": "709609e12e8fe0b00b9dc79c6defa42f37ab6f34f945b0a675a36a371b794045"
+        }
+      },
+      {
+        "id": "2e6e2287620d4c9fb9418637bee619d7",
+        "label": "iteration01-lint",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 1053,
+        "stderr_sha256": "4059616502459adf247d641e92726be039e4e0f20b90ba9ac9bce9c73b08d6fb",
+        "started_utc": "2026-10-25T04:04:11.738331+00:00",
+        "ended_utc": "2026-10-25T04:04:15.937948+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "4cf938f2f977e01782910dec7dee51c9d607f7e503e7251f2a596ff546d6b75c",
+          "untracked_files": {},
+          "working_identity_sha256": "709609e12e8fe0b00b9dc79c6defa42f37ab6f34f945b0a675a36a371b794045"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "4cf938f2f977e01782910dec7dee51c9d607f7e503e7251f2a596ff546d6b75c",
+          "untracked_files": {},
+          "working_identity_sha256": "709609e12e8fe0b00b9dc79c6defa42f37ab6f34f945b0a675a36a371b794045"
+        }
+      },
+      {
+        "id": "38b923b31a6a4e609e3fbefaf0bd5c42",
+        "label": "iteration02-format",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:10:46.708958+00:00",
+        "ended_utc": "2026-10-25T04:10:47.818957+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        }
+      },
+      {
+        "id": "66464dc8d5de4692aebe21787ae280db",
+        "label": "iteration02-lint",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 1053,
+        "stderr_sha256": "6bab574c3fc890db09ee587f8a880574038a284b522aeaf83ec9d7635f94290a",
+        "started_utc": "2026-10-25T04:10:53.655273+00:00",
+        "ended_utc": "2026-10-25T04:10:57.396374+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        }
+      },
+      {
+        "id": "bb55dde5322a45ea9cd14e89c2d87b69",
+        "label": "released-graph-all-features-tests",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 14676,
+        "stdout_sha256": "5ae22f45255f8628e5796af9504aeb6aac10aded85c3588f571fcfda740f7298",
+        "stderr_bytes": 2361,
+        "stderr_sha256": "c18de1a19eb91c9d7972da8a23bd9ca205f166fcfa7b2ae350002e3246fb3f64",
+        "started_utc": "2026-10-25T04:11:29.256086+00:00",
+        "ended_utc": "2026-10-25T04:11:38.546896+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        }
+      },
+      {
+        "id": "8320f17403f24d8cb41c9a6d90e78306",
+        "label": "released-strict-graph-docs",
+        "status": "complete",
+        "exit_code": 101,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 1383,
+        "stderr_sha256": "0dd0eb41c7ea5ec20718bb458b4618742245ed45da37582f9ce23c2fc6028ebf",
+        "started_utc": "2026-10-25T04:11:41.141644+00:00",
+        "ended_utc": "2026-10-25T04:11:44.065217+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "d5f020833b0c5465d9947dfb199ae81cdc7573adb0f5e5f23ff5499b36248ca6",
+          "untracked_files": {},
+          "working_identity_sha256": "5b4954a7fe5ba5418135b9fc438c165ab0f57c3d896e52b875d1c11f83f72cf8"
+        }
+      },
+      {
+        "id": "f4cf6b390a194dc9b8939a431e7187ff",
+        "label": "iteration03-format",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 107,
+        "stdout_sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:13:21.850579+00:00",
+        "ended_utc": "2026-10-25T04:13:22.984616+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      },
+      {
+        "id": "72c421a6fed14f2499e4d14e53a7bfb1",
+        "label": "iteration03-lint",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 176,
+        "stdout_sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7",
+        "stderr_bytes": 1053,
+        "stderr_sha256": "4359120464e9351d172890a63ae1e3e5f021e684c89cd1c6a1b82f4f1d030b70",
+        "started_utc": "2026-10-25T04:13:25.706490+00:00",
+        "ended_utc": "2026-10-25T04:13:28.893361+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      },
+      {
+        "id": "73116438160c466a8dcd4560a3d9ee2a",
+        "label": "released-strict-graph-docs-iteration03",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 310,
+        "stderr_sha256": "890d46c6a7f61d276f5f9c94a290da2cc6c49396bdaf72536d8939da7640aac9",
+        "started_utc": "2026-10-25T04:15:03.951204+00:00",
+        "ended_utc": "2026-10-25T04:15:05.013931+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      },
+      {
+        "id": "dd5d449aec084970b2301194531be614",
+        "label": "released-scope-audit-iteration03",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 731,
+        "stdout_sha256": "8715dccc2754f79e73de865833f928dff5bfd18d9f60d4ed0e5bb4de87007e6c",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:15:21.284456+00:00",
+        "ended_utc": "2026-10-25T04:15:21.753348+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      },
+      {
+        "id": "32305d50b9534f8791884f8f72d06a55",
+        "label": "released-working-diff-check-iteration03",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:15:26.619121+00:00",
+        "ended_utc": "2026-10-25T04:15:26.762085+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      },
+      {
+        "id": "38d6d8c8589444ae85bbee20a4e46519",
+        "label": "released-baseline-diff-check-iteration03",
+        "status": "complete",
+        "exit_code": 0,
+        "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+        "stdout_bytes": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_utc": "2026-10-25T04:15:31.054012+00:00",
+        "ended_utc": "2026-10-25T04:15:31.193103+00:00",
+        "before": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        },
+        "after": {
+          "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+          "status": " M crates/nms-graph/src/edges.rs\n M crates/nms-graph/src/error.rs\n M crates/nms-graph/src/extract.rs\n M crates/nms-graph/src/import.rs\n M crates/nms-graph/src/lib.rs\n M crates/nms-graph/src/model.rs\n M crates/nms-graph/src/query.rs\n M crates/nms-graph/src/route.rs\n M crates/nms-graph/src/spatial.rs\n",
+          "working_diff_sha256": "971c97e7efb3bbc4494edfc77fe6c5409613a81ad47189212a5bdf836a2342d0",
+          "untracked_files": {},
+          "working_identity_sha256": "59680214493f1590140e44b47363a5378ce9c038129e1961348bbef02286ed72"
+        }
+      }
+    ]
+  },
+  "tool_hashes": {
+    "raw_first_capture_kernel": {
+      "path": "/private/tmp/nms-slice32-cc-capture.py",
+      "sha256": "fb25bcb87ff012b7386e09e1a327260a947cef64686a17eb8614023ea84e5bda"
+    },
+    "canonical_capture_kernel": {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice32-graph-api-documentation/artifacts/nms-slice32-cc-capture.py",
+      "sha256": "fb25bcb87ff012b7386e09e1a327260a947cef64686a17eb8614023ea84e5bda"
+    },
+    "supplied_scope_auditor": {
+      "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice32-graph-api-documentation/artifacts/nms-slice32-scope-audit.py",
+      "sha256": "9aad9ffa9b33faff66e55b709342de4afd82886b9d1bea579e4a02fbc6fd9295"
+    }
+  },
+  "proposed_GD_dispositions": [
+    {
+      "id": "GD-01",
+      "proposal": "CC proposed-done; CDC independent acceptance pending",
+      "basis": "Complete nine-file surface/navigation read and successful zero-warning strict graph docs."
+    },
+    {
+      "id": "GD-02",
+      "proposal": "CC proposed-done; CDC independent acceptance pending",
+      "basis": "Source-grounded W1\u2013W5 contract coverage and bounded clarification iterations."
+    },
+    {
+      "id": "GD-03",
+      "proposal": "CC proposed-done; CDC independent acceptance pending",
+      "basis": "E1\u2013E4 examples/fixtures retained; 186 runtime tests and 13 doctests pass; unchanged executable/example bytes after correction."
+    },
+    {
+      "id": "GD-04",
+      "proposal": "CC proposed-done; CDC independent acceptance pending",
+      "basis": "Auditor reports all nine ordered non-doc comparisons, ten named layouts, opposed mutation rejected; both diff checks pass."
+    },
+    {
+      "id": "GD-05",
+      "proposal": "CC proposed-done; CDC independent acceptance pending",
+      "basis": "All seven prescribed proof groups complete; exact nine-path commit, parent/tree, clean source/index and actual parsed adjacent trailers recorded."
+    },
+    {
+      "id": "GD-06",
+      "proposal": "OPEN for CDC",
+      "basis": "CC cannot accept independently, write the CDC retrospective, or complete arc-level bottom-up ownership. CDC retains this row."
+    }
+  ],
+  "bubble_up_answers": [
+    {
+      "question": "Did this slice deliver the piece of the arc capability assigned?",
+      "answer": "Yes, the local dedicated-branch revision e30eb49 delivers documented nms-graph public APIs and runnable key examples with zero-warning strict docs and passing graph/doctest proof. It is committed locally, unintegrated and unreleased; it does not complete M7.6."
+    },
+    {
+      "question": "What did implementation reveal that the arc plan did not anticipate?",
+      "answer": "No new structural or scope finding arose. A rustdoc link needed full crate qualification; that exact correction is resolved. The known warp_jump_count overflow/input-limit note remains assigned to CDC/P01-G07 final reconciliation and was not repaired or separately exercised here."
+    },
+    {
+      "question": "What is the scope-as-specified versus scope-as-delivered diff?",
+      "answer": "The nine-file API documentation and E1\u2013E4 example scope landed with no authorized runtime/API change or omitted in-scope behavior identified. Independent acceptance/retrospective remain CDC-owned. Slice33 query docs, Slice34 remaining APIs/full original reconciliation, M7.5 authentic NomNom input, and wider Arc06/parent gates remain open; no sequencing change is proposed beyond those existing owners."
+    }
+  ],
+  "artifact_inventory": {
+    "return_files": [
+      "workbench/slice32-return/execution.md",
+      "workbench/slice32-return/validation.json",
+      "workbench/slice32-return/closing-report.md"
+    ],
+    "raw_capture_log": "/private/tmp/nms-slice32-cc-attempts.json",
+    "capture_kernel": [
+      "/private/tmp/nms-slice32-cc-capture.py",
+      "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice32-graph-api-documentation/artifacts/nms-slice32-cc-capture.py"
+    ],
+    "scope_auditor": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice32-graph-api-documentation/artifacts/nms-slice32-scope-audit.py",
+    "immutable_assignment_prompts": [
+      "cc-prompt.md",
+      "cc-prompt-iteration01.md",
+      "cc-prompt-iteration02.md",
+      "cc-prompt-iteration03.md"
+    ],
+    "initial_held_patch": "artifacts/initial-held.patch"
+  },
+  "handoff": {
+    "CC_acceptance": "none; all six GD ledger rows remain OPEN pending CDC",
+    "source_and_index": "clean and empty after exact nine-path commit",
+    "owned_processes": "none; all launched captures/gates/commit returned complete",
+    "main_checkout": "distinct, not targeted; HEAD b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc; protected pre-existing modification remains; index empty",
+    "remaining_work": "CDC independent reproduction/dispositions/retrospective/bubble-up; Slice33/Slice34 and all original M7.6 and higher obligations remain open"
+  }
+}

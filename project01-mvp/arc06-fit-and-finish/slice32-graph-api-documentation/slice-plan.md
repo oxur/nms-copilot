@@ -1,6 +1,6 @@
 # Slice32 — complete nms-graph public API documentation
 
-Version1.3,2026-10-25 UTC. OPEN, current cc-prompt-iteration03.md, third actual refinement3/5/two remain. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; selected/applied CDC gpt-6.1-sol High; requested sole fresh CC gpt-6-luna High (actual dispatch acceptance recorded after launch). Prior save-docs CC reported compaction/insufficient next-unit headroom, preserved frozen31 handoff/no process. New context is a replacement implementer, not another role/reviewer/model. CDC owns planning/design/independent acceptance; CC source/index only after coherent durable intake. Dedicated source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation`, branch codex/graph-api-documentation, clean baselineb60e720a1ba3095e403ab706efab7fc0d11469ed.
+Version1.4,2026-10-25 UTC. CLOSED/ACCEPTED at e30eb49, current cc-prompt-iteration03.md, three actual refinements3/5 used. Standing Operator-authorized Autonomous Project01 Arc06 ONLY; selected/applied CDC gpt-6.1-sol High; requested sole fresh CC gpt-6-luna High (actual dispatch acceptance recorded after launch). Prior save-docs CC reported compaction/insufficient next-unit headroom, preserved frozen31 handoff/no process. New context is a replacement implementer, not another role/reviewer/model. CDC owns planning/design/independent acceptance; CC source/index only after coherent durable intake. Dedicated source `/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation`, branch codex/graph-api-documentation, clean baselineb60e720a1ba3095e403ab706efab7fc0d11469ed.
 
 ## Usable increment and retained owners
 
@@ -79,3 +79,7 @@ CDC inspected actual renewed formatfb5b264c901f40509dcda9d72770789a/lint2e6e2287
 ## First runtime/doc gates / third actual refinement — 2026-10-25 UTC
 
 CDC verified actualbb55dde5322a45ea9cd14e89c2d87b69 complete0/fullraw/equalmetadata:186runtime(176+7+3),13doctests(10executed3compileonly), nonefailed/ignored. Exact strictdoc8320f17403f24d8cb41c9a6d90e78306 complete101/fullraw/equalmetadata: new extract.rs232 DiscoverySource::Personal link lacks scope. Immutable03 permits only full nms_core qualification of that one Rustdoc link, all other bytes/examples frozen. Thirdactual3/5/twoleft. Format/lint renewal+CDC exact review before strictdocs/auditor/diffs; unchanged CC runtime/example proof retained by byte applicability, independent originalseven still required. No suppression/waiver/newpolicy/runtime defect. All6GD remain OPEN.
+
+## Formal close — 2026-10-25 UTC
+
+All6GD independently done at clean e30eb49, seven original CDC groups/186runtime+13docs (10execute3compileonly), strictgraphzero/noexception/orderedsourcepreservation/opposedmutation/diffs. [Independent verdict](cdc-verification.md), exact [CC close](closing-report.md), [retrospective](cdc-retrospective.md), supporting inventory retained. Arc50/37done13open/project25open. FullM7.6/33query/34remaining and everyoriginalhighergate remain. Close planning commit is the commit containing these exact named records; not self-invented before commit.

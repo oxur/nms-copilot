@@ -1,0 +1,46 @@
+{
+  "created_utc": "2026-10-25T04:22:10.670165+00:00",
+  "purpose": "Actual Slice32 supporting archive inventory; root prompts/reports are first-class and excluded",
+  "artifacts": {
+    "capture-preflight.json": {
+      "bytes": 8571,
+      "sha256": "d3afa20641fa0e6c67e19b14d45a3ca46b363166be36f59726830dbad09b7a14"
+    },
+    "cc-attempts.json": {
+      "bytes": 117356,
+      "sha256": "a437ad3123220c4efe8a12b762513a82bfcfed50e7352d504efa1176a31bf8ad"
+    },
+    "cc-execution.md": {
+      "bytes": 33864,
+      "sha256": "4ab8ab5b6d7b387185a50ffa8127aec85b11574f8eaf6e89ccbd790af8461774"
+    },
+    "cc-validation.json": {
+      "bytes": 38622,
+      "sha256": "5d81409dd8c24347787001ffc254a26f8d3dfdbff60efbe20855270387a3e67d"
+    },
+    "cdc-attempts.json": {
+      "bytes": 48900,
+      "sha256": "0f644dc73d7952b564a18610a483789696cb3f1d167f23968e948275fd89bc10"
+    },
+    "initial-held.patch": {
+      "bytes": 40941,
+      "sha256": "da02797989f09829ac92498d6d90d47340a2bcbae0f46845c0e63441ce6602f7"
+    },
+    "nms-slice32-cc-capture.py": {
+      "bytes": 3747,
+      "sha256": "fb25bcb87ff012b7386e09e1a327260a947cef64686a17eb8614023ea84e5bda"
+    },
+    "nms-slice32-cdc-capture.py": {
+      "bytes": 3750,
+      "sha256": "8dddfce9aa3aa389385ce912b8394b32dfd02fb81a4fe0fbfc5ba8c6d3980d50"
+    },
+    "nms-slice32-scope-audit.py": {
+      "bytes": 2755,
+      "sha256": "9aad9ffa9b33faff66e55b709342de4afd82886b9d1bea579e4a02fbc6fd9295"
+    },
+    "readiness-graph-diagnostics.json": {
+      "bytes": 24319,
+      "sha256": "70d765904770c3fdfb723e8021546bf4d3331ee2f1b2c3326a34f92ffa3db87e"
+    }
+  }
+}
