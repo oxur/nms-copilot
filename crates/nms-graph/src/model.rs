@@ -27,9 +27,11 @@ pub type PlanetKey = (SystemId, u8);
 /// 3. HashMaps -- associative (name, biome, address lookups)
 ///
 /// The model owns private placeholder provenance, so downstream crates should
-/// construct it with [`Self::new`] or [`Self::from_save`] rather than a struct
-/// literal. [`system_count`](Self::system_count) includes both discoveries and
-/// explicitly marked player-location placeholders.
+/// construct it with [`Self::new`] or a save constructor rather than a struct
+/// literal. [`system_count`](Self::system_count) includes discoveries and
+/// explicitly marked player-location placeholders. Public maps and graph fields
+/// can be changed directly; such edits do not automatically synchronize the
+/// other indexes. Prefer the model's mutators when their behavior fits.
 #[derive(Debug)]
 pub struct GalaxyModel {
     /// Graph topology: nodes are systems, edge weights are distance in ly.
@@ -84,7 +86,7 @@ impl Default for GalaxyModel {
 }
 
 impl GalaxyModel {
-    /// Create an empty `GalaxyModel`.
+    /// Create an empty `GalaxyModel` with active galaxy 0 and no player state.
     pub fn new() -> Self {
         Self {
             graph: StableGraph::default(),
@@ -102,7 +104,17 @@ impl GalaxyModel {
         }
     }
 
-    /// Build a `GalaxyModel` from a parsed save file.
+    /// Build a `GalaxyModel` from a parsed save file using the legacy extraction path.
+    ///
+    /// Discovery addresses use the legacy 48-bit decoder and galaxy 0; converted
+    /// bases also use galaxy 0, while the selected galaxy follows parsed player
+    /// state. This constructor extracts no literal
+    /// discovery names and does not insert a player placeholder. Both save
+    /// constructors build the default KNN-10 graph. Use
+    /// [`Self::from_validated_save`] to retain paired source addresses, active
+    /// player galaxy, checked literal names, and parsed active bases. Nonempty
+    /// base names are indexed lowercase; later duplicate normalized names
+    /// replace earlier values.
     pub fn from_save(save: &SaveRoot) -> Self {
         let extracted = extract_systems(save);
         let bases = save
@@ -121,7 +133,13 @@ impl GalaxyModel {
         )
     }
 
-    /// Build a `GalaxyModel` from a save validated before typed deserialization.
+    /// Build a model from parser-validated source addresses and player state.
+    ///
+    /// Active galaxy follows the parsed current player address; checked
+    /// discovery names and active bases are included. Both save constructors
+    /// build the default KNN-10 graph and do not ensure a player placeholder.
+    /// See the [executing checked extraction example](crate::extract#checked-extraction-example)
+    /// for literal names and source-address observations.
     ///
     /// # Examples
     ///
@@ -267,7 +285,7 @@ impl GalaxyModel {
         self.player_placeholders.contains(id)
     }
 
-    /// Insert a planet-zero placeholder for a player's system when it is absent.
+    /// Insert a marked planet-zero placeholder when the player's system is absent.
     ///
     /// A genuine system with the same ID is left unchanged and is never marked
     /// as synthetic. Explicit provenance distinguishes a placeholder from a
@@ -305,12 +323,15 @@ impl GalaxyModel {
         self.player_placeholders.insert(id);
     }
 
-    /// Number of planets in the model.
+    /// Number of entries in the flattened planet map.
+    ///
+    /// Direct public-field edits can make this differ from the systems' planet
+    /// vectors.
     pub fn planet_count(&self) -> usize {
         self.planets.len()
     }
 
-    /// Number of bases in the model.
+    /// Number of bases indexed by lowercase name.
     pub fn base_count(&self) -> usize {
         self.bases.len()
     }
@@ -322,16 +343,17 @@ impl GalaxyModel {
 
     /// Look up a system by name in the currently active galaxy.
     ///
-    /// Names are matched case-insensitively. Use
+    /// Names are lowercased without trimming. Use
     /// [`system_by_name_in_galaxy`](Self::system_by_name_in_galaxy) to select
-    /// a specific galaxy without changing the active selection.
+    /// a specific galaxy without changing the active selection. If duplicate
+    /// names exist in one galaxy, the derived index stores one representative.
     pub fn system_by_name(&self, name: &str) -> Option<(&SystemId, &System)> {
         self.system_by_name_in_galaxy(name, self.active_galaxy)
     }
 
     /// Look up a system by name in `galaxy` without changing active selection.
     ///
-    /// Names are matched case-insensitively. This lookup never falls back to a
+    /// Names are lowercased without trimming. This lookup never falls back to a
     /// system with the same name in another galaxy.
     pub fn system_by_name_in_galaxy(&self, name: &str, galaxy: u8) -> Option<(&SystemId, &System)> {
         self.name_index
@@ -339,7 +361,7 @@ impl GalaxyModel {
             .and_then(|id| self.systems.get(id).map(|s| (id, s)))
     }
 
-    /// Look up a base by name (case-insensitive).
+    /// Look up a base by lowercased name without trimming.
     pub fn base(&self, name: &str) -> Option<&PlayerBase> {
         self.bases.get(&name.to_lowercase())
     }
@@ -359,19 +381,28 @@ impl GalaxyModel {
         self.spatial.get(&galaxy)
     }
 
-    /// Switch the active galaxy.
+    /// Select the galaxy used by unqualified query methods.
+    ///
+    /// This assigns the supplied index without checking whether that galaxy
+    /// has systems and does not move the player or rebuild any index.
     pub fn set_active_galaxy(&mut self, galaxy: u8) {
         self.active_galaxy = galaxy;
     }
 
-    /// List galaxies that have at least one discovered system.
+    /// Return sorted keys of the per-galaxy spatial indexes.
+    ///
+    /// A key can exist because of an explicitly inserted player placeholder;
+    /// this is not restricted to galaxies with save discoveries.
     pub fn discovered_galaxies(&self) -> Vec<u8> {
         let mut galaxies: Vec<u8> = self.spatial.keys().copied().collect();
         galaxies.sort();
         galaxies
     }
 
-    /// Rebuild all per-galaxy R-trees from the systems HashMap.
+    /// Rebuild only the per-galaxy R-trees from the systems map.
+    ///
+    /// Graph topology and the name, address, planet, and biome indexes are not
+    /// rebuilt by this method.
     pub fn rebuild_spatial(&mut self) {
         let mut galaxy_points: HashMap<u8, Vec<SystemPoint>> = HashMap::new();
         for system in self.systems.values() {
@@ -390,7 +421,10 @@ impl GalaxyModel {
         self.spatial.values().map(|t| t.size()).sum()
     }
 
-    /// Get all planets with a given biome.
+    /// Return flattened planet-map entries indexed under `biome`.
+    ///
+    /// Results reflect the biome index; direct edits to public fields can make
+    /// that derived index stale.
     pub fn planets_by_biome(&self, biome: Biome) -> Vec<&Planet> {
         self.biome_index
             .get(&biome)
@@ -404,7 +438,48 @@ impl GalaxyModel {
     /// it by replacing its contents and discovery indexes while preserving its
     /// graph node, address mapping, and spatial point. A genuine system that
     /// already has the same key remains unchanged, including a genuinely empty
-    /// system.
+    /// system. New systems receive a graph node and spatial point but no edges.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::{GalacticAddress, Planet, System, SystemId};
+    /// use nms_graph::GalaxyModel;
+    ///
+    /// let address = GalacticAddress::new(0, 0, 0, 1, 5, 9);
+    /// let id = SystemId::from_address(&address);
+    /// let mut model = GalaxyModel::new();
+    /// model.insert_player_placeholder(address);
+    /// let node = *model.node_map.get(&id).ok_or("missing graph node")?;
+    /// let point = model.spatial_for(9).and_then(|tree| tree.iter().next()).copied().ok_or("missing spatial point")?;
+    /// let point_count = model.spatial_size();
+    /// assert_eq!(model.graph.node_count(), 1);
+    /// assert_eq!(point_count, 1);
+    /// assert_eq!(model.address_to_id, std::collections::HashMap::from([(id, id)]));
+    /// model.insert_system(System::new(address, Some("Promoted".into()), None, None, vec![
+    ///     Planet::new(3, Some(nms_core::Biome::Lush), None, false, Some("Third".into()), None),
+    /// ]));
+    /// assert!(!model.is_player_placeholder(&id));
+    /// assert_eq!(model.system_count(), 1);
+    /// assert_eq!(model.node_map.get(&id), Some(&node));
+    /// assert_eq!(model.spatial_for(9).and_then(|tree| tree.iter().next()).copied(), Some(point));
+    /// assert_eq!(model.spatial_size(), 1);
+    /// assert_eq!(model.graph.node_count(), 1);
+    /// assert_eq!(model.address_to_id, std::collections::HashMap::from([(id, id)]));
+    /// assert_eq!(model.name_index, std::collections::HashMap::from([((9, "promoted".to_owned()), id)]));
+    /// assert_eq!(model.biome_index, std::collections::HashMap::from([(nms_core::Biome::Lush, vec![(id, 3)])]));
+    /// assert_eq!(model.planet_count(), 1);
+    /// assert_eq!(model.system(&id).map(|system| system.planets.iter().map(|planet| (planet.index, planet.name.as_deref(), planet.biome, planet.infested, planet.seed_hash)).collect::<Vec<_>>()), Some(vec![(3, Some("Third"), Some(nms_core::Biome::Lush), false, None)]));
+    /// assert_eq!(model.planets.get(&(id, 3)).and_then(|planet| planet.name.as_deref()), Some("Third"));
+    /// model.insert_system(System::new(address, Some("Ignored duplicate".into()), None, None, vec![]));
+    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Promoted"));
+    /// assert_eq!(model.system_by_name_in_galaxy("Ignored duplicate", 9), None);
+    /// assert_eq!(model.planets.get(&(id, 3)).and_then(|planet| planet.name.as_deref()), Some("Third"));
+    /// assert_eq!(model.system(&id).map(|system| system.planets.iter().map(|planet| (planet.index, planet.name.as_deref(), planet.biome, planet.infested, planet.seed_hash)).collect::<Vec<_>>()), Some(vec![(3, Some("Third"), Some(nms_core::Biome::Lush), false, None)]));
+    /// assert_eq!(model.name_index, std::collections::HashMap::from([((9, "promoted".to_owned()), id)]));
+    /// assert_eq!(model.biome_index, std::collections::HashMap::from([(nms_core::Biome::Lush, vec![(id, 3)])]));
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn insert_system(&mut self, system: System) {
         let sys_id = SystemId::from_address(&system.address);
 
@@ -486,6 +561,13 @@ impl GalaxyModel {
     /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), Some("Synthetic system"));
     /// assert_eq!(model.planets.get(&(id, 1)).and_then(|planet| planet.name.as_deref()), Some("Synthetic planet"));
     /// assert!(!model.apply_discovery_names(&observed));
+    /// let mut clear_system_only = DiscoveryNames::default();
+    /// clear_system_only.system_names.insert(id, String::new());
+    /// assert!(model.apply_discovery_names(&clear_system_only));
+    /// assert_eq!(model.system(&id).and_then(|system| system.name.as_deref()), None);
+    /// assert_eq!(model.planets.get(&(id, 1)).and_then(|planet| planet.name.as_deref()), Some("Synthetic planet"));
+    /// assert_eq!(model.system(&id).map(|system| system.planets[0].name.as_deref()), Some(Some("Synthetic planet")));
+    /// assert!(!model.apply_discovery_names(&clear_system_only));
     /// ```
     pub fn apply_discovery_names(&mut self, names: &DiscoveryNames) -> bool {
         if names.is_empty() {
@@ -596,11 +678,11 @@ impl GalaxyModel {
         }
     }
 
-    /// Ensure the player's current system exists in the model.
+    /// Ensure the player's current system exists, using a marked planet-zero placeholder.
     ///
-    /// If the player's system has no discovery record, this inserts a
-    /// placeholder system at the player's address so that distance queries
-    /// correctly return 0.0 for in-system results.
+    /// If the player's system has no model entry, this inserts a marked
+    /// planet-zero placeholder so distance queries return 0.0 in-system. With
+    /// no player state, it does nothing; it does not create graph edges.
     pub fn ensure_player_system(&mut self) {
         let current_address = self
             .player_state
@@ -611,7 +693,8 @@ impl GalaxyModel {
         }
     }
 
-    /// Insert a base into the model.
+    /// Insert or replace a nonempty base under its lowercase, untrimmed name.
+    /// A later base with the same normalized name replaces the previous value.
     pub fn insert_base(&mut self, base: PlayerBase) {
         if !base.name.is_empty() {
             self.bases.insert(base.name.to_lowercase(), base);
@@ -620,9 +703,17 @@ impl GalaxyModel {
 
     /// Apply a delta from the file watcher to update the model incrementally.
     ///
-    /// Inserts new systems and planets, updates player position, and
-    /// adds/updates bases. Does NOT rebuild graph edges -- call
-    /// `build_edges()` afterward if needed for routing.
+    /// Inserts new systems and only new planet keys, applies player movement when
+    /// player state already exists, and adds or updates nonempty bases. Existing
+    /// planet contents are not replaced and deletions are not removed. A physical
+    /// galaxy change selects the destination only when player state was updated;
+    /// new systems receive no edges. New planet keys can be stored even when
+    /// their system is absent; they are mirrored into a system only when that
+    /// system exists and has no planet with the same index. Appending a new
+    /// planet index to an existing marked system removes its placeholder marker.
+    /// Names carried by a newly inserted `new_system` can be indexed, but this does not apply
+    /// separate `DiscoveryNames` observations to existing entities, ensure a
+    /// player placeholder, rebuild edges, or persist a cache.
     pub fn apply_delta(&mut self, delta: &SaveDelta) {
         // 1. Insert new systems (with their planets)
         for system in &delta.new_systems {
@@ -678,13 +769,15 @@ impl GalaxyModel {
         }
     }
 
-    /// Apply a complete parsed save update while preserving imported atlas data.
+    /// Apply a complete save update while preserving additive atlas contributions.
     ///
-    /// The event's player state is authoritative for physical location and
-    /// selection decisions; its delta remains the additive source for atlas
-    /// changes. A prior physical galaxy change selects the incoming galaxy.
-    /// When the prior player state is absent, or the physical galaxy is
-    /// unchanged, the caller's selected view is retained.
+    /// The event's complete player state replaces the previous player state;
+    /// its delta remains the additive source for atlas changes. A prior physical
+    /// galaxy change selects the incoming galaxy. When the prior player state is
+    /// absent, or the physical galaxy is unchanged, the caller's selected view
+    /// is retained. It does not apply separate discovery-name observations,
+    /// ensure a player placeholder, rebuild edges, persist a cache, or store the
+    /// save version.
     pub fn apply_save_update(&mut self, update: &SaveUpdate) {
         let previous_reality = self
             .player_state

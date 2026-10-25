@@ -1,7 +1,87 @@
 //! Graph routing algorithms for galactic navigation.
 //!
-//! Provides shortest-path, TSP, and warp-range-constrained routing
-//! over the petgraph topology.
+//! Shortest paths use the petgraph topology built by [`crate::edges`], with a
+//! direct Euclidean fallback for disconnected same-galaxy pairs. TSP ordering,
+//! direct ordered routes, and reachability use system-map positions instead of
+//! graph edges; hop-constrained routes choose waypoints from map neighborhoods.
+//!
+//! # Example
+//!
+//! This executable example keeps query ranking, edge topology, and route legs
+//! as separate observations.
+//!
+//! ```
+//! use nms_core::{Biome, GalacticAddress, Planet, System, SystemId};
+//! use nms_graph::{BiomeFilter, EdgeStrategy, GalaxyModel};
+//!
+//! let addresses = [
+//!     GalacticAddress::new(0, 0, 0, 1, 0, 9),
+//!     GalacticAddress::new(3, 4, 0, 2, 0, 9),
+//!     GalacticAddress::new(6, 8, 0, 3, 0, 9),
+//!     GalacticAddress::new(0, 0, 0, 1, 0, 0),
+//! ];
+//! let ids = addresses.map(|address| SystemId::from_address(&address));
+//! let mut model = GalaxyModel::new();
+//! model.insert_system(System::new(addresses[0], Some("Atlas".into()), None, None, vec![
+//!     Planet::new(1, Some(Biome::Lush), None, false, Some("A1".into()), None),
+//! ]));
+//! model.insert_system(System::new(addresses[1], Some("Beta".into()), None, None, vec![
+//!     Planet::new(2, Some(Biome::Toxic), None, true, Some("B2".into()), None),
+//! ]));
+//! model.insert_system(System::new(addresses[2], Some("Gamma".into()), None, None, vec![]));
+//! model.insert_system(System::new(addresses[3], Some("Atlas".into()), None, None, vec![]));
+//! assert_eq!(addresses[0].distance_ly(&addresses[1]), 2_000.0);
+//! assert_eq!(addresses[0].distance_ly(&addresses[2]), 4_000.0);
+//! let ranked = model.nearest_systems_from_address(&addresses[0], 3);
+//! assert_eq!(ranked, vec![(ids[0], 0.0), (ids[1], 2_000.0), (ids[2], 4_000.0)]);
+//! model.set_active_galaxy(0);
+//! assert!(model.nearest_systems(&addresses[0], 3).is_empty());
+//! model.set_active_galaxy(9);
+//! assert_eq!(model.nearest_systems(&addresses[0], 3), vec![(ids[0], 0.0), (ids[1], 2_000.0), (ids[2], 4_000.0)]);
+//! let (gg9_atlas, _) = model.system_by_name_in_galaxy("ATLAS", 9).ok_or("missing GG9 Atlas")?;
+//! let (gg0_atlas, _) = model.system_by_name_in_galaxy("ATLAS", 0).ok_or("missing GG0 Atlas")?;
+//! assert_eq!((*gg9_atlas, *gg0_atlas), (ids[0], ids[3]));
+//! assert_eq!(model.systems_within_radius_from_address(&addresses[0], 2_000.0), vec![(ids[0], 0.0), (ids[1], 2_000.0)]);
+//! assert!(model.systems_within_radius_from_address(&addresses[0], -1.0).is_empty());
+//! assert!(model.systems_within_radius_from_address(&addresses[0], f64::NAN).is_empty());
+//! let filter = BiomeFilter { biome: Some(Biome::Lush), infested: Some(false), named_only: true, ..Default::default() };
+//! let planets = model.nearest_planets_from_address(&addresses[0], 5, &filter);
+//! assert_eq!(planets.iter().map(|(key, planet, distance)| (*key, planet.name.as_deref(), planet.biome, planet.infested, *distance)).collect::<Vec<_>>(), vec![((ids[0], 1), Some("A1"), Some(Biome::Lush), false, 0.0)]);
+//! model.build_edges(EdgeStrategy::WarpRange { max_ly: 2_500.0 });
+//! assert_eq!(model.graph.edge_count(), 2);
+//! let a_node = *model.node_map.get(&ids[0]).ok_or("missing A graph node")?;
+//! let b_node = *model.node_map.get(&ids[1]).ok_or("missing B graph node")?;
+//! let c_node = *model.node_map.get(&ids[2]).ok_or("missing C graph node")?;
+//! let foreign_node = *model.node_map.get(&ids[3]).ok_or("missing opposed graph node")?;
+//! assert!(model.graph.find_edge(a_node, b_node).is_some());
+//! assert!(model.graph.find_edge(b_node, c_node).is_some());
+//! assert!(model.graph.find_edge(a_node, c_node).is_none());
+//! assert!(model.graph.find_edge(a_node, foreign_node).is_none());
+//! assert!(model.graph.find_edge(b_node, foreign_node).is_none());
+//! assert!(model.graph.find_edge(c_node, foreign_node).is_none());
+//! let route = model.shortest_path(ids[0], ids[2])?;
+//! let project = |route: &nms_graph::Route| route.hops.iter().map(|hop| (hop.system_id, hop.leg_distance_ly, hop.cumulative_ly, hop.is_waypoint)).collect::<Vec<_>>();
+//! assert_eq!(project(&route), vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, false), (ids[2], 2_000.0, 4_000.0, false)]);
+//! assert_eq!(route.total_distance_ly, 4_000.0);
+//! let direct = model.build_route_from_order(&[ids[0], ids[2]])?;
+//! assert_eq!(project(&direct), vec![(ids[0], 0.0, 0.0, false), (ids[2], 4_000.0, 4_000.0, false)]);
+//! assert_eq!(direct.total_distance_ly, 4_000.0);
+//! let constrained = model.constrain_hops(&direct, 2_500.0)?;
+//! assert_eq!(project(&constrained), vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, true), (ids[2], 2_000.0, 4_000.0, false)]);
+//! assert_eq!(constrained.total_distance_ly, 4_000.0);
+//! assert_eq!(constrained.hops.len(), 3);
+//! assert_eq!(GalaxyModel::warp_jump_count(&constrained, 2_500.0), 2);
+//! assert_eq!(model.reachable_systems(ids[0], 2_500.0)?, vec![ids[0], ids[1], ids[2]]);
+//! let empty = model.build_route_from_order(&[])?;
+//! assert!(empty.hops.is_empty());
+//! assert_eq!(empty.total_distance_ly, 0.0);
+//! let tour = model.tsp_nearest_neighbor(ids[0], &[ids[2], ids[1]], false)?;
+//! assert_eq!(project(&tour), vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, false), (ids[2], 2_000.0, 4_000.0, false)]);
+//! assert_eq!(tour.total_distance_ly, 4_000.0);
+//! assert!(matches!(model.tsp_nearest_neighbor(ids[0], &[], false), Err(nms_graph::RouteError::TooFewTargets)));
+//! assert!(matches!(model.shortest_path(ids[0], ids[3]), Err(nms_graph::RouteError::NoPath { from, to }) if from == ids[0] && to == ids[3]));
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
 
 use std::collections::HashSet;
 
@@ -46,11 +126,19 @@ pub enum RoutingAlgorithm {
 /// Errors that can occur during routing.
 #[derive(Debug, Clone)]
 pub enum RouteError {
-    /// A system ID was not found in the model.
-    SystemNotFound(SystemId),
-    /// No same-galaxy path exists, or the requested systems are in different galaxies.
-    NoPath { from: SystemId, to: SystemId },
-    /// Too few targets to form a route.
+    /// A system ID or its graph node index is absent from the model.
+    SystemNotFound(
+        /// System identity supplied to the operation.
+        SystemId,
+    ),
+    /// A requested route would cross galaxy boundaries.
+    NoPath {
+        /// Supplied source system identity.
+        from: SystemId,
+        /// Supplied destination system identity.
+        to: SystemId,
+    },
+    /// An empty target list was supplied to a TSP planner.
     TooFewTargets,
 }
 
@@ -78,8 +166,9 @@ impl GalaxyModel {
     ///
     /// # Errors
     ///
-    /// Returns [`RouteError::SystemNotFound`] when either ID is absent and
-    /// [`RouteError::NoPath`] when the IDs belong to different galaxies.
+    /// Returns [`RouteError::SystemNotFound`] when either ID or node-map entry
+    /// is absent, and [`RouteError::NoPath`] when the IDs belong to different
+    /// galaxies. A same-ID query returns one zero-distance hop.
     pub fn shortest_path(&self, from: SystemId, to: SystemId) -> Result<Route, RouteError> {
         if !self.systems.contains_key(&from) {
             return Err(RouteError::SystemNotFound(from));
@@ -229,6 +318,9 @@ impl GalaxyModel {
     /// Plan a route visiting all targets using nearest-neighbor greedy.
     ///
     /// Uses Euclidean distances directly (not graph edges) for the TSP ordering.
+    /// Equal-distance choices are ordered by [`SystemId`]. Duplicate targets
+    /// are retained; `return_to_start` optionally appends the start after them.
+    /// This greedy heuristic does not promise a globally shortest tour.
     ///
     /// # Errors
     ///
@@ -280,7 +372,9 @@ impl GalaxyModel {
 
     /// Convert a validated ordered list of system IDs into a route.
     ///
-    /// Empty input produces an empty zero-distance route.
+    /// Empty input produces an empty zero-distance route. Repeated IDs in a
+    /// nonempty order are retained, and leg distances are recomputed directly
+    /// from system addresses rather than read from graph edges.
     ///
     /// # Errors
     ///
@@ -317,7 +411,9 @@ impl GalaxyModel {
     /// Improve a route using 2-opt local search.
     ///
     /// Iteratively reverses segments when doing so reduces total distance.
-    /// Runs until no improvement is found (local optimum).
+    /// The first system remains fixed; a closed route also keeps its closing
+    /// endpoint. Swaps require a gain greater than `1e-6`; the result is a local
+    /// heuristic, and orders with fewer than four entries skip the 2-opt pass.
     ///
     /// # Errors
     ///
@@ -395,11 +491,14 @@ impl GalaxyModel {
     /// Add best-effort waypoints for legs longer than `max_ly`.
     ///
     /// Inserts intermediate known systems as waypoints when a hop is too long.
-    /// Waypoints are marked with `is_waypoint: true`.
+    /// Waypoints are marked with `is_waypoint: true`. Input totals are ignored;
+    /// leg and cumulative distances are recomputed from system positions.
     /// Waypoints are selected from the complete radius neighborhood and must
-    /// move closer to the destination. If progress is unavailable or the
-    /// finite search guard is reached, the final direct leg is retained and may
-    /// exceed `max_ly`; this method does not guarantee warp feasibility.
+    /// move closer to the destination. The best-effort search stops after 1,000
+    /// iterations. If progress is unavailable or that guard is reached, the
+    /// final direct leg is retained and may exceed `max_ly`; warp feasibility
+    /// is not guaranteed. The range is not validated; invalid or infeasible
+    /// ranges do not themselves produce a typed error.
     ///
     /// # Errors
     ///
@@ -529,7 +628,16 @@ impl GalaxyModel {
         Ok(())
     }
 
-    /// Count the number of warp jumps needed for a route at a given range.
+    /// Count jumps as the sum of `ceil(leg_distance / warp_range)` for route legs after the start.
+    ///
+    /// The range is not validated; callers should supply a finite positive
+    /// value. Floating-point-to-`usize` casts follow Rust cast semantics, and
+    /// the accumulated count can overflow on some build profiles.
+    ///
+    /// # Panics
+    ///
+    /// Can panic on builds with integer overflow checks when the accumulated
+    /// `usize` jump count exceeds its representable range.
     pub fn warp_jump_count(route: &Route, warp_range: f64) -> usize {
         route
             .hops
@@ -543,7 +651,9 @@ impl GalaxyModel {
 
     /// Find all systems reachable from `start` within a given warp range.
     ///
-    /// Uses DFS over the spatial index (no graph clone needed).
+    /// Uses a depth-first search over map-based radius queries, independent of
+    /// graph edges and without cloning the graph. The start is included even
+    /// when the range is negative or NaN; results are sorted by system identity.
     ///
     /// # Errors
     ///

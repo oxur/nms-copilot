@@ -1,4 +1,47 @@
 //! Extract System/Planet data from raw save discovery records.
+//!
+//! The checked entry points preserve parser-validated addresses; the legacy
+//! entry points use the older typed-save address path.
+//!
+//! # Checked extraction example
+//!
+//! ```
+//! use nms_core::{GalacticAddress, SystemId};
+//! use nms_graph::GalaxyModel;
+//!
+//! let json = br#"{
+//!   "Version":4720,"Platform":"Test","ActiveContext":"Main",
+//!   "CommonStateData":{},
+//!   "BaseContext":{"PlayerStateData":{"UniverseAddress":{
+//!     "RealityIndex":9,"GalacticAddress":{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}},
+//!     "Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},
+//!   "ExpeditionContext":{},
+//!   "DiscoveryManagerData":{"DiscoveryData-v1":{"Store":{"Record":[
+//!     {"DD":{"UA":"0x00010900000003","DT":"SolarSystem"},"DM":{"CN":"Atlas"},"OWS":{"USN":"Explorer"}},
+//!     {"DD":{"UA":"0x20010900000003","DT":"Planet","VP":["0x2A","0x10000"]},"DM":{"CN":"Garden"},"OWS":{}}
+//!   ]}}}
+//! }"#;
+//! let checked = nms_save::parse_validated_save(json)?;
+//! let model = GalaxyModel::from_validated_save(&checked);
+//! let expected = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9));
+//! let system = model.system(&expected).ok_or("missing checked system")?;
+//! assert_eq!(expected.to_string(), "9:000100000003");
+//! assert_eq!(system.address.planet_index(), 0);
+//! assert_eq!(system.name.as_deref(), Some("Atlas"));
+//! assert_eq!(system.discoverer.as_deref(), Some("Explorer"));
+//! assert_eq!(system.source, nms_core::DiscoverySource::Personal);
+//! assert_eq!(model.active_galaxy, 9);
+//! assert_eq!(model.player_position().map(|address| (address.reality_index, address.planet_index(), address.voxel_x())), Some((9, 2, 3)));
+//! let planet = model.planets.get(&(expected, 2)).ok_or("missing checked planet")?;
+//! assert_eq!((planet.index, planet.name.as_deref(), planet.biome, planet.infested, planet.seed_hash), (2, Some("Garden"), Some(nms_core::Biome::Lush), true, Some(42)));
+//! assert_eq!(model.system_count(), 1);
+//! assert_eq!(model.planet_count(), 1);
+//! assert_eq!(system.planets.iter().map(|planet| (planet.index, planet.name.as_deref(), planet.biome, planet.infested, planet.seed_hash)).collect::<Vec<_>>(), vec![(2, Some("Garden"), Some(nms_core::Biome::Lush), true, Some(42))]);
+//! let names = nms_graph::extract::extract_discovery_names_from_validated(&checked);
+//! assert_eq!(names.system_names, std::collections::HashMap::from([(expected, "Atlas".to_owned())]));
+//! assert_eq!(names.planet_names, std::collections::HashMap::from([((expected, 2), "Garden".to_owned())]));
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
 
 use std::collections::{HashMap, HashSet};
 
@@ -14,14 +57,22 @@ use crate::spatial::SystemId;
 /// Extract literal first-row discovery names from a validated save.
 ///
 /// System and planet rows are tracked independently. The first row for each
-/// effective key reserves that key even when its `DM.CN` value is absent or
-/// not a string. Unknown discovery types reserve neither kind of key. Planet
-/// names remain keyed to their exact system and planet index; an orphan planet
-/// row does not create a system observation.
+/// effective key reserves it even when `DM.CN` is absent, null, or non-string;
+/// unknown discovery types reserve neither kind of key. Planet names remain
+/// keyed to their exact system and planet index; an orphan planet row does not
+/// create a system-name observation. Addresses come from parser-validated
+/// record/address pairs, so raw packed addresses are
+/// not decoded again. Name strings are retained literally, including whitespace
+/// and empty strings.
 ///
-/// Addresses come from the parser's validated record/address pairs, so this
-/// function does not decode the raw packed address a second time. Name text is
-/// retained literally, including whitespace and empty strings.
+/// During system extraction, solar-system rows are collected first and planet
+/// rows second. The first solar-system row supplies system metadata; an orphan
+/// planet row can create a system using that row's address. Nonempty `OWS.USN`
+/// supplies the discoverer, positive `OWS.TS` is converted through `u64`-to-`i64`
+/// and may not fit a timestamp, and biome subtype is unavailable from `VP`.
+/// Checked extraction uses literal names and paired source addresses; legacy
+/// extraction assumes galaxy 0 and does not apply `DM.CN` names. These examples
+/// describe this parser path, not authentic game-format completeness.
 ///
 /// # Examples
 ///
@@ -82,8 +133,23 @@ struct SystemBuilder {
 ///     - bits 0..15 (mask 0xFFFF): biome type index (GcBiomeType enum)
 ///     - bit 16 (mask 0x10000): infested flag
 ///
-/// Returns `(biome, infested)`. Returns `(None, false)` if VP is empty or
-/// the format is unrecognized.
+/// Returns `(None, false)` when the VP array has fewer than two entries.
+/// Otherwise returns `(biome, infested)`. Flags accept an unsigned JSON integer or a
+/// hexadecimal string, optionally prefixed with `0x` or `0X`; a bare string is
+/// parsed as hexadecimal, not decimal. Unknown biome indices return `None`
+/// while a recognized infested bit is retained. Invalid flags return
+/// `(None, false)`.
+///
+/// # Examples
+///
+/// ```
+/// use nms_core::Biome;
+/// use nms_graph::extract::extract_biome_from_vp;
+///
+/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("0x10000")]), (Some(Biome::Lush), true));
+/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("0x1000B")]), (None, true));
+/// assert_eq!(extract_biome_from_vp(&[serde_json::json!(0), serde_json::json!("not-hex")]), (None, false));
+/// ```
 pub fn extract_biome_from_vp(vp: &[serde_json::Value]) -> (Option<Biome>, bool) {
     if vp.len() < 2 {
         return (None, false);
@@ -134,7 +200,12 @@ pub fn extract_biome_from_vp(vp: &[serde_json::Value]) -> (Option<Biome>, bool) 
     (biome, infested)
 }
 
-/// Extract seed hash from `VP[0]`.
+/// Extract a seed hash from `VP[0]` as an unsigned integer or hexadecimal string.
+///
+/// Hexadecimal strings follow `u64::from_str_radix` after an optional `0x` or
+/// `0X` prefix; unprefixed strings are hexadecimal, and a leading plus is
+/// accepted by that parser. Negative or nonintegral JSON numbers, malformed
+/// strings, and other JSON types return `None`.
 pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
     if vp.is_empty() {
         return None;
@@ -154,8 +225,16 @@ pub fn extract_seed_from_vp(vp: &[serde_json::Value]) -> Option<u64> {
 
 /// Build systems and planets from a parsed save file's discovery records.
 ///
-/// Groups discovery records by system address, extracts planet biome data,
-/// and returns a map of SystemId -> System.
+/// Groups discovery records by system key and returns a map of
+/// [`SystemId`] to [`System`]. The first solar-system row for a key supplies its
+/// stored address, discoverer, and timestamp; checked extraction also uses its
+/// literal `DM.CN` name, while legacy extraction does not. Extracted systems
+/// have [`nms_core::DiscoverySource::Personal`] provenance; community identity is not
+/// inferred from discovery records. Planet rows are handled in a second pass
+/// and may create an orphan system from their own address, without SolarSystem-row
+/// name, discoverer, or timestamp. Biome subtype is unavailable from `VP`. The
+/// legacy path decodes packed addresses with galaxy 0 and does not extract
+/// literal `DM.CN` discovery names.
 pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
     let records = &save.discovery_manager_data.discovery_data_v1.store.record;
     extract_systems_with_records(
@@ -168,7 +247,17 @@ pub fn extract_systems(save: &SaveRoot) -> HashMap<SystemId, System> {
     )
 }
 
-/// Extract systems using addresses checked by [`ValidatedSave`].
+/// Extract systems using the checked addresses paired by [`ValidatedSave`].
+///
+/// Solar-system and planet rows are processed in separate passes. The first
+/// row for each effective system or planet key supplies its data; an orphan
+/// planet row can create a system, and its stored address can retain that
+/// planet index while the [`SystemId`] key remains planet-zeroed. It follows the
+/// same SolarSystem metadata, orphan-row, and Personal provenance rules as
+/// [`extract_systems`]. Biome subtype is unavailable from `VP`.
+///
+/// See the [module's checked extraction example](crate::extract#checked-extraction-example)
+/// for a complete model and literal identity walkthrough.
 ///
 /// # Examples
 ///

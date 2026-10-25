@@ -28,15 +28,23 @@ pub struct ImportStats {
     pub skipped: usize,
 }
 
-/// Errors that can occur during community data import.
+/// Errors that can occur while creating or reading a community CSV reader.
 #[derive(Debug, thiserror::Error)]
 pub enum ImportError {
-    /// CSV reading/parsing error.
+    /// CSV reader construction or CSV parsing error.
     #[error("CSV error: {0}")]
-    Csv(#[from] csv::Error),
-    /// I/O error reading the file.
+    Csv(
+        /// Underlying CSV error.
+        #[from]
+        csv::Error,
+    ),
+    /// Public conversion from a standard file I/O error.
     #[error("I/O error: {0}")]
-    Io(#[from] std::io::Error),
+    Io(
+        /// Underlying I/O error.
+        #[from]
+        std::io::Error,
+    ),
 }
 
 /// A single row from a community coordinate CSV.
@@ -95,11 +103,66 @@ fn resolve_galaxy_index(name: &str) -> u8 {
 /// Expected CSV columns (flexible naming via aliases):
 /// - `System Name` (required)
 /// - `Portal Glyphs` (required) -- 12 hex digits
-/// - `Galaxy` (optional, defaults to "Euclid")
-/// - `Biome` (optional)
+/// - `Galaxy` (optional, defaults to "Euclid"); an unrecognized or empty value
+///   falls back to index 0. Numeric indexes and case-insensitive galaxy names
+///   are accepted without trimming the galaxy field.
+/// - `Biome` (optional); a recognized biome creates planet index 0, while an
+///   absent or unrecognized biome leaves the accepted system with no planets.
 /// - `Platform` (optional, currently ignored)
 ///
+/// Accepted headers are `system_name`, `System Name`, or `Name` for the system
+/// name; `portal_glyphs`, `Portal Glyphs`, `Glyphs`, or `glyphs` for glyphs;
+/// `galaxy` or `Galaxy`; `biome` or `Biome`; and `platform` or `Platform` (the
+/// platform column is ignored). Glyph text is trimmed and accepts an optional
+/// `0x`/`0X` prefix, then must contain exactly 12 hexadecimal digits.
+///
 /// Returns [`ImportStats`] summarizing what was imported.
+///
+/// A row matching an existing genuine system is counted as a duplicate; a
+/// marked player placeholder is replaced in place and counted as added. Invalid
+/// rows or glyphs increment `skipped`. A recognized biome creates one planet at
+/// index 0; an unrecognized biome is accepted with an empty planet list. The
+/// exact `source_name` is stored as community contribution provenance, not as
+/// the discoverer. The system address retains the glyph planet index, which need
+/// not be zero. This method does not build graph edges or persist a cache. A
+/// failure to create the initial CSV reader is returned as [`ImportError::Csv`].
+///
+/// # Examples
+///
+/// ```
+/// use std::fs;
+/// use std::path::Path;
+///
+/// use nms_core::{Biome, GalacticAddress, SystemId};
+/// use nms_graph::{GalaxyModel, import::{ImportStats, import_csv}};
+///
+/// let temp = tempfile::tempdir()?;
+/// let path = temp.path().join("catalog.csv");
+/// fs::write(&path, b"System Name,Portal Glyphs,Galaxy,Biome\nAtlas,200100000003,9,Lush\nIgnored,200100000003,9,Toxic\nBad,bad,9,Lush\n")?;
+/// let mut model = GalaxyModel::new();
+/// let stats = import_csv(&mut model, Path::new(&path), "local catalog")?;
+/// assert_eq!(stats, ImportStats { added: 1, duplicates: 1, skipped: 1 });
+/// let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
+/// let id = SystemId::from_address(&address);
+/// let system = model.system(&id).ok_or("missing imported system")?;
+/// assert_eq!(system.name.as_deref(), Some("Atlas"));
+/// assert_eq!(system.source, nms_core::DiscoverySource::Community { source: "local catalog".into() });
+/// assert_eq!(system.address.planet_index(), 2);
+/// assert_eq!(model.planets.get(&(id, 0)).and_then(|planet| planet.biome), Some(Biome::Lush));
+/// assert_eq!(model.graph.edge_count(), 0);
+/// assert_eq!(id.to_string(), "9:000100000003");
+/// assert_eq!(model.planet_count(), 1);
+/// assert_eq!(model.system(&id).ok_or("missing system")?.planets.iter().map(|planet| (planet.index, planet.biome)).collect::<Vec<_>>(), vec![(0, Some(Biome::Lush))]);
+/// assert_eq!(model.system_count(), 1);
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`ImportError::Csv`] if the initial CSV reader cannot be created.
+/// Per-row CSV deserialization and invalid glyph rows are counted as skipped.
+/// The public [`ImportError::Io`] conversion exists, but this function does not
+/// directly perform file I/O that returns that variant.
 pub fn import_csv(
     model: &mut GalaxyModel,
     path: &Path,

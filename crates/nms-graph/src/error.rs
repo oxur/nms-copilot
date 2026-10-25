@@ -1,22 +1,43 @@
+//! Errors returned by graph queries and model operations.
+
 use thiserror::Error;
 
+/// An error returned by a graph lookup or spatial query.
+///
+/// Variants describe the graph API's error vocabulary; an individual method
+/// returns only the variants documented on that method.
 #[derive(Debug, Error)]
 #[non_exhaustive]
 pub enum GraphError {
+    /// A requested system could not be found.
     #[error("system not found: {0}")]
-    SystemNotFound(String),
+    SystemNotFound(
+        /// Supplied system reference that failed lookup.
+        String,
+    ),
 
+    /// A requested base could not be found.
     #[error("base not found: {0}")]
-    BaseNotFound(String),
+    BaseNotFound(
+        /// Supplied base name that failed lookup.
+        String,
+    ),
 
-    /// No discovered systems exist in the requested galaxy.
+    /// No model systems, including placeholders, exist in the requested galaxy.
     #[error("no systems in galaxy {0}")]
-    NoSystemsInGalaxy(u8),
+    NoSystemsInGalaxy(
+        /// Galaxy index with no systems.
+        u8,
+    ),
 
     /// A named route target could not be resolved.
     #[error("target not found: {0}")]
-    TargetNotFound(String),
+    TargetNotFound(
+        /// Supplied target reference that failed lookup.
+        String,
+    ),
 
+    /// No player position is available for an implicit reference point.
     #[error("no player position available")]
     NoPlayerPosition,
 
