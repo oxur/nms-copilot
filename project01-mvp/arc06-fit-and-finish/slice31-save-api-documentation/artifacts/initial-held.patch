@@ -1,0 +1,1904 @@
+diff --git a/crates/nms-save/src/address.rs b/crates/nms-save/src/address.rs
+index eb74d87..7012cb7 100644
+--- a/crates/nms-save/src/address.rs
++++ b/crates/nms-save/src/address.rs
+@@ -161,12 +161,6 @@ impl AddressDecodeError {
+ /// See the module-level [packed-field contract](index.html#packed-save-field-values) for
+ /// accepted JSON types, lexical rules, width, and bit layout.
+ ///
+-/// # Errors
+-///
+-/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
+-/// malformed hexadecimal string, packed value wider than 56 bits, or negative
+-/// integer.
+-///
+ /// # Examples
+ ///
+ /// ```
+@@ -177,6 +171,12 @@ impl AddressDecodeError {
+ /// assert_eq!(address.voxel_x(), 1130);
+ /// # Ok::<(), Box<dyn std::error::Error>>(())
+ /// ```
++/// # Errors
++///
++/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
++/// malformed hexadecimal string, packed value wider than 56 bits, or negative
++/// integer.
++///
+ pub fn decode_discovery_address(
+     value: Option<&Value>,
+     path: &str,
+@@ -191,12 +191,6 @@ pub fn decode_discovery_address(
+ /// See the module-level [packed-field contract](index.html#packed-save-field-values) for
+ /// accepted JSON types, lexical rules, width, and bit layout.
+ ///
+-/// # Errors
+-///
+-/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
+-/// malformed hexadecimal string, packed value wider than 56 bits, or negative
+-/// integer.
+-///
+ /// # Examples
+ ///
+ /// ```
+@@ -207,6 +201,12 @@ pub fn decode_discovery_address(
+ /// assert_eq!(address.voxel_x(), -1017);
+ /// # Ok::<(), Box<dyn std::error::Error>>(())
+ /// ```
++/// # Errors
++///
++/// Returns [`AddressDecodeError`] for a missing value, unsupported JSON kind,
++/// malformed hexadecimal string, packed value wider than 56 bits, or negative
++/// integer.
++///
+ pub fn decode_base_address(
+     value: Option<&Value>,
+     path: &str,
+@@ -221,12 +221,6 @@ pub fn decode_base_address(
+ /// See the module-level [expanded-object contract](index.html#expanded-address-objects)
+ /// for required members, ranges, validation order, and diagnostic paths.
+ ///
+-/// # Errors
+-///
+-/// Returns [`AddressDecodeError`] when the wrapper or any required member is
+-/// absent, has the wrong JSON kind, or falls outside its encoded component
+-/// range.
+-///
+ /// # Examples
+ ///
+ /// ```
+@@ -243,6 +237,12 @@ pub fn decode_base_address(
+ /// assert_eq!(address.voxel_z(), -1244);
+ /// # Ok::<(), Box<dyn std::error::Error>>(())
+ /// ```
++/// # Errors
++///
++/// Returns [`AddressDecodeError`] when the wrapper or any required member is
++/// absent, has the wrong JSON kind, or falls outside its encoded component
++/// range.
++///
+ pub fn decode_current_address(
+     value: Option<&Value>,
+     path: &str,
+@@ -257,11 +257,6 @@ pub fn decode_current_address(
+ /// See the module-level [presence contract](index.html#presence-paths-and-scope) for the
+ /// distinction between absence and JSON null.
+ ///
+-/// # Errors
+-///
+-/// Returns [`AddressDecodeError`] when a present wrapper or required member is
+-/// invalid or outside its encoded component range.
+-///
+ /// # Examples
+ ///
+ /// ```
+@@ -276,6 +271,11 @@ pub fn decode_current_address(
+ /// assert!(decode_previous_address(Some(&value), "/Player/PreviousUniverseAddress")?.is_none());
+ /// # Ok::<(), Box<dyn std::error::Error>>(())
+ /// ```
++/// # Errors
++///
++/// Returns [`AddressDecodeError`] when a present wrapper or required member is
++/// invalid or outside its encoded component range.
++///
+ pub fn decode_previous_address(
+     value: Option<&Value>,
+     path: &str,
+diff --git a/crates/nms-save/src/convert.rs b/crates/nms-save/src/convert.rs
+index 742008b..515b4cc 100644
+--- a/crates/nms-save/src/convert.rs
++++ b/crates/nms-save/src/convert.rs
+@@ -9,11 +9,30 @@ use chrono::DateTime;
+ use crate::model::*;
+ 
+ impl RawDiscoveryRecord {
+-    /// Legacy conversion to a core discovery record, or `None` for an unknown type.
++    /// Convert one recognized raw discovery row through the legacy address layout.
+     ///
+-    /// This compatibility helper uses the historical galaxy-zero behavior.
+-    /// Applications should use the address paired by
++    /// The converter recognizes exactly `Planet`, `SolarSystem`, `Sector`,
++    /// `Animal`, `Flora`, and `Mineral`; other `DT` strings return `None`. It
++    /// uses galaxy zero for the packed address and does not extract a discovery
++    /// display name from `DM.CN`. A nonempty `OWS.USN` becomes the discoverer,
++    /// `FL.U` greater than zero becomes uploaded, and a positive `OWS.TS` is
++    /// converted to a timestamp when chrono can represent it. For source-aware
++    /// addresses, use the row/address pair from
+     /// [`crate::ValidatedSave::discoveries`].
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let raw: nms_save::model::RawDiscoveryRecord = serde_json::from_str(
++    ///     r#"{"DD":{"UA":"0x513300F79B1D82","DT":"Flora"},"OWS":{"USN":"Pilot","TS":1700000000},"FL":{"U":1}}"#,
++    /// )?;
++    /// let record = raw.to_core_record().ok_or_else(|| {
++    ///     std::io::Error::new(std::io::ErrorKind::Other, "unrecognized discovery type")
++    /// })?;
++    /// assert_eq!(record.discoverer.as_deref(), Some("Pilot"));
++    /// assert!(record.is_uploaded);
++    /// # Ok::<(), Box<dyn std::error::Error>>(())
++    /// ```
+     pub fn to_core_record(&self) -> Option<nms_core::DiscoveryRecord> {
+         let discovery_type = match self.dd.dt.as_str() {
+             "Planet" => nms_core::Discovery::Planet,
+@@ -51,10 +70,25 @@ impl RawDiscoveryRecord {
+ }
+ 
+ impl PersistentPlayerBase {
+-    /// Legacy conversion to a core base using the historical galaxy-zero address.
++    /// Convert a typed base to a core base using the legacy packed-address layout.
+     ///
+-    /// Applications should use the checked bases exposed by
++    /// `HomePlanetBase` and `FreighterBase` map to their matching core variants;
++    /// every other source string maps to `ExternalPlanetBase`. The address uses
++    /// galaxy zero, position and name are copied, and an empty owner UID becomes
++    /// `None`. The checked base projection is available from
+     /// [`crate::ValidatedSave::bases`].
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let raw: nms_save::model::PersistentPlayerBase = serde_json::from_str(
++    ///     r#"{"GalacticAddress":"0x40050003AB8C07","Name":"Home","Owner":{"UID":"123"},"BaseType":{"PersistentBaseTypes":"HomePlanetBase"}}"#,
++    /// )?;
++    /// let base = raw.to_core_base();
++    /// assert_eq!(base.name, "Home");
++    /// assert_eq!(base.owner_uid.as_deref(), Some("123"));
++    /// # Ok::<(), Box<dyn std::error::Error>>(())
++    /// ```
+     pub fn to_core_base(&self) -> nms_core::PlayerBase {
+         let base_type = match self.base_type.persistent_base_types.as_str() {
+             "HomePlanetBase" => nms_core::BaseType::HomePlanetBase,
+@@ -77,9 +111,19 @@ impl PersistentPlayerBase {
+ }
+ 
+ impl SaveRoot {
+-    /// Get `PlayerStateData` for the active context through the legacy parser.
++    /// Return player-state data for the active context using legacy selection.
+     ///
+-    /// This accessor retains serde-defaulted address behavior for compatibility.
++    /// Only the exact string `Expedition` selects the expedition context; every
++    /// other value selects the base context. The selected fields may already
++    /// contain serde defaults, so this accessor is not source validation.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let root = nms_save::parse_save(br#"{"Version":1,"Platform":"Test","ActiveContext":"Expedition","CommonStateData":{},"BaseContext":{"PlayerStateData":{"Units":10}},"ExpeditionContext":{"PlayerStateData":{"Units":20}},"DiscoveryManagerData":{}}"#)?;
++    /// assert_eq!(root.active_player_state().units, 20);
++    /// # Ok::<(), Box<dyn std::error::Error>>(())
++    /// ```
+     pub fn active_player_state(&self) -> &PlayerStateData {
+         match self.active_context.as_str() {
+             "Expedition" => &self.expedition_context.player_state_data,
+@@ -87,10 +131,26 @@ impl SaveRoot {
+         }
+     }
+ 
+-    /// Convert active player state through the legacy serde-decoded address fields.
++    /// Convert the selected typed state using the legacy address conversion.
++    ///
++    /// Current and previous addresses use the typed wrapper's legacy 48-bit
++    /// conversion. Previous-address absence is detected only from zero X, Y, Z,
++    /// and solar-system components; planet and galaxy do not participate in
++    /// that sentinel. Currency values are cast from signed to unsigned, and the
++    /// freighter address is currently `None`. Use
++    /// [`crate::ValidatedSave::player_state`] when original source members must
++    /// be checked before serde defaults or narrowing.
++    ///
++    /// # Examples
+     ///
+-    /// Applications should use [`crate::ValidatedSave::player_state`] when
+-    /// source addresses must be validated before defaults or narrowing.
++    /// ```
++    /// let root = nms_save::parse_save(br#"{"Version":1,"Platform":"Test","ActiveContext":"Main","CommonStateData":{},"BaseContext":{"PlayerStateData":{"UniverseAddress":{"RealityIndex":9,"GalacticAddress":{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}},"Units":25}},"ExpeditionContext":{},"DiscoveryManagerData":{}}"#)?;
++    /// let state = root.to_core_player_state();
++    /// assert_eq!(state.current_reality, 9);
++    /// assert_eq!(state.current_address.voxel_x(), 3);
++    /// assert_eq!(state.freighter_address, None);
++    /// # Ok::<(), Box<dyn std::error::Error>>(())
++    /// ```
+     pub fn to_core_player_state(&self) -> nms_core::PlayerState {
+         let ps = self.active_player_state();
+         let ua = &ps.universe_address;
+diff --git a/crates/nms-save/src/decompress.rs b/crates/nms-save/src/decompress.rs
+index 2a9a4e9..4f7db8e 100644
+--- a/crates/nms-save/src/decompress.rs
++++ b/crates/nms-save/src/decompress.rs
+@@ -27,11 +27,12 @@ struct BlockHeader {
+     decompressed_size: u32,
+ }
+ 
+-/// Detect whether raw save file bytes are LZ4-compressed or plaintext JSON.
++/// Classify raw bytes using only their first byte.
+ ///
+-/// Checks the first byte for `{` (ASCII 0x7B). No valid NMS LZ4 save starts
+-/// with `{` — they start with the block magic `0xFEEDA1E5` (first byte `0xE5`).
+-/// This handles both compact (`{"Version":...}`) and pretty-printed JSON.
++/// A first byte of `{` selects [`SaveFormat::PlaintextJson`]; every other
++/// value, including empty input and JSON with leading whitespace, selects
++/// [`SaveFormat::Lz4Compressed`]. The function does not validate JSON or
++/// inspect an LZ4 header.
+ pub fn detect_format(data: &[u8]) -> SaveFormat {
+     if !data.is_empty() && data[0] == 0x7B {
+         SaveFormat::PlaintextJson
+@@ -40,13 +41,30 @@ pub fn detect_format(data: &[u8]) -> SaveFormat {
+     }
+ }
+ 
+-/// Decompress an entire NMS save file.
++/// Decompress NMS LZ4 blocks or pass through first-byte-classified JSON bytes.
+ ///
+-/// - If the data is plaintext JSON (starts with `{"`), returns a clone of the input.
+-/// - If the data is LZ4 compressed, parses all blocks and returns concatenated
+-///   decompressed bytes.
++/// When the first byte is `{`, this returns an exact copy of the input without
++/// checking UTF-8 or JSON syntax. Otherwise it parses consecutive 16-byte LZ4
++/// headers, validates each block, and concatenates decompressed payloads. An
++/// empty slice is classified as compressed input and produces an empty output.
+ ///
+-/// The returned bytes are UTF-8 JSON.
++/// # Errors
++///
++/// Returns [`SaveError::UnexpectedEof`] for an incomplete header or payload,
++/// [`SaveError::InvalidMagic`] for a wrong block magic,
++/// [`SaveError::ChunkTooLarge`] for a declared block above 0x80000 bytes, or
++/// [`SaveError::DecompressionFailed`] when the LZ4 decoder rejects a payload.
++///
++/// # Examples
++///
++/// ```
++/// use nms_save::{SaveError, SaveFormat, decompress_save, detect_format};
++/// assert_eq!(decompress_save(b"{}")?, b"{}");
++/// assert_eq!(decompress_save(&[])?, b"");
++/// assert_eq!(detect_format(b" {}"), SaveFormat::Lz4Compressed);
++/// assert!(matches!(decompress_save(b" {}"), Err(SaveError::UnexpectedEof { offset: 0, expected: 16 })));
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn decompress_save(data: &[u8]) -> Result<Vec<u8>, SaveError> {
+     match detect_format(data) {
+         SaveFormat::PlaintextJson => Ok(data.to_vec()),
+@@ -54,7 +72,24 @@ pub fn decompress_save(data: &[u8]) -> Result<Vec<u8>, SaveError> {
+     }
+ }
+ 
+-/// Convenience function: read a file from disk and decompress it.
++/// Read a file and apply [`decompress_save`] to its bytes.
++///
++/// This reads the file but does not parse the returned bytes as UTF-8 or JSON.
++///
++/// # Errors
++///
++/// Returns [`SaveError::Io`] when reading fails, or the decompression error
++/// returned by [`decompress_save`].
++///
++/// # Examples
++///
++/// ```no_run
++/// # fn read(path: &std::path::Path) -> Result<(), nms_save::SaveError> {
++/// let bytes = nms_save::decompress_save_file(path)?;
++/// println!("{} decompressed bytes", bytes.len());
++/// # Ok(())
++/// # }
++/// ```
+ pub fn decompress_save_file(path: &std::path::Path) -> Result<Vec<u8>, SaveError> {
+     let data = std::fs::read(path)?;
+     decompress_save(&data)
+diff --git a/crates/nms-save/src/error.rs b/crates/nms-save/src/error.rs
+index 2ffb590..0db7f80 100644
+--- a/crates/nms-save/src/error.rs
++++ b/crates/nms-save/src/error.rs
+@@ -8,48 +8,82 @@ use crate::address::AddressDecodeError;
+ pub enum SaveError {
+     /// Block header magic mismatch.
+     #[error("invalid block magic at offset {offset:#x}: expected 0xFEEDA1E5, found {found:#010x}")]
+-    InvalidMagic { offset: usize, found: u32 },
++    InvalidMagic {
++        /// Byte offset where the block header began.
++        offset: usize,
++        /// Little-endian magic value read from that header.
++        found: u32,
++    },
+ 
+     /// LZ4 decompression failed for a block.
+     #[error("LZ4 decompression failed at offset {offset:#x}: {message}")]
+-    DecompressionFailed { offset: usize, message: String },
++    DecompressionFailed {
++        /// Byte offset of the LZ4 block header.
++        offset: usize,
++        /// Decoder-provided description of the malformed block.
++        message: String,
++    },
+ 
+     /// File ended before the expected number of bytes could be read.
+     #[error("unexpected EOF at offset {offset:#x}: needed {expected} more bytes")]
+-    UnexpectedEof { offset: usize, expected: usize },
++    UnexpectedEof {
++        /// Byte offset at which the incomplete header or payload begins.
++        offset: usize,
++        /// Number of bytes requested for the header or payload.
++        expected: usize,
++    },
+ 
+     /// A block's decompressed_size exceeds the maximum chunk size.
+     #[error(
+         "block at offset {offset:#x} declares decompressed size {declared}, exceeds max 0x80000"
+     )]
+-    ChunkTooLarge { offset: usize, declared: u32 },
++    ChunkTooLarge {
++        /// Byte offset of the header that declared the size.
++        offset: usize,
++        /// Declared decompressed size, greater than the supported chunk limit.
++        declared: u32,
++    },
+ 
+     /// Metadata file has an invalid length (not one of the known sizes).
+     #[error("invalid metadata file length: {length} bytes")]
+-    InvalidMetaLength { length: usize },
++    InvalidMetaLength {
++        /// Observed metadata-file byte length.
++        length: usize,
++    },
+ 
+-    /// Metadata decryption failed -- magic sentinel not found after trying all slots.
++    /// No candidate same-kind storage key produced the metadata magic sentinel.
+     #[error("metadata decryption failed: magic sentinel not found")]
+     MetaDecryptionFailed,
+ 
+     /// Metadata format version is unsupported (e.g., 2000/vanilla).
+     #[error("unsupported metadata format version: {version:#x}")]
+-    UnsupportedMetaFormat { version: u32 },
++    UnsupportedMetaFormat {
++        /// Metadata format value rejected by the parser (currently `0x7D0`).
++        version: u32,
++    },
+ 
+     /// SHA-256 verification failed.
+     #[error("SHA-256 mismatch")]
+     Sha256Mismatch {
++        /// Digest stored in metadata.
+         expected: [u8; 32],
++        /// Digest computed from the supplied raw save bytes.
+         actual: [u8; 32],
+     },
+ 
+     /// Failed to parse a mapping JSON file.
+     #[error("mapping parse error: {message}")]
+-    MappingParseError { message: String },
++    MappingParseError {
++        /// Serde's mapping-file parse diagnostic.
++        message: String,
++    },
+ 
+     /// Failed to parse save JSON.
+     #[error("JSON parse error: {message}")]
+-    JsonParseError { message: String },
++    JsonParseError {
++        /// Serde's JSON or typed-model parse diagnostic.
++        message: String,
++    },
+ 
+     /// A modeled source address or its containing JSON field is invalid.
+     #[error("{0}")]
+diff --git a/crates/nms-save/src/lib.rs b/crates/nms-save/src/lib.rs
+index cd21e5c..d78ed2a 100644
+--- a/crates/nms-save/src/lib.rs
++++ b/crates/nms-save/src/lib.rs
+@@ -1,24 +1,72 @@
+-//! Raw binary save file parser for No Man's Sky.
++//! Read and model No Man's Sky save data.
+ //!
+-//! Reads `save.hg` files directly from disk:
++//! The legacy file path reads bytes, classifies by the first byte, decompresses
++//! LZ4 blocks when selected, strips trailing NUL bytes, replaces invalid UTF-8,
++//! checks a leading `{"F2P"` key after ASCII whitespace, optionally applies the
++//! bundled mapping, then deserializes the modeled fields. [`parse_save`] is a
++//! narrower compatibility entry point for already-deobfuscated UTF-8 JSON and
++//! applies serde defaults without validating original address members.
+ //!
+-//! 1. Detect format (plaintext JSON vs LZ4 compressed)
+-//! 2. Parse sequential LZ4 blocks (magic `0xFEEDA1E5`), decompress, concatenate
+-//! 3. Deobfuscate JSON keys using MBINCompiler's `mapping.json`
+-//! 4. Deserialize into typed Rust structs via serde
++//! Callers that need source-address validation can use
++//! [`parse_validated_save`] while holding original deobfuscated JSON. It checks
++//! modeled address values before serde defaults and keeps each physical address
++//! paired with the typed row parsed from that same value. Both routes produce a
++//! typed subset: unknown source keys and opaque values not represented by the
++//! model are not a complete raw-save archive. Metadata parsing is a separate
++//! operation through [`read_metadata`] and [`verify_sha256`]; neither save-file
++//! entry point reads or verifies metadata automatically.
+ //!
+-//! Also handles metadata verification (`mf_save.hg`) via XXTEA + SHA-256.
+-//!
+-//! Callers that retain the original JSON can opt into strict address
+-//! validation with [`address`], without changing the legacy typed parser.
++//! # Checked in-memory example
+ //!
+ //! ```
+-//! use nms_save::address::decode_discovery_address;
+-//! let value = serde_json::json!("0x212B0004B2446A");
+-//! let address = decode_discovery_address(Some(&value), "/DD/UA")?;
+-//! assert_eq!(address.voxel_x(), 1130);
++//! let json = br#"{
++//!   "Version": 4720, "Platform": "Test", "ActiveContext": "Main",
++//!   "CommonStateData": {},
++//!   "BaseContext": {"PlayerStateData": {"UniverseAddress": {
++//!     "RealityIndex": 9, "GalacticAddress": {"VoxelX": 3, "VoxelY": 0,
++//!       "VoxelZ": 0, "SolarSystemIndex": 1, "PlanetIndex": 2}
++//!   }}},
++//!   "ExpeditionContext": {},
++//!   "DiscoveryManagerData": {"DiscoveryData-v1": {"Store": {"Record": [
++//!     {"DD": {"UA": "0x20010900000003", "DT": "Planet"}, "OWS": {}}
++//!   ]}}}
++//! }"#;
++//! let checked = nms_save::parse_validated_save(json)?;
++//! assert_eq!(checked.root().version, 4720);
++//! assert_eq!(checked.player_state().current_reality, 9);
++//! assert_eq!(checked.player_state().current_address.planet_index(), 2);
++//! assert_eq!(checked.player_state().current_address.voxel_x(), 3);
++//! let (record, physical) = checked.discoveries().next().ok_or_else(|| {
++//!     std::io::Error::new(std::io::ErrorKind::Other, "missing discovery row")
++//! })?;
++//! assert_eq!(record.dd.dt, "Planet");
++//! assert_eq!(physical.reality_index, 9);
++//! assert_eq!(physical.planet_index(), 2);
++//! assert_eq!(physical.voxel_x(), 3);
++//! assert_eq!(physical.solar_system_index(), 1);
++//! assert_eq!(physical.packed(), 0x200100000003);
++//! assert!(checked.bases().is_empty());
++//! assert!(checked.player_state().previous_address.is_none());
+ //! # Ok::<(), Box<dyn std::error::Error>>(())
+ //! ```
++//!
++//! A checked packed address wider than 56 bits is rejected at its source path:
++//!
++//! ```
++//! let too_wide = br#"{
++//!   "Version":4720,"Platform":"Test","ActiveContext":"Main",
++//!   "CommonStateData":{},"BaseContext":{"PlayerStateData":{"UniverseAddress":{
++//!     "RealityIndex":0,"GalacticAddress":{"VoxelX":0,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":0,"PlanetIndex":0}}}},
++//!   "ExpeditionContext":{},"DiscoveryManagerData":{"DiscoveryData-v1":{"Store":{"Record":[
++//!     {"DD":{"UA":"0x100000000000000","DT":"Planet"},"OWS":{}}
++//!   ]}}}
++//! }"#;
++//! assert!(matches!(
++//!     nms_save::parse_validated_save(too_wide),
++//!     Err(nms_save::SaveError::Address(nms_save::address::AddressDecodeError::PackedWidth { path }))
++//!         if path == "/DiscoveryManagerData/DiscoveryData-v1/Store/Record/0/DD/UA"
++//! ));
++//! ```
+ 
+ pub mod address;
+ pub mod convert;
+@@ -38,28 +86,59 @@ pub use metadata::{SaveMetadata, StorageSlot, read_metadata, verify_sha256};
+ pub use model::SaveRoot;
+ pub use validated::{ValidatedSave, parse_validated_save, parse_validated_save_file};
+ 
+-/// Legacy-permissively parse deobfuscated save JSON into a [`SaveRoot`] struct.
++/// Deserialize already-deobfuscated UTF-8 JSON into the legacy [`SaveRoot`] model.
++///
++/// This does not decompress bytes, map obfuscated keys, or validate source
++/// address presence and ranges before serde applies defaults. Use
++/// [`parse_validated_save`] when the original JSON value must be checked first.
++/// The model retains only fields it defines; unknown JSON members are ignored.
++///
++/// # Errors
+ ///
+-/// The input must be valid UTF-8 JSON with plaintext (deobfuscated) keys. This
+-/// compatibility parser applies serde defaults before address validation; new
+-/// application code should use [`parse_validated_save`].
++/// Returns [`SaveError::JsonParseError`] when JSON syntax or a modeled typed
++/// field cannot be deserialized. It does not return address-validation errors.
++///
++/// # Examples
++///
++/// ```
++/// let root = nms_save::parse_save(br#"{"Version":4720,"Platform":"Test","ActiveContext":"Main","CommonStateData":{},"BaseContext":{},"ExpeditionContext":{},"DiscoveryManagerData":{}}"#)?;
++/// assert_eq!(root.version, 4720);
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn parse_save(json: &[u8]) -> Result<SaveRoot, SaveError> {
+     serde_json::from_slice(json).map_err(|e| SaveError::JsonParseError {
+         message: e.to_string(),
+     })
+ }
+ 
+-/// Legacy-permissively parse a save file from disk, handling the full pipeline.
++/// Read a save file through the legacy byte, mapping, and typed-deserialization path.
++///
++/// The pipeline reads raw bytes, applies first-byte format detection and
++/// decompression, strips trailing NUL bytes, replaces invalid UTF-8, checks
++/// for the leading obfuscated `F2P` key, applies bundled mappings when that
++/// heuristic matches, then deserializes [`SaveRoot`]. This remains a permissive
++/// compatibility route; use [`parse_validated_save_file`] to check modeled
++/// address members before typed defaults.
++///
++/// # Errors
++///
++/// Returns I/O, decompression, mapping JSON, or typed JSON errors from the
++/// existing pipeline. The legacy path does not return checked address errors.
++///
++/// # Panics
++///
++/// Panics only if an embedded bundled mapping fails to parse, which indicates
++/// invalid compiled-in mapping data.
+ ///
+-/// Runs the complete parsing pipeline:
+-/// 1. Read raw bytes from disk
+-/// 2. Decompress LZ4 blocks (passes through plaintext JSON unchanged)
+-/// 3. Check for obfuscated keys and deobfuscate if needed
+-/// 4. Deserialize into [`SaveRoot`]
++/// # Examples
+ ///
+-/// This is the compatibility entry point for reading NMS save files. New
+-/// application code should use [`parse_validated_save_file`].
+-/// For already-decompressed, already-deobfuscated JSON bytes, use [`parse_save`] instead.
++/// ```no_run
++/// # fn read(path: &std::path::Path) -> Result<(), nms_save::SaveError> {
++/// let save = nms_save::parse_save_file(path)?;
++/// println!("save version {}", save.version);
++/// # Ok(())
++/// # }
++/// ```
+ pub fn parse_save_file(path: &std::path::Path) -> Result<SaveRoot, SaveError> {
+     let raw = std::fs::read(path)?;
+     let decompressed = decompress_save(&raw)?;
+diff --git a/crates/nms-save/src/locate.rs b/crates/nms-save/src/locate.rs
+index 18fa3a4..0f87bc6 100644
+--- a/crates/nms-save/src/locate.rs
++++ b/crates/nms-save/src/locate.rs
+@@ -1,4 +1,9 @@
+-//! NMS save file discovery: platform-specific paths, account directories, save files.
++//! Discover NMS account directories and save-file paths without parsing save contents.
++//!
++//! The platform helper returns a conventional root path; listing functions
++//! inspect directory entries and file metadata only. They do not read or
++//! validate save bytes, metadata files, or account identity. The explicit-path
++//! functions are useful with isolated directories in tools and tests.
+ 
+ use std::fmt;
+ use std::path::{Path, PathBuf};
+@@ -8,25 +13,44 @@ use std::time::SystemTime;
+ // Errors
+ // ---------------------------------------------------------------------------
+ 
+-/// Error returned by save file discovery operations.
++/// Error returned while resolving a save root or listing account/save entries.
++///
++/// Path-bearing variants retain the directory associated with the failed
++/// lookup. [`Self::Io`] wraps the operating-system error from directory or
++/// metadata access.
+ #[derive(Debug, thiserror::Error)]
+ #[non_exhaustive]
+ pub enum LocateError {
++    /// The operating system home or data directory could not be resolved.
+     #[error("could not determine home/data directory")]
+     NoHomeDir,
+ 
++    /// The conventional root path does not exist.
+     #[error("NMS save directory not found: {0}")]
+-    SaveDirNotFound(PathBuf),
++    SaveDirNotFound(
++        /// Resolved root path that did not exist.
++        PathBuf,
++    ),
+ 
++    /// No UTF-8 subdirectory was found while listing accounts.
+     #[error("no account directories found in {0}")]
+-    NoAccountDirs(PathBuf),
++    NoAccountDirs(
++        /// Directory searched for UTF-8 account subdirectories.
++        PathBuf,
++    ),
+ 
++    /// No regular file with an accepted save filename was found.
+     #[error("no save files found in {0}")]
+-    NoSaveFiles(PathBuf),
++    NoSaveFiles(
++        /// Account or root directory in which no accepted save name was found.
++        PathBuf,
++    ),
+ 
++    /// The target operating system has no configured automatic save-root path.
+     #[error("unsupported platform for NMS save auto-detection")]
+     UnsupportedPlatform,
+ 
++    /// An operating-system error encountered while reading a directory or file metadata.
+     #[error(transparent)]
+     Io(#[from] std::io::Error),
+ }
+@@ -39,12 +63,18 @@ pub enum LocateError {
+ #[derive(Debug, Clone, PartialEq, Eq)]
+ #[non_exhaustive]
+ pub enum AccountKind {
+-    /// Steam account with numeric Steam ID.
+-    Steam(u64),
++    /// Steam account whose directory suffix parsed as a `u64`.
++    Steam(
++        /// Numeric identifier parsed after the `st_` prefix.
++        u64,
++    ),
+     /// GOG "DefaultUser" account.
+     Gog,
+-    /// Unrecognized directory name.
+-    Unknown(String),
++    /// Directory name that did not match the recognized GOG or Steam forms.
++    Unknown(
++        /// Original UTF-8 directory name.
++        String,
++    ),
+ }
+ 
+ impl fmt::Display for AccountKind {
+@@ -75,7 +105,10 @@ impl AccountDir {
+         &self.kind
+     }
+ 
+-    /// The directory name component (e.g., `st_76561198025707979`).
++    /// Return the UTF-8 directory name component.
++    ///
++    /// If the stored path's final component is not valid UTF-8, this returns
++    /// an empty string.
+     pub fn name(&self) -> &str {
+         self.path.file_name().and_then(|n| n.to_str()).unwrap_or("")
+     }
+@@ -98,10 +131,12 @@ fn parse_account_kind(name: &str) -> AccountKind {
+ // Save file
+ // ---------------------------------------------------------------------------
+ 
+-/// Whether a save file is a manual or auto save.
++/// Whether a discovered save filename denotes the manual or auto file.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+ pub enum SaveType {
++    /// Manual save (`save.hg` or an odd numbered file index).
+     Manual,
++    /// Auto save (an even numbered file index).
+     Auto,
+ }
+ 
+@@ -144,7 +179,9 @@ impl SaveFile {
+         self.modified
+     }
+ 
+-    /// Path to the corresponding metadata file (`mf_save*.hg`).
++    /// Construct the conventional metadata sibling path by prefixing `mf_`.
++    ///
++    /// This only constructs a path; it does not check whether that file exists.
+     pub fn metadata_path(&self) -> PathBuf {
+         let name = self
+             .path
+@@ -179,7 +216,7 @@ impl SaveSlot {
+         self.auto.as_ref()
+     }
+ 
+-    /// The most recently modified save in this slot (manual or auto).
++    /// Return the newer save in this slot, preferring manual on equal timestamps.
+     pub fn most_recent(&self) -> Option<&SaveFile> {
+         match (&self.manual, &self.auto) {
+             (Some(m), Some(a)) => {
+@@ -237,13 +274,26 @@ fn parse_save_filename(name: &str) -> Option<(u8, SaveType)> {
+ // Platform-specific directory resolution
+ // ---------------------------------------------------------------------------
+ 
+-/// Return the platform-specific NMS save root directory.
++/// Return the conventional platform-specific NMS save root path.
++///
++/// On macOS this is under `~/Library/Application Support/HelloGames/NMS`;
++/// on Windows it is under `%APPDATA%\HelloGames\NMS`; on Linux it is under
++/// the Steam Proton prefix for app 275850. This resolves a path but does not
++/// check whether it exists or is a directory.
++///
++/// # Errors
+ ///
+-/// - **macOS**: `~/Library/Application Support/HelloGames/NMS/`
+-/// - **Windows**: `%APPDATA%\HelloGames\NMS\`
+-/// - **Linux**: `~/.local/share/Steam/steamapps/compatdata/275850/pfx/drive_c/users/steamuser/AppData/Roaming/HelloGames/NMS/`
++/// Returns [`LocateError::NoHomeDir`] if the platform data/home directory
++/// cannot be determined and [`LocateError::UnsupportedPlatform`] on targets
++/// without a configured path.
+ ///
+-/// Does NOT verify the directory exists on disk.
++/// # Examples
++///
++/// ```no_run
++/// let path = nms_save::locate::nms_save_dir()?;
++/// println!("conventional save root: {}", path.display());
++/// # Ok::<(), nms_save::locate::LocateError>(())
++/// ```
+ pub fn nms_save_dir() -> Result<PathBuf, LocateError> {
+     nms_save_dir_impl()
+ }
+@@ -271,7 +321,16 @@ fn nms_save_dir_impl() -> Result<PathBuf, LocateError> {
+     Err(LocateError::UnsupportedPlatform)
+ }
+ 
+-/// Like [`nms_save_dir`] but verifies the directory exists on disk.
++/// Resolve the conventional save root and check that the path exists.
++///
++/// This uses [`Path::exists`]; it does not additionally require the path to be
++/// a directory.
++///
++/// # Errors
++///
++/// Propagates [`LocateError::NoHomeDir`] or
++/// [`LocateError::UnsupportedPlatform`] from [`nms_save_dir`], and returns
++/// [`LocateError::SaveDirNotFound`] when the resolved path does not exist.
+ pub fn nms_save_dir_checked() -> Result<PathBuf, LocateError> {
+     let dir = nms_save_dir()?;
+     if dir.exists() {
+@@ -285,10 +344,31 @@ pub fn nms_save_dir_checked() -> Result<PathBuf, LocateError> {
+ // Directory listing
+ // ---------------------------------------------------------------------------
+ 
+-/// List all account directories inside the NMS save root.
++/// List immediate UTF-8 subdirectories in a save root, sorted by name.
++///
++/// `DefaultUser` is recognized as GOG; `st_` followed by a parseable `u64` is
++/// recognized as Steam; every other UTF-8 directory is returned as
++/// [`AccountKind::Unknown`]. Non-directories and names that are not UTF-8 are
++/// skipped. A recognized account kind does not prove that saves are present.
++///
++/// # Errors
++///
++/// Returns [`LocateError::Io`] for directory-entry or file-type errors, and
++/// [`LocateError::NoAccountDirs`] when no qualifying UTF-8 subdirectory exists.
+ ///
+-/// Returns directories matching `st_*` (Steam), `DefaultUser` (GOG),
+-/// and any other subdirectories as [`AccountKind::Unknown`].
++/// # Examples
++///
++/// ```
++/// # fn list() -> Result<(), Box<dyn std::error::Error>> {
++/// let temp = tempfile::tempdir()?;
++/// std::fs::create_dir(temp.path().join("DefaultUser"))?;
++/// std::fs::create_dir(temp.path().join("st_76561198025707979"))?;
++/// let accounts = nms_save::locate::list_accounts(temp.path())?;
++/// assert_eq!(accounts[0].name(), "DefaultUser");
++/// assert!(matches!(accounts[0].kind(), nms_save::locate::AccountKind::Gog));
++/// # Ok(())
++/// # }
++/// ```
+ pub fn list_accounts(save_dir: &Path) -> Result<Vec<AccountDir>, LocateError> {
+     let mut accounts = Vec::new();
+ 
+@@ -316,9 +396,44 @@ pub fn list_accounts(save_dir: &Path) -> Result<Vec<AccountDir>, LocateError> {
+     Ok(accounts)
+ }
+ 
+-/// List all save files (`save*.hg`, excluding `mf_save*.hg`) in an account directory.
++/// List parseable save filenames in one account directory, newest modification first.
++///
++/// The accepted names are `save.hg` and `saveN.hg` where the standard `u8`
++/// parser reads `N` as a file index from 2 through 30. Thus parseable forms
++/// with leading zeroes or a leading plus are also accepted. Metadata names,
++/// other files, directories, and non-UTF-8 names are skipped. File contents
++/// are not read. Equal modification times have no specified relative order.
++///
++/// # Errors
++///
++/// Returns [`LocateError::Io`] for directory-entry, file-type, or modified-time
++/// errors, and [`LocateError::NoSaveFiles`] when no accepted regular file is
++/// found.
++///
++/// # Examples
+ ///
+-/// Results are sorted by modification time, newest first.
++/// ```
++/// # fn list() -> Result<(), Box<dyn std::error::Error>> {
++/// use std::fs::{File, FileTimes};
++/// use std::time::{Duration, UNIX_EPOCH};
++/// let temp = tempfile::tempdir()?;
++/// for (name, seconds) in [("save.hg", 1_700_000_000), ("save30.hg", 1_700_000_010)] {
++///     let path = temp.path().join(name);
++///     std::fs::write(&path, b"")?;
++///     File::options().write(true).open(&path)?.set_times(
++///         FileTimes::new().set_modified(UNIX_EPOCH + Duration::from_secs(seconds))
++///     )?;
++/// }
++/// let saves = nms_save::locate::list_saves(temp.path())?;
++/// let slots = nms_save::locate::group_into_slots(&saves);
++/// assert_eq!(slots.len(), 2);
++/// assert_eq!(slots[0].slot(), 1);
++/// assert_eq!(slots[0].manual().ok_or_else(|| std::io::Error::other("slot 1 manual missing"))?.path().file_name().and_then(|n| n.to_str()), Some("save.hg"));
++/// assert_eq!(slots[1].slot(), 15);
++/// assert_eq!(slots[1].auto().ok_or_else(|| std::io::Error::other("slot 15 auto missing"))?.metadata_path().file_name().and_then(|n| n.to_str()), Some("mf_save30.hg"));
++/// # Ok(())
++/// # }
++/// ```
+ pub fn list_saves(account_dir: &Path) -> Result<Vec<SaveFile>, LocateError> {
+     let mut saves = Vec::new();
+ 
+@@ -351,10 +466,13 @@ pub fn list_saves(account_dir: &Path) -> Result<Vec<SaveFile>, LocateError> {
+     Ok(saves)
+ }
+ 
+-/// Group save files into slot pairs (manual + auto).
++/// Group save-file records into nonempty manual/auto slot pairs.
+ ///
+-/// Returns slots sorted by slot number. Each slot contains at most one
+-/// manual and one auto save.
++/// The result is ordered by slot number and omits empty slots. When input has
++/// duplicate records for the same slot and type, the last record in the input
++/// slice replaces the earlier one; this does not choose by modification time.
++/// [`SaveSlot::most_recent`] compares the retained manual and auto files and
++/// prefers manual when their timestamps are equal.
+ pub fn group_into_slots(saves: &[SaveFile]) -> Vec<SaveSlot> {
+     let max_slot = saves.iter().map(|s| s.slot).max().unwrap_or(0);
+     let mut slots: Vec<SaveSlot> = (1..=max_slot)
+@@ -384,10 +502,18 @@ pub fn group_into_slots(saves: &[SaveFile]) -> Vec<SaveSlot> {
+ // Convenience finders
+ // ---------------------------------------------------------------------------
+ 
+-/// Find the most recently modified save file across all accounts.
++/// Find the newest save across the conventional root's sorted account directories.
+ ///
+-/// Chains [`nms_save_dir_checked`] → [`list_accounts`] → [`list_saves`]
+-/// and returns the single newest file.
++/// The root is resolved and checked, then account directories are visited in
++/// lexicographic name order. Per-account [`list_saves`] errors are skipped; a
++/// root-resolution or account-listing error is returned. A strictly newer
++/// timestamp replaces the current winner, so an equal timestamp retains the
++/// first save encountered in sorted account order.
++///
++/// # Errors
++///
++/// Returns root-resolution or account-listing errors, and
++/// [`LocateError::NoSaveFiles`] when no account yields an accepted save.
+ pub fn find_most_recent_save() -> Result<SaveFile, LocateError> {
+     let save_dir = nms_save_dir_checked()?;
+     let accounts = list_accounts(&save_dir)?;
+@@ -407,7 +533,14 @@ pub fn find_most_recent_save() -> Result<SaveFile, LocateError> {
+     best.ok_or(LocateError::NoSaveFiles(save_dir))
+ }
+ 
+-/// Find the most recently modified save file in a specific account directory.
++/// Find the newest accepted save file in one account directory.
++///
++/// This delegates to [`list_saves`] and returns its first, newest-sorted item.
++///
++/// # Errors
++///
++/// Propagates [`LocateError::Io`] and [`LocateError::NoSaveFiles`] from
++/// [`list_saves`].
+ pub fn find_most_recent_save_in(account_dir: &Path) -> Result<SaveFile, LocateError> {
+     let saves = list_saves(account_dir)?;
+     // list_saves already sorts newest-first
+diff --git a/crates/nms-save/src/mapping.rs b/crates/nms-save/src/mapping.rs
+index 0631ad5..5ea4f8b 100644
+--- a/crates/nms-save/src/mapping.rs
++++ b/crates/nms-save/src/mapping.rs
+@@ -1,8 +1,10 @@
+-//! Key deobfuscation for NMS save file JSON.
++//! Key deobfuscation for NMS save-file JSON.
+ //!
+-//! NMS save files (format 2002+) have obfuscated JSON keys (e.g., `"F2P"` instead
+-//! of `"Version"`). This module loads mapping files and recursively replaces
+-//! obfuscated keys with their readable equivalents.
++//! Some save files store obfuscated object keys such as `"F2P"` in place of
++//! `"Version"`. [`KeyMapping`] combines the primary mapping, older-key
++//! compatibility entries, and Save Wizard spelling fixups. Recursive
++//! deobfuscation preserves unknown keys and values. This module handles JSON
++//! keys only; it does not decompress a save or validate address fields.
+ 
+ use std::collections::HashMap;
+ use std::path::Path;
+@@ -27,10 +29,12 @@ struct MappingFile {
+     mapping: Vec<MappingEntry>,
+ }
+ 
+-/// Bidirectional key mapping for NMS save file deobfuscation.
++/// Key mapping used to deobfuscate NMS save JSON.
+ ///
+-/// Maps obfuscated 3-character keys (e.g., `"F2P"`) to readable names
+-/// (e.g., `"Version"`).
++/// The primary direction maps obfuscated keys such as `"F2P"` to readable
++/// names such as `"Version"`. [`Self::bundled`] also merges older keys and
++/// spelling fixups; [`Self::from_json`] loads one mapping file without those
++/// additional sources.
+ #[derive(Debug, Clone)]
+ pub struct KeyMapping {
+     /// Version string from the primary mapping file.
+@@ -48,6 +52,18 @@ impl KeyMapping {
+     /// - `mapping_mbincompiler.json` (primary)
+     /// - `mapping_legacy.json` (older keys)
+     /// - `mapping_savewizard.json` (name fixups)
++    ///
++    /// # Panics
++    ///
++    /// Panics if any of the mapping files compiled into this crate is invalid.
++    /// Those files are project data and are expected to be valid at build time.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let mapping = nms_save::KeyMapping::bundled();
++    /// assert_eq!(mapping.get("F2P"), Some("Version"));
++    /// ```
+     pub fn bundled() -> Self {
+         let primary_json = include_str!("../data/mapping_mbincompiler.json");
+         let legacy_json = include_str!("../data/mapping_legacy.json");
+@@ -71,7 +87,31 @@ impl KeyMapping {
+         mapping
+     }
+ 
+-    /// Load a mapping from a JSON string (single mapping file).
++    /// Parse one mapping file from JSON text.
++    ///
++    /// The file must contain `libMBIN_version` and a `Mapping` array whose
++    /// entries have `Key` and `Value` strings. When a key occurs more than once,
++    /// the first entry is retained. This constructor does not merge the bundled
++    /// legacy keys or Save Wizard fixups.
++    ///
++    /// # Errors
++    ///
++    /// Returns [`SaveError::MappingParseError`] when the JSON is malformed or
++    /// does not have the expected mapping-file shape.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// let mapping = nms_save::KeyMapping::from_json(
++    ///     r#"{"libMBIN_version":"test","Mapping":[{"Key":"abc","Value":"Alpha"},{"Key":"abc","Value":"Wrong"}]}"#,
++    /// )?;
++    /// assert_eq!(mapping.get("abc"), Some("Alpha"));
++    /// assert_eq!(mapping.len(), 1);
++    /// let mut nested = serde_json::json!({"abc": 1, "untouched": "literal"});
++    /// mapping.deobfuscate(&mut nested);
++    /// assert_eq!(nested, serde_json::json!({"Alpha": 1, "untouched": "literal"}));
++    /// # Ok::<(), nms_save::SaveError>(())
++    /// ```
+     pub fn from_json(json: &str) -> Result<Self, SaveError> {
+         let file: MappingFile =
+             serde_json::from_str(json).map_err(|e| SaveError::MappingParseError {
+@@ -90,32 +130,44 @@ impl KeyMapping {
+         })
+     }
+ 
+-    /// Load a mapping from a file on disk.
++    /// Read and parse one mapping file from disk.
++    ///
++    /// This has the same single-file behavior as [`Self::from_json`]; it does
++    /// not add bundled compatibility entries or fixups.
++    ///
++    /// # Errors
++    ///
++    /// Returns an I/O error if the path cannot be read, or
++    /// [`SaveError::MappingParseError`] if its contents are not a valid mapping.
+     pub fn from_file(path: &Path) -> Result<Self, SaveError> {
+         let json = std::fs::read_to_string(path)?;
+         Self::from_json(&json)
+     }
+ 
+     /// Look up the readable name for an obfuscated key.
++    ///
++    /// Returns `None` when this mapping has no entry for `obfuscated`.
+     pub fn get(&self, obfuscated: &str) -> Option<&str> {
+         self.entries.get(obfuscated).map(|s| s.as_str())
+     }
+ 
+-    /// Return the number of mapping entries.
++    /// Return the number of distinct obfuscated keys in this mapping.
+     pub fn len(&self) -> usize {
+         self.entries.len()
+     }
+ 
+-    /// Return whether the mapping is empty.
++    /// Return whether the mapping contains no obfuscated keys.
+     pub fn is_empty(&self) -> bool {
+         self.entries.is_empty()
+     }
+ 
+-    /// Deobfuscate all keys in a [`serde_json::Value`] tree in place.
++    /// Deobfuscate keys in a [`serde_json::Value`] tree in place.
+     ///
+-    /// Walks the tree recursively. For each JSON object, replaces obfuscated
+-    /// keys with their readable equivalents. Unknown keys are preserved as-is.
+-    /// After key replacement, applies any fixups (e.g., case corrections).
++    /// Walks objects and arrays recursively. For each object key, applies the
++    /// obfuscated-key mapping and then any spelling fixup. Unknown keys and all
++    /// values are retained. The method does not report name collisions; if two
++    /// input keys map to the same output key, no collision error is returned;
++    /// the later processed entry replaces the earlier value in the output map.
+     pub fn deobfuscate(&self, value: &mut serde_json::Value) {
+         self.walk(value);
+     }
+@@ -146,10 +198,12 @@ impl KeyMapping {
+     }
+ }
+ 
+-/// Detect whether a parsed JSON value has obfuscated keys.
++/// Heuristically detect obfuscated keys in a parsed JSON value.
+ ///
+-/// Checks the top-level object for known obfuscated keys (`"F2P"`, `"6f="`, `"8>q"`)
+-/// vs the plaintext `"Version"` key.
++/// Only the top-level object is inspected. `"F2P"` is a positive marker even if
++/// `"Version"` is also present; otherwise, a top-level `"Version"` selects the
++/// plaintext result. If neither is present, `"6f="` or `"8>q"` is treated as an
++/// obfuscation marker. Non-object values return `false`.
+ pub fn is_obfuscated(json: &serde_json::Value) -> bool {
+     match json.as_object() {
+         Some(map) => {
+@@ -165,9 +219,26 @@ pub fn is_obfuscated(json: &serde_json::Value) -> bool {
+     }
+ }
+ 
+-/// Deobfuscate JSON bytes: parse, detect obfuscation, apply mapping if needed.
++/// Parse JSON bytes and deobfuscate them when the top-level shape looks obfuscated.
++///
++/// Returns the parsed value, unchanged when [`is_obfuscated`] returns `false`.
++/// The heuristic is deliberately limited to the marker keys documented on
++/// [`is_obfuscated`].
++///
++/// # Errors
++///
++/// Returns [`SaveError::JsonParseError`] when `json_bytes` is not valid JSON.
++/// This function does not perform save-file decompression or typed
++/// deserialization.
++///
++/// # Examples
+ ///
+-/// Returns the (potentially deobfuscated) parsed JSON value.
++/// ```
++/// let mapping = nms_save::KeyMapping::bundled();
++/// let value = nms_save::deobfuscate_json(br#"{"F2P":6726}"#, &mapping)?;
++/// assert_eq!(value["Version"], 6726);
++/// # Ok::<(), nms_save::SaveError>(())
++/// ```
+ pub fn deobfuscate_json(
+     json_bytes: &[u8],
+     mapping: &KeyMapping,
+diff --git a/crates/nms-save/src/metadata.rs b/crates/nms-save/src/metadata.rs
+index fb39519..9e12238 100644
+--- a/crates/nms-save/src/metadata.rs
++++ b/crates/nms-save/src/metadata.rs
+@@ -34,49 +34,84 @@ const VALID_META_LENGTHS: [usize; 4] = [
+ // StorageSlot
+ // ---------------------------------------------------------------------------
+ 
+-/// Storage slot enum values used for XXTEA key derivation.
++/// Storage-file indices used to derive XXTEA keys for metadata files.
+ ///
+-/// Each value corresponds to a file index. The numeric value is XOR'd
+-/// with a constant during key derivation.
++/// The enum has 32 values: `UserSettings` is 0, `AccountData` is 1, and
++/// `PlayerState1` through `PlayerState30` are 2 through 31. These are file
++/// indices, not the 15 user-visible paired save slots. Metadata fallback tries
++/// the requested index first, then only other indices of the same account-
++/// versus-player kind.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+ #[repr(u8)]
+ pub enum StorageSlot {
++    /// Account-level metadata file index 0.
+     UserSettings = 0,
++    /// Account-level metadata file index 1.
+     AccountData = 1,
++    /// Player-state metadata file index 2.
+     PlayerState1 = 2,
++    /// Player-state metadata file index 3.
+     PlayerState2 = 3,
++    /// Player-state metadata file index 4.
+     PlayerState3 = 4,
++    /// Player-state metadata file index 5.
+     PlayerState4 = 5,
++    /// Player-state metadata file index 6.
+     PlayerState5 = 6,
++    /// Player-state metadata file index 7.
+     PlayerState6 = 7,
++    /// Player-state metadata file index 8.
+     PlayerState7 = 8,
++    /// Player-state metadata file index 9.
+     PlayerState8 = 9,
++    /// Player-state metadata file index 10.
+     PlayerState9 = 10,
++    /// Player-state metadata file index 11.
+     PlayerState10 = 11,
++    /// Player-state metadata file index 12.
+     PlayerState11 = 12,
++    /// Player-state metadata file index 13.
+     PlayerState12 = 13,
++    /// Player-state metadata file index 14.
+     PlayerState13 = 14,
++    /// Player-state metadata file index 15.
+     PlayerState14 = 15,
++    /// Player-state metadata file index 16.
+     PlayerState15 = 16,
++    /// Player-state metadata file index 17.
+     PlayerState16 = 17,
++    /// Player-state metadata file index 18.
+     PlayerState17 = 18,
++    /// Player-state metadata file index 19.
+     PlayerState18 = 19,
++    /// Player-state metadata file index 20.
+     PlayerState19 = 20,
++    /// Player-state metadata file index 21.
+     PlayerState20 = 21,
++    /// Player-state metadata file index 22.
+     PlayerState21 = 22,
++    /// Player-state metadata file index 23.
+     PlayerState22 = 23,
++    /// Player-state metadata file index 24.
+     PlayerState23 = 24,
++    /// Player-state metadata file index 25.
+     PlayerState24 = 25,
++    /// Player-state metadata file index 26.
+     PlayerState25 = 26,
++    /// Player-state metadata file index 27.
+     PlayerState26 = 27,
++    /// Player-state metadata file index 28.
+     PlayerState27 = 28,
++    /// Player-state metadata file index 29.
+     PlayerState28 = 29,
++    /// Player-state metadata file index 30.
+     PlayerState29 = 30,
++    /// Player-state metadata file index 31.
+     PlayerState30 = 31,
+ }
+ 
+ impl StorageSlot {
+-    /// All valid slot values.
++    /// All 32 supported storage-file indices in numeric order.
+     pub const ALL: [StorageSlot; 32] = [
+         Self::UserSettings,
+         Self::AccountData,
+@@ -112,7 +147,19 @@ impl StorageSlot {
+         Self::PlayerState30,
+     ];
+ 
+-    /// Whether this slot represents account-level data (not a save slot).
++    /// Whether this index is one of the two account-level files.
++    ///
++    /// `UserSettings` and `AccountData` return `true`; all 30 player-state
++    /// indices return `false`. This classification controls same-kind fallback
++    /// during [`read_metadata`].
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_save::StorageSlot;
++    /// assert!(StorageSlot::UserSettings.is_account());
++    /// assert!(!StorageSlot::PlayerState1.is_account());
++    /// ```
+     pub fn is_account(&self) -> bool {
+         matches!(self, Self::UserSettings | Self::AccountData)
+     }
+@@ -125,7 +172,7 @@ impl StorageSlot {
+ /// Decrypted and parsed metadata from an `mf_save*.hg` file.
+ #[derive(Debug, Clone)]
+ pub struct SaveMetadata {
+-    /// Format version: 0x7D1 (2001), 0x7D2 (2002), 0x7D3 (2003), 0x7D4 (2004).
++    /// Decrypted format value; only `0x7D0` is rejected by the parser.
+     pub format_version: u32,
+     /// Decompressed JSON size in bytes.
+     pub decompressed_size: u32,
+@@ -133,9 +180,9 @@ pub struct SaveMetadata {
+     pub compressed_size: u32,
+     /// Profile hash (0 if none).
+     pub profile_hash: u32,
+-    /// SpookyHash V2 keys (format 2001 only, None for 2002+).
++    /// SpookyHash V2 key pair, populated for `0x7D1` and absent otherwise.
+     pub spooky_hash: Option<[u64; 2]>,
+-    /// SHA-256 of the raw storage file (format 2001 only, None for 2002+).
++    /// SHA-256 of raw storage bytes for `0x7D1`, absent for other accepted values.
+     pub sha256_hash: Option<[u8; 32]>,
+     /// The storage slot that successfully decrypted this metadata.
+     pub decrypted_with_slot: StorageSlot,
+@@ -147,12 +194,58 @@ pub struct SaveMetadata {
+ 
+ /// Decrypt and parse a metadata file.
+ ///
+-/// `data` is the raw bytes of the `mf_save*.hg` file.
+-/// `slot` is the expected storage slot for this file.
++/// `data` is the complete raw content of an `mf_save*.hg` file. Accepted
++/// lengths are 104, 360, 384, and 432 bytes. `slot` is the expected
++/// storage-file index. The expected index is tried first, followed by other
++/// indices of the same account-versus-player kind.
+ ///
+-/// The function first tries decryption with the given `slot`. If the magic
+-/// sentinel is not found, it tries all other valid slots (in case the file
+-/// was manually moved between save directories).
++/// A 104-byte file uses eight XXTEA rounds; the other accepted sizes use six.
++/// The first decrypted value with the magic sentinel is parsed immediately.
++/// Only metadata version `0x7D0` is rejected; this parser does not enforce a
++/// closed version range.
++///
++/// # Errors
++///
++/// Returns [`SaveError::InvalidMetaLength`] for an unsupported length,
++/// [`SaveError::MetaDecryptionFailed`] when no same-kind key yields the
++/// sentinel, or the parse error for a decrypted unsupported version.
++///
++/// # Examples
++///
++/// A 50-byte input is rejected before any decryption attempt:
++///
++/// ```
++/// use nms_save::{SaveError, StorageSlot, read_metadata};
++/// let error = read_metadata(&[0; 50], StorageSlot::PlayerState1)
++///     .err()
++///     .ok_or_else(|| std::io::Error::other("expected an invalid-length error"))?;
++/// assert!(matches!(error, SaveError::InvalidMetaLength { length: 50 }));
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
++///
++/// This synthetic 360-byte record is encrypted for `PlayerState5`. The
++/// requested `PlayerState1` index is tried first, then same-kind player files.
++/// It illustrates the fallback result; it is not an authentic game metadata file.
++///
++/// ```
++/// use nms_save::{StorageSlot, read_metadata};
++/// use nms_save::xxtea::{derive_key, xxtea_encrypt};
++/// let mut words = vec![0_u32; 90];
++/// words[0] = 0xEEEEEEBE;
++/// words[1] = 0x7D2;
++/// words[14] = 0x1234;
++/// words[15] = 0x5678;
++/// words[16] = 99;
++/// let key = derive_key(StorageSlot::PlayerState5);
++/// xxtea_encrypt(&mut words, &key, 6);
++/// let bytes: Vec<u8> = words.iter().flat_map(|word| word.to_le_bytes()).collect();
++/// let metadata = read_metadata(&bytes, StorageSlot::PlayerState1)?;
++/// assert_eq!(metadata.decrypted_with_slot, StorageSlot::PlayerState5);
++/// assert_eq!(metadata.format_version, 0x7D2);
++/// assert_eq!(metadata.decompressed_size, 0x1234);
++/// assert!(metadata.sha256_hash.is_none());
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn read_metadata(data: &[u8], slot: StorageSlot) -> Result<SaveMetadata, SaveError> {
+     if !VALID_META_LENGTHS.contains(&data.len()) {
+         return Err(SaveError::InvalidMetaLength { length: data.len() });
+@@ -193,10 +286,30 @@ pub fn read_metadata(data: &[u8], slot: StorageSlot) -> Result<SaveMetadata, Sav
+     Err(SaveError::MetaDecryptionFailed)
+ }
+ 
+-/// Verify the SHA-256 hash stored in metadata against the raw save file bytes.
++/// Compare a stored SHA-256 digest with supplied raw save-file bytes.
++///
++/// When metadata contains a digest (the 2001 format), this returns whether the
++/// computed digest matches it. When no digest is stored, it returns `true`;
++/// that means there was no digest to compare, not that the bytes were
++/// independently verified. This function does not read a file or return an
++/// error.
++///
++/// # Examples
+ ///
+-/// Only applicable for format 2001 (Foundation through Prisms). For format 2002+,
+-/// SHA-256 is not used and this function returns `true`.
++/// ```
++/// let mut metadata = nms_save::SaveMetadata {
++///     format_version: 0x7D2,
++///     decompressed_size: 0,
++///     compressed_size: 0,
++///     profile_hash: 0,
++///     spooky_hash: None,
++///     sha256_hash: None,
++///     decrypted_with_slot: nms_save::StorageSlot::PlayerState1,
++/// };
++/// assert!(nms_save::verify_sha256(&metadata, b"no stored digest"));
++/// metadata.sha256_hash = Some([0; 32]);
++/// assert!(!nms_save::verify_sha256(&metadata, b"abc"));
++/// ```
+ pub fn verify_sha256(metadata: &SaveMetadata, raw_save_bytes: &[u8]) -> bool {
+     use sha2::{Digest, Sha256};
+ 
+diff --git a/crates/nms-save/src/model.rs b/crates/nms-save/src/model.rs
+index 6aa5390..f498d1e 100644
+--- a/crates/nms-save/src/model.rs
++++ b/crates/nms-save/src/model.rs
+@@ -13,12 +13,19 @@ use std::fmt;
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct SaveRoot {
++    /// Save version from the `Version` member.
+     pub version: u32,
++    /// Platform string from `Platform`, preserved verbatim.
+     pub platform: String,
++    /// Active context name, such as `Main` or `Expedition`.
+     pub active_context: String,
++    /// Shared save name and play-time data.
+     pub common_state_data: CommonStateData,
++    /// Typed subset of the `BaseContext` object.
+     pub base_context: GameContext,
++    /// Typed subset of the `ExpeditionContext` object.
+     pub expedition_context: GameContext,
++    /// Modeled discovery-manager subset; unknown source members are not retained.
+     pub discovery_manager_data: DiscoveryManagerData,
+ }
+ 
+@@ -27,8 +34,10 @@ pub struct SaveRoot {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct CommonStateData {
++    /// Save display name from `SaveName`, defaulting to empty when absent.
+     #[serde(default)]
+     pub save_name: String,
++    /// Accumulated play time from `TotalPlayTime`, defaulting to zero.
+     #[serde(default)]
+     pub total_play_time: u64,
+ }
+@@ -38,8 +47,10 @@ pub struct CommonStateData {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct GameContext {
++    /// Numeric `GameMode` value, defaulting to zero when absent.
+     #[serde(default)]
+     pub game_mode: u32,
++    /// Modeled player-state subset, defaulting to its empty value.
+     #[serde(default)]
+     pub player_state_data: PlayerStateData,
+ }
+@@ -49,32 +60,39 @@ pub struct GameContext {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct PlayerStateData {
++    /// Current universe address; legacy serde defaults it when absent.
+     #[serde(default)]
+     pub universe_address: UniverseAddress,
+ 
++    /// Previous universe address; legacy conversion applies its own zero sentinel.
+     #[serde(default)]
+     pub previous_universe_address: UniverseAddress,
+ 
++    /// Opaque save-summary text, defaulting to empty.
+     #[serde(default)]
+     pub save_summary: String,
+ 
+-    /// Units can be negative in actual saves.
++    /// Units can be negative in saves; legacy conversion casts this to `u64`.
+     #[serde(default)]
+     pub units: i64,
+ 
++    /// Nanites balance, defaulting to zero.
+     #[serde(default)]
+     pub nanites: i64,
+ 
+-    /// Quicksilver is stored as "Specials" in the JSON.
++    /// Quicksilver is stored as `Specials` in JSON; legacy conversion casts to `u64`.
+     #[serde(default)]
+     pub specials: i64,
+ 
++    /// Persistent bases modeled from this player-state object.
+     #[serde(default)]
+     pub persistent_player_bases: Vec<PersistentPlayerBase>,
+ 
++    /// Health value, defaulting to zero.
+     #[serde(default)]
+     pub health: u32,
+ 
++    /// Elapsed lifetime value, defaulting to zero.
+     #[serde(default)]
+     pub time_alive: u64,
+ }
+@@ -84,8 +102,10 @@ pub struct PlayerStateData {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct UniverseAddress {
++    /// Reality/galaxy index, defaulting to zero in legacy serde parsing.
+     #[serde(default)]
+     pub reality_index: u8,
++    /// Expanded address components, defaulting component-by-component to zero.
+     #[serde(default)]
+     pub galactic_address: GalacticAddressObject,
+ }
+@@ -95,20 +115,40 @@ pub struct UniverseAddress {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct GalacticAddressObject {
++    /// Signed X voxel coordinate using the legacy Rust `i16` range.
+     #[serde(default)]
+     pub voxel_x: i16,
++    /// Signed Y voxel coordinate using the legacy Rust `i8` range.
+     #[serde(default)]
+     pub voxel_y: i8,
++    /// Signed Z voxel coordinate using the legacy Rust `i16` range.
+     #[serde(default)]
+     pub voxel_z: i16,
++    /// Solar-system index, defaulting to zero.
+     #[serde(default)]
+     pub solar_system_index: u16,
++    /// Planet index, defaulting to zero.
+     #[serde(default)]
+     pub planet_index: u8,
+ }
+ 
+ impl GalacticAddressObject {
+-    /// Convert to the core `GalacticAddress` type.
++    /// Convert stored components to a core address with the supplied galaxy index.
++    ///
++    /// This typed-model conversion does not validate original JSON member
++    /// presence or narrower packed-save coordinate ranges.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_save::model::GalacticAddressObject;
++    /// let source: GalacticAddressObject = serde_json::from_str(
++    ///     r#"{"VoxelX":12,"VoxelY":-2,"VoxelZ":30,"SolarSystemIndex":7,"PlanetIndex":1}"#,
++    /// )?;
++    /// let address = source.to_galactic_address(9);
++    /// assert_eq!(address.reality_index, 9);
++    /// assert_eq!(address.voxel_x(), 12);
++    /// ```
+     pub fn to_galactic_address(&self, reality_index: u8) -> nms_core::GalacticAddress {
+         nms_core::GalacticAddress::new(
+             self.voxel_x,
+@@ -121,9 +161,27 @@ impl GalacticAddressObject {
+     }
+ }
+ 
+-/// Galactic address in packed form — hex string `"0x..."` or bare integer.
++/// Legacy packed galactic-address value used by typed bases and discoveries.
++///
++/// Serde accepts an unsigned JSON integer, casts a signed integer to `u64`, or
++/// parses a hexadecimal string with an optional `0x`/`0X` prefix. This
++/// compatibility representation does not enforce the checked decoder's 56-bit
++/// bound or validate original field presence before serde defaults.
++/// Serialization emits the numeric `u64`, not a hexadecimal string.
++///
++/// Conversion uses the core 48-bit portal layout and the galaxy index supplied
++/// by the caller; it does not recover the galaxy byte from the save's 56-bit
++/// discovery/base layout.
++///
++/// # Examples
+ ///
+-/// Used for bases and discoveries where the address is a single value.
++/// ```
++/// use nms_save::model::PackedGalacticAddress;
++/// let legacy = PackedGalacticAddress(0x212B0004B2446A);
++/// let portal = legacy.to_galactic_address(0);
++/// assert_eq!(portal.reality_index, 0);
++/// assert_eq!(portal.planet_index(), 2);
++/// ```
+ #[derive(Debug, Clone, Copy, Default, Serialize)]
+ pub struct PackedGalacticAddress(pub u64);
+ 
+@@ -170,6 +228,7 @@ impl PackedGalacticAddress {
+ #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct DiscoveryManagerData {
++    /// Version-1 discovery payload, defaulting when absent.
+     #[serde(rename = "DiscoveryData-v1", default)]
+     pub discovery_data_v1: DiscoveryDataV1,
+ }
+@@ -179,10 +238,13 @@ pub struct DiscoveryManagerData {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct DiscoveryDataV1 {
++    /// Reserved store count from `ReserveStore`, defaulting to zero.
+     #[serde(default)]
+     pub reserve_store: u32,
++    /// Reserved managed count from `ReserveManaged`, defaulting to zero.
+     #[serde(default)]
+     pub reserve_managed: u32,
++    /// Discovery rows held by this versioned container.
+     #[serde(default)]
+     pub store: DiscoveryStore,
+ }
+@@ -192,6 +254,7 @@ pub struct DiscoveryDataV1 {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct DiscoveryStore {
++    /// Modeled discovery rows from `Record`, defaulting to an empty list.
+     #[serde(default)]
+     pub record: Vec<RawDiscoveryRecord>,
+ }
+@@ -202,23 +265,23 @@ pub struct DiscoveryStore {
+ #[derive(Debug, Clone, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct RawDiscoveryRecord {
+-    /// Discovery data.
++    /// Discovery payload from the actual, non-obfuscated `DD` key.
+     #[serde(rename = "DD")]
+     pub dd: DiscoveryData,
+ 
+-    /// Discovery metadata (usually empty object).
++    /// Opaque value from `DM`; serde defaults it to JSON null when absent.
+     #[serde(rename = "DM", default)]
+     pub dm: serde_json::Value,
+ 
+-    /// Ownership data.
++    /// Observed ownership fields from `OWS`; these do not establish identity.
+     #[serde(rename = "OWS")]
+     pub ows: OwnershipData,
+ 
+-    /// Flags (C=created, U=uploaded).
++    /// Optional creation/upload flags from `FL`, defaulting when absent.
+     #[serde(rename = "FL", default)]
+     pub fl: DiscoveryFlags,
+ 
+-    /// Record ID (base64 hash).
++    /// Optional record identifier from `RID`; its contents remain opaque.
+     #[serde(rename = "RID", default)]
+     pub rid: Option<String>,
+ }
+@@ -227,15 +290,15 @@ pub struct RawDiscoveryRecord {
+ #[derive(Debug, Clone, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct DiscoveryData {
+-    /// Universe address (packed galactic address).
++    /// Packed address from `UA`; typed conversion uses the legacy 48-bit layout.
+     #[serde(rename = "UA")]
+     pub ua: PackedGalacticAddress,
+ 
+-    /// Discovery type: "Flora", "Planet", "Sector", "SolarSystem", "Mineral", "Animal".
++    /// Source discovery-type string; the compatibility converter recognizes six exact values.
+     #[serde(rename = "DT")]
+     pub dt: String,
+ 
+-    /// Variable-purpose data array — opaque for now.
++    /// Opaque variable-purpose values from `VP`; no typed interpretation is applied.
+     #[serde(rename = "VP", default)]
+     pub vp: Vec<serde_json::Value>,
+ }
+@@ -244,23 +307,23 @@ pub struct DiscoveryData {
+ #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct OwnershipData {
+-    /// Local ID (may be empty).
++    /// Source-local identifier, defaulting to empty.
+     #[serde(rename = "LID", default)]
+     pub lid: String,
+ 
+-    /// User ID (Steam ID, PSN ID, etc.).
++    /// Platform account identifier, defaulting to empty; it is observed metadata.
+     #[serde(rename = "UID", default)]
+     pub uid: String,
+ 
+-    /// Username.
++    /// Source username, defaulting to empty.
+     #[serde(rename = "USN", default)]
+     pub usn: String,
+ 
+-    /// Platform token: "ST" = Steam, "PS" = PlayStation, etc.
++    /// Source platform token such as `ST` or `PS`, defaulting to empty.
+     #[serde(rename = "PTK", default)]
+     pub ptk: String,
+ 
+-    /// Timestamp (Unix epoch seconds).
++    /// Source timestamp in Unix epoch seconds, defaulting to zero.
+     #[serde(rename = "TS", default)]
+     pub ts: u64,
+ }
+@@ -269,11 +332,12 @@ pub struct OwnershipData {
+ #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct DiscoveryFlags {
+-    /// Created flag.
++    /// Optional numeric created flag as represented in the source JSON.
+     #[serde(rename = "C", default)]
+     pub created: Option<u8>,
+ 
+-    /// Uploaded flag.
++    /// Optional numeric uploaded flag; the legacy conversion treats values
++    /// greater than zero as uploaded.
+     #[serde(rename = "U", default)]
+     pub uploaded: Option<u8>,
+ }
+@@ -283,42 +347,54 @@ pub struct DiscoveryFlags {
+ #[serde(rename_all = "PascalCase")]
+ #[non_exhaustive]
+ pub struct PersistentPlayerBase {
++    /// Base schema version, defaulting to zero when absent.
+     #[serde(default)]
+     pub base_version: u32,
+ 
++    /// Packed source address; legacy conversion supplies galaxy zero.
+     pub galactic_address: PackedGalacticAddress,
+ 
++    /// Three stored position coordinates, defaulting to zeroes.
+     #[serde(default)]
+     pub position: [f32; 3],
+ 
++    /// Three stored forward-vector coordinates, defaulting to zeroes.
+     #[serde(default)]
+     pub forward: [f32; 3],
+ 
++    /// Last-update Unix timestamp, defaulting to zero.
+     #[serde(default)]
+     pub last_update_timestamp: u64,
+ 
+-    /// Base objects — stored as opaque JSON.
++    /// Base-object values retained as opaque JSON, not interpreted by this model.
+     #[serde(default)]
+     pub objects: Vec<serde_json::Value>,
+ 
++    /// Record identifier from `RID`, defaulting to an empty string.
+     #[serde(default, rename = "RID")]
+     pub rid: String,
+ 
++    /// Observed owner metadata; no stronger identity inference is made.
+     #[serde(default)]
+     pub owner: OwnershipData,
+ 
++    /// Base display name, defaulting to empty.
+     #[serde(default)]
+     pub name: String,
+ 
++    /// Persistent base-type string, defaulting to its empty wrapper.
+     #[serde(default)]
+     pub base_type: BaseTypeWrapper,
+ 
++    /// Last-editor identifier, defaulting to empty.
+     #[serde(default)]
+     pub last_edited_by_id: String,
+ 
++    /// Last-editor name, defaulting to empty.
+     #[serde(default)]
+     pub last_edited_by_username: String,
+ 
++    /// Optional preset game-mode wrapper; missing or JSON null becomes `None`.
+     #[serde(default)]
+     pub game_mode: Option<GameModeWrapper>,
+ }
+@@ -327,6 +403,7 @@ pub struct PersistentPlayerBase {
+ #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct BaseTypeWrapper {
++    /// Raw `PersistentBaseTypes` value, defaulting to empty.
+     #[serde(rename = "PersistentBaseTypes", default)]
+     pub persistent_base_types: String,
+ }
+@@ -335,6 +412,7 @@ pub struct BaseTypeWrapper {
+ #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+ #[non_exhaustive]
+ pub struct GameModeWrapper {
++    /// Raw `PresetGameMode` value, defaulting to empty.
+     #[serde(rename = "PresetGameMode", default)]
+     pub preset_game_mode: String,
+ }
+diff --git a/crates/nms-save/src/validated.rs b/crates/nms-save/src/validated.rs
+index 6e056da..bf0f297 100644
+--- a/crates/nms-save/src/validated.rs
++++ b/crates/nms-save/src/validated.rs
+@@ -1,7 +1,11 @@
+ //! Whole-save address validation before typed deserialization.
+ //!
+-//! This module keeps checked addresses paired with the typed records produced
+-//! from the same original JSON value.
++//! The checked parser examines the original, deobfuscated JSON value before
++//! serde can supply defaults for missing address fields. It validates modeled
++//! discovery rows and both player contexts, then keeps each checked address
++//! paired with the typed save and raw discovery row produced from that same
++//! value. The legacy [`crate::parse_save`] path remains available when callers
++//! need its compatibility behavior instead.
+ 
+ use std::path::Path;
+ 
+@@ -16,10 +20,13 @@ use crate::error::SaveError;
+ use crate::mapping::{KeyMapping, deobfuscate_json};
+ use crate::model::{PersistentPlayerBase, RawDiscoveryRecord, SaveRoot};
+ 
+-/// An owned save whose modeled addresses were validated before serde defaults.
++/// An owned typed save with checked addresses from the original JSON value.
+ ///
+ /// Construct values with [`parse_validated_save`] or
+-/// [`parse_validated_save_file`].
++/// [`parse_validated_save_file`]. This type retains the typed [`SaveRoot`],
++/// checked active [`PlayerState`], checked bases, and a source-ordered pairing
++/// of each raw discovery row with its validated [`GalacticAddress`]. It is not
++/// a representation of every unknown field in the original JSON.
+ #[derive(Debug)]
+ pub struct ValidatedSave {
+     root: SaveRoot,
+@@ -29,7 +36,7 @@ pub struct ValidatedSave {
+ }
+ 
+ impl ValidatedSave {
+-    /// Return the typed source metadata retained by this checked save.
++    /// Return the typed root deserialized from the checked source value.
+     ///
+     /// # Examples
+     ///
+@@ -42,7 +49,8 @@ impl ValidatedSave {
+         &self.root
+     }
+ 
+-    /// Return the fully checked active player state.
++    /// Return the active player state built with the checked current and
++    /// optional previous addresses.
+     ///
+     /// # Examples
+     ///
+@@ -55,7 +63,8 @@ impl ValidatedSave {
+         &self.player_state
+     }
+ 
+-    /// Return checked bases from the active player context in source order.
++    /// Return bases from the active player context in source order, with each
++    /// address taken from the pre-deserialization validation pass.
+     ///
+     /// # Examples
+     ///
+@@ -72,6 +81,10 @@ impl ValidatedSave {
+ 
+     /// Iterate over raw discovery rows and their checked physical addresses.
+     ///
++    /// Rows follow their original discovery-list order. The exact-size
++    /// iterator pairs each typed raw row with the address decoded from its
++    /// corresponding original JSON row; address parsing does not drop rows.
++    ///
+     /// # Examples
+     ///
+     /// ```no_run
+@@ -94,15 +107,26 @@ impl ValidatedSave {
+     }
+ }
+ 
+-/// Parse plaintext, deobfuscated save JSON after validating every modeled address.
++/// Parse plaintext, deobfuscated JSON after validating modeled addresses.
++///
++/// This function expects JSON bytes, not a compressed or obfuscated save file.
++/// It checks the original JSON value before typed serde defaults can hide
++/// missing or invalid address fields, then deserializes the same value. Both
++/// `BaseContext` and `ExpeditionContext` are traversed; `ActiveContext` selects
++/// which context supplies the returned player state and bases. Discovery rows
++/// are validated in source order before the context addresses. Unknown JSON
++/// fields are not retained as a general raw document.
+ ///
+-/// Unlike [`crate::parse_save`], this validates the original JSON value before
+-/// typed serde defaults can hide missing or invalid address fields.
++/// Unlike [`crate::parse_save`], this checked path rejects absent or invalid
++/// modeled addresses instead of accepting serde defaults. Use
++/// [`parse_validated_save_file`] when the input is a save file that needs the
++/// existing decompression and key-mapping pipeline.
+ ///
+ /// # Errors
+ ///
+-/// Returns [`SaveError::Address`] for an invalid modeled container or address,
+-/// and the existing parse error for invalid JSON or unrelated typed metadata.
++/// Returns [`SaveError::Address`] for a missing or invalid modeled container or
++/// address. Invalid JSON and unrelated typed metadata use the existing JSON
++/// parse error.
+ ///
+ /// # Examples
+ ///
+@@ -119,13 +143,19 @@ pub fn parse_validated_save(json: &[u8]) -> Result<ValidatedSave, SaveError> {
+     validated_from_value(value)
+ }
+ 
+-/// Read a save file through the legacy decompression/key-mapping pipeline and validate it.
++/// Read a save file through the existing decompression/key-mapping pipeline,
++/// then validate its modeled addresses.
+ ///
+-/// The deobfuscated original value is checked before constructing its typed root.
++/// The resulting plaintext, deobfuscated JSON value is checked before serde
++/// constructs the typed root. Validation applies to the original values, so a
++/// serde default cannot make a missing address appear valid. The legacy
++/// [`crate::parse_save_file`] function remains available for callers that need
++/// the compatibility parser without checked addresses.
+ ///
+ /// # Errors
+ ///
+-/// Returns the existing I/O, decompression, mapping, JSON, or address error.
++/// Returns an I/O, decompression, mapping, JSON, or address error from the
++/// corresponding stage of the pipeline.
+ ///
+ /// # Examples
+ ///
+diff --git a/crates/nms-save/src/xxtea.rs b/crates/nms-save/src/xxtea.rs
+index 6da08d9..ec39228 100644
+--- a/crates/nms-save/src/xxtea.rs
++++ b/crates/nms-save/src/xxtea.rs
+@@ -1,7 +1,10 @@
+-//! XXTEA encryption/decryption for NMS metadata files.
++//! Modified XXTEA helpers used for NMS metadata files.
+ //!
+-//! Implements the modified XXTEA variant used by No Man's Sky for
+-//! `mf_save*.hg` metadata encryption.
++//! The routines operate in place on little-endian `u32` words and perform no
++//! file I/O, format detection, authentication, or metadata validation. The
++//! caller chooses the storage-slot key and round count. [`crate::read_metadata`]
++//! uses eight rounds for the 104-byte format and six rounds for other supported
++//! metadata lengths; these low-level functions do not select those values.
+ 
+ use crate::metadata::StorageSlot;
+ 
+@@ -31,12 +34,24 @@ pub(crate) const META_ENCRYPTION_KEY: [u32; 4] = [
+     0x47524E54, // "TNRG" as LE u32
+ ];
+ 
+-/// Derive the 4-element XXTEA key from a storage slot.
++/// Derive the four-word XXTEA key for a metadata storage-file index.
+ ///
+-/// `key[0]` is computed from the slot value:
+-///   `key[0] = rotate_left((slot_value ^ 0x1422CB8C), 13) * 5 + 0xE6546B64`
++/// The first word uses wrapping 32-bit arithmetic:
+ ///
+-/// `key[1..3]` are the fixed values from `META_ENCRYPTION_KEY[1..3]`.
++/// `rotate_left((slot as u32 ^ 0x1422CB8C), 13) * 5 + 0xE6546B64`
++///
++/// The remaining words are fixed from `META_ENCRYPTION_KEY`. A slot is a
++/// storage-file index, not one of the 15 user-visible paired save slots.
++///
++/// # Examples
++///
++/// ```
++/// use nms_save::{StorageSlot, xxtea::derive_key};
++///
++/// assert_eq!(derive_key(StorageSlot::PlayerState1), [
++///     0xA58D37F8, 0x44415645, 0x5259414E, 0x47524E54,
++/// ]);
++/// ```
+ pub fn derive_key(slot: StorageSlot) -> [u32; 4] {
+     let slot_value = slot as u32;
+     let key0 = (slot_value ^ KEY_XOR)
+@@ -51,11 +66,18 @@ pub fn derive_key(slot: StorageSlot) -> [u32; 4] {
+     ]
+ }
+ 
+-/// XXTEA decrypt a u32 slice in place.
++/// Decrypt a non-empty `u32` word slice in place with modified XXTEA.
++///
++/// `data` contains words prepared by the caller, typically by interpreting
++/// metadata bytes as little-endian `u32` values. `key` is normally returned by
++/// [`derive_key`]. `iterations` is used exactly as supplied; this function does
++/// not verify that it matches a metadata format. It mutates `data` and does
++/// not check a sentinel or authenticate the result.
++///
++/// # Panics
+ ///
+-/// `data` is the metadata as a mutable slice of little-endian u32 values.
+-/// `key` is the 4-element key from [`derive_key`].
+-/// `iterations` is 8 for vanilla (104-byte) meta, 6 for all others.
++/// Panics when `data` is empty. The metadata parser validates supported byte
++/// lengths before calling this helper.
+ pub fn xxtea_decrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
+     let last = data.len() - 1;
+     let mut hash: u32 = 0;
+@@ -93,9 +115,33 @@ pub fn xxtea_decrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
+     }
+ }
+ 
+-/// XXTEA encrypt a u32 slice in place.
++/// Encrypt a `u32` word slice in place with modified XXTEA.
++///
++/// This is the forward direction corresponding to [`xxtea_decrypt`], primarily
++/// useful for constructing synthetic metadata and testing round trips. Words
++/// are supplied by the caller; this helper does not convert bytes, perform
++/// file I/O, or establish compatibility with an authentic game save.
++/// `iterations` is used exactly as supplied.
++///
++/// # Panics
++///
++/// Panics when `data` is empty. With nonzero `iterations`, it also panics when
++/// `data` has fewer than two words. A non-empty slice with zero iterations is
++/// left unchanged.
++///
++/// # Examples
++///
++/// ```
++/// use nms_save::{StorageSlot, xxtea::{derive_key, xxtea_decrypt, xxtea_encrypt}};
+ ///
+-/// Forward direction of the NMS-modified XXTEA. Used for testing round-trips.
++/// let original = [0xEEEEEEBE, 0x7D2, 42];
++/// let key = derive_key(StorageSlot::PlayerState1);
++/// let mut words = original;
++/// xxtea_encrypt(&mut words, &key, 6);
++/// assert_ne!(words, original);
++/// xxtea_decrypt(&mut words, &key, 6);
++/// assert_eq!(words, original);
++/// ```
+ pub fn xxtea_encrypt(data: &mut [u32], key: &[u32; 4], iterations: usize) {
+     let last = data.len() - 1;
+     let mut hash: u32 = 0;
