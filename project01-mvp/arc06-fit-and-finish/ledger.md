@@ -379,3 +379,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 54rows40done14open/project25OPEN; initial0actualrefinements/no implementation at issue.
 
 2026-10-25 formal36close: all6AS/R06-S36DONE atd553037, eightindependentgroups/235runtime+8docs/zeroownedexact24residual/preservationopposed/diffs.54arc41done13open/project25OPEN; fullM7.6/required37/allhigherowners retained.
+
+## Slice37 complete MCP public API owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S37 | Complete truthful MCP host/config/resources/tools public docs/key examples | SixMP/full4fileworksheet/literalexamples/actualscopedpredicate/preservation | correctness-grade | Original0039 M7.6 next bounded application increment | open | [Issued Slice37](slice37-mcp-api-documentation/slice-plan.md) | Fullstrict/fullM7.6/required38remainingAPIs and allhigherowners OPEN |
+
+55arc41done14open/project25OPEN; initial0actualrefinements/no productproof atissue.

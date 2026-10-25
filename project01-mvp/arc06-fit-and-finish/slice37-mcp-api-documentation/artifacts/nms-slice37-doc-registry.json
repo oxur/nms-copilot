@@ -1,0 +1,405 @@
+{
+  "baseline": "d553037a94055457995d064e02192e9eed0ecb00",
+  "flag_mechanism_record": "5c4d58d5a96a4f9a8c7f7353550315b9",
+  "owned_paths": [
+    "crates/nms-copilot/src/mcp/mod.rs",
+    "crates/nms-copilot/src/mcp/config.rs",
+    "crates/nms-copilot/src/mcp/resources.rs",
+    "crates/nms-copilot/src/mcp/tools.rs"
+  ],
+  "all_baseline": [
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub action: Option<Action>,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum Action {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ShowTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: SetTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ListTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum SetTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ListTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ShowTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/completer.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(model_data: ModelCompletions) -> Self {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/coordinator.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Watch(nms_watch::WatchError),"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/coordinator.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Worker(std::io::Error),"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub letter: char,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub name: String,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_x: i16,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_z: i16,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/mcp/mod.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Stdio,"
+      ],
+      "owner": "Slice37 complete MCP public subtree"
+    },
+    {
+      "path": "crates/nms-copilot/src/mcp/mod.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Http(SocketAddr),"
+      ],
+      "owner": "Slice37 complete MCP public subtree"
+    },
+    {
+      "path": "crates/nms-copilot/src/mcp/mod.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a function",
+      "primary_text": [
+        "pub fn mcp_info_json() -> serde_json::Value {"
+      ],
+      "owner": "Slice37 complete MCP public subtree"
+    },
+    {
+      "path": "crates/nms-copilot/src/mcp/resources.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {"
+      ],
+      "owner": "Slice37 complete MCP public subtree"
+    },
+    {
+      "path": "crates/nms-copilot/src/mcp/tools.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {"
+      ],
+      "owner": "Slice37 complete MCP public subtree"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub galaxy_name: String,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub biome_filter: Option<String>,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub planet_count: usize,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(state: PromptState) -> Self {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    }
+  ],
+  "residual": [
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub action: Option<Action>,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum Action {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ShowTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: SetTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ListTarget,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum SetTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ListTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ShowTarget {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/completer.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(model_data: ModelCompletions) -> Self {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/coordinator.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Watch(nms_watch::WatchError),"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/coordinator.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a variant",
+      "primary_text": [
+        "    Worker(std::io::Error),"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub letter: char,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub name: String,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_x: i16,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_z: i16,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub galaxy_name: String,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub biome_filter: Option<String>,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub planet_count: usize,"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(state: PromptState) -> Self {"
+      ],
+      "owner": "CDC required38 remaining coordinator/watch/presentation APIs and full M7.6 strict reconciliation; further bounded split permitted"
+    }
+  ],
+  "allowed_cargo_warning_lines": [
+    "warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1"
+  ],
+  "parent_boundary": "Full M7.6 and whole-copilot strict acceptance remain open; no warning exception."
+}

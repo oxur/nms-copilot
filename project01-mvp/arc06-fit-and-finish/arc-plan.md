@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.128, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.129, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1071,3 +1071,7 @@ Version1.127 details [Slice36](slice36-application-state-api-documentation/slice
 ## Slice36 application-state docs accepted — 2026-10-25 UTC
 
 Version1.128 closes all6AS/R06-S36 atd553037a94055457995d064e02192e9eed0ecb00: complete config/path/session public docs/keyliteralexamples. Eight independent groups/235runtime+8docs(4execute4compile)/actualzeroownedexact24residual/preservationopposed/diffs pass. Twoactualrefinements/18CC+16CDC records/failurehistory/exactoriginalreturns/message-only6a3→d553same-tree mapping/finalretro retained. No acceptanceexception/structuralamendment. Original wholecrate strict30error baseline remains fullM7.6owner; required37remainingapplicationAPIs/fullreconciliation CDC-owned/furtherboundedsplitallowed.54arc41done13open/project25OPEN; M7.5authenticinput/alloriginalhighergates preserved, no integration/release. See [CDC36 acceptance](slice36-application-state-api-documentation/cdc-verification.md) and [retrospective](slice36-application-state-api-documentation/cdc-retrospective.md).
+
+## Slice37 complete MCP public API owner issued — 2026-10-25 UTC
+
+Version1.129 details [Slice37](slice37-mcp-api-documentation/slice-plan.md), complete four-file MCPsubtree/Rustdoc+threepayloadlayouts/no executablechange, sixOPENMP/R06-S37. FreshsameapprovedCC6-lunaHighcontext selected after actualreliability/headroom review, CDC6.1-solHighunchanged, soleimplementer/noextra reviewer. Cleandedicatedd553source; exactcurrent24warning baseline/fiveowned19residual/controlchecks supportonly. Nineoriginalgroups and actualzeroowned/exact19residual finalpredicate, no fullcrate strict exception. Required38remainingcoordinator/watch/presentationAPIs/full0039M7.6 strictreconciliation CDC-owned/furtherboundedsplitallowed.55arc41done14open/project25OPEN; alloriginalhigherowners/M7.5input retained. No productimplementation/integration/release atissue.

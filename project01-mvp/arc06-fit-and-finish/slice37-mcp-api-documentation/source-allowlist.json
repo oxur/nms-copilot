@@ -1,0 +1,18 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-api-documentation",
+  "baseline": "d553037a94055457995d064e02192e9eed0ecb00",
+  "paths": [
+    "crates/nms-copilot/src/mcp/mod.rs",
+    "crates/nms-copilot/src/mcp/config.rs",
+    "crates/nms-copilot/src/mcp/resources.rs",
+    "crates/nms-copilot/src/mcp/tools.rs"
+  ],
+  "permitted_payload_layouts": {
+    "crates/nms-copilot/src/mcp/mod.rs": [
+      "Http(SocketAddr),",
+      "Spawn(std::io::Error),",
+      "Runtime(std::io::Error),"
+    ]
+  },
+  "change_kind": "whole-line Rustdoc/documentation blanklines and exactly three named tuple payload declaration layout/trailingcomma expansions; all other ordered bytes frozen"
+}
