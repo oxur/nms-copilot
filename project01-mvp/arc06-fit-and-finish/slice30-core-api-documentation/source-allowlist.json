@@ -12,6 +12,15 @@
     "crates/nms-core/src/player.rs",
     "crates/nms-core/src/system.rs"
   ],
-  "allowed_changes": "Whole-line rustdoc comments and blank lines only; every nonblank/non-rustdoc line byte-exact in order.",
-  "frozen": "Every other tracked byte including tests, bodies, attrs, Cargo, fixtures, and all other worktrees."
+  "allowed_changes": "Whole-line rustdoc comments and blank lines; immutable02 explicitly supersedes exact non-doc line equality ONLY for six payload declaration layouts/trailing field commas. All types/API/body/attr/data tokens otherwise frozen.",
+  "frozen": "Every other tracked byte including tests, bodies, attrs, Cargo, fixtures, and all other worktrees.",
+  "permitted_declaration_layouts": {
+    "crates/nms-core/src/biome.rs": "BiomeParseError(pub String)",
+    "crates/nms-core/src/discovery.rs": "DiscoveryParseError(pub String)",
+    "crates/nms-core/src/galaxy.rs": "GalaxyTypeParseError(pub String)",
+    "crates/nms-core/src/glyph.rs": "GlyphParseError(pub String)",
+    "crates/nms-core/src/player.rs": "BaseTypeParseError(pub String)",
+    "crates/nms-core/src/system.rs": "DiscoverySource::Community { source: String }"
+  },
+  "iteration02_frozen_allowed_file": "crates/nms-core/src/lib.rs"
 }
