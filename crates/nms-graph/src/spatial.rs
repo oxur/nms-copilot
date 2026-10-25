@@ -1,16 +1,38 @@
+//! Spatial identity and point types used by the galaxy model.
+
 use rstar::{AABB, PointDistance, RTreeObject};
 
 // Re-export SystemId from nms-core (canonical definition lives there).
+/// Canonical galaxy-qualified, planet-zeroed identity for a system.
 pub use nms_core::system::SystemId;
 
 /// A system's position in 3D voxel space, stored in the R-tree.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct SystemPoint {
+    /// Galaxy-qualified identity associated with these coordinates.
     pub id: SystemId,
+    /// Voxel-space coordinates in X, Y, Z order. R-tree point distance is
+    /// squared Euclidean distance in voxel units.
     pub point: [f64; 3],
 }
 
 impl SystemPoint {
+    /// Create a point from a system ID and voxel coordinates.
+    ///
+    /// The supplied ID is not checked against the coordinates, and coordinates
+    /// are not checked for finiteness.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::{GalacticAddress, SystemId};
+    /// use nms_graph::SystemPoint;
+    ///
+    /// let address = GalacticAddress::new(3, -4, 5, 1, 0, 9);
+    /// let point = SystemPoint::new(SystemId::from_address(&address), 3.0, -4.0, 5.0);
+    /// assert_eq!(point.point, [3.0, -4.0, 5.0]);
+    /// assert_eq!(point.id.reality_index(), 9);
+    /// ```
     pub fn new(id: SystemId, x: f64, y: f64, z: f64) -> Self {
         Self {
             id,
@@ -18,7 +40,7 @@ impl SystemPoint {
         }
     }
 
-    /// Create from a `GalacticAddress`.
+    /// Create from an address, deriving the canonical system ID and voxel point.
     pub fn from_address(addr: &nms_core::address::GalacticAddress) -> Self {
         let id = SystemId::from_address(addr);
         Self::new(

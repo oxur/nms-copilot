@@ -1,4 +1,8 @@
 //! Spatial query methods on the GalaxyModel.
+//!
+//! These methods scan the model's maps and compute system-coordinate
+//! distances; they do not query the R-tree. For a runnable query, topology,
+//! and route example, see the [routing module example](crate::route#example).
 
 use nms_core::address::GalacticAddress;
 use nms_core::biome::{Biome, BiomeSubType};
@@ -17,15 +21,19 @@ pub struct BiomeFilter {
     pub biome_subtype: Option<BiomeSubType>,
     /// Require the planet's infested flag to equal this value when set.
     pub infested: Option<bool>,
-    /// Require a planet name; a containing system name does not count.
+    /// Require the planet to have a name value.
+    ///
+    /// This means `planet.name.is_some()`; an empty string qualifies, and a
+    /// containing system name does not count.
     pub named_only: bool,
 }
 
 impl BiomeFilter {
     /// Return whether `planet` satisfies every configured planet predicate.
     ///
-    /// `named_only` requires a planet name; a containing system name does not
-    /// satisfy this filter. `Some(false)` matches non-infested planets.
+    /// `named_only` requires `planet.name` to be `Some`, including `Some("")`;
+    /// a containing system name does not satisfy it. `Some(false)` matches
+    /// non-infested planets.
     pub fn matches(&self, planet: &Planet) -> bool {
         if let Some(biome) = self.biome
             && planet.biome != Some(biome)
@@ -52,7 +60,15 @@ impl BiomeFilter {
 impl GalaxyModel {
     /// Resolve a reference point to a `GalacticAddress`.
     ///
-    /// Accepts a direct address, a base name, or neither to use player position.
+    /// Accepts a direct address, then a base name, or neither to use player
+    /// position. An explicit address takes precedence if both are supplied;
+    /// this resolver does not compare the result with the active galaxy.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`GraphError::BaseNotFound`] for an unknown supplied base, or
+    /// [`GraphError::NoPlayerPosition`] when neither reference is supplied and
+    /// the model has no player position.
     pub fn resolve_position(
         &self,
         address: Option<&GalacticAddress>,
@@ -86,6 +102,9 @@ impl GalaxyModel {
     }
 
     /// Find the N nearest systems in `from`'s galaxy without changing selection.
+    ///
+    /// This scans the systems map. `n == 0` returns an empty vector; equal
+    /// distances are ordered by the galaxy-qualified system identity.
     ///
     /// Returns `(SystemId, distance_in_ly)` pairs ordered by distance and then
     /// by galaxy-qualified system identity.
@@ -126,8 +145,11 @@ impl GalaxyModel {
 
     /// Find every system within `radius_ly` in `from`'s galaxy.
     ///
+    /// Results include known-location placeholders. Distances are measured to
+    /// the containing system address, not to individual planets.
+    ///
     /// The radius boundary is inclusive. Negative and NaN radii return no rows;
-    /// positive infinity includes every system in the selected galaxy.
+    /// positive infinity includes every system in `from`'s galaxy.
     pub fn systems_within_radius_from_address(
         &self,
         from: &GalacticAddress,
@@ -167,6 +189,9 @@ impl GalaxyModel {
     }
 
     /// Find the N nearest matching planets in `from`'s galaxy without selection changes.
+    ///
+    /// The scan skips flattened planet keys whose containing system is absent.
+    /// Distances are to that system's address; `n == 0` returns no rows.
     pub fn nearest_planets_from_address<'a>(
         &'a self,
         from: &GalacticAddress,
@@ -208,6 +233,9 @@ impl GalaxyModel {
     }
 
     /// Find every matching planet within `radius_ly` in `from`'s galaxy.
+    ///
+    /// The boundary is inclusive; negative and NaN radii return no rows, and
+    /// positive infinity includes every matching planet in the galaxy.
     pub fn planets_within_radius_from_address<'a>(
         &'a self,
         from: &GalacticAddress,

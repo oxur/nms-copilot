@@ -12,15 +12,34 @@ use rstar::PointDistance;
 use crate::model::GalaxyModel;
 use crate::spatial::SystemId;
 
-/// Strategy for generating graph edges.
+/// Strategy for generating per-galaxy graph edges.
+///
+/// Both strategies add undirected edges. KNN connects each system to up to
+/// `k` nearest neighbors; because neighbor choices are unioned, a node's final
+/// degree can exceed `k`.
 #[derive(Debug, Clone, Copy)]
 pub enum EdgeStrategy {
-    /// Connect each system to its k nearest neighbors.
-    Knn { k: usize },
-    /// Connect all systems within warp range (light-years).
-    WarpRange { max_ly: f64 },
+    /// Connect each system to its `k` nearest neighbors in the same galaxy.
+    ///
+    /// `k == 0` adds no edges; undirected neighbor choices are unioned, so a
+    /// system's final degree can be greater than `k`.
+    Knn {
+        /// Maximum outgoing neighbor choices per system.
+        ///
+        /// Choices are unioned as undirected edges, so final degree can exceed `k`.
+        k: usize,
+    },
+    /// Connect same-galaxy systems whose measured distance is at most `max_ly`.
+    ///
+    /// Negative or NaN ranges produce no edges; positive infinity connects all
+    /// pairs within each indexed galaxy.
+    WarpRange {
+        /// Inclusive maximum separation in light-years.
+        max_ly: f64,
+    },
 }
 
+/// The default edge strategy uses KNN with `k = 10`.
 impl Default for EdgeStrategy {
     fn default() -> Self {
         EdgeStrategy::Knn { k: 10 }
@@ -28,7 +47,10 @@ impl Default for EdgeStrategy {
 }
 
 impl GalaxyModel {
-    /// Build edges using the given strategy. Clears existing edges first.
+    /// Build edges using the given strategy after clearing every existing edge.
+    ///
+    /// Neighbor searches use each system's galaxy-specific R-tree. This method
+    /// does not add cross-galaxy links or a disconnected-route fallback.
     pub fn build_edges(&mut self, strategy: EdgeStrategy) {
         // Remove all existing edges
         let edge_ids: Vec<_> = self.graph.edge_indices().collect();
@@ -174,11 +196,14 @@ impl GalaxyModel {
         }
     }
 
-    /// Add KNN edges for a single newly inserted system.
+    /// Add KNN edges for one already-indexed system.
     ///
-    /// Call this after `insert_system()` to connect the new node to
-    /// its neighbors without rebuilding the entire graph.
-    /// Looks up the system's galaxy to use the correct spatial index.
+    /// Call this after [`GalaxyModel::insert_system`] to connect the new node
+    /// to neighbors without rebuilding existing edges. The method uses that
+    /// system's galaxy index; an absent system, spatial index, or graph node is
+    /// a no-op. It adds this system's edges to its selected neighbors, but does
+    /// not rebuild neighbor choices for every node in a batch of new systems.
+    /// Equal-distance R-tree choices are not guaranteed to be deterministic.
     pub fn connect_new_system(&mut self, sys_id: SystemId, k: usize) {
         let system = match self.systems.get(&sys_id) {
             Some(s) => s,
