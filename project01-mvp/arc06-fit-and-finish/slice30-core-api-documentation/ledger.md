@@ -3,12 +3,12 @@
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
-| CD-01 | Complete core public surface comments and crate/module navigation | Full nine-file public-item walk and strict default/archive missing_docs | correctness-grade | open | Pending |
-| CD-02 | Accurate actual contracts/errors/panics and legacy/save distinction | Closed source-grounded worksheet, truthful constructor/identity/parser/provenance descriptions | correctness-grade | open | Pending |
-| CD-03 | Meaningful runnable key examples with independent literal expectations | Required module/type cases and actual default/archive doctests | correctness-grade | open | Pending |
-| CD-04 | Executable/API/tests/data and all other paths unchanged | Exact ordered non-doc line audit plus opposed synthetic mutation and full nine-file review | correctness-grade | open | Pending |
-| CD-05 | Attributable scoped gates/commits/fences | Raw-first actual attempts, format/lint/unit/docs/diffs, exact names/trailers/clean main protection | correctness-grade | open | Pending |
-| CD-06 | Independent acceptance/retro and full original parent ownership | Exact CC return transfer, CDC review/appropriate reproduction/retrospective/bubble-up, required later API owners | correctness-grade | open | Pending |
+| CD-01 | Complete core public surface comments and crate/module navigation | Full nine-file public-item walk and strict default/archive missing_docs | correctness-grade | open | [CDC exact pending disposition](cdc-verification.md) |
+| CD-02 | Accurate actual contracts/errors/panics and legacy/save distinction | Closed source-grounded worksheet, truthful constructor/identity/parser/provenance descriptions | correctness-grade | done | [CDC independent review](cdc-verification.md) |
+| CD-03 | Meaningful runnable key examples with independent literal expectations | Required module/type cases and actual default/archive doctests | correctness-grade | done | [CDC independent review](cdc-verification.md) |
+| CD-04 | Executable/API/tests/data and all other paths unchanged | Exact ordered non-doc line audit plus opposed synthetic mutation and full nine-file review | correctness-grade | done | [CDC independent review](cdc-verification.md) |
+| CD-05 | Attributable scoped gates/commits/fences | Raw-first actual attempts, format/lint/unit/docs/diffs, exact names/trailers/clean main protection | correctness-grade | open | [CDC exact pending disposition](cdc-verification.md) |
+| CD-06 | Independent acceptance/retro and full original parent ownership | Exact CC return transfer, CDC review/appropriate reproduction/retrospective/bubble-up, required later API owners | correctness-grade | open | [CDC exact pending disposition](cdc-verification.md) |
 
 
 2026-10-25 pre-edit01: author digits-only wording superseded by exact12-byte payload then standard radix parser (optional+ accepted), source body/API/scenarios unchanged. CC explicitly no implementation began; sourceclean4a. Initial+01 FIRST implementation, zero actual refinements/five remain; all six rows OPEN. Original prompt preserved, current01 proceeds to original edits/pair/HOLD.
@@ -22,3 +22,7 @@
 Original captured coredefault unit+doctests→allfeatures unit+doctests→strict defaultdocs→strict archivedocs→formal content/scopeaudit(opposed executable mutation)→working/baseline defaultdiffchecks RELEASED to sameCC. Six exact payload layouts/trailingcommas only normalized; types/API/body/data/attrs/tests/everyotherpath remain frozen. No broad unchangedworkspace/native rerun, no current docs/runtime claim until actualrecords. All6CDopen; actual2/5used/threeleft.
 
 CC ordinary pre-edit fence error compared64hex fileSHA256 to40hex GitblobOID, distinct from earlier HEAD-vs-working comparison. Direct actual git hash-object mainnative2cd450ce/corelibaffe7713/statusonlyhumanfile confirms NO drift; originalfailedcalls/unknowns retained, no productcredit/waiver/refinement. Returns retain original erroneous beforehold wording/sourcewalk claims; CDC uses raw timestamps and exactsixsite normalization, not unsupported summary.
+
+2026-10-25 independent current disposition: frozen clean40e6bc8f2b26606393931a232e604ce0e6f38e86/exact9paths, all original9CDCgroups complete8green/strictarchive4ef6bc6f101. Coredefault89unit+14docs/archive90+14; strictdefault0/contentopposed0/diffs0. Source/API/body/types/attrs/tests/data preserved after six exact layouts. CD02–04DONE;CD01/CD05/CD06OPEN, R06-S30/fullM7.6OPEN,48arc34done14open/project25open. Actual15CC+12CDC full records and exact CCreturns archived; no capture gap/waiver.
+
+F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolver::Community.source, no supported doc forwarding to resolver fields. Baseline inventory already contained origin at system13; CDCreadiness missed it. No source/dep repair/suppression or reclassification of strictred. Concrete A/B decision and exact canonical approval rule in cdc-verification.md; A prospective exactgeneratedfieldexception plus actual exit0 JSON/archive-output proof rejecting every extra/different missingdoc; B keep30open pending separately scoped macro remedy. No exception adopted. Source/helper/nextunit mutation HELD pending actual Operator decision, same2/5actual refinements/threeleft. Provisionalretro/bottomuprecord is not sliceclosure.

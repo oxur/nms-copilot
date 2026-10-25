@@ -1,0 +1,1221 @@
+diff --git a/crates/nms-core/src/address.rs b/crates/nms-core/src/address.rs
+index e4c0d80..20df99b 100644
+--- a/crates/nms-core/src/address.rs
++++ b/crates/nms-core/src/address.rs
+@@ -1,3 +1,10 @@
++//! Legacy galactic coordinates and their portal and signal-booster forms.
++//!
++//! A [GalacticAddress] stores the historical 48-bit coordinate, while its
++//! galaxy index is a separate field. This is distinct from save-format
++//! decoding, which belongs to the save crate. Coordinate constructors mask
++//! values to their packed field widths; they are not checked conversions.
++
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+ use std::str::FromStr;
+@@ -63,8 +70,22 @@ const PORTAL_TO_SB_Y: u16 = 0x7F;
+ /// The 48-bit value encodes fields in portal glyph order: `P-SSS-YY-ZZZ-XXX`
+ /// where P=PlanetIndex, SSS=SolarSystemIndex, YY=VoxelY, ZZZ=VoxelZ, XXX=VoxelX.
+ ///
+-/// The `reality_index` identifies the galaxy (0=Euclid, 1=Hilbert, etc.) and is
++/// The galaxy index identifies a galaxy (0 is Euclid, 1 is Hilbert) and is
+ /// stored separately from the packed value.
++///
++/// Construction preserves the supplied galaxy index and masks the packed
++/// coordinate fields to their legacy widths: X/Z 12 bits, Y 8 bits, SSI 12
++/// bits, and planet 4 bits.
++///
++/// # Examples
++///
++/// ```
++/// use nms_core::GalacticAddress;
++///
++/// let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
++/// assert_eq!(address.packed(), 0x2001_0000_0003);
++/// assert_eq!(address.to_signal_booster(), "0802:007F:07FF:0001");
++/// ```
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -72,11 +93,16 @@ const PORTAL_TO_SB_Y: u16 = 0x7F;
+ )]
+ pub struct GalacticAddress {
+     packed: u64,
++    /// Galaxy (reality) index; it is not part of the 48-bit packed value.
+     pub reality_index: u8,
+ }
+ 
+ impl GalacticAddress {
+-    /// Create from individual field values (portal coordinate frame).
++    /// Pack coordinate fields, masking each value to its legacy bit width.
++    ///
++    /// The parameters are voxel X/Y/Z, solar-system index, planet index, and
++    /// galaxy index, respectively. This constructor does not reject out-of-
++    /// range packed values; only the low 12/8/12/12/4 bits are retained.
+     pub fn new(
+         voxel_x: i16,
+         voxel_y: i8,
+@@ -103,7 +129,7 @@ impl GalacticAddress {
+         }
+     }
+ 
+-    /// Create from raw packed 48-bit value and reality index.
++    /// Create from a raw value and galaxy index, retaining only its low 48 bits.
+     pub fn from_packed(packed: u64, reality_index: u8) -> Self {
+         Self {
+             packed: packed & PACKED_MASK,
+@@ -121,7 +147,7 @@ impl GalacticAddress {
+         ((self.packed >> PLANET_SHIFT) & MASK_4BIT) as u8
+     }
+ 
+-    /// Solar system index (12-bit unsigned, 0x000-0xFFE). Bits 43-32.
++    /// Solar-system index (12-bit unsigned, 0x000–0xFFF), from bits 43–32.
+     pub fn solar_system_index(&self) -> u16 {
+         ((self.packed >> SSI_SHIFT) & MASK_12BIT) as u16
+     }
+@@ -156,11 +182,20 @@ impl GalacticAddress {
+         (self.voxel_x(), self.voxel_y(), self.voxel_z())
+     }
+ 
+-    /// Parse signal booster format `XXXX:YYYY:ZZZZ:SSSS`.
++    /// Parse four colon-separated hexadecimal signal-booster components.
+     ///
+     /// Signal booster uses corner-origin unsigned coordinates. The conversion
+     /// adds fixed offsets to translate into portal-frame (center-origin) values.
+-    /// Does NOT include planet index or reality index; caller must supply those.
++    /// Each component is parsed as a radix-16 u16; fixed-width or four-digit
++    /// input is not required. The conversion applies the legacy coordinate
++    /// offsets and masks to the destination widths. Planet and galaxy indices
++    /// are not encoded in this string and are supplied by the caller.
++    ///
++    /// # Errors
++    ///
++    /// Returns [AddressParseError::InvalidFormat] unless there are four
++    /// components, or [AddressParseError::InvalidHex] if any component is
++    /// not accepted by the standard radix-16 integer parser.
+     pub fn from_signal_booster(
+         s: &str,
+         planet_index: u8,
+@@ -191,10 +226,11 @@ impl GalacticAddress {
+         })
+     }
+ 
+-    /// Format as signal booster string `XXXX:YYYY:ZZZZ:SSSS`.
++    /// Format as four uppercase, four-digit signal-booster components.
+     ///
+     /// Converts portal-frame (center-origin) coordinates back to the
+     /// corner-origin unsigned format used by the in-game signal booster.
++    /// Planet and galaxy indices are omitted.
+     pub fn to_signal_booster(&self) -> String {
+         let portal_x = (self.packed & MASK_12BIT) as u16;
+         let portal_y = ((self.packed >> VOXEL_Y_SHIFT) & MASK_8BIT) as u16;
+@@ -210,9 +246,10 @@ impl GalacticAddress {
+ 
+     /// Distance in light-years to another address.
+     ///
+-    /// SSI-aware: returns 0 for same system, [`VOXEL_UNCERTAINTY`] for same
+-    /// voxel but different SSI, and Euclidean voxel distance * [`LY_PER_VOXEL`]
+-    /// otherwise. Only meaningful for addresses in the same galaxy.
++    /// SSI-aware: returns 0 for the same voxel and SSI, [VOXEL_UNCERTAINTY] for
++    /// the same voxel but different SSI, and Euclidean voxel distance times
++    /// [LY_PER_VOXEL] otherwise. These comparisons do not compare galaxy
++    /// indices, so use the estimate only within one galaxy.
+     pub fn distance_ly(&self, other: &GalacticAddress) -> f64 {
+         if self.same_system(other) {
+             0.0
+@@ -228,14 +265,18 @@ impl GalacticAddress {
+         }
+     }
+ 
+-    /// Whether two addresses are in the same region (same VoxelX/Y/Z).
++    /// Whether two addresses have the same voxel X/Y/Z coordinates.
++    ///
++    /// Planet, solar-system index, and galaxy index do not affect this test.
+     pub fn same_region(&self, other: &GalacticAddress) -> bool {
+         self.voxel_x() == other.voxel_x()
+             && self.voxel_y() == other.voxel_y()
+             && self.voxel_z() == other.voxel_z()
+     }
+ 
+-    /// Whether two addresses are in the same system (same region + same SSI).
++    /// Whether two addresses have the same voxel coordinates and SSI.
++    ///
++    /// Planet and galaxy indices do not affect this legacy comparison.
+     pub fn same_system(&self, other: &GalacticAddress) -> bool {
+         self.same_region(other) && self.solar_system_index() == other.solar_system_index()
+     }
+@@ -281,8 +322,17 @@ impl fmt::Display for GalacticAddress {
+     }
+ }
+ 
+-/// Parse from `0x`/`0X` prefix + 12 hex digits, or bare 12 hex digits.
+-/// Reality index defaults to 0.
++/// Parse a 12-byte packed value, optionally prefixed by 0x or 0X.
++///
++/// The remaining input is passed to Rust's radix-16 u64 parser, and the
++/// resulting address uses galaxy index 0. Parsing follows that parser's
++/// accepted syntax, including an optional leading +; this is not a save-format
++/// or checked-coordinate decoder.
++///
++/// # Errors
++///
++/// Returns [AddressParseError::InvalidLength] when the post-prefix input is
++/// not 12 bytes, or [AddressParseError::InvalidHex] when radix parsing fails.
+ impl FromStr for GalacticAddress {
+     type Err = AddressParseError;
+ 
+@@ -328,8 +378,11 @@ impl From<GalacticAddress> for u64 {
+ #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+ #[non_exhaustive]
+ pub enum AddressParseError {
++    /// The signal-booster input does not contain four colon-separated parts.
+     InvalidFormat,
++    /// A hexadecimal component could not be parsed.
+     InvalidHex,
++    /// The packed-address input is not exactly twelve bytes after its prefix.
+     InvalidLength,
+ }
+ 
+@@ -353,6 +406,10 @@ impl std::error::Error for AddressParseError {}
+ ///
+ /// Each glyph is a nibble (0-15), and the 12 glyphs form a 48-bit packed
+ /// value in the same layout as [`GalacticAddress`]: `P-SSS-YY-ZZZ-XXX`.
++///
++/// The constructor checks each supplied nibble, but derived deserialization
++/// does not repeat that check. Methods that convert glyph values may therefore
++/// panic if an invalid value was deserialized.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ pub struct PortalAddress {
+     glyphs: [u8; 12],
+@@ -362,7 +419,10 @@ pub struct PortalAddress {
+ #[derive(Debug, Clone, PartialEq, Eq)]
+ #[non_exhaustive]
+ pub enum PortalParseError {
++    /// The input yielded a glyph count other than twelve. Counts above twelve
++    /// are reported as the sentinel value 13.
+     WrongLength(usize),
++    /// A prefix could not be interpreted as a glyph.
+     InvalidGlyph(GlyphParseError),
+ }
+ 
+@@ -384,7 +444,11 @@ impl From<GlyphParseError> for PortalParseError {
+ }
+ 
+ impl PortalAddress {
+-    /// Create from an array of 12 u8 values (each 0-15).
++    /// Create from twelve glyph indices, each in the range 0–15.
++    ///
++    /// # Panics
++    ///
++    /// Panics when any array element is at least 16.
+     pub fn new(glyphs: [u8; 12]) -> Self {
+         for (i, &g) in glyphs.iter().enumerate() {
+             assert!(g < 16, "glyph[{i}] = {g} is out of range 0-15");
+@@ -392,12 +456,22 @@ impl PortalAddress {
+         Self { glyphs }
+     }
+ 
+-    /// Get the glyph at position `i` (0-11).
++    /// Get the glyph at position i.
++    ///
++    /// # Panics
++    ///
++    /// Panics when i is outside the twelve-element array. A value outside
++    /// 0–15 can also panic if it came from deserialization.
+     pub fn glyph(&self, i: usize) -> Glyph {
+         Glyph::new(self.glyphs[i])
+     }
+ 
+-    /// Get all 12 glyphs.
++    /// Convert all twelve stored values to [Glyph]s.
++    ///
++    /// # Panics
++    ///
++    /// Panics if any stored value is outside 0–15, which can occur after
++    /// deserializing data that bypassed [PortalAddress::new].
+     pub fn glyphs(&self) -> [Glyph; 12] {
+         let mut out = [Glyph::new(0); 12];
+         for (i, slot) in out.iter_mut().enumerate() {
+@@ -427,7 +501,31 @@ impl PortalAddress {
+ 
+     /// Parse a mixed-format string containing 12 glyphs.
+     ///
+-    /// Accepts any combination of hex digits, emoji, and glyph names.
++    /// Trims outer whitespace, then accepts any combination of hexadecimal
++    /// digits, emoji, glyph names, and four-letter abbreviations.
++    ///
++    /// # Errors
++    ///
++    /// Returns [PortalParseError::InvalidGlyph] for an unrecognized glyph
++    /// and [PortalParseError::WrongLength] unless exactly twelve glyphs are
++    /// consumed. More than twelve are reported with count 13.
++    ///
++    /// # Panics
++    ///
++    /// The current glyph-prefix diagnostic can panic if its 20-byte excerpt
++    /// ends inside a multi-byte UTF-8 character.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
++    /// use nms_core::PortalAddress;
++    ///
++    /// let portal = PortalAddress::parse_mixed("01717D8A4EA2")?;
++    /// assert_eq!(portal.to_hex_string(), "01717D8A4EA2");
++    /// # Ok(())
++    /// # }
++    /// ```
+     pub fn parse_mixed(s: &str) -> Result<Self, PortalParseError> {
+         let mut glyphs = Vec::with_capacity(12);
+         let mut remaining = s.trim();
+@@ -451,17 +549,27 @@ impl PortalAddress {
+         Ok(Self { glyphs: arr })
+     }
+ 
+-    /// Convert to [`GalacticAddress`] (reality_index = 0).
++    /// Convert to [`GalacticAddress`] (galaxy index 0).
++    ///
++    /// The portal format does not carry a galaxy index, so the result uses 0.
+     pub fn to_galactic_address(&self) -> GalacticAddress {
+         GalacticAddress::from(*self)
+     }
+ 
+-    /// Create from a [`GalacticAddress`].
++    /// Create from a [`GalacticAddress`], discarding its separate galaxy index.
+     pub fn from_galactic_address(addr: &GalacticAddress) -> Self {
+         PortalAddress::from(*addr)
+     }
+ 
+-    /// Create from a signal booster string by first parsing to [`GalacticAddress`].
++    /// Create from a signal-booster string by first parsing to [`GalacticAddress`].
++    ///
++    /// The result encodes the supplied planet index in the portal glyphs;
++    /// the galaxy index is not represented.
++    ///
++    /// # Errors
++    ///
++    /// Returns the underlying [AddressParseError] if the signal-booster string
++    /// cannot be parsed.
+     pub fn from_signal_booster(
+         s: &str,
+         planet_index: u8,
+@@ -479,7 +587,7 @@ impl fmt::Display for PortalAddress {
+     }
+ }
+ 
+-/// Parse from any supported format (hex, emoji, mixed).
++/// Parse with [PortalAddress::parse_mixed].
+ impl FromStr for PortalAddress {
+     type Err = PortalParseError;
+ 
+@@ -493,7 +601,7 @@ impl From<PortalAddress> for GalacticAddress {
+     ///
+     /// Portal glyph layout: `P-SSS-YY-ZZZ-XXX`
+     /// (glyph positions 0-indexed: `[0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX`).
+-    /// Reality index defaults to 0.
++    /// Galaxy index defaults to 0 because the portal form does not encode it.
+     fn from(pa: PortalAddress) -> Self {
+         let g = pa.glyphs;
+ 
+@@ -516,7 +624,8 @@ impl From<PortalAddress> for GalacticAddress {
+ impl From<GalacticAddress> for PortalAddress {
+     /// Convert galactic address to portal address.
+     ///
+-    /// Extracts each nibble from the packed 48-bit value.
++    /// Extracts each nibble from the packed 48-bit value, dropping the
++    /// separate galaxy index.
+     fn from(addr: GalacticAddress) -> Self {
+         let p = addr.packed();
+         let mut glyphs = [0u8; 12];
+@@ -535,8 +644,14 @@ impl GalacticAddress {
+         PortalAddress::from(*self)
+     }
+ 
+-    /// Create from a portal address string (hex, emoji, or mixed).
+-    /// Reality index defaults to 0.
++    /// Create from a portal-address string containing hex, emoji, or mixed glyphs.
++    ///
++    /// The resulting galaxy index is 0 because the portal form does not encode it.
++    ///
++    /// # Errors
++    ///
++    /// Returns [PortalParseError] if the string has the wrong number of glyphs
++    /// or contains a glyph that cannot be parsed.
+     pub fn from_portal_string(s: &str) -> Result<Self, PortalParseError> {
+         let pa: PortalAddress = s.parse()?;
+         Ok(GalacticAddress::from(pa))
+diff --git a/crates/nms-core/src/biome.rs b/crates/nms-core/src/biome.rs
+index 3f31aeb..91a5410 100644
+--- a/crates/nms-core/src/biome.rs
++++ b/crates/nms-core/src/biome.rs
+@@ -1,3 +1,20 @@
++//! Biome classifications and the known biome-subtype names.
++//!
++//! Parsing is case-insensitive and matches the listed full names and aliases.
++//! Inputs are not trimmed. Unknown input is retained in [BiomeParseError].
++//!
++//! # Examples
++//!
++//! ```
++//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
++//! use nms_core::{Biome, BiomeSubType};
++//!
++//! assert_eq!("GAS_GIANT".parse::<Biome>()?, Biome::GasGiant);
++//! assert_eq!("ocean".parse::<BiomeSubType>()?, BiomeSubType::WaterworldOcean);
++//! # Ok(())
++//! # }
++//! ```
++
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+ use std::str::FromStr;
+@@ -57,6 +74,9 @@ pub const ALL_BIOME_SUBTYPES: [BiomeSubType; 31] = [
+ ];
+ 
+ /// Planet biome classification matching GcBiomeType from game data.
++///
++/// The parser accepts the variant names without regard to case, plus
++/// gasgiant and gas_giant for [Biome::GasGiant]. It does not trim whitespace.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -64,20 +84,35 @@ pub const ALL_BIOME_SUBTYPES: [BiomeSubType; 31] = [
+ )]
+ #[non_exhaustive]
+ pub enum Biome {
++    /// Lush planet biome.
+     Lush,
++    /// Toxic planet biome.
+     Toxic,
++    /// Scorched planet biome.
+     Scorched,
++    /// Radioactive planet biome.
+     Radioactive,
++    /// Frozen planet biome.
+     Frozen,
++    /// Barren planet biome.
+     Barren,
++    /// Dead planet biome.
+     Dead,
++    /// Weird planet biome.
+     Weird,
++    /// Red planet biome.
+     Red,
++    /// Green planet biome.
+     Green,
++    /// Blue planet biome.
+     Blue,
++    /// Swamp planet biome.
+     Swamp,
++    /// Lava planet biome.
+     Lava,
++    /// Waterworld planet biome.
+     Waterworld,
++    /// Gas-giant biome classification.
+     GasGiant,
+ }
+ 
+@@ -106,7 +141,10 @@ impl fmt::Display for Biome {
+ 
+ /// Error returned when parsing a biome or biome subtype string fails.
+ #[derive(Debug, Clone, PartialEq, Eq)]
+-pub struct BiomeParseError(pub String);
++pub struct BiomeParseError(
++    /// The original string that did not match a biome or subtype.
++    pub String,
++);
+ 
+ impl fmt::Display for BiomeParseError {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+@@ -142,6 +180,9 @@ impl FromStr for Biome {
+ }
+ 
+ /// Planet biome subtype matching GcBiomeSubType from game data (31 variants).
++///
++/// Parsing accepts full variant names without regard to case and also accepts
++/// the unique suffixes, such as ice or ocean. Inputs are not trimmed.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -149,36 +190,67 @@ impl FromStr for Biome {
+ )]
+ #[non_exhaustive]
+ pub enum BiomeSubType {
++    /// Room-temperature Lush subtype.
+     LushRoomTemp,
++    /// Humid Lush subtype.
+     LushHumid,
++    /// Inactive Lush subtype.
+     LushInactive,
++    /// Tentacles Toxic subtype.
+     ToxicTentacles,
++    /// Fungus Toxic subtype.
+     ToxicFungus,
++    /// Eggs Toxic subtype.
+     ToxicEggs,
++    /// Singed Scorched subtype.
+     ScorchedSinged,
++    /// Charred Scorched subtype.
+     ScorchedCharred,
++    /// Blasted Scorched subtype.
+     ScorchedBlasted,
++    /// Fungal Radioactive subtype.
+     RadioactiveFungal,
++    /// Contaminated Radioactive subtype.
+     RadioactiveContaminated,
++    /// Irradiated Radioactive subtype.
+     RadioactiveIrradiated,
++    /// Ice Frozen subtype.
+     FrozenIce,
++    /// Snow Frozen subtype.
+     FrozenSnow,
++    /// Glacial Frozen subtype.
+     FrozenGlacial,
++    /// Dusty Barren subtype.
+     BarrenDusty,
++    /// Rocky Barren subtype.
+     BarrenRocky,
++    /// Mountainous Barren subtype.
+     BarrenMountainous,
++    /// Empty Dead subtype.
+     DeadEmpty,
++    /// Corroded Dead subtype.
+     DeadCorroded,
++    /// Void Dead subtype.
+     DeadVoid,
++    /// Hexagonal Weird subtype.
+     WeirdHexagonal,
++    /// Cabled Weird subtype.
+     WeirdCabled,
++    /// Bubbling Weird subtype.
+     WeirdBubbling,
++    /// Fractured Weird subtype.
+     WeirdFractured,
++    /// Shattered Weird subtype.
+     WeirdShattered,
++    /// Contorted Weird subtype.
+     WeirdContorted,
++    /// Wire-cell Weird subtype.
+     WeirdWireCell,
++    /// Murky Swamp subtype.
+     SwampMurky,
++    /// Volcanic Lava subtype.
+     LavaVolcanic,
++    /// Ocean Waterworld subtype.
+     WaterworldOcean,
+ }
+ 
+diff --git a/crates/nms-core/src/delta.rs b/crates/nms-core/src/delta.rs
+index 86b31b4..13411ec 100644
+--- a/crates/nms-core/src/delta.rs
++++ b/crates/nms-core/src/delta.rs
+@@ -2,6 +2,10 @@
+ //!
+ //! These types live in nms-core so that both nms-graph (apply) and nms-watch
+ //! (produce) can use them without creating a dependency cycle.
++//!
++//! [SaveDelta] reports additive observations; it does not report that records
++//! disappeared from a later snapshot. [SaveUpdate] pairs that delta with the
++//! complete supported player state and version from the same parsed update.
+ 
+ use std::collections::HashMap;
+ 
+@@ -53,7 +57,20 @@ impl DiscoveryNames {
+     }
+ }
+ 
+-/// A typed description of what changed between two save file snapshots.
++/// Additive changes observed between two save snapshots.
++///
++/// The fields list newly observed records, movement, and base changes. The
++/// delta does not promise to represent records removed from the source.
++///
++/// # Examples
++///
++/// ```
++/// use nms_core::delta::SaveDelta;
++///
++/// let empty = SaveDelta::empty();
++/// assert!(empty.is_empty());
++/// assert_eq!(empty.change_count(), 0);
++/// ```
+ #[derive(Debug, Clone)]
+ pub struct SaveDelta {
+     /// Newly discovered systems (not in previous snapshot).
+@@ -87,10 +104,12 @@ pub struct SaveUpdate {
+     pub save_version: u32,
+ }
+ 
+-/// Player position change.
++/// A change in the player's galactic address.
+ #[derive(Debug, Clone)]
+ pub struct PlayerMoved {
++    /// Address before the movement.
+     pub from: GalacticAddress,
++    /// Address after the movement.
+     pub to: GalacticAddress,
+ }
+ 
+diff --git a/crates/nms-core/src/discovery.rs b/crates/nms-core/src/discovery.rs
+index 432f693..df0a85d 100644
+--- a/crates/nms-core/src/discovery.rs
++++ b/crates/nms-core/src/discovery.rs
+@@ -1,3 +1,20 @@
++//! Discovery event kinds and records extracted from a save.
++//!
++//! A record carries its complete [GalacticAddress], including the galaxy
++//! index. It has no separate reality-index field; construction copies the
++//! supplied address and does not reconcile it with other values.
++//!
++//! # Examples
++//!
++//! ```
++//! use nms_core::{Discovery, DiscoveryRecord, GalacticAddress};
++//!
++//! let address = GalacticAddress::new(0, 0, 0, 0x123, 0, 5);
++//! let record = DiscoveryRecord::new(Discovery::Planet, address, None, None, None, false);
++//! assert_eq!(record.universe_address.reality_index, 5);
++//! assert!(!record.is_uploaded);
++//! ```
++
+ use chrono::{DateTime, Utc};
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+@@ -9,11 +26,17 @@ use crate::address::GalacticAddress;
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[non_exhaustive]
+ pub enum Discovery {
++    /// A discovered planet.
+     Planet,
++    /// A discovered solar system.
+     SolarSystem,
++    /// A discovered sector.
+     Sector,
++    /// A discovered animal.
+     Animal,
++    /// A discovered flora specimen.
+     Flora,
++    /// A discovered mineral.
+     Mineral,
+ }
+ 
+@@ -32,7 +55,10 @@ impl fmt::Display for Discovery {
+ 
+ /// Error returned when parsing a discovery type string fails.
+ #[derive(Debug, Clone, PartialEq, Eq)]
+-pub struct DiscoveryParseError(pub String);
++pub struct DiscoveryParseError(
++    /// The original string that did not match a discovery type.
++    pub String,
++);
+ 
+ impl fmt::Display for DiscoveryParseError {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+@@ -42,6 +68,11 @@ impl fmt::Display for DiscoveryParseError {
+ 
+ impl std::error::Error for DiscoveryParseError {}
+ 
++/// Parse a discovery type name case-insensitively.
++///
++/// The accepted names are the variant spellings, with solar_system also
++/// accepted for SolarSystem. Input is not trimmed; errors retain the original
++/// string.
+ impl FromStr for Discovery {
+     type Err = DiscoveryParseError;
+ 
+@@ -60,20 +91,31 @@ impl FromStr for Discovery {
+ 
+ /// A single discovery event from the player's save file.
+ ///
+-/// The `reality_index` is derived from the `universe_address` and kept in sync
+-/// by the constructor. Both refer to the galaxy where the discovery was made.
++/// The galaxy is represented by universe_address.reality_index. There is no
++/// separate reality_index field, and the constructor copies the address
++/// without normalizing it.
+ #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+ #[non_exhaustive]
+ pub struct DiscoveryRecord {
++    /// Kind of object represented by this discovery.
+     pub discovery_type: Discovery,
++    /// Galactic address of the discovery, including its galaxy index.
+     pub universe_address: GalacticAddress,
++    /// Optional timestamp recorded for the discovery.
+     pub timestamp: Option<DateTime<Utc>>,
++    /// Optional discovered name.
+     pub name: Option<String>,
++    /// Optional in-game discoverer name.
+     pub discoverer: Option<String>,
++    /// Whether the discovery has been uploaded.
+     pub is_uploaded: bool,
+ }
+ 
+ impl DiscoveryRecord {
++    /// Copy the supplied discovery fields into a record.
++    ///
++    /// The address is preserved as supplied; no separate galaxy value is
++    /// stored or synchronized.
+     pub fn new(
+         discovery_type: Discovery,
+         universe_address: GalacticAddress,
+diff --git a/crates/nms-core/src/galaxy.rs b/crates/nms-core/src/galaxy.rs
+index ef2cc1f..5036475 100644
+--- a/crates/nms-core/src/galaxy.rs
++++ b/crates/nms-core/src/galaxy.rs
+@@ -1,14 +1,40 @@
++//! Bundled galaxy classifications and lookup by the eight-bit galaxy index.
++//!
++//! The table is a local data source; the lookup covers every value representable
++//! by u8. Parsing [GalaxyType] is case-insensitive and does not trim input.
++//!
++//! # Examples
++//!
++//! ```
++//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
++//! use nms_core::{Galaxy, GalaxyType};
++//!
++//! let eissentam = Galaxy::by_index(9);
++//! assert_eq!(eissentam.name, "Eissentam");
++//! assert_eq!(eissentam.galaxy_type, GalaxyType::Lush);
++//! assert_eq!("normal".parse::<GalaxyType>()?, GalaxyType::Norm);
++//! # Ok(())
++//! # }
++//! ```
++
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+ use std::str::FromStr;
+ 
+ /// The four galaxy type classifications that affect planet generation.
++///
++/// Parsing accepts these names case-insensitively; Norm is also accepted as
++/// Normal. Display renders [GalaxyType::Norm] as Normal.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[non_exhaustive]
+ pub enum GalaxyType {
++    /// Normal galaxy classification.
+     Norm,
++    /// Lush galaxy classification.
+     Lush,
++    /// Harsh galaxy classification.
+     Harsh,
++    /// Empty galaxy classification.
+     Empty,
+ }
+ 
+@@ -25,7 +51,10 @@ impl fmt::Display for GalaxyType {
+ 
+ /// Error returned when parsing a galaxy type string fails.
+ #[derive(Debug, Clone, PartialEq, Eq)]
+-pub struct GalaxyTypeParseError(pub String);
++pub struct GalaxyTypeParseError(
++    /// The original string that did not match a galaxy type.
++    pub String,
++);
+ 
+ impl fmt::Display for GalaxyTypeParseError {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+@@ -49,17 +78,33 @@ impl FromStr for GalaxyType {
+     }
+ }
+ 
+-/// One of the 256 galaxies in No Man's Sky.
++/// One entry in the bundled 256-galaxy lookup table.
+ #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+ #[non_exhaustive]
+ pub struct Galaxy {
++    /// Zero-based galaxy index.
+     pub index: u8,
++    /// Bundled galaxy name.
+     pub name: &'static str,
++    /// Bundled planet-generation classification.
+     pub galaxy_type: GalaxyType,
+ }
+ 
+ impl Galaxy {
+-    /// Lookup galaxy by index (0-255). Always returns a valid Galaxy.
++    /// Look up a galaxy by its index.
++    ///
++    /// Every u8 value has a table entry, so this lookup always returns a
++    /// [Galaxy].
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_core::{Galaxy, GalaxyType};
++    ///
++    /// let galaxy = Galaxy::by_index(255);
++    /// assert_eq!(galaxy.name, "Odyalutai");
++    /// assert_eq!(galaxy.galaxy_type, GalaxyType::Norm);
++    /// ```
+     pub fn by_index(index: u8) -> Self {
+         let (name, galaxy_type) = GALAXIES[index as usize];
+         Self {
+diff --git a/crates/nms-core/src/glyph.rs b/crates/nms-core/src/glyph.rs
+index 30ef367..b87c549 100644
+--- a/crates/nms-core/src/glyph.rs
++++ b/crates/nms-core/src/glyph.rs
+@@ -1,12 +1,39 @@
++//! Portal glyph values, their display table, and prefix parsing.
++//!
++//! The valid glyph indices are 0 through 15. Parsing a complete string accepts
++//! a single hexadecimal character, a table emoji, a glyph name, or its
++//! four-letter abbreviation, case-insensitively for names and abbreviations.
++//!
++//! # Examples
++//!
++//! ```
++//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
++//! use nms_core::Glyph;
++//!
++//! let rocket: Glyph = "rckt".parse()?;
++//! assert_eq!(rocket.index(), 13);
++//! assert_eq!(rocket.name(), "Rocket");
++//! # Ok(())
++//! # }
++//! ```
++
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+ use std::str::FromStr;
+ 
++/// Display metadata for one portal glyph.
++///
++/// Entries are indexed by glyph value in [GLYPH_TABLE].
+ pub struct GlyphInfo {
++    /// Numeric glyph value from 0 through 15.
+     pub index: u8,
++    /// Uppercase hexadecimal character for the value.
+     pub hex_char: char,
++    /// Display name recognized by the parsers.
+     pub name: &'static str,
++    /// Emoji representation.
+     pub emoji: &'static str,
++    /// Four-letter abbreviated name.
+     pub abbrev: &'static str,
+ }
+ 
+@@ -127,13 +154,20 @@ pub const GLYPH_TABLE: [GlyphInfo; 16] = [
+ ];
+ 
+ /// A single portal glyph (value 0-15).
++///
++/// The derived deserializer does not enforce the constructor's range check.
++/// Accessors index [GLYPH_TABLE] directly, so deserialized values outside
++/// 0–15 can panic when converted to display metadata.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ pub struct Glyph(u8);
+ 
+ /// Error returned when parsing a glyph string fails.
+ #[derive(Debug, Clone, PartialEq, Eq)]
+ #[non_exhaustive]
+-pub struct GlyphParseError(pub String);
++pub struct GlyphParseError(
++    /// Input text or the unrecognized prefix reported by the parser.
++    pub String,
++);
+ 
+ impl fmt::Display for GlyphParseError {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+@@ -144,13 +178,19 @@ impl fmt::Display for GlyphParseError {
+ impl std::error::Error for GlyphParseError {}
+ 
+ impl Glyph {
+-    /// Create from index 0-15. Panics if out of range.
++    /// Create a glyph from its numeric index.
++    ///
++    /// # Panics
++    ///
++    /// Panics if the index is at least 16.
+     pub fn new(index: u8) -> Self {
+         assert!(index < 16, "glyph index must be 0-15, got {index}");
+         Self(index)
+     }
+ 
+-    /// Try to create from index. Returns None if >= 16.
++    /// Try to create a glyph from its numeric index.
++    ///
++    /// Returns [None] for an index outside 0–15.
+     pub fn try_new(index: u8) -> Option<Self> {
+         if index < 16 { Some(Self(index)) } else { None }
+     }
+@@ -189,6 +229,7 @@ impl From<u8> for Glyph {
+ }
+ 
+ impl From<Glyph> for u8 {
++    /// Return the numeric glyph index.
+     fn from(g: Glyph) -> u8 {
+         g.0
+     }
+@@ -201,7 +242,15 @@ impl fmt::Display for Glyph {
+     }
+ }
+ 
+-/// Parse from a single hex character, an emoji, or a glyph name (case-insensitive).
++/// Parse one hexadecimal character, emoji, name, or abbreviation.
++///
++/// Names and abbreviations are case-insensitive. An optional trailing
++/// variation selector is ignored when matching an emoji. The input is not
++/// trimmed.
++///
++/// # Errors
++///
++/// Returns [GlyphParseError] when no supported spelling matches.
+ impl FromStr for Glyph {
+     type Err = GlyphParseError;
+ 
+@@ -245,14 +294,40 @@ impl FromStr for Glyph {
+     }
+ }
+ 
+-/// Try to parse a single glyph from the start of `input`.
+-/// Returns `(Glyph, remaining_str)` on success.
++/// Parse one glyph from the start of input and return the unconsumed suffix.
+ ///
+ /// Attempts in order:
+ /// 1. Emoji match (longest match first, to handle multi-codepoint emoji)
+ /// 2. Glyph name match (case-insensitive, longest name first)
+ /// 3. Abbreviation match (case-insensitive, 4-char abbreviations)
+ /// 4. Single hex digit
++///
++/// One leading colon is ignored as an abbreviation separator. The parser does
++/// not skip general whitespace.
++///
++/// # Errors
++///
++/// Returns [GlyphParseError] for empty input, a colon with no following glyph,
++/// or an unrecognized prefix. The error retains the empty-input reason or the
++/// reported prefix.
++///
++/// # Panics
++///
++/// For an unrecognized non-ASCII prefix, constructing the diagnostic can
++/// panic when its 20-byte excerpt ends inside a UTF-8 character.
++///
++/// # Examples
++///
++/// ```
++/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
++/// use nms_core::glyph::parse_next_glyph;
++///
++/// let (glyph, rest) = parse_next_glyph("Rocket0")?;
++/// assert_eq!(glyph.index(), 13);
++/// assert_eq!(rest, "0");
++/// # Ok(())
++/// # }
++/// ```
+ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
+     if input.is_empty() {
+         return Err(GlyphParseError("empty input".to_string()));
+diff --git a/crates/nms-core/src/lib.rs b/crates/nms-core/src/lib.rs
+index 805358d..fa382ca 100644
+--- a/crates/nms-core/src/lib.rs
++++ b/crates/nms-core/src/lib.rs
+@@ -1,4 +1,41 @@
+-//! Core types, enums, address math, and portal glyph display for NMS Copilot.
++//! Core value types shared by the NMS Copilot crates.
++//!
++//! This crate models legacy portal coordinates, galaxy-qualified system keys,
++//! player and discovery records, biome classifications, and additive save
++//! deltas. It does not parse or edit save files; those operations belong to
++//! higher-level crates.
++//!
++//! # Quick start
++//!
++//! Build a system key from a coordinate, then use the bundled galaxy and
++//! parsers to interpret it:
++//!
++//! ```
++//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
++//! use nms_core::{Biome, GalacticAddress, Galaxy, Glyph, SystemId};
++//!
++//! let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
++//! let system = SystemId::from_address(&address);
++//! assert_eq!(system.reality_index(), 9);
++//! assert_eq!(Galaxy::by_index(system.reality_index()).name, "Eissentam");
++//! assert_eq!("lush".parse::<Biome>()?, Biome::Lush);
++//! assert_eq!("rckt".parse::<Glyph>()?.index(), 13);
++//! # Ok(())
++//! # }
++//! ```
++//!
++//! # Modules
++//!
++//! - [address] packs coordinates and converts portal and signal-booster forms.
++//! - [glyph] defines the sixteen portal glyphs and prefix parser.
++//! - [biome] and [galaxy] contain bundled classifications and lookups.
++//! - [discovery] and [player] model observations and player state.
++//! - [system] defines planets, systems, and galaxy-qualified [SystemId] values.
++//! - [delta] contains additive changes and runtime discovery-name observations.
++//!
++//! The APIs intentionally retain legacy behavior described on their items:
++//! constructors may mask or copy supplied values rather than validate or
++//! reconcile them.
+ 
+ pub mod address;
+ pub mod biome;
+diff --git a/crates/nms-core/src/player.rs b/crates/nms-core/src/player.rs
+index 98fe3c2..a232759 100644
+--- a/crates/nms-core/src/player.rs
++++ b/crates/nms-core/src/player.rs
+@@ -1,3 +1,20 @@
++//! Player bases and the player-state values represented by a save.
++//!
++//! Constructors copy their arguments. In particular, [PlayerState] stores
++//! current_reality separately from the galaxy index in current_address and
++//! does not require those values to agree.
++//!
++//! # Examples
++//!
++//! ```
++//! use nms_core::{GalacticAddress, PlayerState};
++//!
++//! let address = GalacticAddress::new(0, 0, 0, 1, 0, 9);
++//! let state = PlayerState::new(address, 3, None, None, 100, 20, 5);
++//! assert_eq!(state.current_address.reality_index, 9);
++//! assert_eq!(state.current_reality, 3);
++//! ```
++
+ use serde::{Deserialize, Serialize};
+ use std::fmt;
+ use std::str::FromStr;
+@@ -5,6 +22,9 @@ use std::str::FromStr;
+ use crate::address::GalacticAddress;
+ 
+ /// Maps to PersistentBaseTypes in the save file.
++///
++/// Parsing is case-insensitive, accepts the full variant names and the short
++/// aliases home, freighter, and external, and does not trim input.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -12,8 +32,11 @@ use crate::address::GalacticAddress;
+ )]
+ #[non_exhaustive]
+ pub enum BaseType {
++    /// A home-planet base.
+     HomePlanetBase,
++    /// A freighter base.
+     FreighterBase,
++    /// An external-planet base.
+     ExternalPlanetBase,
+ }
+ 
+@@ -29,7 +52,10 @@ impl fmt::Display for BaseType {
+ 
+ /// Error returned when parsing a base type string fails.
+ #[derive(Debug, Clone, PartialEq, Eq)]
+-pub struct BaseTypeParseError(pub String);
++pub struct BaseTypeParseError(
++    /// The original string that did not match a base type.
++    pub String,
++);
+ 
+ impl fmt::Display for BaseTypeParseError {
+     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+@@ -62,8 +88,11 @@ impl FromStr for BaseType {
+ )]
+ #[non_exhaustive]
+ pub struct PlayerBase {
++    /// Name assigned to the base.
+     pub name: String,
++    /// Base classification.
+     pub base_type: BaseType,
++    /// Galactic address, including the galaxy index.
+     pub address: GalacticAddress,
+     /// Position in local planet coordinates [x, y, z].
+     pub position: [f32; 3],
+@@ -72,6 +101,7 @@ pub struct PlayerBase {
+ }
+ 
+ impl PlayerBase {
++    /// Copy the supplied base fields into a player-base record.
+     pub fn new(
+         name: String,
+         base_type: BaseType,
+@@ -88,13 +118,16 @@ impl PlayerBase {
+         }
+     }
+ 
+-    /// Galaxy index (convenience accessor for `address.reality_index`).
++    /// Return the galaxy index stored in the base address.
+     pub fn reality_index(&self) -> u8 {
+         self.address.reality_index
+     }
+ }
+ 
+-/// Snapshot of the player's current state from the save file.
++/// Snapshot of supported player-state values from the save file.
++///
++/// This is a value record rather than a validating constructor: current_reality
++/// is copied independently from current_address.reality_index.
+ #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -102,16 +135,27 @@ impl PlayerBase {
+ )]
+ #[non_exhaustive]
+ pub struct PlayerState {
++    /// Current galactic address.
+     pub current_address: GalacticAddress,
++    /// Current reality value copied independently from current_address.
+     pub current_reality: u8,
++    /// Previous galactic address, when present.
+     pub previous_address: Option<GalacticAddress>,
++    /// Freighter galactic address, when present.
+     pub freighter_address: Option<GalacticAddress>,
++    /// Units currency balance.
+     pub units: u64,
++    /// Nanites currency balance.
+     pub nanites: u64,
++    /// Quicksilver currency balance.
+     pub quicksilver: u64,
+ }
+ 
+ impl PlayerState {
++    /// Copy the supplied values into a player-state snapshot.
++    ///
++    /// No validation or synchronization is performed between current_reality
++    /// and current_address.reality_index.
+     pub fn new(
+         current_address: GalacticAddress,
+         current_reality: u8,
+diff --git a/crates/nms-core/src/system.rs b/crates/nms-core/src/system.rs
+index 9576653..da75445 100644
+--- a/crates/nms-core/src/system.rs
++++ b/crates/nms-core/src/system.rs
+@@ -1,3 +1,24 @@
++//! Galaxy-qualified system identities and the system/planet model.
++//!
++//! [SystemId] identifies a system by galaxy and planet-zeroed coordinates.
++//! [System] and [Planet] are caller-provided model values: their constructors
++//! copy fields and do not enforce all game-domain bounds.
++//!
++//! # Examples
++//!
++//! ```
++//! use nms_core::{DiscoverySource, GalacticAddress, Planet, System, SystemId};
++//!
++//! let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
++//! let id = SystemId::from_address(&address);
++//! let planet = Planet::new(2, None, None, false, Some("Aster".into()), None);
++//! let mut system = System::new(address, Some("Example".into()), None, None, vec![planet]);
++//! assert_eq!(id.reality_index(), 9);
++//! assert_eq!(system.source, DiscoverySource::Personal);
++//! system.source = DiscoverySource::Community { source: "local catalog".into() };
++//! assert_eq!(system.reality_index(), 9);
++//! ```
++
+ use chrono::{DateTime, Utc};
+ use serde::{Deserialize, Deserializer, Serialize};
+ 
+@@ -16,7 +37,10 @@ pub enum DiscoverySource {
+     /// A system extracted from the player's own save or constructed locally.
+     Personal,
+     /// A system contributed by a named community catalog.
+-    Community { source: String },
++    Community {
++        /// Exact catalog label for the contribution source.
++        source: String,
++    },
+ }
+ 
+ /// Identifies a star system by galaxy and its canonical planet-zeroed address.
+@@ -26,6 +50,9 @@ pub enum DiscoverySource {
+ /// never packed into portal-coordinate bits. Serde uses an object with numeric
+ /// `reality_index` and `system_address` fields. This replaces the former public
+ /// tuple/scalar representation and its scalar serialized form.
++///
++/// The custom deserializer rejects unknown fields and system addresses with
++/// bits outside the low 44 coordinate-and-SSI bits.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+ pub struct SystemId {
+     reality_index: u8,
+@@ -86,22 +113,43 @@ impl std::fmt::Display for SystemId {
+     }
+ }
+ 
+-/// A star system containing one or more planets.
++/// A star-system model record.
+ ///
+ /// The galaxy (reality index) is encoded in the `address` field.
++/// Construction permits an empty planet list, defaults source to
++/// [DiscoverySource::Personal], and preserves the supplied address and other
++/// fields without canonicalization or provenance inference.
+ #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+ #[non_exhaustive]
+ pub struct System {
++    /// Stored galactic address, including its supplied planet and galaxy bits.
+     pub address: GalacticAddress,
+     /// Origin of this system's atlas contribution.
+     pub source: DiscoverySource,
++    /// Optional system name.
+     pub name: Option<String>,
++    /// Optional in-game discoverer name.
+     pub discoverer: Option<String>,
++    /// Optional recorded discovery timestamp.
+     pub timestamp: Option<DateTime<Utc>>,
++    /// Planets represented in this system; an empty vector is allowed.
+     pub planets: Vec<Planet>,
+ }
+ 
+ impl System {
++    /// Create a system with the supplied fields and Personal source.
++    ///
++    /// The address is copied as supplied, and the planet vector may be empty.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// use nms_core::{DiscoverySource, GalacticAddress, System};
++    ///
++    /// let system = System::new(GalacticAddress::new(0, 0, 0, 1, 0, 9), None, None, None, vec![]);
++    /// assert!(system.planets.is_empty());
++    /// assert_eq!(system.source, DiscoverySource::Personal);
++    /// ```
+     pub fn new(
+         address: GalacticAddress,
+         name: Option<String>,
+@@ -119,13 +167,13 @@ impl System {
+         }
+     }
+ 
+-    /// Galaxy index (convenience accessor for `address.reality_index`).
++    /// Return the galaxy index stored in the system address.
+     pub fn reality_index(&self) -> u8 {
+         self.address.reality_index
+     }
+ }
+ 
+-/// A planet within a star system.
++/// A planet record associated with a system.
+ #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+ #[cfg_attr(
+     feature = "archive",
+@@ -133,18 +181,25 @@ impl System {
+ )]
+ #[non_exhaustive]
+ pub struct Planet {
+-    /// Planet index within the system (0-15).
++    /// Supplied planet index; the constructor does not enforce the 0–15 range.
+     pub index: u8,
++    /// Optional primary biome classification.
+     pub biome: Option<Biome>,
++    /// Optional biome subtype.
+     pub biome_subtype: Option<BiomeSubType>,
+     /// Whether the planet has infested (biological horror) variant.
+     pub infested: bool,
++    /// Optional planet name.
+     pub name: Option<String>,
+     /// Procedural generation seed.
+     pub seed_hash: Option<u64>,
+ }
+ 
+ impl Planet {
++    /// Copy the supplied planet fields without validating the index range.
++    ///
++    /// The NMS convention uses indices 0–15, but this constructor accepts any
++    /// u8 value.
+     pub fn new(
+         index: u8,
+         biome: Option<Biome>,

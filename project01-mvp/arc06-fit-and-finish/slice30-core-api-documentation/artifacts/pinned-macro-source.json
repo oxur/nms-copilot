@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rkyv_derive-0.8.15/src/archive/enum.rs",
+    "bytes": 32315,
+    "sha256": "12c4926dc52a060c825963b268ff777ba72beb2c670afec41d796977134bfc83",
+    "role": "read-only pinned primary source; no dependency modification"
+  },
+  {
+    "path": "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rkyv_derive-0.8.15/src/attributes.rs",
+    "bytes": 15599,
+    "sha256": "9cc1b9a4cf9e6dd8da334a12169aa37570a605c17d3e370473cd167ee61cfb8d",
+    "role": "read-only pinned primary source; no dependency modification"
+  },
+  {
+    "path": "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rkyv_derive-0.8.15/src/archive/struct.rs",
+    "bytes": 15642,
+    "sha256": "1e1ad8b291a0df939e77d8fd984273dc3b1d0fc939fdaff68d8da284b83bd983",
+    "role": "read-only pinned primary source; no dependency modification"
+  },
+  {
+    "path": "/Users/oubiwann/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rkyv_derive-0.8.15/src/lib.rs",
+    "bytes": 5232,
+    "sha256": "4c29c26518a1dbd837e91d361697652cf1f59083474dbb513bfe23e16274d5da",
+    "role": "read-only pinned primary source; no dependency modification"
+  }
+]

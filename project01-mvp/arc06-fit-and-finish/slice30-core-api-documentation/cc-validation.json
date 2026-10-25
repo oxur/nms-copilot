@@ -1,0 +1,56 @@
+{
+  "slice": "30-core-api-documentation",
+  "status": "cc-proposed; independent acceptance pending",
+  "source": {
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+    "branch": "codex/public-api-documentation",
+    "baseline": "4a935408460349e9aa64fecd570d9960094191b1",
+    "commit": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+    "changed_paths": 9,
+    "clean_worktree_and_index": true,
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "baseline_diff_sha256": "7ace58f0cee6fe9df498a69ce6ef56ca2d4dab86d11390e0c8faaae340e9d457"
+  },
+  "capture": {
+    "attempt_log": "/private/tmp/nms-slice30-cc-attempts.json",
+    "attempt_log_sha256": "c69d39b99083275829b44b69db761aec6dc65198d25faea7b1a49e00807989e7",
+    "entry_count": 15,
+    "all_entries_complete": true,
+    "kernel": "/private/tmp/nms-slice30-cc-capture.py",
+    "kernel_sha256": "9ca6bf1302b0f82ae2c47ee7594a46b7caa9d70fa367e0ac4f39b4d4f9d89224",
+    "scope_checker": "/private/tmp/nms-slice30-content-scope-audit.py",
+    "scope_checker_sha256": "7eb2c1c0bb642cf49ab08a056748e52c112bb7fb5a4ca35830744fd256eb3ca9"
+  },
+  "checks": [
+    {"id": "30df48746b104e9f9a21df27f0b9c75e", "check": "initial make format", "exit": 0, "result": "pass"},
+    {"id": "e4366218c8a1475485cba550746763d6", "check": "iteration02 make format", "exit": 0, "result": "pass"},
+    {"id": "0036dc58f3cf44cf9fe412f50a11c371", "check": "iteration02 make lint", "exit": 0, "result": "pass"},
+    {"id": "70f73d99c7694b989e67b9eb762ffa69", "check": "iteration03 make format", "exit": 0, "result": "pass"},
+    {"id": "bd742fcb4f7d437bac68f90b4c2be04a", "check": "iteration03 make lint", "exit": 0, "result": "pass"},
+    {"id": "a4f217dfa9ab40cdad9bdb2efb4639e3", "check": "default-feature nms-core tests and doctests", "exit": 0, "result": "pass", "counts": {"unit_tests": 89, "doctests": 14}},
+    {"id": "c99bf77e9e2841b7ad4525b306c124af", "check": "all-feature nms-core tests and doctests", "exit": 0, "result": "pass", "counts": {"unit_tests": 90, "doctests": 14}},
+    {"id": "cad027897a2146c180d5d0e488e072f5", "check": "strict default-feature rustdoc", "exit": 0, "result": "pass"},
+    {"id": "9c115cdda22e47fd9159f59c4d451281", "check": "strict all-features rustdoc", "exit": 101, "result": "fail", "diagnostic": "missing documentation for derive-generated public struct field at crates/nms-core/src/system.rs:38:12"},
+    {"id": "079bd497333041a183e0a7b81057b53c", "check": "formal scope audit initial attempt", "exit": 1, "result": "fail; private checker applied normalizers to wrong file declarations; preserved and superseded by corrected run"},
+    {"id": "c15e684cac584c688d425fa02e013d77", "check": "formal scope audit corrected retry", "exit": 0, "result": "pass"},
+    {"id": "6195eb610d614999bc8c71ed341592b4", "check": "working diff --check", "exit": 0, "result": "pass"},
+    {"id": "180f92e79e504b10aff498d653065f93", "check": "baseline diff --check", "exit": 0, "result": "pass"}
+  ],
+  "support_controls": [
+    {"id": "4ec0f61bf36e4de1810208c1ae099cf5", "exit": 7, "classification": "capture-kernel support control; not product/compiler evidence"},
+    {"id": "f9443dbf625b49efad4c2783c918fa1f", "exit": 0, "classification": "capture-kernel support control; not product/compiler evidence"}
+  ],
+  "proposed_rows": {
+    "CD-01": "open: strict all-features docs red on derive-generated public field",
+    "CD-02": "proposed-done: complete source-grounded documentation worksheet, pending CDC",
+    "CD-03": "proposed-done: default/all-feature unit tests and doctests passed, pending CDC",
+    "CD-04": "proposed-done: normalized source-scope audit passed, pending CDC",
+    "CD-05": "open: strict all-features docs gate failed",
+    "CD-06": "open: independent acceptance and arc disposition pending"
+  },
+  "baseline_diagnostic_context": "CDC baseline inventory 772e already contained the derive-origin missing-field diagnostic at baseline system.rs:13 (entry 220); this was not resolved before the strict gate. The current failure remains red and open.",
+  "independent_acceptance": "not claimed"
+}

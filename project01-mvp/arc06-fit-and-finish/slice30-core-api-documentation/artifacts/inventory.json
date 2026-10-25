@@ -1,0 +1,71 @@
+{
+  "observed_utc": "2026-10-25T01:43:28.714405+00:00",
+  "purpose": "Actual retained raw proof/helpers/held deltas/fences/explicit return transfer; source lives in pinned Git commit, no copied external macro implementation.",
+  "files": [
+    {
+      "path": "cc-attempts.json",
+      "bytes": 93900,
+      "sha256": "c69d39b99083275829b44b69db761aec6dc65198d25faea7b1a49e00807989e7"
+    },
+    {
+      "path": "cc-capture-preflight.json",
+      "bytes": 9047,
+      "sha256": "f3653533eab010c8339d23fc0a730ed018679765f3f65d18767b4979f3ac6c2d"
+    },
+    {
+      "path": "cc-content-scope-audit.py",
+      "bytes": 3356,
+      "sha256": "7eb2c1c0bb642cf49ab08a056748e52c112bb7fb5a4ca35830744fd256eb3ca9"
+    },
+    {
+      "path": "cc-transfer.json",
+      "bytes": 2590,
+      "sha256": "1b66f013789021d0c258b3af8042e0c51331d92bf218fec7b88fb21e36eba233"
+    },
+    {
+      "path": "cdc-content-scope-audit.py",
+      "bytes": 2788,
+      "sha256": "9ba8e3e47700d717a3f2cdce76d7681fede0aa26dad87dd5887888dc3dd3290f"
+    },
+    {
+      "path": "corrected02-held.patch",
+      "bytes": 50474,
+      "sha256": "98173ce12d7e756f2e900ca74f44588605318675ded59e491834c81a8c933639"
+    },
+    {
+      "path": "current-fences.json",
+      "bytes": 6529,
+      "sha256": "6deac5a838ded63671e616cabc780285902101c76670c7b229071f7f8ae35049"
+    },
+    {
+      "path": "initial-held.patch",
+      "bytes": 43338,
+      "sha256": "63f1a976cc6aed51bd5d83fac04de0fb1d1f37aef7eb48bf0ef06623cd267691"
+    },
+    {
+      "path": "nms-slice30-api-inventory.json",
+      "bytes": 148590,
+      "sha256": "bd3408aeed50378289b82d7864ce94a776e8d310a10ade065bc9fd3ba91b7f1e"
+    },
+    {
+      "path": "nms-slice30-cc-capture.py",
+      "bytes": 3723,
+      "sha256": "9ca6bf1302b0f82ae2c47ee7594a46b7caa9d70fa367e0ac4f39b4d4f9d89224"
+    },
+    {
+      "path": "nms-slice30-cdc-attempts.json",
+      "bytes": 1087738,
+      "sha256": "f035a674795b3442e8553bfe58c547523454eaac697795840542e4dfcd5dc207"
+    },
+    {
+      "path": "nms-slice30-cdc-capture.py",
+      "bytes": 3718,
+      "sha256": "c39d1bb2031a7c5ebf1cc313eb3c29039e7c86259b1cbc1c1de71c28ea5d9ee7"
+    },
+    {
+      "path": "pinned-macro-source.json",
+      "bytes": 1225,
+      "sha256": "5de442908efa669076506f27dd777b006b66f345a515a911082ad356f105a3de"
+    }
+  ]
+}

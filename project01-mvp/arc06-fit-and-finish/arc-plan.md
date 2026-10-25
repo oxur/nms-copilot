@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.114, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.115, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -987,3 +987,9 @@ Mainb616 exacthuman9line/blob2cd450ce/indexempty, all26priornonplanningentries(i
 ## Slice30 core API documentation owner — 2026-10-25 UTC
 
 Required original0039 M7.6 API work is decomposed into usable owners: [Slice30 complete core public surface](slice30-core-api-documentation/slice-plan.md), planned31 save, planned32 graph/query, planned33 remaining public crates/full original M7.6 reconciliation, all CDC. Later numbers are ownership plans, not issued/accepted slices; split further if needed without dropping criteria. M7.6 remains OPEN. Baseline4a935408 source public-api-documentation, same selected/applied CDC6.1-solHigh/CC6-lunaHigh; CC qualitative headroom/no processes affirmed. Nine core files, rustdoc/blank lines ONLY, every executable/API/test/data/other path frozen. Compiler readiness306 warnings/core114 is inventory only; current full semantic/item/example review and default/archive strict core docs required. Query HTML warnings and umbrella/CLI doc namespace collision retained for later owner. Existing glyph parser UTF8 byte20 panic documented honestly; any runtime correction remains separate CDC reconciliation owner, no source repair in30. All47 previous rows/closures, game/input/history/final/cache/coverage/distribution/UI/independent/Operator/integration/release obligations preserved. NewR06-S30 makes48arcrows34done14open/project25open. Same one-arc Autonomous authority, no external integration/release permission.
+
+2026-10-25 independent current disposition: frozen clean40e6bc8f2b26606393931a232e604ce0e6f38e86/exact9paths, all original9CDCgroups complete8green/strictarchive4ef6bc6f101. Coredefault89unit+14docs/archive90+14; strictdefault0/contentopposed0/diffs0. Source/API/body/types/attrs/tests/data preserved after six exact layouts. CD02–04DONE;CD01/CD05/CD06OPEN, R06-S30/fullM7.6OPEN,48arc34done14open/project25open. Actual15CC+12CDC full records and exact CCreturns archived; no capture gap/waiver.
+
+F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolver::Community.source, no supported doc forwarding to resolver fields. Baseline inventory already contained origin at system13; CDCreadiness missed it. No source/dep repair/suppression or reclassification of strictred. Concrete A/B decision and exact canonical approval rule in cdc-verification.md; A prospective exactgeneratedfieldexception plus actual exit0 JSON/archive-output proof rejecting every extra/different missingdoc; B keep30open pending separately scoped macro remedy. No exception adopted. Source/helper/nextunit mutation HELD pending actual Operator decision, same2/5actual refinements/threeleft. Provisionalretro/bottomuprecord is not sliceclosure.
+
+See [Slice30 independent decision packet](slice30-core-api-documentation/cdc-verification.md). Planned31/32/33 owners retained; no original API or other higher gate dropped.

@@ -1,0 +1,49 @@
+{
+  "source_commit": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+  "cdc_execution_sha256_before": "67a676d80e08824b3e6a16c1e3a500ec2266a1813927e2ee3f84b8539262ebd5",
+  "cdc_execution_sha256_after": "67a676d80e08824b3e6a16c1e3a500ec2266a1813927e2ee3f84b8539262ebd5",
+  "explicit_role_mapping": [
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/execution.md",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/cc-execution.md",
+      "bytes": 26463,
+      "sha256": "7e44c2d9b443f571c4367afa3cbf7050965ce32dcd6add05657bfd5622a0e349"
+    },
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/validation.json",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/cc-validation.json",
+      "bytes": 4203,
+      "sha256": "a28d9b9bcf3a4ae54e8998acb05ca49133662174c6b798e46cd9a490ac45a70c"
+    },
+    {
+      "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/closing-report.md",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/cc-closing-report.md",
+      "bytes": 3335,
+      "sha256": "1b960a35d3386d8fd222de12a53c8fe0ae3cd2d269fd69a1edc7f70a08a257b7"
+    },
+    {
+      "source": "/private/tmp/nms-slice30-cc-attempts.json",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/artifacts/cc-attempts.json",
+      "bytes": 93900,
+      "sha256": "c69d39b99083275829b44b69db761aec6dc65198d25faea7b1a49e00807989e7"
+    },
+    {
+      "source": "/private/tmp/nms-slice30-content-scope-audit.py",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/artifacts/cc-content-scope-audit.py",
+      "bytes": 3356,
+      "sha256": "7eb2c1c0bb642cf49ab08a056748e52c112bb7fb5a4ca35830744fd256eb3ca9"
+    },
+    {
+      "source": "/private/tmp/nms-slice30-initial-held.patch",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/artifacts/initial-held.patch",
+      "bytes": 43338,
+      "sha256": "63f1a976cc6aed51bd5d83fac04de0fb1d1f37aef7eb48bf0ef06623cd267691"
+    },
+    {
+      "source": "/private/tmp/nms-slice30-corrected02-held.patch",
+      "destination": "project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/artifacts/corrected02-held.patch",
+      "bytes": 50474,
+      "sha256": "98173ce12d7e756f2e900ca74f44588605318675ded59e491834c81a8c933639"
+    }
+  ]
+}
