@@ -1,0 +1,633 @@
+diff --git a/crates/nms-cache/src/data.rs b/crates/nms-cache/src/data.rs
+index 1f684c9..27bf3d9 100644
+--- a/crates/nms-cache/src/data.rs
++++ b/crates/nms-cache/src/data.rs
+@@ -1,4 +1,11 @@
+-//! Cache data types -- the subset of GalaxyModel that gets serialized.
++//! Data records for the portion of a galaxy model stored in the cache.
++//!
++//! [`CacheData`] is a public, mutable serialized subset, not a snapshot of every
++//! `GalaxyModel` field or index. Systems carry their planets inline; bases and
++//! the supported player-state values are retained, while graph topology and
++//! derived lookup indexes are rebuilt when the model is loaded. Extracted
++//! vectors come from hash maps and therefore have no promised order. System
++//! timestamps are stored at whole-second precision.
+ 
+ use rkyv::{Archive, Deserialize, Serialize};
+ 
+@@ -6,13 +13,16 @@ use nms_core::address::GalacticAddress;
+ use nms_core::player::{PlayerBase, PlayerState};
+ use nms_core::system::{DiscoverySource, Planet};
+ 
+-/// Flattened galaxy data for cache serialization.
++/// The supported, serialized subset of a galaxy model.
+ ///
+-/// Contains all the raw data needed to reconstruct a `GalaxyModel`.
++/// This is not a full model snapshot: it does not store custom graph edges,
++/// derived indexes, orphan flat-planet entries, raw save JSON, session state,
++/// or event history. Systems contain their planets, and their extracted vector
++/// order is unspecified. Timestamps are stored as whole Unix seconds.
+ ///
+-/// The archive schema stores the selected galaxy explicitly. Downstream Rust
+-/// struct literals must provide [`active_galaxy`](Self::active_galaxy).
+-/// Indices (graph, R-tree, HashMaps) are rebuilt on load.
++/// The selected galaxy is stored independently of the physical player's
++/// address. The caller supplies `save_version`; this type does not validate it
++/// against a save. Public struct literals must provide all six fields.
+ #[derive(Archive, Serialize, Deserialize, Debug)]
+ pub struct CacheData {
+     /// All model systems, including discoveries and marked player-location placeholders.
+@@ -27,18 +37,27 @@ pub struct CacheData {
+     /// Galaxy selected for spatial queries, independent of player position.
+     pub active_galaxy: u8,
+ 
+-    /// Save file version that produced this cache.
++    /// Caller-supplied save version associated with this cache.
++    ///
++    /// The cache codec stores this value independently of the envelope
++    /// revisions and does not verify it against a source save.
+     pub save_version: u32,
+ 
+-    /// Timestamp when the cache was created (Unix seconds).
++    /// Cache timestamp in Unix seconds.
++    ///
++    /// Extraction records the current whole-second time, using zero if the
++    /// system clock is before the Unix epoch. Decoding does not compare this
++    /// value with the current clock.
+     pub cached_at: u64,
+ }
+ 
+-/// A system with flattened fields for cache storage.
++/// A system record with cache-compatible timestamp storage.
+ ///
+ /// We flatten `System` rather than embedding it because `System` contains
+ /// `Option<DateTime<Utc>>` which doesn't support rkyv. Timestamps are
+-/// stored as Unix seconds and converted on load.
++/// stored as Unix seconds and converted on load; subsecond precision is lost.
++/// The address is the stored system address, which may retain the supplied
++/// planet index. System identity used for indexes is canonicalized separately.
+ #[derive(Archive, Serialize, Deserialize, Debug)]
+ pub struct CachedSystem {
+     /// Galactic address of this system.
+diff --git a/crates/nms-cache/src/error.rs b/crates/nms-cache/src/error.rs
+index 74b7771..b121119 100644
+--- a/crates/nms-cache/src/error.rs
++++ b/crates/nms-cache/src/error.rs
+@@ -1,19 +1,67 @@
+-//! Cache error types.
++//! Errors returned by cache envelope, payload, and filesystem operations.
++//!
++//! Envelope incompatibilities are typed separately from serialization,
++//! checked-deserialization, and filesystem failures. The compatibility enum is
++//! non-exhaustive, so downstream matches should include a wildcard.
++//! `CacheError::Io` and `CacheError::Incompatible` expose their nested error
++//! as a source; the string-bearing serialization and deserialization variants
++//! do not retain an underlying error object.
++//!
++//! # Examples
++//!
++//! ```
++//! use nms_cache::{CacheCompatibilityError, CacheError};
++//! use nms_cache::serialize::deserialize;
++//!
++//! assert!(matches!(deserialize(b""), Err(CacheError::Incompatible(
++//!     CacheCompatibilityError::TruncatedHeader { actual: 0 }
++//! ))));
++//! assert!(matches!(deserialize(&[0; 16]), Err(CacheError::Incompatible(
++//!     CacheCompatibilityError::InvalidMagic
++//! ))));
++//! let schema_three = b"NMSCACHE\x03\x00\x00\x00\x05\x00\x00\x00";
++//! assert!(matches!(deserialize(schema_three), Err(CacheError::Incompatible(
++//!     CacheCompatibilityError::SchemaMismatch { found: 3, expected: 4 }
++//! ))));
++//! let semantic_five = b"NMSCACHE\x04\x00\x00\x00\x05\x00\x00\x00";
++//! assert!(matches!(deserialize(semantic_five), Err(CacheError::Incompatible(
++//!     CacheCompatibilityError::SemanticMismatch { found: 5, expected: 6 }
++//! ))));
++//! let current_empty_payload = b"NMSCACHE\x04\x00\x00\x00\x06\x00\x00\x00";
++//! assert!(matches!(deserialize(current_empty_payload), Err(CacheError::Deserialize(_))));
++//! ```
++//!
++//! These are synthetic header controls, not archived witnesses from previous
++//! releases. A current header without a payload passes envelope checks and
++//! fails during payload decoding.
+ 
+ use std::io;
+ 
+-/// Why an on-disk cache cannot be interpreted by this version of the model.
++/// Why an on-disk cache envelope cannot be interpreted by this version.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+ #[non_exhaustive]
+ pub enum CacheCompatibilityError {
+     /// The cache does not contain a complete compatibility header.
+-    TruncatedHeader { actual: usize },
++    TruncatedHeader {
++        /// Number of bytes supplied; a complete envelope requires 16.
++        actual: usize,
++    },
+     /// The bytes do not identify an NMS Copilot cache.
+     InvalidMagic,
+     /// The archive layout revision is not supported.
+-    SchemaMismatch { found: u32, expected: u32 },
++    SchemaMismatch {
++        /// Archive schema revision read from the envelope.
++        found: u32,
++        /// Archive schema revision supported by this reader.
++        expected: u32,
++    },
+     /// The meaning of the cached model is not supported.
+-    SemanticMismatch { found: u32, expected: u32 },
++    SemanticMismatch {
++        /// Model semantic revision read from the envelope.
++        found: u32,
++        /// Model semantic revision supported by this reader.
++        expected: u32,
++    },
+ }
+ 
+ impl std::fmt::Display for CacheCompatibilityError {
+@@ -40,14 +88,26 @@ impl std::error::Error for CacheCompatibilityError {}
+ 
+ #[derive(Debug)]
+ pub enum CacheError {
+-    /// rkyv serialization failed.
+-    Serialize(String),
+-    /// rkyv deserialization failed.
+-    Deserialize(String),
++    /// Cache-data validation or rkyv serialization failed.
++    Serialize(
++        /// Encoding or pre-serialization cache-data validation detail.
++        String,
++    ),
++    /// Checked payload deserialization or cache-data validation failed.
++    Deserialize(
++        /// Decoding or post-decode cache-data validation detail.
++        String,
++    ),
+     /// File I/O error.
+-    Io(io::Error),
++    Io(
++        /// Underlying filesystem error.
++        io::Error,
++    ),
+     /// The cache envelope uses an unsupported format or model interpretation.
+-    Incompatible(CacheCompatibilityError),
++    Incompatible(
++        /// Typed envelope incompatibility, before payload decoding.
++        CacheCompatibilityError,
++    ),
+ }
+ 
+ impl std::fmt::Display for CacheError {
+diff --git a/crates/nms-cache/src/freshness.rs b/crates/nms-cache/src/freshness.rs
+index 06024a3..9dc850c 100644
+--- a/crates/nms-cache/src/freshness.rs
++++ b/crates/nms-cache/src/freshness.rs
+@@ -1,4 +1,4 @@
+-//! Cache freshness checking.
++//! Cache freshness and cache-or-save model loading.
+ //!
+ //! Compares the modification time of the save file against the cache file
+ //! to determine if the cache is still valid.
+@@ -7,11 +7,24 @@ use std::fs;
+ use std::path::Path;
+ use std::time::SystemTime;
+ 
+-/// Check if the cache file is fresh relative to the save file.
++/// Compare cache and save modification times.
+ ///
+-/// Returns `true` if the cache exists and is newer than the save file.
+-/// Returns `false` if the cache is missing, older than the save, or if
+-/// timestamps can't be read.
++/// This check uses only filesystem modification times: it returns `true` when
++/// the cache time is strictly later than the save time. Equal times, missing
++/// files, and unreadable modification times return `false`. It does not read or
++/// validate either file's contents or the cache envelope.
++///
++/// # Examples
++///
++/// ```no_run
++/// use std::path::Path;
++///
++/// let fresh = nms_cache::is_cache_fresh(
++///     Path::new("galaxy.rkyv"),
++///     Path::new("save.hg"),
++/// );
++/// println!("cache is newer: {fresh}");
++/// ```
+ pub fn is_cache_fresh(cache_path: &Path, save_path: &Path) -> bool {
+     let cache_mtime = match file_mtime(cache_path) {
+         Some(t) => t,
+@@ -29,7 +42,11 @@ fn file_mtime(path: &Path) -> Option<SystemTime> {
+     fs::metadata(path).ok()?.modified().ok()
+ }
+ 
+-/// Result of loading or rebuilding a galaxy model.
++/// Model returned by cache loading or source-save rebuilding.
++///
++/// `was_cached` identifies the input used to build the returned model. It can
++/// remain `true` after a best-effort cache repair write, and is `false` when a
++/// parsed save supplied the model even if writing its cache fails.
+ pub struct LoadResult {
+     /// The loaded galaxy model.
+     pub model: nms_graph::GalaxyModel,
+@@ -39,7 +56,7 @@ pub struct LoadResult {
+     pub save_version: u32,
+ }
+ 
+-/// Load a model from cache if fresh, otherwise parse the save file.
++/// Load a fresh compatible cache or rebuild from the checked source save.
+ ///
+ /// Freshness is determined only by file modification times. A fresh cache is
+ /// still checked for a supported envelope and model semantic revision; if its
+@@ -59,6 +76,20 @@ pub struct LoadResult {
+ /// Returns an error when the source save cannot be read or parsed. Cache read,
+ /// compatibility, and repair-write failures are handled as warnings followed
+ /// by a source rebuild or an in-memory success, as applicable.
++///
++/// # Examples
++///
++/// ```no_run
++/// use std::path::Path;
++///
++/// let loaded = nms_cache::load_or_rebuild(
++///     Path::new("galaxy.rkyv"),
++///     Path::new("save.hg"),
++///     false,
++/// )?;
++/// println!("loaded from cache: {}", loaded.was_cached);
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn load_or_rebuild(
+     cache_path: &Path,
+     save_path: &Path,
+diff --git a/crates/nms-cache/src/serialize.rs b/crates/nms-cache/src/serialize.rs
+index 70282bc..21babc5 100644
+--- a/crates/nms-cache/src/serialize.rs
++++ b/crates/nms-cache/src/serialize.rs
+@@ -21,6 +21,140 @@
+ //! semantic 3 predates the application-wide identity boundary. Both
+ //! revisions are separate from game save version, crate version, and
+ //! `cached_at`.
++//!
++//! # Examples
++//!
++//! This example uses constructed cache data to exercise the checked codec,
++//! model rebuild, and extraction boundaries. It compares complete literal
++//! projections; vector order from hash-map-backed extraction is not promised.
++//!
++//! ```
++//! use chrono::TimeZone;
++//! use nms_cache::data::{CacheData, CachedSystem};
++//! use nms_cache::{deserialize, extract_cache_data, rebuild_model, serialize};
++//! use nms_core::address::GalacticAddress;
++//! use nms_core::player::{BaseType, PlayerBase, PlayerState};
++//! use nms_core::system::{DiscoverySource, Planet, System, SystemId};
++//!
++//! let community_address = GalacticAddress::new(3, 0, 0, 1, 2, 0);
++//! let empty_address = GalacticAddress::new(3, 0, 0, 1, 0, 7);
++//! let marked_address = GalacticAddress::new(3, 0, 0, 1, 0, 9);
++//! let garden = Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42));
++//! let cache = CacheData {
++//!     systems: vec![
++//!         CachedSystem {
++//!             address: community_address,
++//!             source: DiscoverySource::Community { source: "NMSCE".into() },
++//!             name: Some("Atlas".into()),
++//!             discoverer: Some("Explorer".into()),
++//!             timestamp_secs: Some(1_700_000_000),
++//!             planets: vec![garden.clone()],
++//!             is_player_placeholder: false,
++//!         },
++//!         CachedSystem {
++//!             address: empty_address,
++//!             source: DiscoverySource::Personal,
++//!             name: None,
++//!             discoverer: None,
++//!             timestamp_secs: None,
++//!             planets: vec![],
++//!             is_player_placeholder: false,
++//!         },
++//!         CachedSystem {
++//!             address: marked_address,
++//!             source: DiscoverySource::Personal,
++//!             name: None,
++//!             discoverer: None,
++//!             timestamp_secs: None,
++//!             planets: vec![],
++//!             is_player_placeholder: true,
++//!         },
++//!     ],
++//!     bases: vec![PlayerBase::new(
++//!         "Home".into(), BaseType::HomePlanetBase,
++//!         GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into()),
++//!     )],
++//!     player_state: Some(PlayerState::new(
++//!         GalacticAddress::new(3, 0, 0, 1, 5, 9), 9,
++//!         Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)),
++//!         Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5,
++//!     )),
++//!     active_galaxy: 7,
++//!     save_version: 91,
++//!     cached_at: 123,
++//! };
++//!
++//! let bytes = serialize(&cache)?;
++//! assert_eq!(&bytes[..16], b"NMSCACHE\x04\x00\x00\x00\x06\x00\x00\x00");
++//! let decoded = deserialize(&bytes)?;
++//! let rebuilt = rebuild_model(&decoded);
++//! let extracted = extract_cache_data(&rebuilt, 91);
++//!
++//! fn rows(data: &CacheData) -> Vec<(GalacticAddress, DiscoverySource, Option<String>, Option<String>, Option<i64>, Vec<Planet>, bool)> {
++//!     let mut rows: Vec<_> = data.systems.iter().map(|s| (
++//!         s.address, s.source.clone(), s.name.clone(), s.discoverer.clone(),
++//!         s.timestamp_secs, s.planets.clone(), s.is_player_placeholder,
++//!     )).collect();
++//!     rows.sort_by_key(|r| (r.0.reality_index, r.0.packed()));
++//!     rows
++//! }
++//! let expected_rows = vec![
++//!     (GalacticAddress::new(3, 0, 0, 1, 2, 0), DiscoverySource::Community { source: "NMSCE".into() }, Some("Atlas".into()), Some("Explorer".into()), Some(1_700_000_000), vec![Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42))], false),
++//!     (GalacticAddress::new(3, 0, 0, 1, 0, 7), DiscoverySource::Personal, None, None, None, vec![], false),
++//!     (GalacticAddress::new(3, 0, 0, 1, 0, 9), DiscoverySource::Personal, None, None, None, vec![], true),
++//! ];
++//! assert_eq!(rows(&decoded), expected_rows);
++//! assert_eq!(rows(&extracted), expected_rows);
++//! assert_eq!(decoded.cached_at, 123);
++//! assert_eq!(decoded.active_galaxy, 7);
++//! assert_eq!(decoded.save_version, 91);
++//! assert_eq!(extracted.active_galaxy, 7);
++//! assert_eq!(extracted.save_version, 91);
++//! let expected_base = PlayerBase::new("Home".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into()));
++//! assert_eq!(decoded.bases, vec![expected_base.clone()]);
++//! assert_eq!(extracted.bases, vec![expected_base]);
++//! let expected_player = PlayerState::new(GalacticAddress::new(3, 0, 0, 1, 5, 9), 9, Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)), Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5);
++//! assert_eq!(decoded.player_state, Some(expected_player.clone()));
++//! assert_eq!(extracted.player_state, Some(expected_player));
++//! assert_eq!(rebuilt.player_state, Some(PlayerState::new(GalacticAddress::new(3, 0, 0, 1, 5, 9), 9, Some(GalacticAddress::new(3, 0, 0, 1, 2, 0)), Some(GalacticAddress::new(3, 0, 0, 1, 0, 7)), 100, 20, 5)));
++//!
++//! let mut expected_community = System::new(GalacticAddress::new(3, 0, 0, 1, 2, 0), Some("Atlas".into()), Some("Explorer".into()), chrono::Utc.timestamp_opt(1_700_000_000, 0).single(), vec![Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42))]);
++//! expected_community.source = DiscoverySource::Community { source: "NMSCE".into() };
++//! let expected_systems = std::collections::HashMap::from([
++//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 2, 0)), expected_community),
++//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 7)), System::new(GalacticAddress::new(3, 0, 0, 1, 0, 7), None, None, None, vec![])),
++//!     (SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9)), System::new(GalacticAddress::new(3, 0, 0, 1, 0, 9), None, None, None, vec![])),
++//! ]);
++//! assert_eq!(rebuilt.systems, expected_systems);
++//! let mut key_projection: Vec<_> = rebuilt.systems.keys()
++//!     .map(|id| (id.reality_index(), id.system_address()))
++//!     .collect();
++//! key_projection.sort_unstable();
++//! assert_eq!(key_projection, vec![
++//!     (0, 0x0001_0000_0003),
++//!     (7, 0x0001_0000_0003),
++//!     (9, 0x0001_0000_0003),
++//! ]);
++//! let id0 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 2, 0));
++//! let id7 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 7));
++//! let id9 = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 0, 9));
++//! assert_eq!(rebuilt.system_count(), 3);
++//! assert_eq!(rebuilt.planet_count(), 1);
++//! assert_eq!(rebuilt.base_count(), 1);
++//! assert_eq!(rebuilt.graph.node_count(), 3);
++//! assert_eq!(rebuilt.graph.edge_count(), 0);
++//! assert!(rebuilt.is_player_placeholder(&id9));
++//! assert!(!rebuilt.is_player_placeholder(&id7));
++//! assert!(!rebuilt.is_player_placeholder(&id0));
++//! assert_eq!(rebuilt.planets, std::collections::HashMap::from([((id0, 2), Planet::new(2, Some(nms_core::Biome::Lush), None, true, Some("Garden".into()), Some(42)))]));
++//! assert_eq!(rebuilt.bases, std::collections::HashMap::from([("home".into(), PlayerBase::new("Home".into(), BaseType::HomePlanetBase, GalacticAddress::new(3, 0, 0, 1, 2, 0), [1.0, 2.0, 3.0], Some("owner".into())))]));
++//! assert_eq!(rebuilt.active_galaxy, 7);
++//!
++//! let mut inconsistent = deserialize(&bytes)?;
++//! inconsistent.player_state.as_mut().ok_or("player state missing")?.current_reality = 3;
++//! assert!(matches!(serialize(&inconsistent), Err(nms_cache::CacheError::Serialize(message)) if message == "player state reality mismatch: current_reality=3 but current_address.reality_index=9"));
++//! # Ok::<(), Box<dyn std::error::Error>>(())
++//! ```
+ 
+ use std::fs;
+ use std::path::Path;
+@@ -74,7 +208,16 @@ fn validate_cache_data(data: &CacheData) -> Result<(), String> {
+     Ok(())
+ }
+ 
+-/// Extract cache data from a GalaxyModel.
++/// Copy the supported galaxy-model subset into cache data.
++///
++/// Systems, bases, player state, and the selected galaxy are copied from the
++/// model; planets remain embedded in their systems. The caller supplies the
++/// save version. The cache timestamp is generated at whole-second precision.
++/// Hash-map iteration makes the returned system and base vector order
++/// unspecified. Custom edges, derived indexes, and flat orphan-planet entries
++/// are not serialized.
++///
++/// See the module-level example for the complete codec and rebuild projection.
+ pub fn extract_cache_data(model: &GalaxyModel, save_version: u32) -> CacheData {
+     let systems: Vec<CachedSystem> = model
+         .systems
+@@ -190,7 +333,20 @@ pub fn deserialize(bytes: &[u8]) -> Result<CacheData, CacheError> {
+     Ok(data)
+ }
+ 
+-/// Write cache data to a file.
++/// Serialize cache data and replace the file at `path`.
++///
++/// The parent directory is created when needed. The implementation writes to
++/// a sibling path with extension `rkyv.tmp` and then renames it over the
++/// destination; it does not promise fsync durability or isolation between
++/// concurrent writers. Serialization and cache-data validation happen before
++/// filesystem mutation.
++///
++/// # Errors
++///
++/// Returns [`CacheError::Serialize`] before file access when data validation
++/// or encoding fails. Returns [`CacheError::Io`] when directory creation,
++/// temporary-file writing, or rename fails. A failed I/O operation may leave
++/// the created directory or temporary file behind.
+ pub fn write_cache(data: &CacheData, path: &Path) -> Result<(), CacheError> {
+     let bytes = serialize(data)?;
+ 
+@@ -207,7 +363,16 @@ pub fn write_cache(data: &CacheData, path: &Path) -> Result<(), CacheError> {
+     Ok(())
+ }
+ 
+-/// Read and deserialize cache data from a file.
++/// Read a cache file and validate its envelope and payload.
++///
++/// This direct API does not check freshness, rebuild from a source save, or
++/// repair the cache. Use [`crate::load_or_rebuild`] when fallback behavior is
++/// desired.
++///
++/// # Errors
++///
++/// Returns [`CacheError::Io`] when the file cannot be read, or the same typed
++/// envelope and payload errors as [`deserialize`].
+ pub fn read_cache(path: &Path) -> Result<CacheData, CacheError> {
+     let bytes = fs::read(path).map_err(CacheError::Io)?;
+     deserialize(&bytes)
+@@ -221,6 +386,9 @@ pub fn read_cache(path: &Path) -> Result<CacheData, CacheError> {
+ /// placeholder flags restore provenance. A malformed marked record is retained
+ /// with its original fields as an ordinary, unmarked system; persisted archives
+ /// must instead pass the checked codec, which rejects malformed flags.
++/// Graph edges are rebuilt with the default KNN-10 strategy within each
++/// galaxy, not restored from custom topology. This function does not ensure a
++/// missing player-system key; the loader performs that separate operation.
+ pub fn rebuild_model(data: &CacheData) -> GalaxyModel {
+     let mut model = GalaxyModel::new();
+ 
+diff --git a/crates/nms-compat/src/lib.rs b/crates/nms-compat/src/lib.rs
+index 93901a4..6ff65b6 100644
+--- a/crates/nms-compat/src/lib.rs
++++ b/crates/nms-compat/src/lib.rs
+@@ -1,7 +1,7 @@
+-//! Format adapters for No Man's Sky save exports.
++//! Compatibility adapters for selected No Man's Sky save representations.
+ //!
+-//! Handles non-standard save formats, starting with the goatfungus JSON export:
+-//! state-machine character walker that fixes `\xNN` → `\u00NN` and invalid
+-//! escapes inside strings, producing valid JSON for serde.
++//! This crate currently exposes the [`nomnom`] JSON heuristic and typed
++//! passthrough parser. It does not implement the goatfungus escape fixer or
++//! claim that synthetic JSON demonstrates an authentic NomNom export.
+ 
+ pub mod nomnom;
+diff --git a/crates/nms-compat/src/nomnom.rs b/crates/nms-compat/src/nomnom.rs
+index 5fe4fc0..32592f9 100644
+--- a/crates/nms-compat/src/nomnom.rs
++++ b/crates/nms-compat/src/nomnom.rs
+@@ -1,36 +1,121 @@
+-//! Skeleton parser for NomNom JSON export format.
++//! Heuristic detection and typed passthrough parsing for JSON with NomNom markers.
+ //!
+-//! NomNom exports are nearly identical to deobfuscated standard JSON.
+-//! This module provides format detection and a passthrough parser.
+-//! Key normalization will be added when real NomNom exports are available
+-//! for testing.
++//! Detection checks for two case-sensitive quoted substrings anywhere in the
++//! input. It does not parse JSON or check top-level keys, so nested standard
++//! JSON and malformed text can match. Parsing then deserializes the original
++//! string directly into the legacy typed [`SaveRoot`] subset. This does not
++//! normalize keys, validate a save for application use, or establish that the
++//! input is an authentic NomNom export. Authentic export behavior remains
++//! unverified because no such input is available.
+ 
+ use nms_save::model::SaveRoot;
+ 
+-/// Errors that can occur when parsing NomNom format files.
++/// Errors returned by marker-gated typed JSON parsing.
+ #[derive(Debug, thiserror::Error)]
+ pub enum NomNomError {
+-    /// The input JSON does not match expected NomNom format markers.
++    /// At least one required marker substring is absent.
+     #[error("not a NomNom format file")]
+     NotNomNom,
+     /// JSON parsing failed.
+     #[error("JSON parse error: {0}")]
+-    Json(#[from] serde_json::Error),
++    Json(
++        /// Serde error returned after the marker heuristic accepts the input.
++        #[from]
++        serde_json::Error,
++    ),
+ }
+ 
+-/// Detect whether a JSON string is likely NomNom format.
++/// Check whether both NomNom marker substrings occur in the input.
+ ///
+-/// Checks for the presence of top-level keys that NomNom exports include.
+-/// This is a heuristic -- it may produce false positives on standard
+-/// deobfuscated save JSON.
++/// This case-sensitive heuristic looks only for the literal substrings
++/// `"Version"` and `"PlayerStateData"`; it does not parse JSON, require
++/// top-level keys, or establish source format. Nested JSON and malformed text
++/// can therefore return `true`, while differently cased markers return `false`.
++///
++/// # Examples
++///
++/// ```
++/// use nms_compat::nomnom::is_nomnom_format;
++///
++/// assert!(is_nomnom_format(r#"{"Version": 4720, "PlayerStateData": {}}"#));
++/// assert!(is_nomnom_format(r#"{"nested":{"Version":null,"PlayerStateData":false}}"#));
++/// assert!(!is_nomnom_format(r#"{"version":4720,"PlayerStateData":{}}"#));
++/// ```
+ pub fn is_nomnom_format(json: &str) -> bool {
+     json.contains("\"Version\"") && json.contains("\"PlayerStateData\"")
+ }
+ 
+-/// Parse a NomNom JSON export into a [`SaveRoot`].
++/// Parse marker-bearing JSON into the typed [`SaveRoot`] subset.
++///
++/// After [`is_nomnom_format`] accepts the input, this function passes the
++/// original string to `serde_json::from_str`. Serde defaults and ignored
++/// unknown fields are those of [`SaveRoot`]; this function does not normalize
++/// keys, decode binary saves, perform checked source validation, or construct
++/// a query model. Synthetic JSON is useful for demonstrating this typed
++/// passthrough but is not evidence of an authentic NomNom export.
++///
++/// # Errors
++///
++/// Returns [`NomNomError::NotNomNom`] when either marker substring is absent.
++/// If both markers occur, returns [`NomNomError::Json`] when serde cannot
++/// deserialize the input into [`SaveRoot`]. The JSON variant preserves the
++/// underlying serde error as its source.
++///
++/// # Examples
++///
++/// ```
++/// use nms_compat::nomnom::{is_nomnom_format, parse_nomnom, NomNomError};
++///
++/// let json = r#"{"Version":4720,"Platform":"Test","ActiveContext":"Main","CommonStateData":{"SaveName":"Synthetic JSON","TotalPlayTime":42},"BaseContext":{"PlayerStateData":{"Units":100,"Nanites":20,"Specials":5}},"ExpeditionContext":{},"DiscoveryManagerData":{"DiscoveryData-v1":{"Store":{"Record":[]}}}}"#;
++/// let save = parse_nomnom(json)?;
++/// assert_eq!(save.version, 4720);
++/// assert_eq!(save.platform, "Test");
++/// assert_eq!(save.common_state_data.save_name, "Synthetic JSON");
++/// assert_eq!(save.base_context.player_state_data.units, 100);
++/// assert_eq!(save.base_context.player_state_data.nanites, 20);
++/// assert_eq!(save.base_context.player_state_data.specials, 5);
++/// assert_eq!(save.active_context, "Main");
++/// assert_eq!(save.common_state_data.total_play_time, 42);
++/// assert_eq!(save.base_context.player_state_data.universe_address.reality_index, 0);
++/// assert_eq!(save.base_context.player_state_data.universe_address.galactic_address.voxel_x, 0);
++/// assert_eq!(save.base_context.player_state_data.universe_address.galactic_address.voxel_y, 0);
++/// assert_eq!(save.base_context.player_state_data.universe_address.galactic_address.voxel_z, 0);
++/// assert_eq!(save.base_context.player_state_data.universe_address.galactic_address.solar_system_index, 0);
++/// assert_eq!(save.base_context.player_state_data.universe_address.galactic_address.planet_index, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.reality_index, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.galactic_address.voxel_x, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.galactic_address.voxel_y, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.galactic_address.voxel_z, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.galactic_address.solar_system_index, 0);
++/// assert_eq!(save.base_context.player_state_data.previous_universe_address.galactic_address.planet_index, 0);
++/// assert_eq!(save.base_context.player_state_data.save_summary, "");
++/// assert_eq!(save.base_context.player_state_data.health, 0);
++/// assert_eq!(save.base_context.player_state_data.time_alive, 0);
++/// assert_eq!(save.base_context.game_mode, 0);
++/// assert!(save.base_context.player_state_data.persistent_player_bases.is_empty());
++/// assert_eq!(save.expedition_context.game_mode, 0);
++/// assert_eq!(save.expedition_context.player_state_data.units, 0);
++/// assert_eq!(save.expedition_context.player_state_data.nanites, 0);
++/// assert_eq!(save.expedition_context.player_state_data.specials, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.reality_index, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.galactic_address.voxel_x, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.galactic_address.voxel_y, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.galactic_address.voxel_z, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.galactic_address.solar_system_index, 0);
++/// assert_eq!(save.expedition_context.player_state_data.universe_address.galactic_address.planet_index, 0);
++/// assert!(save.expedition_context.player_state_data.persistent_player_bases.is_empty());
++/// assert_eq!(save.discovery_manager_data.discovery_data_v1.reserve_store, 0);
++/// assert_eq!(save.discovery_manager_data.discovery_data_v1.reserve_managed, 0);
++/// assert!(save.discovery_manager_data.discovery_data_v1.store.record.is_empty());
+ ///
+-/// Currently a passthrough to `serde_json` -- key normalization will be
+-/// added when real NomNom exports are available for testing.
++/// let nested = r#"{"nested":{"Version":null,"PlayerStateData":false}}"#;
++/// assert!(is_nomnom_format(nested));
++/// assert!(matches!(parse_nomnom(nested), Err(NomNomError::Json(error)) if error.is_data()));
++/// let malformed = "not JSON \"Version\" \"PlayerStateData\"";
++/// assert!(matches!(parse_nomnom(malformed), Err(NomNomError::Json(error)) if error.is_syntax()));
++/// assert!(matches!(parse_nomnom("not JSON"), Err(NomNomError::NotNomNom)));
++/// # Ok::<(), NomNomError>(())
++/// ```
+ pub fn parse_nomnom(json: &str) -> Result<SaveRoot, NomNomError> {
+     if !is_nomnom_format(json) {
+         return Err(NomNomError::NotNomNom);
