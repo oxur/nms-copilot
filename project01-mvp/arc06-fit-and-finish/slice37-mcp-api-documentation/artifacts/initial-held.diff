@@ -1,0 +1,879 @@
+diff --git a/crates/nms-copilot/src/mcp/config.rs b/crates/nms-copilot/src/mcp/config.rs
+index 33790d3..f34c749 100644
+--- a/crates/nms-copilot/src/mcp/config.rs
++++ b/crates/nms-copilot/src/mcp/config.rs
+@@ -1,17 +1,43 @@
+-//! Configuration for the NMS Copilot MCP server.
++//! Logging configuration used by the NMS Copilot MCP server.
+ //!
+-//! Reads from `~/.nms-copilot/config.toml`, sharing the same config
+-//! file as the REPL. Only the `[logging]` section is used by the
+-//! MCP server; other sections are ignored.
++//! [`McpConfig`] reads only `[logging]` from the shared
++//! `~/.nms-copilot/config.toml`; unrelated sections are ignored. It does not
++//! configure save paths, watchers, or the HTTP bind address, and it does not
++//! install a logger or mutate environment variables. See the
++//! [configuration example](crate::mcp::config) for defaults and option mapping.
+ 
+ use std::path::Path;
+ 
+ use serde::Deserialize;
+ 
+-/// MCP server configuration.
++/// MCP logging configuration read from the shared application config file.
+ ///
+-/// Extracts only the sections relevant to the MCP server from the
+-/// shared `~/.nms-copilot/config.toml`.
++/// Only `[logging]` is used. Missing sections and fields use
++/// [`LoggingConfig::default`]; unrelated sections are ignored. This is not a
++/// general MCP server configuration.
++///
++/// # Examples
++///
++/// File loading is I/O-bearing, so this is compile-only:
++///
++/// ```no_run
++/// let config = nms_copilot::mcp::config::McpConfig::load();
++/// let _options = config.logging.to_twyg_opts();
++/// ```
++///
++/// # Errors
++///
++/// [`Self::load`] and [`Self::load_from`] silently return the entire default
++/// config on missing files, read/UTF-8 errors, TOML errors, or typed
++/// deserialization errors. No partial parse is retained.
++///
++/// # Panics
++///
++/// File and parse failures are handled as defaults.
++///
++/// # Safety
++///
++/// This type has no unsafe behavior.
+ #[derive(Debug, Deserialize, Default)]
+ #[serde(default)]
+ pub struct McpConfig {
+@@ -19,7 +45,58 @@ pub struct McpConfig {
+     pub logging: LoggingConfig,
+ }
+ 
+-/// Logging configuration wrapping twyg options.
++/// Logging settings translated into [`twyg::Opts`] by
++/// [`Self::to_twyg_opts`].
++///
++/// Defaults are `level = "info"`, `coloured = true`, `output = "stderr"`, and
++/// `report_caller = false`. Exact lowercase `trace`, `debug`, `warn`, and
++/// `error` select those levels; every other string selects Info. Only exact
++/// `stdout` selects stdout; other values select stderr.
++///
++/// # Examples
++///
++/// ```
++/// use nms_copilot::mcp::config::LoggingConfig;
++/// use twyg::{LogLevel, Output, TSFormat};
++///
++/// let defaults = LoggingConfig::default();
++/// assert_eq!(defaults.level, "info");
++/// assert!(defaults.coloured);
++/// assert_eq!(defaults.output, "stderr");
++/// assert!(!defaults.report_caller);
++/// let opts = defaults.to_twyg_opts();
++/// assert!(opts.coloured());
++/// assert!(!opts.report_caller());
++/// assert_eq!(opts.level(), LogLevel::Info);
++/// assert_eq!(opts.output(), &Output::Stderr);
++/// assert_eq!(opts.timestamp_format(), &TSFormat::Simple);
++///
++/// let debug = LoggingConfig { level: "debug".into(), coloured: false,
++///     output: "stdout".into(), report_caller: true };
++/// let opts = debug.to_twyg_opts();
++/// assert_eq!(opts.level(), LogLevel::Debug);
++/// assert_eq!(opts.output(), &Output::Stdout);
++/// assert!(!opts.coloured());
++/// assert!(opts.report_caller());
++///
++/// let unknown = LoggingConfig { level: "DEBUG".into(), coloured: true,
++///     output: "STDOUT".into(), report_caller: false }.to_twyg_opts();
++/// assert_eq!(unknown.level(), LogLevel::Info);
++/// assert_eq!(unknown.output(), &Output::Stderr);
++/// ```
++///
++/// # Errors
++///
++/// Conversion returns options directly and has no error result. A twyg builder
++/// error falls back to [`twyg::Opts::default`].
++///
++/// # Panics
++///
++/// Conversion does not intentionally panic.
++///
++/// # Safety
++///
++/// This type has no unsafe behavior.
+ #[derive(Debug, Deserialize)]
+ #[serde(default)]
+ pub struct LoggingConfig {
+@@ -45,7 +122,25 @@ impl Default for LoggingConfig {
+ }
+ 
+ impl LoggingConfig {
+-    /// Convert to twyg::Opts for logger initialization.
++    /// Convert values into twyg logging options without initializing a logger.
++    ///
++    /// Exact lowercase levels `trace`, `debug`, `warn`, and `error` map to
++    /// those levels; all other strings map to Info. Only exact `stdout` selects
++    /// stdout. Timestamp format is Simple with a `hi_black` timestamp color;
++    /// other colors use twyg defaults. Builder failure falls back to default
++    /// options.
++    ///
++    /// # Errors
++    ///
++    /// Returns [`twyg::Opts`] directly; there is no error result.
++    ///
++    /// # Panics
++    ///
++    /// This conversion does not intentionally panic.
++    ///
++    /// # Safety
++    ///
++    /// This function has no unsafe behavior.
+     pub fn to_twyg_opts(&self) -> twyg::Opts {
+         let output = match self.output.as_str() {
+             "stdout" => twyg::Output::Stdout,
+@@ -75,9 +170,23 @@ impl LoggingConfig {
+ }
+ 
+ impl McpConfig {
+-    /// Load config from `~/.nms-copilot/config.toml`.
++    /// Load logging settings from `~/.nms-copilot/config.toml`.
++    ///
++    /// Only `[logging]` is deserialized; other sections are ignored. Missing
++    /// files and read, UTF-8, TOML, or typed-deserialization errors silently
++    /// return the entire default config. There is no partial merge or write.
++    ///
++    /// # Errors
++    ///
++    /// This compatibility loader returns defaults rather than an error.
+     ///
+-    /// Returns defaults if the file doesn't exist.
++    /// # Panics
++    ///
++    /// File and parse failures are handled as defaults.
++    ///
++    /// # Safety
++    ///
++    /// This function has no unsafe behavior.
+     pub fn load() -> Self {
+         let path = dirs::home_dir()
+             .map(|h| h.join(".nms-copilot/config.toml"))
+@@ -85,7 +194,23 @@ impl McpConfig {
+         Self::load_from(&path)
+     }
+ 
+-    /// Load config from a specific path.
++    /// Load logging settings from a specific path.
++    ///
++    /// Missing paths, read failures, invalid UTF-8, TOML errors, and typed
++    /// deserialization errors silently return the entire default config.
++    /// Unknown sections are ignored; no partial merge or write occurs.
++    ///
++    /// # Errors
++    ///
++    /// This compatibility loader returns defaults rather than an error.
++    ///
++    /// # Panics
++    ///
++    /// File and parse failures are handled as defaults.
++    ///
++    /// # Safety
++    ///
++    /// This function has no unsafe behavior.
+     pub fn load_from(path: &Path) -> Self {
+         if !path.exists() {
+             return Self::default();
+diff --git a/crates/nms-copilot/src/mcp/mod.rs b/crates/nms-copilot/src/mcp/mod.rs
+index c18334e..937260e 100644
+--- a/crates/nms-copilot/src/mcp/mod.rs
++++ b/crates/nms-copilot/src/mcp/mod.rs
+@@ -1,9 +1,33 @@
+ //! MCP server integration for NMS Copilot.
+ //!
+-//! When running normally, the MCP server runs on a background thread with its
+-//! own tokio runtime, sharing the `GalaxyModel` with the REPL via
+-//! `Arc<RwLock<GalaxyModel>>`. In headless mode (`--headless`), only the MCP
+-//! server runs (no REPL).
++//! The server exposes the current [`GalaxyModel`] through [`tools`] and
++//! [`resources`]. Registry futures read the shared model when polled;
++//! constructing or listing a registry does not start a server, watcher, or
++//! cache writer.
++//!
++//! # Transports and ownership
++//!
++//! `Transport::Stdio` is always available. `Transport::Http` and the owned
++//! HTTP worker API require the `http` feature. The owned
++//! `spawn_mcp_background_with_updates` API returns after binding and reports
++//! the actual local address through `McpBackgroundHandle`. Shutdown and drop
++//! request cancellation and block while joining the worker; call them outside
++//! model guards.
++//!
++//! The older `spawn_mcp_background`,
++//! `spawn_mcp_background_with_watch_config`, `run_headless`, and
++//! `run_headless_with_watch_config` compatibility APIs keep their detached,
++//! unit-returning behavior. They block for readiness; startup failure is
++//! printed and exits the process with status 1. Their watcher path applies save
++//! deltas. In contrast, `run_headless_with_updates` observes updates already
++//! applied by the application and does not start a watcher, mutate the model,
++//! or write cache. It drains observer events every 100 ms; there is no replay,
++//! event history, per-event snapshot, or bounded-queue guarantee, and shutdown
++//! may drop queued events.
++//!
++//! Stdio is intended for headless use to avoid mixing protocol and REPL output.
++//! The HTTP `/mcp-info` document is static metadata, not a live listener address
++//! or health probe.
+ 
+ pub mod config;
+ pub mod resources;
+@@ -32,11 +56,31 @@ use nms_graph::GalaxyModel;
+ use resources::{BASES_URI, GALAXY_STATS_URI, NmsResources, PLAYER_LOCATION_URI};
+ use tools::NmsTools;
+ 
+-/// MCP transport mode.
++/// Transport used by the MCP server.
++///
++/// Stdio is available in every build. HTTP and the owned HTTP background API
++/// require the `http` feature. Constructing this value does not start serving.
++///
++/// # Errors
++///
++/// This enum has no error result.
++///
++/// # Panics
++///
++/// Constructing a transport value does not panic.
++///
++/// # Safety
++///
++/// This enum has no unsafe behavior.
+ pub enum Transport {
++    /// Serve MCP over standard input and output; intended for headless use.
+     Stdio,
++    /// Serve streamable HTTP at the requested socket address.
+     #[cfg(feature = "http")]
+-    Http(SocketAddr),
++    Http(
++        /// Requested bind address; port 0 lets the operating system choose a port.
++        SocketAddr,
++    ),
+ }
+ 
+ /// Failure while starting or stopping an owned background MCP HTTP server.
+@@ -53,14 +97,36 @@ pub enum Transport {
+ ///
+ /// let error = McpBackgroundError::Runtime(std::io::Error::other("example"));
+ /// assert!(error.source().is_some());
++/// assert!(McpBackgroundError::ReadinessClosed.source().is_none());
+ /// ```
++///
++/// # Errors
++///
++/// `Spawn`, `Runtime`, `Bind`, and `LocalAddress` retain their underlying I/O
++/// errors as sources. `ReadinessClosed` means the worker ended before reporting
++/// startup. `WorkerPanicked` reports a panic found while joining it. Serve
++/// errors after readiness are written to stderr by the worker.
++///
++/// # Panics
++///
++/// Formatting and inspecting these errors does not intentionally panic.
++///
++/// # Safety
++///
++/// This type has no unsafe behavior.
+ #[cfg(feature = "http")]
+ #[derive(Debug)]
+ pub enum McpBackgroundError {
+     /// The worker operating-system thread could not be created.
+-    Spawn(std::io::Error),
++    Spawn(
++        /// The operating-system thread creation error.
++        std::io::Error,
++    ),
+     /// The worker could not construct its Tokio runtime.
+-    Runtime(std::io::Error),
++    Runtime(
++        /// The Tokio runtime construction error.
++        std::io::Error,
++    ),
+     /// The requested listener address could not bind.
+     Bind {
+         /// Address the caller requested.
+@@ -111,10 +177,13 @@ impl std::error::Error for McpBackgroundError {
+ 
+ /// Owns an HTTP server worker and its stop signal.
+ ///
+-/// Call [`Self::shutdown`] outside application model guards; it blocks until
+-/// active requests and SSE connections are cancelled and the worker stops.
+-/// Dropping the handle also requests stop and joins, but reports join errors
+-/// to stderr rather than returning them.
++/// Available with the `http` feature. The handle is returned only after the
++/// listener binds, with the actual address (including an OS-selected port for
++/// requested port 0). [`Self::shutdown`] requests stop, cancels active requests
++/// and SSE streams, and blocks while joining. There is no fixed shutdown
++/// deadline or universal I/O cancellation guarantee. Dropping the handle also
++/// requests stop and joins, writing join errors to stderr. Call shutdown/drop
++/// outside model guards.
+ ///
+ /// # Examples
+ ///
+@@ -126,7 +195,7 @@ impl std::error::Error for McpBackgroundError {
+ ///
+ /// # fn example() -> Result<(), McpBackgroundError> {
+ /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
+-/// let address = "127.0.0.1:0".parse().expect("socket address");
++/// let address = std::net::SocketAddr::from(([127, 0, 0, 1], 0));
+ /// let (_sender, updates) = std::sync::mpsc::channel();
+ /// let handle = spawn_mcp_background_with_updates(model, address, Some(updates))?;
+ /// println!("listening at {}", handle.local_addr());
+@@ -154,26 +223,51 @@ impl std::fmt::Debug for McpBackgroundHandle {
+ 
+ #[cfg(feature = "http")]
+ impl McpBackgroundHandle {
+-    /// The actual local socket address selected by the listener.
++    /// Return the actual local socket address selected by the listener.
++    ///
++    /// Port 0 in the requested address is replaced by the operating-system
++    /// selected port. See [`spawn_mcp_background_with_updates`] for startup.
++    ///
++    /// # Errors
+     ///
+-    /// See the complete [`spawn_mcp_background_with_updates`] example for
+-    /// obtaining and using the actual address after binding.
++    /// This accessor has no error result.
++    ///
++    /// # Panics
++    ///
++    /// This accessor does not panic.
++    ///
++    /// # Safety
++    ///
++    /// This accessor has no unsafe behavior.
+     pub fn local_addr(&self) -> SocketAddr {
+         self.address
+     }
+ 
+-    /// Cancel active connections (including SSE) and join the worker thread.
++    /// Request cancellation and join the worker thread.
++    ///
++    /// This blocking operation cancels active requests and SSE streams. Call
++    /// it outside application model guards.
++    ///
++    /// # Examples
++    ///
++    /// See [`spawn_mcp_background_with_updates`] for creating the owner and
++    /// explicitly shutting it down.
+     ///
+     /// # Errors
+-    /// Returns [`McpBackgroundError::WorkerPanicked`] if the worker panicked
+-    /// while joining. Startup failures are returned by
++    ///
++    /// Returns [`McpBackgroundError::WorkerPanicked`] if joining finds a worker
++    /// panic. Startup failures are returned by
+     /// [`spawn_mcp_background_with_updates`]; post-ready serve errors are
+     /// written to stderr by the worker.
+     ///
+-    /// # Examples
++    /// # Panics
++    ///
++    /// Joining reports a worker panic as an error rather than resuming it.
+     ///
+-    /// See the complete [`spawn_mcp_background_with_updates`] example for
+-    /// starting the owner and explicitly shutting it down.
++    /// # Safety
++    ///
++    /// This method has no unsafe behavior; it blocks and must be called outside
++    /// model guards.
+     pub fn shutdown(mut self) -> Result<(), McpBackgroundError> {
+         self.stop_worker();
+         self.join_worker()
+@@ -240,18 +334,18 @@ impl ServerControl {
+ 
+ /// Start an owned HTTP observer for updates already applied by the application.
+ ///
+-/// Shutdown cancels in-flight requests and SSE streams, drops queued observer
+-/// events, and joins the worker. The server drains the receiver moved into it;
+-/// other coordinator subscribers drain their own receivers. The standard
+-/// observer queue is unbounded, so each subscriber must keep its receiver drained.
+-/// Parser and filesystem work have no hard
+-/// deadline. This handle's shutdown is blocking and must run outside model
+-/// guards.
++/// Available with the `http` feature. This starts a worker and Tokio runtime,
++/// binds the requested address, and returns after readiness with the actual
++/// address available from [`McpBackgroundHandle::local_addr`]. It observes the
++/// supplied receiver; it does not watch or parse save files, mutate the model,
++/// or write cache. The application coordinator remains the update producer.
+ ///
+-/// # Errors
+-/// Returns thread-spawn, runtime-construction, bind, local-address, readiness,
+-/// or worker-panic errors. I/O-backed variants retain their source. Errors
+-/// after readiness are reported to stderr by the worker.
++/// The receiver is drained every 100 ms. Events have no replay, history,
++/// per-event snapshot, flush deadline, or bounded-queue/backpressure guarantee;
++/// shutdown drops queued events. Resource reads query the current model
++/// independently, so notifications invalidate a resource without preserving an
++/// event snapshot. Shutdown blocks while active requests/SSE streams are
++/// cancelled and the worker is joined. Call it outside model guards.
+ ///
+ /// # Examples
+ ///
+@@ -262,7 +356,7 @@ impl ServerControl {
+ /// use tokio::sync::RwLock;
+ /// # fn example() -> Result<(), McpBackgroundError> {
+ /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
+-/// let address = "127.0.0.1:0".parse().expect("socket address");
++/// let address = std::net::SocketAddr::from(([127, 0, 0, 1], 0));
+ /// let (_sender, updates) = std::sync::mpsc::channel();
+ /// let owner = spawn_mcp_background_with_updates(model, address, Some(updates))?;
+ /// println!("listening at {}", owner.local_addr());
+@@ -270,6 +364,25 @@ impl ServerControl {
+ /// # Ok(())
+ /// # }
+ /// ```
++///
++/// # Errors
++/// Returns [`McpBackgroundError::Spawn`], [`McpBackgroundError::Runtime`],
++/// [`McpBackgroundError::Bind`], [`McpBackgroundError::LocalAddress`], or
++/// [`McpBackgroundError::ReadinessClosed`] for startup failure, and
++/// [`McpBackgroundError::WorkerPanicked`] if joining finds a panic. I/O-backed
++/// variants retain their source. Serve errors after readiness are written to
++/// stderr by the worker.
++///
++/// # Panics
++///
++/// Startup errors are returned as [`McpBackgroundError`]. A panic inside a
++/// dependency or process resource exhaustion is not converted into this result.
++///
++/// # Safety
++///
++/// This function has no unsafe behavior. Shutdown is blocking and belongs
++/// outside model guards.
++///
+ #[cfg(feature = "http")]
+ pub fn spawn_mcp_background_with_updates(
+     model: Arc<RwLock<GalaxyModel>>,
+@@ -422,7 +535,12 @@ pub fn run_headless(
+ ///
+ /// `Some(config)` is forwarded unchanged to the save watcher and its owned
+ /// handle remains alive while the server runs. `None` disables file watching
+-/// while the server continues to use the supplied in-memory model.
++/// while serving the supplied in-memory model. Watcher startup failure is
++/// logged and serving continues without it. This compatibility API returns
++/// `()` and blocks on the current thread. Runtime construction uses `expect`
++/// and can panic; entering a blocking runtime from an existing Tokio runtime
++/// can also panic. HTTP readiness failure prints to stderr and exits with status
++/// 1; serving errors are printed to stderr.
+ pub fn run_headless_with_watch_config(
+     model: Arc<RwLock<GalaxyModel>>,
+     transport: Transport,
+@@ -449,8 +567,14 @@ pub fn run_headless_with_watch_config(
+     });
+ }
+ 
+-/// Run headless MCP using already-applied updates from the application owner.
+-/// This observer never starts a watcher, mutates the model, or writes cache.
++/// Run headless MCP using updates already applied by the application owner.
++///
++/// This observer never starts a watcher, parses saves, mutates the model, or
++/// writes cache. It drains the receiver every 100 ms; there is no replay or
++/// per-event snapshot, and queued events can be dropped on shutdown. This API
++/// returns `()` and blocks on this thread. Runtime/serve failures are printed
++/// to stderr; entering a blocking runtime from an existing Tokio runtime can
++/// panic.
+ pub fn run_headless_with_updates(
+     model: Arc<RwLock<GalaxyModel>>,
+     transport: Transport,
+@@ -682,6 +806,33 @@ async fn mcp_info() -> fabryk_mcp::axum::Json<serde_json::Value> {
+     fabryk_mcp::axum::Json(mcp_info_json())
+ }
+ 
++/// Return static advertised metadata for the streamable-HTTP endpoint.
++///
++/// This document reports endpoint paths and a fixed curl template, not the
++/// active listener address or live health state.
++///
++/// # Examples
++///
++/// ```
++/// let info = nms_copilot::mcp::mcp_info_json();
++/// assert_eq!(info["transport"], "streamable-http");
++/// assert_eq!(info["endpoints"]["mcp"], "/mcp");
++/// assert_eq!(info["endpoints"]["health"], "/health");
++/// assert_eq!(info["endpoints"]["info"], "/mcp-info");
++/// assert_eq!(info["session_header"], "Mcp-Session-Id");
++/// ```
++///
++/// # Errors
++///
++/// This function returns metadata directly and has no error result.
++///
++/// # Panics
++///
++/// Constructing the static metadata does not intentionally panic.
++///
++/// # Safety
++///
++/// This function has no unsafe behavior.
+ #[cfg(feature = "http")]
+ pub fn mcp_info_json() -> serde_json::Value {
+     serde_json::json!({
+diff --git a/crates/nms-copilot/src/mcp/resources.rs b/crates/nms-copilot/src/mcp/resources.rs
+index fd76588..d7ac205 100644
+--- a/crates/nms-copilot/src/mcp/resources.rs
++++ b/crates/nms-copilot/src/mcp/resources.rs
+@@ -1,7 +1,11 @@
+ //! MCP resources for NMS Copilot.
+ //!
+-//! Exposes three live resources that clients can subscribe to for
+-//! real-time updates as the player explores the galaxy.
++//! [`NmsResources`] lists three current-model JSON resources in a stable order.
++//! Reads acquire the shared model lock when the returned future is polled;
++//! constructing or listing this registry does not start a server, watcher, or
++//! notification producer. Registering it alone does not send notifications.
++//! See the [resource examples](crate::mcp::resources) for dispatch, typed
++//! errors, wrappers, and read-time model access.
+ 
+ use std::sync::Arc;
+ 
+@@ -13,27 +17,156 @@ use nms_graph::GalaxyModel;
+ 
+ use super::tools::{build_bases_json, build_galaxy_stats_json, build_where_am_i_json};
+ 
+-/// MCP resource URI for the player's current location.
++/// URI for the player's current physical location.
++///
++/// The value is `nms://player/location`; the resource name is `Player
++/// Location` and its MIME type is `application/json`. It follows physical
++/// player position rather than the selected galaxy.
+ pub const PLAYER_LOCATION_URI: &str = "nms://player/location";
+ 
+-/// MCP resource URI for galaxy statistics.
++/// URI for aggregate statistics across the model's galaxies.
++///
++/// The value is `nms://galaxy/stats`; the resource name is `Galaxy Stats` and
++/// its MIME type is `application/json`.
+ pub const GALAXY_STATS_URI: &str = "nms://galaxy/stats";
+ 
+-/// MCP resource URI for player bases.
++/// URI for all player bases in the model.
++///
++/// The value is `nms://bases`; the resource name is `Bases` and its MIME type
++/// is `application/json`.
+ pub const BASES_URI: &str = "nms://bases";
+ 
+-/// MCP resources backed by a shared GalaxyModel.
++/// MCP resources backed by the supplied shared [`GalaxyModel`].
++///
++/// Construction stores the `Arc<RwLock<GalaxyModel>>` without taking a
++/// snapshot, starting a server or watcher, mutating model state, or writing
++/// cache. Read futures acquire the lock when polled and query the current model.
++/// A missing player position returns typed invalid-params data with message
++/// `Player position not available`; statistics and bases work with an empty
++/// model. Registry reads do not themselves subscribe or send notifications.
++///
++/// Resources are listed in this order: `nms://player/location` (`Player
++/// Location`), `nms://galaxy/stats` (`Galaxy Stats`), then `nms://bases`
++/// (`Bases`). All use `application/json`. Each successful read contains one
++/// pretty-printed JSON text value with the requested URI, JSON MIME type, and
++/// no annotations metadata.
++///
++/// # Examples
++///
++/// This example checks registry order, typed absence, wrapper metadata, and
++/// that a future reads the current model when polled rather than when created.
++///
++/// ```
++/// use std::sync::Arc;
++/// use fabryk_mcp::ResourceRegistry;
++/// use fabryk_mcp::model::{ErrorData, ResourceContents};
++/// use nms_core::{
++///     address::GalacticAddress, biome::Biome, player::PlayerState,
++///     system::{Planet, System},
++/// };
++/// use nms_copilot::mcp::resources::{
++///     NmsResources, BASES_URI, GALAXY_STATS_URI, PLAYER_LOCATION_URI,
++/// };
++/// use nms_graph::GalaxyModel;
++/// use serde_json::{json, Value};
++/// use tokio::runtime::Builder;
++/// use tokio::sync::RwLock;
++///
++/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
++/// fn json_from(contents: Vec<ResourceContents>, uri: &str) -> Result<Value, Box<dyn std::error::Error>> {
++///     match contents.as_slice() {
++///         [ResourceContents::TextResourceContents { uri: actual_uri, mime_type, text, meta }] => {
++///             assert_eq!(actual_uri, uri);
++///             assert_eq!(mime_type.as_deref(), Some("application/json"));
++///             assert!(meta.is_none());
++///             Ok(serde_json::from_str(text)?)
++///         }
++///         _ => Err("expected exactly one text resource".into()),
++///     }
++/// }
++/// let model = Arc::new(RwLock::new(GalaxyModel::new()));
++/// let registry = NmsResources::new(Arc::clone(&model));
++/// let listed: Vec<_> = registry.resources().iter()
++///     .map(|resource| (resource.uri.as_str(), resource.name.as_str(), resource.mime_type.as_deref()))
++///     .collect();
++/// assert_eq!(listed, [
++///     ("nms://player/location", "Player Location", Some("application/json")),
++///     ("nms://galaxy/stats", "Galaxy Stats", Some("application/json")),
++///     ("nms://bases", "Bases", Some("application/json")),
++/// ]);
++/// assert!(registry.read("nms://unknown").is_none());
++/// let missing = registry.read(PLAYER_LOCATION_URI).ok_or("missing location")?;
++/// let result = Builder::new_current_thread().build()?.block_on(missing);
++/// assert!(matches!(result, Err(error) if error == ErrorData::invalid_params("Player position not available", None)));
++///
++/// let pending = registry.read(PLAYER_LOCATION_URI).ok_or("missing location")?;
++/// let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
++/// let runtime = Builder::new_current_thread().build()?;
++/// runtime.block_on(async {
++///     let mut guard = model.write().await;
++///     guard.insert_system(System::new(address, Some("Physical-9".into()), None, None,
++///         vec![Planet::new(2, Some(Biome::Lush), None, false, Some("Garden".into()), Some(7))]));
++///     guard.player_state = Some(PlayerState::new(address, 9, None, None, 0, 0, 0));
++///     guard.set_active_galaxy(7);
++/// });
++/// let location = json_from(runtime.block_on(pending)?, PLAYER_LOCATION_URI)?;
++/// assert_eq!(location, json!({
++///     "system":"Physical-9", "planets_in_system":1, "galaxy":"Eissentam",
++///     "voxel_x":3, "voxel_y":0, "voxel_z":0, "solar_system_index":1,
++///     "portal_glyphs_hex":"200100000003",
++///     "portal_glyphs_emoji":"😑🌅🌅🕊🌅🌅🌅🌅🌅🌅🌅🦕",
++///     "signal_booster":"0802:007F:07FF:0001"
++/// }));
++/// let stats = runtime.block_on(registry.read(GALAXY_STATS_URI).ok_or("missing stats")?)?;
++/// assert_eq!(json_from(stats, GALAXY_STATS_URI)?, json!({
++///     "systems":1, "planets":1, "bases":0, "named_systems":1,
++///     "named_planets":1, "infested_planets":0,
++///     "biome_distribution":[{"biome":"Lush","count":1}],
++///     "unknown_biome_count":0
++/// }));
++/// let bases = runtime.block_on(registry.read(BASES_URI).ok_or("missing bases")?)?;
++/// assert_eq!(json_from(bases, BASES_URI)?, json!({"count":0,"bases":[]}));
++/// # Ok(())
++/// # }
++/// ```
++///
++/// # Errors
++///
++/// Reading player location returns `INVALID_PARAMS` when player position is
++/// unavailable. An unrecognized URI returns `None` before a future is made.
++///
++/// # Panics
++///
++/// Listing and creating read futures do not intentionally panic.
++///
++/// # Safety
++///
++/// This type has no unsafe behavior.
+ pub struct NmsResources {
+     model: Arc<RwLock<GalaxyModel>>,
+ }
+ 
+ impl NmsResources {
++    /// Create a registry over the shared model without taking a snapshot.
++    ///
++    /// # Errors
++    ///
++    /// This constructor has no error result.
++    ///
++    /// # Panics
++    ///
++    /// This constructor does not intentionally panic.
++    ///
++    /// # Safety
++    ///
++    /// This constructor has no unsafe behavior.
+     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
+         Self { model }
+     }
+ }
+ 
+ impl ResourceRegistry for NmsResources {
++    /// List location, statistics, then bases resources, all as JSON.
+     fn resources(&self) -> Vec<Resource> {
+         vec![
+             make_resource(
+@@ -57,6 +190,11 @@ impl ResourceRegistry for NmsResources {
+         ]
+     }
+ 
++    /// Create a future for a known URI; it reads the current model when polled.
++    ///
++    /// Success contains one pretty-printed text resource using the requested
++    /// URI, `application/json`, and no metadata. Missing player position is a
++    /// typed invalid-params error.
+     fn read(&self, uri: &str) -> Option<ResourceFuture> {
+         let model = Arc::clone(&self.model);
+         let uri_owned = uri.to_string();
+diff --git a/crates/nms-copilot/src/mcp/tools.rs b/crates/nms-copilot/src/mcp/tools.rs
+index 0aca9c4..7ba894c 100644
+--- a/crates/nms-copilot/src/mcp/tools.rs
++++ b/crates/nms-copilot/src/mcp/tools.rs
+@@ -1,7 +1,34 @@
+ //! NMS Copilot MCP tools.
+ //!
+-//! Each tool wraps a function from `nms-query`, translating between
+-//! JSON tool arguments and typed query structs.
++//! [`NmsTools`] exposes eight domain tools in a stable order and reads the
++//! shared [`GalaxyModel`] for query operations. Construction and listing do
++//! not start a server or watcher, mutate the model, or write cache; recognized
++//! call futures acquire a read lock when polled. Coordinate conversion is
++//! independent of the model. The server registers health and discoverability
++//! tools separately.
++//!
++//! Success is returned as one JSON text item inside a successful
++//! [`CallToolResult`]. Handler errors are direct `ErrorData::invalid_params`
++//! values (`INVALID_PARAMS`, -32602), and an unknown name returns `None`.
++//! Schemas describe client inputs but do not validate every direct trait call;
++//! handler-specific argument getters determine how missing or wrong-typed
++//! values are treated.
++//!
++//! # Tool roles
++//!
++//! * `search_planets` filters planets by biome, distance, discoverer, naming,
++//!   and infested status; `from_base` changes its distance reference.
++//! * `plan_route` accepts target names or a biome and supports warp range,
++//!   radius, target count, algorithm, and round-trip options.
++//! * `where_am_i` reports physical player location; `whats_nearby` searches
++//!   around it and defaults to ten results.
++//! * `show_system` and `show_base` return query-layer details for a required
++//!   name; `galaxy_stats` reports aggregate model statistics.
++//! * `convert_coordinates` converts one supplied format without reading the
++//!   model; conversion output uses galaxy index 0.
++//!
++//! See the [tool examples](crate::mcp::tools) for the full order, the exact
++//! missing-position error, and a literal conversion result.
+ 
+ use std::sync::Arc;
+ 
+@@ -22,22 +49,105 @@ use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
+ use nms_query::show::{ShowQuery, ShowResult, execute_show};
+ use nms_query::stats::{StatsQuery, execute_stats};
+ 
+-/// All NMS tools backed by a shared GalaxyModel.
++/// The eight NMS domain tools backed by a shared [`GalaxyModel`].
++///
++/// Construction stores the shared model without taking a snapshot, starting a
++/// server or watcher, applying updates, or writing cache. Query calls acquire
++/// a read lock when polled; `convert_coordinates` does not read the model. The
++/// registry itself does not produce notifications.
++///
++/// Tools are listed in this order: `search_planets`, `plan_route`,
++/// `where_am_i`, `whats_nearby`, `show_system`, `show_base`,
++/// `convert_coordinates`, `galaxy_stats`. Health and discoverability are
++/// registered separately by the server.
++///
++/// # Examples
++///
++/// ```
++/// use std::sync::Arc;
++/// use fabryk_mcp::ToolRegistry;
++/// use fabryk_mcp::model::{CallToolResult, ErrorData};
++/// use nms_copilot::mcp::tools::NmsTools;
++/// use nms_graph::GalaxyModel;
++/// use serde_json::{json, Value};
++/// use tokio::runtime::Builder;
++/// use tokio::sync::RwLock;
++///
++/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
++/// let tools = NmsTools::new(Arc::new(RwLock::new(GalaxyModel::new())));
++/// let names: Vec<_> = tools.tools().iter().map(|tool| tool.name.as_str()).collect();
++/// assert_eq!(names, ["search_planets", "plan_route", "where_am_i",
++///     "whats_nearby", "show_system", "show_base", "convert_coordinates",
++///     "galaxy_stats"]);
++/// assert!(tools.call("unknown", Value::Null).is_none());
++/// let runtime = Builder::new_current_thread().build()?;
++/// let missing = tools.call("where_am_i", json!({})).ok_or("missing tool")?;
++/// let error = match runtime.block_on(missing) {
++///     Err(error) => error,
++///     Ok(_) => return Err("expected missing-position error".into()),
++/// };
++/// assert_eq!(error, ErrorData::invalid_params("Player position not available", None));
++///
++/// let future = tools.call("convert_coordinates", json!({"glyphs":"0x200100000003"}))
++///     .ok_or("missing converter")?;
++/// let result: CallToolResult = runtime.block_on(future)?;
++/// assert_eq!(result.content.len(), 1);
++/// assert_eq!(result.is_error, Some(false));
++/// assert!(result.structured_content.is_none());
++/// assert!(result.meta.is_none());
++/// let text = result.content.first().and_then(|item| item.as_text()).ok_or("not text")?;
++/// let actual: Value = serde_json::from_str(&text.text)?;
++/// assert_eq!(actual, json!({
++///     "portal_glyphs_hex":"200100000003",
++///     "portal_glyphs_emoji":"😑🌅🌅🕊🌅🌅🌅🌅🌅🌅🌅🦕",
++///     "signal_booster":"0802:007F:07FF:0001",
++///     "galactic_address":"0x200100000003",
++///     "voxel_x":3,"voxel_y":0,"voxel_z":0,
++///     "solar_system_index":1,"planet_index":2,"galaxy":"Euclid"
++/// }));
++/// # Ok(())
++/// # }
++/// ```
++///
++/// # Errors
++///
++/// Known tools return typed invalid-params data for invalid arguments or query
++/// state. Missing player position for `where_am_i` and `whats_nearby` is an
++/// `INVALID_PARAMS` error. Unknown names return `None` instead of a future.
++///
++/// # Panics
++///
++/// Construction and dispatch do not intentionally panic. Query and address
++/// conversion retain the behavior and limitations of their underlying APIs.
++///
++/// # Safety
+ ///
+-/// Uses `RwLock` to support live updates from the file watcher.
+-/// Tool handlers acquire a read lock; the watcher takes a write lock
+-/// to apply deltas.
++/// This type has no unsafe behavior.
+ pub struct NmsTools {
+     model: Arc<RwLock<GalaxyModel>>,
+ }
+ 
+ impl NmsTools {
++    /// Create a registry over the shared model without taking a snapshot.
++    ///
++    /// # Errors
++    ///
++    /// This constructor has no error result.
++    ///
++    /// # Panics
++    ///
++    /// This constructor does not intentionally panic.
++    ///
++    /// # Safety
++    ///
++    /// This constructor has no unsafe behavior.
+     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
+         Self { model }
+     }
+ }
+ 
+ impl ToolRegistry for NmsTools {
++    /// List the eight domain tools in their documented order.
+     fn tools(&self) -> Vec<Tool> {
+         vec![
+             search_planets_tool(),
+@@ -51,6 +161,10 @@ impl ToolRegistry for NmsTools {
+         ]
+     }
+ 
++    /// Return a future for a recognized tool, or `None` for an unknown name.
++    ///
++    /// Query handlers read the current model when polled. Successful results
++    /// contain one JSON text item; handler errors are typed invalid-params data.
+     fn call(&self, name: &str, args: Value) -> Option<ToolResult> {
+         let model = Arc::clone(&self.model);
+         match name {
