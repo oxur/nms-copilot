@@ -1,0 +1,847 @@
+diff --git a/crates/nms-query/src/display.rs b/crates/nms-query/src/display.rs
+index 09f8de0..9776353 100644
+--- a/crates/nms-query/src/display.rs
++++ b/crates/nms-query/src/display.rs
+@@ -1,8 +1,8 @@
+ //! Output formatting for query results.
+ //!
+-//! All formatters return `String` -- the caller prints to stdout.
+-//! Each formatter accepts a [`Theme`] for API compatibility but uses
+-//! `nms_theme()` / `nms_theme_no_color()` for table styling internally.
++//! Formatters return owned strings; callers choose where to write them. Table
++//! formatters accept [`Theme`] for compatibility, while table helpers select an
++//! upstream palette from the theme header style.
+ 
+ use crate::find::FindResult;
+ use crate::route::RouteResult;
+@@ -11,7 +11,20 @@ use crate::stats::StatsResult;
+ use crate::table::{Builder, build_table, nms_theme, nms_theme_no_color};
+ use crate::theme::Theme;
+ 
+-/// Format a distance in light-years for display.
++/// Format a distance estimate in light-years for display.
++///
++/// Zero has a special label; same-voxel uncertainty and cross-voxel estimates
++/// use different rounding. Inputs are not validated.
++///
++/// # Examples
++///
++/// ```
++/// use nms_query::format_distance;
++/// assert_eq!(format_distance(0.0), "< 1 ly");
++/// assert_eq!(format_distance(2_000.0), "~2.0K ly (±163)");
++/// assert_eq!(format_distance(4_000.0), "~4.0K ly");
++/// assert_eq!(format_distance(40_000.0), "~40.0K ly");
++/// ```
+ ///
+ /// - 0.0 (same system): `"< 1 ly"`
+ /// - ~265 ly (same voxel): `"~265 ly (±100)"` — SD from Robbins' variance
+@@ -50,9 +63,18 @@ pub fn format_distance(ly: f64) -> String {
+     }
+ }
+ 
+-/// Convert a 12-digit hex portal address to emoji string.
++/// Convert hexadecimal characters in `hex` to portal glyphs.
+ ///
+-/// Uses `nms_core::glyph::Glyph::new()` and `emoji()`.
++/// Each character is scanned: hexadecimal digits are converted and other
++/// characters are skipped. This is not a strict portal-address parser.
++///
++/// # Examples
++///
++/// ```
++/// use nms_query::hex_to_emoji;
++/// assert_eq!(hex_to_emoji("01"), "🌅🕊");
++/// assert_eq!(hex_to_emoji("0x1?"), "🌅🕊");
++/// ```
+ pub fn hex_to_emoji(hex: &str) -> String {
+     use nms_core::glyph::Glyph;
+     hex.chars()
+@@ -63,7 +85,9 @@ pub fn hex_to_emoji(hex: &str) -> String {
+         .collect()
+ }
+ 
+-/// Select the appropriate table theme based on whether the `Theme` has colors.
++/// Select the built-in table palette from the supplied theme's header style.
++///
++/// Other semantic styles do not affect table-cell palette selection.
+ fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
+     if theme.header.fg.is_some() || theme.header.bold {
+         nms_theme()
+@@ -72,7 +96,34 @@ fn table_theme_for(theme: &Theme) -> crate::table::TableStyleConfig {
+     }
+ }
+ 
+-/// Format find results as a themed table.
++/// Format find results as a table string for the caller to emit.
++///
++/// Byte-based name truncation can panic if its cut falls inside a UTF-8 code point.
++///
++/// # Examples
++///
++/// ```
++/// use nms_query::{format_distance, format_find_results, format_route, hex_to_emoji, should_use_colors, Theme};
++/// use nms_query::route::RouteResult;
++/// use nms_graph::route::{Route, RoutingAlgorithm};
++/// use nms_graph::GalaxyModel;
++///
++/// assert_eq!(format_distance(0.0), "< 1 ly");
++/// assert_eq!(format_distance(2_000.0), "~2.0K ly (±163)");
++/// assert_eq!(format_distance(4_000.0), "~4.0K ly");
++/// assert_eq!(format_distance(40_000.0), "~40.0K ly");
++/// assert_eq!(hex_to_emoji("01"), "🌅🕊");
++/// assert_eq!(hex_to_emoji("0x1?"), "🌅🕊");
++/// let theme = Theme::none();
++/// assert_eq!(theme.header.paint("Atlas"), "Atlas");
++/// assert_eq!(theme.biome_style(&nms_core::Biome::Lush), &theme.biome_lush);
++/// assert!(!should_use_colors(false));
++/// assert_eq!(format_find_results(&[], &theme), "  No results found.\n");
++/// let empty = RouteResult { route: Route { hops: vec![], total_distance_ly: 0.0 },
++///     warp_range: None, warp_jumps: None, algorithm: RoutingAlgorithm::NearestNeighbor, targets_visited: 0 };
++/// assert_eq!(format_route(&empty, &GalaxyModel::new(), &theme), "  No route computed.\n");
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
+     if results.is_empty() {
+         return "  No results found.\n".to_string();
+@@ -129,7 +180,7 @@ pub fn format_find_results(results: &[FindResult], theme: &Theme) -> String {
+     build_table(builder, &["SEARCH RESULTS"], &table_theme, "Results")
+ }
+ 
+-/// Format a system detail view.
++/// Format system properties and its planet list as table strings.
+ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
+     let table_theme = table_theme_for(theme);
+     let sys = &result.system;
+@@ -203,7 +254,7 @@ pub fn format_show_system(result: &ShowSystemResult, theme: &Theme) -> String {
+     out
+ }
+ 
+-/// Format a base detail view.
++/// Format base properties and any associated system detail as table strings.
+ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
+     let table_theme = table_theme_for(theme);
+     let base = &result.base;
+@@ -229,7 +280,7 @@ pub fn format_show_base(result: &ShowBaseResult, theme: &Theme) -> String {
+     out
+ }
+ 
+-/// Format a show result (dispatches to system or base).
++/// Format either variant of a [`ShowResult`] detail response.
+ pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
+     match result {
+         ShowResult::System(s) => format_show_system(s, theme),
+@@ -237,7 +288,7 @@ pub fn format_show_result(result: &ShowResult, theme: &Theme) -> String {
+     }
+ }
+ 
+-/// Format statistics output.
++/// Format aggregate counts and the optional biome-distribution table.
+ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
+     let table_theme = table_theme_for(theme);
+ 
+@@ -290,7 +341,10 @@ pub fn format_stats(result: &StatsResult, theme: &Theme) -> String {
+     out
+ }
+ 
+-/// Format a route result as an itinerary table.
++/// Format a route result as an itinerary table string.
++///
++/// Byte-based name truncation can panic if its cut falls inside a UTF-8 code point.
++/// See the [display example](crate#examples) for the empty-result output.
+ pub fn format_route(result: &RouteResult, model: &nms_graph::GalaxyModel, theme: &Theme) -> String {
+     if result.route.hops.is_empty() {
+         return "  No route computed.\n".to_string();
+diff --git a/crates/nms-query/src/find.rs b/crates/nms-query/src/find.rs
+index c910e6f..b17b3fa 100644
+--- a/crates/nms-query/src/find.rs
++++ b/crates/nms-query/src/find.rs
+@@ -7,7 +7,10 @@ use nms_graph::model::PlanetKey;
+ use nms_graph::query::BiomeFilter;
+ use nms_graph::{GalaxyModel, GraphError};
+ 
+-/// How to determine the "from" point for distance calculations.
++/// How to determine the reference galaxy and origin for distance calculations.
++///
++/// See [`execute_find`] for current-position validation and explicit-reference
++/// behavior.
+ #[derive(Debug, Clone, Default)]
+ pub enum ReferencePoint {
+     /// Use the player's current position from the save file.
+@@ -19,7 +22,8 @@ pub enum ReferencePoint {
+     Address(GalacticAddress),
+ }
+ 
+-/// Parameters for a planet/system search.
++/// Parameters for a planet/system search. All supplied filters are combined
++/// before the optional nearest-result limit is applied.
+ #[derive(Debug, Clone, Default)]
+ pub struct FindQuery {
+     /// Filter by biome type.
+@@ -34,26 +38,29 @@ pub struct FindQuery {
+     pub within_ly: Option<f64>,
+     /// Return at most this many results after all filters, nearest first.
+     pub nearest: Option<usize>,
+-    /// Filter by planet or system name substring, case-insensitively.
++    /// Case-insensitive substring matched against either planet or system name.
+     pub name_pattern: Option<String>,
+-    /// Filter by discoverer username (case-insensitive substring).
++    /// Case-insensitive substring matched against the system discoverer name.
+     pub discoverer: Option<String>,
+-    /// Only include planets that have a name.
++    /// Include planets whose name is `Some`, including an empty string.
+     pub named_only: bool,
+     /// Reference point for distance calculations.
+     pub from: ReferencePoint,
+ }
+ 
+-/// A single result from a find query.
++/// A cloned planet/system match and its query-relative distance.
++///
++/// `portal_hex` is formatted from the stored system address, not the planet index
++/// or the canonical planet-zeroed [`nms_graph::SystemId`].
+ #[derive(Debug, Clone)]
+ pub struct FindResult {
+-    /// The matching planet.
++    /// Cloned matching planet record.
+     pub planet: Planet,
+-    /// The system containing the planet.
++    /// Cloned containing system record.
+     pub system: System,
+     /// Distance from the reference point in light-years.
+     pub distance_ly: f64,
+-    /// Portal glyphs as hex (12 digits). Caller renders as emoji.
++    /// Twelve-digit uppercase hex from the stored system address; callers may render it as glyphs.
+     pub portal_hex: String,
+ }
+ 
+@@ -64,6 +71,8 @@ pub struct FindResult {
+ /// references select their own galaxy without mutating the model. Every planet
+ /// and system filter is applied before the optional nearest limit. Results are
+ /// sorted by distance, then numeric galaxy, system address, and planet index.
++/// The name pattern matches a planet or system name; discoverer matching uses
++/// the system name. A positive infinite radius is inclusive.
+ ///
+ /// # Errors
+ ///
+diff --git a/crates/nms-query/src/lib.rs b/crates/nms-query/src/lib.rs
+index 16166ab..a39c9da 100644
+--- a/crates/nms-query/src/lib.rs
++++ b/crates/nms-query/src/lib.rs
+@@ -1,7 +1,87 @@
+ //! Shared query engine for NMS Copilot.
+ //!
+-//! Pure, stateless query layer consumed by all three interfaces (CLI, REPL, MCP).
+-//! Takes an immutable reference to the `GalaxyModel` and returns typed results.
++//! Evaluates typed queries against an in-memory [`nms_graph::GalaxyModel`] and
++//! returns typed results for callers such as the CLI, REPL, and MCP server.
++//! Query execution takes an immutable model reference; it performs no save-file
++//! or cache I/O. Formatting helpers return owned strings for callers to print.
++//!
++//! # Modules
++//!
++//! - [`find`] filters planet and system records.
++//! - [`show`] resolves a system or base detail view.
++//! - [`stats`] aggregates counts across the model.
++//! - [`route`] resolves targets and computes an itinerary.
++//! - [`display`] formats query results.
++//! - [`theme`] provides semantic styles and terminal detection.
++//! - [`table`] builds the crate's themed tables.
++//!
++//! # Examples
++//!
++//! This explicit-address example needs no player save and observes the complete
++//! find result fields, a show result, and all statistics across the model.
++//!
++//! ```
++//! use nms_core::{Biome, GalacticAddress, Planet, System};
++//! use nms_graph::{GalaxyModel, GraphError, SystemId};
++//! use nms_query::{execute_find, execute_show, execute_stats, FindQuery, ReferencePoint, ShowQuery, ShowResult, StatsQuery, StatsResult};
++//!
++//! let atlas = GalacticAddress::new(0, 0, 0, 1, 2, 9);
++//! let beta = GalacticAddress::new(3, 4, 0, 2, 0, 9);
++//! let opposed = GalacticAddress::new(0, 0, 0, 1, 2, 0);
++//! let mut model = GalaxyModel::new();
++//! model.insert_system(System::new(atlas, Some("Atlas".into()), Some("Explorer".into()), None, vec![
++//!     Planet::new(1, Some(Biome::Lush), None, false, Some("Garden".into()), Some(7)),
++//! ]));
++//! model.insert_system(System::new(beta, Some("Beta".into()), Some("Explorer".into()), None, vec![
++//!     Planet::new(2, Some(Biome::Toxic), None, true, Some("Cinder".into()), Some(8)),
++//! ]));
++//! model.insert_system(System::new(opposed, Some("Opposed".into()), Some("Other".into()), None, vec![
++//!     Planet::new(1, Some(Biome::Lush), None, false, Some("Other".into()), Some(9)),
++//! ]));
++//! let query = FindQuery { biome: Some(Biome::Lush), biome_subtype: None, infested: Some(false),
++//!     within_ly: Some(0.0), nearest: Some(1), name_pattern: Some("gard".into()),
++//!     discoverer: Some("expl".into()), named_only: true, from: ReferencePoint::Address(atlas) };
++//! let found = execute_find(&model, &query)?;
++//! assert_eq!(found.len(), 1);
++//! let result = &found[0];
++//! assert_eq!(format!("{}", SystemId::from_address(&result.system.address)), "9:000100000000");
++//! assert_eq!(result.system.address, atlas);
++//! assert_eq!(result.system.source, nms_core::DiscoverySource::Personal);
++//! assert_eq!(result.system.name.as_deref(), Some("Atlas"));
++//! assert_eq!(result.system.discoverer.as_deref(), Some("Explorer"));
++//! assert_eq!(result.system.timestamp, None);
++//! assert_eq!(result.system.planets.len(), 1);
++//! assert_eq!(result.planet.index, 1);
++//! assert_eq!(result.planet.name.as_deref(), Some("Garden"));
++//! assert_eq!(result.planet.biome, Some(Biome::Lush));
++//! assert_eq!(result.planet.biome_subtype, None);
++//! assert!(!result.planet.infested);
++//! assert_eq!(result.planet.seed_hash, Some(7));
++//! assert_eq!(result.distance_ly, 0.0);
++//! assert_eq!(result.portal_hex, "200100000000");
++//! assert_eq!(model.active_galaxy, 0);
++//! assert!(matches!(execute_find(&model, &FindQuery::default()), Err(GraphError::NoPlayerPosition)));
++//! model.set_active_galaxy(9);
++//! let shown = execute_show(&model, &ShowQuery::System("ATLAS".into()))?;
++//! assert!(matches!(shown, ShowResult::System(ref s) if s.system.name.as_deref() == Some("Atlas")
++//!     && s.portal_hex == "200100000000" && s.galaxy_name == "Eissentam" && s.distance_from_player.is_none()));
++//! assert!(matches!(execute_show(&model, &ShowQuery::Base("Missing".into())), Err(GraphError::BaseNotFound(ref n)) if n == "Missing"));
++//! let expected = StatsResult { system_count: 3, planet_count: 3, base_count: 0,
++//!     biome_counts: [(Biome::Lush, 2), (Biome::Toxic, 1)].into(), unknown_biome_count: 0,
++//!     named_planet_count: 3, named_system_count: 3, infested_count: 1 };
++//! for query in [StatsQuery::default(), StatsQuery { biomes: true, discoveries: true }] {
++//!     let got = execute_stats(&model, &query);
++//!     assert_eq!(got.system_count, expected.system_count);
++//!     assert_eq!(got.planet_count, expected.planet_count);
++//!     assert_eq!(got.base_count, expected.base_count);
++//!     assert_eq!(got.biome_counts, expected.biome_counts);
++//!     assert_eq!(got.unknown_biome_count, expected.unknown_biome_count);
++//!     assert_eq!(got.named_planet_count, expected.named_planet_count);
++//!     assert_eq!(got.named_system_count, expected.named_system_count);
++//!     assert_eq!(got.infested_count, expected.infested_count);
++//! }
++//! # Ok::<(), Box<dyn std::error::Error>>(())
++//! ```
+ 
+ pub mod display;
+ pub mod find;
+@@ -11,12 +91,18 @@ pub mod stats;
+ pub mod table;
+ pub mod theme;
+ 
++/// Text-formatting functions for query results.
+ pub use display::{
+     format_distance, format_find_results, format_route, format_show_result, format_stats,
+     hex_to_emoji,
+ };
++/// Planet and system search query types.
+ pub use find::{FindQuery, FindResult, ReferencePoint};
++/// Route selection, input, and result types.
+ pub use route::{RouteFrom, RouteQuery, RouteResult, TargetSelection};
++/// Detail-query input and result types.
+ pub use show::{ShowQuery, ShowResult};
++/// Statistics input and result types.
+ pub use stats::{StatsQuery, StatsResult};
++/// Semantic output theme and stdout color-detection helper.
+ pub use theme::{Theme, should_use_colors};
+diff --git a/crates/nms-query/src/route.rs b/crates/nms-query/src/route.rs
+index b67166f..37904a4 100644
+--- a/crates/nms-query/src/route.rs
++++ b/crates/nms-query/src/route.rs
+@@ -1,4 +1,7 @@
+-//! Route query layer -- resolves targets and executes routing algorithms.
++//! Resolve route targets and delegate their ordering to the graph planner.
++//!
++//! Radius and optional hop constraints use model addresses; this module does not
++//! promise a globally optimal or warp-feasible itinerary.
+ 
+ use std::collections::HashSet;
+ 
+@@ -7,18 +10,18 @@ use nms_graph::query::BiomeFilter;
+ use nms_graph::route::{Route, RoutingAlgorithm};
+ use nms_graph::{GalaxyModel, GraphError, SystemId};
+ 
+-/// How route targets are specified.
++/// How a route query obtains its target systems.
+ #[derive(Debug, Clone)]
+ pub enum TargetSelection {
+-    /// Find planets matching a biome filter, use their systems as targets.
++    /// Match planets, deduplicate their systems, and rank systems from the origin.
+     Biome(BiomeFilter),
+-    /// Named bases or systems (looked up case-insensitively).
++    /// Resolve bases first, then system names in the start galaxy, case-insensitively.
+     Named(Vec<String>),
+-    /// Explicit system IDs.
++    /// Caller-supplied system IDs, validated before radius filtering or target limits.
+     SystemIds(Vec<SystemId>),
+ }
+ 
+-/// Where the route starts from.
++/// How to select the route origin and its galaxy.
+ #[derive(Debug, Clone, Default)]
+ pub enum RouteFrom {
+     /// Use the player's current position from the save file.
+@@ -30,37 +33,39 @@ pub enum RouteFrom {
+     Address(GalacticAddress),
+ }
+ 
+-/// Parameters for a route query.
++/// Inputs controlling start resolution, targets, ordering, and hop reporting.
+ #[derive(Debug, Clone)]
+ pub struct RouteQuery {
+-    /// How targets are selected.
++    /// Target source and selection behavior.
+     pub targets: TargetSelection,
+-    /// Starting point for the route.
++    /// Current player position, named base, or explicit address.
+     pub from: RouteFrom,
+-    /// Ship warp range in light-years (for hop constraints and jump counts).
++    /// Warp range in light-years for hop constraints and jump counts; use a finite
++    /// positive value because the graph layer does not validate this input.
+     pub warp_range: Option<f64>,
+-    /// Only consider targets within this radius in light-years.
++    /// Retain targets within this distance of the original origin; negative or NaN
++    /// values remove all candidates.
+     pub within_ly: Option<f64>,
+     /// Maximum number of targets to visit.
+     pub max_targets: Option<usize>,
+-    /// Which routing algorithm to use.
++    /// Nearest-neighbor or nearest-neighbor followed by 2-opt.
+     pub algorithm: RoutingAlgorithm,
+-    /// Whether the route should return to the start.
++    /// Whether the ordered route should include a return leg to the start.
+     pub return_to_start: bool,
+ }
+ 
+-/// Result of a route query.
++/// Computed route and query options used to describe it.
+ #[derive(Debug, Clone)]
+ pub struct RouteResult {
+-    /// The computed route.
++    /// Ordered route hops and total distance.
+     pub route: Route,
+     /// Warp range used (if any).
+     pub warp_range: Option<f64>,
+-    /// Total warp jumps needed at the given warp range.
++    /// Sum of per-leg jump estimates when a warp range was supplied.
+     pub warp_jumps: Option<usize>,
+     /// Which algorithm was used.
+     pub algorithm: RoutingAlgorithm,
+-    /// Number of non-waypoint targets visited (excluding start).
++    /// Number of selected targets after filtering and limiting (excluding start).
+     pub targets_visited: usize,
+ }
+ 
+@@ -127,13 +132,59 @@ fn resolve_biome_targets(
+ 
+ /// Execute a route query against the galaxy model.
+ ///
+-/// Resolves targets, runs the selected routing algorithm, and optionally
+-/// applies hop constraints based on warp range.
++/// Resolves a start to its nearest indexed system in that galaxy. Target IDs are
++/// validated before deduplication, radius filtering, or the target limit. Biome
++/// targets are ranked from the original start; named and explicit IDs retain
++/// caller order. Ordering is heuristic; warp-range hop constraints are best effort.
+ ///
+ /// # Errors
+ ///
+-/// Returns graph or route errors for an unavailable start, empty start galaxy,
+-/// unresolved target, missing system, cross-galaxy target, or empty target set.
++/// Returns graph or route errors for a missing player/base, active-galaxy mismatch,
++/// empty start galaxy, unresolved target, missing system, cross-galaxy target, or
++/// empty target set. A boxed error may contain [`nms_graph::RouteError`].
++///
++/// # Panics
++///
++/// A supplied warp range can lead to a jump-count overflow on build profiles
++/// that check integer overflow.
++///
++/// # Examples
++///
++/// This route uses fixed 3-4-5 voxel geometry and checks each hop literally.
++///
++/// ```
++/// use nms_core::{GalacticAddress, System};
++/// use nms_graph::{GalaxyModel, RouteError, SystemId};
++/// use nms_graph::route::RoutingAlgorithm;
++/// use nms_query::{execute_route, RouteFrom, RouteQuery, TargetSelection};
++///
++/// let addresses = [GalacticAddress::new(0, 0, 0, 1, 0, 9),
++///     GalacticAddress::new(3, 4, 0, 2, 0, 9),
++///     GalacticAddress::new(6, 8, 0, 3, 0, 9),
++///     GalacticAddress::new(0, 0, 0, 1, 0, 0)];
++/// let ids = addresses.map(|address| SystemId::from_address(&address));
++/// let mut model = GalaxyModel::new();
++/// for (address, name) in addresses.iter().copied().zip(["A", "B", "C", "Opposed"]) {
++///     model.insert_system(System::new(address, Some(name.into()), None, None, vec![]));
++/// }
++/// let query = RouteQuery { targets: TargetSelection::SystemIds(vec![ids[2], ids[1], ids[1]]),
++///     from: RouteFrom::Address(addresses[0]), warp_range: Some(2_500.0), within_ly: Some(4_000.0),
++///     max_targets: Some(2), algorithm: RoutingAlgorithm::NearestNeighbor, return_to_start: false };
++/// let result = execute_route(&model, &query)?;
++/// let hops: Vec<_> = result.route.hops.iter().map(|h|
++///     (h.system_id, h.leg_distance_ly, h.cumulative_ly, h.is_waypoint)).collect();
++/// assert_eq!(hops, vec![(ids[0], 0.0, 0.0, false), (ids[1], 2_000.0, 2_000.0, false),
++///     (ids[2], 2_000.0, 4_000.0, false)]);
++/// assert_eq!(result.route.total_distance_ly, 4_000.0);
++/// assert_eq!(result.targets_visited, 2);
++/// assert_eq!(result.warp_range, Some(2_500.0));
++/// assert_eq!(result.warp_jumps, Some(2));
++/// assert!(matches!(result.algorithm, RoutingAlgorithm::NearestNeighbor));
++/// let opposed = RouteQuery { targets: TargetSelection::SystemIds(vec![ids[3]]), ..query };
++/// let error = execute_route(&model, &opposed).unwrap_err();
++/// assert!(matches!(error.downcast_ref::<RouteError>(), Some(RouteError::NoPath { from, to }) if *from == ids[0] && *to == ids[3]));
++/// # Ok::<(), Box<dyn std::error::Error>>(())
++/// ```
+ pub fn execute_route(
+     model: &GalaxyModel,
+     query: &RouteQuery,
+diff --git a/crates/nms-query/src/show.rs b/crates/nms-query/src/show.rs
+index c60cd32..2321be7 100644
+--- a/crates/nms-query/src/show.rs
++++ b/crates/nms-query/src/show.rs
+@@ -1,4 +1,7 @@
+-//! Detail view queries for systems, planets, and bases.
++//! Detail views for systems and bases, resolved from the in-memory model.
++//!
++//! [`execute_show`] checks active-galaxy system names before packed addresses;
++//! base names use the model-wide base index.
+ 
+ use nms_core::address::GalacticAddress;
+ use nms_core::player::PlayerBase;
+@@ -6,48 +9,64 @@ use nms_core::system::System;
+ use nms_graph::spatial::SystemId;
+ use nms_graph::{GalaxyModel, GraphError};
+ 
+-/// What to show detail for.
++/// What record to resolve for a detail view.
+ #[derive(Debug, Clone)]
+ pub enum ShowQuery {
+-    /// Show a system by name or packed address.
++    /// Resolve a name first, then a packed hexadecimal address in the active galaxy.
+     System(String),
+-    /// Show a base by name.
++    /// Resolve a base name through the model-wide base index.
+     Base(String),
+ }
+ 
+-/// Result of a show query.
++/// A resolved system or base detail result.
+ #[derive(Debug, Clone)]
+ pub enum ShowResult {
++    /// Resolved system detail.
+     System(ShowSystemResult),
++    /// Resolved base detail.
+     Base(ShowBaseResult),
+ }
+ 
++/// Cloned system data and display fields for a system detail view.
+ #[derive(Debug, Clone)]
+ pub struct ShowSystemResult {
++    /// The cloned system record; its stored address may retain source planet bits.
+     pub system: System,
++    /// Twelve-digit uppercase hex formatted from the stored system address.
+     pub portal_hex: String,
++    /// Galaxy display name for the stored address.
+     pub galaxy_name: String,
++    /// Distance when player and system addresses share a galaxy.
+     pub distance_from_player: Option<f64>,
+ }
+ 
++/// Cloned base data and display fields for a base detail view.
+ #[derive(Debug, Clone)]
+ pub struct ShowBaseResult {
++    /// The cloned base record.
+     pub base: PlayerBase,
++    /// Twelve-digit uppercase hex formatted from the stored base address.
+     pub portal_hex: String,
++    /// Galaxy display name for the base address.
+     pub galaxy_name: String,
++    /// Cloned associated system, when that canonical key exists in the model.
+     pub system: Option<System>,
++    /// Distance when player and base addresses share a galaxy.
+     pub distance_from_player: Option<f64>,
+ }
+ 
+ /// Execute a show query using active-galaxy system-name and packed-address lookup.
+ ///
+ /// A player distance is included only when the player and selected item share
+-/// a galaxy; otherwise the result has no distance.
++/// a galaxy; otherwise the result has no distance. Name lookup lowercases without
++/// trimming and precedes address parsing. Address lookup accepts packed hexadecimal
++/// `u64` text with an optional `0x` or `0X` prefix, not a save-format decoder.
+ ///
+ /// # Errors
+ ///
+ /// Returns [`GraphError::SystemNotFound`] or [`GraphError::BaseNotFound`] when
+-/// the requested system or base cannot be resolved.
++/// the requested system or base cannot be resolved. A system-name miss is also
++/// attempted as a packed address before `SystemNotFound` is returned.
+ pub fn execute_show(model: &GalaxyModel, query: &ShowQuery) -> Result<ShowResult, GraphError> {
+     match query {
+         ShowQuery::System(name_or_id) => show_system(model, name_or_id),
+diff --git a/crates/nms-query/src/stats.rs b/crates/nms-query/src/stats.rs
+index b18ba48..692e711 100644
+--- a/crates/nms-query/src/stats.rs
++++ b/crates/nms-query/src/stats.rs
+@@ -1,41 +1,44 @@
+-//! Aggregate statistics queries.
++//! Aggregate statistics across the complete in-memory model.
+ 
+ use std::collections::HashMap;
+ 
+ use nms_core::biome::Biome;
+ use nms_graph::GalaxyModel;
+ 
+-/// What statistics to compute.
++/// Compatibility flags for choosing statistics. The current [`execute_stats`]
++/// implementation computes all fields and ignores both flags.
+ #[derive(Debug, Clone, Default)]
+ pub struct StatsQuery {
+-    /// Show biome distribution.
++    /// Whether to include biome distribution (currently ignored).
+     pub biomes: bool,
+-    /// Show discovery counts by type.
++    /// Whether to include discovery counts by type (currently ignored).
+     pub discoveries: bool,
+ }
+ 
+-/// Aggregate statistics result.
++/// Counts computed across all model records and galaxies. Biome-map entry order
++/// is unspecified.
+ #[derive(Debug, Clone)]
+ pub struct StatsResult {
+-    /// Total systems in model.
++    /// Number of indexed systems across all galaxies.
+     pub system_count: usize,
+-    /// Total planets in model.
++    /// Number of entries in the model's flattened planet map.
+     pub planet_count: usize,
+-    /// Total bases.
++    /// Number of indexed bases across all galaxies.
+     pub base_count: usize,
+-    /// Biome distribution: biome -> count of planets.
++    /// Counts for planets with a known biome.
+     pub biome_counts: HashMap<Biome, usize>,
+-    /// Planets with no biome assigned.
++    /// Planets whose biome is `None`.
+     pub unknown_biome_count: usize,
+-    /// Named vs unnamed planets.
++    /// Planets whose name is `Some`, including an empty string.
+     pub named_planet_count: usize,
+-    /// Named vs unnamed systems.
++    /// Systems whose name is `Some`, including an empty string.
+     pub named_system_count: usize,
+-    /// Infested planet count.
++    /// Planets with the infested flag set, independent of biome.
+     pub infested_count: usize,
+ }
+ 
+-/// Execute a stats query.
++/// Compute every statistic over the entire model, regardless of active galaxy.
++/// `query.biomes` and `query.discoveries` are currently ignored.
+ pub fn execute_stats(model: &GalaxyModel, _query: &StatsQuery) -> StatsResult {
+     let mut biome_counts: HashMap<Biome, usize> = HashMap::new();
+     let mut unknown_biome_count = 0;
+diff --git a/crates/nms-query/src/table.rs b/crates/nms-query/src/table.rs
+index a7218c5..09c5558 100644
+--- a/crates/nms-query/src/table.rs
++++ b/crates/nms-query/src/table.rs
+@@ -1,13 +1,15 @@
+ //! NMS-themed table formatting using `oxur-cli` tables.
+ //!
+-//! Provides a deep-space color palette for all tabular output, plus a no-color
+-//! variant for piped output and MCP consumption.
++//! Provides embedded table palettes and a helper that renders caller-built rows.
++//! The black-on-black palette is not a guarantee of ANSI-free renderer output.
+ //!
+ //! The `build_table` function handles the `oxur-cli` row layout convention
+ //! automatically: callers push `[header, data..., footer]` and the helper
+ //! inserts a title row at position 0 so the theme styling aligns correctly.
+ 
++/// Re-export of the upstream row builder used by [`build_table`].
+ pub use oxur_cli::table::Builder;
++/// Re-export of the upstream table styling configuration.
+ pub use oxur_cli::table::TableStyleConfig;
+ 
+ /// Dummy type to satisfy the `Tabled` trait bound on `apply_to_table`.
+@@ -103,12 +105,22 @@ bg_color = "black"
+ fg_color = "black"
+ "##;
+ 
+-/// Parse and return the NMS deep-space color theme.
++/// Parse the embedded deep-space TOML into a table style configuration.
++///
++/// # Panics
++///
++/// Panics if the embedded constant is not valid TOML for the upstream parser.
+ pub fn nms_theme() -> TableStyleConfig {
+     toml::from_str(NMS_THEME).expect("NMS_THEME TOML is valid")
+ }
+ 
+-/// Parse and return the no-color theme.
++/// Parse the embedded black-and-white TOML into a table style configuration.
++///
++/// This palette does not guarantee ANSI-free output from the renderer.
++///
++/// # Panics
++///
++/// Panics if the embedded constant is not valid TOML for the upstream parser.
+ pub fn nms_theme_no_color() -> TableStyleConfig {
+     toml::from_str(NMS_THEME_NO_COLOR).expect("NMS_THEME_NO_COLOR TOML is valid")
+ }
+@@ -128,6 +140,25 @@ pub fn nms_theme_no_color() -> TableStyleConfig {
+ ///    "Total: N <label>" summary. If the combined text fits within the
+ ///    widest column-0 entry, it goes entirely in column 0; otherwise
+ ///    "Total:" goes in column 0 and "N <label>" in column 1.
++///
++/// Returns a string with a leading newline and two trailing newlines. The helper
++/// assumes the caller's intended column layout and does not sanitize cell text.
++///
++/// # Examples
++///
++/// ```
++/// use nms_query::table::{build_table, nms_theme_no_color, Builder};
++/// let mut rows = Builder::default();
++/// rows.push_record(["Name", "Value"]);
++/// rows.push_record(["Atlas", "7"]);
++/// rows.push_record(["", ""]);
++/// let rendered = build_table(rows, &["EXAMPLE"], &nms_theme_no_color(), "Rows");
++/// assert!(rendered.starts_with('\n'));
++/// assert!(rendered.ends_with("\n\n"));
++/// for text in ["EXAMPLE", "Name", "Value", "Atlas", "7", "Total:", "1 Rows"] {
++///     assert!(rendered.contains(text));
++/// }
++/// ```
+ pub fn build_table(
+     builder: Builder,
+     title: &[&str],
+diff --git a/crates/nms-query/src/theme.rs b/crates/nms-query/src/theme.rs
+index 2f69a54..186482f 100644
+--- a/crates/nms-query/src/theme.rs
++++ b/crates/nms-query/src/theme.rs
+@@ -1,10 +1,9 @@
+ //! Color themes for terminal output.
+ //!
+-//! Provides semantic styling for NMS Copilot output using raw ANSI escape codes.
+-//! No external color crates are used. The [`Theme`] struct maps semantic elements
+-//! (headers, system names, biome types) to [`Style`] values. Two presets are
+-//! provided: [`Theme::default_dark`] for interactive terminal use and
+-//! [`Theme::none`] for piped or machine-consumed output.
++//! Provides semantic styles and optional stdout terminal detection.
++//!
++//! [`Style::paint`] emits raw ANSI SGR codes for styled text. Theme presets describe
++//! semantic fields; they do not control every renderer or sanitize input strings.
+ 
+ use nms_core::biome::Biome;
+ 
+@@ -15,20 +14,35 @@ const RESET: &str = "\x1b[0m";
+ /// Terminal color identifiers mapped to ANSI SGR codes.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+ pub enum Color {
++    /// Red foreground color.
+     Red,
++    /// Green foreground color.
+     Green,
++    /// Yellow foreground color.
+     Yellow,
++    /// Blue foreground color.
+     Blue,
++    /// Magenta foreground color.
+     Magenta,
++    /// Cyan foreground color.
+     Cyan,
++    /// White foreground color.
+     White,
++    /// BrightRed foreground color.
+     BrightRed,
++    /// BrightGreen foreground color.
+     BrightGreen,
++    /// BrightYellow foreground color.
+     BrightYellow,
++    /// BrightBlue foreground color.
+     BrightBlue,
++    /// BrightMagenta foreground color.
+     BrightMagenta,
++    /// BrightCyan foreground color.
+     BrightCyan,
++    /// BrightWhite foreground color.
+     BrightWhite,
++    /// Gray foreground color.
+     Gray,
+ }
+ 
+@@ -55,10 +69,23 @@ impl Color {
+     }
+ }
+ 
+-/// A text style combining an optional foreground color and bold flag.
++/// A text style combining an optional foreground color and bold flag. Plain
++/// styles return input unchanged; styled output adds SGR and reset sequences
++/// without escaping embedded control characters.
++///
++/// # Examples
++///
++/// ```
++/// use nms_query::theme::{Color, Style};
++/// let style = Style { fg: Some(Color::Green), bold: true };
++/// assert_eq!(style.paint("Atlas"), "\x1b[1;32mAtlas\x1b[0m");
++/// assert_eq!(Style::plain().paint("Atlas"), "Atlas");
++/// ```
+ #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+ pub struct Style {
++    /// Optional foreground color.
+     pub fg: Option<Color>,
++    /// Whether text is bold.
+     pub bold: bool,
+ }
+ 
+@@ -94,28 +121,41 @@ impl Style {
+     }
+ }
+ 
+-/// Semantic color theme for NMS Copilot terminal output.
++/// Semantic color theme for NMS Copilot output.
+ ///
+-/// Each field corresponds to a semantic element in the output (headers, system
+-/// names, biome categories, etc.). Use [`Theme::default_dark`] for dark
+-/// terminal backgrounds or [`Theme::none`] for plain text.
++/// Individual formatters may use only a subset of its fields. [`Theme::none`] makes
++/// these styles plain but does not guarantee ANSI-free downstream table rendering.
+ #[derive(Debug, Clone)]
+ pub struct Theme {
++    /// Heading and header text style.
+     pub header: Style,
++    /// System-name style.
+     pub system_name: Style,
++    /// Planet-name style.
+     pub planet_name: Style,
++    /// Distance-value style.
+     pub distance: Style,
++    /// Portal-glyph style.
+     pub glyphs: Style,
++    /// Secondary-text style.
+     pub muted: Style,
+ 
+     // Biome-specific styles.
++    /// Lush and swamp biome style.
+     pub biome_lush: Style,
++    /// Toxic biome style.
+     pub biome_toxic: Style,
++    /// Scorched and lava biome style.
+     pub biome_scorched: Style,
++    /// Frozen biome style.
+     pub biome_frozen: Style,
++    /// Barren biome style.
+     pub biome_barren: Style,
++    /// Dead biome style.
+     pub biome_dead: Style,
++    /// Weird, red, green, and blue biome style.
+     pub biome_exotic: Style,
++    /// Fallback style for other biome classifications.
+     pub biome_other: Style,
+ }
+ 
+@@ -226,7 +266,8 @@ impl Theme {
+ /// detection.
+ ///
+ /// Returns `true` only when `config_colors` is `true` **and** stdout is a
+-/// terminal (as determined by [`std::io::IsTerminal`]).
++/// terminal (as determined by [`std::io::IsTerminal`]). It does not inspect
++/// environment overrides such as `NO_COLOR` or `TERM`.
+ pub fn should_use_colors(config_colors: bool) -> bool {
+     use std::io::IsTerminal;
+     config_colors && std::io::stdout().is_terminal()
