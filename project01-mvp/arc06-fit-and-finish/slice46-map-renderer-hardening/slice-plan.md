@@ -1,6 +1,6 @@
 # Slice46 — map renderer hardening
 
-Version1.2,2026-10-25UTC. ACTIVE/twoACTUALrefinementsissued(2of5)/sixMR OPEN. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh chosen after45 completedboundedrepair/handoff; no extra role/model/exception. Reuse clean dedicated workspace-coverage-contract fe5e9d1, CDC→CC mutationownership after coherent acknowledgedintake. Exacttwofiles: render.rs Localname construction/columnskip/affectedteaching+appendedmeaningfultests; map/mod.rs obsoleteUTF8paniccauseDOCONLY. Fullinput/state/terminalruntime/otherfiles/API/deps/theme/helpstrings/existingrenderdoctest frozen.
+Version1.3,2026-10-25UTC. ACTIVE/threeACTUALrefinementsissued(3of5)/sixMR OPEN. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh chosen after45 completedboundedrepair/handoff; no extra role/model/exception. Reuse clean dedicated workspace-coverage-contract fe5e9d1, CDC→CC mutationownership after coherent acknowledgedintake. Exacttwofiles: render.rs Localname construction/columnskip/affectedteaching+appendedmeaningfultests; map/mod.rs obsoleteUTF8paniccauseDOCONLY. Fullinput/state/terminalruntime/otherfiles/API/deps/theme/helpstrings/existingrenderdoctest frozen.
 
 Authorreadinesscomplete: fullactualrender460/state/entry107/input104/D0042/originalM7.7/currenttests+coverage and pinnedRatatuiSpan.width/Paragraph/LineTruncator APIs inspected. Byte-slice/byte-skip defects concrete; safeexistingcolumn/grapheme APIs/nofallbackornewdependency, preservedASCIIwidth/style/lastrowcollision/playerprecedence and scalar-vs-terminal distinction resolved. M1–M5 exactprojection/density/opposedGG+offscreen/Unicodeedge/followingdensity/overlay/status/help/smallbufferoracles defined inprompt; sixMR/ninegroups/pairhold/fullCDCsource/oraclereview/freshproof+retro. Requiredguides applied and coherent boundedrequiredreading leavesfreshcontextimplementationheadroom. No unresolvedconsequentialpolicyornewempiricalinquiry.
 
@@ -15,3 +15,7 @@ Preserved initialprompt; fullCDCinitialheldreview complete. OneconsolidatedACTUA
 ## Current assignment — iteration02
 
 Secondactual2of5/threeleft: exactrenderDOCphysicalblank deletion plus existingM4wholehelpBlackbackground/fourWhiteBoldheaders; allotherbytes/currentvalidatedliterals/mechanicsfrozen. Actual01format0/lint2docblank; targetedF1–F5reviewclosedexceptthese2. Capturedpair/holdthenoriginalfocused-firstgates; no runtime/source/policyexpansion.
+
+## Current assignment — iteration03 record-only
+
+Allcurrentproductproof/source85a80ca verifiedindependently; formalMR06recorddutypending. Thirdactual3of5/twoleft is ONLY appendtwoignoredCCreturnrecordswith6MRwalk/concreteinventory/threebubbleupanswers, preservingeveryfirstreturnbyte/validation/source/helper/index. No runtimeorcodeedits/reruns/sourcecommit. All9CDCgroupscompletewithknownparent95red; fullM7.7/D0042otheroriginalgatesOPEN.

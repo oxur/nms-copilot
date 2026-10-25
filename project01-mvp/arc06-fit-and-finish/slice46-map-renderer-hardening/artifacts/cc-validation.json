@@ -1,0 +1,918 @@
+{
+  "slice": "Project01 Arc06 Slice46 map renderer hardening",
+  "status": "CC proposed-done; CDC independent final acceptance and retrospective pending",
+  "refinements": {
+    "actual_after_initial": 2,
+    "available_after_initial": 5,
+    "remaining": 3
+  },
+  "source_checkout": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+  "branch": "codex/workspace-coverage-contract",
+  "baseline_head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+  "commit": "85a80ca1bf77e80f071c6036e6e187a214228dea",
+  "commit_parent": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+  "committed_paths": [
+    "crates/nms-copilot/src/map/render.rs",
+    "crates/nms-copilot/src/map/mod.rs"
+  ],
+  "clean_after_commit": true,
+  "index_empty": true,
+  "source_files": {
+    "crates/nms-copilot/src/map/render.rs": {
+      "bytes": 34919,
+      "sha256": "60feb0f5aecd01c14c54835d41caa0385ef54e30e8930bacae8e876cfe995dd5"
+    },
+    "crates/nms-copilot/src/map/mod.rs": {
+      "bytes": 3358,
+      "sha256": "f30791fad5b8f9c530a5d245786a9e7ce218d7606aaba6aa8de8a73ca683693b"
+    }
+  },
+  "commit_message": "Harden map renderer Unicode clipping and coverage",
+  "trailers": [
+    "Co-authored-by: Codex <noreply@openai.com>",
+    "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+  ],
+  "gates": [
+    {
+      "group": "G1",
+      "id": "e9335a88315b4f93943195d30fead0e3",
+      "result": "pass"
+    },
+    {
+      "group": "G2",
+      "id": "fdeb2001e68e4119aeafc7b48e051c2d",
+      "result": "pass"
+    },
+    {
+      "group": "G3",
+      "id": "774af4ab8c9048d791e43c012c216ce4",
+      "result": "pass",
+      "population": "5 passed; 0 failed; 0 ignored; 235 filtered"
+    },
+    {
+      "group": "G4",
+      "id": "2162ad98a3c14c7381fb471d09ebe110",
+      "result": "pass",
+      "native_host": true,
+      "tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "tmpdir_overridden": false,
+      "runtime": "40 invocations; 1107 passed; 0 failed; 0 ignored",
+      "doctests": "9 targets; 118 total; 91 executing; 27 compile-only"
+    },
+    {
+      "group": "G5a",
+      "id": "d1872f53e9804d70afaacbeb2c58df09",
+      "result": "pass",
+      "population": "5 passed; 0 failed; 0 ignored; 234 filtered"
+    },
+    {
+      "group": "G5b",
+      "id": "3fa952daf057499882a98dbd4a77be59",
+      "result": "pass",
+      "population": "28 passed; 0 failed; 0 ignored; existing render example included"
+    },
+    {
+      "group": "G6",
+      "id": "22527d3d347340d1b8c9a93a6be41a98",
+      "result": "pass",
+      "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+    },
+    {
+      "group": "G7",
+      "id": "b8e786e698804b54a5df05527fd762c3",
+      "result": "workspace threshold red; renderer floor passed",
+      "native_host": true,
+      "tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "tmpdir_overridden": false,
+      "offline": true
+    },
+    {
+      "group": "G8",
+      "id": "cb7914392d81481ab5cc0efb5eae3845",
+      "result": "pass",
+      "streams_empty": true
+    },
+    {
+      "group": "G9",
+      "id": "a5655481fd3e4cf092ed5e4bf9a9eb04",
+      "result": "pass",
+      "streams_empty": true
+    }
+  ],
+  "coverage": {
+    "raw_json": {
+      "path": "/private/tmp/nms-slice46-cc-workspace-coverage.json",
+      "bytes": 76829259,
+      "sha256": "e14c1f832510cc2cbe3e374660e93b1541095efcda9a99da1f70331b0465d3f3"
+    },
+    "lossless_gzip": {
+      "path": "/private/tmp/nms-slice46-cc-workspace-coverage.json.gz",
+      "bytes": 7439179,
+      "sha256": "608b872b1dacd42eb240af2ecc22b7ad199be14dd64933200a8ad64f65f4b7ff"
+    },
+    "workspace": {
+      "files": 72,
+      "lines": {
+        "covered": 23598,
+        "count": 25230,
+        "percent": 93.53151010701545
+      },
+      "functions": {
+        "covered": 2008,
+        "count": 2179,
+        "percent": 92.15236346948141
+      },
+      "instantiations": {
+        "covered": 2458,
+        "count": 3193,
+        "percent": 76.98089570936423
+      }
+    },
+    "renderer": {
+      "lines": {
+        "covered": 614,
+        "count": 617,
+        "percent": 99.51377633711506
+      },
+      "functions": {
+        "covered": 32,
+        "count": 32,
+        "percent": 100.0
+      },
+      "unique_production_function_positive_counts": {
+        "render": 15,
+        "render_map": 17,
+        "render_status": 15,
+        "render_legend": 15,
+        "render_help": 1,
+        "render_help::pad": 22,
+        "bin_systems": 16,
+        "voxel_to_cell": 68
+      },
+      "interpretation": "The JSON records lib/bin duplicates, including zero-count records; unique production functions each have a positive execution witness."
+    },
+    "below_90_line_files": [
+      {
+        "path": "crates/nms-cache/src/error.rs",
+        "covered": 18,
+        "count": 23,
+        "percent": 78.26086956521739
+      },
+      {
+        "path": "crates/nms-cli/src/find.rs",
+        "covered": 32,
+        "count": 36,
+        "percent": 88.88888888888889
+      },
+      {
+        "path": "crates/nms-cli/src/list.rs",
+        "covered": 118,
+        "count": 223,
+        "percent": 52.91479820627802
+      },
+      {
+        "path": "crates/nms-cli/src/route.rs",
+        "covered": 37,
+        "count": 48,
+        "percent": 77.08333333333334
+      },
+      {
+        "path": "crates/nms-cli/src/show.rs",
+        "covered": 14,
+        "count": 18,
+        "percent": 77.77777777777779
+      },
+      {
+        "path": "crates/nms-cli/src/stats.rs",
+        "covered": 18,
+        "count": 22,
+        "percent": 81.81818181818183
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "covered": 313,
+        "count": 572,
+        "percent": 54.72027972027972
+      },
+      {
+        "path": "crates/nms-copilot/src/main.rs",
+        "covered": 670,
+        "count": 897,
+        "percent": 74.69342251950948
+      },
+      {
+        "path": "crates/nms-copilot/src/map/input.rs",
+        "covered": 0,
+        "count": 37,
+        "percent": 0.0
+      },
+      {
+        "path": "crates/nms-copilot/src/map/mod.rs",
+        "covered": 0,
+        "count": 30,
+        "percent": 0.0
+      },
+      {
+        "path": "crates/nms-copilot/src/mcp/mod.rs",
+        "covered": 525,
+        "count": 775,
+        "percent": 67.74193548387096
+      },
+      {
+        "path": "crates/nms-copilot/src/mcp/tools.rs",
+        "covered": 1243,
+        "count": 1387,
+        "percent": 89.61788031723144
+      },
+      {
+        "path": "crates/nms-copilot/src/prompt.rs",
+        "covered": 110,
+        "count": 125,
+        "percent": 88.0
+      },
+      {
+        "path": "crates/nms-copilot/src/setup.rs",
+        "covered": 122,
+        "count": 259,
+        "percent": 47.1042471042471
+      },
+      {
+        "path": "crates/nms-save/src/lib.rs",
+        "covered": 29,
+        "count": 35,
+        "percent": 82.85714285714286
+      }
+    ],
+    "known_red": "Workspace line coverage 93.531510% is below requested 95%; do not claim parent M7.7 closure."
+  },
+  "capture_ledger": {
+    "path": "/private/tmp/nms-slice46-cc-attempts.json",
+    "attempts": [
+      {
+        "id": "7d3348d9bd2b4db3b89ee72b866fe5f7",
+        "label": "support raw-channel control 7",
+        "kind": "support only; no product credit",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-c",
+          "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(7)"
+        ],
+        "exit_code": 7,
+        "stdout": {
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "c452a708829f4e22bdef1f9b673ad606",
+        "label": "support raw-channel control 0",
+        "kind": "support only; no product credit",
+        "status": "complete",
+        "argv": [
+          "python3",
+          "-c",
+          "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(0)"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": "",
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "55e894df1a8f463d8bcad7c353f2d99c",
+        "label": "G1 make format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 107,
+          "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "056b493f93e50d59245ee6292078b387716f2087eee065b2f987c88ca75a0124",
+          "working_identity_sha256": "c56ce6ab60623bfc8faa8b53f6b753e86b922d786f96bcff5d9b4ba6f6942a04"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+          "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "e2812d61a31e4162871628503427d232",
+        "label": "G2 make lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "exit_code": 2,
+        "stdout": {
+          "bytes": 69,
+          "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+        },
+        "stderr": {
+          "bytes": 12321,
+          "sha256": "44bcc56ab8395e8bd6c35d5d8d320f4472bd7edf5bba44bf9d0e056a1542365c"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+          "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "34c9fd8d3e6bf7b5dbe738e99696ccd2be322094b4bc5a90b13bb6599a48c3a3",
+          "working_identity_sha256": "8491a183feb45218545e57ee0e4b200bcf016833703de9368febe8a5f3d7520e"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "a574e479320248538d12264b77959970",
+        "label": "iteration01 G1 make format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 107,
+          "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "eb82bc1366d4ba5d77fac0a35a2abcb0ce99346ac79f27985c67184b12552426",
+          "working_identity_sha256": "c5adba0556ab5529feecac692a1a9f8a4125a24fd7089934a0877d591206bef7"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "47e9ab541309f0af4f579a5a7976b0da3eacc501ae813fad87cc1913c3259843",
+          "working_identity_sha256": "0507200b1bc75d27d2966ebfac0075b29326d4af31e6b0ad81d8b5e3a7126290"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "eb3c9adb9d8c43c999db9f28320a563d",
+        "label": "iteration01 G2 make lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "exit_code": 2,
+        "stdout": {
+          "bytes": 69,
+          "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+        },
+        "stderr": {
+          "bytes": 983,
+          "sha256": "97df1608162f9e53041656906e980ea4b0eb6087940cb77a5d6bfeabbc55016d"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "47e9ab541309f0af4f579a5a7976b0da3eacc501ae813fad87cc1913c3259843",
+          "working_identity_sha256": "0507200b1bc75d27d2966ebfac0075b29326d4af31e6b0ad81d8b5e3a7126290"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "47e9ab541309f0af4f579a5a7976b0da3eacc501ae813fad87cc1913c3259843",
+          "working_identity_sha256": "0507200b1bc75d27d2966ebfac0075b29326d4af31e6b0ad81d8b5e3a7126290"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "e9335a88315b4f93943195d30fead0e3",
+        "label": "iteration02 G1 make format",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "format"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 107,
+          "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "366b4aa298b85c902052bcebab21e46542e9a8ec5a22673445a15556c0406f0e",
+          "working_identity_sha256": "16844c45d22ba1a0274af1338092af03f7aef790a13a96227ec4af71808bcb0a"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "fdeb2001e68e4119aeafc7b48e051c2d",
+        "label": "iteration02 G2 make lint",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "lint"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 176,
+          "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+        },
+        "stderr": {
+          "bytes": 456,
+          "sha256": "ecd78710a804f138cb8d0c6c28c767a01fdfcf8816e2bf1eeaa696e41a26c09c"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "774af4ab8c9048d791e43c012c216ce4",
+        "label": "G3 focused map renderer tests all-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--lib",
+          "map::render::tests",
+          "--all-features",
+          "--offline"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 565,
+          "sha256": "3a4241ea61f3111286b0437bab4f5155d155d82669cf60d68587185343b8c10e"
+        },
+        "stderr": {
+          "bytes": 11219,
+          "sha256": "afd33fb83de87e528d33ee8f308688a18db4510d303849fd74198fdab7da07d4"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "2162ad98a3c14c7381fb471d09ebe110",
+        "label": "G4 make test native-host original-TMPDIR",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "make",
+          "test"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 89213,
+          "sha256": "27ba2ed78054eca6cb384114a8b311489ce0426ffbf7b430b69486e7e023e887"
+        },
+        "stderr": {
+          "bytes": 5579,
+          "sha256": "01aed7632fd85f54bfd936e600e3b8ce7fd2aada7e4c6285f359e0498acf307d"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "d1872f53e9804d70afaacbeb2c58df09",
+        "label": "G5a renderer tests no-default-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--lib",
+          "map::render::tests",
+          "--no-default-features",
+          "--offline"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 565,
+          "sha256": "706692c23e4a4adce65998ceade656c72a10263ba002b98aae61766634ab5b50"
+        },
+        "stderr": {
+          "bytes": 1575,
+          "sha256": "d9733d940eae0052593de7c1cbb96c56b168c79e5e1c5489a441317a052589b6"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "3fa952daf057499882a98dbd4a77be59",
+        "label": "G5b nms-copilot doctests no-default-features",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "test",
+          "-p",
+          "nms-copilot",
+          "--doc",
+          "--no-default-features",
+          "--offline"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 2498,
+          "sha256": "1834f5bb8b6e120b9912615884ed48005bbe9f7a6033f45ea87b61d21a7462aa"
+        },
+        "stderr": {
+          "bytes": 482,
+          "sha256": "c7539a5596bc3e672f84fb9d2311a50ff5664d58185c5d324f1d9d76f3eade46"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "22527d3d347340d1b8c9a93a6be41a98",
+        "label": "G6 strict all-features library documentation",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "doc",
+          "-p",
+          "nms-copilot",
+          "--lib",
+          "--all-features",
+          "--no-deps",
+          "--offline"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 1696,
+          "sha256": "437a5a6a05b07aa1eac7b729c7ef8c8a83d2488131b9598c2ab2e08c495cf713"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true",
+          "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+        }
+      },
+      {
+        "id": "b8e786e698804b54a5df05527fd762c3",
+        "label": "G7 full-workspace all-features coverage native-host original-TMPDIR",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "cargo",
+          "llvm-cov",
+          "--workspace",
+          "--all-features",
+          "--offline",
+          "--json",
+          "--output-path",
+          "/private/tmp/nms-slice46-cc-workspace-coverage.json",
+          "--fail-under-lines",
+          "95"
+        ],
+        "exit_code": 1,
+        "stdout": {
+          "bytes": 77867,
+          "sha256": "5d9a67725e932740505dec6fd76c16096d87c53988499e2cdbe8c2caf59daf2e"
+        },
+        "stderr": {
+          "bytes": 6166,
+          "sha256": "26efbb62f8ede6851829b13e24c64d03e4e477c6381e8263b3cd481e9b261d16"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {
+          "CARGO_NET_OFFLINE": "true"
+        }
+      },
+      {
+        "id": "cb7914392d81481ab5cc0efb5eae3845",
+        "label": "G8 working-tree git diff check",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      },
+      {
+        "id": "a5655481fd3e4cf092ed5e4bf9a9eb04",
+        "label": "G9 baseline git diff check",
+        "kind": "SUT gate",
+        "status": "complete",
+        "argv": [
+          "git",
+          "diff",
+          "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "after": {
+          "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+          "status": " M crates/nms-copilot/src/map/mod.rs\n M crates/nms-copilot/src/map/render.rs\n",
+          "working_diff_sha256": "553f1d421b6b88c1b96fb1f36791a52c77ecbdb3f2977104d8585d31ad41a5c0",
+          "working_identity_sha256": "c27cdc62f37ceb8df00ac798c6e230f85e2fbce8f50572945c23730c4446bfbd"
+        },
+        "inherited_env": {
+          "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+          "CARGO_NET_OFFLINE": null,
+          "RUSTDOCFLAGS": null
+        },
+        "overrides": {}
+      }
+    ]
+  },
+  "protected_main": {
+    "head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+    "status": " M crates/nms-copilot/tests/mcp_live_integration.rs",
+    "index_empty": true,
+    "protected_oid": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e"
+  },
+  "scope": {
+    "only_committed_paths": [
+      "crates/nms-copilot/src/map/render.rs",
+      "crates/nms-copilot/src/map/mod.rs"
+    ],
+    "open_owners": [
+      "map/input.rs and map/mod.rs input/terminal ownership; full terminal lifecycle",
+      "full Project01 Arc06 M7.7 and D0042",
+      "15 files below 90% line coverage and parent workspace threshold"
+    ]
+  },
+  "artifact_process": "No owned background process remains; all captured commands completed."
+}

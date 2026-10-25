@@ -1,6 +1,6 @@
 # Slice46 acceptance ledger
 
-SixOPEN/twoACTUALrefinementsissued(2of5). FullM7.7/D0042 remainOPEN.
+SixOPEN/threeACTUALrefinementsissued(3of5). FullM7.7/D0042 remainOPEN.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
@@ -14,3 +14,5 @@ SixOPEN/twoACTUALrefinementsissued(2of5). FullM7.7/D0042 remainOPEN.
 Currentiteration01F1–F5 repairs MR01–04proof/docs gaps plus MR05lintred; MR01–06allremainOPEN/no runtimeclaim. Initialsourcefullreview/executablemechanicsmatchesdesign; currentproductionbodyfreezeexplicit.
 
 Currentiteration02exacttwocorrections; allsixMRremainOPEN/runtimeunreleased; threeactualrefinementsremainafterthis.
+
+Currentiteration03record-only; product/source/coverageproofindependentlycomplete, MR06attributableCCrecordappendthenformalCDCclosurepending. No retest/codewaiver.
