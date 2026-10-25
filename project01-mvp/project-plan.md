@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.139
+version: 1.140
 project: project01-mvp
 status: active
 depends-on: []
@@ -1360,3 +1360,7 @@ All6IR/R06-S47 DONE at isolatedclean3e8dd6b426d024adb9318497db49a35281b419cb: ex
 ## Slice48 guard / required49 native map composition — 2026-10-25UTC
 
 OriginalD0042/M7.7 nextboundedsourceowner48: exactonefile map/mod.rs/privateownedguard/commoncontrolorchestration, compensatepartialsetup/attemptallcleanup/Dropordinaryunwind. Preservepublicsignature/inputtiming/key/render/state/loop/example and legacysetup-primary/firstcleanup-before-body errorprecedence. Fourcomplete literaltrace/error/owner/unwindtestgroups, capturedpair/heldreview/nineoriginalgroups/freshsameapprovedLunaHigh+CDC6.1-solHigh/mandatoryretro. Sourceclean3e8dd6b/current95parentRED93.736577%/14below90. Explicitrequired49 ownsactualisolatednativePTY/navigation/zoom/help/resize/exit/restoration/realadapter-entry-loop/modulefloor/fullD0042reconciliation;48injectedproofisnotphysicalterminalproof. No newterminaldependency/realuserterminalinteraction/acceptanceexception/inquiry/policychange.66arc53done13open/project25OPEN; alloriginal95/module90/hostedCI/non-doc/input/higherOperatorgatesOPEN. No integration/maincleanup/release. [Issued48prompt](arc06-fit-and-finish/slice48-map-terminal-guard/cc-prompt.md).
+
+## Slice48 guard independently accepted — 2026-10-25UTC
+
+Version1.140 closes all6TG/R06-S48 on isolated cleanfb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc: exactone map/mod.rs ownedpartial-setup/all-cleanup/ordinary-unwind guard preserves public API/loop/example/key/time/errorprecedence; FOUR literal fulltrace/error/owner tests. Originalnine fresh independentgroups complete1118runtime+118docs(91execute27compile)/fourfocusedbothfeaturemodes/28separatenodefaultdocs/strict+diffs0,95parentRED24213/25836=93.718068%/mod208/257=80.933852%/14below90. All14CC+12CDC/exactreturns/currentlosslessreports/oneactualrefinement/recordreplacement+exactretainedoriginalreceipt/retrospective preserved, no exception. Required49 actualisolatednativePTY/realadapter/publicentry/frame-loop/modulefloor/fullD0042 reconciliation remainsready nextowner under standingauthority; fullM7.7/95/hostedCI/alloriginalhigher/input/Operatorgates OPEN. Unchangedmainmodalreadguard is source-derived laterR06-R03/C04 concern, not a watched-mapruntime claim or48repair.66arc54done12open/project25OPEN. No maincleanup/integration/release. [Acceptance](arc06-fit-and-finish/slice48-map-terminal-guard/cdc-verification.md), [retrospective](arc06-fit-and-finish/slice48-map-terminal-guard/cdc-retrospective.md).

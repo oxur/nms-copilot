@@ -1,0 +1,103 @@
+{
+  "slice": "Project01 Arc06 Slice48",
+  "status": "CC proposed evidence; CDC acceptance pending",
+  "source": {
+    "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+    "branch": "codex/workspace-coverage-contract",
+    "parent": "3e8dd6b426d024adb9318497db49a35281b419cb",
+    "path": "crates/nms-copilot/src/map/mod.rs",
+    "blob": "d019e92657db8dfeb33a0e565dade82897362dff",
+    "precommit_tracked_status": "M crates/nms-copilot/src/map/mod.rs",
+    "index_empty": true,
+    "untracked_files": []
+  },
+  "final_commit": {
+    "sha": "fb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc",
+    "parent": "3e8dd6b426d024adb9318497db49a35281b419cb",
+    "changed_paths": ["crates/nms-copilot/src/map/mod.rs"],
+    "source_blob": "d019e92657db8dfeb33a0e565dade82897362dff",
+    "source_status_clean": true,
+    "index_empty": true,
+    "raw_commit_body_matches_prepared_message": true,
+    "message_bytes": 224
+  },
+  "refinements": {
+    "actual_after_initial": 1,
+    "available_after_initial": 5,
+    "iteration01": "three test-only bare-operation error-identity corrections; CDC accepted"
+  },
+  "captures": {
+    "registry": "/private/tmp/nms-slice48-cc-attempts.json",
+    "gates": [
+      {"group": "1", "label": "make format", "id": "d40186377cbb42da82cb930b0b242677", "exit": 0},
+      {"group": "2", "label": "make lint", "id": "1b50df1238e6490288ca5b6f99ff6f28", "exit": 0},
+      {"group": "3", "label": "focused map tests all features", "id": "fc6964466298455fa5d3538b7da4c9de", "exit": 0, "passed": 4, "failed": 0, "ignored": 0},
+      {"group": "4", "label": "native-host make test", "id": "9a2422a18012439f929a8c7046e2d3ce", "exit": 0, "runtime_targets": 40, "runtime_passed": 1118, "runtime_failed": 0, "runtime_ignored": 0, "doctest_crates": 9, "doctests_passed": 118, "doctests_failed": 0, "doctests_ignored": 0, "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"},
+      {"group": "5a", "label": "focused map tests no default features", "id": "2c7cd063f73040d69281765e83ab5d20", "exit": 0, "passed": 4, "failed": 0, "ignored": 0},
+      {"group": "5b", "label": "copilot doctests no default features", "id": "5789016b3ce24caf8917d1af8cb9d730", "exit": 0, "passed": 28, "failed": 0, "ignored": 0},
+      {"group": "6", "label": "strict rustdoc", "id": "6fd1c677a77044cabd7d686e806b88ba", "exit": 0, "RUSTDOCFLAGS": "-D warnings -D missing_docs", "generated_doc_inspected": true},
+      {"group": "7", "label": "native-host workspace llvm-cov with fail-under-lines 95", "id": "9a7af5aa405c4f61962a900d4beacb8e", "exit": 1, "result": "configured 95 percent threshold not met; measured lines 93.71806781235486 percent", "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/"},
+      {"group": "8", "label": "git diff --check", "id": "4a4a6fbed7d744afbf4b6178b0b0c367", "exit": 0},
+      {"group": "9", "label": "git diff baseline --check", "id": "af31b0119d85465d82c1e80e1fc79a0f", "exit": 0}
+    ]
+  },
+  "coverage": {
+    "json_version": "3.1.0",
+    "cargo_llvm_cov_version": "0.6.21",
+    "files": 72,
+    "totals": {
+      "lines": {"covered": 24213, "count": 25836, "percent": 93.71806781235486},
+      "functions": {"covered": 2052, "count": 2232, "percent": 91.93548387096774},
+      "instantiations": {"covered": 2508, "count": 3264, "percent": 76.83823529411765},
+      "regions": {"covered": 38893, "count": 41627, "percent": 93.43214740432892},
+      "branches": "not measured",
+      "mcdc": "not measured"
+    },
+    "map_files": {
+      "input.rs": {"covered": 407, "count": 416},
+      "mod.rs": {"covered": 208, "count": 257, "percent": 80.93385214007782, "functions_covered": 22, "functions": 33},
+      "render.rs": {"covered": 614, "count": 617},
+      "state.rs": {"covered": 373, "count": 386}
+    },
+    "below_90_percent_lines": [
+      {"file": "nms-cache/src/error.rs", "covered": 18, "count": 23},
+      {"file": "nms-cli/src/find.rs", "covered": 32, "count": 36},
+      {"file": "nms-cli/src/list.rs", "covered": 118, "count": 223},
+      {"file": "nms-cli/src/route.rs", "covered": 37, "count": 48},
+      {"file": "nms-cli/src/show.rs", "covered": 14, "count": 18},
+      {"file": "nms-cli/src/stats.rs", "covered": 18, "count": 22},
+      {"file": "nms-copilot/src/dispatch.rs", "covered": 313, "count": 572},
+      {"file": "nms-copilot/src/main.rs", "covered": 670, "count": 897},
+      {"file": "nms-copilot/src/map/mod.rs", "covered": 208, "count": 257},
+      {"file": "nms-copilot/src/mcp/mod.rs", "covered": 525, "count": 775},
+      {"file": "nms-copilot/src/mcp/tools.rs", "covered": 1243, "count": 1387},
+      {"file": "nms-copilot/src/prompt.rs", "covered": 110, "count": 125},
+      {"file": "nms-copilot/src/setup.rs", "covered": 122, "count": 259},
+      {"file": "nms-save/src/lib.rs", "covered": 29, "count": 35}
+    ],
+    "raw_json": {"path": "/private/tmp/nms-slice48-cc-workspace-coverage.json", "bytes": 76918495, "sha256": "58f39106e3ece4876f02d6ad28d1277009fc6b3279ba38305389e27a34af56bd"},
+    "lossless_gzip": {"path": "/private/tmp/nms-slice48-cc-workspace-coverage.json.gz", "bytes": 7456668, "sha256": "d1f83f87d3a4fc57dddc3d257d51fc703bad1ce304f116d3bb8e6b5c746eb6b3"},
+    "production_function_counts": {
+      "run_map": 0,
+      "run_map_loop": 0,
+      "CrosstermControl methods": 0,
+      "TerminalGuard<CrosstermControl> enter_restore_drop": 0,
+      "with_terminal_control<CrosstermControl>": 0
+    },
+    "injected_witnesses": {
+      "each_of_four_tests": 1,
+      "MockControl::operation": 136,
+      "TerminalGuard<MockControl>::enter": 25,
+      "TerminalGuard<MockControl>::restore": 42,
+      "TerminalGuard<MockControl>::Drop": 25,
+      "with_terminal_control<MockControl> closure instantiations": [1, 6, 16, 2]
+    },
+    "limits": ["95 percent workspace threshold remains red", "module floor and real adapter/public entry/loop remain Slice49 or higher-scale work", "coverage does not establish physical terminal restoration", "full D0042/M7.7 and hosted CI remain open"]
+  },
+  "main_checkout_pin": {
+    "head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+    "protected_status_only": "M crates/nms-copilot/tests/mcp_live_integration.rs",
+    "index_empty": true,
+    "native_oid": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e"
+  }
+}

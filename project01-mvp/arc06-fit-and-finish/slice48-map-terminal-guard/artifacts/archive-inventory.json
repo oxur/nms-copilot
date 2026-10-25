@@ -1,0 +1,81 @@
+{
+  "observed_utc": "2026-10-25T18:47:22.327620+00:00",
+  "scope": "Actual current support bytes; firstclass authorities excluded. Original CC returns and actual original intake tool receipt preserved.",
+  "files": [
+    {
+      "path": "before-iteration01-mod.rs",
+      "bytes": 15686,
+      "sha256": "a16cc6eb172b113b03e2c4e2a20e7d9d87368146df893159e7169f039feb8e8c"
+    },
+    {
+      "path": "before-mod.rs",
+      "bytes": 3358,
+      "sha256": "f30791fad5b8f9c530a5d245786a9e7ce218d7606aaba6aa8de8a73ca683693b"
+    },
+    {
+      "path": "cc-attempts.json",
+      "bytes": 306448,
+      "sha256": "4e3879a03459a04c15489c26b5500f3d3e437e97d2c2882cd8e3ac9325fdc445"
+    },
+    {
+      "path": "cc-capture.py",
+      "bytes": 3815,
+      "sha256": "9ca2e4a39dc5e2e221fb4a8e6f36196178a642bdade0c3ac63f46fdf3009c246"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 6423,
+      "sha256": "4da8d66af743f84b529ac93135b0a2fbb9cb25cd0e33933c32abccbd3694d783"
+    },
+    {
+      "path": "cc-execution.md",
+      "bytes": 21155,
+      "sha256": "182f1ac6b72daf1eceb3be83702718cee531a7b5e8801bf6c247363de3e1853c"
+    },
+    {
+      "path": "cc-original-intake-receipt.json",
+      "bytes": 27197,
+      "sha256": "f12324283ff1d62960b1c91d8692a18bf376033808682371d52a10b4b54a6403"
+    },
+    {
+      "path": "cc-source-message.txt",
+      "bytes": 224,
+      "sha256": "45c824c5842356a427563542cb3c8d3a002231a53b596347bd513c7513cbf1ac"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 6293,
+      "sha256": "bf422af6dd6d837cbb5fb27394521ac652d071942b0cdf2f9907e43ce3075486"
+    },
+    {
+      "path": "cc-workspace-coverage.json.gz",
+      "bytes": 7456668,
+      "sha256": "d1f83f87d3a4fc57dddc3d257d51fc703bad1ce304f116d3bb8e6b5c746eb6b3"
+    },
+    {
+      "path": "cdc-attempts.json",
+      "bytes": 295656,
+      "sha256": "804d10bfdb7395a9d37a0f31421c48f3eaca0952975971154cd0cad189b825ad"
+    },
+    {
+      "path": "cdc-capture.py",
+      "bytes": 3817,
+      "sha256": "0f78d9e526cf330b58a73f314f7c4af467774a56579441af930a67282ba07c68"
+    },
+    {
+      "path": "cdc-workspace-coverage.json.gz",
+      "bytes": 7456591,
+      "sha256": "fc66ecd087a0972e3b3bb6d5d13c17e0d1691420a6f345da112b45f6b13ad397"
+    },
+    {
+      "path": "closing-worktrees.json",
+      "bytes": 12080,
+      "sha256": "3e70b368c949c18d8cc9d612f9ec6c0420d5dc91e964113b5e3bd3b4c668eb8a"
+    },
+    {
+      "path": "issued-worktrees.json",
+      "bytes": 11084,
+      "sha256": "11d3a7ffb32d2dd49598e94666f46cd6d306216b453b2b97cd338039d78f1b56"
+    }
+  ]
+}

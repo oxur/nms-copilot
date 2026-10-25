@@ -494,6 +494,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S48 | Map-owned guard compensates partial setup, attempts all restoration and handles ordinary unwinding | SixTG/L1–L4/ninegroups/independentproof | correctness-grade | OriginalD0042/M7.7 terminal lifetime gap | open | — | Required49actualnative/modulefloor/fullD0042/95CI/parentgates remainOPEN |
+| R06-S48 | Map-owned guard compensates partial setup, attempts all restoration and handles ordinary unwinding | SixTG/L1–L4/ninegroups/independentproof | correctness-grade | OriginalD0042/M7.7 terminal lifetime gap | done | [CDC48 acceptance](slice48-map-terminal-guard/cdc-verification.md) — reproduced | Required49actualnative/modulefloor/fullD0042/95CI/parentgates remainOPEN |
 
 66arc53done13open/project25OPEN/initialzeroACTUALrefinements/noimplementationoracceptanceatissue.
+
+2026-10-25formal48close: all6TG/R06-S48DONE/oneactualrefinement/noexception;66arc54done12open/project25OPEN. Current95parentRED93.718068%/mod208of257/14below90/fullM7.7,D0042/49nativeadapter/modulefloor/CI/allhigherownersOPEN.
