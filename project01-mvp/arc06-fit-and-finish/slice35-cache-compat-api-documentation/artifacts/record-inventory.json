@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-10-25",
+  "scope": "Actual support artifacts, excluding first-class prompts/reports and selfinventory. Exact CC return contains flattened raw fields plus attestation; original raw object/file retained separately for original capture identity.",
+  "files": [
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 7818,
+      "sha256": "c2ba6c241bfb92d7cc0b0d0c0c652fd1885cb828137c67c126b573c21a561e1e"
+    },
+    {
+      "path": "artifacts/cc-attempts.json",
+      "bytes": 95260,
+      "sha256": "ecd49f76df3aee2614073d24b1554055f5c6d9414ad3186292dd2ebce2fa9108"
+    },
+    {
+      "path": "artifacts/cc-execution.md",
+      "bytes": 26347,
+      "sha256": "65281e197a3a7d447aa838e2e7e7bb4c131f61dee762c43ace15b46e4e59e2ab"
+    },
+    {
+      "path": "artifacts/cc-validation.json",
+      "bytes": 98569,
+      "sha256": "2ff903bee8f9fb2a07c7a3bf66224b22a97290f455eb2dc97e4a674064cd2077"
+    },
+    {
+      "path": "artifacts/cdc-attempts.json",
+      "bytes": 36550,
+      "sha256": "9f87675a9a77a3ae898c0f483ce59337f4dd2dff436bf950e381034e2538b550"
+    },
+    {
+      "path": "artifacts/initial-held.patch",
+      "bytes": 31280,
+      "sha256": "24bbf597f0540ccdbd28e403e4df91c8788ca25a12e28c299edca5a720462907"
+    },
+    {
+      "path": "artifacts/nms-slice35-cc-capture.py",
+      "bytes": 3754,
+      "sha256": "d952b8ea6fcbda17f20279dacefde4740775b4c220f014429234fd3f2c547ffd"
+    },
+    {
+      "path": "artifacts/nms-slice35-cdc-capture.py",
+      "bytes": 3757,
+      "sha256": "aade967762a2bd54279def21e57b252d5db7adf6309d696afbbc71e46bd0eaa0"
+    },
+    {
+      "path": "artifacts/nms-slice35-scope-audit.py",
+      "bytes": 2604,
+      "sha256": "f81aa948dd13fef7f0a1b84e44d5a33221c54456a0ec065c967c61ccdab70063"
+    }
+  ]
+}

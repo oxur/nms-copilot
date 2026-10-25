@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.125, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.126, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1059,3 +1059,7 @@ Version1.124 closes all6WD/R06-S34 at clean65ac646db635aa97030c8a21fc46aa8d93f0e
 ## Slice35 cache/compat API owner issued — 2026-10-25 UTC
 
 Version1.125 details [Slice35](slice35-cache-compat-api-documentation/slice-plan.md): complete sevenfile cache/compat public docs/keycodec-rebuild-error/heuristictypedpassthrough examples, eight exact payloadlayouts, no executable/API/test/dependencychange. Dedicatedcodex/cache-compat-api-documentation cleanaccepted65ac; sameCDC6.1-solHigh/soleCC6-lunaHigh with qualitativeheadroom/noactiveprocessconfirmed. Complete W1–W3/E1–E3 grounded beforeinitialprompt. No authenticNomNomformat proof fromsyntheticexamples; M7.5input remainsOPEN. Required36applicationAPIs/full0039 reconciliation staysCDC,furtherboundedsplitsallowed. Sevenoriginalgroups/rawfirstsupportpreflight/independentacceptance/retro retained. Initial0actualrefinements/no productimplementationatissue.53arc39done14open/project25open; alloriginal/highergates unchanged.
+
+## Slice35 formal close — 2026-10-25 UTC
+
+Version1.126 closes all6KC/R06-S35 at48b6bd790f7120f39638b8f55e430d8b52d707c3: complete sevenfile cache/compat publicdocs/sixactualchangedpaths. Seven independent groups/57runtime+8docs(5execute/3compile)/strictbothzero/preservation8layouts/opposed/diffs accepted. Oneactualrefinement/15CC+7CDC exactrecords/retainedfailures/reportqualifications/finalretro. No structural/scope/sequence amendment/waiver. Required **Slice36** remainingapplicationAPIs/full0039reconciliation remainsCDC(furtherusabledecompositionallowed), not a countof36APIs; M7.5authenticinput and alloriginal/higherowners retained.53arc40done13open/project25allOPEN.

@@ -364,6 +364,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S35 | Complete truthful cache/compat public documentation and key fallible examples | SixKC/full7fileworksheet/strictbothdocs/tests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | open | [Slice35 plan](slice35-cache-compat-api-documentation/slice-plan.md) | FullM7.6/required36applicationAPIs/fullreconciliation/M7.5input/allhigherowners retained |
+| R06-S35 | Complete truthful cache/compat public documentation and key fallible examples | SixKC/full7fileworksheet/strictbothdocs/tests/preservation | correctness-grade | Original0039 M7.6 next bounded API increment | done | [CDC35 acceptance](slice35-cache-compat-api-documentation/cdc-verification.md) — reproduced | FullM7.6/required36applicationAPIs/fullreconciliation/M7.5input/allhigherowners retained |
 
 53arc39done14open/project25open; no sourceimplementation/acceptanceatissue.
+
+2026-10-25 formal35close: all6KC/R06-S35DONE at48b6bd79, sevenindependentgroups/57runtime+8docs(5execute/3compile)/strictbothzero/preservationopposed/diffs.53arc40done13open/project25open; fullM7.6/requiredSlice36/allhigherowners retained.
