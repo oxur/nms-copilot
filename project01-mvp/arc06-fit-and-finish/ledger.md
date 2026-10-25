@@ -419,3 +419,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 58arcrows44done14open/project25OPEN; initial0actualrefinements/no implementation or acceptance at issue.
 
 2026-10-25 formal40close: all6MP/R06-S40DONE;58arcrows45done13open/all25projectrowsOPEN. Prior issue counts retained historically; required41/fullM7.6/alloriginalhigherowners OPEN.
+
+## Original M7.6 banner/setup and root navigation owner — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S41 | Complete truthful banner/setup/root public docs/keyexamples | SixBS/W1–W4/E1–E5/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued41](slice41-banner-setup-api-documentation/slice-plan.md) | Required42 CLI/fullM7.6/allhigherowners OPEN |
+
+59arc45done14open/project25OPEN; initialzeroactualrefinements/no implementation or acceptance at issue.

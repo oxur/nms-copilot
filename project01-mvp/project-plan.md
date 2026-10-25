@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.123
+version: 1.124
 project: project01-mvp
 status: active
 depends-on: []
@@ -1294,3 +1294,7 @@ Version1.122/arc1.135 issues complete4mapfiledocs/keyliteralexamples/strictzero/
 ## Arc06 Slice40 map API documentation accepted — 2026-10-25 UTC
 
 Version1.123/arc1.136 records all6MP/R06-S40accepted atcleanfff40ed2, nineindependentgroups/235runtime+25allfeaturedocs+21no-defaultdocs/actualstrictzero/fourorderednon-doc/opposedextent/diffs/finalretro.58arc45done13open/all25projectrowsOPEN. Twoactualrefinements/noexception, full16CC+13CDCrawhistory/exactreturns preserved. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6reconciliation and authenticNomNominput/alloriginalhigherowners remainOPEN, no cleanup/integration/release.
+
+## Arc06 Slice41 banner/setup and root navigation owner — 2026-10-25 UTC
+
+Version1.124/arc1.137 issues complete four-file banner/setup/copilotroot/umbrella docs/keyliteral/no_run examples from acceptedfff40ed2, sixBS/R06-S41OPEN.59arc45done14open/all25projectrowsOPEN. Exact non-doc/API/tests/deps/layout freeze; actual limitedscanner/wizardexplicitcaller/configeffects truthful, no product repair. FreshsameapprovedCC planned for qualitativeheadroom/noextra reviewer; ninegroups/rawfirst/independentacceptance/retro required. Required42CLI/fullpublicsurface/full0039M7.6 and alloriginalhigherowners/authenticinput remainOPEN, no cleanup/integration/release.

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.136, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.137, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -33,6 +33,8 @@ All ledger rows dispositioned; independently reproduced capability demonstration
 Two contributors by default: this context prepares/designs; a fresh CC performs bounded assignments; CDC independently reviews work it did not implement. Higher-scale assembly still needs a separate composition verifier and Operator acceptance. Expedited Mode is active from the user's 2026-10-03 instruction: commit named files promptly, then close/advance when evidence permits. It never waives independent review or scope gates.
 
 ## Version history
+
+- 1.137 (2026-10-25): Detail Slice41 four-file banner/setup/root navigation usable increment from accepted40; required42 CLI/fullM7.6 remains explicit. Routine approved decomposition, no feature/policy/scope reduction.
 
 - 1.136 (2026-10-25): Slice40 map documentation independently accepted at fff40ed2/all6MP; routine close/bubble-up, no scope/structural/sequence amendment. Required41/fullM7.6 and all higher owners remain open.
 
@@ -1105,3 +1107,7 @@ Version1.135 details [Slice40](slice40-map-api-documentation/slice-plan.md), com
 ## Slice40 map documentation accepted — 2026-10-25 UTC
 
 Version1.136 closes all6MP/R06-S40 at cleanfff40ed23c02184e70f175cc3fc2dc687862ec34: complete four-file map API docs/keyliteralexamples. Nine fresh independent groups pass235runtime+25allfeaturedocs(18execute7compile-only)+21no-defaultdocs(16execute5compile-only), actualstrictzero/fourorderednon-doc/opposedextent/diffs. Two actual refinements/all16CC+13CDCrawvalues/exactreturns/strictred/authorreviewmisses/finalretro retained; no exception or structural/scope/sequence amendment. Required41banner/setup/root/CLI/umbrella/fullpublicsurface/full0039M7.6 reconciliation remainsCDC/furtherusabledecompositionallowed.58arcrows45done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC40acceptance](slice40-map-api-documentation/cdc-verification.md) and [retrospective](slice40-map-api-documentation/cdc-retrospective.md).
+
+## Slice41 banner/setup and root navigation owner issued — 2026-10-25 UTC
+
+Version1.137 details [Slice41](slice41-banner-setup-api-documentation/slice-plan.md), four-file banner/setup/copilot-root/umbrella Rustdoc/keyliteralexamples from acceptedfff40ed2, pure doc/blank changes only/all non-doc frozen. Fresh SAMEapprovedCC6-lunaHigh planned after40 qualitativeheadroom recommendation; CDC6.1-solHigh unchanged. W1–W4 actual scanner/padding/wizardcaller/config/errors/navigation and E1–E5 wholeliteral/no_run boundaries resolved; no host wizard or runtime repair. Nine original groups/strictzero bothlibraries/exactfourfile/opposed/independentacceptance/retro; supportcontrols only at issue. SixBS/R06-S41OPEN/initialzeroactualrefinements. Required42 CLI namespace/navigation/fullpublicsurface/full0039M7.6 reconciliation staysCDC/furtherbounded split permitted.59arc45done14open/project25OPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release.
