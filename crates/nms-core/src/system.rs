@@ -1,3 +1,28 @@
+//! Galaxy-qualified system identities and the system/planet model.
+//!
+//! [SystemId] identifies a system by galaxy and planet-zeroed coordinates.
+//! [System] and [Planet] are caller-provided model values: their constructors
+//! copy fields and do not enforce all game-domain bounds.
+//!
+//! # Examples
+//!
+//! ```
+//! use nms_core::{DiscoverySource, GalacticAddress, Planet, System, SystemId};
+//!
+//! let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
+//! let id = SystemId::from_address(&address);
+//! let planet = Planet::new(2, None, None, false, Some("Aster".into()), None);
+//! let mut system = System::new(address, Some("Example".into()), None, None, vec![planet]);
+//! assert_eq!(id.reality_index(), 9);
+//! assert_eq!(id.system_address(), 0x0001_0000_0003);
+//! assert_eq!(id.to_string(), "9:000100000003");
+//! let same_packed_in_euclid = SystemId::from_address(&GalacticAddress::new(3, 0, 0, 1, 2, 0));
+//! assert_ne!(id, same_packed_in_euclid);
+//! assert_eq!(system.source, DiscoverySource::Personal);
+//! system.source = DiscoverySource::Community { source: "local catalog".into() };
+//! assert_eq!(system.reality_index(), 9);
+//! ```
+
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -16,7 +41,10 @@ pub enum DiscoverySource {
     /// A system extracted from the player's own save or constructed locally.
     Personal,
     /// A system contributed by a named community catalog.
-    Community { source: String },
+    Community {
+        /// Exact catalog label for the contribution source.
+        source: String,
+    },
 }
 
 /// Identifies a star system by galaxy and its canonical planet-zeroed address.
@@ -26,6 +54,9 @@ pub enum DiscoverySource {
 /// never packed into portal-coordinate bits. Serde uses an object with numeric
 /// `reality_index` and `system_address` fields. This replaces the former public
 /// tuple/scalar representation and its scalar serialized form.
+///
+/// The custom deserializer rejects unknown fields and system addresses with
+/// bits outside the low 44 coordinate-and-SSI bits.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
 pub struct SystemId {
     reality_index: u8,
@@ -86,22 +117,43 @@ impl std::fmt::Display for SystemId {
     }
 }
 
-/// A star system containing one or more planets.
+/// A star-system model record.
 ///
 /// The galaxy (reality index) is encoded in the `address` field.
+/// Construction permits an empty planet list, defaults source to
+/// [DiscoverySource::Personal], and preserves the supplied address and other
+/// fields without canonicalization or provenance inference.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct System {
+    /// Stored galactic address, including its supplied planet and galaxy bits.
     pub address: GalacticAddress,
     /// Origin of this system's atlas contribution.
     pub source: DiscoverySource,
+    /// Optional system name.
     pub name: Option<String>,
+    /// Optional in-game discoverer name.
     pub discoverer: Option<String>,
+    /// Optional recorded discovery timestamp.
     pub timestamp: Option<DateTime<Utc>>,
+    /// Planets represented in this system; an empty vector is allowed.
     pub planets: Vec<Planet>,
 }
 
 impl System {
+    /// Create a system with the supplied fields and Personal source.
+    ///
+    /// The address is copied as supplied, and the planet vector may be empty.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::{DiscoverySource, GalacticAddress, System};
+    ///
+    /// let system = System::new(GalacticAddress::new(0, 0, 0, 1, 0, 9), None, None, None, vec![]);
+    /// assert!(system.planets.is_empty());
+    /// assert_eq!(system.source, DiscoverySource::Personal);
+    /// ```
     pub fn new(
         address: GalacticAddress,
         name: Option<String>,
@@ -119,13 +171,13 @@ impl System {
         }
     }
 
-    /// Galaxy index (convenience accessor for `address.reality_index`).
+    /// Return the galaxy index stored in the system address.
     pub fn reality_index(&self) -> u8 {
         self.address.reality_index
     }
 }
 
-/// A planet within a star system.
+/// A planet record associated with a system.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "archive",
@@ -133,18 +185,25 @@ impl System {
 )]
 #[non_exhaustive]
 pub struct Planet {
-    /// Planet index within the system (0-15).
+    /// Supplied planet index; the constructor does not enforce the 0–15 range.
     pub index: u8,
+    /// Optional primary biome classification.
     pub biome: Option<Biome>,
+    /// Optional biome subtype.
     pub biome_subtype: Option<BiomeSubType>,
     /// Whether the planet has infested (biological horror) variant.
     pub infested: bool,
+    /// Optional planet name.
     pub name: Option<String>,
     /// Procedural generation seed.
     pub seed_hash: Option<u64>,
 }
 
 impl Planet {
+    /// Copy the supplied planet fields without validating the index range.
+    ///
+    /// The NMS convention uses indices 0–15, but this constructor accepts any
+    /// u8 value.
     pub fn new(
         index: u8,
         biome: Option<Biome>,

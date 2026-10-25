@@ -1,3 +1,10 @@
+//! Legacy galactic coordinates and their portal and signal-booster forms.
+//!
+//! A [GalacticAddress] stores the historical 48-bit coordinate, while its
+//! galaxy index is a separate field. This is distinct from save-format
+//! decoding, which belongs to the save crate. Coordinate constructors mask
+//! values to their packed field widths; they are not checked conversions.
+
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
@@ -63,8 +70,37 @@ const PORTAL_TO_SB_Y: u16 = 0x7F;
 /// The 48-bit value encodes fields in portal glyph order: `P-SSS-YY-ZZZ-XXX`
 /// where P=PlanetIndex, SSS=SolarSystemIndex, YY=VoxelY, ZZZ=VoxelZ, XXX=VoxelX.
 ///
-/// The `reality_index` identifies the galaxy (0=Euclid, 1=Hilbert, etc.) and is
+/// The galaxy index identifies a galaxy (0 is Euclid, 1 is Hilbert) and is
 /// stored separately from the packed value.
+///
+/// Construction preserves the supplied galaxy index and masks the packed
+/// coordinate fields to their legacy widths: X/Z 12 bits, Y 8 bits, SSI 12
+/// bits, and planet 4 bits.
+///
+/// # Examples
+///
+/// ```
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// use nms_core::GalacticAddress;
+///
+/// let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
+/// assert_eq!(address.packed(), 0x2001_0000_0003);
+/// assert_eq!(address.to_signal_booster(), "0802:007F:07FF:0001");
+/// let from_signal = GalacticAddress::from_signal_booster("0802:007F:07FF:0001", 2, 9)?;
+/// assert_eq!(from_signal, address);
+/// let portal = address.to_portal_address();
+/// assert_eq!(portal.to_hex_string(), "200100000003");
+/// assert_eq!(portal.to_galactic_address().reality_index, 0);
+///
+/// let different_system = GalacticAddress::new(3, 0, 0, 2, 2, 9);
+/// assert!((address.distance_ly(&different_system) - 264.6828728).abs() < 1e-9);
+/// let neighbor = GalacticAddress::new(4, 0, 0, 1, 2, 9);
+/// assert_eq!(address.distance_ly(&neighbor), 400.0);
+/// let different_planet = GalacticAddress::new(3, 0, 0, 1, 3, 9);
+/// assert_eq!(address.distance_ly(&different_planet), 0.0);
+/// # Ok(())
+/// # }
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "archive",
@@ -72,11 +108,16 @@ const PORTAL_TO_SB_Y: u16 = 0x7F;
 )]
 pub struct GalacticAddress {
     packed: u64,
+    /// Galaxy (reality) index; it is not part of the 48-bit packed value.
     pub reality_index: u8,
 }
 
 impl GalacticAddress {
-    /// Create from individual field values (portal coordinate frame).
+    /// Pack coordinate fields, masking each value to its legacy bit width.
+    ///
+    /// The parameters are voxel X/Y/Z, solar-system index, planet index, and
+    /// galaxy index, respectively. This constructor does not reject out-of-
+    /// range packed values; only the low 12/8/12/12/4 bits are retained.
     pub fn new(
         voxel_x: i16,
         voxel_y: i8,
@@ -103,7 +144,7 @@ impl GalacticAddress {
         }
     }
 
-    /// Create from raw packed 48-bit value and reality index.
+    /// Create from a raw value and galaxy index, retaining only its low 48 bits.
     pub fn from_packed(packed: u64, reality_index: u8) -> Self {
         Self {
             packed: packed & PACKED_MASK,
@@ -121,7 +162,7 @@ impl GalacticAddress {
         ((self.packed >> PLANET_SHIFT) & MASK_4BIT) as u8
     }
 
-    /// Solar system index (12-bit unsigned, 0x000-0xFFE). Bits 43-32.
+    /// Solar-system index (12-bit unsigned, 0x000–0xFFF), from bits 43–32.
     pub fn solar_system_index(&self) -> u16 {
         ((self.packed >> SSI_SHIFT) & MASK_12BIT) as u16
     }
@@ -156,11 +197,20 @@ impl GalacticAddress {
         (self.voxel_x(), self.voxel_y(), self.voxel_z())
     }
 
-    /// Parse signal booster format `XXXX:YYYY:ZZZZ:SSSS`.
+    /// Parse four colon-separated hexadecimal signal-booster components.
     ///
     /// Signal booster uses corner-origin unsigned coordinates. The conversion
     /// adds fixed offsets to translate into portal-frame (center-origin) values.
-    /// Does NOT include planet index or reality index; caller must supply those.
+    /// Each component is parsed as a radix-16 u16; fixed-width or four-digit
+    /// input is not required. The conversion applies the legacy coordinate
+    /// offsets and masks to the destination widths. Planet and galaxy indices
+    /// are not encoded in this string and are supplied by the caller.
+    ///
+    /// # Errors
+    ///
+    /// Returns [AddressParseError::InvalidFormat] unless there are four
+    /// components, or [AddressParseError::InvalidHex] if any component is
+    /// not accepted by the standard radix-16 integer parser.
     pub fn from_signal_booster(
         s: &str,
         planet_index: u8,
@@ -191,10 +241,11 @@ impl GalacticAddress {
         })
     }
 
-    /// Format as signal booster string `XXXX:YYYY:ZZZZ:SSSS`.
+    /// Format as four uppercase, four-digit signal-booster components.
     ///
     /// Converts portal-frame (center-origin) coordinates back to the
     /// corner-origin unsigned format used by the in-game signal booster.
+    /// Planet and galaxy indices are omitted.
     pub fn to_signal_booster(&self) -> String {
         let portal_x = (self.packed & MASK_12BIT) as u16;
         let portal_y = ((self.packed >> VOXEL_Y_SHIFT) & MASK_8BIT) as u16;
@@ -210,9 +261,10 @@ impl GalacticAddress {
 
     /// Distance in light-years to another address.
     ///
-    /// SSI-aware: returns 0 for same system, [`VOXEL_UNCERTAINTY`] for same
-    /// voxel but different SSI, and Euclidean voxel distance * [`LY_PER_VOXEL`]
-    /// otherwise. Only meaningful for addresses in the same galaxy.
+    /// SSI-aware: returns 0 for the same voxel and SSI, [VOXEL_UNCERTAINTY] for
+    /// the same voxel but different SSI, and Euclidean voxel distance times
+    /// [LY_PER_VOXEL] otherwise. These comparisons do not compare galaxy
+    /// indices, so use the estimate only within one galaxy.
     pub fn distance_ly(&self, other: &GalacticAddress) -> f64 {
         if self.same_system(other) {
             0.0
@@ -228,14 +280,18 @@ impl GalacticAddress {
         }
     }
 
-    /// Whether two addresses are in the same region (same VoxelX/Y/Z).
+    /// Whether two addresses have the same voxel X/Y/Z coordinates.
+    ///
+    /// Planet, solar-system index, and galaxy index do not affect this test.
     pub fn same_region(&self, other: &GalacticAddress) -> bool {
         self.voxel_x() == other.voxel_x()
             && self.voxel_y() == other.voxel_y()
             && self.voxel_z() == other.voxel_z()
     }
 
-    /// Whether two addresses are in the same system (same region + same SSI).
+    /// Whether two addresses have the same voxel coordinates and SSI.
+    ///
+    /// Planet and galaxy indices do not affect this legacy comparison.
     pub fn same_system(&self, other: &GalacticAddress) -> bool {
         self.same_region(other) && self.solar_system_index() == other.solar_system_index()
     }
@@ -281,8 +337,17 @@ impl fmt::Display for GalacticAddress {
     }
 }
 
-/// Parse from `0x`/`0X` prefix + 12 hex digits, or bare 12 hex digits.
-/// Reality index defaults to 0.
+/// Parse a 12-byte packed value, optionally prefixed by 0x or 0X.
+///
+/// The remaining input is passed to Rust's radix-16 u64 parser, and the
+/// resulting address uses galaxy index 0. Parsing follows that parser's
+/// accepted syntax, including an optional leading +; this is not a save-format
+/// or checked-coordinate decoder.
+///
+/// # Errors
+///
+/// Returns [AddressParseError::InvalidLength] when the post-prefix input is
+/// not 12 bytes, or [AddressParseError::InvalidHex] when radix parsing fails.
 impl FromStr for GalacticAddress {
     type Err = AddressParseError;
 
@@ -328,8 +393,11 @@ impl From<GalacticAddress> for u64 {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub enum AddressParseError {
+    /// The signal-booster input does not contain four colon-separated parts.
     InvalidFormat,
+    /// A hexadecimal component could not be parsed.
     InvalidHex,
+    /// The packed-address input is not exactly twelve bytes after its prefix.
     InvalidLength,
 }
 
@@ -353,6 +421,10 @@ impl std::error::Error for AddressParseError {}
 ///
 /// Each glyph is a nibble (0-15), and the 12 glyphs form a 48-bit packed
 /// value in the same layout as [`GalacticAddress`]: `P-SSS-YY-ZZZ-XXX`.
+///
+/// The constructor checks each supplied nibble, but derived deserialization
+/// does not repeat that check. Methods that convert glyph values may therefore
+/// panic if an invalid value was deserialized.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct PortalAddress {
     glyphs: [u8; 12],
@@ -362,7 +434,11 @@ pub struct PortalAddress {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PortalParseError {
+    /// The parsed glyph count was not twelve.
+    ///
+    /// Counts above twelve are reported with the sentinel value 13.
     WrongLength(usize),
+    /// A prefix could not be interpreted as a glyph.
     InvalidGlyph(GlyphParseError),
 }
 
@@ -384,7 +460,11 @@ impl From<GlyphParseError> for PortalParseError {
 }
 
 impl PortalAddress {
-    /// Create from an array of 12 u8 values (each 0-15).
+    /// Create from twelve glyph indices, each in the range 0–15.
+    ///
+    /// # Panics
+    ///
+    /// Panics when any array element is at least 16.
     pub fn new(glyphs: [u8; 12]) -> Self {
         for (i, &g) in glyphs.iter().enumerate() {
             assert!(g < 16, "glyph[{i}] = {g} is out of range 0-15");
@@ -392,12 +472,22 @@ impl PortalAddress {
         Self { glyphs }
     }
 
-    /// Get the glyph at position `i` (0-11).
+    /// Get the glyph at position i.
+    ///
+    /// # Panics
+    ///
+    /// Panics when i is outside the twelve-element array. A value outside
+    /// 0–15 can also panic if it came from deserialization.
     pub fn glyph(&self, i: usize) -> Glyph {
         Glyph::new(self.glyphs[i])
     }
 
-    /// Get all 12 glyphs.
+    /// Convert all twelve stored values to [Glyph]s.
+    ///
+    /// # Panics
+    ///
+    /// Panics if any stored value is outside 0–15, which can occur after
+    /// deserializing data that bypassed [PortalAddress::new].
     pub fn glyphs(&self) -> [Glyph; 12] {
         let mut out = [Glyph::new(0); 12];
         for (i, slot) in out.iter_mut().enumerate() {
@@ -406,17 +496,29 @@ impl PortalAddress {
         out
     }
 
-    /// Format as 12 hex digits (uppercase): e.g., `01717D8A4EA2`.
+    /// Format the twelve stored glyph values as uppercase hexadecimal.
+    ///
+    /// For valid glyph values 0–15, the result is twelve hexadecimal digits.
     pub fn to_hex_string(&self) -> String {
         self.glyphs.iter().map(|g| format!("{g:X}")).collect()
     }
 
-    /// Format as emoji string.
+    /// Format the twelve glyph values as their emoji sequence.
+    ///
+    /// # Panics
+    ///
+    /// Panics if a stored value is outside 0–15, including values supplied by
+    /// deserialization that bypassed [PortalAddress::new].
     pub fn to_emoji_string(&self) -> String {
         self.glyphs.iter().map(|&g| Glyph::new(g).emoji()).collect()
     }
 
-    /// Format as colon-separated 4-character abbreviations.
+    /// Format as colon-separated four-character glyph abbreviations.
+    ///
+    /// # Panics
+    ///
+    /// Panics if a stored value is outside 0–15, including values supplied by
+    /// deserialization that bypassed [PortalAddress::new].
     pub fn to_abbrev_string(&self) -> String {
         self.glyphs
             .iter()
@@ -427,7 +529,31 @@ impl PortalAddress {
 
     /// Parse a mixed-format string containing 12 glyphs.
     ///
-    /// Accepts any combination of hex digits, emoji, and glyph names.
+    /// Trims outer whitespace, then accepts any combination of hexadecimal
+    /// digits, emoji, glyph names, and four-letter abbreviations.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// use nms_core::PortalAddress;
+    ///
+    /// let portal = PortalAddress::parse_mixed("01717D8A4EA2")?;
+    /// assert_eq!(portal.to_hex_string(), "01717D8A4EA2");
+    /// # Ok(())
+    /// # }
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// Returns [PortalParseError::InvalidGlyph] for an unrecognized glyph
+    /// and [PortalParseError::WrongLength] unless exactly twelve glyphs are
+    /// consumed. More than twelve are reported with count 13.
+    ///
+    /// # Panics
+    ///
+    /// The current glyph-prefix diagnostic can panic if its 20-byte excerpt
+    /// ends inside a multi-byte UTF-8 character.
     pub fn parse_mixed(s: &str) -> Result<Self, PortalParseError> {
         let mut glyphs = Vec::with_capacity(12);
         let mut remaining = s.trim();
@@ -451,17 +577,27 @@ impl PortalAddress {
         Ok(Self { glyphs: arr })
     }
 
-    /// Convert to [`GalacticAddress`] (reality_index = 0).
+    /// Convert to [`GalacticAddress`] (galaxy index 0).
+    ///
+    /// The portal format does not carry a galaxy index, so the result uses 0.
     pub fn to_galactic_address(&self) -> GalacticAddress {
         GalacticAddress::from(*self)
     }
 
-    /// Create from a [`GalacticAddress`].
+    /// Create from a [`GalacticAddress`], discarding its separate galaxy index.
     pub fn from_galactic_address(addr: &GalacticAddress) -> Self {
         PortalAddress::from(*addr)
     }
 
-    /// Create from a signal booster string by first parsing to [`GalacticAddress`].
+    /// Create from a signal-booster string by first parsing to [`GalacticAddress`].
+    ///
+    /// The result encodes the supplied planet index in the portal glyphs;
+    /// the galaxy index is not represented.
+    ///
+    /// # Errors
+    ///
+    /// Returns the underlying [AddressParseError] if the signal-booster string
+    /// cannot be parsed.
     pub fn from_signal_booster(
         s: &str,
         planet_index: u8,
@@ -479,7 +615,17 @@ impl fmt::Display for PortalAddress {
     }
 }
 
-/// Parse from any supported format (hex, emoji, mixed).
+/// Parse with [PortalAddress::parse_mixed].
+///
+/// # Errors
+///
+/// Returns [PortalParseError] when the input has the wrong glyph count or an
+/// unrecognized glyph.
+///
+/// # Panics
+///
+/// May panic when the glyph parser constructs an unrecognized-prefix
+/// diagnostic whose 20-byte excerpt ends inside a multi-byte UTF-8 character.
 impl FromStr for PortalAddress {
     type Err = PortalParseError;
 
@@ -493,7 +639,7 @@ impl From<PortalAddress> for GalacticAddress {
     ///
     /// Portal glyph layout: `P-SSS-YY-ZZZ-XXX`
     /// (glyph positions 0-indexed: `[0]=P, [1-3]=SSS, [4-5]=YY, [6-8]=ZZZ, [9-11]=XXX`).
-    /// Reality index defaults to 0.
+    /// Galaxy index defaults to 0 because the portal form does not encode it.
     fn from(pa: PortalAddress) -> Self {
         let g = pa.glyphs;
 
@@ -516,7 +662,8 @@ impl From<PortalAddress> for GalacticAddress {
 impl From<GalacticAddress> for PortalAddress {
     /// Convert galactic address to portal address.
     ///
-    /// Extracts each nibble from the packed 48-bit value.
+    /// Extracts each nibble from the packed 48-bit value, dropping the
+    /// separate galaxy index.
     fn from(addr: GalacticAddress) -> Self {
         let p = addr.packed();
         let mut glyphs = [0u8; 12];
@@ -535,8 +682,19 @@ impl GalacticAddress {
         PortalAddress::from(*self)
     }
 
-    /// Create from a portal address string (hex, emoji, or mixed).
-    /// Reality index defaults to 0.
+    /// Create from a portal-address string containing hex, emoji, or mixed glyphs.
+    ///
+    /// The resulting galaxy index is 0 because the portal form does not encode it.
+    ///
+    /// # Errors
+    ///
+    /// Returns [PortalParseError] if the string has the wrong number of glyphs
+    /// or contains a glyph that cannot be parsed.
+    ///
+    /// # Panics
+    ///
+    /// May panic when the glyph parser constructs an unrecognized-prefix
+    /// diagnostic whose 20-byte excerpt ends inside a multi-byte UTF-8 character.
     pub fn from_portal_string(s: &str) -> Result<Self, PortalParseError> {
         let pa: PortalAddress = s.parse()?;
         Ok(GalacticAddress::from(pa))

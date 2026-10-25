@@ -2,6 +2,10 @@
 //!
 //! These types live in nms-core so that both nms-graph (apply) and nms-watch
 //! (produce) can use them without creating a dependency cycle.
+//!
+//! [SaveDelta] reports additive observations; it does not report that records
+//! disappeared from a later snapshot. [SaveUpdate] pairs that delta with the
+//! complete supported player state and version from the same parsed update.
 
 use std::collections::HashMap;
 
@@ -53,7 +57,25 @@ impl DiscoveryNames {
     }
 }
 
-/// A typed description of what changed between two save file snapshots.
+/// Additive changes observed between two save snapshots.
+///
+/// The fields list newly observed records, movement, and base changes. The
+/// delta does not promise to represent records removed from the source.
+///
+/// # Examples
+///
+/// ```
+/// use nms_core::{GalacticAddress, PlayerMoved, SaveDelta};
+///
+/// let mut delta = SaveDelta::empty();
+/// assert!(delta.is_empty());
+/// assert_eq!(delta.change_count(), 0);
+/// let from = GalacticAddress::new(3, 0, 0, 1, 2, 9);
+/// let to = GalacticAddress::new(4, 0, 0, 1, 2, 9);
+/// delta.player_moved = Some(PlayerMoved { from, to });
+/// assert!(!delta.is_empty());
+/// assert_eq!(delta.change_count(), 1);
+/// ```
 #[derive(Debug, Clone)]
 pub struct SaveDelta {
     /// Newly discovered systems (not in previous snapshot).
@@ -87,10 +109,12 @@ pub struct SaveUpdate {
     pub save_version: u32,
 }
 
-/// Player position change.
+/// A change in the player's galactic address.
 #[derive(Debug, Clone)]
 pub struct PlayerMoved {
+    /// Address before the movement.
     pub from: GalacticAddress,
+    /// Address after the movement.
     pub to: GalacticAddress,
 }
 

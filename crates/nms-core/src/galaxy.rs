@@ -1,14 +1,40 @@
+//! Bundled galaxy classifications and lookup by the eight-bit galaxy index.
+//!
+//! The table is a local data source; the lookup covers every value representable
+//! by u8. Parsing [GalaxyType] is case-insensitive and does not trim input.
+//!
+//! # Examples
+//!
+//! ```
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! use nms_core::{Galaxy, GalaxyType};
+//!
+//! let eissentam = Galaxy::by_index(9);
+//! assert_eq!(eissentam.name, "Eissentam");
+//! assert_eq!(eissentam.galaxy_type, GalaxyType::Lush);
+//! assert_eq!("normal".parse::<GalaxyType>()?, GalaxyType::Norm);
+//! # Ok(())
+//! # }
+//! ```
+
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
 
 /// The four galaxy type classifications that affect planet generation.
+///
+/// Parsing accepts these names case-insensitively; Norm is also accepted as
+/// Normal. Display renders [GalaxyType::Norm] as Normal.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[non_exhaustive]
 pub enum GalaxyType {
+    /// Normal galaxy classification.
     Norm,
+    /// Lush galaxy classification.
     Lush,
+    /// Harsh galaxy classification.
     Harsh,
+    /// Empty galaxy classification.
     Empty,
 }
 
@@ -25,7 +51,10 @@ impl fmt::Display for GalaxyType {
 
 /// Error returned when parsing a galaxy type string fails.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct GalaxyTypeParseError(pub String);
+pub struct GalaxyTypeParseError(
+    /// The original string that did not match a galaxy type.
+    pub String,
+);
 
 impl fmt::Display for GalaxyTypeParseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -35,6 +64,15 @@ impl fmt::Display for GalaxyTypeParseError {
 
 impl std::error::Error for GalaxyTypeParseError {}
 
+/// Parse a galaxy type name without regard to case.
+///
+/// Accepts `norm` or `normal`, `lush`, `harsh`, and `empty`. Input is not
+/// trimmed.
+///
+/// # Errors
+///
+/// Returns [GalaxyTypeParseError] containing the original input when it does
+/// not match an accepted name.
 impl FromStr for GalaxyType {
     type Err = GalaxyTypeParseError;
 
@@ -49,17 +87,33 @@ impl FromStr for GalaxyType {
     }
 }
 
-/// One of the 256 galaxies in No Man's Sky.
+/// One entry in the bundled 256-galaxy lookup table.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub struct Galaxy {
+    /// Zero-based galaxy index.
     pub index: u8,
+    /// Bundled galaxy name.
     pub name: &'static str,
+    /// Bundled planet-generation classification.
     pub galaxy_type: GalaxyType,
 }
 
 impl Galaxy {
-    /// Lookup galaxy by index (0-255). Always returns a valid Galaxy.
+    /// Look up a galaxy by its index.
+    ///
+    /// Every u8 value has a table entry, so this lookup always returns a
+    /// [Galaxy].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_core::{Galaxy, GalaxyType};
+    ///
+    /// let galaxy = Galaxy::by_index(255);
+    /// assert_eq!(galaxy.name, "Odyalutai");
+    /// assert_eq!(galaxy.galaxy_type, GalaxyType::Norm);
+    /// ```
     pub fn by_index(index: u8) -> Self {
         let (name, galaxy_type) = GALAXIES[index as usize];
         Self {
