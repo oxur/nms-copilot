@@ -1,0 +1,46 @@
+# Slice46 independent acceptance
+
+2026-10-25 UTC. **MR-01–06 and R06-S46 ACCEPTED**, source `85a80ca1bf77e80f071c6036e6e187a214228dea`, parent `fe5e9d1287a353bcfbf67fc8db6c5445102c03f5`, tree `ddd762d34f6142b1e8c0be5ff996a8910a1aa8a4`. CDC `/root/cdc_arc06`, requested/applied gpt-6.1-sol High, independently reviewed sole CC `/root/cdc_arc06/cc_map_renderer_hardening`, requested/applied gpt-6-luna High. Root transported status only. Three ACTUAL refinements: two code/document corrections and one record-only handback; two unused, no reset/exception. Full M7.7/D0042 remain OPEN.
+
+## Original independent groups
+
+Nine groups comprise ten fresh product commands on committed clean85a80ca. All twelve CDC records include two support-only NUL/exit7+0 controls. Every actual stdout/stderr byte/hash, completion, argv/cwd/environment/originalTMPDIR, before/after identity and status was verified. Every CDC before/after equals clean committed85, composite5d233a338ee52f692380af6743c778a241b1d93d5d6c7c567bb7c5f18e5ce6c5. Workspace tests and coverage used FIRST actual authorized host execution, original TMPDIR; no independent retry. Eight groups passed0; coverage completed1 solely at the explicitly retained parent95 threshold.
+
+| Actual CDC ID | Group | Exit |
+|---|---|---|
+| 37d52189adc44286b5667de7be2c4366 | CDC G1 make format | 0 |
+| 177f746be1b84290b5fd41bdd1c820b8 | CDC G2 make lint | 0 |
+| a0a95c37eee64a8e894e89fcc5b28d3e | CDC G3 focused renderer all-features | 0 |
+| 74f7e81e9a6e4878b31887670edbdf73 | CDC G4 make test FIRST native host/original TMPDIR | 0 |
+| c6823bc1d32a44419f550586e5d39133 | CDC G5a renderer no-default-features | 0 |
+| 7daa284677b541a0b28ec2bb27a4cd71 | CDC G5b copilot doctests no-default-features | 0 |
+| 750e5d016ac14f8d8c0833085cfeb7a1 | CDC G6 strict copilot library docs | 0 |
+| 8fc01a7ccbfe4a14aafb6035773e0d52 | CDC G7 full workspace coverage FIRST native host/original TMPDIR | 1 |
+| 227706b72c8c43d8bbaf8357ced5c30f | CDC G8 working diff check | 0 |
+| 0185f466f9304f0b870f7da558f7c064 | CDC G9 full committed baseline diff check | 0 |
+
+Focused all-feature and no-default renderer populations each passed **5/5**. Full workspace passed **1,107 runtime tests across40 harnesses plus118 doctests across9 targets (91 executing,27 compile-only)**, zero failed/ignored. Separate no-default28 doctests (22 executing,6 compile-only) overlap the all-feature population. The coverage run also passed all1,107 runtime tests; stable coverage excludes doctests. Strict affected library docs used exactly `-D warnings -D missing_docs`, zero Rustdoc diagnostics; Cargo's proc-macro-error2 future-incompatibility notice is separate. No generated-core-field exception was transferred. Working and complete committed baseline diff gates passed0/empty.
+
+Current coverage is **23,598/25,230 lines =93.53151010701545%: parent95 gate RED**. Functions2008/2179; regions38036/40791; branch/MCDC unmeasured. Renderer614/617 lines99.513776%,32/32 summary function entries, including test/helper entries. Each of EIGHT unique existing production functions has an execution witness: render15, render_map17, render_status15, render_legend15, render_help1, nested pad22, bin_systems16, voxel_to_cell68. Duplicate zero-count lib/bin records remain in raw JSON. MapState373/386; map input0/37 and entry0/30 remain other owners. Inline test-body lines are included; changed denominators mean baseline92.237773→93.531510 is not a pure production-only gain. Prior Slice40's executing render doctest already passed, despite stable coverage baseline0 instrumentation. No unreachable fixed-ASCII padding branch was manufactured for percentage.
+
+Fifteen files remain below90%: cache/error; CLI find/list/route/show/stats; copilot dispatch/main/map input/map entry/MCP module/MCP tools/prompt/setup; save/lib. The full original95%, module-floor, hosted platformCI and D0042 input/terminal requirements are unaccepted.
+
+## Complete source and literal behavior review
+
+Exactly TWO paths changed. Local labels retain complete text and use pinned existing Paragraph grapheme clipping plus Span display width for following-cell advance. No new dependency, byte cut, normalization or arbitrary-input/panic-free promise. ASCII budgets, selected galaxy, XZ projection, density, collision/player precedence, palette, fixed help strings/padding, API, state/input/lifecycle and old executing example stay intact. map/mod.rs changes only the obsolete propagated UTF8 panic reference. All other executable bodies were compared with accepted parent.
+
+MR-01: SIX M2 name cases cover é, CJK, emoji, ZWJ and ASCII fit/clip; a separate following-density witness opposes old byte skipping. Exact glyph-start symbols/styles/right borders and unchanged names discriminate clipping and column accounting. CC closing MR-01 prose says five M2 cases: this is a transcription error; five is the total new test-function count. Source has six name cases, retained raw focused count5 is correct. No source repair/waiver follows.
+
+MR-02: M1 actual public rendering uses17 systems and opposed model/state galaxies, complete literal four bins and60-cell population/styles, full unchanged system population, offscreen/foreign negatives, Y independence, signed truncation and zero-axis boundaries. MR-03: M3 full overlay/base tuples, last-row collision/player precedence and Galaxy/Region letter-only cases; M4 complete status/legend and18×70 help cells, all-black backgrounds/four white-bold headers, independently literal normal/help plus full same-Terminal normal→help→normal Buffer equality; M5 populated zero-inner-width/height frames and literal borders. These are synchronous real TestBackend observations, not terminal input/setup/teardown/live-session proof.
+
+MR-04: full initial two-path and M1–M5 helper/assertion/doc walk, followed by targeted exact corrective-delta comparisons, verifies no weakened valid assertion/scenario. Existing render example is byte-preserved and executes. Two current generated public doc bodies were actually read and archived in cdc-current-html.json: truthful grapheme teaching, obsolete panic gone, best-effort/unwind/numeric caveats retained. This is valid cached compiler output, not a new absent-target render or published site.
+
+MR-05: all16 CC and12 CDC raw records, initial prefixes and all16 CC return projections were reconciled with full raw channels/identity/argv/exits. Final CC gates ran on precommit HEADfe/diff553f/compositec27; their compiled bytes match committed85, but their observed HEAD is not relabelled. CDC proof is fresh on85. Exact source message/raw Git body and both consecutive once-only parsed coauthor trailers match. All45 worktree pins are preserved except intended source/planning progression; source is clean. Main retains ONLY the known pre-existing AGENT nine-line change/blob2cd450ce, empty index; assessment complete/no cleanup authority. External03e8d04 remains unchanged.
+
+## Failures, records and disposition
+
+Initial format0 legitimately formatted source; initial lint2 found unused Rect. Full held review found stale panic teaching and new literal buffer/style/population omissions. Immutable01 consolidated these; renewed format0/lint2 exposed one physical blank after a removed doc fence. Targeted review found promised whole-help background/header assertions still missing; immutable02 corrected ONLY those two boundaries. Renewed pair0/0 released runtime; all five focused tests passed first behavioral execution. All three CC format attempts were0; two early lint attempts were2. CDC ordinary inspection once mistakenly required initial formatting identity to stay unchanged; retained format before/after shows legitimate formatting and post-format/lint stability, so the metadata assertion was corrected without inventing a product failure or missing-history exception.
+
+CC's initial workspace prose1113runtime/112docs was corrected against40 runtime/9 doc harnesses to1107/118; original message/raw remain. Initial intake transcription errors were resolved before ACK/edit, with actual full required guide extents completed before release; no retroactive compliance claim. CC first return's2-refinement/3-remaining counter is historical. Required individual MR/inventory/bubble-up handback was missing, so immutable03 authorized ONLY additive ignored records. Exact old33379B execution and2812B closing prefixes plus unchanged33972B validation were verified. Appended execution is retained separately; current closing contains exact8359B CC report followed by labelled CDC acceptance. Current count is3/5, no new tests or source edits for record closure.
+
+MR-06: attributable CC six-row proposal/inventory/three arc answers, this independent acceptance, mandatory retrospective, final actual archive inventory and bottom-up records are complete. All SIX MR DONE; no dropped/deferred criterion or architectural amendment. Capability is usable isolated Unicode-safe map labels and meaningful buffer regressions, unintegrated. Arc64 rows52done12open; all25 project rows OPEN. Full M7.7/D0042/table-theme/UI, authentic NomNom input, packaging/performance/platformCI, raw/history/nonzero-game/final-semantics/cache/freshness and higher independent/Operator/integration/release owners remain OPEN. No push/merge/install/publish/release/main cleanup/other arc/Project02.

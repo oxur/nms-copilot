@@ -474,6 +474,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S46 | Unicode-safe column-aligned map renderer with useful projection/overlay/help regressions | SixMR/M1–M5/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 concrete renderer debt/coverage | open | — | Full95coverage/CI/input/terminal/otherUI/themes/parent gates remainOPEN |
+| R06-S46 | Unicode-safe column-aligned map renderer with useful projection/overlay/help regressions | SixMR/M1–M5/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 concrete renderer debt/coverage | done | [CDC46 acceptance](slice46-map-renderer-hardening/cdc-verification.md) — reproduced | Full95coverage/CI/input/terminal/otherUI/themes/parent gates remainOPEN |
 
 64arc51done13open/project25OPEN/initialzeroACTUALrefinements/no acceptanceatissue.
+
+2026-10-25 formal46close: all6MR/R06-S46DONE/threeACTUALrefinements/noexception;64arc52done12open/project25OPEN. Current95parentcoverageRED93.531510%/15below90, fullM7.7,D0042/input/terminal/CI/alloriginalhigher owners OPEN.
