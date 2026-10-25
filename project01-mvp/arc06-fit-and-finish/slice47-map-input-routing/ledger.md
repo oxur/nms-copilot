@@ -10,3 +10,5 @@ Six OPEN/initial delivery/zero ACTUAL refinements. Full M7.7/D0042 remain OPEN.
 | IR-04 | One-path private seam/public docs+handle_key+other source frozen | Full exact before/current comparison and strict docs | correctness-grade | open | — |
 | IR-05 | Attributable nine groups/current coverage/clean source/pins | Rawfirst/gates/inputfloor/privatefunctioncounts/parentred | correctness-grade | open | — |
 | IR-06 | Independent acceptance/retro/arc bubble-up/no dropped parent owners | Fresh CDC originalnine/sixIR/records/remaining limits | correctness-grade | open | — |
+
+Iteration01firstactual1of5: all six IR remainOPEN. Correct private seam/public/doc/key preservation reviewed, but initial completepair0/0 had NO new tests. Append originalI1–I7 only with existing113prefix frozen; renewedpair/fullheldreview beforeoriginalruntime. No policy/exception/newscenario.
