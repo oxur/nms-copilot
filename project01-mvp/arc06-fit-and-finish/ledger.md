@@ -489,3 +489,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 65arc52done13open/project25OPEN/initialzeroACTUALrefinements/no product validation or acceptance at issue.
 
 2026-10-25formal47close: all6IR/R06-S47DONE/oneACTUALrefinement/noexception;65arc53done12open/project25OPEN. Current95parentRED93.736577%/14below90/fullM7.7,D0042/lifecycle/CI/alloriginalhigher owners OPEN.
+
+## Original map restoration child — 2026-10-25UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S48 | Map-owned guard compensates partial setup, attempts all restoration and handles ordinary unwinding | SixTG/L1–L4/ninegroups/independentproof | correctness-grade | OriginalD0042/M7.7 terminal lifetime gap | open | — | Required49actualnative/modulefloor/fullD0042/95CI/parentgates remainOPEN |
+
+66arc53done13open/project25OPEN/initialzeroACTUALrefinements/noimplementationoracceptanceatissue.

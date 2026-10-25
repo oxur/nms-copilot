@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.151, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.152, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1175,3 +1175,7 @@ OriginalM7.7/D0042 next usable child: exactonefile map/input.rs, private FnOnce 
 ## Slice47 input routing accepted — 2026-10-25UTC
 
 All6IR/R06-S47 DONE at isolatedclean3e8dd6b426d024adb9318497db49a35281b419cb: exactonefile/private FnOnce seam/seven literal complete-state/error/event tests, public docs/signature/enum/handle_key/allotherbytes frozen. Nine fresh independentgroups complete7focusedbothfeatures/1114runtime+118docs(91execute27compile)/28separate nodefaultdocs/strict+diffs0; coverage1 retains95parentRED24005/25609=93.736577%, input407/41697.836538%/injectedprivatepositive/realwrapper0/14filesbelow90. Inlinebody/defaultdoctest/provenance qualifications explicit, actualterminalIO/elapsed100ms/setup/cleanup/panic lifetime not inferred. OneACTUALrefinement appends omitted initialtests; green-but-incompleteinitialpair/originalprompts/raw14CC+12CDC/returns/countcorrection/retro preserved, no exception.65arc53done12open/project25OPEN. CDC next originalD0042/M7.7 lifecycle/remainingbehavior owner under existingauthority; full95/modulefloors/hostedCI/all originalhigher/input/Operator gates OPEN. No integration/maincleanup/release. [Acceptance](slice47-map-input-routing/cdc-verification.md), [retrospective](slice47-map-input-routing/cdc-retrospective.md).
+
+## Slice48 guard / required49 native map composition — 2026-10-25UTC
+
+OriginalD0042/M7.7 nextboundedsourceowner48: exactonefile map/mod.rs/privateownedguard/commoncontrolorchestration, compensatepartialsetup/attemptallcleanup/Dropordinaryunwind. Preservepublicsignature/inputtiming/key/render/state/loop/example and legacysetup-primary/firstcleanup-before-body errorprecedence. Fourcomplete literaltrace/error/owner/unwindtestgroups, capturedpair/heldreview/nineoriginalgroups/freshsameapprovedLunaHigh+CDC6.1-solHigh/mandatoryretro. Sourceclean3e8dd6b/current95parentRED93.736577%/14below90. Explicitrequired49 ownsactualisolatednativePTY/navigation/zoom/help/resize/exit/restoration/realadapter-entry-loop/modulefloor/fullD0042reconciliation;48injectedproofisnotphysicalterminalproof. No newterminaldependency/realuserterminalinteraction/acceptanceexception/inquiry/policychange.66arc53done13open/project25OPEN; alloriginal95/module90/hostedCI/non-doc/input/higherOperatorgatesOPEN. No integration/maincleanup/release. [Issued48prompt](slice48-map-terminal-guard/cc-prompt.md).
