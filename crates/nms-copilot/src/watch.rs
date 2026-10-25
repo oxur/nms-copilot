@@ -1,8 +1,17 @@
-//! Watch integration for the REPL.
+//! Watch-related REPL helpers and read-only applied-update notification drains.
 //!
-//! Drains pending file-watcher deltas between prompts, applies them to the
-//! galaxy model, updates session state, and optionally writes through to the
-//! cache. Notifications are returned as strings for the REPL to print.
+//! [`drain_watch_events`] retains the legacy delta-only REPL path: it applies
+//! queued [`SaveDelta`] values, synchronizes the caller's session, prints
+//! notes, and may write one cache snapshot after the batch. The normal
+//! application path instead uses [`crate::coordinator::LiveSaveCoordinator`]
+//! and gives read-only subscribers [`drain_applied_notifications`]; draining
+//! those notifications does not apply an update or persist a cache.
+//!
+//! [`notifications_for_delta`] formats notes against the model before an
+//! update. [`apply_and_notify`] uses that formatter, then applies a delta and
+//! synchronizes the REPL session. These helpers describe the legacy delta
+//! behavior; they do not provide the coordinator's complete player state,
+//! explicit discovery-name observations, or same-parse cache version.
 
 use std::path::Path;
 use std::sync::mpsc;
@@ -14,10 +23,25 @@ use crate::coordinator::AppliedSaveUpdate;
 use crate::session::SessionState;
 use nms_core::system::SystemId;
 
-/// Drain all pending deltas from the watcher and apply them to the model.
+/// Drain and apply all currently queued legacy watcher deltas.
 ///
-/// Prints notifications for each delta. If any deltas were applied and
-/// `cache_path` is provided, writes an updated cache.
+/// For each received delta, this formats notes before application with
+/// [`apply_and_notify`], applies the additive atlas changes, synchronizes
+/// `session`, and prints each note to stdout. It does not apply the complete player state, source version, or
+/// discovery-name observations carried by the coordinator path. An empty or
+/// disconnected receiver ends the nonblocking drain.
+///
+/// If at least one delta was received, `cache_path` causes one cache snapshot
+/// and best-effort write after the whole batch, using the caller-supplied
+/// `save_version`; no received delta means no cache write. A received empty
+/// delta still counts as a batch item. Cache failures are reported to stderr;
+/// they do not return an error or roll back model/session updates. `None`
+/// skips cache extraction and writing.
+///
+/// # Panics
+///
+/// Writing a notification or cache-failure warning to stdout or stderr can
+/// panic if the output stream fails.
 pub fn drain_watch_events(
     receiver: &mpsc::Receiver<SaveDelta>,
     model: &mut GalaxyModel,
@@ -44,10 +68,15 @@ pub fn drain_watch_events(
     }
 }
 
-/// Drain already-applied update notifications into user-facing movement notes.
+/// Drain literal notifications from already-applied updates.
 ///
-/// This observer has no access to the model, cache, or session, so consuming
-/// notifications cannot apply state or persist it a second time.
+/// Repeatedly calls `try_recv` and concatenates each event's `notifications`
+/// in publication order. It stops when the channel is empty or disconnected;
+/// it does not wait for future events. This read-only observer has no access
+/// to the model, cache, or session, so consuming notifications cannot apply
+/// state or persist it a second time. Strings are returned exactly as stored,
+/// even if they were constructed independently of the coordinator's formatter.
+/// This is not a cache-write receipt, replay, or model snapshot.
 ///
 /// # Examples
 ///
@@ -141,10 +170,23 @@ mod applied_notification_tests {
     }
 }
 
-/// Format user-facing notes for an update before applying it to the model.
+/// Format user-facing notes from a delta against the current model.
 ///
-/// This is pure with respect to the model and is shared by the coordinator so
-/// both live paths preserve the same name-resolution behavior.
+/// This function only reads the model and returns strings; it does not apply
+/// the delta, print output, or report cache status. Notes are ordered as
+/// movement, each new system, each new planet, then each new base. Modified
+/// bases, removals, and name-only changes do not produce notes. System lookup
+/// uses the galaxy-qualified, planet-zeroed system key. A movement destination
+/// uses a matching incoming system only when the model has no genuine system
+/// there or has a player placeholder; otherwise the existing system name is
+/// retained. For each scan, the system name comes from the first exact-key
+/// matching incoming `new_system`, before a stored-system lookup. Missing
+/// movement names render as `unknown`, unnamed new systems and planets as `-`,
+/// and planets without a biome as `?`. Every generated note begins with two
+/// ASCII spaces. These notes describe the incoming delta, not a receipt that
+/// every duplicate record was inserted.
+///
+/// [`apply_and_notify`] uses this formatter before applying a legacy delta.
 pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<String> {
     let mut notes = Vec::new();
 
@@ -207,10 +249,148 @@ pub fn notifications_for_delta(model: &GalaxyModel, delta: &SaveDelta) -> Vec<St
     notes
 }
 
-/// Apply a delta to the model and generate human-readable notifications.
+/// Format notes against the current model, then apply a legacy delta.
 ///
-/// Notifications are generated *before* the delta is applied so that
-/// system name lookups for the "from" position still resolve correctly.
+/// Notes are generated before `model.apply_delta`, preserving lookups for the
+/// movement origin. A movement changes the physical player address only when
+/// player state already exists; only a cross-galaxy physical move changes the
+/// selected galaxy. The helper then synchronizes model-derived session fields:
+/// it refreshes the selected galaxy and counts, follows a missing or
+/// player-following position, and preserves base or manual-address snapshots,
+/// biome filter, and warp preference. It does not print, apply complete player
+/// fields or explicit discovery names, create player state, start a watcher,
+/// ensure a player placeholder, or write a cache.
+///
+/// # Examples
+///
+/// This in-memory example formats and applies a cross-galaxy update without
+/// reading a save file, starting a watcher, or writing a cache. The expected
+/// notifications are literal user-facing strings, including their two-space
+/// prefixes.
+///
+/// ```
+/// use nms_copilot::session::{PositionContext, SessionState};
+/// use nms_copilot::watch::{apply_and_notify, notifications_for_delta};
+/// use nms_core::{BaseType, Biome, GalacticAddress, PlayerBase, PlayerMoved, PlayerState, Planet, SaveDelta, System, SystemId};
+/// use nms_graph::GalaxyModel;
+///
+/// let origin = GalacticAddress::new(3, 0, 0, 1, 2, 0);
+/// let destination = GalacticAddress::new(3, 0, 0, 1, 4, 9);
+/// let origin_id = SystemId::from_address(&origin);
+/// let destination_id = SystemId::from_address(&destination);
+/// let mut model = GalaxyModel::new();
+/// model.set_active_galaxy(7);
+/// model.player_state = Some(PlayerState::new(origin, 0, None, None, 7, 8, 9));
+/// model.insert_system(System::new(
+///     origin,
+///     Some("Origin-0".into()),
+///     None,
+///     None,
+///     vec![],
+/// ));
+/// let mut session = SessionState::from_model(&model);
+/// session.position = Some(PositionContext::Address(origin));
+/// session.biome_filter = Some(Biome::Lush);
+/// session.warp_range = Some(1200.0);
+///
+/// let delta = SaveDelta {
+///     new_systems: vec![System::new(
+///         destination,
+///         Some("Destination-9".into()),
+///         None,
+///         None,
+///         vec![Planet::new(4, Some(Biome::Lush), None, false, Some("Garden-9".into()), None)],
+///     )],
+///     new_planets: vec![(
+///         destination_id,
+///         Planet::new(5, Some(Biome::Toxic), None, false, Some("Leaf-9".into()), None),
+///     )],
+///     player_moved: Some(PlayerMoved { from: origin, to: destination }),
+///     new_bases: vec![PlayerBase::new(
+///         "Outpost-9".into(),
+///         BaseType::HomePlanetBase,
+///         destination,
+///         [0.0, 0.0, 0.0],
+///         None,
+///     )],
+///     modified_bases: vec![],
+/// };
+/// let expected_before = vec![
+///     "  Warped: Origin-0 -> Destination-9".to_owned(),
+///     "  New system: Destination-9 (1 planet)".to_owned(),
+///     "  New scan: \"Leaf-9\" (Toxic) in Destination-9".to_owned(),
+///     "  New base: Outpost-9".to_owned(),
+/// ];
+/// assert_eq!(notifications_for_delta(&model, &delta), expected_before);
+/// assert_eq!((model.system_count(), model.planet_count(), model.bases.len()), (1, 0, 0));
+/// assert_eq!(model.active_galaxy, 7);
+/// let before = model.player_state.as_ref().map(|player| (
+///     player.current_address.packed(), player.current_address.reality_index,
+///     player.current_reality, player.previous_address, player.freighter_address,
+///     player.units, player.nanites, player.quicksilver,
+/// ));
+/// assert_eq!(before, Some((0x2001_0000_0003, 0, 0, None, None, 7, 8, 9)));
+///
+/// let notes = apply_and_notify(&mut model, &mut session, &delta);
+/// assert_eq!(notes, vec![
+///     "  Warped: Origin-0 -> Destination-9".to_owned(),
+///     "  New system: Destination-9 (1 planet)".to_owned(),
+///     "  New scan: \"Leaf-9\" (Toxic) in Destination-9".to_owned(),
+///     "  New base: Outpost-9".to_owned(),
+/// ]);
+/// assert_eq!((model.system_count(), model.planet_count(), model.bases.len()), (2, 2, 1));
+/// assert_eq!(model.active_galaxy, 9);
+/// let after = model.player_state.as_ref().map(|player| (
+///     player.current_address.packed(), player.current_address.reality_index,
+///     player.current_reality, player.previous_address, player.freighter_address,
+///     player.units, player.nanites, player.quicksilver,
+/// ));
+/// assert_eq!(after, Some((0x4001_0000_0003, 9, 9, None, None, 7, 8, 9)));
+/// assert_eq!(model.system(&origin_id).map(|system| system.name.as_deref()), Some(Some("Origin-0")));
+/// assert_eq!(model.system(&destination_id).map(|system| system.name.as_deref()), Some(Some("Destination-9")));
+/// assert_eq!(model.planets.get(&(destination_id, 4)).map(|planet| (planet.name.as_deref(), planet.biome)), Some((Some("Garden-9"), Some(Biome::Lush))));
+/// assert_eq!(model.planets.get(&(destination_id, 5)).map(|planet| (planet.name.as_deref(), planet.biome)), Some((Some("Leaf-9"), Some(Biome::Toxic))));
+/// let mut system_keys: Vec<_> = model.systems.keys()
+///     .map(|id| (id.reality_index(), id.system_address()))
+///     .collect();
+/// system_keys.sort_unstable();
+/// assert_eq!(system_keys, [(0, 0x0001_0000_0003), (9, 0x0001_0000_0003)]);
+/// let mut planet_keys: Vec<_> = model.planets.keys()
+///     .map(|(id, index)| (id.reality_index(), id.system_address(), *index))
+///     .collect();
+/// planet_keys.sort_unstable();
+/// assert_eq!(planet_keys, [(9, 0x0001_0000_0003, 4), (9, 0x0001_0000_0003, 5)]);
+/// let mut base_keys: Vec<_> = model.bases.keys().map(String::as_str).collect();
+/// base_keys.sort_unstable();
+/// assert_eq!(base_keys, ["outpost-9"]);
+/// assert_eq!(
+///     model.bases.get("outpost-9").map(|base| (
+///         base.name.as_str(), base.address.packed(), base.address.reality_index,
+///     )),
+///     Some(("Outpost-9", 0x4001_0000_0003, 9)),
+/// );
+/// assert_eq!(
+///     (session.galaxy.index, session.galaxy.name, session.galaxy.galaxy_type,
+///      session.system_count, session.planet_count,
+///      session.position.as_ref().map(|position| {
+///          let kind = match position {
+///              PositionContext::Address(_) => "address",
+///              PositionContext::Base { .. } => "base",
+///              PositionContext::PlayerPosition(_) => "player",
+///          };
+///          (
+///              kind,
+///              position.label(),
+///              position.address().packed(),
+///              position.address().reality_index,
+///          )
+///      }),
+///      session.biome_filter, session.warp_range),
+///     (9, "Eissentam", nms_core::GalaxyType::Lush, 2, 2,
+///      Some(("address", "0x200100000003".to_owned(), 0x2001_0000_0003, 0)),
+///      Some(Biome::Lush), Some(1200.0)),
+/// );
+/// ```
 pub fn apply_and_notify(
     model: &mut GalaxyModel,
     session: &mut SessionState,
