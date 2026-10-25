@@ -1,8 +1,91 @@
-//! Configuration file support for NMS Copilot.
+//! Read and resolve NMS Copilot configuration.
 //!
-//! Config file location: `~/.nms-copilot/config.toml`
+//! Configuration is read from `~/.nms-copilot/config.toml`; this module does
+//! not write configuration files. Missing fields use the defaults described
+//! on [`Config`] and its nested types. TOML strings such as save formats,
+//! table styles, and routing algorithms are stored as supplied and are not
+//! validated here. Unknown TOML keys are ignored by deserialization.
 //!
-//! All fields are optional -- sensible defaults are used when not specified.
+//! [`Config::load_from`] is useful when an application already has a config
+//! path. Environment overrides are read after the file or defaults, and only
+//! the three documented `NMS_SAVE_*` variables are recognized. Cache-path
+//! construction and the explicit-save-file fast path return configured paths
+//! literally. [`Config::effective_save_file`] and [`Config::save_path`] also
+//! inspect legacy paths and search configured save directories. No getter
+//! creates a file or canonicalizes a returned path.
+//!
+//! # Examples
+//!
+//! ```
+//! use nms_copilot::config::Config;
+//! use std::net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr};
+//! use std::path::{Path, PathBuf};
+//! use std::time::Duration;
+//!
+//! let mut config = Config::default();
+//! assert_eq!(config.save.path, None);
+//! assert_eq!(config.save.dir, None);
+//! assert_eq!(config.save.file, None);
+//! assert_eq!(config.save.format, "auto");
+//! assert!(config.display.emoji_glyphs);
+//! assert!(config.display.color);
+//! assert_eq!(config.display.table_style, "rounded");
+//! assert_eq!(config.display.banner, None);
+//! assert!(config.display.show_banner);
+//! assert!(config.display.show_system_banner);
+//! assert_eq!(config.defaults.galaxy, 0);
+//! assert_eq!(config.defaults.warp_range, None);
+//! assert_eq!(config.defaults.tsp_algorithm, "2opt");
+//! assert_eq!(config.defaults.find_limit, None);
+//! assert!(config.cache.enabled);
+//! assert_eq!(config.cache.path, None);
+//! assert!(config.watch.enabled);
+//! assert_eq!(config.watch.debounce_ms, 500);
+//! assert_eq!(config.mcp.host, IpAddr::V4(Ipv4Addr::LOCALHOST));
+//! assert_eq!(config.mcp.port, 5099);
+//! assert_eq!(config.mcp_http_addr(), SocketAddr::new(IpAddr::V4(Ipv4Addr::LOCALHOST), 5099));
+//! assert!(config.cache_enabled());
+//! assert!(config.watch_enabled());
+//! assert_eq!(config.watch_debounce(), Duration::from_millis(500));
+//!
+//! config.save.file = Some(PathBuf::from("chosen.hg"));
+//! config.save.path = Some(PathBuf::from("legacy.hg"));
+//! config.save.dir = Some(PathBuf::from("account"));
+//! assert_eq!(config.effective_save_file(), Some(PathBuf::from("chosen.hg")));
+//! assert_eq!(config.save_path(), Some(PathBuf::from("chosen.hg")));
+//! config.cache.path = Some(PathBuf::from("override.rkyv"));
+//! assert_eq!(config.cache_path_for(Some(Path::new("account/save3.hg"))), PathBuf::from("override.rkyv"));
+//! assert_eq!(config.cache_path_for(None), PathBuf::from("override.rkyv"));
+//!
+//! config.cache.enabled = false;
+//! config.watch.enabled = false;
+//! config.watch.debounce_ms = 0;
+//! config.mcp.host = IpAddr::V6(Ipv6Addr::LOCALHOST);
+//! config.mcp.port = 0;
+//! assert!(!config.cache_enabled());
+//! assert!(!config.watch_enabled());
+//! assert_eq!(config.watch_debounce(), Duration::ZERO);
+//! assert_eq!(config.mcp_http_addr(), SocketAddr::new(IpAddr::V6(Ipv6Addr::LOCALHOST), 0));
+//! ```
+//!
+//! # Reading configuration
+//!
+//! This `no_run` example compiles but does not run. If run, these calls read
+//! configuration sources and process the current environment; they do not
+//! modify the configuration file or environment.
+//!
+//! ```no_run
+//! # fn main() -> Result<(), nms_copilot::config::ConfigError> {
+//! use nms_copilot::config::Config;
+//! use std::path::Path;
+//!
+//! let _specific = Config::load_from(Path::new("config.toml"))?;
+//! let _default_path = Config::load()?;
+//! let mut defaults = Config::default();
+//! defaults.apply_env_overrides();
+//! # Ok(())
+//! # }
+//! ```
 
 use std::fs;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
@@ -13,43 +96,51 @@ use serde::Deserialize;
 
 use crate::paths;
 
-/// Top-level configuration.
+/// Top-level configuration loaded from TOML and environment overrides.
+///
+/// Each nested section has serde defaults, so omitted fields use that section's
+/// [`Default`] implementation. Unknown TOML keys are ignored. Values such as
+/// format and algorithm names remain strings and are not validated here.
 #[derive(Debug, Deserialize, Default)]
 #[serde(default)]
 pub struct Config {
-    /// Save file configuration.
+    /// Save paths and the save format (`"auto"` by default).
     pub save: SaveConfig,
 
-    /// Display preferences.
+    /// Display preferences; defaults enable glyph emoji, color, and banners.
     pub display: DisplayConfig,
 
-    /// Default values for commands.
+    /// Command defaults: galaxy 0, `"2opt"`, and no range or result limit.
     pub defaults: DefaultsConfig,
 
-    /// Cache settings.
+    /// Cache enablement and an optional explicit cache path.
     pub cache: CacheConfig,
 
-    /// File watcher settings.
+    /// File watcher enablement and debounce milliseconds (default 500).
     pub watch: WatchConfig,
 
-    /// MCP server settings.
+    /// MCP HTTP host and port; constructing the address does not bind a socket.
     pub mcp: McpConfig,
 }
 
-/// Save file location and format.
+/// Save path settings and the unvalidated format string.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct SaveConfig {
-    /// DEPRECATED: Old combined path. Treated as `file` for backward compat.
+    /// Legacy combined save path for file and directory fallback.
+    ///
+    /// Effective resolution checks `save.file`, this path as a file, `save.dir`
+    /// for its newest current save, then this path as a directory for its
+    /// newest current save. Searches are limited to the supplied directory.
     pub path: Option<PathBuf>,
 
-    /// Path to the NMS save directory (account dir containing `save*.hg`).
+    /// Directory searched for its most recent save after the legacy file check.
     pub dir: Option<PathBuf>,
 
-    /// Path to a specific NMS save file.
+    /// Explicit save file returned literally, even when it does not exist.
     pub file: Option<PathBuf>,
 
-    /// Save format: "auto", "raw", "goatfungus".
+    /// Unvalidated save format string; defaults to `"auto"`.
     pub format: String,
 }
 
@@ -64,27 +155,27 @@ impl Default for SaveConfig {
     }
 }
 
-/// Display preferences.
+/// Display settings with serde defaults; strings are not validated here.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct DisplayConfig {
     /// Use emoji for portal glyphs (true) or hex digits (false).
     pub emoji_glyphs: bool,
 
-    /// Enable ANSI color output.
+    /// Whether consumers should enable ANSI color output; defaults to `true`.
     pub color: bool,
 
-    /// Table border style.
+    /// Unvalidated table border style string; defaults to `"rounded"`.
     pub table_style: String,
 
     /// Custom banner text. `None` = use default embedded banner.
     /// Empty string = disable banner.
     pub banner: Option<String>,
 
-    /// Whether to show the art banner at startup (default: true).
+    /// Whether a consumer should show its startup art banner (default `true`).
     pub show_banner: bool,
 
-    /// Whether to show the system info line after the banner (default: true).
+    /// Whether a consumer should show the system line after its banner (default `true`).
     pub show_system_banner: bool,
 }
 
@@ -101,7 +192,7 @@ impl Default for DisplayConfig {
     }
 }
 
-/// Default values for commands.
+/// Defaults consumed by command frontends; values are stored without validation.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct DefaultsConfig {
@@ -111,7 +202,7 @@ pub struct DefaultsConfig {
     /// Default warp range in light-years for routing.
     pub warp_range: Option<f64>,
 
-    /// Default TSP algorithm: "nearest-neighbor" or "2opt".
+    /// Unvalidated TSP algorithm name; defaults to `"2opt"`.
     pub tsp_algorithm: String,
 
     /// Default number of results for find.
@@ -129,14 +220,17 @@ impl Default for DefaultsConfig {
     }
 }
 
-/// Cache settings.
+/// Cache settings. An explicit `path` overrides derived and legacy cache paths.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct CacheConfig {
-    /// Enable caching (default: true).
+    /// Whether a consumer should use its cache (default `true`).
     pub enabled: bool,
 
-    /// Cache file path (default: ~/.nms-copilot/galaxy.rkyv).
+    /// Optional explicit cache-path override.
+    ///
+    /// When absent, a save path derives an account/slot cache path; without a
+    /// save path, resolution uses the legacy `galaxy.rkyv` path.
     pub path: Option<PathBuf>,
 }
 
@@ -149,13 +243,13 @@ impl Default for CacheConfig {
     }
 }
 
-/// File watcher settings.
+/// File watcher settings; a zero-millisecond debounce is accepted.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct WatchConfig {
-    /// Enable file watching (default: true).
+    /// Whether a consumer should watch for file changes (default `true`).
     pub enabled: bool,
-    /// Debounce duration in milliseconds (default: 500).
+    /// Debounce duration in milliseconds, converted directly to [`Duration`].
     pub debounce_ms: u64,
 }
 
@@ -168,14 +262,14 @@ impl Default for WatchConfig {
     }
 }
 
-/// MCP server settings.
+/// MCP HTTP listener settings. These values form an address but do not start a listener.
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct McpConfig {
-    /// Host/IP address for the MCP HTTP server.
+    /// Host/IP address for the MCP HTTP server; defaults to IPv4 localhost.
     pub host: IpAddr,
 
-    /// Port for the MCP HTTP server.
+    /// Port for the MCP HTTP server; defaults to 5099 and is not bound here.
     pub port: u16,
 }
 
@@ -189,16 +283,39 @@ impl Default for McpConfig {
 }
 
 impl Config {
-    /// Load config from the default path (`~/.nms-copilot/config.toml`).
+    /// Load configuration from [`paths::config_path`].
     ///
-    /// Returns the default config if the file doesn't exist.
-    /// Returns an error if the file exists but can't be parsed.
+    /// A missing file selects defaults; an existing file is read as UTF-8 and
+    /// parsed before the supported environment overrides are applied. Resolving
+    /// the default path inherits [`paths::data_dir`]'s panic if no home directory
+    /// is available. See the [configuration module](crate::config) for its
+    /// compiled loading example. This function does not write configuration.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ConfigError::Io`] when reading the file fails and
+    /// [`ConfigError::Parse`] when its contents cannot be deserialized.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the home directory cannot be determined while resolving the default path.
     pub fn load() -> Result<Self, ConfigError> {
         let path = paths::config_path();
         Self::load_from(&path)
     }
 
-    /// Load config from a specific path.
+    /// Load configuration from `path`, using defaults when it does not exist.
+    ///
+    /// Environment overrides are applied after either defaults or file values.
+    /// This method does not create or write the path.
+    /// See the [configuration module](crate::config) for its compiled loading example.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ConfigError::Io`] for a read/UTF-8 error and
+    /// [`ConfigError::Parse`] when TOML cannot be deserialized. Parsing first
+    /// tries direct TOML deserialization, then a TOML value conversion; if both
+    /// attempts fail, the original document error is returned.
     pub fn load_from(path: &Path) -> Result<Self, ConfigError> {
         let mut config = if !path.exists() {
             Self::default()
@@ -210,12 +327,16 @@ impl Config {
         Ok(config)
     }
 
-    /// Apply environment variable overrides to the config.
+    /// Apply supported Unicode environment overrides in place.
     ///
     /// Reads:
     /// - `NMS_SAVE_DIR` -> `self.save.dir`
     /// - `NMS_SAVE_FILE` -> `self.save.file`
     /// - `NMS_SAVE_FORMAT` -> `self.save.format`
+    ///
+    /// Values are copied literally without trimming, expansion, or validation;
+    /// non-Unicode values and all other environment variables are ignored.
+    /// See the [configuration module](crate::config) for its compiled loading example.
     pub fn apply_env_overrides(&mut self) {
         if let Ok(val) = std::env::var("NMS_SAVE_DIR") {
             self.save.dir = Some(PathBuf::from(val));
@@ -228,7 +349,7 @@ impl Config {
         }
     }
 
-    /// Resolve the effective save file path from all configured sources.
+    /// Resolve the effective save path using the documented precedence.
     ///
     /// Priority:
     /// 1. `save.file` (explicit file path)
@@ -236,6 +357,13 @@ impl Config {
     /// 3. `save.dir` — find most recent save in that directory
     /// 4. `save.path` if it points to a directory (backward compat)
     /// 5. `None` if nothing is configured or resolvable
+    ///
+    /// The explicit file is returned literally without checking existence.
+    /// Directory searches use the save locator to choose the newest current
+    /// save in the supplied account directory. They are not recursive and do
+    /// not discover a default account. Search failures fall through to the next
+    /// source. Legacy file/directory checks and searches access the filesystem;
+    /// the result is not canonicalized.
     pub fn effective_save_file(&self) -> Option<PathBuf> {
         // 1. Explicit file
         if let Some(ref file) = self.save.file {
@@ -267,12 +395,19 @@ impl Config {
         None
     }
 
-    /// Resolve the effective cache path.
+    /// Resolve an effective cache path without checking or creating it.
     ///
-    /// If `cache.path` is explicitly set in config, uses that (single override).
-    /// Otherwise, derives a per-save cache path from the save file path:
+    /// If `cache.path` is set, returns it literally. Otherwise a supplied save
+    /// path derives a per-save cache path from its lexical components:
     /// `~/.nms-copilot/<account_dir>/<save_stem>/galaxy.rkyv`.
-    /// Falls back to the legacy `~/.nms-copilot/galaxy.rkyv` if no save path given.
+    /// With no save path, it falls back to the legacy
+    /// `~/.nms-copilot/galaxy.rkyv` path. An explicit override avoids resolving
+    /// the home directory.
+    ///
+    /// # Panics
+    ///
+    /// Panics if no cache override is set and the home directory cannot be
+    /// determined while building the fallback path.
     pub fn cache_path_for(&self, save_path: Option<&std::path::Path>) -> PathBuf {
         if let Some(p) = &self.cache.path {
             return p.clone();
@@ -283,7 +418,7 @@ impl Config {
         }
     }
 
-    /// Resolve the effective save path (if configured).
+    /// Return the effective save path, if configured or found.
     ///
     /// Delegates to [`Self::effective_save_file`]. For backward compatibility,
     /// also checks the legacy `save.path` field.
@@ -291,22 +426,22 @@ impl Config {
         self.effective_save_file()
     }
 
-    /// Whether caching is enabled.
+    /// Return the stored cache-enabled flag.
     pub fn cache_enabled(&self) -> bool {
         self.cache.enabled
     }
 
-    /// Whether file watching is enabled.
+    /// Return the stored file-watcher enabled flag.
     pub fn watch_enabled(&self) -> bool {
         self.watch.enabled
     }
 
-    /// The configured debounce duration for file watching.
+    /// Convert the stored debounce milliseconds directly to a [`Duration`].
     pub fn watch_debounce(&self) -> Duration {
         Duration::from_millis(self.watch.debounce_ms)
     }
 
-    /// The configured MCP HTTP bind address.
+    /// Construct the configured MCP HTTP socket address without binding it.
     pub fn mcp_http_addr(&self) -> SocketAddr {
         SocketAddr::new(self.mcp.host, self.mcp.port)
     }
@@ -323,11 +458,21 @@ fn parse_config(content: &str) -> Result<Config, toml::de::Error> {
     }
 }
 
-/// Config loading errors.
+/// Errors returned while reading or deserializing configuration.
+///
+/// Both variants expose their contained error through [`std::error::Error::source`].
 #[derive(Debug)]
 pub enum ConfigError {
-    Io(std::io::Error),
-    Parse(toml::de::Error),
+    /// Reading the configuration file or decoding its UTF-8 contents failed.
+    Io(
+        /// Underlying filesystem or UTF-8 decoding error.
+        std::io::Error,
+    ),
+    /// The TOML document could not be deserialized into configuration values.
+    Parse(
+        /// Underlying TOML deserialization error.
+        toml::de::Error,
+    ),
 }
 
 impl std::fmt::Display for ConfigError {
