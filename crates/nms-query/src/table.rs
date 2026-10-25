@@ -1,13 +1,16 @@
 //! NMS-themed table formatting using `oxur-cli` tables.
 //!
-//! Provides a deep-space color palette for all tabular output, plus a no-color
-//! variant for piped output and MCP consumption.
+//! Provides embedded table palettes and a helper that renders caller-built rows.
+//! The no-color palette is black-and-white: title and footer regions are black on
+//! black, while body rows are black with white text. It is not ANSI-free output.
 //!
 //! The `build_table` function handles the `oxur-cli` row layout convention
 //! automatically: callers push `[header, data..., footer]` and the helper
 //! inserts a title row at position 0 so the theme styling aligns correctly.
 
+/// Re-export of the upstream row builder used by [`build_table`].
 pub use oxur_cli::table::Builder;
+/// Re-export of the upstream table styling configuration.
 pub use oxur_cli::table::TableStyleConfig;
 
 /// Dummy type to satisfy the `Tabled` trait bound on `apply_to_table`.
@@ -103,12 +106,22 @@ bg_color = "black"
 fg_color = "black"
 "##;
 
-/// Parse and return the NMS deep-space color theme.
+/// Parse the embedded deep-space TOML into a table style configuration.
+///
+/// # Panics
+///
+/// Panics if the embedded constant is not valid TOML for the upstream parser.
 pub fn nms_theme() -> TableStyleConfig {
     toml::from_str(NMS_THEME).expect("NMS_THEME TOML is valid")
 }
 
-/// Parse and return the no-color theme.
+/// Parse the embedded black-and-white TOML into a table style configuration.
+///
+/// This palette does not guarantee ANSI-free output from the renderer.
+///
+/// # Panics
+///
+/// Panics if the embedded constant is not valid TOML for the upstream parser.
 pub fn nms_theme_no_color() -> TableStyleConfig {
     toml::from_str(NMS_THEME_NO_COLOR).expect("NMS_THEME_NO_COLOR TOML is valid")
 }
@@ -124,10 +137,32 @@ pub fn nms_theme_no_color() -> TableStyleConfig {
 ///    aligns correctly (title at row 0, header at row 1, data at rows 2+,
 ///    footer at last row). Title words can be spread across columns by
 ///    passing multiple elements in the `title` slice.
-/// 3. If `count_label` is non-empty, replaces the empty footer with a
-///    "Total: N <label>" summary. If the combined text fits within the
-///    widest column-0 entry, it goes entirely in column 0; otherwise
-///    "Total:" goes in column 0 and "N <label>" in column 1.
+/// 3. For a nonempty `count_label` and at least two columns, computes a data count
+///    as `max(records.len() - 2, 0)`. It removes the last row only when every cell
+///    in that row is empty, then appends the summary. An empty label or fewer than
+///    two columns leaves the supplied footer as-is.
+///
+/// The combined `Total: N <label>` string is compared by UTF-8 byte length with
+/// the longest column-0 data cell (not display width); it goes in column 0 when it
+/// fits, otherwise `Total:` goes in column 0 and `N <label>` in column 1. Title
+/// elements beyond the table's column count are ignored. Returns a string with a
+/// leading newline and two trailing newlines; cell contents are not sanitized.
+///
+/// # Examples
+///
+/// ```
+/// use nms_query::table::{build_table, nms_theme_no_color, Builder};
+/// let mut rows = Builder::default();
+/// rows.push_record(["Name", "Value"]);
+/// rows.push_record(["Atlas", "7"]);
+/// rows.push_record(["", ""]);
+/// let rendered = build_table(rows, &["EXAMPLE"], &nms_theme_no_color(), "Rows");
+/// assert!(rendered.starts_with('\n'));
+/// assert!(rendered.ends_with("\n\n"));
+/// for text in ["EXAMPLE", "Name", "Value", "Atlas", "7", "Total:", "1 Rows"] {
+///     assert!(rendered.contains(text));
+/// }
+/// ```
 pub fn build_table(
     builder: Builder,
     title: &[&str],

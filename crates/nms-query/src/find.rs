@@ -7,19 +7,30 @@ use nms_graph::model::PlanetKey;
 use nms_graph::query::BiomeFilter;
 use nms_graph::{GalaxyModel, GraphError};
 
-/// How to determine the "from" point for distance calculations.
+/// How to determine the reference galaxy and origin for distance calculations.
+///
+/// See [`execute_find`] for current-position validation and explicit-reference
+/// behavior. The [`crate#examples`] shows an explicit
+/// address reference in use.
 #[derive(Debug, Clone, Default)]
 pub enum ReferencePoint {
     /// Use the player's current position from the save file.
     #[default]
     CurrentPosition,
     /// Use a named base's position.
-    Base(String),
+    Base(
+        /// Name resolved through the model-wide base index, without trimming.
+        String,
+    ),
     /// Use an explicit galactic address.
-    Address(GalacticAddress),
+    Address(
+        /// Address whose galaxy supplies the query scope and distance origin.
+        GalacticAddress,
+    ),
 }
 
-/// Parameters for a planet/system search.
+/// Parameters for a planet/system search. All supplied filters are combined
+/// before the optional nearest-result limit is applied. See the [`crate#examples`] for a complete query and result observation.
 #[derive(Debug, Clone, Default)]
 pub struct FindQuery {
     /// Filter by biome type.
@@ -28,42 +39,58 @@ pub struct FindQuery {
     pub biome_subtype: Option<BiomeSubType>,
     /// Filter by infested flag.
     pub infested: Option<bool>,
-    /// Only include results within this radius (light-years). Negative values
-    /// return no results; NaN returns no results without `nearest` and adds no
-    /// radius cutoff when `nearest` is set.
+    /// Optional maximum distance in light-years from the selected reference.
+    ///
+    /// Negative values always return no results. NaN returns no results when
+    /// `nearest` is `None`; with `nearest` set, NaN adds no radius cutoff.
     pub within_ly: Option<f64>,
     /// Return at most this many results after all filters, nearest first.
     pub nearest: Option<usize>,
-    /// Filter by planet or system name substring, case-insensitively.
+    /// Case-insensitive substring matched against either planet or system name.
     pub name_pattern: Option<String>,
-    /// Filter by discoverer username (case-insensitive substring).
+    /// Case-insensitive substring matched against the system discoverer name.
     pub discoverer: Option<String>,
-    /// Only include planets that have a name.
+    /// Include planets whose name is `Some`, including an empty string.
     pub named_only: bool,
     /// Reference point for distance calculations.
     pub from: ReferencePoint,
 }
 
-/// A single result from a find query.
+/// A cloned planet/system match and its query-relative distance.
+///
+/// `portal_hex` comes from the stored system address, which may retain a nonzero
+/// planet index. The [`nms_graph::SystemId`] used as the system key is planet-zeroed.
+/// See the [`crate#examples`] for all returned fields.
 #[derive(Debug, Clone)]
 pub struct FindResult {
-    /// The matching planet.
+    /// Cloned matching planet record.
     pub planet: Planet,
-    /// The system containing the planet.
+    /// Cloned containing system record.
     pub system: System,
     /// Distance from the reference point in light-years.
     pub distance_ly: f64,
-    /// Portal glyphs as hex (12 digits). Caller renders as emoji.
+    /// Twelve-digit uppercase hex from the stored system address; callers may render it as glyphs.
     pub portal_hex: String,
 }
 
 /// Execute a find query against one selected galaxy in the model.
 ///
-/// Current-position queries use the active galaxy and report a mismatch when
-/// the player's address is in another galaxy. Explicit address and base
-/// references select their own galaxy without mutating the model. Every planet
-/// and system filter is applied before the optional nearest limit. Results are
-/// sorted by distance, then numeric galaxy, system address, and planet index.
+/// Resolve a reference and return matching planets from its galaxy.
+/// See the [`crate#examples`] for current-position failure
+/// and explicit-address success observations.
+///
+/// Current-position queries require a player whose galaxy matches the active
+/// galaxy. Explicit address and base references use their own galaxy without
+/// changing model selection. All biome, subtype, infested, name, discoverer, and
+/// named-only filters combine before `nearest`; name matching checks planet or
+/// system names, while discoverer matching checks `System.discoverer`.
+/// Negative radius always returns no rows. With `nearest == None`, NaN returns
+/// no rows; with `nearest == Some(_)`, NaN disables the radius cutoff. Positive
+/// infinity is inclusive and `nearest == Some(0)` returns no rows. Missing systems
+/// for flattened planet entries are skipped, and both the key galaxy and stored
+/// system-address galaxy must match the reference. Results sort by distance,
+/// galaxy, canonical system address, and planet index; explicit references do not
+/// mutate the model's active-galaxy selection.
 ///
 /// # Errors
 ///
