@@ -9,11 +9,31 @@ use chrono::DateTime;
 use crate::model::*;
 
 impl RawDiscoveryRecord {
-    /// Legacy conversion to a core discovery record, or `None` for an unknown type.
+    /// Convert one recognized raw discovery row through the legacy address layout.
     ///
-    /// This compatibility helper uses the historical galaxy-zero behavior.
-    /// Applications should use the address paired by
+    /// The converter recognizes exactly `Planet`, `SolarSystem`, `Sector`,
+    /// `Animal`, `Flora`, and `Mineral`; other `DT` strings return `None`. It
+    /// uses galaxy zero for the packed address and does not extract a discovery
+    /// display name from `DM.CN`. A nonempty `OWS.USN` becomes the discoverer,
+    /// `FL.U` greater than zero becomes uploaded. A positive `OWS.TS` is cast
+    /// from `u64` to `i64` and then converted when chrono can represent it, so
+    /// not every positive source value yields a timestamp. For source-aware
+    /// addresses, use the row/address pair from
     /// [`crate::ValidatedSave::discoveries`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let raw: nms_save::model::RawDiscoveryRecord = serde_json::from_str(
+    ///     r#"{"DD":{"UA":"0x513300F79B1D82","DT":"Flora"},"OWS":{"USN":"Pilot","TS":1700000000},"FL":{"U":1}}"#,
+    /// )?;
+    /// let record = raw.to_core_record().ok_or_else(|| {
+    ///     std::io::Error::new(std::io::ErrorKind::Other, "unrecognized discovery type")
+    /// })?;
+    /// assert_eq!(record.discoverer.as_deref(), Some("Pilot"));
+    /// assert!(record.is_uploaded);
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn to_core_record(&self) -> Option<nms_core::DiscoveryRecord> {
         let discovery_type = match self.dd.dt.as_str() {
             "Planet" => nms_core::Discovery::Planet,
@@ -51,10 +71,25 @@ impl RawDiscoveryRecord {
 }
 
 impl PersistentPlayerBase {
-    /// Legacy conversion to a core base using the historical galaxy-zero address.
+    /// Convert a typed base to a core base using the legacy packed-address layout.
     ///
-    /// Applications should use the checked bases exposed by
+    /// `HomePlanetBase` and `FreighterBase` map to their matching core variants;
+    /// every other source string maps to `ExternalPlanetBase`. The address uses
+    /// galaxy zero, position and name are copied, and an empty owner UID becomes
+    /// `None`. The checked base projection is available from
     /// [`crate::ValidatedSave::bases`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let raw: nms_save::model::PersistentPlayerBase = serde_json::from_str(
+    ///     r#"{"GalacticAddress":"0x40050003AB8C07","Name":"Home","Owner":{"UID":"123"},"BaseType":{"PersistentBaseTypes":"HomePlanetBase"}}"#,
+    /// )?;
+    /// let base = raw.to_core_base();
+    /// assert_eq!(base.name, "Home");
+    /// assert_eq!(base.owner_uid.as_deref(), Some("123"));
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn to_core_base(&self) -> nms_core::PlayerBase {
         let base_type = match self.base_type.persistent_base_types.as_str() {
             "HomePlanetBase" => nms_core::BaseType::HomePlanetBase,
@@ -77,9 +112,19 @@ impl PersistentPlayerBase {
 }
 
 impl SaveRoot {
-    /// Get `PlayerStateData` for the active context through the legacy parser.
+    /// Return player-state data for the active context using legacy selection.
     ///
-    /// This accessor retains serde-defaulted address behavior for compatibility.
+    /// Only the exact string `Expedition` selects the expedition context; every
+    /// other value selects the base context. The selected fields may already
+    /// contain serde defaults, so this accessor is not source validation.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let root = nms_save::parse_save(br#"{"Version":1,"Platform":"Test","ActiveContext":"Expedition","CommonStateData":{},"BaseContext":{"PlayerStateData":{"Units":10}},"ExpeditionContext":{"PlayerStateData":{"Units":20}},"DiscoveryManagerData":{}}"#)?;
+    /// assert_eq!(root.active_player_state().units, 20);
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn active_player_state(&self) -> &PlayerStateData {
         match self.active_context.as_str() {
             "Expedition" => &self.expedition_context.player_state_data,
@@ -87,10 +132,27 @@ impl SaveRoot {
         }
     }
 
-    /// Convert active player state through the legacy serde-decoded address fields.
+    /// Convert the selected typed state using the legacy address conversion.
     ///
-    /// Applications should use [`crate::ValidatedSave::player_state`] when
-    /// source addresses must be validated before defaults or narrowing.
+    /// Current and previous addresses use the expanded typed components and
+    /// the supplied reality index through the core 48-bit conversion; they do
+    /// not decode a packed source address. Previous-address absence is detected
+    /// only from zero X, Y, Z, and solar-system components; planet and galaxy
+    /// do not participate in that sentinel. Currency values are cast from
+    /// signed to unsigned, and the freighter address is currently `None`. Use
+    /// [`crate::ValidatedSave::player_state`] when original source members must
+    /// be checked before serde defaults or narrowing.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let root = nms_save::parse_save(br#"{"Version":1,"Platform":"Test","ActiveContext":"Main","CommonStateData":{},"BaseContext":{"PlayerStateData":{"UniverseAddress":{"RealityIndex":9,"GalacticAddress":{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}},"Units":25}},"ExpeditionContext":{},"DiscoveryManagerData":{}}"#)?;
+    /// let state = root.to_core_player_state();
+    /// assert_eq!(state.current_reality, 9);
+    /// assert_eq!(state.current_address.voxel_x(), 3);
+    /// assert_eq!(state.freighter_address, None);
+    /// # Ok::<(), Box<dyn std::error::Error>>(())
+    /// ```
     pub fn to_core_player_state(&self) -> nms_core::PlayerState {
         let ps = self.active_player_state();
         let ua = &ps.universe_address;

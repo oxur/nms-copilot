@@ -1,4 +1,9 @@
-//! NMS save file discovery: platform-specific paths, account directories, save files.
+//! Discover NMS account directories and save-file paths without parsing save contents.
+//!
+//! The platform helper returns a conventional root path; listing functions
+//! inspect directory entries and file metadata only. They do not read or
+//! validate save bytes, metadata files, or account identity. The explicit-path
+//! functions are useful with isolated directories in tools and tests.
 
 use std::fmt;
 use std::path::{Path, PathBuf};
@@ -8,25 +13,44 @@ use std::time::SystemTime;
 // Errors
 // ---------------------------------------------------------------------------
 
-/// Error returned by save file discovery operations.
+/// Error returned while resolving a save root or listing account/save entries.
+///
+/// Path-bearing variants retain the directory associated with the failed
+/// lookup. [`Self::Io`] wraps the operating-system error from directory or
+/// metadata access.
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum LocateError {
+    /// The operating system home or data directory could not be resolved.
     #[error("could not determine home/data directory")]
     NoHomeDir,
 
+    /// The conventional root path does not exist.
     #[error("NMS save directory not found: {0}")]
-    SaveDirNotFound(PathBuf),
+    SaveDirNotFound(
+        /// Resolved root path that did not exist.
+        PathBuf,
+    ),
 
+    /// No UTF-8 subdirectory was found while listing accounts.
     #[error("no account directories found in {0}")]
-    NoAccountDirs(PathBuf),
+    NoAccountDirs(
+        /// Directory searched for UTF-8 account subdirectories.
+        PathBuf,
+    ),
 
+    /// No regular file with an accepted save filename was found.
     #[error("no save files found in {0}")]
-    NoSaveFiles(PathBuf),
+    NoSaveFiles(
+        /// Account or root directory in which no accepted save name was found.
+        PathBuf,
+    ),
 
+    /// The target operating system has no configured automatic save-root path.
     #[error("unsupported platform for NMS save auto-detection")]
     UnsupportedPlatform,
 
+    /// An operating-system error encountered while reading a directory or file metadata.
     #[error(transparent)]
     Io(#[from] std::io::Error),
 }
@@ -39,12 +63,18 @@ pub enum LocateError {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum AccountKind {
-    /// Steam account with numeric Steam ID.
-    Steam(u64),
+    /// Steam account whose directory suffix parsed as a `u64`.
+    Steam(
+        /// Numeric identifier parsed after the `st_` prefix.
+        u64,
+    ),
     /// GOG "DefaultUser" account.
     Gog,
-    /// Unrecognized directory name.
-    Unknown(String),
+    /// Directory name that did not match the recognized GOG or Steam forms.
+    Unknown(
+        /// Original UTF-8 directory name.
+        String,
+    ),
 }
 
 impl fmt::Display for AccountKind {
@@ -75,7 +105,10 @@ impl AccountDir {
         &self.kind
     }
 
-    /// The directory name component (e.g., `st_76561198025707979`).
+    /// Return the UTF-8 directory name component.
+    ///
+    /// If the stored path's final component is not valid UTF-8, this returns
+    /// an empty string.
     pub fn name(&self) -> &str {
         self.path.file_name().and_then(|n| n.to_str()).unwrap_or("")
     }
@@ -98,10 +131,12 @@ fn parse_account_kind(name: &str) -> AccountKind {
 // Save file
 // ---------------------------------------------------------------------------
 
-/// Whether a save file is a manual or auto save.
+/// Whether a discovered save filename denotes the manual or auto file.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SaveType {
+    /// Manual save (`save.hg` or an odd numbered file index).
     Manual,
+    /// Auto save (an even numbered file index).
     Auto,
 }
 
@@ -144,7 +179,9 @@ impl SaveFile {
         self.modified
     }
 
-    /// Path to the corresponding metadata file (`mf_save*.hg`).
+    /// Construct the conventional metadata sibling path by prefixing `mf_`.
+    ///
+    /// This only constructs a path; it does not check whether that file exists.
     pub fn metadata_path(&self) -> PathBuf {
         let name = self
             .path
@@ -179,7 +216,7 @@ impl SaveSlot {
         self.auto.as_ref()
     }
 
-    /// The most recently modified save in this slot (manual or auto).
+    /// Return the newer save in this slot, preferring manual on equal timestamps.
     pub fn most_recent(&self) -> Option<&SaveFile> {
         match (&self.manual, &self.auto) {
             (Some(m), Some(a)) => {
@@ -237,13 +274,26 @@ fn parse_save_filename(name: &str) -> Option<(u8, SaveType)> {
 // Platform-specific directory resolution
 // ---------------------------------------------------------------------------
 
-/// Return the platform-specific NMS save root directory.
+/// Return the conventional platform-specific NMS save root path.
 ///
-/// - **macOS**: `~/Library/Application Support/HelloGames/NMS/`
-/// - **Windows**: `%APPDATA%\HelloGames\NMS\`
-/// - **Linux**: `~/.local/share/Steam/steamapps/compatdata/275850/pfx/drive_c/users/steamuser/AppData/Roaming/HelloGames/NMS/`
+/// On macOS this is under `~/Library/Application Support/HelloGames/NMS`;
+/// on Windows it is under `%APPDATA%\HelloGames\NMS`; on Linux it is under
+/// the Steam Proton prefix for app 275850. This resolves a path but does not
+/// check whether it exists or is a directory.
 ///
-/// Does NOT verify the directory exists on disk.
+/// # Examples
+///
+/// ```no_run
+/// let path = nms_save::locate::nms_save_dir()?;
+/// println!("conventional save root: {}", path.display());
+/// # Ok::<(), nms_save::locate::LocateError>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`LocateError::NoHomeDir`] if the platform data/home directory
+/// cannot be determined and [`LocateError::UnsupportedPlatform`] on targets
+/// without a configured path.
 pub fn nms_save_dir() -> Result<PathBuf, LocateError> {
     nms_save_dir_impl()
 }
@@ -271,7 +321,16 @@ fn nms_save_dir_impl() -> Result<PathBuf, LocateError> {
     Err(LocateError::UnsupportedPlatform)
 }
 
-/// Like [`nms_save_dir`] but verifies the directory exists on disk.
+/// Resolve the conventional save root and check that the path exists.
+///
+/// This uses [`Path::exists`]; it does not additionally require the path to be
+/// a directory.
+///
+/// # Errors
+///
+/// Propagates [`LocateError::NoHomeDir`] or
+/// [`LocateError::UnsupportedPlatform`] from [`nms_save_dir`], and returns
+/// [`LocateError::SaveDirNotFound`] when the resolved path does not exist.
 pub fn nms_save_dir_checked() -> Result<PathBuf, LocateError> {
     let dir = nms_save_dir()?;
     if dir.exists() {
@@ -285,10 +344,32 @@ pub fn nms_save_dir_checked() -> Result<PathBuf, LocateError> {
 // Directory listing
 // ---------------------------------------------------------------------------
 
-/// List all account directories inside the NMS save root.
+/// List immediate UTF-8 subdirectories in a save root, sorted by name.
 ///
-/// Returns directories matching `st_*` (Steam), `DefaultUser` (GOG),
-/// and any other subdirectories as [`AccountKind::Unknown`].
+/// `DefaultUser` is recognized as GOG; `st_` followed by a parseable `u64` is
+/// recognized as Steam; every other UTF-8 directory is returned as
+/// [`AccountKind::Unknown`]. Non-directories and names that are not UTF-8 are
+/// skipped. A recognized account kind does not prove that saves are present.
+///
+/// # Examples
+///
+/// ```
+/// use nms_save::locate::AccountKind;
+/// let temp = tempfile::tempdir()?;
+/// std::fs::create_dir(temp.path().join("DefaultUser"))?;
+/// std::fs::create_dir(temp.path().join("st_76561198025707979"))?;
+/// let accounts = nms_save::locate::list_accounts(temp.path())?;
+/// assert_eq!(accounts.iter().map(|a| a.name()).collect::<Vec<_>>(),
+///     vec!["DefaultUser", "st_76561198025707979"]);
+/// assert_eq!(accounts.iter().map(|a| a.kind().clone()).collect::<Vec<_>>(),
+///     vec![AccountKind::Gog, AccountKind::Steam(76561198025707979)]);
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`LocateError::Io`] for directory-entry or file-type errors, and
+/// [`LocateError::NoAccountDirs`] when no qualifying UTF-8 subdirectory exists.
 pub fn list_accounts(save_dir: &Path) -> Result<Vec<AccountDir>, LocateError> {
     let mut accounts = Vec::new();
 
@@ -316,9 +397,49 @@ pub fn list_accounts(save_dir: &Path) -> Result<Vec<AccountDir>, LocateError> {
     Ok(accounts)
 }
 
-/// List all save files (`save*.hg`, excluding `mf_save*.hg`) in an account directory.
+/// List parseable save filenames in one account directory, newest modification first.
 ///
-/// Results are sorted by modification time, newest first.
+/// The accepted names are `save.hg` and `saveN.hg` where the standard `u8`
+/// parser reads `N` as a file index from 2 through 30. Thus parseable forms
+/// with leading zeroes or a leading plus are also accepted. Metadata names,
+/// other files, directories, and non-UTF-8 names are skipped. File contents
+/// are not read. Equal modification times have no specified relative order.
+///
+/// # Examples
+///
+/// ```
+/// use nms_save::locate::SaveType;
+/// use std::fs::{File, FileTimes};
+/// use std::time::{Duration, UNIX_EPOCH};
+/// let temp = tempfile::tempdir()?;
+/// for (name, seconds) in [("save.hg", 1_700_000_000), ("save30.hg", 1_700_000_010)] {
+///     let path = temp.path().join(name);
+///     std::fs::write(&path, b"fixture")?;
+///     File::options().write(true).open(&path)?.set_times(
+///         FileTimes::new().set_modified(UNIX_EPOCH + Duration::from_secs(seconds))
+///     )?;
+/// }
+/// let saves = nms_save::locate::list_saves(temp.path())?;
+/// assert_eq!(saves.iter().map(|s| (s.slot(), s.save_type())).collect::<Vec<_>>(),
+///     vec![(15, SaveType::Auto), (1, SaveType::Manual)]);
+/// let slots = nms_save::locate::group_into_slots(&saves);
+/// assert_eq!(slots.iter().map(|s| s.slot()).collect::<Vec<_>>(), vec![1, 15]);
+/// assert_eq!(slots[0].manual().and_then(|s| s.path().file_name()).and_then(|n| n.to_str()), Some("save.hg"));
+/// assert!(slots[0].auto().is_none());
+/// let auto = slots[1].auto().ok_or_else(|| std::io::Error::other("slot 15 auto missing"))?;
+/// assert_eq!(auto.path().file_name().and_then(|n| n.to_str()), Some("save30.hg"));
+/// assert!(slots[1].manual().is_none());
+/// assert_eq!(auto.metadata_path().file_name().and_then(|n| n.to_str()), Some("mf_save30.hg"));
+/// let newest = nms_save::locate::find_most_recent_save_in(temp.path())?;
+/// assert_eq!((newest.slot(), newest.save_type()), (15, SaveType::Auto));
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
+///
+/// # Errors
+///
+/// Returns [`LocateError::Io`] for directory-entry, file-type, or modified-time
+/// errors, and [`LocateError::NoSaveFiles`] when no accepted regular file is
+/// found.
 pub fn list_saves(account_dir: &Path) -> Result<Vec<SaveFile>, LocateError> {
     let mut saves = Vec::new();
 
@@ -351,10 +472,13 @@ pub fn list_saves(account_dir: &Path) -> Result<Vec<SaveFile>, LocateError> {
     Ok(saves)
 }
 
-/// Group save files into slot pairs (manual + auto).
+/// Group save-file records into nonempty manual/auto slot pairs.
 ///
-/// Returns slots sorted by slot number. Each slot contains at most one
-/// manual and one auto save.
+/// The result is ordered by slot number and omits empty slots. When input has
+/// duplicate records for the same slot and type, the last record in the input
+/// slice replaces the earlier one; this does not choose by modification time.
+/// [`SaveSlot::most_recent`] compares the retained manual and auto files and
+/// prefers manual when their timestamps are equal.
 pub fn group_into_slots(saves: &[SaveFile]) -> Vec<SaveSlot> {
     let max_slot = saves.iter().map(|s| s.slot).max().unwrap_or(0);
     let mut slots: Vec<SaveSlot> = (1..=max_slot)
@@ -384,10 +508,18 @@ pub fn group_into_slots(saves: &[SaveFile]) -> Vec<SaveSlot> {
 // Convenience finders
 // ---------------------------------------------------------------------------
 
-/// Find the most recently modified save file across all accounts.
+/// Find the newest save across the conventional root's sorted account directories.
 ///
-/// Chains [`nms_save_dir_checked`] → [`list_accounts`] → [`list_saves`]
-/// and returns the single newest file.
+/// The root is resolved and checked, then account directories are visited in
+/// lexicographic name order. Per-account [`list_saves`] errors are skipped; a
+/// root-resolution or account-listing error is returned. A strictly newer
+/// timestamp replaces the current winner, so an equal timestamp retains the
+/// first save encountered in sorted account order.
+///
+/// # Errors
+///
+/// Returns root-resolution or account-listing errors, and
+/// [`LocateError::NoSaveFiles`] when no account yields an accepted save.
 pub fn find_most_recent_save() -> Result<SaveFile, LocateError> {
     let save_dir = nms_save_dir_checked()?;
     let accounts = list_accounts(&save_dir)?;
@@ -407,7 +539,14 @@ pub fn find_most_recent_save() -> Result<SaveFile, LocateError> {
     best.ok_or(LocateError::NoSaveFiles(save_dir))
 }
 
-/// Find the most recently modified save file in a specific account directory.
+/// Find the newest accepted save file in one account directory.
+///
+/// This delegates to [`list_saves`] and returns its first, newest-sorted item.
+///
+/// # Errors
+///
+/// Propagates [`LocateError::Io`] and [`LocateError::NoSaveFiles`] from
+/// [`list_saves`].
 pub fn find_most_recent_save_in(account_dir: &Path) -> Result<SaveFile, LocateError> {
     let saves = list_saves(account_dir)?;
     // list_saves already sorts newest-first

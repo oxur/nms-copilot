@@ -1,7 +1,11 @@
 //! Whole-save address validation before typed deserialization.
 //!
-//! This module keeps checked addresses paired with the typed records produced
-//! from the same original JSON value.
+//! The checked parser examines the original, deobfuscated JSON value before
+//! serde can supply defaults for missing address fields. It validates modeled
+//! discovery rows and both player contexts, then keeps each checked address
+//! paired with the typed save and raw discovery row produced from that same
+//! value. The legacy [`crate::parse_save`] path remains available when callers
+//! need its compatibility behavior instead.
 
 use std::path::Path;
 
@@ -16,10 +20,13 @@ use crate::error::SaveError;
 use crate::mapping::{KeyMapping, deobfuscate_json};
 use crate::model::{PersistentPlayerBase, RawDiscoveryRecord, SaveRoot};
 
-/// An owned save whose modeled addresses were validated before serde defaults.
+/// An owned typed save with checked addresses from the original JSON value.
 ///
 /// Construct values with [`parse_validated_save`] or
-/// [`parse_validated_save_file`].
+/// [`parse_validated_save_file`]. This type retains the typed [`SaveRoot`],
+/// checked active [`PlayerState`], checked bases, and a source-ordered pairing
+/// of each raw discovery row with its validated [`GalacticAddress`]. It is not
+/// a representation of every unknown field in the original JSON.
 #[derive(Debug)]
 pub struct ValidatedSave {
     root: SaveRoot,
@@ -29,7 +36,7 @@ pub struct ValidatedSave {
 }
 
 impl ValidatedSave {
-    /// Return the typed source metadata retained by this checked save.
+    /// Return the typed root deserialized from the checked source value.
     ///
     /// # Examples
     ///
@@ -42,7 +49,7 @@ impl ValidatedSave {
         &self.root
     }
 
-    /// Return the fully checked active player state.
+    /// Return the active player state built with checked address values.
     ///
     /// # Examples
     ///
@@ -56,6 +63,8 @@ impl ValidatedSave {
     }
 
     /// Return checked bases from the active player context in source order.
+    ///
+    /// Each address comes from the pre-deserialization validation pass.
     ///
     /// # Examples
     ///
@@ -71,6 +80,10 @@ impl ValidatedSave {
     }
 
     /// Iterate over raw discovery rows and their checked physical addresses.
+    ///
+    /// Rows follow their original discovery-list order. The exact-size
+    /// iterator pairs each typed raw row with the address decoded from its
+    /// corresponding original JSON row; address parsing does not drop rows.
     ///
     /// # Examples
     ///
@@ -94,15 +107,38 @@ impl ValidatedSave {
     }
 }
 
-/// Parse plaintext, deobfuscated save JSON after validating every modeled address.
+/// Parse plaintext, deobfuscated JSON after validating modeled addresses.
 ///
-/// Unlike [`crate::parse_save`], this validates the original JSON value before
-/// typed serde defaults can hide missing or invalid address fields.
+/// This function expects JSON bytes, not a compressed or obfuscated save file.
+/// It checks the original JSON value before typed serde defaults can hide
+/// missing or invalid address fields, then deserializes the same value.
 ///
-/// # Errors
+/// `ActiveContext` is required to be a string; exactly `Expedition` selects
+/// that context and every other string selects `BaseContext`. Both context
+/// objects are required. Validation visits all discovery rows, then
+/// `BaseContext`, then `ExpeditionContext`, before constructing the typed root.
 ///
-/// Returns [`SaveError::Address`] for an invalid modeled container or address,
-/// and the existing parse error for invalid JSON or unrelated typed metadata.
+/// The returned active player state requires `PlayerStateData` and its current
+/// address in the active context. Missing player state or current addresses in
+/// the inactive context are allowed; supplied inactive addresses are still
+/// validated. A missing previous address or a present all-six-zero sentinel
+/// produces `None`; a supplied malformed or null value is an error. Supplied
+/// bases are validated in either context, but only active-context bases are
+/// returned. Discovery rows, including unknown discovery types, remain paired
+/// with checked addresses in source order. See [`crate::address`] for address
+/// field ranges and path rules.
+///
+/// Missing optional discovery hierarchy produces an empty validated discovery
+/// list. The typed root is still deserialized afterward, so missing required
+/// top-level typed metadata can produce a JSON parse error. The root is a typed
+/// subset, not a copy of every source field. Paired discoveries preserve row
+/// order; signed balances use legacy casts to `u64`, and the freighter address
+/// remains `None`.
+///
+/// Unlike [`crate::parse_save`], this checked path validates modeled source
+/// addresses before serde defaults. Use [`parse_validated_save_file`] when the
+/// input is a save file that needs the existing decompression and key-mapping
+/// pipeline.
 ///
 /// # Examples
 ///
@@ -114,18 +150,24 @@ impl ValidatedSave {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// # Errors
+///
+/// Returns [`SaveError::Address`] for a missing or invalid modeled address or
+/// container. Invalid JSON and unrelated typed metadata produce the existing
+/// JSON parse error.
 pub fn parse_validated_save(json: &[u8]) -> Result<ValidatedSave, SaveError> {
     let value: Value = serde_json::from_slice(json).map_err(json_error)?;
     validated_from_value(value)
 }
 
-/// Read a save file through the legacy decompression/key-mapping pipeline and validate it.
+/// Parse and validate modeled addresses from a save file.
 ///
-/// The deobfuscated original value is checked before constructing its typed root.
-///
-/// # Errors
-///
-/// Returns the existing I/O, decompression, mapping, JSON, or address error.
+/// The resulting plaintext, deobfuscated JSON value is checked before serde
+/// constructs the typed root. Validation applies to the original values, so a
+/// serde default cannot make a missing address appear valid. The legacy
+/// [`crate::parse_save_file`] function remains available for callers that need
+/// the compatibility parser without checked addresses.
 ///
 /// # Examples
 ///
@@ -136,6 +178,18 @@ pub fn parse_validated_save(json: &[u8]) -> Result<ValidatedSave, SaveError> {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// # Errors
+///
+/// Returns [`SaveError::Io`] and decompression errors from earlier stages,
+/// [`SaveError::JsonParseError`] for malformed JSON or typed metadata, and
+/// [`SaveError::Address`] for invalid modeled source addresses.
+///
+/// # Panics
+///
+/// Decompression can panic on a malformed compressed-size offset on 32-bit
+/// targets; see [`crate::decompress::decompress_save`]. The bundled mapping
+/// can also panic if its compiled-in data is invalid.
 pub fn parse_validated_save_file(path: &Path) -> Result<ValidatedSave, SaveError> {
     let raw = std::fs::read(path)?;
     let decompressed = crate::decompress::decompress_save(&raw)?;
