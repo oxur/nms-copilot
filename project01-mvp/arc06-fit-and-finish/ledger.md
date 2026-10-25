@@ -302,3 +302,12 @@ Human “I do approve” adopts only pending9ccc915f directNode historical excep
 47arc33done14open/project25open. Full M7.6 remains open for this delivery+required API-doc/finalreconciliation owner30; alloriginalparents/M7.5input/highergates retained.
 
 2026-10-25 formal29close:47rows34done13open/project25open. SixUD/source4a935408/11appropriateindependentchecks/currentraw+images accepted; complete defaultGitEOFredsretainedforimmutablebyteexactdata, authoredchecks0. M7.6/API30requiredOPEN; absentlocallicensefiles trackedoriginalM7.8ownerCDC, termsunchanged. Allotheroriginal/highergates retained; mainhumanblob/pins preserved.
+
+
+## Slice30 core public API documentation owner opened — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S30 | Complete truthful core public API documentation and runnable key examples | SixCD rows/nine-file full semantic walk/default+archive strictdocs/unit+doctests/executable-byte audit | correctness-grade | Original0039 M7.6 required API increment | open | [Slice30 plan](slice30-core-api-documentation/slice-plan.md) | Every other original/API owner remains open; compiler inventory is not acceptance |
+
+48rows34done14open/project25open. All47 prior rows preserved. Full M7.6 OPEN: required30core, planned31save/32graph-query/33remaining public surface+fulloriginal reconciliation, ownerCDC; numbers are not invented delivered slices.

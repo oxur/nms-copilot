@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.113, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.114, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -982,3 +982,8 @@ Version1.113: [all6UD/R06-S29DONE](slice29-user-documentation-contract/cdc-verif
 47arcrows34done13open/project25open. OriginalM7.6 remainsOPEN: required **Slice30 publicAPIrustdoc/keyexamples/full0039M7.6reconciliation, CDCowner**, groundednext understandingone-arcauthority. Captureimages arehonestlyrenderedactualCLIusage, notOS/game/TTYthemeproof. Newdemonstratedpackagingfinding: localLICENSE-APACHE/MITfilesabsent; READMElinksnowuseexistingcanonicalURLs/termsunchanged, actualfiledelivery retainedoriginal **M7.8, CDCowner** beforepublish-readyclaim; no newlegalterms/files here. Versionhistory:29surfacedrender/data-vs-authoredvalidation andmissinglicensefiles, so status/follow-onownerexplicitnow; no originalcapability/criterion dropped or newexternalpermission.
 
 Mainb616 exacthuman9line/blob2cd450ce/indexempty, all26priornonplanningentries(includingmain) unchanged against28fences; newdocssourceclean, planningowned. M7.5authenticNomNominputstillpendingindependently; allrepair/game-backed/history/freshness/finalsemantic/UI/themes/coverage/platform/performance/distribution/higher/Operator/integration/release owners remain. SameCDC6.1-solHigh/CC6-lunaHigh, no merge/push/install/release/nextarc/Project02.
+
+
+## Slice30 core API documentation owner — 2026-10-25 UTC
+
+Required original0039 M7.6 API work is decomposed into usable owners: [Slice30 complete core public surface](slice30-core-api-documentation/slice-plan.md), planned31 save, planned32 graph/query, planned33 remaining public crates/full original M7.6 reconciliation, all CDC. Later numbers are ownership plans, not issued/accepted slices; split further if needed without dropping criteria. M7.6 remains OPEN. Baseline4a935408 source public-api-documentation, same selected/applied CDC6.1-solHigh/CC6-lunaHigh; CC qualitative headroom/no processes affirmed. Nine core files, rustdoc/blank lines ONLY, every executable/API/test/data/other path frozen. Compiler readiness306 warnings/core114 is inventory only; current full semantic/item/example review and default/archive strict core docs required. Query HTML warnings and umbrella/CLI doc namespace collision retained for later owner. Existing glyph parser UTF8 byte20 panic documented honestly; any runtime correction remains separate CDC reconciliation owner, no source repair in30. All47 previous rows/closures, game/input/history/final/cache/coverage/distribution/UI/independent/Operator/integration/release obligations preserved. NewR06-S30 makes48arcrows34done14open/project25open. Same one-arc Autonomous authority, no external integration/release permission.

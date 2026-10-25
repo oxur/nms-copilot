@@ -1,0 +1,17 @@
+{
+  "baseline": "4a935408460349e9aa64fecd570d9960094191b1",
+  "source_worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+  "paths": [
+    "crates/nms-core/src/lib.rs",
+    "crates/nms-core/src/address.rs",
+    "crates/nms-core/src/biome.rs",
+    "crates/nms-core/src/delta.rs",
+    "crates/nms-core/src/discovery.rs",
+    "crates/nms-core/src/galaxy.rs",
+    "crates/nms-core/src/glyph.rs",
+    "crates/nms-core/src/player.rs",
+    "crates/nms-core/src/system.rs"
+  ],
+  "allowed_changes": "Whole-line rustdoc comments and blank lines only; every nonblank/non-rustdoc line byte-exact in order.",
+  "frozen": "Every other tracked byte including tests, bodies, attrs, Cargo, fixtures, and all other worktrees."
+}
