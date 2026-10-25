@@ -1,0 +1,7 @@
+{
+  "observed_utc": "2026-10-25T14:48:39.767651+00:00",
+  "target": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/m76-cdc-library-docs",
+  "exists": false,
+  "is_symlink": false,
+  "meaning": "actual independent pre-first-build target absence observation; no target mutation"
+}

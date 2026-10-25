@@ -1,0 +1,553 @@
+{
+  "slice": "Project01 Arc06 Slice44 documentation reconciliation",
+  "classification": "CC proposed-done; CDC disposition pending; not self-accepted",
+  "created_utc": "2026-10-25T14:41:01.153141+00:00",
+  "source": {
+    "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+    "branch": "codex/documentation-reconciliation",
+    "baseline": "a3f74a86f0ceeb523d7cda62c8c2bc38215669de",
+    "commit": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+    "commit_tree": "974f51254e2304df17a5f806669a22b5c8b07299",
+    "parent": "a3f74a86f0ceeb523d7cda62c8c2bc38215669de",
+    "clean_after_commit": true,
+    "exact_changed_paths": 12,
+    "exact_regions": 21
+  },
+  "raw_attempt_record": {
+    "path": "/private/tmp/nms-slice44-cc-attempts.json",
+    "sha256": "48067f4f44b564906ed73a1e18a5d136a0e8dfee813b7f4e4cd12a0f567878e5",
+    "raw_channels_retained": true
+  },
+  "attempts": [
+    {
+      "id": "006bca999c094bf1829e956e9601b79b",
+      "label": "format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:31:23.500053+00:00",
+      "ended_utc": "2026-10-25T14:31:24.653559+00:00",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "2e2cc630e8c440279df3d64f8d5a9899",
+      "label": "lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:31:27.269656+00:00",
+      "ended_utc": "2026-10-25T14:31:55.696449+00:00",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 12100,
+        "sha256": "bc8b38713fc282d7ab0eee31283b0882046f714a3422591d342868f7f42c4df3"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "7c27b441856840c9abc3fc6505b84bb0",
+      "label": "all-features-tests",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--all-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:33:52.769985+00:00",
+      "ended_utc": "2026-10-25T14:36:21.370570+00:00",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 88090,
+        "sha256": "93eba9aeef6eea44dcecdc354005b1f14a492d6c0c4fd930725561548524c74c"
+      },
+      "stderr": {
+        "bytes": 15406,
+        "sha256": "5e035d0ea1b5470d00f2578348ebff65049bd4c90f5aeb4d40e0bdd6d7c623cc"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "c63bb86aed8c4ff0a12e9df82dec591d",
+      "label": "no-default-doc-tests",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--doc",
+        "--no-default-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:36:24.014638+00:00",
+      "ended_utc": "2026-10-25T14:36:40.948611+00:00",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 10877,
+        "sha256": "34373ab56ecce8a276cb454643249f3f8e15dbd4e8b61eeee4c9929ab9dde239"
+      },
+      "stderr": {
+        "bytes": 1697,
+        "sha256": "6d98cd7af8739e73d1534725fdf3d81b2dee23017640e78eb0135a1254284d30"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "9b46c66557be4c77bc89579505c74094",
+      "label": "library-json-docs",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "--workspace",
+        "--lib",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--message-format=json"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:36:57.916878+00:00",
+      "ended_utc": "2026-10-25T14:37:21.355667+00:00",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTDOCFLAGS": "-D warnings --force-warn missing_docs",
+        "CARGO_TARGET_DIR": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/m76-cc-library-docs"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 350030,
+        "sha256": "da37e64b7dc999e43d2cfdcbc168c91c67b0ac1b165d6cc20b0eea7b976f84c2"
+      },
+      "stderr": {
+        "bytes": 12523,
+        "sha256": "0b68f61f4866e08b97cecb0833d8a4f2459ee405a15a621c025f101cdf8e323a"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "1178e5d24be644259456a1d2bf06e674",
+      "label": "archive-verifier",
+      "kind": "SUT validator",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice44-reconcile.py",
+        "archive",
+        "/private/tmp/nms-slice44-cc-attempts.json",
+        "9b46c66557be4c77bc89579505c74094"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:37:25.648989+00:00",
+      "ended_utc": "2026-10-25T14:37:25.823588+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 1,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 604,
+        "sha256": "2ccce37e1947beeed054ac99dfc29c621041a5937b3d3bbc7d9b6d402fda1465"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "00d33077da9c41509c05cdd443c7caf3",
+      "label": "library-json-docs-exact-overrides",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "--workspace",
+        "--lib",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--message-format=json"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:37:44.278257+00:00",
+      "ended_utc": "2026-10-25T14:37:44.863447+00:00",
+      "overrides": {
+        "RUSTDOCFLAGS": "-D warnings --force-warn missing_docs",
+        "CARGO_TARGET_DIR": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/m76-cc-library-docs"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 349626,
+        "sha256": "72262a3383dd9e690596df670d61562e01079175fac14442a651c04a216a10cc"
+      },
+      "stderr": {
+        "bytes": 481,
+        "sha256": "18d647bef205168d06662f6ff7a20760f73939c17eeedae2f4a4bf3155b1ad49"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "442f39115a7d4074a16f2ea693bcbd03",
+      "label": "archive-verifier-exact-overrides",
+      "kind": "SUT validator",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice44-reconcile.py",
+        "archive",
+        "/private/tmp/nms-slice44-cc-attempts.json",
+        "00d33077da9c41509c05cdd443c7caf3"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:37:47.975243+00:00",
+      "ended_utc": "2026-10-25T14:37:48.196068+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 10967,
+        "sha256": "75ec5b05915a59a577a7480fed4b6e4d7b12953e567c0f887f41a6cef51b34b1"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "50156095bdda40bea2a0eee364fe928c",
+      "label": "cli-docs",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-cli",
+        "--bin",
+        "nms",
+        "--document-private-items",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--target-dir",
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/cli-docs"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:37:59.982983+00:00",
+      "ended_utc": "2026-10-25T14:38:16.103980+00:00",
+      "overrides": {
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 6701,
+        "sha256": "4473d8346d1a37cd7c05f33511c18e2f5514b2ebdd2bc1690c138cbf55e462b2"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "42605abba14647ff9d9919635a994d77",
+      "label": "scope-verifier",
+      "kind": "SUT validator",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice44-reconcile.py",
+        "scope"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:38:18.930912+00:00",
+      "ended_utc": "2026-10-25T14:38:19.937810+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 628,
+        "sha256": "f7c02002f7b13b3a5ec267588a5ace6b0a9eaf3dc0cadd5d68882616d5ae6592"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "1960337cb45c4cef990d5b335fa0c43a",
+      "label": "composition-verifier",
+      "kind": "SUT validator",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-slice44-reconcile.py",
+        "composition",
+        "/private/tmp/nms-slice44-cc-attempts.json",
+        "7c27b441856840c9abc3fc6505b84bb0",
+        "c63bb86aed8c4ff0a12e9df82dec591d",
+        "50156095bdda40bea2a0eee364fe928c"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:38:38.724451+00:00",
+      "ended_utc": "2026-10-25T14:38:39.381826+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 3907,
+        "sha256": "a08a13effd4dd4f25568b40edfe1af3efc88303f9d885c2266eefb01dc352e24"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "2996dfdcd3f046e98e94a0ffc17f3006",
+      "label": "working-diff-check",
+      "kind": "SUT validator",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:38:42.503380+00:00",
+      "ended_utc": "2026-10-25T14:38:42.610544+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    },
+    {
+      "id": "248e968e4afd4b42a398eacbcc36ed3f",
+      "label": "baseline-diff-check",
+      "kind": "SUT validator",
+      "argv": [
+        "git",
+        "diff",
+        "a3f74a86f0ceeb523d7cda62c8c2bc38215669de",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T14:38:46.096609+00:00",
+      "ended_utc": "2026-10-25T14:38:46.204500+00:00",
+      "overrides": {},
+      "inherited_TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "exit_code": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b",
+      "after_identity": "b9e92c2c2f33dd7d3a30858f33ec466dca46a977b2358ef96b94507e2469d24b"
+    }
+  ],
+  "gate_disposition": [
+    {
+      "gate": 1,
+      "name": "make format",
+      "status": "pass",
+      "attempt_ids": [
+        "006bca999c094bf1829e956e9601b79b"
+      ]
+    },
+    {
+      "gate": 2,
+      "name": "make lint",
+      "status": "pass",
+      "attempt_ids": [
+        "2e2cc630e8c440279df3d64f8d5a9899"
+      ]
+    },
+    {
+      "gate": 3,
+      "name": "cargo test --workspace --all-features --offline",
+      "status": "pass",
+      "attempt_ids": [
+        "7c27b441856840c9abc3fc6505b84bb0"
+      ],
+      "totals": {
+        "runtime": 1097,
+        "all_feature_doctests": 118,
+        "doctests_executed": 91,
+        "doctests_compile_only": 27
+      }
+    },
+    {
+      "gate": 4,
+      "name": "cargo test --workspace --doc --no-default-features --offline",
+      "status": "pass",
+      "attempt_ids": [
+        "c63bb86aed8c4ff0a12e9df82dec591d"
+      ],
+      "totals": {
+        "doctests": 114,
+        "doctests_executed": 89,
+        "doctests_compile_only": 25
+      },
+      "overlap": "separate overlapping feature configuration"
+    },
+    {
+      "gate": 5,
+      "name": "strict all-library JSON rustdoc",
+      "status": "pass",
+      "accepted_attempt_id": "00d33077da9c41509c05cdd443c7caf3",
+      "initial_attempt_id": "9b46c66557be4c77bc89579505c74094",
+      "initial_attempt": "exit 0; extra CARGO_NET_OFFLINE override made its proof metadata fail the exact verifier predicate; first run created generated output after dedicated target was verified absent",
+      "corrected_attempt": "same source and strict flags, exact required override set, existing target reused with cached artifacts; do not describe as newly rendered a second time",
+      "target_absent_before_first_build": true,
+      "warning_exception": "exactly one approved generated DiscoverySourceResolver::Community.source missing_docs warning"
+    },
+    {
+      "gate": 6,
+      "name": "archive output and warning predicate verifier",
+      "status": "pass",
+      "accepted_attempt_id": "442f39115a7d4074a16f2ea693bcbd03",
+      "initial_attempt_id": "1178e5d24be644259456a1d2bf06e674",
+      "initial_attempt": "exit 1 because group 5 attempt had an extra override; preserved; no product warning/predicate red",
+      "verified": {
+        "same_origin_warning_count": 1,
+        "extra_warning_negative_rejected": true,
+        "wrong_origin_negative_rejected": true,
+        "public_landing_pages": 70,
+        "archive_pages_and_resolver_anchors": true
+      }
+    },
+    {
+      "gate": 7,
+      "name": "isolated private CLI docs",
+      "status": "pass",
+      "attempt_ids": [
+        "50156095bdda40bea2a0eee364fe928c"
+      ],
+      "private_module_pages": 11,
+      "separate_namespace": true
+    },
+    {
+      "gate": 8,
+      "name": "scope verifier",
+      "status": "pass",
+      "attempt_ids": [
+        "42605abba14647ff9d9919635a994d77"
+      ],
+      "verified": {
+        "exact_paths": 12,
+        "public_paragraphs": 20,
+        "other_docs_examples_non_doc_frozen": true,
+        "retained29_inputs_exact": true,
+        "insert_base_casing_mutant_rejected": true
+      }
+    },
+    {
+      "gate": 9,
+      "name": "composition verifier",
+      "status": "pass",
+      "attempt_ids": [
+        "1960337cb45c4cef990d5b335fa0c43a"
+      ],
+      "verified": {
+        "retained29_user_inputs_byte_exact": true,
+        "current_preview_and_full_M7_6_mapping": true,
+        "cli_internal_modules": 11
+      }
+    },
+    {
+      "gate": 10,
+      "name": "git diff --check",
+      "status": "pass",
+      "attempt_ids": [
+        "2996dfdcd3f046e98e94a0ffc17f3006"
+      ]
+    },
+    {
+      "gate": 11,
+      "name": "baseline git diff --check",
+      "status": "pass",
+      "attempt_ids": [
+        "248e968e4afd4b42a398eacbcc36ed3f"
+      ]
+    }
+  ],
+  "commit_verification": {
+    "prepared_message_path": "/private/tmp/nms-slice44-cc-source-message.txt",
+    "message_sha256": "fca7a73ffd108a7fecde19aba272f3e3c8976669136ae486481c1c914b6e552c",
+    "commit_body_byte_equal_to_prepared_message": true,
+    "trailers_exact": true,
+    "changed_paths_exact_contract_allowlist": true
+  },
+  "refinements": {
+    "initial_actual": 0,
+    "actual_refinements": 0,
+    "gate_invocation_correction_is_not_a_prompt_refinement": true
+  },
+  "handback": {
+    "owned_processes_running": false,
+    "source_clean": true,
+    "source_index_gate_hold": "returned to CDC; no further CC activity until disposition/instructions",
+    "cdc_close_hash": "unknown/pending"
+  }
+}

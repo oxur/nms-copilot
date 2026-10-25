@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.130
+version: 1.131
 project: project01-mvp
 status: active
 depends-on: []
@@ -1322,3 +1322,7 @@ Version1.129 records complete one-file public dispatcher documentation/keylitera
 ## Arc06 Slice44 original M7.6 reconciliation issued — 2026-10-25 UTC
 
 Version1.130 owns exact12doc paths/20 public summary layouts+contributor namespace recipe and complete original0039M7.6 proof. Full current workspace tests/feature docs, actual nine-library70-page output/exact existing core generated-field exception, strict isolatedCLI and original29 input retention plus complete criterion review; compiler/style counts alone insufficient. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh planned after43 context-fit handoff. SixDR/R06-S44/M7.6OPEN/zeroactualrefinements/supportonly at issue;62arc48done14open/all25projectrowsOPEN. All original higher/input/Operator gates preserved/no cleanup/integration/release.
+
+## Slice44 and original M7.6 independently accepted — 2026-10-25 UTC
+
+All6DR/R06-S44 AND originalM7.6 DONE on isolated clean9b632b665885d1a8b596006dd96ebcaaad41a71a: exact12doc paths/20public-summary layouts+previewnamespace, all other docs/examples/non-doc frozen. Full original README/captures/contributor/publicAPI/keyexample criterion reconciled; accepted29 byte-applicable proof retained with its actual date, fresh eleven CDC groups pass1097runtime+118allfeaturedocs(91execute27compile)+114separatenodefaultdocs(89execute25compile), exact existing generated-field A/current new70+2page output/two negatives/strictisolatedCLI/sourceopposed/composition/diffs. Initial0ACTUALrefinements/no new exception/structural amendment. All15CC+15CDC raw records/exact original returns/real first profile-verifier red/corrected cached CC retry/fresh separate CDC build/current HTML bundles/prose qualifications/final retrospective retained. See [CDC44 full acceptance](arc06-fit-and-finish/slice44-documentation-reconciliation/cdc-verification.md) and [retrospective](arc06-fit-and-finish/slice44-documentation-reconciliation/cdc-retrospective.md) in the arc directory.62arc50done12open/all25projectrowsOPEN. Next original non-doc ownership remains CDC: M7.7 testing/coverage/CI, M7.8 distribution/license assets, M7.10 themes, D0040–43UI/R01–03/raw/history/nonzero-game/finalsemantic/cache/freshness and higher independent/Operator/integration/release. Authentic NomNom input unanswered; no cleanup/push/merge/install/network/publish/release/otherarc/Project02.

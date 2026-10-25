@@ -1,6 +1,6 @@
 # Slice44 — full original M7.6 documentation reconciliation
 
-Version1.0,2026-10-25UTC. ACTIVE/initial0ACTUALrefinements/sixDR OPEN. CDC6.1-solHigh/freshsoleCC6-lunaHigh planned after43 completed handoff/context-fit recommendation. Same one-arc Autonomous authority/no extra reviewer/new exception. Source clean accepted43a3f74a86, dedicated codex/documentation-reconciliation.
+Version1.1,2026-10-25UTC. CLOSED/all6DR and originalM7.6 DONE at9b632b66; initial0ACTUALrefinements. Opening authority/iteration notes below are historical. CDC6.1-solHigh/freshsoleCC6-lunaHigh planned after43 completed handoff/context-fit recommendation. Same one-arc Autonomous authority/no extra reviewer/new exception. Source clean accepted43a3f74a86, dedicated codex/documentation-reconciliation.
 
 Exact12 paths/21 literal regions in artifacts/documentation-contract.json:20 public first-summary paragraph layouts and CONTRIBUTING preview namespace block. All other docs/examples/non-doc/API/help/layout/tests/deps/fixtures frozen. Twenty public facts/source citations/83source identities/nine library roots+61 modules/isolated elevenCLI modules resolved; two private/Clap paragraphs excluded. No runtime or policy change.
 
@@ -11,3 +11,7 @@ Supporting artifacts default artifacts/, private deployed helpers and ignored CC
 All M7.7/7.8/7.10/UI/R01–03/cache/history/game-backed/freshness/authentic NomNom/parent/Operator gates remain open. If full M7.6 proof reveals further requirements, keep exact owners rather than infer completion.62arc48done14open/project25open at issue; no implementation/acceptance yet.
 
 Actual contributor: /root/cdc_arc06/cc_docs_reconciliation, explicitly launched gpt-6-luna High/forknone after committed02cd3de5. Initial intake/readback only; source mutation/gates pending CDC ACK. Same CDC independent owner/root transport.
+
+## Final acceptance
+
+All sixDR/R06-S44/originalM7.6 accepted: eleven fresh independent groups1097runtime+118/114 separate overlapping doc populations, actual exactA/new library+archive output/strict isolatedCLI/source-opposed/composition/diffs. Full original criterion map/mandatoryretro/exact original returns/15CC+15CDC records/real profile-verifier red/current84-page bundles retained. Arc62rows50done12open/project25OPEN; all original non-doc/input/higher owners open. No new exception/structural amendment/integration/release.

@@ -1,0 +1,74 @@
+{
+  "created_utc": "2026-10-25T14:59:26.507586+00:00",
+  "meaning": "Actual present supporting payload bytes, not earlier inventory or first-class assignments; page bundles preserve84 reviewed bodies each, not self-contained published sites",
+  "files": {
+    "cc-attempts-final.json": {
+      "bytes": 1220424,
+      "sha256": "48067f4f44b564906ed73a1e18a5d136a0e8dfee813b7f4e4cd12a0f567878e5"
+    },
+    "cc-attempts.json": {
+      "bytes": 7808,
+      "sha256": "ac8dbc17ddfbc0cb67d391dcbf4e2f7e9e4b84be6d8b5601189339b0289b43de"
+    },
+    "cc-capture.py": {
+      "bytes": 3753,
+      "sha256": "84967c47f321fbbd8c4eb8a43701d54fe48a099a0e4f20d9249c676f1b923c74"
+    },
+    "cc-closing-report.md": {
+      "bytes": 5989,
+      "sha256": "bc287f18a6022dc63c81426b0852cc00008fbd5c1cd7f230dad7f73e78870f3b"
+    },
+    "cc-execution.md": {
+      "bytes": 18155,
+      "sha256": "121bae89455773a74eddaf619d7efc76aa85d5f7828fda168de1166deb83594f"
+    },
+    "cc-reviewed-html.tar.gz": {
+      "bytes": 78094,
+      "sha256": "1c56ac495ff64a0ebe529b1753a4f563f36e39b386e173e27cfcbe965e684d72"
+    },
+    "cc-source-message.txt": {
+      "bytes": 359,
+      "sha256": "fca7a73ffd108a7fecde19aba272f3e3c8976669136ae486481c1c914b6e552c"
+    },
+    "cc-validation.json": {
+      "bytes": 20062,
+      "sha256": "bbaa1d664475cbd82dd1bcbdeda1c98b67c9f26e0e362157281822d5adb860a2"
+    },
+    "cdc-attempts-final.json": {
+      "bytes": 702543,
+      "sha256": "3515ea72151d28e4a797e4d2c437ba24611a76665455b121b013e5c9e27aafee"
+    },
+    "cdc-attempts.json": {
+      "bytes": 15642,
+      "sha256": "2d1543bc32707fda5b3de101ca2408131a36af62ed06f95edd05229b360b7b30"
+    },
+    "cdc-capture.py": {
+      "bytes": 3717,
+      "sha256": "2733a672cdd0cda14f30076e99003f815391d175a69c39a1eee5b5cf1bc3174d"
+    },
+    "cdc-doc-target-before.json": {
+      "bytes": 317,
+      "sha256": "da16ff182f74b1f1975fe6358bad8d529cf7fb6069cf39eed5b46e9b942b6656"
+    },
+    "cdc-reviewed-html.tar.gz": {
+      "bytes": 78079,
+      "sha256": "d4c1fbf87621628b7aa67d1549461312cb6dda58073f6abb12d495f384412148"
+    },
+    "closing-worktrees.json": {
+      "bytes": 10787,
+      "sha256": "5368467f6fb0128aea76951cae44bbf166dfd358b2da7dee0a60ff2089687545"
+    },
+    "documentation-contract.json": {
+      "bytes": 31748,
+      "sha256": "f926b13b29b8d77c6d4a8077889a76937afee9e2a018295aa3f181c2088354f8"
+    },
+    "issued-worktrees.json": {
+      "bytes": 10673,
+      "sha256": "80ab4509ff0875902a1f9b6a8e79a652f67b2c6221cb76217083a74c4b565a92"
+    },
+    "reconcile.py": {
+      "bytes": 8485,
+      "sha256": "cde5e90469bddbbc099256c8ccb0e524b161f9014d4eb71658720b91b04c98b6"
+    }
+  }
+}

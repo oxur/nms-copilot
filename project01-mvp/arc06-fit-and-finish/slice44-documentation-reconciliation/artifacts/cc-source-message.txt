@@ -1,0 +1,6 @@
+Document public API summaries and preview namespaces
+
+Reconcile twenty existing public Rustdoc summaries with current behavior and separate the library and private CLI documentation preview outputs. Preserve executable examples and all other frozen surfaces.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>
