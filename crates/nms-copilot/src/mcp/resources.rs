@@ -1,7 +1,92 @@
 //! MCP resources for NMS Copilot.
 //!
-//! Exposes three live resources that clients can subscribe to for
-//! real-time updates as the player explores the galaxy.
+//! [`NmsResources`] lists three current-model JSON resources in a stable order.
+//! Reads acquire the shared model lock when the returned future is polled;
+//! constructing or listing this registry does not start a server, watcher, or
+//! notification producer. Registering it alone does not send notifications.
+//! See the [resource examples](crate::mcp::resources) for dispatch, typed
+//! errors, wrappers, and read-time model access.
+//!
+//! # Examples
+//!
+//! This example checks registry order, typed absence, wrapper metadata, and
+//! that a future reads the current model when polled rather than when created.
+//!
+//! ```
+//! use std::sync::Arc;
+//! use fabryk_mcp::ResourceRegistry;
+//! use fabryk_mcp::model::{ErrorData, ResourceContents};
+//! use nms_core::{
+//!     address::GalacticAddress, biome::Biome, player::PlayerState,
+//!     system::{Planet, System},
+//! };
+//! use nms_copilot::mcp::resources::{
+//!     NmsResources, BASES_URI, GALAXY_STATS_URI, PLAYER_LOCATION_URI,
+//! };
+//! use nms_graph::GalaxyModel;
+//! use serde_json::{json, Value};
+//! use tokio::runtime::Builder;
+//! use tokio::sync::RwLock;
+//!
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! fn json_from(contents: Vec<ResourceContents>, uri: &str) -> Result<Value, Box<dyn std::error::Error>> {
+//!     match contents.as_slice() {
+//!         [ResourceContents::TextResourceContents { uri: actual_uri, mime_type, text, meta }] => {
+//!             assert_eq!(actual_uri, uri);
+//!             assert_eq!(mime_type.as_deref(), Some("application/json"));
+//!             assert!(meta.is_none());
+//!             Ok(serde_json::from_str(text)?)
+//!         }
+//!         _ => Err("expected exactly one text resource".into()),
+//!     }
+//! }
+//! let model = Arc::new(RwLock::new(GalaxyModel::new()));
+//! let registry = NmsResources::new(Arc::clone(&model));
+//! let listed_resources = registry.resources();
+//! let listed: Vec<_> = listed_resources.iter()
+//!     .map(|resource| (resource.uri.as_str(), resource.name.as_str(), resource.mime_type.as_deref()))
+//!     .collect();
+//! assert_eq!(listed, [
+//!     ("nms://player/location", "Player Location", Some("application/json")),
+//!     ("nms://galaxy/stats", "Galaxy Stats", Some("application/json")),
+//!     ("nms://bases", "Bases", Some("application/json")),
+//! ]);
+//! assert!(registry.read("nms://unknown").is_none());
+//! let missing = registry.read(PLAYER_LOCATION_URI).ok_or("missing location")?;
+//! let result = Builder::new_current_thread().build()?.block_on(missing);
+//! assert!(matches!(result, Err(error) if error == ErrorData::invalid_params("Player position not available", None)));
+//!
+//! let pending = registry.read(PLAYER_LOCATION_URI).ok_or("missing location")?;
+//! let address = GalacticAddress::new(3, 0, 0, 1, 2, 9);
+//! let runtime = Builder::new_current_thread().build()?;
+//! runtime.block_on(async {
+//!     let mut guard = model.write().await;
+//!     guard.insert_system(System::new(address, Some("Physical-9".into()), None, None,
+//!         vec![Planet::new(2, Some(Biome::Lush), None, false, Some("Garden".into()), Some(7))]));
+//!     guard.player_state = Some(PlayerState::new(address, 9, None, None, 0, 0, 0));
+//!     guard.set_active_galaxy(7);
+//! });
+//! let location = json_from(runtime.block_on(pending)?, PLAYER_LOCATION_URI)?;
+//! assert_eq!(location, json!({
+//!     "system":"Physical-9", "planets_in_system":1, "galaxy":"Eissentam",
+//!     "voxel_x":3, "voxel_y":0, "voxel_z":0, "solar_system_index":1,
+//!     "portal_glyphs_hex":"200100000003",
+//!     "portal_glyphs_emoji":"😑🌅🌅🕊🌅🌅🌅🌅🌅🌅🌅🦕",
+//!     "signal_booster":"0802:007F:07FF:0001"
+//! }));
+//! let stats = runtime.block_on(registry.read(GALAXY_STATS_URI).ok_or("missing stats")?)?;
+//! assert_eq!(json_from(stats, GALAXY_STATS_URI)?, json!({
+//!     "systems":1, "planets":1, "bases":0, "named_systems":1,
+//!     "named_planets":1, "infested_planets":0,
+//!     "biome_distribution":[{"biome":"Lush","count":1}],
+//!     "unknown_biome_count":0
+//! }));
+//! let bases = runtime.block_on(registry.read(BASES_URI).ok_or("missing bases")?)?;
+//! assert_eq!(json_from(bases, BASES_URI)?, json!({"count":0,"bases":[]}));
+//! # Ok(())
+//! # }
+//! ```
+//!
 
 use std::sync::Arc;
 
@@ -13,27 +98,61 @@ use nms_graph::GalaxyModel;
 
 use super::tools::{build_bases_json, build_galaxy_stats_json, build_where_am_i_json};
 
-/// MCP resource URI for the player's current location.
+/// URI for the player's current physical location.
+///
+/// The value is `nms://player/location`; the resource name is `Player
+/// Location` and its MIME type is `application/json`. It follows physical
+/// player position rather than the selected galaxy.
 pub const PLAYER_LOCATION_URI: &str = "nms://player/location";
 
-/// MCP resource URI for galaxy statistics.
+/// URI for aggregate statistics across the model's galaxies.
+///
+/// The value is `nms://galaxy/stats`; the resource name is `Galaxy Stats` and
+/// its MIME type is `application/json`.
 pub const GALAXY_STATS_URI: &str = "nms://galaxy/stats";
 
-/// MCP resource URI for player bases.
+/// URI for all player bases in the model.
+///
+/// The value is `nms://bases`; the resource name is `Bases` and its MIME type
+/// is `application/json`.
 pub const BASES_URI: &str = "nms://bases";
 
-/// MCP resources backed by a shared GalaxyModel.
+/// MCP resources backed by the supplied shared [`GalaxyModel`].
+///
+/// Construction stores the `Arc<RwLock<GalaxyModel>>` without taking a
+/// snapshot, starting a server or watcher, mutating model state, or writing
+/// cache. Read futures acquire the lock when polled and query the current model.
+/// A missing player position returns typed invalid-params data with message
+/// `Player position not available`; statistics and bases work with an empty
+/// model. Registry reads do not themselves subscribe or send notifications.
+///
+/// Resources are listed in this order: `nms://player/location` (`Player
+/// Location`), `nms://galaxy/stats` (`Galaxy Stats`), then `nms://bases`
+/// (`Bases`). All use `application/json`. Each successful read contains one
+/// pretty-printed JSON text value with the requested URI, JSON MIME type, and
+/// no annotations metadata.
+///
+/// See the [module examples](crate::mcp::resources) for the ordered resource
+/// population, typed missing-position result, and current-model read behavior.
+///
+/// # Errors
+///
+/// Reading player location returns `INVALID_PARAMS` when player position is
+/// unavailable. An unrecognized URI returns `None` before a future is made.
+///
 pub struct NmsResources {
     model: Arc<RwLock<GalaxyModel>>,
 }
 
 impl NmsResources {
+    /// Store the shared model without taking a snapshot or starting a service.
     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
         Self { model }
     }
 }
 
 impl ResourceRegistry for NmsResources {
+    /// List location, statistics, then bases resources, all as JSON.
     fn resources(&self) -> Vec<Resource> {
         vec![
             make_resource(
@@ -57,6 +176,11 @@ impl ResourceRegistry for NmsResources {
         ]
     }
 
+    /// Create a future for a known URI; it reads the current model when polled.
+    ///
+    /// Success contains one pretty-printed text resource using the requested
+    /// URI, `application/json`, and no metadata. Missing player position is a
+    /// typed invalid-params error.
     fn read(&self, uri: &str) -> Option<ResourceFuture> {
         let model = Arc::clone(&self.model);
         let uri_owned = uri.to_string();

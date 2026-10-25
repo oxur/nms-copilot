@@ -1,17 +1,73 @@
-//! Configuration for the NMS Copilot MCP server.
+//! Logging configuration used by the NMS Copilot MCP server.
 //!
-//! Reads from `~/.nms-copilot/config.toml`, sharing the same config
-//! file as the REPL. Only the `[logging]` section is used by the
-//! MCP server; other sections are ignored.
+//! [`McpConfig`] reads only `[logging]` from the shared
+//! `~/.nms-copilot/config.toml`; unrelated sections are ignored. It does not
+//! configure save paths, watchers, or the HTTP bind address, and it does not
+//! install a logger or mutate environment variables. See the
+//! [configuration example](crate::mcp::config) for defaults and option mapping.
+//!
+//! # Examples
+//!
+//! ```
+//! use nms_copilot::mcp::config::LoggingConfig;
+//! use twyg::{LogLevel, Output, TSFormat};
+//!
+//! let defaults = LoggingConfig::default();
+//! assert_eq!(defaults.level, "info");
+//! assert!(defaults.coloured);
+//! assert_eq!(defaults.output, "stderr");
+//! assert!(!defaults.report_caller);
+//! let opts = defaults.to_twyg_opts();
+//! assert!(opts.coloured());
+//! assert!(!opts.report_caller());
+//! assert_eq!(opts.level(), LogLevel::Info);
+//! assert_eq!(opts.output(), &Output::Stderr);
+//! assert_eq!(opts.timestamp_format(), &TSFormat::Simple);
+//!
+//! let mut debug = LoggingConfig { level: "debug".into(), coloured: false,
+//!     output: "stdout".into(), report_caller: true };
+//! let opts = debug.to_twyg_opts();
+//! assert_eq!(opts.level(), LogLevel::Debug);
+//! assert_eq!(opts.output(), &Output::Stdout);
+//! assert!(!opts.coloured());
+//! assert!(opts.report_caller());
+//! assert_eq!(opts.timestamp_format(), &TSFormat::Simple);
+//!
+//! debug.level = "DEBUG".into();
+//! debug.output = "STDOUT".into();
+//! let opts = debug.to_twyg_opts();
+//! assert_eq!(opts.level(), LogLevel::Info);
+//! assert_eq!(opts.output(), &Output::Stderr);
+//! assert!(!opts.coloured());
+//! assert!(opts.report_caller());
+//! assert_eq!(opts.timestamp_format(), &TSFormat::Simple);
+//! ```
+//!
 
 use std::path::Path;
 
 use serde::Deserialize;
 
-/// MCP server configuration.
+/// MCP logging configuration read from the shared application config file.
 ///
-/// Extracts only the sections relevant to the MCP server from the
-/// shared `~/.nms-copilot/config.toml`.
+/// Only `[logging]` is used. Missing sections and fields use
+/// [`LoggingConfig::default`]; unrelated sections are ignored. Missing files,
+/// read/UTF-8 errors, TOML errors, and typed-deserialization errors silently
+/// return the entire default config; no partial parse is retained. If a home
+/// directory cannot be determined, [`Self::load`] uses an empty path and
+/// follows the same default-return route. This is not a general MCP server
+/// configuration.
+///
+/// # Examples
+///
+/// File loading is I/O-bearing, so this is compile-only:
+///
+/// ```no_run
+/// let config = nms_copilot::mcp::config::McpConfig::load();
+/// let _options = config.logging.to_twyg_opts();
+/// ```
+///
+/// See the [module examples](crate::mcp::config) for logging options.
 #[derive(Debug, Deserialize, Default)]
 #[serde(default)]
 pub struct McpConfig {
@@ -19,7 +75,15 @@ pub struct McpConfig {
     pub logging: LoggingConfig,
 }
 
-/// Logging configuration wrapping twyg options.
+/// Logging settings translated into twyg options.
+///
+/// Defaults are `level = "info"`, `coloured = true`, `output = "stderr"`, and
+/// `report_caller = false`.
+/// Exact lowercase `trace`, `debug`, `warn`, and `error` select those levels;
+/// every other value selects Info. Only exact `stdout` selects stdout; other
+/// destinations select stderr. [`Self::to_twyg_opts`] returns options without
+/// initializing a logger and falls back to [`twyg::Opts::default`] if its
+/// builder fails. See the [module examples](crate::mcp::config).
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct LoggingConfig {
@@ -45,7 +109,14 @@ impl Default for LoggingConfig {
 }
 
 impl LoggingConfig {
-    /// Convert to twyg::Opts for logger initialization.
+    /// Convert values into twyg logging options without initializing a logger.
+    ///
+    /// Exact lowercase levels `trace`, `debug`, `warn`, and `error` map to
+    /// those levels; all other strings map to Info. Only exact `stdout` selects
+    /// stdout. Timestamp format is Simple with a `hi_black` timestamp color;
+    /// other colors use twyg defaults. Builder failure falls back to default
+    /// options. See the [module example](crate::mcp::config).
+    ///
     pub fn to_twyg_opts(&self) -> twyg::Opts {
         let output = match self.output.as_str() {
             "stdout" => twyg::Output::Stdout,
@@ -75,9 +146,15 @@ impl LoggingConfig {
 }
 
 impl McpConfig {
-    /// Load config from `~/.nms-copilot/config.toml`.
+    /// Load logging settings from `~/.nms-copilot/config.toml`.
     ///
-    /// Returns defaults if the file doesn't exist.
+    /// Only `[logging]` is deserialized; other sections are ignored. Missing
+    /// files and read, UTF-8, TOML, or typed-deserialization errors silently
+    /// return the entire default config. There is no partial merge or write. If the
+    /// home directory cannot be determined, this uses an empty path and follows
+    /// the same default-return route. See the
+    /// [loading example](crate::mcp::config::McpConfig).
+    ///
     pub fn load() -> Self {
         let path = dirs::home_dir()
             .map(|h| h.join(".nms-copilot/config.toml"))
@@ -85,7 +162,13 @@ impl McpConfig {
         Self::load_from(&path)
     }
 
-    /// Load config from a specific path.
+    /// Load logging settings from a specific path.
+    ///
+    /// Missing paths, read failures, invalid UTF-8, TOML errors, and typed
+    /// deserialization errors silently return the entire default config.
+    /// Unknown sections are ignored; no partial merge or write occurs. See the
+    /// [loading example](crate::mcp::config::McpConfig).
+    ///
     pub fn load_from(path: &Path) -> Self {
         if !path.exists() {
             return Self::default();

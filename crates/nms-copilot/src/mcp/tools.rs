@@ -1,8 +1,112 @@
 //! NMS Copilot MCP tools.
 //!
-//! Each tool wraps a function from `nms-query`, translating between
-//! JSON tool arguments and typed query structs.
+//! [`NmsTools`] exposes eight domain tools in a stable order and reads the
+//! shared [`GalaxyModel`] for query operations. Construction and listing do
+//! not start a server or watcher, mutate the model, or write cache. Recognized
+//! query futures acquire a read lock when polled; coordinate conversion does
+//! not read or lock the model. The server registers health and discoverability
+//! tools separately.
+//!
+//! Success is returned as one JSON text item inside a successful
+//! [`CallToolResult`]. Handler errors are direct `ErrorData::invalid_params`
+//! values (`INVALID_PARAMS`, -32602), and an unknown name returns `None`.
+//! Schemas describe client inputs but do not validate every direct trait call;
+//! handler-specific argument getters determine how missing or wrong-typed
+//! values are treated.
+//!
+//! # Tool roles
+//!
+//! * `search_planets` filters planets by biome, distance, discoverer, naming,
+//!   and infested status; `from_base` changes its distance reference.
+//! * `plan_route` accepts target names or a biome and supports warp range,
+//!   radius, target count, algorithm, and round-trip options.
+//! * `where_am_i` reports physical player location; `whats_nearby` searches
+//!   around it and defaults to ten results.
+//! * `show_system` and `show_base` return query-layer details for a required
+//!   name; `galaxy_stats` reports aggregate model statistics.
+//! * `convert_coordinates` converts one supplied format without reading the
+//!   model; conversion output uses galaxy index 0.
+//!
+//! `search_planets` treats `infested: false` as unset. Missing and wrong-typed
+//! optional values are ignored by the corresponding argument getter; unknown
+//! fields are ignored. A string `targets` array takes precedence over `biome`
+//! in `plan_route`; non-string array members are filtered, while an empty or
+//! non-string-only array is an error. Without a target array, the handler needs
+//! a valid biome. Only `nearest-neighbor` and `nn` select that algorithm; all
+//! other algorithm values use TwoOpt. `plan_route` can panic in build profiles
+//! with integer-overflow checks when the supplied warp range produces an
+//! unrepresentable jump-count total; see
+//! [execute_route].
+//!
+//! `where_am_i` reports the physical player address in its own reality; it
+//! does not follow an active-galaxy selection. A missing player address is an
+//! invalid-params error. A missing or placeholder system has unknown name and
+//! zero planets, while a real unnamed system is displayed as `-`.
+//! `whats_nearby` defaults to ten results. `show_system` requires a string
+//! `name` and uses the selected-galaxy query; `show_base` requires a string
+//! `name` and queries bases globally, case-insensitively. `galaxy_stats` covers
+//! the complete model across galaxies.
+//!
+//! `convert_coordinates` checks string arguments in this order: `glyphs`,
+//! `coords`, then `galactic_address`; a wrong-typed earlier value is skipped.
+//! Glyph input accepts an optional `0x`/`0X` prefix followed by exactly twelve
+//! hexadecimal digits. Galactic-address input parses as `u64`, then the core
+//! address constructor masks it to 48 bits. Coordinate input uses the core
+//! signal-booster parser. Conversion output uses galaxy index 0; it does not
+//! validate that the address belongs to a save.
+//!
+//! See the [tool examples](crate::mcp::tools) for the full order, the exact
+//! missing-position error, and a literal conversion result.
 
+//! # Examples
+//!
+//! ```
+//! use std::sync::Arc;
+//! use fabryk_mcp::ToolRegistry;
+//! use fabryk_mcp::model::{CallToolResult, ErrorData};
+//! use nms_copilot::mcp::tools::NmsTools;
+//! use nms_graph::GalaxyModel;
+//! use serde_json::{json, Value};
+//! use tokio::runtime::Builder;
+//! use tokio::sync::RwLock;
+//!
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! let tools = NmsTools::new(Arc::new(RwLock::new(GalaxyModel::new())));
+//! let listed_tools = tools.tools();
+//! let names: Vec<&str> = listed_tools.iter().map(|tool| tool.name.as_ref()).collect();
+//! assert_eq!(names, ["search_planets", "plan_route", "where_am_i",
+//!     "whats_nearby", "show_system", "show_base", "convert_coordinates",
+//!     "galaxy_stats"]);
+//! assert!(tools.call("unknown", Value::Null).is_none());
+//! let runtime = Builder::new_current_thread().build()?;
+//! let missing = tools.call("where_am_i", json!({})).ok_or("missing tool")?;
+//! let error = match runtime.block_on(missing) {
+//!     Err(error) => error,
+//!     Ok(_) => return Err("expected missing-position error".into()),
+//! };
+//! assert_eq!(error, ErrorData::invalid_params("Player position not available", None));
+//!
+//! let future = tools.call("convert_coordinates", json!({"glyphs":"0x200100000003"}))
+//!     .ok_or("missing converter")?;
+//! let result: CallToolResult = runtime.block_on(future)?;
+//! assert_eq!(result.content.len(), 1);
+//! assert_eq!(result.is_error, Some(false));
+//! assert!(result.structured_content.is_none());
+//! assert!(result.meta.is_none());
+//! let text = result.content.first().and_then(|item| item.as_text()).ok_or("not text")?;
+//! let actual: Value = serde_json::from_str(&text.text)?;
+//! assert_eq!(actual, json!({
+//!     "portal_glyphs_hex":"200100000003",
+//!     "portal_glyphs_emoji":"😑🌅🌅🕊🌅🌅🌅🌅🌅🌅🌅🦕",
+//!     "signal_booster":"0802:007F:07FF:0001",
+//!     "galactic_address":"0x200100000003",
+//!     "voxel_x":3,"voxel_y":0,"voxel_z":0,
+//!     "solar_system_index":1,"planet_index":2,"galaxy":"Euclid"
+//! }));
+//! # Ok(())
+//! # }
+//! ```
+//!
 use std::sync::Arc;
 
 use fabryk_mcp::model::{CallToolResult, Content, ErrorData, Tool};
@@ -22,22 +126,48 @@ use nms_query::route::{RouteFrom, RouteQuery, TargetSelection, execute_route};
 use nms_query::show::{ShowQuery, ShowResult, execute_show};
 use nms_query::stats::{StatsQuery, execute_stats};
 
-/// All NMS tools backed by a shared GalaxyModel.
+/// The eight NMS domain tools backed by a shared [`GalaxyModel`].
 ///
-/// Uses `RwLock` to support live updates from the file watcher.
-/// Tool handlers acquire a read lock; the watcher takes a write lock
-/// to apply deltas.
+/// Construction stores the shared model without taking a snapshot, starting a
+/// server or watcher, applying updates, or writing cache. Query calls acquire
+/// a read lock when polled; `convert_coordinates` does not read the model. The
+/// registry itself does not produce notifications.
+///
+/// Tools are listed in this order: `search_planets`, `plan_route`,
+/// `where_am_i`, `whats_nearby`, `show_system`, `show_base`,
+/// `convert_coordinates`, `galaxy_stats`. Health and discoverability are
+/// registered separately by the server.
+///
+/// See the complete [module examples](crate::mcp::tools), including the
+/// ordered tool list, missing-position error, and literal converter result.
+///
+/// # Errors
+///
+/// Known tools return typed invalid-params data for invalid arguments or query
+/// state. Missing player position for `where_am_i` and `whats_nearby` is an
+/// `INVALID_PARAMS` error. Unknown names return `None` instead of a future.
+///
+/// # Panics
+///
+/// Polling the recognized `plan_route` future can panic in build profiles with
+/// integer-overflow checks when the supplied warp range produces an
+/// unrepresentable jump-count total; see
+/// [execute_route].
+///
 pub struct NmsTools {
     model: Arc<RwLock<GalaxyModel>>,
 }
 
 impl NmsTools {
+    /// Create a registry over the shared model without taking a snapshot.
+    ///
     pub fn new(model: Arc<RwLock<GalaxyModel>>) -> Self {
         Self { model }
     }
 }
 
 impl ToolRegistry for NmsTools {
+    /// List the eight domain tools in their documented order.
     fn tools(&self) -> Vec<Tool> {
         vec![
             search_planets_tool(),
@@ -51,6 +181,10 @@ impl ToolRegistry for NmsTools {
         ]
     }
 
+    /// Return a future for a recognized tool, or `None` for an unknown name.
+    ///
+    /// Query handlers read the current model when polled. Successful results
+    /// contain one JSON text item; handler errors are typed invalid-params data.
     fn call(&self, name: &str, args: Value) -> Option<ToolResult> {
         let model = Arc::clone(&self.model);
         match name {

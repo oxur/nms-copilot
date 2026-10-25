@@ -1,9 +1,51 @@
 //! MCP server integration for NMS Copilot.
 //!
-//! When running normally, the MCP server runs on a background thread with its
-//! own tokio runtime, sharing the `GalaxyModel` with the REPL via
-//! `Arc<RwLock<GalaxyModel>>`. In headless mode (`--headless`), only the MCP
-//! server runs (no REPL).
+//! The server exposes the current [`GalaxyModel`] through [`tools`] and
+//! [`resources`]. Registry futures read the shared model when polled;
+//! constructing or listing a registry does not start a server, watcher, or
+//! cache writer.
+//!
+//! # Transports and ownership
+//!
+//! `Transport::Stdio` is always available. `Transport::Http` and the owned
+//! HTTP worker API require the `http` feature. The owned
+//! `spawn_mcp_background_with_updates` API returns after binding and reports
+//! the actual local address through `McpBackgroundHandle`. Shutdown and drop
+//! request cancellation and block while joining the worker; call them outside
+//! model guards.
+//!
+//! The older `spawn_mcp_background` and
+//! `spawn_mcp_background_with_watch_config` wrappers are detached and return
+//! `()`. Both block for readiness on Stdio and HTTP: HTTP signals after bind,
+//! while Stdio signals before serving. Startup or readiness-channel failure
+//! prints to stderr and exits with status 1; readiness does not guarantee
+//! protocol initialization. Failure to create the OS thread can panic on the
+//! caller, while runtime construction can panic in the worker and close
+//! readiness. Watcher startup failure is logged and serving continues; watcher
+//! events apply save deltas. The default wrapper uses a 500 ms debounce, while
+//! the explicit wrapper forwards `Some(config)` unchanged and `None` disables
+//! watching.
+//! `run_headless` and `run_headless_with_watch_config` also return `()` and
+//! block while serving on the caller thread. They print serve errors to stderr
+//! and return; they do not use the background readiness exit path. Watcher
+//! startup failure is logged and serving continues. Their runtime construction
+//! uses `expect`, and entering the blocking runtime from an existing Tokio
+//! runtime can panic. The default wrapper uses a 500 ms debounce; the explicit
+//! wrapper forwards `Some(config)` unchanged and `None` disables watching.
+//! These watcher compatibility paths apply save deltas and do not promise a
+//! full-state reload or cache write.
+//!
+//! In contrast, `run_headless_with_updates` observes updates already applied by
+//! the application and does not start a watcher, mutate the model, or write
+//! cache. It drains observer events every 100 ms. Every event invalidates player
+//! location; new systems, new planets, or changed names invalidate galaxy
+//! statistics; new or modified bases invalidate bases. There is no replay,
+//! event history, per-event snapshot, or bounded-queue guarantee, and shutdown
+//! may drop queued events.
+//!
+//! Stdio is intended for headless use to avoid mixing protocol and REPL output.
+//! The HTTP `/mcp-info` document is static metadata, not a live listener address
+//! or health probe.
 
 pub mod config;
 pub mod resources;
@@ -32,11 +74,20 @@ use nms_graph::GalaxyModel;
 use resources::{BASES_URI, GALAXY_STATS_URI, NmsResources, PLAYER_LOCATION_URI};
 use tools::NmsTools;
 
-/// MCP transport mode.
+/// Transport used by the MCP server.
+///
+/// Stdio is available in every build. HTTP and the owned HTTP background API
+/// require the `http` feature. Constructing this value does not start serving.
+///
 pub enum Transport {
+    /// Serve MCP over standard input and output; intended for headless use.
     Stdio,
+    /// Serve streamable HTTP at the requested socket address.
     #[cfg(feature = "http")]
-    Http(SocketAddr),
+    Http(
+        /// Requested bind address; port 0 lets the operating system choose a port.
+        SocketAddr,
+    ),
 }
 
 /// Failure while starting or stopping an owned background MCP HTTP server.
@@ -53,14 +104,27 @@ pub enum Transport {
 ///
 /// let error = McpBackgroundError::Runtime(std::io::Error::other("example"));
 /// assert!(error.source().is_some());
+/// assert!(McpBackgroundError::ReadinessClosed.source().is_none());
 /// ```
+///
+/// `Spawn`, `Runtime`, `Bind`, and `LocalAddress` retain their underlying I/O
+/// errors as sources. `ReadinessClosed` means the worker ended before reporting
+/// startup. `WorkerPanicked` reports a panic found while joining it. Serve
+/// errors after readiness are written to stderr by the worker.
+///
 #[cfg(feature = "http")]
 #[derive(Debug)]
 pub enum McpBackgroundError {
     /// The worker operating-system thread could not be created.
-    Spawn(std::io::Error),
+    Spawn(
+        /// The operating-system thread creation error.
+        std::io::Error,
+    ),
     /// The worker could not construct its Tokio runtime.
-    Runtime(std::io::Error),
+    Runtime(
+        /// The Tokio runtime construction error.
+        std::io::Error,
+    ),
     /// The requested listener address could not bind.
     Bind {
         /// Address the caller requested.
@@ -111,10 +175,13 @@ impl std::error::Error for McpBackgroundError {
 
 /// Owns an HTTP server worker and its stop signal.
 ///
-/// Call [`Self::shutdown`] outside application model guards; it blocks until
-/// active requests and SSE connections are cancelled and the worker stops.
-/// Dropping the handle also requests stop and joins, but reports join errors
-/// to stderr rather than returning them.
+/// Available with the `http` feature. The handle is returned only after the
+/// listener binds, with the actual address (including an OS-selected port for
+/// requested port 0). [`Self::shutdown`] requests stop, cancels active requests
+/// and SSE streams, and blocks while joining. There is no fixed shutdown
+/// deadline or universal I/O cancellation guarantee. Dropping the handle also
+/// requests stop and joins, writing join errors to stderr. Call shutdown/drop
+/// outside model guards.
 ///
 /// # Examples
 ///
@@ -126,7 +193,7 @@ impl std::error::Error for McpBackgroundError {
 ///
 /// # fn example() -> Result<(), McpBackgroundError> {
 /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
-/// let address = "127.0.0.1:0".parse().expect("socket address");
+/// let address = std::net::SocketAddr::from(([127, 0, 0, 1], 0));
 /// let (_sender, updates) = std::sync::mpsc::channel();
 /// let handle = spawn_mcp_background_with_updates(model, address, Some(updates))?;
 /// println!("listening at {}", handle.local_addr());
@@ -154,26 +221,32 @@ impl std::fmt::Debug for McpBackgroundHandle {
 
 #[cfg(feature = "http")]
 impl McpBackgroundHandle {
-    /// The actual local socket address selected by the listener.
+    /// Return the actual local socket address selected by the listener.
     ///
-    /// See the complete [`spawn_mcp_background_with_updates`] example for
-    /// obtaining and using the actual address after binding.
+    /// Port 0 in the requested address is replaced by the operating-system
+    /// selected port. See [`spawn_mcp_background_with_updates`] for startup.
+    ///
     pub fn local_addr(&self) -> SocketAddr {
         self.address
     }
 
-    /// Cancel active connections (including SSE) and join the worker thread.
+    /// Request cancellation and join the worker thread.
     ///
-    /// # Errors
-    /// Returns [`McpBackgroundError::WorkerPanicked`] if the worker panicked
-    /// while joining. Startup failures are returned by
-    /// [`spawn_mcp_background_with_updates`]; post-ready serve errors are
-    /// written to stderr by the worker.
+    /// This blocking operation cancels active requests and SSE streams. Call
+    /// it outside application model guards.
     ///
     /// # Examples
     ///
-    /// See the complete [`spawn_mcp_background_with_updates`] example for
-    /// starting the owner and explicitly shutting it down.
+    /// See [`spawn_mcp_background_with_updates`] for creating the owner and
+    /// explicitly shutting it down.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`McpBackgroundError::WorkerPanicked`] if joining finds a worker
+    /// panic. Startup failures are returned by
+    /// [`spawn_mcp_background_with_updates`]; post-ready serve errors are
+    /// written to stderr by the worker.
+    ///
     pub fn shutdown(mut self) -> Result<(), McpBackgroundError> {
         self.stop_worker();
         self.join_worker()
@@ -240,18 +313,18 @@ impl ServerControl {
 
 /// Start an owned HTTP observer for updates already applied by the application.
 ///
-/// Shutdown cancels in-flight requests and SSE streams, drops queued observer
-/// events, and joins the worker. The server drains the receiver moved into it;
-/// other coordinator subscribers drain their own receivers. The standard
-/// observer queue is unbounded, so each subscriber must keep its receiver drained.
-/// Parser and filesystem work have no hard
-/// deadline. This handle's shutdown is blocking and must run outside model
-/// guards.
+/// Available with the `http` feature. This starts a worker and Tokio runtime,
+/// binds the requested address, and returns after readiness with the actual
+/// address available from [`McpBackgroundHandle::local_addr`]. It observes the
+/// supplied receiver; it does not watch or parse save files, mutate the model,
+/// or write cache. The application coordinator remains the update producer.
 ///
-/// # Errors
-/// Returns thread-spawn, runtime-construction, bind, local-address, readiness,
-/// or worker-panic errors. I/O-backed variants retain their source. Errors
-/// after readiness are reported to stderr by the worker.
+/// The receiver is drained every 100 ms. Events have no replay, history,
+/// per-event snapshot, flush deadline, or bounded-queue/backpressure guarantee;
+/// shutdown drops queued events. Resource reads query the current model
+/// independently, so notifications invalidate a resource without preserving an
+/// event snapshot. Shutdown blocks while active requests/SSE streams are
+/// cancelled and the worker is joined. Call it outside model guards.
 ///
 /// # Examples
 ///
@@ -262,7 +335,7 @@ impl ServerControl {
 /// use tokio::sync::RwLock;
 /// # fn example() -> Result<(), McpBackgroundError> {
 /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
-/// let address = "127.0.0.1:0".parse().expect("socket address");
+/// let address = std::net::SocketAddr::from(([127, 0, 0, 1], 0));
 /// let (_sender, updates) = std::sync::mpsc::channel();
 /// let owner = spawn_mcp_background_with_updates(model, address, Some(updates))?;
 /// println!("listening at {}", owner.local_addr());
@@ -270,6 +343,15 @@ impl ServerControl {
 /// # Ok(())
 /// # }
 /// ```
+///
+/// # Errors
+/// Returns [`McpBackgroundError::Spawn`], [`McpBackgroundError::Runtime`],
+/// [`McpBackgroundError::Bind`], [`McpBackgroundError::LocalAddress`], or
+/// [`McpBackgroundError::ReadinessClosed`] for startup failure, and
+/// [`McpBackgroundError::WorkerPanicked`] if joining finds a panic. I/O-backed
+/// variants retain their source. Serve errors after readiness are written to
+/// stderr by the worker.
+///
 #[cfg(feature = "http")]
 pub fn spawn_mcp_background_with_updates(
     model: Arc<RwLock<GalaxyModel>>,
@@ -337,18 +419,21 @@ pub fn spawn_mcp_background_with_updates(
 
 /// Start the MCP server on a background thread with its own tokio runtime.
 ///
-/// The server shares the given model with the REPL. When using HTTP transport,
-/// the MCP server runs concurrently with the REPL. Stdio transport should only
-/// be used in headless mode.
+/// The server shares the given model with the REPL. HTTP serves concurrently;
+/// stdio is intended for headless use. This detached compatibility wrapper
+/// returns `()` and uses a 500 ms watcher debounce when `save_path` is `Some`.
+/// Watcher startup failure is logged and serving continues; watcher deltas are
+/// applied to the model. Both Stdio and HTTP calls wait for readiness; HTTP
+/// signals after bind, while Stdio signals before serving. Startup or
+/// readiness-channel failure prints to stderr and exits with status 1; this
+/// does not guarantee protocol initialization. Use
+/// [`spawn_mcp_background_with_watch_config`] for explicit watcher settings.
 ///
-/// Starts a default-debounce watcher when `save_path` is `Some`.
+/// # Panics
 ///
-/// This compatibility wrapper uses a 500ms debounce; use
-/// [`spawn_mcp_background_with_watch_config`] to supply explicit settings.
-///
-/// For HTTP transport, blocks the caller until the server is listening
-/// (TCP bind succeeded) so the REPL doesn't start before the MCP endpoint
-/// is reachable. Uses fabryk-core's `ServiceHandle` for state tracking.
+/// May panic on the caller if the operating-system worker thread cannot be created.
+/// Runtime construction can panic in the worker; a closed readiness channel then
+/// causes the waiting caller to exit with status 1.
 pub fn spawn_mcp_background(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
@@ -359,9 +444,20 @@ pub fn spawn_mcp_background(
 
 /// Start the MCP server on a background thread with an explicit watcher setting.
 ///
-/// `Some(config)` is forwarded unchanged to the save watcher and its owned
-/// handle remains alive while the server runs. `None` disables file watching
-/// while the server continues to use the supplied in-memory model.
+/// This detached compatibility wrapper returns `()`; `Some(config)` is
+/// forwarded unchanged to the save watcher, whose handle remains alive while
+/// serving, and `None` disables file watching. Watcher startup failure is
+/// logged and serving continues. Watcher events apply save deltas. Both Stdio
+/// and HTTP calls wait for readiness; HTTP signals after bind, while Stdio
+/// signals before serving. Startup or readiness-channel failure prints to
+/// stderr and exits with status 1; this does not guarantee protocol
+/// initialization. No full-state reload or cache write is promised.
+///
+/// # Panics
+///
+/// May panic on the caller if the operating-system worker thread cannot be created.
+/// Runtime construction can panic in the worker; a closed readiness channel then
+/// causes the waiting caller to exit with status 1.
 pub fn spawn_mcp_background_with_watch_config(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
@@ -408,8 +504,18 @@ pub fn spawn_mcp_background_with_watch_config(
 
 /// Run the MCP server in headless mode with a default-debounce watcher.
 ///
-/// This compatibility wrapper uses a 500ms debounce when `save_path` is
-/// `Some`; use [`run_headless_with_watch_config`] for explicit settings.
+/// This wrapper blocks on the caller thread and returns `()` after serving.
+/// It uses a 500 ms watcher debounce when `save_path` is `Some`; watcher
+/// startup failure is logged and serving continues. Watcher deltas are applied
+/// to the model. Serve errors are printed to stderr and the function returns;
+/// it does not use the background readiness exit path. Use
+/// [`run_headless_with_watch_config`] for explicit watcher settings. No
+/// full-state reload or cache write is promised.
+///
+/// # Panics
+///
+/// Runtime construction through `expect` can panic. Entering this blocking
+/// runtime from an existing Tokio runtime can also panic.
 pub fn run_headless(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
@@ -420,9 +526,18 @@ pub fn run_headless(
 
 /// Run the MCP server in headless mode with an explicit watcher setting.
 ///
-/// `Some(config)` is forwarded unchanged to the save watcher and its owned
-/// handle remains alive while the server runs. `None` disables file watching
-/// while the server continues to use the supplied in-memory model.
+/// This compatibility API returns `()` and blocks while serving on the caller
+/// thread. `Some(config)` is forwarded unchanged and its watcher handle remains
+/// alive while serving; `None` disables watching. Watcher startup failure is
+/// logged and serving continues. Watcher events apply save deltas. Serve errors
+/// are printed to stderr and the function returns; HTTP bind/readiness failure
+/// follows this same serving-error path and does not exit the process. No
+/// full-state reload or cache write is promised.
+///
+/// # Panics
+///
+/// Runtime construction through `expect` can panic. Entering this blocking
+/// runtime from an existing Tokio runtime can also panic.
 pub fn run_headless_with_watch_config(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
@@ -449,8 +564,20 @@ pub fn run_headless_with_watch_config(
     });
 }
 
-/// Run headless MCP using already-applied updates from the application owner.
-/// This observer never starts a watcher, mutates the model, or writes cache.
+/// Run headless MCP using updates already applied by the application owner.
+///
+/// This observer never starts a watcher, parses saves, mutates the model, or
+/// writes cache. It drains the receiver every 100 ms; every applied event
+/// invalidates player location, new systems or planets and changed names
+/// invalidate galaxy statistics, and new or modified bases invalidate bases.
+/// There is no replay or per-event snapshot, and queued events can be dropped on
+/// shutdown. This API returns `()` and blocks on this thread. Runtime
+/// construction errors are printed to stderr and return without serving; serve
+/// errors are printed to stderr and return.
+///
+/// # Panics
+///
+/// Entering this blocking runtime from an existing Tokio runtime can panic.
 pub fn run_headless_with_updates(
     model: Arc<RwLock<GalaxyModel>>,
     transport: Transport,
@@ -682,6 +809,22 @@ async fn mcp_info() -> fabryk_mcp::axum::Json<serde_json::Value> {
     fabryk_mcp::axum::Json(mcp_info_json())
 }
 
+/// Return static advertised metadata for the streamable-HTTP endpoint.
+///
+/// This document reports endpoint paths and a fixed curl template, not the
+/// active listener address or live health state.
+///
+/// # Examples
+///
+/// ```
+/// let info = nms_copilot::mcp::mcp_info_json();
+/// assert_eq!(info["transport"], "streamable-http");
+/// assert_eq!(info["endpoints"]["mcp"], "/mcp");
+/// assert_eq!(info["endpoints"]["health"], "/health");
+/// assert_eq!(info["endpoints"]["info"], "/mcp-info");
+/// assert_eq!(info["session_header"], "Mcp-Session-Id");
+/// ```
+///
 #[cfg(feature = "http")]
 pub fn mcp_info_json() -> serde_json::Value {
     serde_json::json!({
