@@ -1,6 +1,8 @@
 # Slice39 acceptance ledger
 
-2026-10-25 UTC. Six correctness-grade OPEN rows; initial0actualrefinements, no implementation or acceptance at issue.
+2026-10-25 UTC. Six correctness-grade OPEN rows; currentfirstactualrefinement1/5/fourremain. Initial0actualrefinement issue and all prompts preserved, no acceptance at issue.
+
+2026-10-25 currentstate: initialpairformatbc21f37e/lint968dc8c4 both0/fullraw/equalidentity4b0d65ce/diff58728d7d; complete3fileinitialwalk found F1command-example lifetime/??/period/order, F2completion9field6boolshape, F3missingW2panic/quote/cap semantics, F4convertoptional-syntaxprecision. Immutable01 FIRST ACTUAL1/5/fourleft, onlycommands/completerRustdoc/examples; prompt.rs/derivedregion/currenthelpers/allproduction/tests frozen. All6RP remainOPEN; no runtime/compilerfailure invented.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
