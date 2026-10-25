@@ -1,11 +1,18 @@
 //! Map state: zoom levels, viewport math, cursor logic.
+//!
+//! [`MapState`] stores a mutable view of a model/session snapshot and does
+//! not enforce cross-field invariants or refresh from either source. Map
+//! geometry projects voxel X/Z and ignores Y. [`ZoomLevel`] defines the
+//! viewport scales; [`density_char`] maps cell counts to display glyphs.
 
 use nms_core::galaxy::Galaxy;
 use nms_graph::GalaxyModel;
 
 use crate::session::SessionState;
 
-/// Zoom tier for the galaxy map.
+/// One of the map's three X/Z viewport scales.
+///
+/// The per-axis extents are 4096 for Galaxy, 512 for Region, and 64 for Local.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ZoomLevel {
     /// Full galaxy view — 4096×4096 voxel extent.
@@ -18,6 +25,19 @@ pub enum ZoomLevel {
 
 impl ZoomLevel {
     /// Voxel extent covered by one axis at this zoom level.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_copilot::map::state::ZoomLevel;
+    /// let levels = [ZoomLevel::Galaxy, ZoomLevel::Region, ZoomLevel::Local];
+    /// let actual: Vec<_> = levels.into_iter().map(|z| (z.extent(), z.label(), z.zoom_in(), z.zoom_out())).collect();
+    /// assert_eq!(actual, vec![
+    ///     (4096.0, "Galaxy", Some(ZoomLevel::Region), None),
+    ///     (512.0, "Region", Some(ZoomLevel::Local), Some(ZoomLevel::Galaxy)),
+    ///     (64.0, "Local", None, Some(ZoomLevel::Region)),
+    /// ]);
+    /// ```
     pub fn extent(self) -> f64 {
         match self {
             Self::Galaxy => 4096.0,
@@ -54,43 +74,86 @@ impl ZoomLevel {
     }
 }
 
-/// Label for a base on the map.
+/// Snapshot label and X/Z location for one map base.
+///
+/// [`MapState::new`] sorts selected-galaxy bases by case-sensitive name and
+/// labels at most 26. This value owns copied data and does not track changes.
 #[derive(Debug, Clone)]
 pub struct BaseLabel {
+    /// Display letter assigned from `A` through `Z`.
     pub letter: char,
+    /// Copied base name used by the Local view and legend.
     pub name: String,
+    /// Base voxel X coordinate in the selected galaxy.
     pub voxel_x: i16,
+    /// Base voxel Z coordinate in the selected galaxy.
     pub voxel_z: i16,
 }
 
-/// Interactive map state.
+/// Mutable viewport and display snapshot for the interactive map.
+///
+/// Fields are public and independently mutable; direct changes can create
+/// combinations methods do not produce. Galaxy, labels, and player position
+/// are copied on construction, not live model views. Geometry uses voxel X/Z.
 pub struct MapState {
-    /// Current zoom level.
+    /// Current X/Z viewport scale.
     pub zoom: ZoomLevel,
-    /// Viewport center in voxel coordinates (X, Z).
+    /// Viewport center as `(voxel_x, voxel_z)`.
     pub center: (f64, f64),
-    /// Cursor position on the grid (col, row).
+    /// Cursor grid cell as `(column, row)`.
     pub cursor: (u16, u16),
-    /// Usable map grid size (cols, rows).
+    /// Usable map dimensions as `(columns, rows)`.
     pub grid_size: (u16, u16),
-    /// Active galaxy index.
+    /// Model active-galaxy index captured at construction.
     pub galaxy: u8,
-    /// Galaxy name for display.
+    /// Display name for the captured model galaxy.
     pub galaxy_name: String,
-    /// Base labels (A-Z).
+    /// Up to 26 captured base labels for the model galaxy, ordered by name.
     pub base_labels: Vec<BaseLabel>,
-    /// Player voxel position (X, Z), if known.
+    /// Captured player `(voxel_x, voxel_z)`, if known.
     pub player_pos: Option<(i16, i16)>,
-    /// Stack for zoom-out restoration.
+    /// Saved `(zoom, center_x, center_z)` entries used by zoom-out.
     pub zoom_stack: Vec<(ZoomLevel, f64, f64)>,
-    /// Whether to show the help overlay.
+    /// Whether rendering should paint the help overlay.
     pub show_help: bool,
-    /// Whether the map should exit.
+    /// Whether the loop should exit after input handling.
     pub should_quit: bool,
 }
 
 impl MapState {
-    /// Create initial map state from the model and session.
+    /// Capture initial map state from the model and session.
+    ///
+    /// The model's active galaxy selects the display name and base labels;
+    /// `session.galaxy` does not. Player X/Z is copied without a galaxy
+    /// comparison. A session position, when present, supplies the center even
+    /// if its address names another galaxy; otherwise player position or the
+    /// origin is used. Names sort case-sensitively, and only the first 26
+    /// selected-galaxy bases receive `A`–`Z`. Equal-name order is unspecified
+    /// because source order comes from a hash map. Values are snapshots.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_copilot::{map::state::{MapState, ZoomLevel}, session::{PositionContext, SessionState}};
+    /// use nms_core::{BaseType, GalacticAddress, PlayerBase, PlayerState};
+    /// use nms_graph::GalaxyModel;
+    /// # fn main() {
+    /// let mut model = GalaxyModel::new();
+    /// model.set_active_galaxy(9);
+    /// model.player_state = Some(PlayerState::new(GalacticAddress::new(100, 0, 200, 1, 0, 9), 9, None, None, 0, 0, 0));
+    /// for (name, x, z, galaxy) in [("Beta", 30, 40, 9), ("Alpha", 10, 20, 9), ("Other", 50, 60, 0)] {
+    ///     model.insert_base(PlayerBase::new(name.into(), BaseType::HomePlanetBase, GalacticAddress::new(x, 0, z, 1, 0, galaxy), [0.0; 3], None));
+    /// }
+    /// let mut session = SessionState::from_model(&model);
+    /// session.galaxy = nms_core::galaxy::Galaxy::by_index(0);
+    /// session.position = Some(PositionContext::Address(GalacticAddress::new(16, 0, -8, 1, 0, 0)));
+    /// let state = MapState::new(&model, &session);
+    /// assert_eq!((state.zoom, state.center, state.cursor, state.grid_size, state.galaxy, state.galaxy_name.as_str(), state.player_pos, state.zoom_stack.clone(), state.show_help, state.should_quit),
+    ///     (ZoomLevel::Galaxy, (16.0, -8.0), (0, 0), (78, 19), 9, "Eissentam", Some((100, 200)), vec![], false, false));
+    /// let labels: Vec<_> = state.base_labels.iter().map(|b| (b.letter, b.name.as_str(), b.voxel_x, b.voxel_z)).collect();
+    /// assert_eq!(labels, vec![('A', "Alpha", 10, 20), ('B', "Beta", 30, 40)]);
+    /// # }
+    /// ```
     pub fn new(model: &GalaxyModel, session: &SessionState) -> Self {
         let galaxy = model.active_galaxy;
         let galaxy_name = Galaxy::by_index(galaxy).name.to_string();
@@ -146,7 +209,12 @@ impl MapState {
         }
     }
 
-    /// Update grid size (e.g., on terminal resize).
+    /// Set the usable grid from complete outer frame or terminal dimensions.
+    ///
+    /// This method itself reserves two columns and five rows for borders and
+    /// status/legend. Dimensions saturate at zero; a zero-sized axis leaves
+    /// its previous cursor coordinate unchanged. Callers should not subtract
+    /// those reservations before calling this method.
     pub fn resize(&mut self, cols: u16, rows: u16) {
         // Reserve 3 rows for status + legend, and 2 cols + 2 rows for map border
         let inner_cols = cols.saturating_sub(2);
@@ -155,7 +223,15 @@ impl MapState {
         self.clamp_cursor();
     }
 
-    /// Move cursor by (dx, dy), clamping to grid bounds.
+    /// Move by signed `(dx, dy)` and clamp the cursor to nonempty grid axes.
+    ///
+    /// The stored `u16` coordinates are cast to `i16` for addition; this is
+    /// intended for ordinary terminal dimensions and small input deltas.
+    ///
+    /// # Panics
+    ///
+    /// Intermediate `i16` addition can overflow with overflow checks enabled.
+    /// Wrapping builds may differ for extreme public cursor values or deltas.
     pub fn move_cursor(&mut self, dx: i16, dy: i16) {
         let (cx, cy) = self.cursor;
         let new_x = (cx as i16 + dx).max(0) as u16;
@@ -175,7 +251,11 @@ impl MapState {
         }
     }
 
-    /// Zoom in on the cell under the cursor.
+    /// Zoom in one tier around the voxel under the cursor, when possible.
+    ///
+    /// Saves the prior zoom and center (not cursor), moves the center to the
+    /// old cursor voxel, and places the cursor at the grid midpoint. At Local
+    /// zoom the state is unchanged. Public stack edits are not validated.
     pub fn zoom_in(&mut self) {
         if let Some(next_zoom) = self.zoom.zoom_in() {
             // Save current state for zoom-out
@@ -189,7 +269,11 @@ impl MapState {
         }
     }
 
-    /// Zoom out, restoring previous state.
+    /// Restore the saved zoom and center at the top of the stack, if present.
+    ///
+    /// Returns `true` after restoring and centering the cursor. An empty stack
+    /// returns `false` without changing `should_quit`; the input layer applies
+    /// the exit policy.
     pub fn zoom_out(&mut self) -> bool {
         if let Some((prev_zoom, cx, cz)) = self.zoom_stack.pop() {
             self.zoom = prev_zoom;
@@ -202,7 +286,10 @@ impl MapState {
         }
     }
 
-    /// Center the viewport on the player position.
+    /// Center on the captured player position when known.
+    ///
+    /// Changes center and cursor midpoint while preserving zoom and stack; no
+    /// player position leaves state unchanged.
     pub fn center_on_player(&mut self) {
         if let Some((px, pz)) = self.player_pos {
             self.center = (f64::from(px), f64::from(pz));
@@ -210,7 +297,13 @@ impl MapState {
         }
     }
 
-    /// Get the voxel coordinate that the cursor is pointing at.
+    /// Return the voxel `(x, z)` coordinate under the cursor.
+    ///
+    /// Each cell size is the zoom extent divided by its grid dimension,
+    /// treating zero dimensions as one. For a positive dimension, the origin
+    /// is center minus half the viewport extent on that axis. When a dimension
+    /// is zero, its divisor is one and its half-dimension is zero; a retained
+    /// nonzero cursor coordinate can still offset the result on that axis.
     pub fn cursor_voxel(&self) -> (f64, f64) {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
@@ -225,8 +318,13 @@ impl MapState {
         (vx, vz)
     }
 
-    /// Convert a voxel coordinate to grid position.
-    /// Returns `None` if outside the viewport.
+    /// Convert voxel `(x, z)` coordinates to a grid `(column, row)`.
+    ///
+    /// Returns `None` when the resulting integer cell is outside the grid.
+    /// Float-to-integer casts truncate toward zero, so this is not strict
+    /// continuous-rectangle containment: a slightly negative fractional cell
+    /// can map to zero. Nonfinite and extreme inputs follow Rust cast rules.
+    /// A zero grid dimension yields no in-grid cell.
     pub fn voxel_to_grid(&self, vx: f64, vz: f64) -> Option<(u16, u16)> {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
@@ -246,8 +344,34 @@ impl MapState {
         }
     }
 
-    /// Get the voxel bounding box for the current viewport.
-    /// Returns ((min_x, min_z), (max_x, max_z)).
+    /// Return bounds as `((min_x, min_z), (max_x, max_z))`.
+    ///
+    /// A zero-sized axis has equal minimum and maximum coordinates.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use nms_copilot::map::state::{MapState, ZoomLevel};
+    /// use nms_copilot::session::SessionState;
+    /// use nms_graph::GalaxyModel;
+    /// # fn main() {
+    /// let model = GalaxyModel::new(); let session = SessionState::from_model(&model);
+    /// let mut state = MapState::new(&model, &session); state.center = (16.0, -8.0); state.resize(10, 9);
+    /// assert_eq!((state.grid_size, state.cursor), ((8, 4), (0, 0)));
+    /// assert_eq!(state.cursor_voxel(), (-2032.0, -2056.0));
+    /// assert_eq!(state.viewport_bounds(), ((-2032.0, -2056.0), (2064.0, 2040.0)));
+    /// assert_eq!(state.voxel_to_grid(16.0, -8.0), Some((4, 2)));
+    /// assert_eq!(state.voxel_to_grid(2064.0, -8.0), None);
+    /// state.move_cursor(2, 1); assert_eq!((state.cursor, state.cursor_voxel()), ((2, 1), (-1008.0, -1032.0)));
+    /// state.zoom_in(); assert_eq!((state.zoom, state.center, state.cursor, state.zoom_stack.clone()), (ZoomLevel::Region, (-1008.0, -1032.0), (4, 2), vec![(ZoomLevel::Galaxy, 16.0, -8.0)]));
+    /// assert!(state.zoom_out()); assert_eq!((state.zoom, state.center, state.cursor, state.zoom_stack.clone()), (ZoomLevel::Galaxy, (16.0, -8.0), (4, 2), vec![]));
+    /// assert!(!state.zoom_out()); assert!(!state.should_quit);
+    /// state.player_pos = Some((100, 200)); state.center_on_player();
+    /// assert_eq!((state.center, state.cursor, state.zoom, state.zoom_stack.clone()), ((100.0, 200.0), (4, 2), ZoomLevel::Galaxy, vec![]));
+    /// state.resize(1, 3); assert_eq!((state.grid_size, state.cursor), ((0, 0), (4, 2)));
+    /// assert_eq!(state.voxel_to_grid(100.0, 200.0), None);
+    /// # }
+    /// ```
     pub fn viewport_bounds(&self) -> ((f64, f64), (f64, f64)) {
         let (cols, rows) = self.grid_size;
         let extent = self.zoom.extent();
@@ -264,7 +388,19 @@ impl MapState {
     }
 }
 
-/// Select a density character based on system count in a cell.
+/// Return the density glyph for a system count in one map cell.
+///
+/// The exact mapping is `0 => ' '`, `1 => '·'`, `2..=3 => '+'`,
+/// `4..=7 => '*'`, and `8 or more => '#'`.
+///
+/// # Examples
+///
+/// ```
+/// use nms_copilot::map::state::density_char;
+/// let counts = [0, 1, 2, 3, 4, 7, 8, 100];
+/// let glyphs: Vec<_> = counts.into_iter().map(density_char).collect();
+/// assert_eq!(glyphs, [' ', '·', '+', '+', '*', '*', '#', '#']);
+/// ```
 pub fn density_char(count: usize) -> char {
     match count {
         0 => ' ',

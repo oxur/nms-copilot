@@ -1,7 +1,13 @@
-//! Interactive ASCII galaxy map using ratatui.
+//! Interactive ASCII galaxy map using Ratatui.
 //!
-//! Provides a full-screen TUI map with cursor navigation and zoom drill-down.
-//! Three zoom levels: Galaxy → Region → Local.
+//! This module joins [`input`] handling, [`render`]ing, and [`state`] for a
+//! borrowed snapshot of a [`GalaxyModel`] and [`SessionState`]. Its zoom tiers
+//! are [`state::ZoomLevel::Galaxy`], [`state::ZoomLevel::Region`], and
+//! [`state::ZoomLevel::Local`]. The map projects voxel X/Z and does not update
+//! the model or session.
+//!
+//! The entry point requires an interactive terminal; the state and renderer
+//! can also be used separately with an in-memory backend.
 
 pub mod input;
 pub mod render;
@@ -22,8 +28,42 @@ use state::MapState;
 
 /// Enter the interactive map, returning when the user exits.
 ///
-/// Sets up an alternate screen with raw mode, runs the event loop,
-/// and restores the terminal on exit (even if the loop errors).
+/// Borrows the model and session as a read-only snapshot. It enables raw
+/// mode, enters the alternate screen, hides the cursor, then draws before
+/// each input poll; a resize updates the grid for the following draw.
+///
+/// Setup and teardown are sequential best-effort operations. A loop error
+/// still reaches teardown. A setup error can return before cleanup starts; a
+/// cleanup error can replace the loop result and prevent later restoration.
+/// Panics are not protected by an RAII terminal guard.
+///
+/// # Examples
+///
+/// This terminal entry example is checked but not run because it requires an
+/// interactive terminal.
+/// ```no_run
+/// use std::io;
+/// use nms_copilot::{map::run_map, session::SessionState};
+/// use nms_graph::GalaxyModel;
+/// # fn main() -> io::Result<()> {
+/// let model = GalaxyModel::new();
+/// let session = SessionState::from_model(&model);
+/// run_map(&model, &session)?;
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// Returns I/O errors from raw-mode setup, screen/cursor commands, terminal
+/// construction or sizing, drawing, event polling or reading, raw-mode
+/// teardown, or screen/cursor restoration.
+///
+/// # Panics
+///
+/// A panic in map processing unwinds without normal terminal teardown. See
+/// [`render::render`] for UTF-8 clipping and
+/// [`state::MapState::move_cursor`] for its numeric limit.
 pub fn run_map(model: &GalaxyModel, session: &SessionState) -> io::Result<()> {
     // Setup terminal
     crossterm::terminal::enable_raw_mode()?;

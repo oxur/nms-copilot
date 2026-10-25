@@ -1,22 +1,53 @@
 //! Crossterm event handling for the interactive map.
+//!
+//! [`handle_input`] polls for an event and updates a borrowed
+//! [`MapState`]. It does not configure or restore
+//! terminal modes; [`super::run_map`] owns that lifecycle.
 
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyModifiers};
 use std::time::Duration;
 
 use super::state::MapState;
 
-/// Map action produced by input handling.
+/// Result of polling and handling one map input event.
+///
+/// `None` does not imply unchanged state: an ordinary key may already have
+/// changed the cursor, zoom, help, or quit flag.
 pub enum MapAction {
-    /// No action (timeout or ignored event).
+    /// No resize action to report.
+    ///
+    /// Returned for timeout, ignored event, or key input; key handling may
+    /// already have changed state.
     None,
-    /// Terminal was resized.
+    /// Terminal resized, reported as `(width, height)`.
+    ///
+    /// [`MapState::resize`] has already been
+    /// applied before this variant is returned.
     Resized(u16, u16),
 }
 
-/// Poll for input events and update map state accordingly.
+/// Poll for up to 100 ms and apply one available event to `state`.
 ///
-/// Returns `MapAction::Resized` when the terminal size changes,
-/// so the caller can trigger a re-render.
+/// Resize calls [`MapState::resize`] and
+/// reports width then height. Key event kind is not filtered (press, repeat,
+/// or release). While help is open, any key dismisses it and has no other key
+/// effect, including `q` and Ctrl+C; resize still applies. Otherwise arrows
+/// move, Enter/`+` zoom in, Esc/`-` zoom out and request exit only if the zoom
+/// stack is empty, `q`/Ctrl+C request exit, unmodified lowercase `c` centers,
+/// and `?` toggles help. Timeout, ignored input, and handled keys return
+/// [`MapAction::None`], which may follow a state change.
+///
+/// This function does not enable raw mode or restore the terminal.
+///
+/// # Errors
+///
+/// Returns an I/O error if Crossterm event polling or reading fails.
+///
+/// # Panics
+///
+/// An arrow key calls [`MapState::move_cursor`], whose intermediate `i16`
+/// addition can overflow with overflow checks enabled for extreme public
+/// cursor values or deltas. See that method for the exact limitation.
 pub fn handle_input(state: &mut MapState) -> std::io::Result<MapAction> {
     if !event::poll(Duration::from_millis(100))? {
         return Ok(MapAction::None);
