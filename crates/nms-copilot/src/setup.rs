@@ -1,7 +1,10 @@
-//! Interactive setup wizard for first-time NMS Copilot configuration.
+//! Interactive setup wizard for selecting an NMS save file.
 //!
-//! When the REPL starts with no save file configured and auto-detect fails,
-//! this wizard guides the user through finding and selecting their NMS save file.
+//! The `nms-copilot` binary's startup calls the wizard only for explicit
+//! `--setup` in non-headless mode, after an explicit `--save` option has taken
+//! precedence. Failed save auto-detection alone does not call it. Other library
+//! callers may invoke the public wizard directly. Its entry point is
+//! [`run_setup_wizard`], and its errors are described by [`SetupError`].
 
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
@@ -29,35 +32,112 @@ fn wizard_theme() -> ColorfulTheme {
     }
 }
 
-/// Errors that can occur during the setup wizard.
+/// Errors reported while interacting with the setup wizard.
+///
+/// `Cancelled` represents dialoguer interaction errors, including but not
+/// limited to an explicit user cancellation. `NoInstallation` means the
+/// prompted path did not exist. `Locate` carries a save-discovery error, and
+/// `Io` carries an I/O error from configuration or data-directory handling.
+///
+/// # Examples
+///
+/// ```
+/// use nms_copilot::setup::SetupError;
+/// use nms_save::locate::LocateError;
+/// use std::io;
+///
+/// let errors = [
+///     SetupError::Cancelled,
+///     SetupError::NoInstallation,
+///     LocateError::NoHomeDir.into(),
+///     io::Error::other("fixture").into(),
+/// ];
+/// let actual = errors.map(|error| error.to_string());
+/// assert_eq!(
+///     actual,
+///     [
+///         "setup cancelled by user".to_owned(),
+///         "no NMS installation found".to_owned(),
+///         "could not determine home/data directory".to_owned(),
+///         "fixture".to_owned(),
+///     ]
+/// );
+/// ```
 #[derive(Debug, thiserror::Error)]
 pub enum SetupError {
-    /// The user cancelled the setup wizard.
+    /// A dialoguer interaction error occurred.
+    ///
+    /// It includes, but is not limited to, explicit user cancellation.
     #[error("setup cancelled by user")]
     Cancelled,
 
-    /// No NMS installation could be found.
+    /// The literal path entered at the prompt did not exist.
     #[error("no NMS installation found")]
     NoInstallation,
 
-    /// Error from save file discovery.
+    /// A transparently carried save-discovery [`locate::LocateError`].
     #[error(transparent)]
     Locate(#[from] locate::LocateError),
 
-    /// I/O error.
+    /// A configuration or data-directory I/O error occurred.
+    ///
+    /// It transparently carries [`std::io::Error`] for config, data-directory,
+    /// read, serialization, or write errors.
     #[error(transparent)]
     Io(#[from] std::io::Error),
 }
 
-/// Run the interactive setup wizard.
+/// Interactively select an NMS save file and optionally save its paths.
 ///
-/// Guides the user through selecting an NMS save file by:
-/// 1. Detecting the platform-default NMS save directory
-/// 2. Listing account directories
-/// 3. Listing save slots within the selected account
-/// 4. Optionally saving the selection to `~/.nms-copilot/config.toml`
+/// The wizard uses an existing platform-default save directory when available;
+/// otherwise it prompts for a path, trims the input, and requires that it
+/// exists. It does not expand `~`, canonicalize the path, parse save contents,
+/// or guarantee a direct-file bypass despite the prompt mentioning a save
+/// file. A recognized account directory containing saves is selected directly
+/// when found in its parent listing; otherwise account subdirectories are
+/// listed. One account is selected automatically and multiple accounts are
+/// offered in a menu. Accounts are not restricted to Steam. Save files are
+/// grouped by numbered slot; one slot is selected automatically and multiple
+/// slots are offered in slot order. The selected slot uses its most-recent
+/// manual or auto save, with the manual save winning an equal modification
+/// time. This is filename and metadata selection, not gameplay/save validation.
 ///
-/// Returns the resolved path to the selected save file.
+/// A confirmation prompt defaults to yes. On confirmation, the wizard writes
+/// `dir`, `file`, and `format = "auto"` to the `[save]` table in the config
+/// returned by [`crate::paths::config_path`], after
+/// [`crate::paths::ensure_data_dir`]. Other TOML root tables are retained, but
+/// the complete `[save]` table is replaced. Readable malformed TOML is treated
+/// as a new empty config; comments and the previous save table are not
+/// guaranteed to survive. The write is direct and non-atomic, with no rollback
+/// if an error occurs. Declining returns the selected path without writing
+/// config. The function returns an owned [`PathBuf`] only after an optional
+/// config write succeeds; it does not activate that config in an existing
+/// object, start a watcher/model, or validate the save.
+///
+/// # Examples
+///
+/// ```no_run
+/// # fn main() -> Result<(), nms_copilot::setup::SetupError> {
+/// let selected = nms_copilot::setup::run_setup_wizard()?;
+/// println!("Selected {}", selected.display());
+/// # Ok(())
+/// # }
+/// ```
+///
+/// # Errors
+///
+/// Returns [`SetupError::Cancelled`] for dialoguer interaction errors,
+/// [`SetupError::NoInstallation`] when the prompted path does not exist,
+/// [`SetupError::Locate`] for save-discovery failures, or [`SetupError::Io`]
+/// for config/data-directory/read/serialization/write I/O errors. A failure can
+/// occur after the user has interacted with the wizard.
+///
+/// # Panics
+///
+/// Standard-output writes can panic. When saving configuration, unavailable
+/// home-directory resolution can panic through `config_path`; internal
+/// selection assumptions also use `unwrap` for an account or a nonempty slot's
+/// most-recent save.
 pub fn run_setup_wizard() -> Result<PathBuf, SetupError> {
     let theme = wizard_theme();
 

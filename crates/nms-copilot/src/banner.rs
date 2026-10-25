@@ -1,15 +1,37 @@
 //! Startup banner display for the NMS Copilot REPL.
 //!
-//! Provides an ASCII art banner with ANSI color support and a system info
-//! banner showing loaded model statistics. Both are independently configurable.
+//! The module resolves a compile-time default or caller-supplied banner,
+//! substitutes the crate version, and can remove the escape forms recognized
+//! by its limited scanner. It also prints caller-supplied system counts and a
+//! help hint. These helpers do not inspect terminal capabilities.
 
 /// Default ASCII art banner, embedded at compile time.
 const DEFAULT_BANNER: &str = include_str!("../assets/banners/banner.txt");
 
-/// Count visible characters in a string, ignoring ANSI escape sequences.
+/// Count Unicode scalar values, ignoring the escape forms recognized here.
 ///
-/// Walks through the characters; when hitting `\x1b`, skips the entire
-/// escape sequence (up to and including `m`).
+/// This is not a count of bytes, grapheme clusters, or terminal display
+/// columns. The scanner discards ESC; when ESC is followed by `[`, it also
+/// discards through the next `m` or the end of the string. It does not validate
+/// that the sequence is SGR, and other ESC forms leave their following
+/// characters in the input.
+///
+/// # Examples
+///
+/// ```
+/// use nms_copilot::banner::{strip_ansi, visible_width};
+///
+/// let inputs = ["\x1b[31mA界\x1b[0m", "a\x1bx", "a\x1b[31"];
+/// let actual = inputs.map(|text| (visible_width(text), strip_ansi(text)));
+/// assert_eq!(
+///     actual,
+///     [
+///         (2, "A界".to_owned()),
+///         (2, "ax".to_owned()),
+///         (1, "a".to_owned()),
+///     ]
+/// );
+/// ```
 pub fn visible_width(s: &str) -> usize {
     let mut width = 0;
     let mut chars = s.chars().peekable();
@@ -32,7 +54,12 @@ pub fn visible_width(s: &str) -> usize {
     width
 }
 
-/// Remove all ANSI escape sequences from a string.
+/// Remove the escape forms recognized by this module's limited scanner.
+///
+/// ESC is discarded. If it is followed by `[`, characters through the next
+/// `m` or the end of the string are discarded; this does not validate SGR.
+/// Other characters following ESC remain. This is not general ANSI handling.
+/// See [`visible_width`] for a complete scanner example.
 pub fn strip_ansi(s: &str) -> String {
     let mut result = String::with_capacity(s.len());
     let mut chars = s.chars().peekable();
@@ -55,11 +82,53 @@ pub fn strip_ansi(s: &str) -> String {
     result
 }
 
-/// Replace a placeholder in a line while preserving visual column width.
+/// Replace every occurrence of a placeholder in a line and adjust spacing.
 ///
-/// After replacement, calculates the width difference and adds or removes
-/// trailing spaces before the last border character (`║`, `│`, `|`, `]`)
-/// to maintain alignment.
+/// If the placeholder is absent, the original line is returned. Width is
+/// measured with [`visible_width`], so it counts Unicode scalar values rather
+/// than terminal columns. The adjustment point is the last ESC if present;
+/// otherwise it is the last `║`, then `│`, then `|`, then `]`, or the end of
+/// the line. This is a priority among character classes, not the globally
+/// rightmost border. A shorter replacement adds spaces there. A longer one
+/// removes available trailing whitespace there; if there is not enough, the
+/// result can remain wider than the input. This does not guarantee visual
+/// alignment. Replacement uses ordinary [`str::replace`] semantics and
+/// replaces all matches, including the standard behavior when `placeholder`
+/// is empty.
+///
+/// # Examples
+///
+/// ```
+/// use nms_copilot::banner::{substitute_placeholder_in_line, substitute_placeholders};
+///
+/// let calls = [
+///     ("no placeholder", "{v}", "x"),
+///     ("{version} |", "{version}", "1.0"),
+///     ("{v} |", "{v}", "ABCDE"),
+///     ("{v}:{v} |", "{v}", "x"),
+/// ];
+/// let actual = calls.map(|(line, placeholder, value)| {
+///     substitute_placeholder_in_line(line, placeholder, value)
+/// });
+/// assert_eq!(
+///     actual,
+///     [
+///         "no placeholder".to_owned(),
+///         "1.0       |".to_owned(),
+///         "ABCDE|".to_owned(),
+///         "x:x     |".to_owned(),
+///     ]
+/// );
+/// assert_eq!(
+///     substitute_placeholders("v{version}|\r\nkeep\n", "1.0"),
+///     "v1.0      |\nkeep"
+/// );
+/// ```
+///
+/// # Panics
+///
+/// When removing trailing whitespace, the implementation slices by byte
+/// length. It can panic if that slice splits a multibyte whitespace character.
 pub fn substitute_placeholder_in_line(line: &str, placeholder: &str, value: &str) -> String {
     if !line.contains(placeholder) {
         return line.to_string();
@@ -113,7 +182,16 @@ pub fn substitute_placeholder_in_line(line: &str, placeholder: &str, value: &str
     }
 }
 
-/// Apply `{version}` substitution across all lines of a banner.
+/// Replace literal `{version}` placeholders on each line of a banner.
+///
+/// Uses [`substitute_placeholder_in_line`] for each line, then joins with LF.
+/// As a result, a final line terminator is removed and CRLF is normalized to
+/// LF. Other content is retained except for the documented spacing adjustment.
+///
+/// # Panics
+///
+/// See [`substitute_placeholder_in_line`] for its possible multibyte-whitespace
+/// slicing panic.
 pub fn substitute_placeholders(banner: &str, version: &str) -> String {
     banner
         .lines()
@@ -122,13 +200,43 @@ pub fn substitute_placeholders(banner: &str, version: &str) -> String {
         .join("\n")
 }
 
-/// Resolve the banner text to display, or `None` if disabled.
+/// Resolve the selected banner text, or return `None` when it is disabled.
 ///
-/// Returns `None` when:
-/// - `show_banner` is `false`
-/// - `custom_banner` is `Some("")` (empty string disables the banner)
+/// When `show_banner` is false, resolution stops immediately. `Some("")`
+/// disables a custom banner; `None` selects the default embedded at compile
+/// time, while a nonempty `Some` uses the supplied text. The compile-time crate
+/// version replaces `{version}` before the limited escape scanner is applied
+/// when `color_enabled` is false. No banner path is read and terminal support
+/// is not detected or used to alter the input.
 ///
-/// When `color_enabled` is `false`, ANSI escape sequences are stripped.
+/// # Examples
+///
+/// ```
+/// use nms_copilot::banner::resolve_banner;
+///
+/// let actual = [
+///     resolve_banner(Some("ignored"), false, true),
+///     resolve_banner(Some(""), true, true),
+///     resolve_banner(Some(" "), true, false),
+///     resolve_banner(Some("\x1b[31mRed\x1b[0m\n"), true, false),
+///     resolve_banner(Some("\x1b[31mRed\x1b[0m\n"), true, true),
+/// ];
+/// assert_eq!(
+///     actual,
+///     [
+///         None,
+///         None,
+///         Some(" ".to_owned()),
+///         Some("Red".to_owned()),
+///         Some("\x1b[31mRed\x1b[0m".to_owned()),
+///     ]
+/// );
+/// ```
+///
+/// # Panics
+///
+/// See [`substitute_placeholder_in_line`] for its possible multibyte-whitespace
+/// slicing panic during substitution.
 pub fn resolve_banner(
     custom_banner: Option<&str>,
     show_banner: bool,
@@ -154,19 +262,30 @@ pub fn resolve_banner(
     }
 }
 
-/// Resolve the banner and print it to stdout.
+/// Resolve the banner and print it to stdout when enabled.
 ///
-/// Prints nothing if the banner is disabled or resolves to `None`.
+/// Prints nothing when the banner is disabled or resolves to `None`. The
+/// resolved text is printed with a trailing newline.
+///
+/// # Panics
+///
+/// Panics if writing to stdout fails. Banner substitution can also panic as
+/// documented by [`substitute_placeholder_in_line`].
 pub fn print_banner(custom_banner: Option<&str>, show_banner: bool, color_enabled: bool) {
     if let Some(text) = resolve_banner(custom_banner, show_banner, color_enabled) {
         println!("{text}");
     }
 }
 
-/// Print the system info banner (model stats and help hint).
+/// Print the supplied system counts and a help hint when `show` is true.
 ///
-/// When `show` is `true`, prints the loaded model summary and a help hint.
-/// When `show` is `false`, prints nothing.
+/// Counts and source are printed as passed; this function does not query a
+/// model or inspect terminal capabilities. When `show` is false, it prints
+/// nothing.
+///
+/// # Panics
+///
+/// Panics if writing to stdout fails.
 pub fn print_system_banner(show: bool, systems: usize, planets: usize, bases: usize, source: &str) {
     if show {
         println!(
