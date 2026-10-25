@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.132
+version: 1.133
 project: project01-mvp
 status: active
 depends-on: []
@@ -1330,3 +1330,7 @@ All6DR/R06-S44 AND originalM7.6 DONE on isolated clean9b632b665885d1a8b596006dd9
 ## Slice45 Unicode query formatting issued — 2026-10-25 UTC
 
 Three-path usable originalM7.7/D0043 child on accepted9b632b66: shared query private name truncation/scalar-safe standardstrings, obsolete propagated panic teaching correction and actual isolated checked-save CLI find/route regressions. Readiness independently reproduced both children101 slicing insideé/fullraw/digests preserved. ASCII actual19–22budgets preserved; scalar/tinybudget/2–4byte/combining/ZWJ/find/normalroute/waypoint literals resolved, no grapheme/displaywidth/ANSI promise/API/schema/dependency change. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh selected after44broadhandoff; no new approval/exception/extra reviewer. SixUF/R06-S45OPEN/zeroactualrefinements/nineoriginalgroups/pairhold/freshindependentacceptance+retro. FullM7.7coverage95%/platformCI/allcommands and D0043/fulltheme/otherUnicodeparser-map/remainingoriginal/input/higherowners remainCDC-ownedOPEN. ExistingMakecoveragecopilotlib-only and defaultfeatureCI gaps retained; installedtool notmeasurement.63arc50done13open/all25projectrowsOPEN/no maincleanup/integration/release/otherarc.
+
+## Slice45 Unicode query formatting accepted — 2026-10-25 UTC
+
+All6UF/R06-S45DONE on clean isolatedfe5e9d1287a353bcfbf67fc8db6c5445102c03f5: exactthreepaths/scalar-safe private truncation/truthful propagatedpanic teaching/two real checked-save CLI regressions. ExistingASCIIreal19–22budgets/allotherformatter/query/API/grammar/tests/fences/cache/schema/deps preserved; no grapheme/displaywidth/ANSI promise. Nine fresh CDC groups pass3focused+2actualchildren/1102runtime+118allfeaturedocs(91execute27compile)/35separatenodefaultdocs(29execute6compile)/strictaffectedzero/diffs. OneACTUALrefinement; originalcompilerred/restrictedpartial228pass7fail/authorizedhostretry/actualreadingextentmiss+timelyfullcompletion/exact14CC+11CDC returns+rawrecords/currentHTML/retro retained. No newexception/structuralamendment. FullM7.7allcommands/95%coverage/platformCI and D0043tables/themes/otherUnicodeparser-map debt remainCDC-ownedOPEN; authenticNomNominput/M7.8/M7.10/UI/R01–03/raw/history/nonzero-game/finalsemantic/cache/freshness/higherOperator owners unchanged.63arc51done12open/all25projectrowsOPEN; no maincleanup/integration/release/otherarc. See [CDC45acceptance](arc06-fit-and-finish/slice45-unicode-query-formatting/cdc-verification.md) and [retrospective](arc06-fit-and-finish/slice45-unicode-query-formatting/cdc-retrospective.md).

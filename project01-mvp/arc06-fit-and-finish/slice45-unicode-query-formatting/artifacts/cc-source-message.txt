@@ -1,0 +1,6 @@
+Fix Unicode-safe query name truncation
+
+Count displayed names by Unicode scalar values and preserve UTF-8 boundaries while retaining the existing field limits and ASCII output. Add literal formatter regressions and real nms find/route checked-save child coverage.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

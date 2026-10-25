@@ -1,0 +1,493 @@
+{
+  "record": "Slice45 CC validation receipt",
+  "assignment": "Project01 Arc06 Slice45 — Unicode-safe query formatting",
+  "status": "CC proposed-done; independent CDC acceptance and remaining Arc06 gates are open",
+  "candidate": {
+    "commit": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+    "parent": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+    "tree": "721a881b0b5bfa4118653645ab50c395850a9748",
+    "branch": "codex/unicode-query-formatting",
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+    "clean": true,
+    "paths": [
+      {
+        "path": "crates/nms-query/src/display.rs",
+        "bytes": 37970,
+        "sha256": "fc00a7355de6f6c24c283b759018eaea2425523e079e5c0d904e7c4bdf673e40"
+      },
+      {
+        "path": "crates/nms-copilot/src/dispatch.rs",
+        "bytes": 36821,
+        "sha256": "39d41dcf9c47e5b6c4350769559b265b5945a14d157ea39c5e09a1ebcdace61d"
+      },
+      {
+        "path": "crates/nms-cli/tests/unicode_display_integration.rs",
+        "bytes": 4208,
+        "sha256": "06e5f215224d1cce0019417e26e32bd533ce85f3de1d4285b2b2fdef0ba37b9a"
+      }
+    ]
+  },
+  "reading_record": {
+    "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting/workbench/slice45-return/execution.md",
+    "sha256": "82f1c108b22a2d7bf11fdc675fd7d0d93999d5cc711e6eb11c3b981a15abc75a",
+    "notes": "Initial source-cited readback, iteration01 readback, and timely intake-completion correction; earlier partial-reading account preserved."
+  },
+  "raw_capture": {
+    "path": "/private/tmp/nms-slice45-cc-attempts.json",
+    "bytes": 284462,
+    "sha256": "705003028fbe9a5ad6eb673887cf63aa16e90ced42f51afa06f7f01b7d5c72d4",
+    "note": "Contains full base64 raw stdout/stderr receipts, support controls, every captured SUT attempt, times, environments, identities and exits; referenced here, not duplicated."
+  },
+  "actual_refinement_accounting": {
+    "initial_iterations": 0,
+    "issued_actual_refinements": 1,
+    "completed_actual_refinements": 1,
+    "remaining_of_five": 4,
+    "iteration01_prompt": "planning/project01-mvp/arc06-fit-and-finish/slice45-unicode-query-formatting/cc-prompt-iteration01.md",
+    "scope": "Only F1 output-tied lifetime and F2 owned Command local in the new integration test."
+  },
+  "attempts": [
+    {
+      "id": "071abb9e1b724bf0a7a9f1ed332b50aa",
+      "label": "make format",
+      "status": "complete",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:16:59.990559+00:00",
+      "ended_utc": "2026-10-25T15:17:01.128569+00:00",
+      "exit_code": 0,
+      "before_identity": "8cd273877025f801cb39a0a5664fc895835bd4917e913a1210db9e767b27a4f2",
+      "after_identity": "43eef45377cb9c033c0e74828a46a05cb4d831946f267a8c7729844c8898e4c7",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "38d7f4b60611462bb87cd4e474e1de25",
+      "label": "make lint",
+      "status": "complete",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:17:36.120795+00:00",
+      "ended_utc": "2026-10-25T15:18:03.490104+00:00",
+      "exit_code": 2,
+      "before_identity": "43eef45377cb9c033c0e74828a46a05cb4d831946f267a8c7729844c8898e4c7",
+      "after_identity": "43eef45377cb9c033c0e74828a46a05cb4d831946f267a8c7729844c8898e4c7",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 69,
+        "sha256": "62578ae144c0511964a064efe65d6eedf12e7a447c8100221178b714bc9dc78b"
+      },
+      "stderr": {
+        "bytes": 12742,
+        "sha256": "88c4526f3c9951112000c6ceb30fe6d47ac39c57bad9faa65ecc0f9f882a03d3"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "1c1b498f5f3e4746be85d2dc5f6eb03a",
+      "label": "iteration01 make format",
+      "status": "complete",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:25:22.168505+00:00",
+      "ended_utc": "2026-10-25T15:25:23.299343+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "75f7a71f42d64cdf89f51b2e042a4450",
+      "label": "iteration01 make lint",
+      "status": "complete",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:25:25.613250+00:00",
+      "ended_utc": "2026-10-25T15:25:30.206960+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 1876,
+        "sha256": "850de1e037e0347dd84fc1778ec4c1b49cc20b6be2053fd638652195b85239a3"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "f958e14cafae42de88e37b95f05d0a0c",
+      "label": "cargo test -p nms-query --lib unicode --offline",
+      "status": "complete",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-query",
+        "--lib",
+        "unicode",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:26:20.096304+00:00",
+      "ended_utc": "2026-10-25T15:26:39.342647+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 409,
+        "sha256": "bca34df769e4af4ae080f1d8b2b8b9293e86791dad9b9b03e30a60ccb4981b68"
+      },
+      "stderr": {
+        "bytes": 5917,
+        "sha256": "092fc63fb8dc5bec4e3cd26b1ba6f9a6982789b7e5d564acdfb5693d8d005b91"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "76d4dda8d1e24dcabe5fc3fef867ecf3",
+      "label": "cargo test -p nms-cli --test unicode_display_integration --offline",
+      "status": "complete",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-cli",
+        "--test",
+        "unicode_display_integration",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:26:42.570678+00:00",
+      "ended_utc": "2026-10-25T15:26:49.665657+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 272,
+        "sha256": "e160e61c76012150de65b4deb400eaaf7281e4abd2ecf75ec009ae5a60b70156"
+      },
+      "stderr": {
+        "bytes": 1353,
+        "sha256": "347e0ab98d9e34bda91b9502234f34023fd19b760e620aec388d8ae313b677d8"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "1983a47587984190a4aace6bd74d1df5",
+      "label": "make test",
+      "status": "complete",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:26:54.229702+00:00",
+      "ended_utc": "2026-10-25T15:27:39.538237+00:00",
+      "exit_code": 2,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 35451,
+        "sha256": "8944a471c6b0385fc54b91abab9b408fa64f79ab4dcba1a15d2f306da1e3e235"
+      },
+      "stderr": {
+        "bytes": 9169,
+        "sha256": "5a28854e9322b01285b41f36da866e4d6f5fae544e4fb913d805314b9909df2f"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json",
+      "execution_substrate": "default sandbox (permission omitted; instruction miss, retained)"
+    },
+    {
+      "id": "42a1c39124384f2cb2530a34152105c2",
+      "label": "make test",
+      "status": "complete",
+      "argv": [
+        "make",
+        "test"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:27:59.775164+00:00",
+      "ended_utc": "2026-10-25T15:29:49.208268+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 88763,
+        "sha256": "e002df043c9abd05b16647c65b200342583885718480abe511e2a2dba7531498"
+      },
+      "stderr": {
+        "bytes": 4307,
+        "sha256": "a9b20bad6c02a29d39a814305ce516c082000bfc6830a810c3664ba7e1893af3"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json",
+      "execution_substrate": "host require_escalated; identical argv/cwd/env retry as expressly authorized"
+    },
+    {
+      "id": "5abb08bbd7334c86b3581d14fcfd9c3b",
+      "label": "cargo test -p nms-query -p nms-copilot --doc --no-default-features --offline",
+      "status": "complete",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "nms-query",
+        "-p",
+        "nms-copilot",
+        "--doc",
+        "--no-default-features",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:29:54.566287+00:00",
+      "ended_utc": "2026-10-25T15:30:12.040071+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 3191,
+        "sha256": "73fe95af36546b074f5e27ac91cd3583a0fcd40e51f34450f37b674bb39faa4d"
+      },
+      "stderr": {
+        "bytes": 1475,
+        "sha256": "5b85d69766de89a91d0300170b6b1993dc58a52dcac4fc28a835795f06e5bed7"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "9fc64ed85418436ea91cc277d57cf5d5",
+      "label": "cargo doc -p nms-query -p nms-copilot --lib --all-features --no-deps --offline strict docs",
+      "status": "complete",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-query",
+        "-p",
+        "nms-copilot",
+        "--lib",
+        "--all-features",
+        "--no-deps",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {
+        "CARGO_NET_OFFLINE": "true",
+        "RUSTDOCFLAGS": "-D warnings -D missing_docs"
+      },
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:30:15.360360+00:00",
+      "ended_utc": "2026-10-25T15:30:20.999924+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 1811,
+        "sha256": "63de361b5975b0322cc56294e6009cb72e05002a651a53bee9e60781a3b8516f"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "5109aeed3848460bab02f913b79b6d76",
+      "label": "git diff --check",
+      "status": "complete",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {},
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:30:23.837780+00:00",
+      "ended_utc": "2026-10-25T15:30:23.937990+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    },
+    {
+      "id": "4500fa3d921941d9912c0b88412dcd8f",
+      "label": "git diff 9b632b665885d1a8b596006dd96ebcaaad41a71a --check",
+      "status": "complete",
+      "argv": [
+        "git",
+        "diff",
+        "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unicode-query-formatting",
+      "overrides": {},
+      "inherited_tmpdir": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+      "started_utc": "2026-10-25T15:30:26.533861+00:00",
+      "ended_utc": "2026-10-25T15:30:26.637372+00:00",
+      "exit_code": 0,
+      "before_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "after_identity": "48cb3e5fdb115b466157ffd467074898ace10b30469847981a346798ce260a5c",
+      "head_before": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "head_after": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "raw_channel_receipt": "/private/tmp/nms-slice45-cc-attempts.json"
+    }
+  ],
+  "focused_results": [
+    {
+      "attempt": "f958e14cafae42de88e37b95f05d0a0c",
+      "result": "3 Unicode scalar helper/find/route tests passed; 0 failed."
+    },
+    {
+      "attempt": "76d4dda8d1e24dcabe5fc3fef867ecf3",
+      "result": "2 real nms find/route checked-save child tests passed; 0 failed."
+    },
+    {
+      "attempt": "5abb08bbd7334c86b3581d14fcfd9c3b",
+      "result": "No-default-features doc tests passed: nms-copilot 28 and nms-query 7."
+    },
+    {
+      "attempt": "9fc64ed85418436ea91cc277d57cf5d5",
+      "result": "All-features strict docs passed with RUSTDOCFLAGS -D warnings -D missing_docs."
+    },
+    {
+      "attempt": "5109aeed3848460bab02f913b79b6d76",
+      "result": "Working diff check passed."
+    },
+    {
+      "attempt": "4500fa3d921941d9912c0b88412dcd8f",
+      "result": "Baseline diff check against 9b632b665885d1a8b596006dd96ebcaaad41a71a passed."
+    }
+  ],
+  "rendered_docs_readback": [
+    {
+      "path": "target/doc/nms_query/display/fn.format_find_results.html",
+      "observed": "20-scalar planet and 22-scalar biome/system limits; three ASCII periods; combining sequences count as scalars; no grapheme/terminal-width promise."
+    },
+    {
+      "path": "target/doc/nms_query/display/fn.format_route.html",
+      "observed": "21-scalar ordinary-hop and 19-scalar waypoint limits; same scalar/non-grapheme/non-terminal-width qualification."
+    },
+    {
+      "path": "target/doc/nms_copilot/dispatch/fn.dispatch.html",
+      "observed": "Name-truncation panic cause absent; PortalAddress 20-byte UTF-8 excerpt, route jump-count overflow and theme-parser caveats remain; no general panic-freedom promise."
+    }
+  ],
+  "preserved_attempts": [
+    {
+      "attempt": "38d7f4b60611462bb87cd4e474e1de25",
+      "result": "Initial make lint exit 2: two compiler diagnostics in the new test helpers; resolved only by iteration01 F1/F2."
+    },
+    {
+      "attempt": "1983a47587984190a4aace6bd74d1df5",
+      "result": "Mistaken default-sandbox make test exit 2: 228 passed, 7 watcher/coordinator timeouts. Do not attribute the failures to sandbox causality; preserve the execution-setting miss."
+    },
+    {
+      "attempt": "42a1c39124384f2cb2530a34152105c2",
+      "result": "Identical make test rerun with require_escalated and original TMPDIR passed, exit 0."
+    }
+  ],
+  "cdc_review_state": "Initial full source/U1-U4 review and targeted whole-file F1/F2 review closed with no remaining issued finding. CDC fresh nine-gate reproduction on committed candidate, independent acceptance, retrospective and Arc06/Operator closure remain pending."
+}

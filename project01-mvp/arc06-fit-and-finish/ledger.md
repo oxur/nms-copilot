@@ -464,6 +464,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S45 | Query name truncation Unicode-safe with ASCII preservation/real CLI regressions | SixUF/U1–U4/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0043 concrete formatter carryover | open | — | FullM7.7coverage/CI/D0043/themes/otherUnicode/higherowners OPEN |
+| R06-S45 | Query name truncation Unicode-safe with ASCII preservation/real CLI regressions | SixUF/U1–U4/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0043 concrete formatter carryover | done | [CDC45 acceptance](slice45-unicode-query-formatting/cdc-verification.md) — reproduced | FullM7.7coverage/CI/D0043/themes/otherUnicode/higherowners OPEN |
 
 63arc50done13open/project25OPEN/initial0ACTUALrefinements/no implementation or acceptance at issue.
+
+2026-10-25 formal45close: all6UF/R06-S45DONE atfe5e9d1;63arc51done12open/project25OPEN. Nineindependentgroups/oneACTUALrefinement/fullfailedhistory/readingremediation/retro preserved. OriginalM7.7fullintegration/95%coverage/hostedplatformCI/D0043/fullthemes/otherUnicode/input/higherowners OPEN.
