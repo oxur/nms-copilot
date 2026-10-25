@@ -1,0 +1,115 @@
+{
+  "utc": "2026-10-25T00:51:14.053230+00:00",
+  "supporting_files": [
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 13878,
+      "sha256": "8d2380f4f9fa05b0231c0b558ffba2442dcecdb2f51aca2fc9b170e17a50a291"
+    },
+    {
+      "path": "artifacts/cc-attempts.json",
+      "bytes": 187075,
+      "sha256": "0d58ae7f632213c033763c7af4e140e7c8d262eb01c5324166dc8da1a34c5d18"
+    },
+    {
+      "path": "artifacts/cc-capture.py",
+      "bytes": 3759,
+      "sha256": "2d529b2d44880824bf92c30ceeb705630a2ed400f84e1b59ecd7ffc2991d5727"
+    },
+    {
+      "path": "artifacts/cc-check-docs.py",
+      "bytes": 6422,
+      "sha256": "a9d7efc92facc6b3222a114e25db887cc7715379ec60df71e72001304634c57f"
+    },
+    {
+      "path": "artifacts/cdc-attempts.json",
+      "bytes": 62324,
+      "sha256": "d094b2a1c544909bcf4cd12cf213438f0dd3a3677b99c379f36bba8c5a661720"
+    },
+    {
+      "path": "artifacts/cdc-capture.py",
+      "bytes": 3721,
+      "sha256": "40d8841e3a295352c60088084eabf504a7c47dcf1b5fb94f217d2f88b7bb48e4"
+    },
+    {
+      "path": "artifacts/cdc-check-images.py",
+      "bytes": 465,
+      "sha256": "d0a7fba0eb99e76e4d346d1bf375da9be98fd726077093c4c5d8a1983272a6c9"
+    },
+    {
+      "path": "artifacts/cdc-inputs.json",
+      "bytes": 888,
+      "sha256": "ee1a4d3399c7a236fc1973f4d7c491c8e96b1f13a60530efa07e6700877c866b"
+    },
+    {
+      "path": "artifacts/cdc-rendered/nms-help.png",
+      "bytes": 65711,
+      "sha256": "83a6528fc9e621c9273452753547090d7ba85051d626839d8185bc8cbbfce2f2"
+    },
+    {
+      "path": "artifacts/cdc-rendered/nms-stats.png",
+      "bytes": 38823,
+      "sha256": "19acabe53dd1adaf8aba9ee4d1fe0709508393a774a0a244ad7d52760a00ebba"
+    },
+    {
+      "path": "artifacts/cdc-run.py",
+      "bytes": 3093,
+      "sha256": "3ce2f0c5faaf33f5f4bc11a5b2da6e6b7901e9e4748bbc98906440b7076131d5"
+    },
+    {
+      "path": "artifacts/closing-fences.json",
+      "bytes": 10669,
+      "sha256": "d03d4d7f1abffcb7c1e7b501101c59f6d36a8ba7994dbebfa9aa358b2d25d5fa"
+    },
+    {
+      "path": "artifacts/evidence-integrity.py",
+      "bytes": 2945,
+      "sha256": "1976dd1bd8a192263992ce4d283eb326d897f230b89b43f00551e256fa454083"
+    },
+    {
+      "path": "artifacts/held02-snapshot/CONTRIBUTING.md",
+      "bytes": 3787,
+      "sha256": "90e6fb398c178e342fddfbe5866f15acc751f132e7fe7acf7e99301dfd9e9fc8"
+    },
+    {
+      "path": "artifacts/held02-snapshot/README.md",
+      "bytes": 30485,
+      "sha256": "b10ca1192f1e3d048bb65ba1d48971d2fe2dfac906132b4baff4bfd4e9d4e4ea"
+    },
+    {
+      "path": "artifacts/held02-snapshot/docs/captures/README.md",
+      "bytes": 2663,
+      "sha256": "9d515fd50f4f019b2118628e783b0183dcae197a21f556e2fc30c5c102301d7a"
+    },
+    {
+      "path": "artifacts/held02-snapshot/docs/render-cli-capture.py",
+      "bytes": 3345,
+      "sha256": "a0cd467424ad7cbf813b77f203e434b79ae225ea24651f7799602e5b512f3a53"
+    },
+    {
+      "path": "artifacts/transfer-manifest.json",
+      "bytes": 5021,
+      "sha256": "6c5cb13b6237e40d7aac30ceaba5335bc64a8aa71f883ee155c64e57159c34ce"
+    }
+  ],
+  "first_class_original_CC_returns": [
+    {
+      "path": "cc-execution.md",
+      "bytes": 48074,
+      "sha256": "16cff0e9a0b1107e63b6a36e97e469bad8c573e9fa60e9ae50b57b33cba22981"
+    },
+    {
+      "path": "cc-validation.json",
+      "bytes": 58369,
+      "sha256": "9036938a2506d58b2cc48f82ee6078cabc07f41ff212de5e931909b51a60f29b"
+    },
+    {
+      "path": "cc-closing-report.md",
+      "bytes": 6923,
+      "sha256": "2a72b096c24fa9a255d2e5e169d6ff4ac59cc2c0fdf334bf018047a648a0f05d"
+    }
+  ],
+  "inventory_self_excluded": true,
+  "source_delivery": "8 paths in immutable source4a935408; actual raw text/images remain source deliverables, not duplicated as fake desktop images",
+  "temporary_support": "font API preflight PNG was temporary support-only; original command/raw result retained; no usage-image credit"
+}

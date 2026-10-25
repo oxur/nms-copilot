@@ -1,0 +1,1287 @@
+{
+  "slice": "Slice29 user documentation contract",
+  "assignment": "cc-prompt-iteration05.md",
+  "actual_refinement_ordinal": "4 of 5; one remains",
+  "role": "CC gpt-6-luna High",
+  "acceptance": "proposed only; CDC independent acceptance pending; all six UD rows remain open",
+  "source_commit": {
+    "branch": "codex/user-documentation-contract",
+    "commit": "4a935408460349e9aa64fecd570d9960094191b1",
+    "parent": "be4145b631405ff19c3e403457ecaa581afe805f",
+    "tree": "656427d24eb9c73154677ed45fd93ba76ab49799",
+    "changed_paths": [
+      "CONTRIBUTING.md",
+      "README.md",
+      "docs/captures/README.md",
+      "docs/captures/nms-help.png",
+      "docs/captures/nms-help.txt",
+      "docs/captures/nms-stats.png",
+      "docs/captures/nms-stats.txt",
+      "docs/render-cli-capture.py"
+    ],
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "clean_worktree": true,
+    "empty_index": true
+  },
+  "fences": {
+    "main_head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+    "main_status": [
+      " M crates/nms-copilot/tests/mcp_live_integration.rs"
+    ],
+    "native_blob": "2cd450ce5e0a74f5017b6e4cb3a2ea2719e4d77e"
+  },
+  "capture_log": {
+    "path": "/private/tmp/nms-slice29-cc-attempts.json",
+    "entries": 29,
+    "sha256": "0d58ae7f632213c033763c7af4e140e7c8d262eb01c5324166dc8da1a34c5d18",
+    "raw_log_preserved": true
+  },
+  "attempts": [
+    {
+      "id": "10f308a28cf84fb998b3f3e3e09cfa54",
+      "label": "CDC-author-control-7",
+      "kind": "CDC support control, no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys;sys.stdout.write(\"out\\x00value\\n\");sys.stderr.write(\"err\\x00\\n\");sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-24T23:43:50.583043+00:00",
+      "exit_code": 7,
+      "ended_utc": "2026-10-24T23:43:50.704839+00:00",
+      "stdout": {
+        "bytes": 10,
+        "sha256": "918db940ad7703ade12f9bf00d0905f41debf25521591f6d410d697259ab6874"
+      },
+      "stderr": {
+        "bytes": 5,
+        "sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "9fec95ee8b7a4d96bb99e8799d9b8b03",
+      "label": "CDC-author-control-0",
+      "kind": "CDC support control, no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import sys;sys.stdout.write(\"out\\x00value\\n\");sys.stderr.write(\"err\\x00\\n\");sys.exit(0)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-24T23:43:50.884249+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-24T23:43:51.000921+00:00",
+      "stdout": {
+        "bytes": 10,
+        "sha256": "918db940ad7703ade12f9bf00d0905f41debf25521591f6d410d697259ab6874"
+      },
+      "stderr": {
+        "bytes": 5,
+        "sha256": "c4846b09bf3f403d7239b90bfa61a92221d5af3d2cebf3075fa6a21d17b21383"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "d2232fab118c4425b29dcf01b43a37d2",
+      "label": "CDC-author-render-api",
+      "kind": "CDC author support API preflight, no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "from PIL import Image,ImageDraw,ImageFont; from PIL import __version__; f=ImageFont.truetype(\"/System/Library/Fonts/Menlo.ttc\",18); im=Image.new(\"RGB\",(400,120),\"white\"); d=ImageDraw.Draw(im); print(__version__,f.getbbox(\"Systems 6\"),f.getlength(\"Systems 6\")); d.text((24,24),\"Systems 6\",font=f,fill=\"black\"); im.save(\"/private/tmp/nms-slice29-font-preflight.png\")"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-24T23:47:18.937544+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-24T23:47:19.578053+00:00",
+      "stdout": {
+        "bytes": 27,
+        "sha256": "f8ebe30b4038b042de2fe9dd959e1294ac86d3e4bfe1d1ed616d42954a0df7b8"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "working_identity_sha256": "4683ee8986155c60dd6e6a14e3eb07ac4a87c78fcd7e391a9374556e7e05fb69"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "0c8970b70f084214ae53331ed5206a36",
+      "label": "initial-make-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-24T23:58:24.752699+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-24T23:58:25.876898+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "4113f2f0bfe54abb7ef5d8b30b03aa95672f1a71c4c6dc64675d21db46534662",
+        "working_identity_sha256": "f6ee50b9dd8cc8d7d9a7f25f21c32ad463b435433d8f3bac5237b8a54164d4a5"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "4113f2f0bfe54abb7ef5d8b30b03aa95672f1a71c4c6dc64675d21db46534662",
+        "working_identity_sha256": "f6ee50b9dd8cc8d7d9a7f25f21c32ad463b435433d8f3bac5237b8a54164d4a5"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "b834f0d4000b48edb2688a5e173eef77",
+      "label": "initial-make-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-24T23:58:31.139189+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-24T23:58:56.326481+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 12090,
+        "sha256": "84847cc31a7f0cf50e0657ed75f51d5723c8dc77a914c7c2403d487bbf50e86f"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "4113f2f0bfe54abb7ef5d8b30b03aa95672f1a71c4c6dc64675d21db46534662",
+        "working_identity_sha256": "f6ee50b9dd8cc8d7d9a7f25f21c32ad463b435433d8f3bac5237b8a54164d4a5"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "4113f2f0bfe54abb7ef5d8b30b03aa95672f1a71c4c6dc64675d21db46534662",
+        "working_identity_sha256": "f6ee50b9dd8cc8d7d9a7f25f21c32ad463b435433d8f3bac5237b8a54164d4a5"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "f0c0758a731443e1beec3a733b631ddb",
+      "label": "slice29-refinement02-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:07:09.931467+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:07:10.964338+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "41b104dd23cc444fa6143dd5539b1964",
+      "label": "slice29-refinement02-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:07:29.117616+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:07:30.817501+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 327,
+        "sha256": "97d9d23a81802eaa9f5f78dceae2727382738f36ffab003657e85c4e8832fe33"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "81e93b4717d84a77a452156194b8fecb",
+      "label": "slice29-cli-build-offline",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "build",
+        "-p",
+        "nms-cli",
+        "--bin",
+        "nms",
+        "--offline"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:10:23.821940+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:10:38.798510+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 6131,
+        "sha256": "d996ee0e648cae923462abf5874898de35934216a723acb72da93ad0e780d990"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "eeae09e86c65466eadf4774ad6e4e087",
+      "label": "slice29-cli-help",
+      "kind": "SUT gate",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract/target/debug/nms",
+        "--help"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:10:49.944987+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:10:50.266125+00:00",
+      "stdout": {
+        "bytes": 887,
+        "sha256": "2bba2f1030814740c5063af89546e4b214b0cbfd77332829cb7215da737f00bb"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "e974a83b290146298e30fce60ada9b08",
+      "label": "slice29-cli-stats",
+      "kind": "SUT gate",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract/target/debug/nms",
+        "stats",
+        "--save",
+        "data/test/save56_multi_system.json",
+        "--biomes"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:10:53.146794+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:10:53.220595+00:00",
+      "stdout": {
+        "bytes": 2029,
+        "sha256": "d6ae97e45f6007dffd6a467bc074b86717d2502cb3fb7e9b9f5beca01519db53"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f81501677ea424a8b135596a8b0a3dda473261c22431ef1e71a7fea0d058112c",
+        "working_identity_sha256": "932bd10dc488378e3970a51773cd68c75eb3e6682191c21d53189733ff414b9b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "6a0bf131bc75483a95857b6949a9fdc3",
+      "label": "slice29-refinement03-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:18:31.622541+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:18:32.616560+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "45c6be3250389349c7b1c3cb56c8b16df599bd43cade16f0d7ee5f91a86b76ab"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "45c6be3250389349c7b1c3cb56c8b16df599bd43cade16f0d7ee5f91a86b76ab"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "cfca65b4e3854de19c5910d35a93804a",
+      "label": "slice29-refinement03-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:18:43.425714+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:18:44.998342+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 327,
+        "sha256": "51c8d30cb29a49908ce8ab7efcb6e569892328e3aae458846f6d967eaa7ad31b"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "45c6be3250389349c7b1c3cb56c8b16df599bd43cade16f0d7ee5f91a86b76ab"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "45c6be3250389349c7b1c3cb56c8b16df599bd43cade16f0d7ee5f91a86b76ab"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "2547bde3d3ed4dbebf9e7e2f8a433eff",
+      "label": "slice29-refinement03-pycompile",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "-m",
+        "py_compile",
+        "docs/render-cli-capture.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:20:23.040660+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:20:23.207628+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "93a5810e0348e6c575adc294dfa66cfee0a195a4794f2b999c1112daa9ae30b7"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "93a5810e0348e6c575adc294dfa66cfee0a195a4794f2b999c1112daa9ae30b7"
+      },
+      "overrides": {
+        "PYTHONPYCACHEPREFIX": "/private/tmp/nms-slice29-refinement03-pycache"
+      }
+    },
+    {
+      "id": "a73c3519c8324b5b9f6ee645d6a4696f",
+      "label": "slice29-refinement03-render-help",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "docs/render-cli-capture.py",
+        "docs/captures/nms-help.txt",
+        "docs/captures/nms-help.png",
+        "--command",
+        "nms --help",
+        "--font",
+        "/System/Library/Fonts/Menlo.ttc"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:20:31.185062+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:20:31.984267+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "93a5810e0348e6c575adc294dfa66cfee0a195a4794f2b999c1112daa9ae30b7"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "dafd9d78d705d0178708e87a0b75ae5b68174f2c862ee6c6308a6411e62421df"
+      },
+      "overrides": {
+        "PYTHONPYCACHEPREFIX": "/private/tmp/nms-slice29-refinement03-pycache"
+      }
+    },
+    {
+      "id": "aac49ae5bca14f16a8c939d9c12e851c",
+      "label": "slice29-refinement03-render-stats",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "docs/render-cli-capture.py",
+        "docs/captures/nms-stats.txt",
+        "docs/captures/nms-stats.png",
+        "--command",
+        "nms stats --save data/test/save56_multi_system.json --biomes",
+        "--font",
+        "/System/Library/Fonts/Menlo.ttc"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:20:42.537008+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:20:42.807505+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "dafd9d78d705d0178708e87a0b75ae5b68174f2c862ee6c6308a6411e62421df"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "f86386a593dcae11cdedf1bae99c6f54ed3646d30af06a3a8024e9580b54f7d9",
+        "working_identity_sha256": "c67f6678938fb8538ab3087d4254efdff5c159520a27045107e0e58feb18a6ec"
+      },
+      "overrides": {
+        "PYTHONPYCACHEPREFIX": "/private/tmp/nms-slice29-refinement03-pycache"
+      }
+    },
+    {
+      "id": "38240a98ecb04eeeb45359549bc413d7",
+      "label": "slice29-final-assets-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:23:16.396119+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:23:17.388315+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "68c90e8f41bd6e4fcb3e6292e55294dabcc88ca12a3f7705d72d6e11fc15167f"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "68c90e8f41bd6e4fcb3e6292e55294dabcc88ca12a3f7705d72d6e11fc15167f"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "af56de85708c45158e9d86e757188094",
+      "label": "slice29-final-assets-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:23:24.299072+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:23:25.761497+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 327,
+        "sha256": "209234ba828f83d937a1735d43ee65d83d3ee7d2cdb9f15201cf751d3a8deaa7"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "68c90e8f41bd6e4fcb3e6292e55294dabcc88ca12a3f7705d72d6e11fc15167f"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "68c90e8f41bd6e4fcb3e6292e55294dabcc88ca12a3f7705d72d6e11fc15167f"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "6c226fed734a4b629acf92abbc46a8e2",
+      "label": "slice29-refinement04-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:28:59.307699+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:29:00.310692+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "347895e3e7754976994f6bd296847ad0",
+      "label": "slice29-refinement04-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:29:10.584678+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:29:12.165654+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 327,
+        "sha256": "f2a4621387af1abad06fb2808f158e9d54ec397d9f2d97e25edbb6535c43fd03"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "0849647bc536416fb508f064d753b2a4",
+      "label": "slice29-final-route-invalid-comma-biome",
+      "kind": "SUT gate",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract/target/debug/nms",
+        "route",
+        "--save",
+        "data/test/save56_multi_system.json",
+        "--biome",
+        "Lush,Swamp",
+        "--round-trip"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:30:38.352228+00:00",
+      "exit_code": 1,
+      "ended_utc": "2026-10-25T00:30:38.434961+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 48,
+        "sha256": "57663b5673777fb68ad3fe28f448b61fcf0d2881633a727d29743f47f45d5911"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "6fbfad4ab6e54d7185ea048c2bdd5bdb",
+      "label": "slice29-final-route-valid-single-biome",
+      "kind": "SUT gate",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract/target/debug/nms",
+        "route",
+        "--save",
+        "data/test/save56_multi_system.json",
+        "--biome",
+        "Lush",
+        "--round-trip"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:30:45.988313+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:30:46.067201+00:00",
+      "stdout": {
+        "bytes": 2044,
+        "sha256": "830a9ea1176f8df6f81da55172937f7c07614d60fdbb83e7c0838009aa2abe3b"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "e2686e5efeb34813a80f0c3b50253886",
+      "label": "slice29-final-doc-checker",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "workbench/slice29-return/check_docs.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:31:15.600563+00:00",
+      "exit_code": 1,
+      "ended_utc": "2026-10-25T00:31:15.797449+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 760,
+        "sha256": "c54142be2aa7cac8551609924c1ba27a8f562e440d12e5d79b5a09dea7dcc561"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": " M README.md\n?? CONTRIBUTING.md\n?? docs/captures/\n?? docs/render-cli-capture.py\n",
+        "working_diff_sha256": "1b3d1ae3580d9811cce398ef9a3d3e6b8b91be0b8f413efd46bddb068439db5b",
+        "working_identity_sha256": "0d1197f09954731ab59c722ee3f5de269d44c64c4d42be2acceaa9b011c73497"
+      },
+      "overrides": {
+        "PYTHONPYCACHEPREFIX": "/private/tmp/nms-slice29-cc-pycache"
+      }
+    },
+    {
+      "id": "e3b8dcf41aa1409da32c2919bf1ca59b",
+      "label": "slice29-final-working-index-diff-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "HEAD",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:35:06.493247+00:00",
+      "exit_code": 2,
+      "ended_utc": "2026-10-25T00:35:06.581250+00:00",
+      "stdout": {
+        "bytes": 55,
+        "sha256": "24977f771d118dfba372df8dddfd3c61827366bc44f554e76bcec3d2cc6c2501"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "c1b95ac8574879fffd218e7157688fdf30e0c0461a5465266e4f2ec6cd4524de",
+        "working_identity_sha256": "174e1b2808f42e3fe5706deb5dae9565d8d5b4bbe1c214b50633924db39e2f1b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "c1b95ac8574879fffd218e7157688fdf30e0c0461a5465266e4f2ec6cd4524de",
+        "working_identity_sha256": "174e1b2808f42e3fe5706deb5dae9565d8d5b4bbe1c214b50633924db39e2f1b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "08d96888cc1c424d8bd6430460de4b35",
+      "label": "slice29-final-baseline-diff-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "be4145b631405ff19c3e403457ecaa581afe805f",
+        "--check"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:35:10.211654+00:00",
+      "exit_code": 2,
+      "ended_utc": "2026-10-25T00:35:10.300953+00:00",
+      "stdout": {
+        "bytes": 55,
+        "sha256": "24977f771d118dfba372df8dddfd3c61827366bc44f554e76bcec3d2cc6c2501"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "c1b95ac8574879fffd218e7157688fdf30e0c0461a5465266e4f2ec6cd4524de",
+        "working_identity_sha256": "174e1b2808f42e3fe5706deb5dae9565d8d5b4bbe1c214b50633924db39e2f1b"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "c1b95ac8574879fffd218e7157688fdf30e0c0461a5465266e4f2ec6cd4524de",
+        "working_identity_sha256": "174e1b2808f42e3fe5706deb5dae9565d8d5b4bbe1c214b50633924db39e2f1b"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "77464e4c5c22418da65a75a7c52eda9d",
+      "label": "slice29-05-format",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "format"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:37:57.045810+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:37:58.065951+00:00",
+      "stdout": {
+        "bytes": 107,
+        "sha256": "1205c3992cdb019f09e137aec75930a5e4c45d5d1f8993574c2ace0b8d86ce57"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "ad6550eb7d54412ca84028ce3d4bbea4",
+      "label": "slice29-05-lint",
+      "kind": "SUT gate",
+      "argv": [
+        "make",
+        "lint"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:38:02.325941+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:38:03.781542+00:00",
+      "stdout": {
+        "bytes": 176,
+        "sha256": "f810636e1c8999d41a9367929b15ad516bf33fcefcc8a7c5a1582c0859800ad7"
+      },
+      "stderr": {
+        "bytes": 327,
+        "sha256": "82379de4144492c904ce045566ec95ecdddf7b5f556203652d11da8660e3ecb7"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "fa88fcdf230a465c80d969f97b1bff43",
+      "label": "slice29-05-final-doc-checker",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "workbench/slice29-return/check_docs.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:39:06.047493+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:39:06.605947+00:00",
+      "stdout": {
+        "bytes": 28,
+        "sha256": "cdf5ef3fe24ecc18352a9514cd99c91cbbabde884375bf4232def3837c4f767c"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "overrides": {
+        "PYTHONPYCACHEPREFIX": "/private/tmp/nms-slice29-cc-pycache"
+      }
+    },
+    {
+      "id": "9606bb9da7d748528862cfbfdff1dff2",
+      "label": "slice29-05-scoped-working-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "HEAD",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/captures/nms-stats.txt"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:39:10.070426+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:39:10.155028+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "overrides": {}
+    },
+    {
+      "id": "199510aba4ea4e8ea9672a5293441091",
+      "label": "slice29-05-scoped-baseline-check",
+      "kind": "SUT gate",
+      "argv": [
+        "git",
+        "diff",
+        "be4145b631405ff19c3e403457ecaa581afe805f",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/captures/nms-stats.txt"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "status": "complete",
+      "started_utc": "2026-10-25T00:39:12.155636+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-25T00:39:12.241673+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "before": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "after": {
+        "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+        "status": "A  CONTRIBUTING.md\nM  README.md\nA  docs/captures/README.md\nA  docs/captures/nms-help.png\nA  docs/captures/nms-help.txt\nA  docs/captures/nms-stats.png\nA  docs/captures/nms-stats.txt\nA  docs/render-cli-capture.py\n",
+        "working_diff_sha256": "15d2bae49170c983ebd12349c1d2ea0c627d36a3fbf8ac33e1d992c3021f458d",
+        "working_identity_sha256": "206e545e2b958762b753e3e7093c8a5d48abb1fd7e7a311cb324b4f0885ab6d0"
+      },
+      "overrides": {}
+    }
+  ],
+  "rows": [
+    {
+      "id": "UD-01",
+      "acceptance": "open",
+      "cc_proposal": "proposed-done",
+      "evidence": [
+        "README.md command/interface corrections",
+        "0849647bc536416fb508f064d753b2a4 Invalid biome negative",
+        "6fbfad4ab6e54d7185ea048c2bdd5bdb single-biome round-trip positive"
+      ],
+      "limits": [
+        "Public API rustdoc completeness is assigned to the follow-on owner; M7.6 remains open until full parent reconciliation."
+      ]
+    },
+    {
+      "id": "UD-02",
+      "acceptance": "open",
+      "cc_proposal": "proposed-done",
+      "evidence": [
+        "CONTRIBUTING.md committed in exact eight-path source commit",
+        "Captured final documentation checker fa88fcdf230a465c80d969f97b1bff43 parses bash snippets with bash -n and validates links/assets"
+      ]
+    },
+    {
+      "id": "UD-03",
+      "acceptance": "open",
+      "cc_proposal": "proposed-done",
+      "evidence": [
+        "Actual CLI help and synthetic-fixture stats stdout preserved byte-for-byte in .txt files",
+        "Two rendered CLI PNGs visually inspected by CC and CDC",
+        "Capture provenance and renderer instructions in docs/captures/README.md"
+      ],
+      "limits": [
+        "These are rendered CLI captures, not desktop screenshots or game screenshots."
+      ]
+    },
+    {
+      "id": "UD-04",
+      "acceptance": "open",
+      "cc_proposal": "proposed-done-with-recorded-full-check-red",
+      "evidence": [
+        "Renderer py_compile and two actual renders: 2547bde3d3ed4dbebf9e7e2f8a433eff, a73c3519c8324b5b9f6ee645d6a4696f, aac49ae5bca14f16a8c939d9c12e851c",
+        "Final captured checker fa88fcdf230a465c80d969f97b1bff43 exit 0",
+        "Scoped working/baseline whitespace checks 9606bb9da7d748528862cfbfdff1dff2 and 199510aba4ea4e8ea9672a5293441091 exit 0",
+        "Full default whitespace checks e3b8dcf41aa1409da32c2919bf1ca59b and 08d96888cc1c424d8bd6430460de4b35 retained exit 2 on authentic stats raw-output blank line at EOF"
+      ],
+      "limits": [
+        "Do not characterize the full default whitespace checks as passing."
+      ]
+    },
+    {
+      "id": "UD-05",
+      "acceptance": "open",
+      "cc_proposal": "proposed-done-with-recorded-full-check-red",
+      "evidence": [
+        "Exact eight paths committed as 4a935408460349e9aa64fecd570d9960094191b1",
+        "Final captured format/lint 77464e4c5c22418da65a75a7c52eda9d and ad6550eb7d54412ca84028ce3d4bbea4 exit 0",
+        "Protected main fence unchanged",
+        "Final checker and scoped diff results recorded above"
+      ],
+      "limits": [
+        "Two original full default diff --check attempts remain red on immutable raw stats .txt whitespace; only the explicitly scoped checks excluding that raw file passed."
+      ]
+    },
+    {
+      "id": "UD-06",
+      "acceptance": "open",
+      "cc_proposal": "proposed-open-pending-independent-review",
+      "evidence": [
+        "CDC independent acceptance and mandatory retrospective remain pending",
+        "Public API rustdoc owner / Slice30 and M7.8 missing license-file packaging owner remain explicit follow-on work"
+      ]
+    }
+  ],
+  "artifact_inventory": {
+    "tracked_source_files": {
+      "CONTRIBUTING.md": {
+        "bytes": 3787,
+        "sha256": "90e6fb398c178e342fddfbe5866f15acc751f132e7fe7acf7e99301dfd9e9fc8"
+      },
+      "README.md": {
+        "bytes": 30557,
+        "sha256": "e599d3647b5598c694b14a7eeee4ffb3c3312da13b15efc812d0b253d7152ef5"
+      },
+      "docs/captures/README.md": {
+        "bytes": 5702,
+        "sha256": "03f12bf774170796fcb788b22998aae480676dcc641381c40cdedbbc38d506c8"
+      },
+      "docs/captures/nms-help.png": {
+        "bytes": 65711,
+        "sha256": "83a6528fc9e621c9273452753547090d7ba85051d626839d8185bc8cbbfce2f2"
+      },
+      "docs/captures/nms-help.txt": {
+        "bytes": 887,
+        "sha256": "2bba2f1030814740c5063af89546e4b214b0cbfd77332829cb7215da737f00bb"
+      },
+      "docs/captures/nms-stats.png": {
+        "bytes": 38823,
+        "sha256": "19acabe53dd1adaf8aba9ee4d1fe0709508393a774a0a244ad7d52760a00ebba"
+      },
+      "docs/captures/nms-stats.txt": {
+        "bytes": 2029,
+        "sha256": "d6ae97e45f6007dffd6a467bc074b86717d2502cb3fb7e9b9f5beca01519db53"
+      },
+      "docs/render-cli-capture.py": {
+        "bytes": 3874,
+        "sha256": "2b7a92d12c5844a4d4c1c8850b0761052a403caa2b7ceb815c23a98a6b3b6baf"
+      }
+    },
+    "supporting_files": {
+      "data/test/save56_multi_system.json": {
+        "bytes": 13145,
+        "sha256": "66fdbda21fb47cb5459d210613a08e14abfb1505d00ee849b20241cae75019a1"
+      },
+      "target/debug/nms": {
+        "bytes": 13846136,
+        "sha256": "985e5688c6cbde138fac3899baed5688e1ba23cc023356d41a22211d57bd4574"
+      },
+      "docs/render-cli-capture.py": {
+        "bytes": 3874,
+        "sha256": "2b7a92d12c5844a4d4c1c8850b0761052a403caa2b7ceb815c23a98a6b3b6baf"
+      },
+      "workbench/slice29-return/check_docs.py": {
+        "bytes": 6422,
+        "sha256": "a9d7efc92facc6b3222a114e25db887cc7715379ec60df71e72001304634c57f"
+      },
+      "docs/captures/nms-help.txt": {
+        "bytes": 887,
+        "sha256": "2bba2f1030814740c5063af89546e4b214b0cbfd77332829cb7215da737f00bb"
+      },
+      "docs/captures/nms-stats.txt": {
+        "bytes": 2029,
+        "sha256": "d6ae97e45f6007dffd6a467bc074b86717d2502cb3fb7e9b9f5beca01519db53"
+      },
+      "docs/captures/nms-help.png": {
+        "bytes": 65711,
+        "sha256": "83a6528fc9e621c9273452753547090d7ba85051d626839d8185bc8cbbfce2f2"
+      },
+      "docs/captures/nms-stats.png": {
+        "bytes": 38823,
+        "sha256": "19acabe53dd1adaf8aba9ee4d1fe0709508393a774a0a244ad7d52760a00ebba"
+      },
+      "workbench/slice29-return/execution.md": {
+        "bytes": 48074,
+        "sha256": "16cff0e9a0b1107e63b6a36e97e469bad8c573e9fa60e9ae50b57b33cba22981"
+      },
+      "workbench/slice29-return/closing-report.md": {
+        "bytes": 6923,
+        "sha256": "2a72b096c24fa9a255d2e5e169d6ff4ac59cc2c0fdf334bf018047a648a0f05d"
+      }
+    },
+    "font": {
+      "path": "/System/Library/Fonts/Menlo.ttc",
+      "bytes": 2156036,
+      "sha256": "dc256e0b39c2a6fec947129d421fef41b8b429f58f9b6e5d1b148c87f775c1f6",
+      "measured": "after generation during provenance review"
+    }
+  },
+  "known_history_and_limits": [
+    "The two earlier default diff checks remain red, each reporting the exact 55-byte new blank line at EOF in docs/captures/nms-stats.txt; raw capture remains unchanged with two trailing LF.",
+    "The first final checker attempt remains red on the now-corrected dead local LICENSE-APACHE link; the current checker passes. Both LICENSE-APACHE and LICENSE-MIT are absent, and this slice does not add them.",
+    "The valid/invalid route records, build, raw CLI outputs, renders, image inspections, prior format/lint pairs, and failed checks are all retained in the canonical 29-entry raw capture log.",
+    "No active CC command/session remains. No license availability/network check, install, publish, desktop capture, or game-state claim was made."
+  ],
+  "bubble_up": {
+    "assigned_capability_and_state": "Delivered local user/contributor documentation, exact CLI-output text, rendered output images, renderer and provenance notes on the dedicated branch; not merged, installed, or published. Full public API rustdoc completeness remains assigned to the follow-on owner.",
+    "implementation_surprises_and_corrections": "The inherited README overclaimed CLI/REPL command parity and included a comma-separated biome example that the actual CLI rejects. Real stats output includes ANSI styling despite the no-color presentation, and the byte-exact stats capture has two trailing LF; the renderer omits recognized styling only for the image. The dual-license badge/footer referred to LICENSE files absent from the checkout, so the badge now targets the existing License section and footer uses the original canonical external URLs while preserving the Cargo license expression. No production behavior changed.",
+    "specified_vs_delivered": "This delivery covers the original user guide, contributor guide, actual fixture-backed help/stats captures and raw text, renderer, provenance/reproduction notes, captured compilation/rendering, both route examples, documentation checker and scoped authored-file whitespace checks. The original raw capture remains byte-exact; the full unscoped diff checks remain red and are reported as such. No requirements were silently dropped: full public API rustdoc, parent M7.6 reconciliation/independent acceptance, and M7.8 license-file packaging remain explicit follow-on work."
+  }
+}

@@ -1,0 +1,37 @@
+# Slice29 — documentation delivery
+
+**CC disposition: proposed only; CDC independent acceptance is pending.** The final source commit is `4a935408460349e9aa64fecd570d9960094191b1` on `codex/user-documentation-contract`, based on `be4145b631405ff19c3e403457ecaa581afe805f`. It contains exactly the eight assigned documentation paths and has the required consecutive coauthor trailers. The dedicated worktree is clean with an empty index. The protected main checkout remains at `b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc` with only its pre-existing protected native-test modification. No CC command/session remained active at handback.
+
+All six Slice29 ledger rows remain open pending independent review. The CC proposals are:
+
+| Row | CC proposal | Evidence and limit |
+|---|---|---|
+| UD-01 | Proposed done | README command/interface guidance and route examples were corrected against source. The comma-biome negative `0849647bc536416fb508f064d753b2a4` returned the expected invalid-biome error; `6fbfad4ab6e54d7185ea048c2bdd5bdb` passed the explicit-fixture single-biome round trip. Full public API rustdoc remains assigned to the follow-on owner; full M7.6 reconciliation remains open. |
+| UD-02 | Proposed done | `CONTRIBUTING.md` documents the existing development workflow, test-data and privacy boundaries, and coverage limitations. Its Bash examples are parsed by the final checker with `bash -n`; the commands were not executed. |
+| UD-03 | Proposed done | `docs/captures/nms-help.txt` and `nms-stats.txt` preserve actual successful CLI stdout, with rendered PNGs, source commands, provenance and reproduction instructions. Both PNGs were visually inspected. These are rendered CLI captures, not desktop or game screenshots. |
+| UD-04 | Proposed done, with recorded full-check red | The renderer was compiled and used for both captures; the final checker `fa88fcdf230a465c80d969f97b1bff43` passed its link, asset, raw-text, metric, Bash-syntax and route checks. The two original unscoped whitespace checks remain red on the authentic stats output’s final blank line; only the explicitly scoped checks excluding that one byte-exact raw file passed. |
+| UD-05 | Proposed done, with recorded full-check red | The exact eight paths are committed, and Rust/production/fixture paths were not changed. Final format and lint passed (`77464e4c5c22418da65a75a7c52eda9d`, `ad6550eb7d54412ca84028ce3d4bbea4`); the scoped working and baseline checks passed (`9606bb9da7d748528862cfbfdff1dff2`, `199510aba4ea4e8ea9672a5293441091`). The earlier complete default diff checks remain red as recorded in `execution.md` and `validation.json`; they are not represented as green. |
+| UD-06 | Open; no CC acceptance | CDC’s independent acceptance and retrospective, the full original M7.6 reconciliation, and assigned follow-on work remain pending. |
+
+## Supporting artifacts
+
+The commit contains `README.md`, `CONTRIBUTING.md`, `docs/render-cli-capture.py`, `docs/captures/README.md`, and the two `.txt` plus two `.png` outputs. The synthetic input remains `data/test/save56_multi_system.json`; no player save was read. The actual capture/build record is `/private/tmp/nms-slice29-cc-attempts.json` (29 entries, SHA-256 `0d58ae7f632213c033763c7af4e140e7c8d262eb01c5324166dc8da1a34c5d18`). It retains support controls, successful and failed attempts, raw channel bytes and metadata. The capture kernel is `/private/tmp/nms-slice29-cc-capture.py` (SHA-256 `2d529b2d44880824bf92c30ceeb705630a2ed400f84e1b59ecd7ffc2991d5727`); the private checker is retained at `workbench/slice29-return/check_docs.py` (SHA-256 `a9d7efc92facc6b3222a114e25db887cc7715379ec60df71e72001304634c57f`). The complete chronological notes are in `workbench/slice29-return/execution.md`; the structured attempt index and current file hashes are in `workbench/slice29-return/validation.json`.
+
+The two PNGs are rendered from the real CLI help and synthetic-fixture stats output. The raw output files are exact captured stdout, including the stats file’s two final LF bytes. The renderer omits only the recognized ANSI styling from the image projection; it does not rewrite the `.txt` evidence. The explicit Menlo font was measured after generation at 2,156,036 bytes, SHA-256 `dc256e0b39c2a6fec947129d421fef41b8b429f58f9b6e5d1b148c87f775c1f6`.
+
+## Bubble-up to the arc
+
+1. **Assigned capability and integration state.** This slice delivers user and contributor documentation, actual fixture-backed CLI examples, raw output, rendered output images, and a small local renderer with provenance. The commit is local to the dedicated branch; it has not been merged, installed, or published. Public API rustdoc completeness remains assigned to the follow-on owner.
+
+2. **Implementation surprises and corrections.** The inherited README described CLI and REPL commands as if their command sets matched and included a comma-separated biome route that the CLI rejects. Actual stats output still contains ANSI styling despite the no-color table presentation; styling is removed only in the rendered image while the raw capture stays exact. The real stats capture ends in two LF bytes, which the ordinary full `git diff --check` reports as a blank line at EOF. The README badge and footer also pointed to local `LICENSE-MIT` and `LICENSE-APACHE` files absent from this checkout. The badge now targets the existing License section, and the footer uses the already-present canonical Apache/MIT URLs without changing Cargo’s `MIT OR Apache-2.0` declaration or the “either … at your option” terms. No production behavior changed.
+
+3. **Specified versus delivered.** The assigned user guide, contributor guide, fixture-based help/stats output, raw text and rendered images, renderer, provenance/reproduction notes, route examples, captured compilation/rendering, documentation checker and scoped authored-file whitespace checks are delivered. The complete source/API-documentation, parent M7.6, independent-acceptance and retrospective duties remain visible and open. The absent license files remain a separate M7.8 packaging/distribution finding owned by CDC; this slice does not create or claim to ship them. No required criterion was silently removed, no install/publish command was run, and no desktop/game screenshot is claimed.
+
+## Validation boundary
+
+The current captured documentation checker and the two exact scoped whitespace checks passed. The two earlier full unscoped whitespace checks remain red on `docs/captures/nms-stats.txt:25: new blank line at EOF.` Their raw records are preserved. The stats file was not trimmed or normalized; the checker verifies it against the exact successful CLI stdout. The initial checker failure on the now-corrected Apache local link is also preserved alongside the passing rerun. These results and their distinct boundaries are recorded in the canonical attempt log; CDC remains responsible for independent acceptance.
+
+
+## CDC final close — 2026-10-25 UTC
+
+The preceding CC proposed report is preserved verbatim (original hash in transfer-manifest). Current independent verdict: **all sixUD DONE at4a935408**,11appropriatechecks, exactvisual/pixel/data proof and explicit defaultEOFred distinction; see [cdc-verification.md](cdc-verification.md). Final mandatory [CDC retrospective](cdc-retrospective.md) completed. Original M7.6 remainsOPEN for requiredAPI30/fullreconciliation; missinglicensefiles remainoriginalM7.8ownerCDC. All other original/higher/integration/release gates retained. No external action/unchanged-code rerun.

@@ -1,0 +1,26 @@
+{
+  "measured_utc": "2026-10-25T00:42:35.010911+00:00",
+  "source": "4a935408460349e9aa64fecd570d9960094191b1",
+  "files": {
+    "target/debug/nms": {
+      "bytes": 13846136,
+      "sha256": "985e5688c6cbde138fac3899baed5688e1ba23cc023356d41a22211d57bd4574"
+    },
+    "data/test/save56_multi_system.json": {
+      "bytes": 13145,
+      "sha256": "66fdbda21fb47cb5459d210613a08e14abfb1505d00ee849b20241cae75019a1"
+    },
+    "docs/render-cli-capture.py": {
+      "bytes": 3874,
+      "sha256": "2b7a92d12c5844a4d4c1c8850b0761052a403caa2b7ceb815c23a98a6b3b6baf"
+    },
+    "/System/Library/Fonts/Menlo.ttc": {
+      "bytes": 2156036,
+      "sha256": "dc256e0b39c2a6fec947129d421fef41b8b429f58f9b6e5d1b148c87f775c1f6"
+    },
+    "workbench/slice29-return/check_docs.py": {
+      "bytes": 6422,
+      "sha256": "a9d7efc92facc6b3222a114e25db887cc7715379ec60df71e72001304634c57f"
+    }
+  }
+}

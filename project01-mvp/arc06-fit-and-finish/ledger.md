@@ -297,6 +297,8 @@ Human “I do approve” adopts only pending9ccc915f directNode historical excep
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S29 | Accurate user/contributor documentation with attributable real-output usage images | SixUDrows/exact8docpaths/source-grounded commands/actualCLIraw+render/visualreview/orderedgates | correctness-grade | Original0039M7.6 usable increment | open | — | Dedicatedcleanbe414; required30publicAPI/fullM7.6ownerCDC retained; no parentclosure/desktopclaim/install |
+| R06-S29 | Accurate user/contributor documentation with attributable real-output usage images | SixUDrows/exact8docpaths/source-grounded commands/actualCLIraw+render/visualreview/orderedgates | correctness-grade | Original0039M7.6 usable increment | done | [CDC independent acceptance](slice29-user-documentation-contract/cdc-verification.md) | Acceptedlocal4a935408; all6UDdone/11appropriatechecks; defaultimmutableEOFredsretained; required30/fullM7.6open |
 
 47arc33done14open/project25open. Full M7.6 remains open for this delivery+required API-doc/finalreconciliation owner30; alloriginalparents/M7.5input/highergates retained.
+
+2026-10-25 formal29close:47rows34done13open/project25open. SixUD/source4a935408/11appropriateindependentchecks/currentraw+images accepted; complete defaultGitEOFredsretainedforimmutablebyteexactdata, authoredchecks0. M7.6/API30requiredOPEN; absentlocallicensefiles trackedoriginalM7.8ownerCDC, termsunchanged. Allotheroriginal/highergates retained; mainhumanblob/pins preserved.

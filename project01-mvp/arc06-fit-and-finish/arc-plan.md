@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.112, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.113, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -973,3 +973,12 @@ The Operator sync/rebase/merge/stash-pop note was reconciled BEFORE dependent wr
 Version1.112 details [Slice29](slice29-user-documentation-contract/slice-plan.md), exact8docpaths/sixOPENUDrows, clean dedicatedcodex/user-documentation-contract fromacceptedbe414. Same selected/applied CDC6.1-solHigh/CC6-lunaHigh, existingCCqualitativeheadroom/noactiveprocess confirmed. Fulloriginal0039/README/actualCLI-REPL/Make/manifests/fixture grounding finds missingCONTRIBUTING/usageimages and demonstrated command prose errors. Deliver usable user/contributor guide plus honest renderedrealCLIcaptures now; publicAPIrustdoc/keyexamples and finalcompleteM7.6reconciliation remain explicit required30ownerCDC. No parent criterion drop or prematureM7.6closure; all otheroriginal/higherowners remain. ExistingCLIread-only/isolatedcommittedfixture proof and alreadyinstalledPillow/Menlo rendering, no tool-safety bypass/newinstall/hostsave. Actualcapturekernelraw-first/status/NUL0-7controls and rendererAPIpreflight recordedBEFOREproduct/compiler. Firstpair→CDC fullreview→actualgeneratedassets→renewedpair/assetreview prevents stale-pair applicability. No sourceimplementation yet.
 
 47arcrows33done14open/project25open; all46priorrows retained. M7.5actualNomNominputstillunanswered/independent. Mainhuman9line/held/externalpins/Project02 and Arc06-onlyendpoint preserved; no remote/integration/publish/install/nextarc. This is usable-increment scope detail within originalM7.6, not a new investigation or criterion waiver.
+
+
+## Slice29 user/contributor docs accepted / required original API owner — 2026-10-25 UTC
+
+Version1.113: [all6UD/R06-S29DONE](slice29-user-documentation-contract/cdc-verification.md) onlocal4a935408 (childbe414,exact8docs/assets),11appropriateindependentchecks/fullvisualandpixelreproduction. ActualCLIraw887/2029B preserved; narrowmonochromeSGRprojection/actualprovenance disclosed. CompleteGitdefaultEOFreds remainred/onlyimmutablecapturedstats; authoredallotherpathdefaultchecks plus exactrawbyteequality satisfy distinctcriteria, no broad-w/trim/historywaiver. Fouractualrefinements retained, all29CC/15CDCrawrecords/exactreturns/sourceworkinghistory andfinalretro/bubbleup archived. Production/Rust/Cargo/fixtures unchanged, inherited28countsnotnew29tests.
+
+47arcrows34done13open/project25open. OriginalM7.6 remainsOPEN: required **Slice30 publicAPIrustdoc/keyexamples/full0039M7.6reconciliation, CDCowner**, groundednext understandingone-arcauthority. Captureimages arehonestlyrenderedactualCLIusage, notOS/game/TTYthemeproof. Newdemonstratedpackagingfinding: localLICENSE-APACHE/MITfilesabsent; READMElinksnowuseexistingcanonicalURLs/termsunchanged, actualfiledelivery retainedoriginal **M7.8, CDCowner** beforepublish-readyclaim; no newlegalterms/files here. Versionhistory:29surfacedrender/data-vs-authoredvalidation andmissinglicensefiles, so status/follow-onownerexplicitnow; no originalcapability/criterion dropped or newexternalpermission.
+
+Mainb616 exacthuman9line/blob2cd450ce/indexempty, all26priornonplanningentries(includingmain) unchanged against28fences; newdocssourceclean, planningowned. M7.5authenticNomNominputstillpendingindependently; allrepair/game-backed/history/freshness/finalsemantic/UI/themes/coverage/platform/performance/distribution/higher/Operator/integration/release owners remain. SameCDC6.1-solHigh/CC6-lunaHigh, no merge/push/install/release/nextarc/Project02.
