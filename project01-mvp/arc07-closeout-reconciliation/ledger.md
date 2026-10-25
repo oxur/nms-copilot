@@ -21,7 +21,7 @@ increments are finite04–08. Parent criteria remain independently binding.
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R07-S04 | Live atlas map/graph consistency increment independently reviewed | Owned snapshot/lock-progress and real-consumer rebuild parity checks | correctness-grade | Adopted behavior decisions | open | — | Smallest necessary repair; no routing redesign |
+| R07-S04 | Live atlas map/graph consistency increment independently reviewed | Owned snapshot/lock-progress and real-consumer rebuild parity checks | correctness-grade | Adopted behavior decisions | open | Slice04 `cdc-verification.md`, AT-01/02 independently accepted at8f10d4c | Implementation reviewed; AT-03 full native-workspace/feature gate carries to07 without narrowing. Whole gate not green; actual runner failures/unknown details retained |
 | R07-S05 | Narrow support cleanup preserves useful tests and only the known stray main edit is restored | Exact diff/oracle retention and affected checks | correctness-grade | Adopted decision report | open | — | Preserve drift and called candidate helper |
 | R07-S06 | Existing interaction/docs and local package candidate assessed against original scope with concrete remaining gates | Bounded existing-behavior/package/install checks and independent review | correctness-grade | Adopted table | open | — | Substantial missing feature/input is a decision gate |
 | R07-S07 | Final candidate receives applicable existing feature/coverage/performance checks with honest gates | Final-candidate commands/results and retained-proof applicability | correctness-grade | Adopted table | open | — | Shortfall remains a parent failure; no auto-hardening |

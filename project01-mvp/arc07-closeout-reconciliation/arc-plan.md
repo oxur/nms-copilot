@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.7. Created: 2026-10-25. Status: table adopted; finite remaining cleanup authorized. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.8. Created: 2026-10-25. Status: finite cleanup underway;04 behavior reviewed with validation carry. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -236,6 +236,19 @@ verification; user-installed binaries/global environment are protected. Push,
 merge/rebase/integration/tag, external CI/pipeline effects and publication still
 need explicit separate authority after a concrete candidate is ready.
 
+## Current cleanup disposition
+
+Current cleanup candidate: source8f10d4cbe04f7d781667cc4e37280c333a67ee8d.
+Slice04 AT-01/02 are independently accepted: owned fixed map releases model
+lock, live MCP/cache progress continues, app exit0/terminal restoration and
+literal application/rebuild graph parity are observed. AT-03 remains open:
+reported whole-workspace247/7 was not green, individual historical failure
+names/complete commands are unavailable, and no-default package cfg blockers
+remain. Final07 owns the actual native full-candidate/feature commands; no
+historical unknown is reconstructed. Independent ready05 work may proceed
+under the adopted affected-proof hold, without calling04 fully complete.
+Actual native runner failures remain separate from positive app observations.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -254,3 +267,5 @@ need explicit separate authority after a concrete candidate is ready.
 - 1.6 (2026-10-25): Recorded Duncan’s adoption of fixed-snapshot map, original graph-consistency/minimal-repair and keep/narrow-cleanup/drop-old49 decisions. Added the requested existing-obligation finish/proposed-deferral/external-gate table; no deferral or numeric waiver adopted and no execution or04+ planning resumed.
 
 - 1.7 (2026-10-25): Duncan adopted the table and its two narrow deferrals. Recorded mixed publishing/readiness obligations, continuing finite Autonomous authority and04–08 usable-increment sketch; only the next actual assignment will be detailed. Original numeric/input/external/acceptance gates remain.
+
+- 1.8 (2026-10-25): Recorded04 independently reviewed map/graph behavior and explicit open AT-03 carry to final07; no whole-gate success, threshold waiver or extra scope. Ready agreed cleanup continues separately.
