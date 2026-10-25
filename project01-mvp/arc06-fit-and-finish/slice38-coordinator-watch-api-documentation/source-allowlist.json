@@ -1,0 +1,9 @@
+{
+  "source_root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/coordinator-watch-api-documentation",
+  "baseline": "9dc1a2409c7f0e53712f643bf7b0a61078e17664",
+  "paths": [
+    "crates/nms-copilot/src/coordinator.rs",
+    "crates/nms-copilot/src/watch.rs"
+  ],
+  "allowed": "whole-line Rustdoc/adjacent blanks plus exactly two named errorpayload layout expansions; all other ordered non-doc bytes frozen"
+}

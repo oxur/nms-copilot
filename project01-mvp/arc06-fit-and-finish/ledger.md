@@ -389,3 +389,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 55arc41done14open/project25OPEN; initial0actualrefinements/no productproof atissue.
 
 2026-10-25 formal37close: all6MP/R06-S37DONE at9dc1; nineindependentgroups/235runtime+13allfeaturesdocs+9no-defaultdocs/scoped0owned19residual/preservationopposed/diffs.55arc42done13open/project25OPEN; fullM7.6/requiredSlice38/furtherusefulsplit/allhigherowners retained.
+
+## Slice38 coordinator/watch API increment — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Source | Status | Evidence | Owner/limits |
+|---|---|---|---|---|---|---|
+| R06-S38 | Complete truthful coordinator/watch public docs/key examples | SixCW/full2fileworksheet/literalexamples/actualscopedpredicate/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued Slice38](slice38-coordinator-watch-api-documentation/slice-plan.md) | FullM7.6/strict/requiredSlice39/allhigherowners OPEN |
+
+56arcrows42done14open/project25OPEN at38issue; no implementation/acceptance claim.
