@@ -1,6 +1,6 @@
 # Slice02 — Assess accumulated work
 
-Status: active. Current source cleanfb2ecebb in `.worktrees/workspace-coverage-contract`; mainb616ab2 has protected known nine-line helper. Slice01 is accepted. Two contributors/model/ownership and hard three-slice endpoint follow parent plan.
+Status: closed; independent CDC acceptance recorded. Current source cleanfb2ecebb in `.worktrees/workspace-coverage-contract`; mainb616ab2 has protected known nine-line helper. Slice01 is accepted. Two contributors/model/ownership and hard three-slice endpoint follow parent plan.
 
 Deliver ONE `artifacts/work-inventory.md` covering all Arc06 entries01–48 and unissued49. Each entry identifies purpose/capability, actual source/evidence commits and paths, current integration state, useful outcome, maintenance cost, proof limits and proposed disposition. Group cross-cutting findings/dependencies by capability and compare with original Project01 promises/current gates. Existing source/docs/tests/reports are the inputs. This inventory answers what exists and its value/cost; Slice03 produces the decision report. Separate process effort from product value.
 
@@ -10,4 +10,4 @@ Author readiness: source history/main-tip split and current read-lock/coordinato
 
 ## Assignment history
 
-- Initial `cc-prompt.md`, 2026-10-25, issued; current assignment. Predecessor none; independent review pending.
+- Initial `cc-prompt.md`, 2026-10-25, accepted after CC return363f1fe and independent whole-population/source review. Predecessor none; initial assignment complete.

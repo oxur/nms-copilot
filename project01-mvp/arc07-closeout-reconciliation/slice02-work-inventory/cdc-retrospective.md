@@ -1,0 +1,5 @@
+# Slice02 retrospective
+
+CDC /root/cdc_arc07, 2026-10-25, reviewed363f1fe at unchangedfb2ecebb. Outcome:49-entry inventory with source/dependency/value/cost and current-gate distinctions; no new source or proof infrastructure. The useful review corrections were semantic: a R06-only denominator initially hid15 original rows, and placeholder persistence was initially described incorrectly. Inspecting original rows and current codec source corrected both before acceptance. Reading compiler/test counts alone would not have done so.
+
+The inventory also confirms why costly execution should not drive indiscriminate reverts: documentation, exact corruption/identity and native lifecycle oracles retain concrete value. Repeated wire/fixture helpers are a supported consolidation candidate; their size alone is not a deletion case. For03, keep the report short and capability-grouped, identify exact safe removal candidates and leave compatibility/policy decisions to Duncan. This follows the earlier proportionality watch item; it is not a new process proposal or a measured claim of better efficiency.
