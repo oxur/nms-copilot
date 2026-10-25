@@ -1,0 +1,119 @@
+{
+  "capture_owner": "Slice46 cc execution log",
+  "attempts": [
+    {
+      "id": "7d3348d9bd2b4db3b89ee72b866fe5f7",
+      "label": "support raw-channel control 7",
+      "kind": "support only; no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(7)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:04:43.762337+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "xterm-256color",
+        "PATH": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 7,
+        "ended_utc": "2026-10-25T16:04:43.872257+00:00",
+        "stdout": {
+          "base64": "b3V0AGJ5dGVzCg==",
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "base64": "ZXJyIQo=",
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      }
+    },
+    {
+      "id": "c452a708829f4e22bdef1f9b673ad606",
+      "label": "support raw-channel control 0",
+      "kind": "support only; no product credit",
+      "argv": [
+        "python3",
+        "-c",
+        "import os,sys;os.write(1,b'out\\x00bytes\\n');os.write(2,b'err!\\n');sys.exit(0)"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/workspace-coverage-contract",
+      "started_utc": "2026-10-25T16:04:43.951378+00:00",
+      "before": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "xterm-256color",
+        "PATH": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin",
+        "RUSTFLAGS": null,
+        "CARGO_ENCODED_RUSTFLAGS": null,
+        "LLVM_PROFILE_FILE": null,
+        "LLVM_COV": null,
+        "LLVM_PROFDATA": null,
+        "CARGO_LLVM_COV_TARGET_DIR": null
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-25T16:04:44.045883+00:00",
+        "stdout": {
+          "base64": "b3V0AGJ5dGVzCg==",
+          "bytes": 10,
+          "sha256": "96a4f40c904d0541a3302777be960d06bfe169e72d6eef4665ff472d3a092980"
+        },
+        "stderr": {
+          "base64": "ZXJyIQo=",
+          "bytes": 5,
+          "sha256": "462f69552e2a9a6582d9ee1c3db811e004372dc723b76ab3dcd28687c4332c11"
+        }
+      },
+      "after": {
+        "head": "fe5e9d1287a353bcfbf67fc8db6c5445102c03f5",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "fec06e29d5f6b6d4fb307c90c25e30fa9ce9449b8ce36209f39b70f898231be9"
+      }
+    }
+  ]
+}

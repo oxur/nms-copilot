@@ -469,3 +469,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 63arc50done13open/project25OPEN/initial0ACTUALrefinements/no implementation or acceptance at issue.
 
 2026-10-25 formal45close: all6UF/R06-S45DONE atfe5e9d1;63arc51done12open/project25OPEN. Nineindependentgroups/oneACTUALrefinement/fullfailedhistory/readingremediation/retro preserved. OriginalM7.7fullintegration/95%coverage/hostedplatformCI/D0043/fullthemes/otherUnicode/input/higherowners OPEN.
+
+## Original testing/map renderer child — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S46 | Unicode-safe column-aligned map renderer with useful projection/overlay/help regressions | SixMR/M1–M5/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0042 concrete renderer debt/coverage | open | — | Full95coverage/CI/input/terminal/otherUI/themes/parent gates remainOPEN |
+
+64arc51done13open/project25OPEN/initialzeroACTUALrefinements/no acceptanceatissue.

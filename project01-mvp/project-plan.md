@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.134
+version: 1.135
 project: project01-mvp
 status: active
 depends-on: []
@@ -1338,3 +1338,9 @@ All6UF/R06-S45DONE on clean isolatedfe5e9d1287a353bcfbf67fc8db6c5445102c03f5: ex
 ## Arc06 original M7.7 coverage readiness — 2026-10-25 UTC
 
 CDC prepares one attributable native/offline all-workspace all-feature installedLLVMcoverage baseline at accepted45fe5e9d1, existing95%line threshold/no exclusions, to select the next usable hardening owner. Tool0.6.21/llvm-tools/rustc1.99.1LLVM23 verified raw-first; no coverage result or source assignment yet. ExistingMakecoveragecopilotlib-only/CIdefaultfeatures remain gaps; originalcoverage/CI/platform/fullcommands/remainingoriginal/input/Operator gates OPEN.63arc51done12open/project25OPEN; no install/network/integration/release/maincleanup. See arc current readiness record.
+
+## Original M7.7 baseline and Slice46 renderer owner issued — 2026-10-25 UTC
+
+Actual FIRST offline native workspaceallfeature coverage98059f18 atcleanfe5e9d1: all1102runtime/40harnessespassed,95thresholdREDexit1;72srcfiles24864lines22934covered92.23777348777348%/1930uncovered,17modulesbelow90. Stabledefaultexcludesdoctests/includesinlineunitbodylines; prior40rendererexecutingdoctestalreadygreen,0instrumentationdoesnotmean0priorproof. Fullraw76718574BJSON/b29b6f3d losslesslycompressed+all6readinessrecords under [Slice46artifacts](slice46-map-renderer-hardening/artifacts/). EarliergenericdefaultfeatureCIgapwordingqualified: currentdefaultalreadyHTTP/archiveworkspaceclosure; concretecoverage/no95gate/hostedcandidateplatformproof remainsopen.
+
+[Slice46](slice46-map-renderer-hardening/slice-plan.md) exacttwofile usablechild: Localmaplabelbyte-slicepanic+byte-skiprepair viaexistingRatatuiwidth/graphemeclipping, meaningful literalprojection/selectedGG/density/Unicode/precedence/help/smallbufferproof, obsoletepanicDOCONLYatentrypoint. ExistingASCIIwidth/styles/overlayorder/doctest/terminalruntime/input/state/API/depsfrozen. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh,initial0ACTUALrefinements/sixMR+R06-S46OPEN/ninegroups/freshindependentproof/retro. FullM7.7workspace95/modulefloor/CI/allcommands, fullD0042input/terminalrestoration/nativeinteractive, originalotherUI/themes/packaging/NomNom/raw/history/nonzero-game/parent/Operator/integration/release ownersremainOPEN.64arc51done13open/projectall25OPEN; no integration/maincleanup/install/network/publish/otherarc.
