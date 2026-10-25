@@ -10,3 +10,5 @@
 | CD-04 | Non-doc/API/tests/derive-help/other paths preserved | Twelve ordered comparisons/two exact layouts/both actual opposed mutants | correctness-grade | open | — |
 | CD-05 | Attributable original seven gates and exact clean commit/fences | Raw-first full observations/trailers/source ownership | correctness-grade | open | — |
 | CD-06 | Independent acceptance/retrospective/bubble-up and original owners | CDC seven groups/six rows/required43/fullM7.6 | correctness-grade | open | — |
+
+2026-10-25 FIRSTactual1of5/current01/all6CDOPEN. Initialactualpair0/equalpin/fullheldwalk; consolidatedF1–F6docs-only plusadditiveauthorW12outputcorrection. No runtime/strict/scope/diff/acceptanceyet; originalseven/required43/higherownersretained.

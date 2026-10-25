@@ -11,3 +11,7 @@ OriginalSEVEN groups: offlineformat→lint→HOLD/fullworksheet; actualhostCLIpa
 OriginalM7.6 STILL OPEN for required43remainingpublicdispatch/keyfunction Errors/Examples/fullpublicsurface/style/strict/original0039reconciliation, CDCowned/furtherusabledecompositionallowed. Existingquerysummarylinewrapping explicitlyretainedthere. AuthenticNomNominput unanswered; alloriginalraw/history/nonzerogame/finalsemantic/cache/freshness/coverage/themes/UI/distribution/parent/Operator/integration/releaseowners retained.60arcrows46done14open/all25projectrowsOPEN. No merge/push/install/publish/release/maincleanup/nextarc/Project02.
 
 ActualfreshCCdispatch /root/cdc_arc06/cc_cli_docs accepted explicitgpt-6-lunaHigh/forknoneaftere14a1257. Initialrequiredintake/readbackonly; sourceownershiphelduntilCDCACK. Actual41worktreefencescleanexceptknownmainagent9line2cd450ce. No additionalrole/modelsubstitution.
+
+## Complete initial held review / first actual refinement
+
+Version1.1/currentimmutable01/FIRSTactual1of5. Actualinitialformat/lint0/fullraw/equalpinverified; full12fileW/EwalkclosedF1summarylayout,F2keyruntext examples,F3convertbounds/panics,F4exportcaller/format/output,F5find/routefilteraliases/panics,F6otherhandleromissions+authorW12filenameoverclaim. Same12Rustdoconly/oldmaindocinputsandallnon-docfrozen. No runtime/strict/scope/diffclaim. SixCD/fullM7.6/required43/higherownersOPEN. ReadbackACK→pairhold→targetedreview→originalsevengroups unchanged.
