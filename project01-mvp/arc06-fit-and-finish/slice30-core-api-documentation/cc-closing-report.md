@@ -15,3 +15,11 @@ The six row proposals are: CD-02, CD-03, and CD-04 proposed done; CD-01 and CD-0
 3. **Specified versus delivered:** All nine named files were updated, with only the six allowed declaration-layout normalizations outside Rustdoc. Tests/doctests, strict default docs, the corrected scope audit, and both diff checks passed. Strict all-features docs failed and remains open. The failed initial audit attempt is retained alongside its passing corrected retry. No broader workspace docs, later crate owners, release, or arc acceptance is claimed.
 
 Supporting artifacts are the canonical attempt log, capture kernel, corrected scope checker, and the three ignored return files in this directory. No generated runtime artifact or additional source path is claimed.
+
+## Approved-A validation update
+
+The later bounded JSON/archive-doc attempt did not satisfy the approved exception: captured build `725aee93595748d28002b8741df317da` exited 101, with the one expected derive-origin diagnostic emitted at level `error` and a failed build-finished event. The captured checker `48675f34ac3d488b83c34485a391f07c` exited 1 at its required exit-0 precondition, so it did not assess negative controls or generated HTML. The new attempt is recorded without changing the original strict failure or proposed row statuses. The exception remains unverified and the candidate remains unaccepted pending CDC/Operator disposition.
+
+## Approved-A validation05 update
+
+The bounded v2 proof passed under the approved exact-field exception. Captured JSON build `65308cafe3004d56854db1e7ca3c83d0` exited 0 with exactly one warning-level diagnostic at the approved pinned derive origin and a successful build-finished event. Captured checker `23471843dab74d2c92f9e9dbec061c0d` exited 0, rejected the duplicate and wrong-origin controls, and verified the fresh HTML pages and resolver anchors. The earlier approved04 exit101/checker exit1 and original strict-docs failures remain preserved as failures. CC proposes CD-01/CD-05 done under approved A, pending CDC's independent reproduction; CD-06 remains open. Slice30 and full M7.6 are not independently accepted or closed.

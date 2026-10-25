@@ -1,0 +1,107 @@
+{
+  "observed_utc": "2026-10-25T02:22:20.297121+00:00",
+  "transfer": [
+    {
+      "source": {
+        "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/execution.md",
+        "bytes": 40857,
+        "sha256": "97ea2ae404464a50c9bec76d25e3617a0f853473006ecdae587fb15cbf71015a"
+      },
+      "destination": "cc-execution.md",
+      "original_sha256": "7e44c2d9b443f571c4367afa3cbf7050965ce32dcd6add05657bfd5622a0e349",
+      "original_prefix_preserved": true
+    },
+    {
+      "source": {
+        "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/closing-report.md",
+        "bytes": 4720,
+        "sha256": "3d358c68b3f0838f35822b10f102094f335964d82249a2faef09f6460ca9c875"
+      },
+      "destination": "cc-closing-report.md",
+      "original_sha256": "1b960a35d3386d8fd222de12a53c8fe0ae3cd2d269fd69a1edc7f70a08a257b7",
+      "original_prefix_preserved": true
+    },
+    {
+      "source": {
+        "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation/workbench/slice30-return/validation.json",
+        "bytes": 11468,
+        "sha256": "37f16880c1d204966dd35e8797e7c98c26989eff60e8fc029315b7d8b6ca6607"
+      },
+      "destination": "cc-validation-approved-A.json",
+      "original_cc_validation_preserved": {
+        "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/cc-validation.json",
+        "bytes": 4203,
+        "sha256": "a28d9b9bcf3a4ae54e8998acb05ca49133662174c6b798e46cd9a490ac45a70c"
+      },
+      "capture_header_updates": {
+        "attempt_log_sha256": {
+          "before": "c69d39b99083275829b44b69db761aec6dc65198d25faea7b1a49e00807989e7",
+          "after": "809a6fcc292df814a7270f3800dbee1166952c5e969ad4bbd2000e3eac454c44"
+        },
+        "entry_count": {
+          "before": 15,
+          "after": 21
+        }
+      },
+      "all_other_original_values_preserved": true
+    }
+  ],
+  "cdc_execution_before": {
+    "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/execution.md",
+    "bytes": 11638,
+    "sha256": "c80971cc3be76f92ddff48400005d48805b6b750cba115a50404fc7d50e5762c"
+  },
+  "cdc_execution_after": {
+    "path": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning/project01-mvp/arc06-fit-and-finish/slice30-core-api-documentation/execution.md",
+    "bytes": 11638,
+    "sha256": "c80971cc3be76f92ddff48400005d48805b6b750cba115a50404fc7d50e5762c"
+  },
+  "qualification": "CC current capture header updates two summary fields; historical cc-validation.json remains byte-exact. Original 15 CC and 12 CDC raw attempt values preserved. Execution/closing original prefixes exact. No reconstructed observations.",
+  "html_witnesses": [
+    {
+      "destination": "approved-archive-html/index.html",
+      "observations": {
+        "cc": {
+          "path": "/private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b/doc/nms_core/index.html",
+          "bytes": 12439,
+          "sha256": "041fb44949ba505e40c85263e2f78d8254bf29ae3a70fcfba0430ce73d8aebe7"
+        },
+        "cdc": {
+          "path": "/private/tmp/nms-slice30-cdc-approved-archive-09fd3092babf4c3893d0434e7bee8961/doc/nms_core/index.html",
+          "bytes": 12439,
+          "sha256": "041fb44949ba505e40c85263e2f78d8254bf29ae3a70fcfba0430ce73d8aebe7"
+        }
+      }
+    },
+    {
+      "destination": "approved-archive-html/system/enum.ArchivedDiscoverySource.html",
+      "observations": {
+        "cc": {
+          "path": "/private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b/doc/nms_core/system/enum.ArchivedDiscoverySource.html",
+          "bytes": 30722,
+          "sha256": "ee85996438bed04cd8561631ad41de4246a3233a20b638435134efde015c23a9"
+        },
+        "cdc": {
+          "path": "/private/tmp/nms-slice30-cdc-approved-archive-09fd3092babf4c3893d0434e7bee8961/doc/nms_core/system/enum.ArchivedDiscoverySource.html",
+          "bytes": 30722,
+          "sha256": "ee85996438bed04cd8561631ad41de4246a3233a20b638435134efde015c23a9"
+        }
+      }
+    },
+    {
+      "destination": "approved-archive-html/system/enum.DiscoverySourceResolver.html",
+      "observations": {
+        "cc": {
+          "path": "/private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b/doc/nms_core/system/enum.DiscoverySourceResolver.html",
+          "bytes": 27032,
+          "sha256": "107b1db5e879bcc5250bd9375e43c0c797e8c4142958922d000dab64ea5975c1"
+        },
+        "cdc": {
+          "path": "/private/tmp/nms-slice30-cdc-approved-archive-09fd3092babf4c3893d0434e7bee8961/doc/nms_core/system/enum.DiscoverySourceResolver.html",
+          "bytes": 27032,
+          "sha256": "107b1db5e879bcc5250bd9375e43c0c797e8c4142958922d000dab64ea5975c1"
+        }
+      }
+    }
+  ]
+}

@@ -1,11 +1,41 @@
 {
-  "observed_utc": "2026-10-25T01:43:28.714405+00:00",
-  "purpose": "Actual retained raw proof/helpers/held deltas/fences/explicit return transfer; source lives in pinned Git commit, no copied external macro implementation.",
+  "observed_utc": "2026-10-25T02:22:20.297121+00:00",
+  "purpose": "Retained actual raw attempts, exact return transfer, source-preservation audits and three matching fresh archive HTML witnesses; no compiled target forest. First-class slice documents excluded.",
   "files": [
     {
+      "path": "approved-A-final-fences.json",
+      "bytes": 6993,
+      "sha256": "7310f27b0fd84120dbfce53af2528d3ef8d41d1b18e61c1e73bedae43040aa10"
+    },
+    {
+      "path": "approved-archive-html/index.html",
+      "bytes": 12439,
+      "sha256": "041fb44949ba505e40c85263e2f78d8254bf29ae3a70fcfba0430ce73d8aebe7"
+    },
+    {
+      "path": "approved-archive-html/system/enum.ArchivedDiscoverySource.html",
+      "bytes": 30722,
+      "sha256": "ee85996438bed04cd8561631ad41de4246a3233a20b638435134efde015c23a9"
+    },
+    {
+      "path": "approved-archive-html/system/enum.DiscoverySourceResolver.html",
+      "bytes": 27032,
+      "sha256": "107b1db5e879bcc5250bd9375e43c0c797e8c4142958922d000dab64ea5975c1"
+    },
+    {
+      "path": "cc-approved-archive-check-v1.py",
+      "bytes": 11811,
+      "sha256": "cdf5ea3b76f79e6d294da7bd1b1b57dc89bc00edec4c60f902757ec820b51bf0"
+    },
+    {
+      "path": "cc-approved-archive-check-v2.py",
+      "bytes": 11824,
+      "sha256": "315aa24edad86ec4a07252a3835a9f8ca0b26b536f3062175db22ae7aebbcd09"
+    },
+    {
       "path": "cc-attempts.json",
-      "bytes": 93900,
-      "sha256": "c69d39b99083275829b44b69db761aec6dc65198d25faea7b1a49e00807989e7"
+      "bytes": 197834,
+      "sha256": "809a6fcc292df814a7270f3800dbee1166952c5e969ad4bbd2000e3eac454c44"
     },
     {
       "path": "cc-capture-preflight.json",
@@ -18,9 +48,19 @@
       "sha256": "7eb2c1c0bb642cf49ab08a056748e52c112bb7fb5a4ca35830744fd256eb3ca9"
     },
     {
+      "path": "cc-transfer-approved-A.json",
+      "bytes": 4966,
+      "sha256": "e9474461d4af404d62a9fb64524924c1f627793a89591c21c156a60074892b49"
+    },
+    {
       "path": "cc-transfer.json",
       "bytes": 2590,
       "sha256": "1b66f013789021d0c258b3af8042e0c51331d92bf218fec7b88fb21e36eba233"
+    },
+    {
+      "path": "cdc-approved-archive-check.py",
+      "bytes": 4646,
+      "sha256": "ea17b2e4589ad1e24439c1b213f473ead0a9f2b174514abe1e67f5f387ebd6be"
     },
     {
       "path": "cdc-content-scope-audit.py",
@@ -54,8 +94,8 @@
     },
     {
       "path": "nms-slice30-cdc-attempts.json",
-      "bytes": 1087738,
-      "sha256": "f035a674795b3442e8553bfe58c547523454eaac697795840542e4dfcd5dc207"
+      "bytes": 1164362,
+      "sha256": "9a567aedbc1015011a4981da864cbbc900dec138614ff81d572c6a6b39412c18"
     },
     {
       "path": "nms-slice30-cdc-capture.py",

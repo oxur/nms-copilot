@@ -1,0 +1,304 @@
+{
+  "slice": "30-core-api-documentation",
+  "status": "cc-proposed; independent acceptance pending",
+  "source": {
+    "worktree": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+    "branch": "codex/public-api-documentation",
+    "baseline": "4a935408460349e9aa64fecd570d9960094191b1",
+    "commit": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+    "changed_paths": 9,
+    "clean_worktree_and_index": true,
+    "trailers": [
+      "Co-authored-by: Codex <noreply@openai.com>",
+      "Co-authored-by: Billo AI <ai-engineering@billo.systems>"
+    ],
+    "baseline_diff_sha256": "7ace58f0cee6fe9df498a69ce6ef56ca2d4dab86d11390e0c8faaae340e9d457"
+  },
+  "capture": {
+    "attempt_log": "/private/tmp/nms-slice30-cc-attempts.json",
+    "attempt_log_sha256": "809a6fcc292df814a7270f3800dbee1166952c5e969ad4bbd2000e3eac454c44",
+    "entry_count": 21,
+    "all_entries_complete": true,
+    "kernel": "/private/tmp/nms-slice30-cc-capture.py",
+    "kernel_sha256": "9ca6bf1302b0f82ae2c47ee7594a46b7caa9d70fa367e0ac4f39b4d4f9d89224",
+    "scope_checker": "/private/tmp/nms-slice30-content-scope-audit.py",
+    "scope_checker_sha256": "7eb2c1c0bb642cf49ab08a056748e52c112bb7fb5a4ca35830744fd256eb3ca9"
+  },
+  "checks": [
+    {
+      "id": "30df48746b104e9f9a21df27f0b9c75e",
+      "check": "initial make format",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "e4366218c8a1475485cba550746763d6",
+      "check": "iteration02 make format",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "0036dc58f3cf44cf9fe412f50a11c371",
+      "check": "iteration02 make lint",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "70f73d99c7694b989e67b9eb762ffa69",
+      "check": "iteration03 make format",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "bd742fcb4f7d437bac68f90b4c2be04a",
+      "check": "iteration03 make lint",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "a4f217dfa9ab40cdad9bdb2efb4639e3",
+      "check": "default-feature nms-core tests and doctests",
+      "exit": 0,
+      "result": "pass",
+      "counts": {
+        "unit_tests": 89,
+        "doctests": 14
+      }
+    },
+    {
+      "id": "c99bf77e9e2841b7ad4525b306c124af",
+      "check": "all-feature nms-core tests and doctests",
+      "exit": 0,
+      "result": "pass",
+      "counts": {
+        "unit_tests": 90,
+        "doctests": 14
+      }
+    },
+    {
+      "id": "cad027897a2146c180d5d0e488e072f5",
+      "check": "strict default-feature rustdoc",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "9c115cdda22e47fd9159f59c4d451281",
+      "check": "strict all-features rustdoc",
+      "exit": 101,
+      "result": "fail",
+      "diagnostic": "missing documentation for derive-generated public struct field at crates/nms-core/src/system.rs:38:12"
+    },
+    {
+      "id": "079bd497333041a183e0a7b81057b53c",
+      "check": "formal scope audit initial attempt",
+      "exit": 1,
+      "result": "fail; private checker applied normalizers to wrong file declarations; preserved and superseded by corrected run"
+    },
+    {
+      "id": "c15e684cac584c688d425fa02e013d77",
+      "check": "formal scope audit corrected retry",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "6195eb610d614999bc8c71ed341592b4",
+      "check": "working diff --check",
+      "exit": 0,
+      "result": "pass"
+    },
+    {
+      "id": "180f92e79e504b10aff498d653065f93",
+      "check": "baseline diff --check",
+      "exit": 0,
+      "result": "pass"
+    }
+  ],
+  "support_controls": [
+    {
+      "id": "4ec0f61bf36e4de1810208c1ae099cf5",
+      "exit": 7,
+      "classification": "capture-kernel support control; not product/compiler evidence"
+    },
+    {
+      "id": "f9443dbf625b49efad4c2783c918fa1f",
+      "exit": 0,
+      "classification": "capture-kernel support control; not product/compiler evidence"
+    }
+  ],
+  "proposed_rows": {
+    "CD-01": "open: strict all-features docs red on derive-generated public field",
+    "CD-02": "proposed-done: complete source-grounded documentation worksheet, pending CDC",
+    "CD-03": "proposed-done: default/all-feature unit tests and doctests passed, pending CDC",
+    "CD-04": "proposed-done: normalized source-scope audit passed, pending CDC",
+    "CD-05": "open: strict all-features docs gate failed",
+    "CD-06": "open: independent acceptance and arc disposition pending"
+  },
+  "baseline_diagnostic_context": "CDC baseline inventory 772e already contained the derive-origin missing-field diagnostic at baseline system.rs:13 (entry 220); this was not resolved before the strict gate. The current failure remains red and open.",
+  "independent_acceptance": "not claimed",
+  "approved_A_validation05": {
+    "approval_scope": "same exact Operator-approved A predicate; only force-warn mechanics and fresh-target constants differ from reviewed checker",
+    "status": "CC proposed success; CDC independent reproduction/acceptance pending",
+    "source_head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+    "source_before_after_metadata_equal": true,
+    "checker": {
+      "original_path": "/private/tmp/nms-slice30-cc-approved-archive-check.py",
+      "original_sha256": "cdf5ea3b76f79e6d294da7bd1b1b57dc89bc00edec4c60f902757ec820b51bf0",
+      "v2_path": "/private/tmp/nms-slice30-cc-approved-archive-check-v2.py",
+      "v2_sha256": "315aa24edad86ec4a07252a3835a9f8ca0b26b536f3062175db22ae7aebbcd09",
+      "original_bytes": 11811,
+      "v2_bytes": 11824,
+      "only_changed_literals": [
+        "RUSTDOCFLAGS: -D warnings -W missing_docs -> -D warnings --force-warn missing_docs",
+        "fresh CARGO_TARGET_DIR to /private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b"
+      ],
+      "inverse_replacements_byte_equal_original": true,
+      "py_compile_id": "c5c8bf7938f84446b8b929b09b137849",
+      "py_compile_exit": 0,
+      "checker_record_id": "23471843dab74d2c92f9e9dbec061c0d",
+      "checker_exit": 0,
+      "checker_stdout_bytes": 1623,
+      "checker_stdout_sha256": "fdbdefbe6d6459152a0825bd1505ec9de5aa639ca3aabd0f3f8f745d30dfbec6",
+      "checker_stderr_bytes": 0,
+      "checker_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fresh_target": {
+      "path": "/private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b",
+      "absent_before_build": true
+    },
+    "build": {
+      "id": "65308cafe3004d56854db1e7ca3c83d0",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-core",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--message-format=json"
+      ],
+      "overrides": {
+        "RUSTDOCFLAGS": "-D warnings --force-warn missing_docs",
+        "CARGO_TARGET_DIR": "/private/tmp/nms-slice30-cc-approved-archive-v2-c9db13f1ed824eda95b0a4ffc594303b"
+      },
+      "exit": 0,
+      "status": "complete",
+      "stdout": {
+        "bytes": 28615,
+        "sha256": "45384e4457ae72eb5f60cbf64d808b2106b534ca323e68fb194b0208eacbbfc1"
+      },
+      "stderr": {
+        "bytes": 1053,
+        "sha256": "e4ce18a8a78bc4be53689727a20ed26e56bcb843054c70953911116f31b1759c"
+      },
+      "event_count": 37,
+      "compiler_message_count": 1,
+      "expected_warning_and_origin_matches": true,
+      "build_finished_count": 1,
+      "build_finished_success": true
+    },
+    "negative_controls": {
+      "duplicate_diagnostic_rejected": true,
+      "wrong_player_rs_origin_rejected": true
+    },
+    "html": {
+      "index": {
+        "path": "doc/nms_core/index.html",
+        "bytes": 12439,
+        "sha256": "041fb44949ba505e40c85263e2f78d8254bf29ae3a70fcfba0430ce73d8aebe7"
+      },
+      "archived_discovery_source": {
+        "path": "doc/nms_core/system/enum.ArchivedDiscoverySource.html",
+        "bytes": 30722,
+        "sha256": "ee85996438bed04cd8561631ad41de4246a3233a20b638435134efde015c23a9"
+      },
+      "discovery_source_resolver": {
+        "path": "doc/nms_core/system/enum.DiscoverySourceResolver.html",
+        "bytes": 27032,
+        "sha256": "107b1db5e879bcc5250bd9375e43c0c797e8c4142958922d000dab64ea5975c1",
+        "required_ids": [
+          "variant.Community",
+          "variant.Community.field.source"
+        ]
+      }
+    },
+    "previous_approved_A_validation04_preserved_as_failed": true,
+    "original_strict_docs_failures_preserved": true,
+    "current_proposed_rows": {
+      "CD-01": "proposed-done under exact approved A; independent CDC repeat pending",
+      "CD-02": "proposed-done; prior disposition retained",
+      "CD-03": "proposed-done; prior disposition retained",
+      "CD-04": "proposed-done; prior disposition retained",
+      "CD-05": "proposed-done under exact approved A; independent CDC repeat pending",
+      "CD-06": "open pending independent acceptance/retrospective/arc disposition"
+    },
+    "slice30_acceptance": "not claimed; CDC independent proof and disposition pending"
+  },
+  "approved_A_validation": {
+    "approval_scope": "Operator-approved exact A only: prospective exception for one current derive-generated DiscoverySourceResolver::Community.source missing_docs diagnostic; historical strict failures retained",
+    "status": "failed; exception not validated",
+    "build": {
+      "id": "725aee93595748d28002b8741df317da",
+      "kind": "SUT gate",
+      "argv": [
+        "cargo",
+        "doc",
+        "-p",
+        "nms-core",
+        "--all-features",
+        "--no-deps",
+        "--offline",
+        "--message-format=json"
+      ],
+      "overrides": {
+        "RUSTDOCFLAGS": "-D warnings -W missing_docs",
+        "CARGO_TARGET_DIR": "/private/tmp/nms-slice30-cc-approved-archive-af61924901ce4f8789579d2b2e354ca4"
+      },
+      "exit": 101,
+      "status": "complete",
+      "stdout": {
+        "bytes": 27671,
+        "sha256": "845d8a512538c13e35a8022396af0400fc5fc794eab5c69d178d2a60ef6d4dab"
+      },
+      "stderr": {
+        "bytes": 900,
+        "sha256": "3d6748b60a7507c4311d492941935fd0ec6bb8c5cf039f12348da1677f995ced"
+      },
+      "parsed_event_count": 36,
+      "compiler_message_count": 1,
+      "expected_origin_matches": true,
+      "diagnostic_level": "error",
+      "build_finished_success": false,
+      "source_head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+      "before_after_source_metadata_equal": true
+    },
+    "checker": {
+      "path": "/private/tmp/nms-slice30-cc-approved-archive-check.py",
+      "sha256": "cdf5ea3b76f79e6d294da7bd1b1b57dc89bc00edec4c60f902757ec820b51bf0",
+      "py_compile_id": "b6ec249867444e3eb963b68029acc7a5",
+      "py_compile_exit": 0,
+      "actual_record_id": "48675f34ac3d488b83c34485a391f07c",
+      "actual_record_exit": 1,
+      "actual_stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "actual_stderr": {
+        "bytes": 93,
+        "sha256": "cfe3441eaefec737f9b76b9cbcd4782d1443648a26d0d402c73cd0090c2ed30a"
+      },
+      "error": "actual Cargo command did not complete with exit 0",
+      "negative_controls_run": false,
+      "html_inspection_run": false
+    },
+    "capture_log": {
+      "path": "/private/tmp/nms-slice30-cc-attempts.json",
+      "entry_count": 18,
+      "sha256": "034858640904a0cb3402d1b1af100d775ccc0dbd2700396c1885de0561af904b",
+      "original_15_entries_preserved_as_prefix": true
+    },
+    "rows_unchanged": true,
+    "independent_acceptance": "not claimed"
+  }
+}

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.115, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.116, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1001,3 +1001,9 @@ Operator explicitly “I approve A”, relayed by root with exact wording. Adopt
 Ownership correction, additive: Operator states “the uncommitted change ... that's not me”. Earlier 'human/Operator-owned nine-line edit' descriptions were unsupported and are corrected going forward, not rewritten. Root's subsequent bounded actual-session/tool-call/replay assessment attributes the main addition to CC15/Poincare session01a15630-a75b-7d51-bcbc-4af3a072e27a: call_34f2fb1255464a22b87668713ec9db61 at2026-10-20T01:17:39.846Z relative Python write/no workdir (main cwd), completed .952Z; call_0ff24d2b08314ea899469608f98697db at01:17:43.101Z repeats in correct headless-live-cache, completed .327Z. Exact child transcript Oct19T17-03-11 lines2667/2670/2674/2677, and root read-only replay againstmainHEAD reproduces currentbytes. This is root's attributed assessment, not a new CDC origin investigation. Current main OID2cd450ce stays protected as pre-existing agent addition pending separate Operator disposition; no removal/commit/incorporation within30. Root separately owns requested usefulness/usage assessment.
 
 Same CDC6.1-solHigh/CC6-lunaHigh/onearc authority.48arc34done14open/project25open until actual30closure; all31/32/33/fulloriginal/higher owners retained.
+
+## Slice30 core API increment accepted — 2026-10-25 UTC
+
+Version1.116 closes all6CD/R06-S30 at clean40e6bc8f under the explicitly approved exact generated DiscoverySourceResolver::Community.source exception. Original strict reds remain red; new independent fresh archive JSON/output plus exactly-one/extra/wrong-origin proof passes with supported force-warn mechanics, other warnings fatal. Ten positive current groups include the original eight byte-applicable groups and two new approved-A groups; default89/archive90 units and14 doctests each overlap. Full21CC/17CDC raw records, four actual refinements, exact return versions/transfer and final retrospective retained. No source change after approval or historical waiver. See [final independent acceptance](slice30-core-api-documentation/cdc-verification.md#final-independent-acceptance-and-bubble-up--2026-10-25-utc).
+
+48arc rows/35done/13open; project25open. Full originalM7.6 remains OPEN: planned31 save,32 graph/query,33 remaining public APIs/full0039 reconciliation, allCDC. Slice30 surfaced exact generated-field and flag-precedence readiness misses, so later owners must classify actual generated origins and preserve this approved limit explicitly; this version records that scope/acceptance feedback before next planning. Known glyph UTF8 panic remains separately owned reconciliation, no runtime fix silently added. Main ownership correction and root's CC15 attribution remain recorded; protected pre-existing agent addition was not changed. All other original input/game-backed/cache/history/coverage/distribution/UI/parent/Operator/integration/release obligations survive.

@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.102
+version: 1.103
 project: project01-mvp
 status: active
 depends-on: []
@@ -1210,3 +1210,7 @@ Original M7.6 remains OPEN after accepted29; complete core public API increment3
 ### Arc06 Slice30 current independent gate — 2026-10-25 UTC
 
 Core docs candidate40e6 has8of9independentgroups green; strictarchive docs red on exact external rkyv-generated resolverfield, independently reproduced.3CDrowsdone/3open; child30/M7.6 remainopen,48arc34done14open/project25open. Bounded prospective exception-versus-hold decision packet is reviewable; no silent criterion change/source suppression/dependency expansion or capture waiver. Original planned31save/32graph-query/33remainingAPI+fullM7.6 owners and every other original/higher gate retained.
+
+### Arc06 Slice30 core API increment accepted — 2026-10-25 UTC
+
+Version1.103 / arc1.116 records six-row core API docs closure at40e6 under exact approved generated-field A, actual independent JSON/archive output and negative controls. Original strict reds retained, no runtime/source suppression. Arc48rows35done13open/project25open. Full originalM7.6 remains open with31save/32graph-query/33remaining API+full0039 reconciliation ownedCDC; all other original/higher obligations remain. Final review/retrospective and exact record-version qualification live in Slice30.

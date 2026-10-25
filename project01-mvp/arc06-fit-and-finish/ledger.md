@@ -308,7 +308,7 @@ Human “I do approve” adopts only pending9ccc915f directNode historical excep
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S30 | Complete truthful core public API documentation and runnable key examples | SixCD rows/nine-file full semantic walk/default+archive strictdocs/unit+doctests/executable-byte audit | correctness-grade | Original0039 M7.6 required API increment | open | [Slice30 plan](slice30-core-api-documentation/slice-plan.md) | Every other original/API owner remains open; compiler inventory is not acceptance |
+| R06-S30 | Complete truthful core public API documentation and runnable key examples | SixCD rows/nine-file full semantic walk/default+archive strictdocs/unit+doctests/executable-byte audit | correctness-grade | Original0039 M7.6 required API increment | done | [Slice30 final independent review](slice30-core-api-documentation/cdc-verification.md) | Every other original/API owner remains open; compiler inventory is not acceptance |
 
 48rows34done14open/project25open. All47 prior rows preserved. Full M7.6 OPEN: required30core, planned31save/32graph-query/33remaining public surface+fulloriginal reconciliation, ownerCDC; numbers are not invented delivered slices.
 
@@ -317,3 +317,5 @@ Human “I do approve” adopts only pending9ccc915f directNode historical excep
 F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolver::Community.source, no supported doc forwarding to resolver fields. Baseline inventory already contained origin at system13; CDCreadiness missed it. No source/dep repair/suppression or reclassification of strictred. Concrete A/B decision and exact canonical approval rule in cdc-verification.md; A prospective exactgeneratedfieldexception plus actual exit0 JSON/archive-output proof rejecting every extra/different missingdoc; B keep30open pending separately scoped macro remedy. No exception adopted. Source/helper/nextunit mutation HELD pending actual Operator decision, same2/5actual refinements/threeleft. Provisionalretro/bottomuprecord is not sliceclosure.
 
 [Exact generated-field decision](slice30-core-api-documentation/cdc-verification.md); no Slice30 closure before resolution.
+
+2026-10-25 formal30close: all6CD/R06-S30DONE on40e6 with exact Operator-approved generated-field A exception and fresh independent actual archive output. Original strict reds retained; ten positive current groups/21CC+17CDC full raw records/final retrospective.48rows35done13open/project25open; fullM7.6/31–33 and all higher obligations remain OPEN.
