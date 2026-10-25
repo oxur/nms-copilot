@@ -1,0 +1,55 @@
+{
+  "capture_owner": "Unicode formatter readiness log",
+  "attempts": [
+    {
+      "id": "dce6c67cd39c42f48ff73230f22a8c74",
+      "label": "Original formatter two real-child Unicode panic reproductions",
+      "kind": "SUT gate",
+      "argv": [
+        "python3",
+        "/private/tmp/nms-unicode-readiness.py"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "started_utc": "2026-10-25T15:04:20.442811+00:00",
+      "before": {
+        "head": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "64ace4580f7cb53e722b19db9113e36ad05851d0c66c2926c39418cdb321bf01"
+      },
+      "inherited_env": {
+        "TMPDIR": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/",
+        "RUSTDOCFLAGS": null,
+        "CARGO_TARGET_DIR": null,
+        "CARGO_NET_OFFLINE": null,
+        "RUSTUP_TOOLCHAIN": null,
+        "TERM": "dumb",
+        "PATH": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/oubiwann/Library/Application Support/ChatGPT-Profiles/personal/codex-home/tmp/arg0/codex-arg0HC6juU:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/gcloud/369.0.0/bin:/opt/go/1.24.3/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/oubiwann/.ghcup/bin:/Users/oubiwann/.local/bin:/Users/oubiwann/.cargo/bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/oubiwann/.sdkman/candidates/gradle/current/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin:/Users/oubiwann/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:/Users/oubiwann/.cargo/bin:/Users/oubiwann/.rvm/bin:/Users/oubiwann/.npm-global/bin:/Users/oubiwann/.radicle/bin"
+      },
+      "overrides": {},
+      "status": "complete",
+      "raw_completion": {
+        "exit_code": 0,
+        "ended_utc": "2026-10-25T15:04:20.615100+00:00",
+        "stdout": {
+          "base64": "eyJyZWNvcmQiOiAiL3Zhci9mb2xkZXJzL2R0L2tjOG5kbjZkM2t4OGMxam54cjA1ZHJzaDAwMDBnbi9UL25tcy11bmljb2RlLXJlYWRpbmVzcy1mOW94YWNpZS9yZWNlaXB0cy5qc29uIiwgImNhc2VzIjogW3sibGFiZWwiOiAiZmluZCIsICJleGl0IjogMTAxLCAic3RkZXJyIjogIlxudGhyZWFkICdtYWluJyAoNzMyMTg5MDIpIHBhbmlja2VkIGF0IGNyYXRlcy9ubXMtcXVlcnkvc3JjL2Rpc3BsYXkucnM6NDczOjI4OlxuZW5kIGJ5dGUgaW5kZXggMTcgaXMgbm90IGEgY2hhciBib3VuZGFyeTsgaXQgaXMgaW5zaWRlICfDqScgKGJ5dGVzIDE2Li4xOCBvZiBzdHJpbmcpXG5ub3RlOiBydW4gd2l0aCBgUlVTVF9CQUNLVFJBQ0U9MWAgZW52aXJvbm1lbnQgdmFyaWFibGUgdG8gZGlzcGxheSBhIGJhY2t0cmFjZVxuIn0sIHsibGFiZWwiOiAicm91dGUiLCAiZXhpdCI6IDEwMSwgInN0ZGVyciI6ICJcbnRocmVhZCAnbWFpbicgKDczMjE4OTA0KSBwYW5pY2tlZCBhdCBjcmF0ZXMvbm1zLXF1ZXJ5L3NyYy9kaXNwbGF5LnJzOjQ3MzoyODpcbmVuZCBieXRlIGluZGV4IDE4IGlzIG5vdCBhIGNoYXIgYm91bmRhcnk7IGl0IGlzIGluc2lkZSAnw6knIChieXRlcyAxNy4uMTkgb2Ygc3RyaW5nKVxubm90ZTogcnVuIHdpdGggYFJVU1RfQkFDS1RSQUNFPTFgIGVudmlyb25tZW50IHZhcmlhYmxlIHRvIGRpc3BsYXkgYSBiYWNrdHJhY2VcbiJ9XX0K",
+          "bytes": 702,
+          "sha256": "70e8c853aed638080bbf13f4cb313adba85abae9abe997cbc6367365c52d51ab"
+        },
+        "stderr": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "after": {
+        "head": "9b632b665885d1a8b596006dd96ebcaaad41a71a",
+        "status": "",
+        "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "untracked_files": {},
+        "working_identity_sha256": "64ace4580f7cb53e722b19db9113e36ad05851d0c66c2926c39418cdb321bf01"
+      }
+    }
+  ]
+}

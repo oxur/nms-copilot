@@ -459,3 +459,11 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 62arc48done14open/project25OPEN; initial0ACTUALrefinements/no implementation or acceptance at issue.
 
 2026-10-25 formal44close: all6DR/R06-S44 AND originalM7.6DONE at9b632b66.62arc50done12open/project25OPEN; eleven independent groups1097runtime+118/114separatedocs/exact existingA/currentoutput/CLI/sourceopposed/composition/diffs. Zeroactualrefinements/no newexception. Original opening counts retained; all non-doc/input/higher owners OPEN.
+
+## Original integration/table Unicode hardening child — 2026-10-25 UTC
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R06-S45 | Query name truncation Unicode-safe with ASCII preservation/real CLI regressions | SixUF/U1–U4/ninegroups/independentproof | correctness-grade | OriginalM7.7/D0043 concrete formatter carryover | open | — | FullM7.7coverage/CI/D0043/themes/otherUnicode/higherowners OPEN |
+
+63arc50done13open/project25OPEN/initial0ACTUALrefinements/no implementation or acceptance at issue.

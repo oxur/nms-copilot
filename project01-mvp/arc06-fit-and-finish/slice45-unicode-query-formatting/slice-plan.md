@@ -1,0 +1,9 @@
+# Slice45 — Unicode-safe query formatting
+
+Version1.0,2026-10-25UTC. ACTIVE/initial0ACTUALrefinements/sixUF OPEN. Same CDC6.1-solHigh/freshsoleCC6-lunaHigh after44 completed broad handback; no extra role/model/exception. Three exact paths from accepted9b632b66: query display private truncate+obsolete panic docs+appended regressions; dispatcher obsolete propagated panic wording ONLY; new CLI two-child integration test.
+
+Existing "characters" helper contract resolved to Unicode scalar values, preserving ASCII actual19–22call budgets/periodsuffix, defining private0–3budgets; no grapheme/displaywidth/ANSI guarantee or dependency. All other public formatter/query/route/table functions, existing tests/fences/CLI grammar/raw/cache/schema/other bytes frozen. Literal2/3/4byte, combining/ZWJ, actual find/normalroute/waypoint and real checked-save child proof prescribed before handoff. Readiness actual find+route each101 insideé, exact channels/binary+fixture hashes retained; outer expected-reproduction0 is not product success.
+
+Nine original captured groups/pairhold/fullCDC U1–U4review/focusedfirst/fullworkspace/affectedstrictdocs/diffs; fresh independentnine/retro/bubbleup required. No new validator/harness; direct complete diff/originaltest+fence equality/current rendered docs review. Raw-first kernels read/inversechecked before diagnostics;2CC/2CDC support7/0/fullNULrecords supportONLY. Actual44worktree/pins/mainknownagent9line protected.
+
+Bounded originalM7.7/D0043 child: full coverage95%/CI/platform/allcommand criterion and fulltable/theme reconciliation remain CDC-owned; makecoverage currentlycopilotlib/no-defaultonly, installedllvm-cov is not measurement. Separate parser/map UTF8 debt, authenticNomNominput, alloriginalrepair/raw/history/nonzero-game/finalsemantic/cache/freshness/parent/Operator/integration/release obligations remainOPEN. No newarc/Project02/maincleanup/integration/release.

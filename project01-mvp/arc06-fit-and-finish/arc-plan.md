@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.144, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.145, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1141,3 +1141,7 @@ Version1.143 details [Slice44](slice44-documentation-reconciliation/slice-plan.m
 ## Slice44 and original M7.6 independently accepted — 2026-10-25 UTC
 
 All6DR/R06-S44 AND originalM7.6 DONE on isolated clean9b632b665885d1a8b596006dd96ebcaaad41a71a: exact12doc paths/20public-summary layouts+previewnamespace, all other docs/examples/non-doc frozen. Full original README/captures/contributor/publicAPI/keyexample criterion reconciled; accepted29 byte-applicable proof retained with its actual date, fresh eleven CDC groups pass1097runtime+118allfeaturedocs(91execute27compile)+114separatenodefaultdocs(89execute25compile), exact existing generated-field A/current new70+2page output/two negatives/strictisolatedCLI/sourceopposed/composition/diffs. Initial0ACTUALrefinements/no new exception/structural amendment. All15CC+15CDC raw records/exact original returns/real first profile-verifier red/corrected cached CC retry/fresh separate CDC build/current HTML bundles/prose qualifications/final retrospective retained. See [CDC44 full acceptance](slice44-documentation-reconciliation/cdc-verification.md) and [retrospective](slice44-documentation-reconciliation/cdc-retrospective.md) in the arc directory.62arc50done12open/all25projectrowsOPEN. Next original non-doc ownership remains CDC: M7.7 testing/coverage/CI, M7.8 distribution/license assets, M7.10 themes, D0040–43UI/R01–03/raw/history/nonzero-game/finalsemantic/cache/freshness and higher independent/Operator/integration/release. Authentic NomNom input unanswered; no cleanup/push/merge/install/network/publish/release/otherarc/Project02.
+
+## Slice45 Unicode query formatting issued — 2026-10-25 UTC
+
+Three-path usable originalM7.7/D0043 child on accepted9b632b66: shared query private name truncation/scalar-safe standardstrings, obsolete propagated panic teaching correction and actual isolated checked-save CLI find/route regressions. Readiness independently reproduced both children101 slicing insideé/fullraw/digests preserved. ASCII actual19–22budgets preserved; scalar/tinybudget/2–4byte/combining/ZWJ/find/normalroute/waypoint literals resolved, no grapheme/displaywidth/ANSI promise/API/schema/dependency change. SameCDC6.1-solHigh/freshsoleCC6-lunaHigh selected after44broadhandoff; no new approval/exception/extra reviewer. SixUF/R06-S45OPEN/zeroactualrefinements/nineoriginalgroups/pairhold/freshindependentacceptance+retro. FullM7.7coverage95%/platformCI/allcommands and D0043/fulltheme/otherUnicodeparser-map/remainingoriginal/input/higherowners remainCDC-ownedOPEN. ExistingMakecoveragecopilotlib-only and defaultfeatureCI gaps retained; installedtool notmeasurement.63arc50done13open/all25projectrowsOPEN/no maincleanup/integration/release/otherarc.

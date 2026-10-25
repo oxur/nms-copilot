@@ -1,0 +1,68 @@
+{
+  "created_utc": "2026-10-25T15:04:20.574096+00:00",
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+  "binary": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/debug/nms",
+  "binary_sha256": "088a4da312766ff732c281b9224e2145a874625a51b4cf9638690a05f5790bb3",
+  "seed_sha256": "ebb2ff183d3a97887a46de9a2ef227b0c5d4cabf1d6fee97f54db539d91589ab",
+  "home": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/nms-unicode-readiness-f9oxacie",
+  "cases": [
+    {
+      "label": "find",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/debug/nms",
+        "find",
+        "--save",
+        "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/nms-unicode-readiness-f9oxacie/find.json"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "HOME": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/nms-unicode-readiness-f9oxacie",
+      "fixture_sha256": "5e80d5fdb59791bf26556e731ae81378ced7f97e6b9a7adf081af0fe3cdce514",
+      "started_utc": "2026-10-25T15:04:20.591556+00:00",
+      "completion": {
+        "exit_code": 101,
+        "ended_utc": "2026-10-25T15:04:20.602723+00:00",
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "CnRocmVhZCAnbWFpbicgKDczMjE4OTAyKSBwYW5pY2tlZCBhdCBjcmF0ZXMvbm1zLXF1ZXJ5L3NyYy9kaXNwbGF5LnJzOjQ3MzoyODoKZW5kIGJ5dGUgaW5kZXggMTcgaXMgbm90IGEgY2hhciBib3VuZGFyeTsgaXQgaXMgaW5zaWRlICfDqScgKGJ5dGVzIDE2Li4xOCBvZiBzdHJpbmcpCm5vdGU6IHJ1biB3aXRoIGBSVVNUX0JBQ0tUUkFDRT0xYCBlbnZpcm9ubWVudCB2YXJpYWJsZSB0byBkaXNwbGF5IGEgYmFja3RyYWNlCg==",
+          "bytes": 241,
+          "sha256": "0243f2e3ee424a40deebf01bc0b70bd787dd72a295bc8612a649cb8856f0ae50"
+        }
+      }
+    },
+    {
+      "label": "route",
+      "argv": [
+        "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation/target/debug/nms",
+        "route",
+        "--save",
+        "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/nms-unicode-readiness-f9oxacie/route.json",
+        "--target",
+        "12345678901234567\u00e9\u00e9\u00e9\u00e9\u00e9",
+        "--algo",
+        "nn"
+      ],
+      "cwd": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/documentation-reconciliation",
+      "HOME": "/var/folders/dt/kc8ndn6d3kx8c1jnxr05drsh0000gn/T/nms-unicode-readiness-f9oxacie",
+      "fixture_sha256": "b0f97dd097fe960034e29c0884df668f615756ab0d12a1ccaf2568c6ba9efb9b",
+      "started_utc": "2026-10-25T15:04:20.603466+00:00",
+      "completion": {
+        "exit_code": 101,
+        "ended_utc": "2026-10-25T15:04:20.609534+00:00",
+        "stdout": {
+          "base64": "",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "base64": "CnRocmVhZCAnbWFpbicgKDczMjE4OTA0KSBwYW5pY2tlZCBhdCBjcmF0ZXMvbm1zLXF1ZXJ5L3NyYy9kaXNwbGF5LnJzOjQ3MzoyODoKZW5kIGJ5dGUgaW5kZXggMTggaXMgbm90IGEgY2hhciBib3VuZGFyeTsgaXQgaXMgaW5zaWRlICfDqScgKGJ5dGVzIDE3Li4xOSBvZiBzdHJpbmcpCm5vdGU6IHJ1biB3aXRoIGBSVVNUX0JBQ0tUUkFDRT0xYCBlbnZpcm9ubWVudCB2YXJpYWJsZSB0byBkaXNwbGF5IGEgYmFja3RyYWNlCg==",
+          "bytes": 241,
+          "sha256": "bbc23481d337b299d0e75f09945456832bb0e79e2d88779abcb6bcb6259d0801"
+        }
+      }
+    }
+  ]
+}
