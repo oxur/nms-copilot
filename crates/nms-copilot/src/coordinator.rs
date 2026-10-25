@@ -1,12 +1,43 @@
-//! One application-owned path from parsed save updates through the live model
-//! to the optional cache and read-only observers.
+//! Application-owned live-save coordination from checked watcher observations.
 //!
-//! Observer channels are unbounded. Slow subscribers therefore do not delay
-//! application or cache writes, but callers must drain their receiver to bound
-//! their own memory use. A subscriber receives events published after its
-//! registration; there is no initial snapshot or replay. An update already in
-//! flight may be published after subscription because publication follows the
-//! serialized apply/write operation.
+//! [`LiveSaveCoordinator::start`] takes a model that the application has
+//! already loaded, starts one watcher for that coordinator instance, and runs a
+//! worker that applies each observation before optional cache persistence and
+//! read-only publication. The worker does not seed the model, write an initial
+//! cache, or emit an initial update. Creating another coordinator creates
+//! another watcher; this type does not enforce a process-wide singleton.
+//!
+//! For each accepted observation, the worker formats notes against the
+//! pre-update model, applies the complete player update and additive atlas
+//! delta, ensures the player system, applies explicit discovery-name
+//! observations, and snapshots the cache using that update's source version
+//! when a cache path was supplied. It releases the model write lock before the
+//! serialized cache write. Cache failures are reported to stderr; they do not
+//! roll back the model or prevent the observer event from being published.
+//! With no cache path, the worker skips cache extraction and writing.
+//!
+//! [`AppliedSaveUpdate`] contains the parsed [`SaveUpdate`], whether an
+//! existing discovery name changed, and notes formatted before application.
+//! It does not contain the discovery-name map or a cache-write receipt. A
+//! name-only observation can therefore publish an event with an empty delta
+//! and no notes while changing what later model reads return.
+//!
+//! Each call to [`LiveSaveCoordinator::subscribe`] creates an unbounded
+//! standard-channel receiver. It receives publications made after
+//! registration, with no initial snapshot or replay; an update already in
+//! flight may be published after registration. Publication follows the
+//! serialized application and cache attempt. Sending does not wait for a
+//! receiver to consume an event; each subscriber gets a clone, and unbounded
+//! queues can accumulate memory when receivers are slow. Callers must drain
+//! receivers. Events are not a query snapshot or a durable history. The stream
+//! carries applied events only, not watcher parse errors or worker panics.
+//!
+//! Dropping the coordinator signals its worker and joins it; the worker then
+//! drops and joins its watcher. Work already being applied or written finishes
+//! before `drop` returns, but queued observations are not promised to flush.
+//! Parser and disk I/O have no hard shutdown deadline. Release model guards
+//! before dropping the coordinator. A worker panic is joined and reported to
+//! stderr rather than returned from `drop`.
 
 use std::fmt;
 use std::path::{Path, PathBuf};
@@ -22,22 +53,84 @@ use nms_graph::GalaxyModel;
 use nms_watch::{WatchConfig, WatchObservationHandle, start_watching_observations};
 use tokio::sync::RwLock;
 
-/// A complete parsed update after it has been applied to the shared model.
+/// One parsed update after the coordinator applied it to the shared model.
+///
+/// The event is published after the model update and the optional best-effort
+/// cache-write attempt. It is not a cache-success receipt, a complete model
+/// snapshot, or a record of the explicit discovery-name map. Fields are public
+/// and this value can also be constructed independently of a coordinator.
 #[derive(Debug, Clone)]
 pub struct AppliedSaveUpdate {
-    /// Complete parsed player state, atlas delta, and source version.
+    /// Complete player state, additive delta, and source version from one parse.
+    ///
+    /// The value pairs the supported player snapshot with the additive atlas
+    /// delta observed by that same checked parse.
     pub update: SaveUpdate,
-    /// Whether an existing entity's discovery name changed after the delta.
+    /// Whether applying the observation changed a name on an existing entity.
+    ///
+    /// This can be `true` when `update.delta` is empty. A removed name-map
+    /// entry alone does not clear a model name.
     pub names_changed: bool,
-    /// Existing human-readable discovery/movement notes, formatted pre-apply.
+    /// Pre-apply movement and discovery notes in formatter order.
+    ///
+    /// The receiver preserves these strings literally; this field does not
+    /// contain cache status or validate how the strings were produced.
     pub notifications: Vec<String>,
 }
 
-/// Failure to start the owned live-update producer.
+/// Failure to start a live-save coordinator.
+///
+/// The variants retain the watcher-setup or operating-system thread-creation
+/// error so callers can inspect its typed payload. The display text adds a
+/// coordinator-specific prefix. This type does not expose a nested source
+/// chain.
+///
+/// # Examples
+///
+/// ```
+/// use nms_copilot::coordinator::CoordinatorStartError;
+/// use nms_watch::WatchError;
+/// use std::error::Error;
+/// use std::io;
+/// use std::path::{Path, PathBuf};
+///
+/// let missing = CoordinatorStartError::Watch(WatchError::SaveNotFound(
+///     PathBuf::from("missing.json"),
+/// ));
+/// assert_eq!(
+///     missing.to_string(),
+///     "could not start save update coordinator: save file not found: missing.json",
+/// );
+/// assert!(missing.source().is_none());
+/// let CoordinatorStartError::Watch(WatchError::SaveNotFound(path)) = &missing else {
+///     return Err(io::Error::new(io::ErrorKind::Other, "unexpected watch error").into());
+/// };
+/// assert_eq!(path, Path::new("missing.json"));
+///
+/// let worker = CoordinatorStartError::Worker(io::Error::new(
+///     io::ErrorKind::PermissionDenied,
+///     "denied",
+/// ));
+/// assert_eq!(worker.to_string(), "could not start coordinator worker: denied");
+/// assert!(worker.source().is_none());
+/// let CoordinatorStartError::Worker(error) = &worker else {
+///     return Err(io::Error::new(io::ErrorKind::Other, "unexpected worker error").into());
+/// };
+/// assert_eq!(error.kind(), io::ErrorKind::PermissionDenied);
+/// # Ok::<(), Box<dyn Error>>(())
+/// ```
 #[derive(Debug)]
 pub enum CoordinatorStartError {
-    Watch(nms_watch::WatchError),
-    Worker(std::io::Error),
+    /// The checked save watcher or native file notification setup failed.
+    Watch(
+        /// Missing path, initial parse, or watcher-setup error from `nms-watch`.
+        nms_watch::WatchError,
+    ),
+    /// The coordinator's application worker could not be created.
+    Worker(
+        /// Operating-system error returned while spawning the worker thread.
+        std::io::Error,
+    ),
 }
 
 impl fmt::Display for CoordinatorStartError {
@@ -54,13 +147,42 @@ impl fmt::Display for CoordinatorStartError {
 
 impl std::error::Error for CoordinatorStartError {}
 
-/// Owns the single watcher producer and serialized live cache writer.
+/// Owns one application watcher and serialized update worker.
 ///
-/// Drop signals shutdown and joins the worker, which in turn drops and joins
-/// the watcher. An update already being applied or written is completed before
-/// Drop returns. Queued updates are not promised to flush, and parser or disk
-/// I/O has no hard completion deadline. Callers must release model guards
-/// before dropping this coordinator.
+/// The worker applies observations and can write the optional live cache.
+///
+/// Ownership is per value; starting another coordinator starts another
+/// watcher. The application currently chooses to own one for its selected
+/// save. The supplied model must already be loaded. Startup checks and watches
+/// the save but does not apply an initial observation or write a cache.
+///
+/// On each accepted observation, the worker applies the complete player state
+/// and additive atlas delta, ensures the player system, applies explicit names,
+/// and optionally snapshots the model with the observed save version. It
+/// releases the model lock before attempting the serialized cache write, then
+/// publishes an [`AppliedSaveUpdate`] even if that best-effort write fails.
+/// With no cache path, it does not extract or write cache data. The coordinator
+/// does not update a REPL [`crate::session::SessionState`].
+///
+/// Subscribers use unbounded channels and receive no initial snapshot or
+/// replay. Sending does not wait for receivers to consume; the worker clones
+/// each event for the registered senders, and slow receivers can accumulate
+/// queued copies and memory use. There is no fixed queue or memory bound, so
+/// callers must drain their receivers. A subscription made while an update is
+/// in flight can receive that update after registration. Watcher parse errors
+/// and worker panics are not published as events.
+///
+/// Dropping the value signals shutdown and joins the application worker; the
+/// worker then drops and joins the watcher. In-flight application and disk
+/// writing finish before `drop` returns, but queued observations are not
+/// promised to flush. Parser or disk I/O has no hard completion deadline.
+/// Release model guards before dropping the coordinator. A worker panic is
+/// joined and reported to stderr rather than returned from `drop`.
+///
+/// # Panics
+///
+/// Dropping the coordinator can panic if writing the joined-worker-panic
+/// warning to stderr fails.
 pub struct LiveSaveCoordinator {
     shutdown: Arc<AtomicBool>,
     worker: Option<JoinHandle<()>>,
@@ -77,7 +199,63 @@ impl fmt::Debug for LiveSaveCoordinator {
 }
 
 impl LiveSaveCoordinator {
-    /// Start exactly one full-state watcher and its serialized app worker.
+    /// Start a checked watcher and one serialized application worker.
+    ///
+    /// The caller supplies an already loaded shared model. This call does not
+    /// seed it from the save, write an initial cache, or publish an initial
+    /// event. The watcher establishes its checked baseline before the worker
+    /// starts. A second call creates a second independent coordinator instance.
+    ///
+    /// When `cache_path` is `None`, accepted updates skip cache extraction and
+    /// writing. When it is `Some`, cache snapshots use each update's source
+    /// version; later write failures are reported to stderr and do not undo the
+    /// model update or suppress publication.
+    ///
+    /// # Examples
+    ///
+    /// This example is compiled without starting a watcher or touching a save
+    /// file.
+    ///
+    /// ```no_run
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// use nms_copilot::coordinator::LiveSaveCoordinator;
+    /// use nms_copilot::watch::drain_applied_notifications;
+    /// use nms_graph::GalaxyModel;
+    /// use nms_watch::WatchConfig;
+    /// use std::path::PathBuf;
+    /// use std::sync::Arc;
+    /// use std::time::Duration;
+    /// use tokio::sync::RwLock;
+    ///
+    /// // Applications normally load their model before starting live updates.
+    /// let model = Arc::new(RwLock::new(GalaxyModel::new()));
+    /// let watch = WatchConfig {
+    ///     save_path: PathBuf::from("save.json"),
+    ///     debounce: Duration::from_millis(500),
+    /// };
+    /// let coordinator = LiveSaveCoordinator::start(model, watch, None)?;
+    /// let receiver = coordinator.subscribe();
+    /// let current_notes = drain_applied_notifications(&receiver);
+    /// drop(receiver);
+    /// drop(coordinator);
+    /// # let _ = current_notes;
+    /// # Ok(())
+    /// # }
+    /// ```
+    /// # Errors
+    ///
+    /// Returns [`CoordinatorStartError::Watch`] if the save path is missing,
+    /// the initial checked parse fails, or watcher/native notification setup
+    /// fails. Returns [`CoordinatorStartError::Worker`] if the operating system
+    /// cannot create the coordinator worker thread.
+    ///
+    /// # Panics
+    ///
+    /// Initial parsing can propagate the parser's documented malformed
+    /// compressed-size offset panic on 32-bit targets or invalid bundled-mapping
+    /// panic. This is the initial parse performed by
+    /// [`nms_watch::start_watching_observations`].
+    ///
     pub fn start(
         model: Arc<RwLock<GalaxyModel>>,
         watch: WatchConfig,
@@ -120,8 +298,17 @@ impl LiveSaveCoordinator {
         })
     }
 
-    /// Subscribe to future applied updates. The unbounded receiver must be
-    /// drained by its owner; a slow subscriber never stalls cache writing.
+    /// Subscribe to applied updates published after registration.
+    ///
+    /// The unbounded receiver has no initial snapshot or replay. An update
+    /// already in flight can be published after this method returns. Sending
+    /// does not wait for the receiver to consume an event; each published event
+    /// is cloned for registered subscribers, so a slow receiver can accumulate
+    /// queued copies and memory use. There is no fixed queue or memory bound,
+    /// and the owner must drain the receiver. Watcher parse errors and worker
+    /// panics are not sent through this stream. The coordinator-owned sender
+    /// for a subscriber whose receiver was dropped is removed on a later event
+    /// publication; a worker panic does not promise immediate disconnection.
     pub fn subscribe(&self) -> mpsc::Receiver<AppliedSaveUpdate> {
         let (sender, receiver) = mpsc::channel();
         lock_observers(&self.observers).push(sender);
