@@ -694,6 +694,7 @@ impl GalaxyModel {
     }
 
     /// Insert or replace a nonempty base under its lowercase, untrimmed name.
+    ///
     /// A later base with the same normalized name replaces the previous value.
     pub fn insert_base(&mut self, base: PlayerBase) {
         if !base.name.is_empty() {

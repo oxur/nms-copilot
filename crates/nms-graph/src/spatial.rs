@@ -11,8 +11,9 @@ pub use nms_core::system::SystemId;
 pub struct SystemPoint {
     /// Galaxy-qualified identity associated with these coordinates.
     pub id: SystemId,
-    /// Voxel-space coordinates in X, Y, Z order. R-tree point distance is
-    /// squared Euclidean distance in voxel units.
+    /// Voxel-space coordinates in X, Y, Z order.
+    ///
+    /// R-tree point distance is squared Euclidean distance in voxel units.
     pub point: [f64; 3],
 }
 

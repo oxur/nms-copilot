@@ -168,8 +168,9 @@ pub struct DisplayConfig {
     /// Unvalidated table border style string; defaults to `"rounded"`.
     pub table_style: String,
 
-    /// Custom banner text. `None` = use default embedded banner.
-    /// Empty string = disable banner.
+    /// Custom banner text.
+    ///
+    /// `None` = use default embedded banner. Empty string = disable banner.
     pub banner: Option<String>,
 
     /// Whether a consumer should show its startup art banner (default `true`).
