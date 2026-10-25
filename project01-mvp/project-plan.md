@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.114
+version: 1.115
 project: project01-mvp
 status: active
 depends-on: []
@@ -1258,3 +1258,7 @@ Version1.113/arc1.126 records all6KC/R06-S35accepted at48b6bd79, sevenindependen
 ## Arc06 Slice36 application-state docs owner — 2026-10-25 UTC
 
 Version1.114/arc1.127 issues three-file config/path/session increment/sixAS/R06-S36 OPEN from48b6.54arc40done14open/all25projectrowsOPEN. Scoped zeroowned/exact24residual diagnostics retains original30error wholecrate strict/fullM7.6 owner required37, no exception/parentacceptance. Same approved roles/models/alloriginalhighergates unchanged; no productimplementation/integration/release claim.
+
+## Arc06 Slice36 accepted — 2026-10-25 UTC
+
+Version1.115/arc1.128 records all6AS/R06-S36 accepted atd553037, eightindependentgroups/235runtime+8docs(4execute4compile)/zeroownedexact24residual/preservation/finalretro.54arc41done13open/all25projectrowsOPEN. Original fullM7.6/wholecrate strict/required37remainingAPIs/fullreconciliation and alloriginalhigherowners remainOPEN; scopedcomponentacceptance is not waiver/parentacceptance/integration/release.

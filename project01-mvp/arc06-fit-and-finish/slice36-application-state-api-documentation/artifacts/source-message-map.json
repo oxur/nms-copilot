@@ -1,0 +1,11 @@
+{
+  "original": "6a3dc22b232a62c4f54da787c54ce1ffe55623f4",
+  "current": "d553037a94055457995d064e02192e9eed0ecb00",
+  "tree": "8989f300b22a70ab4e0ccba6afade223635e0d80",
+  "preserved_ref": "refs/codex/slice36-original-message",
+  "reason": "CC reused CDC planning-release message; CDC corrected message only, exact source tree unchanged",
+  "original_message": "review(arc06): release settled state docs validation\n\nCo-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n\n",
+  "current_message": "docs(copilot): document configuration paths and session state\n\nDescribe the complete state configuration surface and add literal defaults, path and session-anchor examples. Retain the remaining application API owner.\n\nCo-authored-by: Codex <noreply@openai.com>\nCo-authored-by: Billo AI <ai-engineering@billo.systems>\n\n",
+  "same_tree_verified": true,
+  "format_lint_applicability": "Two independent commands on original6a3; remaining independent groups on currentd553; exact same tree, no code rerun for metadata only."
+}

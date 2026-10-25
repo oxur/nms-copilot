@@ -1,15 +1,15 @@
 # Slice36 acceptance ledger
 
-2026-10-25 UTC. Six correctness-grade OPEN rows. Initial implementation, zero actual refinements/five available; no product acceptance at issue.
+2026-10-25 UTC. Six correctness-grade DONE/reproduced rows. Opening6/closing6/no shrinkage; two actual refinements2/5. Historical OPEN stages below are retained.
 
 | ID | Criterion | Verify | Significance | Status | Evidence |
 |---|---|---|---|---|---|
-| AS-01 | Complete configuration/path/session public surface and payload docs | Full3fileW1–W3/zeroowned diagnostics/exact residual owners | correctness-grade | open | Issued plan/prompt; no implementation |
-| AS-02 | Truthful default/search/error/panic/state/anchor limits | Source/caller/dependency worksheet | correctness-grade | open | Issued W1–W3 |
-| AS-03 | Meaningful literal key examples and information-preserving state oracles | E1–E3/runnable+compiled docs | correctness-grade | open | Issued literal contract |
-| AS-04 | Executable/API/tests/data/otherpaths unchanged | Threeorderedcomparisons/fivelayouts/opposedmutation | correctness-grade | open | Supplied scope auditor |
-| AS-05 | Appropriate attributable validation/commit/fences | Eightgroups/rawfirst/exacttrailers/sourcefreeze | correctness-grade | open | Support controls only |
-| AS-06 | Independent acceptance/retro/fulloriginalownership | CDC reproduced rows/mandatoryretro/bottomup | correctness-grade | open | Required37/fullM7.6 retained |
+| AS-01 | Complete configuration/path/session public surface and payload docs | Full3fileW1–W3/zeroowned diagnostics/exact residual owners | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| AS-02 | Truthful default/search/error/panic/state/anchor limits | Source/caller/dependency worksheet | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| AS-03 | Meaningful literal key examples and information-preserving state oracles | E1–E3/runnable+compiled docs | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| AS-04 | Executable/API/tests/data/otherpaths unchanged | Threeorderedcomparisons/fivelayouts/opposedmutation | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| AS-05 | Appropriate attributable validation/commit/fences | Eightgroups/rawfirst/exacttrailers/sourcefreeze | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
+| AS-06 | Independent acceptance/retro/fulloriginalownership | CDC reproduced rows/mandatoryretro/bottomup | correctness-grade | done | [CDC independent acceptance](cdc-verification.md) — reproduced |
 
 ## Complete held review / first actual refinement — 2026-10-25 UTC
 
@@ -26,3 +26,7 @@ Actualformat25b5a71b5f184447b14ec0be47827da6/lintd4985a4aa80f4ea0b54f10b947793db
 CDC directly verified actualformatd2b6653663ae45908d544c58da2222ba/lint157b3f3dd2ac43018807aeb456b2a979 complete0/fullraw/end/equalstatus/identityc496119d/diffa8f2f746. Three exact prose findings closed: accurate legacy summary/detail, three actualcrate::config modulelinks beforeErrors, systemmarker vsflatplanetcount distinction. Prior full three-file production/E1–E3 walk retained; actual whole label/address/state assertions/inputliterals/no_run teaching reviewed, no unresolvedissuedfinding.
 
 Release ONLY remaining original six groups: copilotallfeatureslibrarytests, copilotallfeaturesdoctests, actualscopedCargoJSON THEN capturedexact24registrychecker ascomposedgroup, scopeauditor, workingdiff, baseline48b6diff. Sourcefrozenatthispin; rawfirstallattempts/no inferredgreen. Establishednative test substrate permits authorizedhost/originalTMPDIR ascontracted. Onceallpass, originalprepared+actualtrailerparses/exactpathnormalhookscommit/frozenreturn allowed. Twoactualrefinements2/5/threeleft, sixAS stillOPEN untilCDCindependentproof/retro. No fullcrate strict/M7.6 acceptance/waiver/newscope.
+
+## Formal close — 2026-10-25 UTC
+
+AllsixAS/R06-S36 DONE atd553037a94055457995d064e02192e9eed0ecb00, tree8989f300 unchangedfromoriginal6a3/message-onlymappingrefpreserved. Eightindependentgroups/ninecommands/235runtime+8docs(4execute4compile)/zeroownedexact24residual/preservationopposed/diffs. Twoactualrefinements/exact18CC+16CDC/failures/returnqualifications/finalretro retained. Fullcrate strict/fullM7.6 required37remainingAPIs/reconciliation staysCDC-owned/furtherusabledecompositionallowed; no exception/structuralamendment/integration/release.54arc41done13open/project25OPEN/allhigherownersretained.

@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.127, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.128, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -1067,3 +1067,7 @@ Version1.126 closes all6KC/R06-S35 at48b6bd790f7120f39638b8f55e430d8b52d707c3: c
 ## Slice36 configuration/path/session owner issued — 2026-10-25 UTC
 
 Version1.127 details [Slice36](slice36-application-state-api-documentation/slice-plan.md): complete three-file state/config public docs/key literal examples, five named payload layouts, no executable/API/test/dependency change. Same approved CDC6.1-solHigh/soleCC6-lunaHigh with qualitativeheadroom/noownedprocess confirmed; isolated clean48b6 source. Six AS/R06-S36 OPEN, zero actual refinements. Original whole-copilot strict readiness30error red preserved; component proof requires actual zeroowned/exact24 residual warnings with failclosed checker, not fullcrate acceptance or waiver. Required37remainingapplicationAPIs/full0039M7.6 reconciliation CDC-owned/furtherbounded split allowed.54arc40done14open/project25OPEN; all original/higher owners/M7.5input retained. No implementation at issue/integration/release authority.
+
+## Slice36 application-state docs accepted — 2026-10-25 UTC
+
+Version1.128 closes all6AS/R06-S36 atd553037a94055457995d064e02192e9eed0ecb00: complete config/path/session public docs/keyliteralexamples. Eight independent groups/235runtime+8docs(4execute4compile)/actualzeroownedexact24residual/preservationopposed/diffs pass. Twoactualrefinements/18CC+16CDC records/failurehistory/exactoriginalreturns/message-only6a3→d553same-tree mapping/finalretro retained. No acceptanceexception/structuralamendment. Original wholecrate strict30error baseline remains fullM7.6owner; required37remainingapplicationAPIs/fullreconciliation CDC-owned/furtherboundedsplitallowed.54arc41done13open/project25OPEN; M7.5authenticinput/alloriginalhighergates preserved, no integration/release. See [CDC36 acceptance](slice36-application-state-api-documentation/cdc-verification.md) and [retrospective](slice36-application-state-api-documentation/cdc-retrospective.md).

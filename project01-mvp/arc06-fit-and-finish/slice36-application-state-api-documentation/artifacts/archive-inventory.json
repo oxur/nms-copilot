@@ -1,0 +1,73 @@
+{
+  "inventory_utc": "2026-10-25",
+  "purpose": "actual closure archive byte inventory; excludes itself and first-class slice documents",
+  "cc_records": 18,
+  "cdc_records": 16,
+  "items": [
+    {
+      "path": "artifacts/author-readiness-attempts.json",
+      "bytes": 1038468,
+      "sha256": "588dfdc407998e570d3290d40a126cda0e773933b8f1f598899684f4ef12f3d3"
+    },
+    {
+      "path": "artifacts/capture-preflight.json",
+      "bytes": 7823,
+      "sha256": "bc15349c2dcc2070a531a947103d587db1a7857b256b9492a9fad43f8803a7e3"
+    },
+    {
+      "path": "artifacts/cc-capture-preflight.json",
+      "bytes": 9262,
+      "sha256": "def0a06f169ab98e567b84a5322e115f33effd0eac2c3bfd089701931e323045"
+    },
+    {
+      "path": "artifacts/cc-execution.md",
+      "bytes": 18401,
+      "sha256": "3efec87075a3f46545df42ec4bff92f172a802f2df307bb8e1d34d8a1ce806bf"
+    },
+    {
+      "path": "artifacts/cc-validation.json",
+      "bytes": 607324,
+      "sha256": "378c3373ef8c47bf545f5e68bb2dcc89a84e20cf2d9e66c212c65fab0bb3d0cb"
+    },
+    {
+      "path": "artifacts/cdc-validation.json",
+      "bytes": 1590834,
+      "sha256": "27abddd9e898464797230d291827b167a068208a5e02537642560b6a4e34fb0a"
+    },
+    {
+      "path": "artifacts/initial-held.diff",
+      "bytes": 33359,
+      "sha256": "831ed311756ec178f6c48f1a133d9aa66751fe3eb0fdf130fa71d05a67729c42"
+    },
+    {
+      "path": "artifacts/nms-slice36-cc-capture.py",
+      "bytes": 3760,
+      "sha256": "8a482a8e9fb568919736c1aed4032796f406ece692bbe0a089954a579eef79c9"
+    },
+    {
+      "path": "artifacts/nms-slice36-cdc-capture.py",
+      "bytes": 3762,
+      "sha256": "dd77faa1348ae68d4bb10bce97c4a64269573ac9017544dc1c81979f60a5faf1"
+    },
+    {
+      "path": "artifacts/nms-slice36-doc-check.py",
+      "bytes": 5586,
+      "sha256": "427b966ed7578ec02a5552bd0d279ee0c05ba428c2eefe51f932d443c9176c7d"
+    },
+    {
+      "path": "artifacts/nms-slice36-doc-registry.json",
+      "bytes": 19439,
+      "sha256": "e4d45d0bba4e8e963d01e924f8829cac9a941b8f839fab5d6e81ec32d7571d44"
+    },
+    {
+      "path": "artifacts/nms-slice36-scope-audit.py",
+      "bytes": 2399,
+      "sha256": "8c2d557538785fcdf091807264f70ebaef7c11aff1ebc05b5e58f2c520fcbe40"
+    },
+    {
+      "path": "artifacts/source-message-map.json",
+      "bytes": 1076,
+      "sha256": "0afe688045d32185f6273681ebcf0c0721b5dcbf09f34f187968037d53448709"
+    }
+  ]
+}

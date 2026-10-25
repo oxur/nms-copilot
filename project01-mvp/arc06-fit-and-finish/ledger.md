@@ -374,6 +374,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S36 | Complete truthful configuration/path/session public docs and key examples | SixAS/full3fileworksheet/exactscopeddiagnostics/tests/preservation | correctness-grade | Original0039 M7.6 bounded application increment | open | [Issued Slice36](slice36-application-state-api-documentation/slice-plan.md) | Fullstrict30error baseline retained; required37/fullM7.6 allhigherowners OPEN |
+| R06-S36 | Complete truthful configuration/path/session public docs and key examples | SixAS/full3fileworksheet/exactscopeddiagnostics/tests/preservation | correctness-grade | Original0039 M7.6 bounded application increment | done | [CDC36 acceptance](slice36-application-state-api-documentation/cdc-verification.md) — reproduced | Fullstrict30error baseline retained; required37/fullM7.6 allhigherowners OPEN |
 
 54rows40done14open/project25OPEN; initial0actualrefinements/no implementation at issue.
+
+2026-10-25 formal36close: all6AS/R06-S36DONE atd553037, eightindependentgroups/235runtime+8docs/zeroownedexact24residual/preservationopposed/diffs.54arc41done13open/project25OPEN; fullM7.6/required37/allhigherowners retained.
