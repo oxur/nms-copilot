@@ -1,0 +1,613 @@
+diff --git a/crates/nms-watch/src/delta.rs b/crates/nms-watch/src/delta.rs
+index 9f55554..2e9e420 100644
+--- a/crates/nms-watch/src/delta.rs
++++ b/crates/nms-watch/src/delta.rs
+@@ -1,16 +1,99 @@
+-//! Delta computation between save snapshots.
++//! Additive delta computation between save snapshots.
+ //!
+-//! Compares two `SaveSnapshot` values and produces a `SaveDelta` listing
+-//! all changes: new discoveries, player movement, new/modified bases.
++//! [`compute_delta`] reports newly keyed systems, planets, and bases,
++//! changed bases under an existing lowercase name key, and player movement.
++//! It does not report removals or changed metadata under existing system or
++//! planet keys; result-vector order follows hash-map iteration.
++//!
++//! # Examples
++//!
++//! The literal snapshots below show the positive, reverse, and unchanged
++//! cases. The changed Atlas/Garden metadata at an existing key is not a
++//! reported change, while the new Beta/Cinder records and base changes are.
++//!
++//! ```
++//! use std::collections::HashMap;
++//! use nms_core::address::GalacticAddress;
++//! use nms_core::biome::Biome;
++//! use nms_core::player::{BaseType, PlayerBase};
++//! use nms_core::system::{Planet, System, SystemId};
++//! use nms_watch::{compute_delta, SaveSnapshot};
++//!
++//! fn address(planet: u8, galaxy: u8) -> GalacticAddress {
++//!     GalacticAddress::new(3, 0, 0, 1, planet, galaxy)
++//! }
++//! fn original() -> SaveSnapshot {
++//!     let address = address(2, 9);
++//!     let id = SystemId::from_address(&address);
++//!     let planet = Planet::new(2, Some(Biome::Lush), None, false, Some("Garden".into()), Some(7));
++//!     let system = System::new(address, Some("Atlas".into()), None, None, vec![planet.clone()]);
++//!     let base = PlayerBase::new("Home".into(), BaseType::HomePlanetBase, address, [0.0, 0.0, 0.0], None);
++//!     SaveSnapshot {
++//!         systems: HashMap::from([(id, system)]),
++//!         planets: HashMap::from([((id, 2), planet)]),
++//!         bases: HashMap::from([("home".into(), base)]),
++//!         player_address: address,
++//!     }
++//! }
++//! fn changed() -> SaveSnapshot {
++//!     let old_address = address(2, 9);
++//!     let old_id = SystemId::from_address(&old_address);
++//!     let old_planet = Planet::new(2, Some(Biome::Lush), None, false, Some("Renamed Garden".into()), Some(7));
++//!     let old_system = System::new(old_address, Some("Renamed Atlas".into()), None, None, vec![old_planet.clone()]);
++//!     let new_address = address(1, 0);
++//!     let new_id = SystemId::from_address(&new_address);
++//!     let new_planet = Planet::new(1, Some(Biome::Toxic), None, false, Some("Cinder".into()), Some(8));
++//!     let new_system = System::new(new_address, Some("Beta".into()), None, None, vec![new_planet.clone()]);
++//!     let home = PlayerBase::new("HOME".into(), BaseType::HomePlanetBase, old_address, [1.0, 2.0, 3.0], None);
++//!     let outpost = PlayerBase::new("Outpost".into(), BaseType::ExternalPlanetBase, new_address, [4.0, 5.0, 6.0], None);
++//!     SaveSnapshot {
++//!         systems: HashMap::from([(old_id, old_system), (new_id, new_system)]),
++//!         planets: HashMap::from([((old_id, 2), old_planet), ((new_id, 1), new_planet)]),
++//!         bases: HashMap::from([("home".into(), home), ("outpost".into(), outpost)]),
++//!         player_address: new_address,
++//!     }
++//! }
++//! let old = original();
++//! let new = changed();
++//! let forward = compute_delta(&old, &new);
++//! let beta_address = address(1, 0);
++//! let beta_planet = Planet::new(1, Some(Biome::Toxic), None, false, Some("Cinder".into()), Some(8));
++//! let beta = System::new(beta_address, Some("Beta".into()), None, None, vec![beta_planet.clone()]);
++//! assert_eq!(forward.new_systems, vec![beta]);
++//! assert_eq!(forward.new_planets, vec![(SystemId::from_address(&beta_address), beta_planet)]);
++//! assert_eq!(forward.player_moved.as_ref().map(|m| (m.from, m.to)), Some((address(2, 9), address(1, 0))));
++//! assert_eq!(forward.new_bases, vec![PlayerBase::new("Outpost".into(), BaseType::ExternalPlanetBase, beta_address, [4.0, 5.0, 6.0], None)]);
++//! assert_eq!(forward.modified_bases, vec![PlayerBase::new("HOME".into(), BaseType::HomePlanetBase, address(2, 9), [1.0, 2.0, 3.0], None)]);
++//! assert_eq!(forward.change_count(), 5);
++//! assert!(!forward.is_empty());
++//! let reverse = compute_delta(&new, &old);
++//! assert!(reverse.new_systems.is_empty());
++//! assert!(reverse.new_planets.is_empty());
++//! assert_eq!(reverse.player_moved.as_ref().map(|m| (m.from, m.to)), Some((address(1, 0), address(2, 9))));
++//! assert!(reverse.new_bases.is_empty());
++//! assert_eq!(reverse.modified_bases, vec![PlayerBase::new("Home".into(), BaseType::HomePlanetBase, address(2, 9), [0.0, 0.0, 0.0], None)]);
++//! assert_eq!(reverse.change_count(), 2);
++//! let unchanged = compute_delta(&new, &new);
++//! assert!(unchanged.is_empty());
++//! assert_eq!(unchanged.change_count(), 0);
++//! ```
+ 
+ use nms_core::delta::{PlayerMoved, SaveDelta};
+ 
+ use crate::snapshot::SaveSnapshot;
+ 
+-/// Compute the delta between two snapshots.
++/// Compute additive observations between two snapshots.
++///
++/// New system and planet records are selected by absent map keys, not by
++/// comparing values at keys already present in `old`. Base changes use the
++/// lowercase name key, and movement compares the full galactic address.
++/// Removed records and changes to existing system or planet metadata are
++/// omitted. Vectors are collected from hash maps and have no stable order.
++///
++/// # Examples
+ ///
+-/// Compares discovery records by system address, player position, and base
+-/// lists. Checks player position first (O(1)) since it changes most often.
++/// See the module example for complete literal forward, reverse, and
++/// unchanged expectations.
+ pub fn compute_delta(old: &SaveSnapshot, new: &SaveSnapshot) -> SaveDelta {
+     // 1. Check player position change (cheapest check first)
+     let player_moved = if old.player_address != new.player_address {
+diff --git a/crates/nms-watch/src/error.rs b/crates/nms-watch/src/error.rs
+index fac9957..5c4f8e1 100644
+--- a/crates/nms-watch/src/error.rs
++++ b/crates/nms-watch/src/error.rs
+@@ -1,17 +1,33 @@
+-//! Error types for the file watcher.
++//! Errors reported while preparing a file watcher.
++//!
++//! These errors cover path existence, initial checked parsing, and watcher
++//! setup. Later parse failures are handled by the running worker and are not
++//! sent as [`WatchError`] values.
+ 
+ use std::fmt;
+ use std::path::PathBuf;
+ 
+-/// Errors from the file watch system.
++/// An error encountered before a watcher starts.
++///
++/// The string payloads preserve the underlying setup or parser message, but
++/// this type does not expose a typed [`std::error::Error::source`] chain.
+ #[derive(Debug)]
+ pub enum WatchError {
+-    /// Save file not found at the expected path.
+-    SaveNotFound(PathBuf),
+-    /// File system notification error.
+-    NotifyError(String),
+-    /// Error parsing the save file during watch.
+-    ParseError(String),
++    /// The configured path did not exist when watcher setup began.
++    SaveNotFound(
++        /// Configured path that failed the existence check.
++        PathBuf,
++    ),
++    /// Debouncer, parent-directory, watch-registration, or worker setup failed.
++    NotifyError(
++        /// Display message from the setup failure.
++        String,
++    ),
++    /// The initial checked save parse failed.
++    ParseError(
++        /// Display message from the parser.
++        String,
++    ),
+ }
+ 
+ impl fmt::Display for WatchError {
+diff --git a/crates/nms-watch/src/lib.rs b/crates/nms-watch/src/lib.rs
+index 94e956b..fa1ce18 100644
+--- a/crates/nms-watch/src/lib.rs
++++ b/crates/nms-watch/src/lib.rs
+@@ -1,18 +1,37 @@
+ //! File watcher and delta computation for NMS Copilot.
+ //!
+-//! Monitors the NMS save directory for changes, re-parses on auto-save,
+-//! computes typed deltas (new discoveries, player movement, new bases),
+-//! and distributes updates via channel to all consumers.
++//! The crate turns checked save-file parses into snapshot comparisons and
++//! channel observations. [`snapshot`] documents the legacy and checked atlas
++//! views; [`delta`] describes additive comparisons; [`watcher`] covers file
++//! monitoring and its channel/lifetime contracts; and [`error`] documents
++//! setup failures.
++//!
++//! [`start_watching`]: watcher::start_watching
++//! [`start_watching_updates`]: watcher::start_watching_updates
++//! [`start_watching_observations`]: watcher::start_watching_observations
++//! [`SaveSnapshot`]: snapshot::SaveSnapshot
++//! [`SaveDelta`]: nms_core::delta::SaveDelta
++//! [`SaveUpdate`]: nms_core::delta::SaveUpdate
++//! [`DiscoveryNames`]: nms_core::delta::DiscoveryNames
+ 
++/// Additive comparison of two [`SaveSnapshot`] atlas views.
+ pub mod delta;
++/// Setup errors returned by the watcher entry points.
+ pub mod error;
++/// Mutable atlas maps and constructors from parsed saves.
+ pub mod snapshot;
++/// Save-file monitoring, update streams, and watcher handles.
+ pub mod watcher;
+ 
++/// Compute additive discovery, movement, and base observations.
+ pub use delta::compute_delta;
++/// Error returned while preparing a watcher.
+ pub use error::WatchError;
++/// Runtime observation types shared with `nms-core`.
+ pub use nms_core::delta::{DiscoveryNames, PlayerMoved, SaveDelta, SaveUpdate};
++/// Mutable atlas snapshot built from a parsed save.
+ pub use snapshot::SaveSnapshot;
++/// Watcher configurations, handles, observations, and start functions.
+ pub use watcher::{
+     SaveObservation, WatchConfig, WatchHandle, WatchObservationHandle, WatchUpdateHandle,
+     start_watching, start_watching_observations, start_watching_updates,
+diff --git a/crates/nms-watch/src/snapshot.rs b/crates/nms-watch/src/snapshot.rs
+index 055f57b..b97889c 100644
+--- a/crates/nms-watch/src/snapshot.rs
++++ b/crates/nms-watch/src/snapshot.rs
+@@ -1,8 +1,51 @@
+-//! Save file snapshot for delta comparison.
++//! Mutable atlas snapshot for delta comparison.
+ //!
+-//! A `SaveSnapshot` captures the minimum state needed to detect changes
+-//! between two versions of a save file. Built by re-parsing the save
+-//! and extracting discovery records, player position, and bases.
++//! A [`SaveSnapshot`] contains system and flat-planet maps, bases keyed by
++//! lowercased nonempty names, and the current physical player address. It is
++//! not the complete player state, source version, or explicit discovery-name
++//! observation map. Its public maps can be changed independently, so callers
++//! are responsible for keeping related entries consistent.
++//!
++//! [`from_save`]: SaveSnapshot::from_save
++//! [`from_validated_save`]: SaveSnapshot::from_validated_save
++//! [`from_file`]: SaveSnapshot::from_file
++//!
++//! # Examples
++//!
++//! This in-memory example contrasts checked address extraction with the
++//! legacy low-48-bit extraction. `SystemId` is planet-zeroed in both cases;
++//! the checked stored system address and player address retain the supplied
++//! planet index. The legacy stored system address uses its legacy planet-zero
++//! default while the separately converted player address retains P2.
++//!
++//! ```
++//! use std::collections::HashMap;
++//! use nms_core::address::GalacticAddress;
++//! use nms_core::biome::Biome;
++//! use nms_core::system::{Planet, System, SystemId};
++//! use nms_watch::SaveSnapshot;
++//!
++//! let json = br#"{"Version":4720,"Platform":"Test","ActiveContext":"Main","CommonStateData":{},"BaseContext":{"PlayerStateData":{"UniverseAddress":{"RealityIndex":9,"GalacticAddress":{"VoxelX":3,"VoxelY":0,"VoxelZ":0,"SolarSystemIndex":1,"PlanetIndex":2}},"Units":0,"Nanites":0,"Specials":0,"PersistentPlayerBases":[]}},"ExpeditionContext":{},"DiscoveryManagerData":{"DiscoveryData-v1":{"Store":{"Record":[{"DD":{"UA":"0x00010900000003","DT":"SolarSystem"},"DM":{"CN":"Atlas"},"OWS":{"USN":"Explorer"}},{"DD":{"UA":"0x20010900000003","DT":"Planet","VP":["0x2A","0x10000"]},"DM":{"CN":"Garden"},"OWS":{}}]}}}}"#;
++//! let checked_save = nms_save::parse_validated_save(json)?;
++//! let checked = SaveSnapshot::from_validated_save(&checked_save);
++//! let checked_address = GalacticAddress::new(3, 0, 0, 1, 0, 9);
++//! let checked_id = SystemId::from_address(&checked_address);
++//! let checked_planet = Planet::new(2, Some(Biome::Lush), None, true, Some("Garden".into()), Some(42));
++//! assert_eq!(checked.systems, HashMap::from([(checked_id, System::new(checked_address, Some("Atlas".into()), Some("Explorer".into()), None, vec![checked_planet.clone()]))]));
++//! assert_eq!(checked.planets, HashMap::from([((checked_id, 2), checked_planet)]));
++//! assert!(checked.bases.is_empty());
++//! assert_eq!(checked.player_address, GalacticAddress::new(3, 0, 0, 1, 2, 9));
++//!
++//! let legacy = SaveSnapshot::from_save(checked_save.root());
++//! let legacy_address = GalacticAddress::new(3, 0, 0, 265, 0, 0);
++//! let legacy_id = SystemId::from_address(&legacy_address);
++//! let legacy_planet = Planet::new(0, Some(Biome::Lush), None, true, None, Some(42));
++//! assert_eq!(legacy.systems, HashMap::from([(legacy_id, System::new(legacy_address, None, Some("Explorer".into()), None, vec![legacy_planet.clone()]))]));
++//! assert_eq!(legacy.planets, HashMap::from([((legacy_id, 0), legacy_planet)]));
++//! assert!(legacy.bases.is_empty());
++//! assert_eq!(legacy.player_address, GalacticAddress::new(3, 0, 0, 1, 2, 9));
++//! # Ok::<(), Box<dyn std::error::Error>>(())
++//! ```
+ 
+ use std::collections::HashMap;
+ use std::path::Path;
+@@ -13,27 +56,58 @@ use nms_core::system::{Planet, System, SystemId};
+ use nms_graph::extract::extract_systems;
+ use nms_save::model::SaveRoot;
+ 
+-/// A snapshot of save file state for diff comparison.
++/// Mutable subset of save state used for additive atlas comparisons.
++///
++/// This public value type does not enforce agreement between `systems`,
++/// `planets`, and `bases`. Constructors populate the maps from a save, but
++/// callers that mutate them must maintain any desired consistency.
+ #[derive(Debug)]
+ pub struct SaveSnapshot {
+-    /// Systems keyed by SystemId.
++    /// Systems keyed by galaxy-qualified, planet-zeroed
++    /// [`nms_core::system::SystemId`].
+     pub systems: HashMap<SystemId, System>,
+-    /// Planets keyed by (SystemId, planet_index).
++    /// Flat planet records keyed by `(SystemId, planet_index)`.
+     pub planets: HashMap<(SystemId, u8), Planet>,
+-    /// Bases keyed by lowercase name.
++    /// Nonempty base names lowercased as keys, without trimming.
++    ///
++    /// Equal lowercase names replace an earlier entry, including across
++    /// galaxies.
+     pub bases: HashMap<String, PlayerBase>,
+-    /// Player's current galactic address.
++    /// Current physical address; unlike [`nms_core::system::SystemId`], this may retain P bits.
+     pub player_address: GalacticAddress,
+ }
+ 
+ impl SaveSnapshot {
+-    /// Build a snapshot by parsing a save file from disk.
++    /// Parse a save file with address validation and build its atlas snapshot.
++    ///
++    /// This uses [`nms_save::parse_validated_save_file`] and then the checked
++    /// extraction path; it does not write the save or coordinate an app cache.
++    /// See the [module example](#examples) for the checked-versus-legacy map
++    /// comparison.
++    ///
++    /// # Errors
++    ///
++    /// Returns the parser's boxed save error for file I/O, decompression, JSON,
++    /// or address-validation failures.
++    ///
++    /// # Panics
++    ///
++    /// The underlying parser can panic for its documented malformed
++    /// compressed-size offset on 32-bit targets or an invalid bundled mapping.
+     pub fn from_file(path: &Path) -> Result<Self, Box<dyn std::error::Error>> {
+         let save = nms_save::parse_validated_save_file(path)?;
+         Ok(Self::from_validated_save(&save))
+     }
+ 
+-    /// Build a snapshot from an already-parsed save.
++    /// Build a snapshot through the legacy save-model extraction path.
++    ///
++    /// This does not revalidate raw source addresses. It uses the legacy
++    /// extraction defaults, including galaxy zero and legacy player/base
++    /// conversions; use [`from_validated_save`](Self::from_validated_save)
++    /// when the source has been checked before deserialization. The resulting
++    /// maps contain discoveries and bases from this save, not a complete
++    /// player/version or discovery-name state. See the
++    /// [module example](#examples) for the address distinction.
+     pub fn from_save(save: &SaveRoot) -> Self {
+         let extracted = extract_systems(save);
+ 
+@@ -63,7 +137,13 @@ impl SaveSnapshot {
+         }
+     }
+ 
+-    /// Build a snapshot from a save whose addresses were checked before serde.
++    /// Build a snapshot from checked, pre-deserialization save addresses.
++    ///
++    /// The checked graph extraction preserves galaxy-qualified system keys
++    /// and explicit names from the validated discovery records. The current
++    /// address is copied from the converted player state. This does not add a
++    /// current-location placeholder or construct a graph/cache. See the
++    /// [module example](#examples) for complete checked and legacy maps.
+     ///
+     /// # Examples
+     ///
+diff --git a/crates/nms-watch/src/watcher.rs b/crates/nms-watch/src/watcher.rs
+index 0223045..673fa5d 100644
+--- a/crates/nms-watch/src/watcher.rs
++++ b/crates/nms-watch/src/watcher.rs
+@@ -1,8 +1,37 @@
+-//! File system watcher for NMS save files.
++//! File watcher for a selected NMS save file.
+ //!
+-//! Uses `notify` with debouncing to detect save file modifications.
+-//! Includes robustness features: file stability checks, consecutive
+-//! failure counting, and graceful error recovery.
++//! The entry points synchronously check and parse the configured path, then
++//! watch its parent directory nonrecursively for matching debounced events.
++//! File-size stability is a two-read heuristic, not a lock or complete-write
++//! guarantee; backend coalescing means intermediate writes can be missed.
++//! Failed later parses retain the last-good baseline and emit no event. A
++//! warning is written to stderr on the fifth consecutive parse failure; a
++//! successful parse resets the count. Watcher setup errors are returned as
++//! [`WatchError`], while backend error batches are ignored.
++//!
++//! # Examples
++//!
++//! ```
++//! use std::path::PathBuf;
++//! use nms_watch::{WatchConfig, WatchError};
++//!
++//! let config = WatchConfig::default();
++//! assert!(config.save_path.as_os_str().is_empty());
++//! assert_eq!(config.debounce, std::time::Duration::from_millis(500));
++//! let error = WatchError::SaveNotFound(PathBuf::from("save.hg"));
++//! assert_eq!(error.to_string(), "save file not found: save.hg");
++//! ```
++//!
++//! The legacy [`start_watching`] stream is unbounded and carries only
++//! nonempty additive deltas. [`start_watching_updates`] adds complete
++//! supported player state and source version on their changes;
++//! [`start_watching_observations`] also emits the complete explicit discovery
++//! name map. None sends an initial event. The complete streams use a
++//! capacity-one queue plus at most one worker-held pending event.
++//!
++//! Dropping a handle cancels and joins its worker. File I/O, parsing, and
++//! backend teardown mean shutdown has no hard deadline; a pending unsent event
++//! may be lost. This crate does not coordinate application cache writers.
+ 
+ use std::fmt;
+ use std::io::Write;
+@@ -28,11 +57,14 @@ const MAX_CONSECUTIVE_FAILURES: usize = 5;
+ /// Milliseconds to wait between file size checks for stability.
+ const FILE_STABILITY_CHECK_MS: u64 = 100;
+ 
+-/// Handle to a running file watcher.
++/// Owner and receiver for the legacy additive-delta stream.
+ ///
+-/// Dropping this stops the watcher thread.
++/// The channel is unbounded. It emits only nonempty [`SaveDelta`] values,
++/// with no initial event; player-state, source-version, and explicit-name-only
++/// changes may therefore produce no message. Dropping the handle cancels and
++/// joins the worker.
+ pub struct WatchHandle {
+-    /// Receive deltas from the watcher thread.
++    /// Receive nonempty additive deltas from the watcher thread.
+     pub receiver: mpsc::Receiver<SaveDelta>,
+     /// Owns the debouncer and joined worker lifetime.
+     _owner: WatchOwner,
+@@ -44,9 +76,8 @@ pub struct WatchHandle {
+ /// update. Supported state/version changes arrive in source order, while an
+ /// unchanged parsed save is suppressed. The bounded queue holds one event and
+ /// the worker may retain one additional parsed event while waiting to enqueue
+-/// it. Dropping this handle stops and joins the worker, so a pending unsent
+-/// event may be discarded during shutdown; an event already in the queue
+-/// remains readable before the receiver disconnects. File I/O and parsing are
++/// it. Dropping this handle stops and joins the worker; a worker-held pending
++/// event may be discarded during shutdown. File I/O and parsing are
+ /// not subject to a hard shutdown deadline.
+ ///
+ /// # Examples
+@@ -68,7 +99,7 @@ pub struct WatchHandle {
+ /// }
+ /// ```
+ pub struct WatchUpdateHandle {
+-    /// Receive complete parsed updates in source order.
++    /// Receive updates in source order; the capacity-one queue starts empty.
+     pub receiver: mpsc::Receiver<SaveUpdate>,
+     /// Owns the debouncer and joined worker lifetime.
+     _owner: WatchOwner,
+@@ -78,13 +109,16 @@ pub struct WatchUpdateHandle {
+ ///
+ /// Both values are derived from the same checked parse. `discovery_names` is
+ /// the complete set of explicit names in that save, so consumers can replace
+-/// their previous observed map even when player state and atlas delta are
+-/// unchanged.
++/// their previous observation map even when player state and atlas delta are
++/// unchanged; consumers apply their own absent-name and model-clearing policy.
+ #[derive(Debug, Clone)]
+ pub struct SaveObservation {
+-    /// Existing movement/discovery/base update and complete player state.
++    /// Additive atlas delta, complete supported player state, and source version.
+     pub update: SaveUpdate,
+-    /// Complete explicit system and planet names from this parsed save.
++    /// Complete explicit system and planet names from the same checked parse.
++    ///
++    /// A present empty value represents an explicit clear; a missing map entry
++    /// does not itself request a model clear.
+     pub discovery_names: DiscoveryNames,
+ }
+ 
+@@ -93,8 +127,8 @@ pub struct SaveObservation {
+ /// The bounded receiver is empty at startup. It holds one observation while
+ /// the worker can retain one additional parsed observation; later events stay
+ /// in source order. Dropping the handle sets cancellation and joins the
+-/// worker. A queued event remains readable before disconnection, while a
+-/// pending event can be discarded. File I/O and parsing have no hard
++/// worker. A worker-held pending event can be discarded during shutdown.
++/// File I/O and parsing have no hard
+ /// shutdown deadline.
+ ///
+ /// # Examples
+@@ -125,7 +159,7 @@ pub struct SaveObservation {
+ /// do not advance the baseline or enter the channel; the existing warning and
+ /// recovery policy is retained.
+ pub struct WatchObservationHandle {
+-    /// Receive source-ordered observations; no initial event is sent.
++    /// Receive complete observations in source order; starts empty.
+     pub receiver: mpsc::Receiver<SaveObservation>,
+     /// Owns the debouncer and joined worker lifetime.
+     _owner: WatchOwner,
+@@ -170,12 +204,14 @@ impl Drop for WatchOwner {
+     }
+ }
+ 
+-/// Configuration for the file watcher.
++/// Path and debounce interval for a watcher.
++///
++/// The default path is empty and is not a discovered save location.
+ #[derive(Debug, Clone)]
+ pub struct WatchConfig {
+-    /// Path to the save file to watch.
++    /// Exact save-file path to parse and match against notifications.
+     pub save_path: PathBuf,
+-    /// Debounce duration (default: 500ms).
++    /// Backend debounce interval; the default is 500 milliseconds.
+     pub debounce: Duration,
+ }
+ 
+@@ -188,10 +224,10 @@ impl Default for WatchConfig {
+     }
+ }
+ 
+-/// Check that a file's size is stable (not being actively written).
++/// Check whether two file-size reads 100 ms apart both succeed and match.
+ ///
+-/// Takes two size readings separated by `FILE_STABILITY_CHECK_MS` and
+-/// returns `true` only if both readings succeed and match.
++/// This is only a stability heuristic: equal sizes do not prove an atomic
++/// write, complete contents, or a lock against a later change.
+ fn is_file_stable(path: &Path) -> bool {
+     let size1 = std::fs::metadata(path).map(|m| m.len()).ok();
+     thread::sleep(Duration::from_millis(FILE_STABILITY_CHECK_MS));
+@@ -281,16 +317,25 @@ fn send_observation(
+     }
+ }
+ 
+-/// Start watching a save file for changes.
++/// Start a watcher that sends nonempty additive atlas deltas.
+ ///
+-/// Returns a `WatchHandle` whose `receiver` yields `SaveDelta` values
+-/// whenever the save file is modified.
++/// The returned unbounded receiver starts empty. A successful parse sends a
++/// delta only when it contains new keyed records, a base change, or player
++/// movement; changes only to existing system/planet metadata, supported
++/// player fields, source version, or explicit names can remain quiet. Backend
++/// coalescing means this is not a lossless record of every file write.
+ ///
+ /// # Errors
+ ///
+-/// Returns `WatchError::SaveNotFound` if the save file does not exist,
+-/// `WatchError::ParseError` if the initial parse fails, or
+-/// `WatchError::NotifyError` if the file watcher cannot be created.
++/// Returns [`WatchError::SaveNotFound`] when the configured path is missing,
++/// [`WatchError::ParseError`] when the initial checked parse fails, or
++/// [`WatchError::NotifyError`] when debouncer, parent-directory, registration,
++/// or worker setup fails. Later parser failures are not returned here.
++///
++/// # Panics
++///
++/// The initial parser can propagate its documented malformed compressed-size
++/// offset panic on 32-bit targets or invalid bundled-mapping panic.
+ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
+     let (sender, receiver) = mpsc::channel();
+     let owner = start_watching_inner(config, UpdateSender::Delta(sender))?;
+@@ -300,7 +345,16 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
+     })
+ }
+ 
+-/// Start watching a save and emit complete supported player updates.
++/// Start watching and emit complete supported player updates.
++///
++/// This includes all represented [`nms_core::player::PlayerState`] fields and source version
++/// when either differs, even if the atlas delta is empty. It does not include
++/// discovery-name observations; use [`start_watching_observations`] for that
++/// stream.
++///
++/// # Examples
++///
++/// See [`WatchUpdateHandle`] for a compiled filesystem example.
+ ///
+ /// Each event pairs the existing additive atlas delta with the complete
+ /// supported player state and source version from one parse. No initial event
+@@ -308,8 +362,8 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
+ /// delta changes; unchanged parsed saves are suppressed. The capacity-one
+ /// queue preserves source order and the worker can hold one additional parsed
+ /// event while waiting for capacity. Dropping the returned handle stops and
+-/// joins the worker. A pending unsent event may be discarded on shutdown, but
+-/// a queued event remains readable before disconnection. File I/O and parsing
++/// joins the worker; a worker-held pending event may be discarded on shutdown.
++/// File I/O and parsing
+ /// have no hard shutdown deadline. This library API does not coordinate
+ /// application cache writers.
+ ///
+@@ -318,6 +372,11 @@ pub fn start_watching(config: WatchConfig) -> Result<WatchHandle, WatchError> {
+ /// Returns [`WatchError::SaveNotFound`] when the path is missing,
+ /// [`WatchError::ParseError`] when the initial save cannot be parsed, or
+ /// [`WatchError::NotifyError`] when notification or worker setup fails.
++///
++/// # Panics
++///
++/// The initial parser can propagate its documented malformed compressed-size
++/// offset panic on 32-bit targets or invalid bundled-mapping panic.
+ pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle, WatchError> {
+     let (sender, receiver) = mpsc::sync_channel(1);
+     let owner = start_watching_inner(config, UpdateSender::Full(sender))?;
+@@ -327,13 +386,33 @@ pub fn start_watching_updates(config: WatchConfig) -> Result<WatchUpdateHandle,
+     })
+ }
+ 
+-/// Start watching a save and emit complete supported updates with checked names.
++/// Start watching and emit complete supported updates with checked names.
++///
++/// The emitted name map is the complete set of explicit names from the same
++/// parse as its update. It can report name-only changes, removed map entries,
++/// and explicitly empty names. Absence from the map is not itself a request
++/// for the consumer to clear a model value. The existing complete-update
++/// predicate also emits when player state, source version, or atlas delta
++/// changes. The update, source version, and complete explicit name map come
++/// from the same validated parse. No initial event is sent. The capacity-one
++/// queue and worker-held pending event use the complete-update stream's
++/// ordering and shutdown behavior.
++///
++/// # Examples
++///
++/// See [`WatchObservationHandle`] for a compiled filesystem example showing
++/// the complete names and player state received together.
++///
++/// # Errors
++///
++/// Returns [`WatchError::SaveNotFound`] for a missing path,
++/// [`WatchError::ParseError`] for an initial parse failure, or
++/// [`WatchError::NotifyError`] for watcher setup failures.
++///
++/// # Panics
+ ///
+-/// The update, source version and complete explicit name map come from the same
+-/// validated parse. No initial event is sent. An event is emitted when the
+-/// existing full-update predicate or the complete name map changes. The
+-/// capacity-one queue, source order, cancellation, and join behavior match
+-/// [`start_watching_updates`].
++/// The initial parser can propagate its documented malformed compressed-size
++/// offset panic on 32-bit targets or invalid bundled-mapping panic.
+ pub fn start_watching_observations(
+     config: WatchConfig,
+ ) -> Result<WatchObservationHandle, WatchError> {
