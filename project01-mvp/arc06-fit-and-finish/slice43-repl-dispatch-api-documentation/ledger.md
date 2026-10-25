@@ -10,3 +10,5 @@
 | RD-04 | All non-doc/API/Clap/tests/deps/otherpaths preserved | Oneorderedcomparison/actualStatusresponseopposed/diffs | correctness-grade | open | — |
 | RD-05 | Attributable originalnine/cleanexactonepathcommit/fences | Fullrawfirstrecords/ownership/trailers | correctness-grade | open | — |
 | RD-06 | Independent acceptance/retro/bubbleup/originalowners retained | CDCninegroups/sixrows/required44/fullM7.6 | correctness-grade | open | — |
+
+2026-10-25current01/FIRSTactual1of5/all6RDOPEN. Initialactualpair0/fullonefilewalkclosed3doc/examplegroups; sameonefile/non-docfrozen/no runtime/strict/scope/diffyet. Originalnine/required44/fullM7.6retained.

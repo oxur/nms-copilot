@@ -11,3 +11,7 @@ OriginalNINEgroupsofflineformat→lint→fullHOLDreview; bothfeaturedoctests; ac
 Required44fullpublicsurface/style/strict/original0039M7.6reconciliation CDCowned/furtherusabledecompositionallowed: inheritedquerysummarylinewrapping, knownformatterlimits throughwrappers, exactcoregenerated-fieldexception, isolatedCLI namespace/actual29capturemethod retained. Alloriginal0039criteria and accepted29–42/authenticNomNominput/raw/history/nonzerogame/finalsemantic/cache/freshness/coverage/themes/UI/distribution/parent/Operator/integration/releaseowners preserved.61arc47done14open/project25allOPEN. No nextarc/Project02/push/merge/install/publish/release/maincleanup.
 
 ActualfreshsoleCC /root/cdc_arc06/cc_dispatch_docs acceptedexplicitgpt-6-lunaHigh/forknoneafterdb44c7ab; prior42completed/frozen. Initialrequiredintake/readbackonly/sourcehelduntilACK. Actual42worktreefencesallheldsourcesclean/mainknownagent9line2cd450ce.
+
+## Complete initial held review / first actual correction
+
+Version1.1/currentimmutable01/FIRSTactual1of5/fourleft. Initialactualpair0/pinef1291a6/fullwalkclosedF1absentconversionsemantics/F2Listresetdetail/F3Statusliteralconstruction. ExactonefileRustdoc-only/ALLnon-docandprivatehelpersfrozen, validexamplesexceptStatusRHSfrozen. No runtimeyet; originalnine/required44/fullM7.6binding. SixRDOPEN/noexception.
