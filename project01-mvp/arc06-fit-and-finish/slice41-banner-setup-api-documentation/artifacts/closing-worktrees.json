@@ -1,0 +1,245 @@
+{
+  "observed_utc": "2026-10-25T12:08:33.217884+00:00",
+  "worktrees": [
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot",
+      "head": "b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc",
+      "status": " M crates/nms-copilot/tests/mcp_live_integration.rs\n",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/application-state-api-documentation",
+      "head": "d553037a94055457995d064e02192e9eed0ecb00",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/banner-setup-api-documentation",
+      "head": "83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-compat-api-documentation",
+      "head": "48b6bd790f7120f39638b8f55e430d8b52d707c3",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-player-state-integrity",
+      "head": "a101bd44b277f06c75ed7260b470b31cd5510130",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/cache-semantic-compatibility",
+      "head": "decd8d6c09c1199a6cdd01fd48aa50f3adef2b1a",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/checked-save-integration",
+      "head": "b290ea312f937617546fe7ebab464de786a0dd37",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/community-import-contract",
+      "head": "be4145b631405ff19c3e403457ecaa581afe805f",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/complete-live-save-updates",
+      "head": "11cf7e6a8e2a7549a223880820c0bf4543381459",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/coordinator-watch-api-documentation",
+      "head": "3fc7c3ff7bdd65b6b13d9db087dbeb01a447007a",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-integration",
+      "head": "2f2814c780f5022dea3bc1643d99828ba679e8d0",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/discovery-name-observations",
+      "head": "753bb3a9a01451e57fff34262acd4ab194d99341",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/export-contract",
+      "head": "cd38d7e1603b957f862b75c23b60ed5bc713bcf0",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-qualified-identity",
+      "head": "f57a38f7d1f00d1a3f5aa500ed5f7ce7d8c26eb8",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-queries",
+      "head": "7118a486ea43a776aa2451ec0807d43384fb954f",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-repl",
+      "head": "e615f25419cc68e367c07eda6ef73d26c4e4839c",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-routing",
+      "head": "f71d607e27e18d7266855a2708449f9d6b90c632",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/galaxy-scoped-session",
+      "head": "e9cabd5fe63f19e9fe2e6da840845315d2ee2d18",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/graph-api-documentation",
+      "head": "e30eb49f77565769c0d6fdb61dbe372f686e77d7",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-cache-startup",
+      "head": "130034e8a6f2e77605058620fea2fb0cae43c608",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/headless-live-cache",
+      "head": "e0939229b38e46cab7dd0dd6c5381278029ea1bf",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/map-api-documentation",
+      "head": "fff40ed23c02184e70f175cc3fc2dc687862ec34",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-api-documentation",
+      "head": "9dc1a2409c7f0e53712f643bf7b0a61078e17664",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-live-watch",
+      "head": "239313cc109ca908f43f34ae5e04ba7e5487161f",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-watch-settings",
+      "head": "16c078725492744db22bae837d87c89489a6add5",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/multi-galaxy-composition",
+      "head": "063c8c658fb07ae04acca7ae2d7a7971c4f85688",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/placeholder-cache",
+      "head": "e592ecf061407cf13a40478c4d05bd78e4dd007f",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/planning",
+      "head": "3046341e7ec843fee4e372c918c65369c49259bf",
+      "status": " M project01-mvp/arc06-fit-and-finish/slice41-banner-setup-api-documentation/execution.md\n",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/pr-stack-ci",
+      "head": "03e8d04b11d1899f2d66cdca3f26763c406dd275",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/public-api-documentation",
+      "head": "40e6bc8f2b26606393931a232e604ce0e6f38e86",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/query-api-documentation",
+      "head": "6e5af862ac51de71c5ceae7e17d49450c678cbfe",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-live-cache",
+      "head": "61f1d98fcb7f5cad4b8eef0477a62bf000599f6a",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-presentation-api-documentation",
+      "head": "00cfa740c902f5110159a56329b5241dac706a9d",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-address-decoder",
+      "head": "0b37d8b41222b8e4a084c088246f777490575756",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-api-documentation",
+      "head": "b60e720a1ba3095e403ab706efab7fc0d11469ed",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/save-slot-contract",
+      "head": "bfa2b3710269b8110a858227ad79202ffdd1d513",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/shell-completions",
+      "head": "03b6536636f00a74a52f2d783a9ef80a671d191e",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/unknown-system-lifecycle",
+      "head": "4cb745b7190e7463663a0ead29f169060e36dc05",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/user-documentation-contract",
+      "head": "4a935408460349e9aa64fecd570d9960094191b1",
+      "status": "",
+      "index": ""
+    },
+    {
+      "root": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/watch-api-documentation",
+      "head": "65ac646db635aa97030c8a21fc46aa8d93f0ecb3",
+      "status": "",
+      "index": ""
+    }
+  ]
+}

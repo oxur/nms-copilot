@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.124
+version: 1.125
 project: project01-mvp
 status: active
 depends-on: []
@@ -1298,3 +1298,7 @@ Version1.123/arc1.136 records all6MP/R06-S40accepted atcleanfff40ed2, nineindepe
 ## Arc06 Slice41 banner/setup and root navigation owner — 2026-10-25 UTC
 
 Version1.124/arc1.137 issues complete four-file banner/setup/copilotroot/umbrella docs/keyliteral/no_run examples from acceptedfff40ed2, sixBS/R06-S41OPEN.59arc45done14open/all25projectrowsOPEN. Exact non-doc/API/tests/deps/layout freeze; actual limitedscanner/wizardexplicitcaller/configeffects truthful, no product repair. FreshsameapprovedCC planned for qualitativeheadroom/noextra reviewer; ninegroups/rawfirst/independentacceptance/retro required. Required42CLI/fullpublicsurface/full0039M7.6 and alloriginalhigherowners/authenticinput remainOPEN, no cleanup/integration/release.
+
+## Arc06 Slice41 banner/setup/root docs accepted — 2026-10-25 UTC
+
+Version1.125/arc1.138 records all6BS/R06-S41accepted atclean83e67d62 after nineindependentgroups/235runtime+30/26featuredocs/actualstrictzerobothlibraries/preservationopposed/diffs/finalretro.59arc46done13open/all25projectrowsOPEN. Twoactualrefinements/noexception, complete15CC+13CDCrawhistory/exactreturns retained. Required42CLI namespace/navigation/remainingdispatch/fullpublicsurface/full0039M7.6 and authenticNomNom/alloriginalhigherowners remainOPEN, no cleanup/integration/release.

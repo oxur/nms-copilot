@@ -424,6 +424,8 @@ F30-01: pinnedrkyv_derive0.8.15 emits undocumented public DiscoverySourceResolve
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R06-S41 | Complete truthful banner/setup/root public docs/keyexamples | SixBS/W1–W4/E1–E5/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | open | [Issued41](slice41-banner-setup-api-documentation/slice-plan.md) | Required42 CLI/fullM7.6/allhigherowners OPEN |
+| R06-S41 | Complete truthful banner/setup/root public docs/keyexamples | SixBS/W1–W4/E1–E5/strictdocs/preservation | correctness-grade | Original0039 M7.6 next bounded increment | done | [CDC41 acceptance](slice41-banner-setup-api-documentation/cdc-verification.md) — reproduced | Required42 CLI/fullM7.6/allhigherowners OPEN |
 
 59arc45done14open/project25OPEN; initialzeroactualrefinements/no implementation or acceptance at issue.
+
+2026-10-25 formal41close: all6BS/R06-S41DONE at83e67d62;59arc46done13open/project25OPEN. Prior issuecounts preserved, required42CLI/dispatch/fullM7.6/higherownersOPEN.

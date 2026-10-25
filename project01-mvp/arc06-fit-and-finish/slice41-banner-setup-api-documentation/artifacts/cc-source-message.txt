@@ -1,0 +1,6 @@
+docs: clarify banner and setup API behavior
+
+Document existing banner scanning, setup side effects, and public crate navigation.
+
+Co-authored-by: Codex <noreply@openai.com>
+Co-authored-by: Billo AI <ai-engineering@billo.systems>

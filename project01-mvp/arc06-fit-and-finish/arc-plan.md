@@ -1,6 +1,6 @@
 # arc06-fit-and-finish — closeout recovery plan
 
-Version: 1.137, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
+Version: 1.138, created 2026-10-03. Status: acceptance reconstruction active; arc not closed.
 
 ## Capability
 
@@ -33,6 +33,8 @@ All ledger rows dispositioned; independently reproduced capability demonstration
 Two contributors by default: this context prepares/designs; a fresh CC performs bounded assignments; CDC independently reviews work it did not implement. Higher-scale assembly still needs a separate composition verifier and Operator acceptance. Expedited Mode is active from the user's 2026-10-03 instruction: commit named files promptly, then close/advance when evidence permits. It never waives independent review or scope gates.
 
 ## Version history
+
+- 1.138 (2026-10-25): Slice41 four-file banner/setup/root docs independently accepted at83e67d62/all6BS. Routine close; required42 CLI/remaining dispatch/fullM7.6 stays explicit, no structural/policy/scope reduction.
 
 - 1.137 (2026-10-25): Detail Slice41 four-file banner/setup/root navigation usable increment from accepted40; required42 CLI/fullM7.6 remains explicit. Routine approved decomposition, no feature/policy/scope reduction.
 
@@ -1111,3 +1113,7 @@ Version1.136 closes all6MP/R06-S40 at cleanfff40ed23c02184e70f175cc3fc2dc687862e
 ## Slice41 banner/setup and root navigation owner issued — 2026-10-25 UTC
 
 Version1.137 details [Slice41](slice41-banner-setup-api-documentation/slice-plan.md), four-file banner/setup/copilot-root/umbrella Rustdoc/keyliteralexamples from acceptedfff40ed2, pure doc/blank changes only/all non-doc frozen. Fresh SAMEapprovedCC6-lunaHigh planned after40 qualitativeheadroom recommendation; CDC6.1-solHigh unchanged. W1–W4 actual scanner/padding/wizardcaller/config/errors/navigation and E1–E5 wholeliteral/no_run boundaries resolved; no host wizard or runtime repair. Nine original groups/strictzero bothlibraries/exactfourfile/opposed/independentacceptance/retro; supportcontrols only at issue. SixBS/R06-S41OPEN/initialzeroactualrefinements. Required42 CLI namespace/navigation/fullpublicsurface/full0039M7.6 reconciliation staysCDC/furtherbounded split permitted.59arc45done14open/project25OPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release.
+
+## Slice41 banner/setup and root navigation accepted — 2026-10-25 UTC
+
+Version1.138 closes all6BS/R06-S41 atclean83e67d62d46fa0a3aee004f0f2a51c8d53cf33e8: complete four-file truthful banner/setup/root docs/keyliteralexamples. Ninefreshindependentgroups pass235runtime+30allfeaturedocs(22execute8compile-only)+26nodefaultdocs(20execute6compile-only), umbrella0/actualstrictzerobothlibraries/fourorderednon-doc/opposedscalar/diffs. Twoactualrefinements/full15CC+13CDCrawrecords/exactreturns/transientrestoration/reportqualifications/finalretro retained, no acceptanceexception/structural/scope/sequence amendment. Required42 CLI namespace/navigation/remainingdispatchkeyfunction and fullpublicsurface/full0039M7.6reconciliation staysCDC/furtherusabledecompositionallowed.59arc46done13open/all25projectrowsOPEN; authenticNomNominput/alloriginalhigherowners retained, no cleanup/integration/release. See [CDC41acceptance](slice41-banner-setup-api-documentation/cdc-verification.md) and [retrospective](slice41-banner-setup-api-documentation/cdc-retrospective.md).
