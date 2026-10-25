@@ -1,7 +1,53 @@
 //! Context-aware REPL prompt.
 //!
-//! Displays current galaxy, active biome filter, and model size.
-//! Format: `[Euclid | Lush | 644 planets] 🚀 `
+//! The prompt renders a copied session snapshot: selected galaxy name, the
+//! `Debug` spelling of the optional biome filter, and planet count. It does not
+//! look up the physical position galaxy or retain a live session reference.
+//! Public snapshot fields can be constructed or changed independently. A
+//! `CopilotPrompt` owns the snapshot passed to it; [`CopilotPrompt::update`]
+//! replaces it, and the REPL currently refreshes session state and updates the
+//! prompt before each `read_line` call.
+//!
+//! The left prompt is `[galaxy | optional biome | N planets] 🚀` (without a
+//! trailing space); an empty-string biome still produces a segment, and the
+//! count is not singularized. The right prompt is empty, the edit-mode
+//! indicator is one ASCII space for every mode, and the multiline indicator is
+//! `... `. History search shows `(search: TERM) ` or `(failed) (search: TERM) `.
+//! Reedline's default trait colors remain in effect.
+//!
+//! # Examples
+//!
+//! ```
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! use nms_copilot::prompt::{CopilotPrompt, PromptState};
+//! use nms_copilot::session::SessionState;
+//! use nms_core::{galaxy::Galaxy, Biome};
+//! use nms_graph::GalaxyModel;
+//! use reedline::{Prompt, PromptEditMode, PromptHistorySearch, PromptHistorySearchStatus};
+//!
+//! let mut session = SessionState::from_model(&GalaxyModel::new());
+//! session.galaxy = Galaxy::by_index(9);
+//! session.biome_filter = Some(Biome::Toxic);
+//! session.planet_count = 2;
+//! let state = PromptState::from_session(&session);
+//! assert_eq!((state.galaxy_name.as_str(), state.biome_filter.as_deref(), state.planet_count), ("Eissentam", Some("Toxic"), 2));
+//! let mut prompt = CopilotPrompt::new(state);
+//! assert_eq!(prompt.render_prompt_left().as_ref(), "[Eissentam | Toxic | 2 planets] 🚀");
+//! assert_eq!(prompt.render_prompt_right().as_ref(), "");
+//! assert_eq!(prompt.render_prompt_indicator(PromptEditMode::Default).as_ref(), " ");
+//! assert_eq!(prompt.render_prompt_multiline_indicator().as_ref(), "... ");
+//! assert_eq!(prompt.render_prompt_history_search_indicator(PromptHistorySearch::new(PromptHistorySearchStatus::Passing, "find".to_owned())).as_ref(), "(search: find) ");
+//! assert_eq!(prompt.render_prompt_history_search_indicator(PromptHistorySearch::new(PromptHistorySearchStatus::Failing, "find".to_owned())).as_ref(), "(failed) (search: find) ");
+//!
+//! session.galaxy = Galaxy::by_index(0);
+//! session.biome_filter = None;
+//! session.planet_count = 1;
+//! assert_eq!(prompt.render_prompt_left().as_ref(), "[Eissentam | Toxic | 2 planets] 🚀");
+//! prompt.update(PromptState::from_session(&session));
+//! assert_eq!(prompt.render_prompt_left().as_ref(), "[Euclid | 1 planets] 🚀");
+//! # Ok(())
+//! # }
+//! ```
 
 use std::borrow::Cow;
 
@@ -16,8 +62,11 @@ use crate::session::SessionState;
 /// and the session state changes between prompts.
 #[derive(Debug, Clone)]
 pub struct PromptState {
+    /// Selected session galaxy name copied for display.
     pub galaxy_name: String,
+    /// Optional biome's display spelling copied from its `Debug` form.
     pub biome_filter: Option<String>,
+    /// Planet count copied from the session snapshot.
     pub planet_count: usize,
 }
 
@@ -38,6 +87,10 @@ pub struct CopilotPrompt {
 }
 
 impl CopilotPrompt {
+    /// Create a prompt that owns the supplied display snapshot.
+    ///
+    /// Later session changes do not affect this prompt until [`Self::update`]
+    /// receives another [`PromptState`].
     pub fn new(state: PromptState) -> Self {
         Self { state }
     }

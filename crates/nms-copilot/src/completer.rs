@@ -1,5 +1,26 @@
 //! Tab completion for the NMS Copilot REPL.
 //!
+//! The completer combines fixed command, target, flag, biome, and galaxy
+//! reference knowledge with owned base and system name vectors supplied by the
+//! caller. The model names are a snapshot: constructing the completer consumes
+//! those vectors, and it does not observe later model updates. The current REPL
+//! builds this snapshot once before its editor loop.
+//!
+//! Suggestions are context heuristics, not parser validation. For example,
+//! list completion omits the parseable `terrain-types` target, and route target
+//! names are not offered. Context matching is case-insensitive, but preceding
+//! flag recognition in find and route contexts compares the original spelling;
+//! parser acceptance and completion context can therefore differ. Candidate
+//! order, casing, and duplicates are preserved. Named candidates are limited
+//! to the first 20 matches, including galaxy-name matches. Galaxy completion
+//! searches the 256 reference names in index order, removes one leading double
+//! quote for matching, and replaces the complete value-tail span. Names with
+//! spaces are wrapped in double quotes, but embedded quotes are not generally
+//! escaped. Static command, flag, and biome lists are prefix-filtered without
+//! the named-candidate cap. Ordinary contexts use `split_whitespace` and detect
+//! a trailing ASCII space; they are not quote-aware shell contexts. This code
+//! does not read standard input, a terminal, files, or the model.
+//!
 //! Provides context-aware completions:
 //! - Command names (find, show, stats, convert, info, help, exit, quit)
 //! - Subcommand names (show system, show base)
@@ -12,7 +33,7 @@
 use nms_core::galaxy::Galaxy;
 use reedline::{Completer, Span, Suggestion};
 
-/// Completions that depend on the loaded galaxy model.
+/// Owned base and system name snapshot supplied to the REPL completer.
 #[derive(Clone)]
 pub struct ModelCompletions {
     /// Known base names (original casing).
@@ -21,12 +42,74 @@ pub struct ModelCompletions {
     pub system_names: Vec<String>,
 }
 
-/// REPL tab completer with static command knowledge and dynamic model data.
+/// REPL tab completer with static command knowledge and an owned model-name snapshot.
+///
+/// Its [`Completer::complete`] implementation treats `pos` as a UTF-8 byte
+/// offset and slices `line[..pos]`; callers must supply an in-range byte offset
+/// at a character boundary.
+///
+/// # Panics
+///
+/// Panics when `pos` is outside `line` or is not a UTF-8 character boundary.
 pub struct CopilotCompleter {
     model_data: ModelCompletions,
 }
 
 impl CopilotCompleter {
+    /// Create a completer that owns the supplied model-name snapshot.
+    ///
+    /// The vectors are consumed as provided; they are not sorted, deduplicated,
+    /// or refreshed when the model changes. The REPL currently constructs this
+    /// snapshot once before entering its editor loop.
+    ///
+    /// # Examples
+    ///
+    /// This checks whole ordered suggestion projections, including replacement
+    /// spans, whitespace behavior, optional metadata, the fixed command lists,
+    /// galaxy quoting, and the first-20 named-candidate limit.
+    ///
+    /// ```
+    /// use nms_copilot::completer::{CopilotCompleter, ModelCompletions};
+    /// use reedline::{Completer, Suggestion};
+    ///
+    /// fn projection(items: Vec<Suggestion>) -> Vec<(String, usize, usize, bool, bool, bool, bool, bool, bool)> {
+    ///     items.into_iter().map(|item| (
+    ///         item.value, item.span.start, item.span.end, item.append_whitespace,
+    ///         item.display_override.is_none(), item.description.is_none(),
+    ///         item.style.is_none(), item.extra.is_none(), item.match_indices.is_none(),
+    ///     )).collect()
+    /// }
+    /// fn completer(base_names: Vec<String>, system_names: Vec<String>) -> CopilotCompleter {
+    ///     CopilotCompleter::new(ModelCompletions { base_names, system_names })
+    /// }
+    /// let mut c = completer(
+    ///     vec!["Alpha Base".into(), "Alpine".into(), "ALPHA BASE".into(), "Beta".into()],
+    ///     vec![],
+    /// );
+    /// assert_eq!(projection(c.complete("show base al", 12)), vec![
+    ///     ("\"Alpha Base\"".into(), 10, 12, true, true, true, true, true, true),
+    ///     ("Alpine".into(), 10, 12, true, true, true, true, true, true),
+    ///     ("\"ALPHA BASE\"".into(), 10, 12, true, true, true, true, true, true),
+    /// ]);
+    /// assert_eq!(
+    ///     c.complete("", 0).into_iter().map(|s| s.value).collect::<Vec<_>>(),
+    ///     vec!["convert", "exit", "find", "galaxy", "help", "info", "list", "map", "quit", "reset", "route", "set", "show", "stats", "status"],
+    /// );
+    /// assert_eq!(
+    ///     c.complete("list ", 5).into_iter().map(|s| s.value).collect::<Vec<_>>(),
+    ///     vec!["bases", "biomes", "galaxies", "glyphs", "systems"],
+    /// );
+    /// assert!(c.complete("nonsense ", 9).is_empty());
+    /// assert_eq!(projection(c.complete("galaxy \"hilb", 12)), vec![
+    ///     ("\"Hilbert Dimension\"".into(), 7, 12, true, true, true, true, true, true),
+    /// ]);
+    /// let names = (0..21).map(|i| format!("Base-{i:02}")).collect::<Vec<_>>();
+    /// let mut capped = completer(names, vec![]);
+    /// assert_eq!(
+    ///     capped.complete("show base ", 10).into_iter().map(|s| s.value).collect::<Vec<_>>(),
+    ///     vec!["Base-00", "Base-01", "Base-02", "Base-03", "Base-04", "Base-05", "Base-06", "Base-07", "Base-08", "Base-09", "Base-10", "Base-11", "Base-12", "Base-13", "Base-14", "Base-15", "Base-16", "Base-17", "Base-18", "Base-19"],
+    /// );
+    /// ```
     pub fn new(model_data: ModelCompletions) -> Self {
         Self { model_data }
     }
