@@ -12,3 +12,5 @@
 | MP-06 | Independent acceptance/retrospective/bottom-up/alloriginalowners retained | CDCninegroups/6rowwalk/3bubbleups | correctness-grade | open | Required41/fullM7.6/authenticinput/higherowners OPEN |
 
 2026-10-25 current: all6MP OPEN; FIRST actual refinement1/5/fourleft/currentimmutable01. Verified initialformat5eceeb51/lintdeac9d72 both0/fullraw/equalidentityc7cfc502/diff269666ec; fullinitialwalk closed F1–F3 static docs findings. Sound E1/E2/E3/E4 literals frozen, no runtime failure/credit, no production/helper/layout/scope change. Author W3/W4 shorthand qualifications retained explicitly in01.
+
+2026-10-25 current: SECOND actual2/5/threeleft/currentimmutable02. Actual25/21doctests+235hostlibrarygreen; strictdocse9274af0RED/redundantlink, no scope/diffgate yet. Exactinput3/render1target-only correction, allproduction/examples/otherfiles frozen; retaincompletedruntimebybyteapplicability, finalindependentninegroupsbinding. All6MPremainOPEN/noexception.
