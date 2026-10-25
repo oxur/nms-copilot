@@ -1,0 +1,206 @@
+{
+  "baseline": "3fc7c3ff7bdd65b6b13d9db087dbeb01a447007a",
+  "population_origin": "accepted38 actual CDCac3810b2 17 warnings; new current source-path baseline required",
+  "owned_paths": [
+    "crates/nms-copilot/src/commands.rs",
+    "crates/nms-copilot/src/completer.rs",
+    "crates/nms-copilot/src/prompt.rs"
+  ],
+  "all_baseline": [
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub action: Option<Action>,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum Action {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ShowTarget,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: SetTarget,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "        target: ListTarget,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum SetTarget {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ListTarget {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/commands.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an enum",
+      "primary_text": [
+        "pub enum ShowTarget {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/completer.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(model_data: ModelCompletions) -> Self {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub letter: char,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub name: String,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_x: i16,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_z: i16,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub galaxy_name: String,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub biome_filter: Option<String>,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub planet_count: usize,"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    },
+    {
+      "path": "crates/nms-copilot/src/prompt.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for an associated function",
+      "primary_text": [
+        "    pub fn new(state: PromptState) -> Self {"
+      ],
+      "owner": "Slice39 REPL presentation APIs"
+    }
+  ],
+  "residual": [
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub letter: char,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub name: String,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_x: i16,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    },
+    {
+      "path": "crates/nms-copilot/src/map/state.rs",
+      "code": "missing_docs",
+      "message": "missing documentation for a struct field",
+      "primary_text": [
+        "    pub voxel_z: i16,"
+      ],
+      "owner": "CDC requiredSlice40 map APIs and later banner/setup/root/full M7.6 reconciliation; further usable split allowed"
+    }
+  ],
+  "allowed_cargo_warning_lines": [
+    "warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1"
+  ],
+  "parent_boundary": "FullM7.6/wholecopilotstrict OPEN; required40/later explicit owners, no exception"
+}

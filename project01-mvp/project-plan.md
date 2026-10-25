@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.119
+version: 1.120
 project: project01-mvp
 status: active
 depends-on: []
@@ -1278,3 +1278,7 @@ Version1.118/arc1.131 issues complete2filecoordinator/watchAPI unit/sixCW/R06-S3
 ## Arc06 Slice38 coordinator/watch docs accepted — 2026-10-25 UTC
 
 Version1.119/arc1.132 records all6CW/R06-S38accepted atclean3fc7c3ff, nineindependentgroups/235runtime+16allfeaturesdocs+12no-defaultdocs/actual0owned17residual/preservationopposed/diffs/finalretro.56arc43done13open/all25projectrowsOPEN. TwoACTUALrefinements/current03, same-modeloperationalcontextreplacement preservesunfinished01/history/noreset. FullM7.6/wholecopilotstrict/requiredSlice39remainingpresentationAPIs/fullreconciliation and alloriginalhigherowners remainOPEN, no acceptanceexception/cleanup/integration/release.
+
+## Arc06 Slice39 REPL presentation owner — 2026-10-25 UTC
+
+Version1.120/arc1.133 issues complete3filecommands/completer/prompt API unit/sixRP/R06-S39OPEN fromclean3fc7.57arc43done14open/all25projectrowsOPEN. Exactexistingderivehelpinputs+8newdocsites/actualoverride-v-directaugmentation behavior explicit, no grammar/default/API/body/test change. Scopedactualzeroowned/exact4mapresidual required; required40map and41banner/setup/root/fullpublicsurface/fullM7.6strictreconciliation remainCDC/furtherusabledecompositionallowed. Freshsame-modelsoleCCcontext chosenforqualitativeheadroom; actualdispatch recordedafterlaunch. Alloriginalinput/Operator/higherowners retained, no implementation/integration/release claim.

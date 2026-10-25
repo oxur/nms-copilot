@@ -1,0 +1,11 @@
+{
+  "source": "/Users/oubiwann/lab/oxur/nms-copilot/.worktrees/repl-presentation-api-documentation",
+  "baseline": "3fc7c3ff7bdd65b6b13d9db087dbeb01a447007a",
+  "paths": [
+    "crates/nms-copilot/src/commands.rs",
+    "crates/nms-copilot/src/completer.rs",
+    "crates/nms-copilot/src/prompt.rs"
+  ],
+  "allowed": "whole-line Rustdoc/adjacent blanks; zero non-doc/layout changes; commands derived region exactly eight new-doc insertion sites, all old help inputs byte-preserved",
+  "forbidden": "all other source/API/attributes/bodies/tests/dependencies/planning/main/held pins"
+}
