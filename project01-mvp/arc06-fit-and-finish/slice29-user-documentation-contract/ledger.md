@@ -10,3 +10,5 @@
 | UD-04 | Bounded renderer and useful documentation examples | Captured compile/render/bash syntax/links/complete metrics plus opposed wrong-count and route controls | correctness-grade | open | — |
 | UD-05 | Scope/production/fences and actual required gates | Exact8paths/Rust+fixtures unchanged/final pair/diffs/commit/main protected | correctness-grade | open | — |
 | UD-06 | Attributable independent acceptance/retro/original parent accounting | Six-row review/CC returns/CDC retrospective/bubble-up/API30 owner/M7.6open | correctness-grade | open | — |
+
+2026-10-25 heldinitialreview: actualformat/lint0 onf6ee50b9, no runtime/imagesyet. All6UDopen; current02firstactualrefinement1/5/4remain, threeMarkdownonly F1–F4 correction, correctrenderer/productionfrozen. Initial+01firstimplementation; no reset/waiver.

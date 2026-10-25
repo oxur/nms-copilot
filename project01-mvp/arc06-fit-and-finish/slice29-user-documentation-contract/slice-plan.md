@@ -1,5 +1,5 @@
 # Slice29 — usable user/contributor documentation
-Version1.1,2026-10-24 UTC. OPEN, six UD rows. Current assignment cc-prompt-iteration01.md plus preserved initial cc-prompt.md, same initial implementation, zero of five actual refinements. Dedicated codex/user-documentation-contract at clean be4145b631405ff19c3e403457ecaa581afe805f. CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 selected/applied gpt-6-luna High confirms qualitative usable headroom and no active process/gate/pending edit. Same Autonomous Project01 Arc06 ONLY; no new arc/Project02/merge/push/install/publish/release. CDC planning/index/design/independent review; after coherent intake CC dedicated source/index only.
+Version1.2,2026-10-24 UTC. OPEN, six UD rows. Current assignment cc-prompt-iteration02.md, first actual refinement1/5 (four remain); initial+pre-edit01 were FIRST implementation. Dedicated codex/user-documentation-contract at clean be4145b631405ff19c3e403457ecaa581afe805f. CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High; sole CC /root/cdc_arc06/cc_slice17 selected/applied gpt-6-luna High confirms qualitative usable headroom and no active process/gate/pending edit. Same Autonomous Project01 Arc06 ONLY; no new arc/Project02/merge/push/install/publish/release. CDC planning/index/design/independent review; after coherent intake CC dedicated source/index only.
 
 ## Assigned useful increment and full parent accounting
 
@@ -36,3 +36,7 @@ CC intake and runtime authority: required-full prompt/plan/ledger/README, requir
 ## Pre-edit author clarification01 — 2026-10-24 UTC
 
 Initial abbreviated src/dispatch.rs fully qualified as crates/nms-copilot/src/dispatch.rs; same sections/functions/intended source and no behavior/scope/proof change. CC explicitly confirms only required reads/inventory, no implementation; dedicatedsource stillcleanbe414. Immutable01 preserves originalprompt and corrections visibly; initial+01 firstimplementation, zeroactualrefinements. All otherauthority/8paths/6rows/sequence unchanged.
+
+## Held initial review / actual refinement02 — 2026-10-25 UTC
+
+Actual firstformat0c8970b7/lintb834f0d4 complete0/fullraw/status/before==after onf6ee50b9 verified byCDC. Complete four-file heldwalk closes F1–F4 prose/onboarding findings; threeMarkdownpaths only, rendererSHAa0cd4674/allRust/fixtures frozen. Explicitly supersedes author CLI-onlyinfo/legacyfictional-origin overclaims and fixes inherited route/stats comments, missing build/doc-preview/workspace entries, reader-facingoffline/install prose. No productiondefect/runtime/imagecredit/newscenario. Firstactualrefinement1/5; correctedpair HOLD before originalgenerationrelease.
