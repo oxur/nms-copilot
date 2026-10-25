@@ -1,6 +1,6 @@
 # Slice37 — complete MCP public API documentation
 
-Version1.4, 2026-10-25 UTC. ACTIVE fourth ACTUAL refinement4/5/one remains, current cc-prompt-iteration04.md; initial/01 preserved. Standing Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High, sole new CC successor selected gpt-6-luna High (actual launch identity recorded at dispatch). No model substitution/extra reviewer. Previous cc_graph_docs is completed/frozen; its self-reported headroom considered alongside repeated source-match/path mistakes and continued conflation of message-subject reuse with parser syntax after compaction. CDC chooses a fresh same-model context for this self-contained unit, no causal cure/capability claim or new role.
+Version1.5, 2026-10-25 UTC. ACTIVE fifth/final ACTUAL refinement5/5, record-only current cc-prompt-iteration05.md; initial/01 preserved. Standing Autonomous Project01 Arc06 ONLY; CDC /root/cdc_arc06 selected/applied gpt-6.1-sol High, sole new CC successor selected gpt-6-luna High (actual launch identity recorded at dispatch). No model substitution/extra reviewer. Previous cc_graph_docs is completed/frozen; its self-reported headroom considered alongside repeated source-match/path mistakes and continued conflation of message-subject reuse with parser syntax after compaction. CDC chooses a fresh same-model context for this self-contained unit, no causal cure/capability claim or new role.
 
 Dedicated /Users/oubiwann/lab/oxur/nms-copilot/.worktrees/mcp-api-documentation, codex/mcp-api-documentation, clean baseline d553037a94055457995d064e02192e9eed0ecb00. Source/index ownership passes to sole CC after coherent readback. CDC owns planning and independent acceptance.
 
@@ -87,3 +87,7 @@ Actual allfeatures doca9c4295d exit101/12passed1failed: Cow tool.name.as_str inv
 ## Actual strict link finding / fourth actual refinement
 
 Allfeatures13pass/no-default9pass actual8779c1c4/a7f95357 rawverified. CargoJSON4c18c38a exit101 exactly2 redundant_explicit_links for CDC-mandated02 syntax; compilerhelp confirms [execute_route] identicaltarget. Immutable04 exactTWO prose links only, examples/executable/rest frozen; fourthactual4/5/one remains. Prior library/docs byte-applicable; actualscoped+remaining gates/final independentnine still binding, no warning exception.
+
+## Independent proof complete / fifth actual record-only close-set completion
+
+AllninefreshCDCgroups onclean9dc1 pass235runtime+13allfeaturesdocs+9no-defaultdocs/zeroownedexact19residual/preservationopposed/diffs. CanonicalCCreport lacks originalperrowwalk/threebubbleupanswers (presentinexecution), miswords requiredSlice38 as38owners and validators-afterpair/example-audit applicability. Immutable05 append-only recordcompletion, source/validationJSON frozen/no reruns; fifthactual5/5. Originalreport retainedbyteexact supportingartifact before05; no productdefect/newcriterion/waiver. SixMP remainOPEN until formalindependentclose.
