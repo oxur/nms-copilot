@@ -1,0 +1,1570 @@
+[1;34mRunning tests...[0m
+[1;36m• Running all workspace tests...[0m
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.47s
+warning: the following packages contain code that will be rejected by a future version of Rust: proc-macro-error2 v2.0.1
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+     Running unittests src/lib.rs (target/debug/deps/nms-55c674c4b1ac33c2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_cache-ee6659e42af10042)
+
+running 20 tests
+test serialize::tests::test_compatibility_error_display_and_source_are_observable ... ok
+test serialize::tests::test_deserialize_compatibility_error_precedence ... ok
+test serialize::tests::test_current_header_with_bad_payload_is_deserialize_error ... ok
+test serialize::tests::test_envelope_has_literal_header_and_roundtrips ... ok
+test serialize::tests::test_deserialize_handles_misaligned_borrowed_envelope ... ok
+test serialize::tests::test_extract_cache_data ... ok
+test serialize::tests::test_marked_community_source_is_rejected_but_trusted_rebuild_preserves_it ... ok
+test serialize::tests::test_headerless_archive_is_not_a_compatible_cache ... ok
+test serialize::tests::test_read_nonexistent_cache_errors ... ok
+test serialize::tests::test_direct_cache_transport_preserves_two_galaxies_and_selected_galaxy ... ok
+test serialize::tests::test_rebuild_model_preserves_counts ... ok
+test serialize::tests::test_rebuild_preserves_base_lookup ... ok
+test serialize::tests::test_rebuild_preserves_player_state ... ok
+test serialize::tests::test_serialize_deserialize_roundtrip ... ok
+test serialize::tests::test_read_missing_cache_preserves_io_error ... ok
+test freshness::tests::test_missing_save_returns_false ... ok
+test freshness::tests::test_missing_cache_returns_false ... ok
+test serialize::tests::test_write_and_read_cache_file ... ok
+test freshness::tests::test_fresh_cache_returns_true ... ok
+test freshness::tests::test_stale_cache_returns_false ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/load_integration.rs (target/debug/deps/load_integration-6f613e5449ae3ff3)
+
+running 31 tests
+test cache_freshness_uses_deterministic_file_times ... ok
+test compatible_cache_preserves_populated_model_with_independent_save_version ... ok
+test cache_write_failure_returns_parsed_source_model ... ok
+test actual_schema1_semantic1_predecessor_rebuilds_active_galaxy_source_then_warm_hits ... ok
+test authentic_schema3_semantic4_predecessor_rebuilds_then_warm_hits ... ok
+test actual_schema3_semantic3_predecessor_rebuilds_then_warm_hits_without_touching_fresh_current ... ok
+test corrupt_current_payload_rebuilds_then_warm_hits ... ok
+test direct_file_roundtrip_has_header_and_source_version_is_not_header_version ... ok
+test explicit_placeholder_validation_is_shared_by_codec_and_preserves_write_targets ... ok
+test contradictory_player_reality_is_rejected_by_byte_file_and_write_boundaries ... ok
+test authentic_schema3_semantic5_predecessor_rebuilds_then_warm_hits ... ok
+test load_or_rebuild_skips_cache_with_no_cache_flag ... ok
+test actual_schema2_semantic2_predecessor_rebuilds_source_then_current_and_marker_warm_hit ... ok
+test incompatible_fresh_cache_and_malformed_save_preserve_cache_bytes ... ok
+test load_or_rebuild_from_save_when_no_cache ... ok
+test no_cache_ensures_player_without_creating_cache_parent ... ok
+test headerless_legacy_archive_rebuilds_then_warm_hits ... ok
+test load_or_rebuild_uses_cache_when_fresh ... ok
+test malformed_source_and_no_cache_preserve_contradictory_cache_bytes ... ok
+test no_cache_ignores_incompatible_existing_cache_and_preserves_it ... ok
+test marker_round_trip_preserves_full_model_and_genuine_planet_promotion ... ok
+test fresh_contradictory_cache_rebuilds_authoritative_source_then_warm_hits ... ok
+test unknown_player_system_edges_match_cold_no_cache_and_warm_repair ... ok
+test valid_independent_player_and_selected_galaxies_roundtrip_with_or_without_player ... ok
+test stale_compatible_sentinel_cache_rebuilds_from_source ... ok
+test no_cache_preserves_valid_opposed_cache_and_temp_blocker_then_warm_repair_is_noop ... ok
+test warm_existing_current_key_and_absent_player_do_not_rewrite_or_parse_source ... ok
+test current_schema4_semantic1_cache_rebuilds_and_dual_galaxy_transport_warm_hits ... ok
+test semantic3_predecessor_failure_no_cache_and_write_blocker_preserve_all_owned_files ... ok
+test warm_marker_repair_is_best_effort_and_then_a_byte_stable_noop ... ok
+test schema_and_semantic_revision_mismatches_rebuild_then_warm_hit ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/main.rs (target/debug/deps/nms-6901a3885c130d59)
+
+running 73 tests
+test convert::tests::parse_ga_with_prefix ... ok
+test convert::tests::parse_ga_masks_to_48_bits ... ok
+test convert::tests::parse_ga_without_prefix ... ok
+test convert::tests::parse_glyphs_emoji_input ... ok
+test convert::tests::parse_glyphs_abbrev_input ... ok
+test convert::tests::parse_glyphs_invalid_hex ... ok
+test convert::tests::parse_glyphs_12_hex_digits ... ok
+test convert::tests::parse_glyphs_lowercase ... ok
+test convert::tests::parse_glyphs_name_input ... ok
+test convert::tests::parse_glyphs_with_0x_prefix ... ok
+test convert::tests::parse_signal_booster_invalid_format ... ok
+test convert::tests::parse_glyphs_wrong_length ... ok
+test convert::tests::parse_signal_booster_invalid_hex ... ok
+test convert::tests::parse_signal_booster_valid ... ok
+test convert::tests::parse_voxel_negative ... ok
+test convert::tests::parse_voxel_positive ... ok
+test convert::tests::parse_voxel_ssi_out_of_range ... ok
+test convert::tests::parse_voxel_with_spaces ... ok
+test convert::tests::parse_voxel_wrong_part_count ... ok
+test convert::tests::parse_voxel_x_out_of_range ... ok
+test convert::tests::parse_voxel_z_out_of_range ... ok
+test convert::tests::resolve_galaxy_by_index ... ok
+test convert::tests::resolve_galaxy_by_name_euclid ... ok
+test convert::tests::resolve_galaxy_by_name_case_insensitive ... ok
+test convert::tests::resolve_galaxy_hilbert ... ok
+test convert::tests::resolve_galaxy_index_out_of_range ... ok
+test convert::tests::resolve_galaxy_unknown_name ... ok
+test convert::tests::roundtrip_from_actual_save_address ... ok
+test convert::tests::run_voxel_without_ssi_returns_error ... ok
+test convert::tests::roundtrip_glyphs_to_ga_to_voxel ... ok
+test convert::tests::run_with_no_input_returns_error ... ok
+test convert::tests::roundtrip_ga_to_all_formats ... ok
+test convert::tests::roundtrip_glyphs_to_signal_booster ... ok
+test export::tests::test_export_format_parse_csv ... ok
+test export::tests::test_export_format_parse_json ... ok
+test export::tests::test_export_format_parse_unknown ... ok
+test export::tests::test_csv_output_has_header_and_row ... ok
+test export::tests::test_export_record_from_find_result ... ok
+test completions::tests::test_completions_bash_generates_output ... ok
+test export::tests::test_export_record_missing_names ... ok
+test export::tests::test_write_csv_empty ... ok
+test export::tests::test_json_output_is_valid_json ... ok
+test export::tests::test_write_csv_propagates_broken_pipe ... ok
+test export::tests::test_write_csv_with_data ... ok
+test export::tests::test_write_json_empty ... ok
+test export::tests::test_write_json_propagates_broken_pipe ... ok
+test export::tests::test_write_json_with_data ... ok
+test info::tests::format_game_mode_creative ... ok
+test info::tests::format_game_mode_expedition ... ok
+test info::tests::format_game_mode_normal ... ok
+test info::tests::format_game_mode_unknown ... ok
+test info::tests::format_number_negative ... ok
+test info::tests::format_number_positive ... ok
+test info::tests::format_number_small ... ok
+test info::tests::format_play_time_days ... ok
+test info::tests::format_number_thousands ... ok
+test info::tests::format_number_zero ... ok
+test info::tests::format_play_time_actual_save_value ... ok
+test info::tests::format_play_time_hours_and_minutes ... ok
+test info::tests::format_play_time_minutes_and_seconds ... ok
+test completions::tests::test_completions_fish_generates_output ... ok
+test info::tests::format_play_time_seconds_only ... ok
+test info::tests::format_play_time_zero ... ok
+test saves::tests::test_format_mtime_days_ago ... ok
+test saves::tests::test_format_mtime_epoch ... ok
+test saves::tests::test_format_mtime_hours_ago ... ok
+test saves::tests::test_format_mtime_recent ... ok
+test tests::test_resolve_save_explicit_path ... ok
+test tests::test_resolve_save_with_slot_explicit_path_takes_priority ... ok
+test completions::tests::test_completions_zsh_generates_output ... ok
+test saves::tests::test_slots_for_account_reports_empty_directory_without_error ... ok
+test saves::tests::test_slots_for_account_propagates_not_a_directory_io_error ... ok
+test saves::tests::test_slots_for_account_returns_discovered_slots ... ok
+
+test result: ok. 73 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/checked_save_integration.rs (target/debug/deps/checked_save_integration-220c13bc7167e1d9)
+
+running 3 tests
+test test_new_cli_fixtures_are_exact_known_field_projections_of_original_jsons ... ok
+test test_every_actual_cli_save_consumer_rejects_late_legacy_accepted_57_bit_base ... ok
+test test_actual_cli_callers_use_checked_save_and_keep_portal_and_signed_currency_outputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running tests/cli_integration.rs (target/debug/deps/cli_integration-03667fff2edd3d9a)
+
+running 34 tests
+test test_nms_convert_glyphs_invalid_length_fails ... ok
+test test_nms_convert_coords_displays_conversion ... ok
+test test_nms_completions_bash_generates_script ... ok
+test test_nms_convert_ga_displays_conversion ... ok
+test test_nms_convert_glyphs_lowercase_accepted ... ok
+test test_nms_convert_galaxy_name_euclid ... ok
+test test_nms_completions_fish_generates_script ... ok
+test test_nms_convert_glyphs_invalid_hex_fails ... ok
+test test_nms_convert_galaxy_name_hilbert ... ok
+test test_nms_completions_zsh_generates_script ... ok
+test test_nms_convert_voxel_without_ssi_fails ... ok
+test test_nms_convert_no_input_fails ... ok
+test test_nms_export_invalid_format_fails ... ok
+test test_nms_export_csv_produces_header_row ... ok
+test test_nms_convert_help_shows_options ... ok
+test test_nms_convert_voxel_with_ssi_displays_conversion ... ok
+test test_nms_export_json_produces_valid_json ... ok
+test test_nms_convert_glyphs_roundtrip_displays_all_formats ... ok
+test test_nms_find_invalid_biome_fails ... ok
+test test_nms_find_from_base_reference ... ok
+test test_nms_info_nonexistent_save_fails ... ok
+test test_nms_find_with_biome_filter_frozen ... ok
+test test_nms_convert_glyphs_roundtrip_coords_consistent ... ok
+test test_nms_help_shows_usage ... ok
+test test_nms_find_with_biome_filter_lush ... ok
+test test_nms_find_with_nearest_limit ... ok
+test test_nms_info_with_fixture_shows_summary ... ok
+test test_nms_find_with_fixture_returns_results ... ok
+test test_nms_unknown_command_fails_with_error ... ok
+test test_nms_no_args_shows_error ... ok
+test test_nms_version_shows_version ... ok
+test test_nms_stats_biomes_flag_shows_biome_table ... ok
+test test_nms_stats_with_fixture_shows_statistics ... ok
+test test_nms_info_with_multi_system_fixture_shows_discovery_counts ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/completions_integration.rs (target/debug/deps/completions_integration-945ecb26663164bc)
+
+running 2 tests
+test test_completions_cli_help_and_shell_argument_errors ... ok
+test test_completions_all_shells_generate_scoped_manifests_and_reject_mutants ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/export_integration.rs (target/debug/deps/export_integration-1c2b984fc30bed95)
+
+running 4 tests
+test test_export_literal_csv_bytes_and_json_oracle_reject_mutations ... ok
+test test_export_defaults_uppercase_and_independent_empty_source ... ok
+test test_export_errors_are_stderr_only_and_leave_source_unchanged ... ok
+test test_export_real_child_filter_order_reference_and_empty_matrix ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/find_integration.rs (target/debug/deps/find_integration-1e3d8a9059daae30)
+
+running 7 tests
+test find_nearest_respects_limit ... ok
+test find_with_biome_filter ... ok
+test find_from_base_reference ... ok
+test show_formatter_omits_distance_when_player_and_system_galaxies_differ ... ok
+test find_pipeline_end_to_end ... ok
+test find_formatter_keeps_named_planets_paired_with_their_systems ... ok
+test find_infested_flag_filters_the_real_cli_process_result ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/glyph_error_integration.rs (target/debug/deps/glyph_error_integration-af5cf912633bb2f4)
+
+running 2 tests
+test test_convert_glyphs_four_byte_rejection_is_bounded_error ... ok
+test test_convert_glyphs_three_byte_rejection_is_bounded_error ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/import_integration.rs (target/debug/deps/import_integration-942906b3877b1165)
+
+running 2 tests
+test test_import_csv_real_child_preserves_fixture_and_reports_exact_counts ... ok
+test test_import_csv_real_child_rejects_missing_or_invalid_inputs_without_success_payload ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/info_integration.rs (target/debug/deps/info_integration-e638c9c5f53e3cd9)
+
+running 1 test
+test parse_minimal_save_and_verify_fields ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/multi_save_integration.rs (target/debug/deps/multi_save_integration-e1b19accee2613c0)
+
+running 6 tests
+test test_clean_text_strips_only_complete_sgr_and_preserves_other_escape_text ... ok
+test test_saves_command_reports_exact_accounts_slots_and_recent_types ... ok
+test test_saves_lists_all_thirty_canonical_fake_files_without_parsing_payloads ... ok
+test test_save_listing_errors_distinguish_missing_empty_and_io_and_preserve_static_commands ... ok
+test test_actual_cli_flag_positions_explicit_file_and_slot_errors_are_distinguishable ... ok
+test test_actual_cli_routes_select_literal_save_rows_for_all_ten_save_backed_commands ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests/pipeline_integration.rs (target/debug/deps/pipeline_integration-3fdcef815ee8355c)
+
+running 29 tests
+test test_pipeline_discovered_galaxies_contains_euclid ... ok
+test test_pipeline_every_system_has_address_to_id_entry ... ok
+test test_pipeline_find_infested_filter ... ok
+test test_pipeline_find_results_have_portal_hex ... ok
+test test_pipeline_find_nearest_respects_limit ... ok
+test test_pipeline_find_from_base_reference_works ... ok
+test test_pipeline_find_lush_biome_filter ... ok
+test test_pipeline_find_all_returns_all_planets ... ok
+test test_pipeline_minimal_model_base_lookup_works ... ok
+test test_pipeline_minimal_model_has_expected_counts ... ok
+test test_pipeline_minimal_model_player_position_set ... ok
+test test_pipeline_every_system_has_node_map_entry ... ok
+test test_pipeline_graph_node_count_matches_system_count ... ok
+test test_pipeline_multi_system_biome_index_has_barren ... ok
+test test_pipeline_multi_system_biome_index_has_frozen ... ok
+test test_pipeline_multi_system_biome_index_has_lush ... ok
+test test_pipeline_multi_system_biome_index_has_scorched ... ok
+test test_pipeline_multi_system_biome_index_has_toxic ... ok
+test test_pipeline_multi_system_infested_planet_exists ... ok
+test test_pipeline_parse_minimal_fixture_file_succeeds ... ok
+test test_pipeline_multi_system_model_has_expected_planet_count ... ok
+test test_pipeline_multi_system_model_has_six_systems ... ok
+test test_pipeline_parse_multi_system_fixture_file_succeeds ... ok
+test test_pipeline_multi_system_model_has_two_bases ... ok
+test test_pipeline_spatial_index_matches_system_count ... ok
+test test_pipeline_stats_biome_counts_sum_to_planet_count ... ok
+test test_pipeline_stats_counts_match_model ... ok
+test test_pipeline_find_formatted_output_contains_headers ... ok
+test test_pipeline_stats_formatted_output_contains_galaxy_stats ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/route_integration.rs (target/debug/deps/route_integration-b18bdba8895bf316)
+
+running 5 tests
+test test_route_formatter_preserves_qualified_identity_and_exact_400_ly_legs ... ok
+test test_nms_route_missing_target_fails_without_itinerary ... ok
+test test_route_biome_filter_is_not_implicitly_limited_to_one_hundred ... ok
+test test_single_target_route_cli_matches_parser_and_query_oracle ... ok
+test test_nms_route_lush_targets_succeed_for_nn_and_two_opt_round_trip ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/show_integration.rs (target/debug/deps/show_integration-e0780bab7a76dec1)
+
+running 5 tests
+test show_nonexistent_base_errors ... ok
+test show_nonexistent_system_errors ... ok
+test show_base_case_insensitive ... ok
+test show_base_end_to_end ... ok
+test show_system_with_planets ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/stats_integration.rs (target/debug/deps/stats_integration-b2f070e7429b4781)
+
+running 3 tests
+test stats_biome_distribution_consistent ... ok
+test stats_base_count_matches_save ... ok
+test stats_end_to_end ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/unicode_display_integration.rs (target/debug/deps/unicode_display_integration-1dc4df3bffac7608)
+
+running 2 tests
+test test_nms_find_unicode_checked_save_names_render_without_panicking ... ok
+test test_nms_route_unicode_checked_save_target_renders_without_panicking ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_compat-af4617a4d8f2cdd4)
+
+running 7 tests
+test nomnom::tests::test_is_nomnom_format_negative_empty ... ok
+test nomnom::tests::test_is_nomnom_format_positive ... ok
+test nomnom::tests::test_is_nomnom_format_negative_missing_player ... ok
+test nomnom::tests::test_is_nomnom_format_negative_missing_version ... ok
+test nomnom::tests::test_parse_nomnom_not_nomnom_returns_error ... ok
+test nomnom::tests::test_parse_nomnom_invalid_json_returns_error ... ok
+test nomnom::tests::test_parse_nomnom_valid_save ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_copilot-57051903645bdf2a)
+
+running 254 tests
+test banner::tests::test_default_banner_contains_version_placeholder ... ok
+test banner::tests::test_default_banner_is_not_empty ... ok
+test banner::tests::test_resolve_banner_show_false_returns_none ... ok
+test banner::tests::test_resolve_banner_empty_string_returns_none ... ok
+test banner::tests::test_strip_ansi_preserves_plain_text ... ok
+test banner::tests::test_strip_ansi_empty_string ... ok
+test banner::tests::test_strip_ansi_removes_escape_sequences ... ok
+test banner::tests::test_resolve_banner_no_color_strips_ansi ... ok
+test banner::tests::test_resolve_banner_custom_returns_custom_text ... ok
+test banner::tests::test_resolve_banner_default_returns_embedded_content ... ok
+test banner::tests::test_substitute_placeholder_in_line_longer_value_removes_spaces ... ok
+test banner::tests::test_substitute_placeholder_in_line_no_placeholder_unchanged ... ok
+test banner::tests::test_substitute_placeholder_in_line_same_length_no_padding_change ... ok
+test banner::tests::test_substitute_placeholder_in_line_shorter_value_adds_spaces ... ok
+test banner::tests::test_substitute_placeholders_replaces_version ... ok
+test banner::tests::test_visible_width_empty_string_returns_zero ... ok
+test banner::tests::test_visible_width_plain_text_returns_char_count ... ok
+test banner::tests::test_visible_width_with_ansi_codes_ignores_escapes ... ok
+test commands::tests::test_parse_empty_line ... ok
+test commands::tests::test_parse_exit ... ok
+test commands::tests::test_parse_help ... ok
+test commands::tests::test_parse_info ... ok
+test commands::tests::test_parse_find_with_biome ... ok
+test commands::tests::test_parse_list_biomes ... ok
+test commands::tests::test_parse_list_bases ... ok
+test commands::tests::test_parse_command_dash_help_shows_subcommand_help ... ok
+test commands::tests::test_parse_list_bases_with_all ... ok
+test commands::tests::test_parse_list_galaxies ... ok
+test commands::tests::test_parse_list_systems ... ok
+test commands::tests::test_parse_list_galaxies_with_type ... ok
+test commands::tests::test_parse_galaxy_optional_selection ... ok
+test commands::tests::test_parse_command_help_shows_subcommand_help ... ok
+test commands::tests::test_parse_list_glyphs ... ok
+test commands::tests::test_parse_list_systems_with_limit ... ok
+test commands::tests::test_parse_list_systems_with_all ... ok
+test commands::tests::test_parse_list_terrain_types ... ok
+test commands::tests::test_parse_map ... ok
+test commands::tests::test_parse_quit ... ok
+test commands::tests::test_parse_reset_default ... ok
+test commands::tests::test_parse_reset_biome ... ok
+test commands::tests::test_parse_route_round_trip ... ok
+test commands::tests::test_parse_route_with_biome_and_warp_range ... ok
+test commands::tests::test_parse_route_with_targets ... ok
+test commands::tests::test_parse_set_biome ... ok
+test commands::tests::test_parse_set_position ... ok
+test commands::tests::test_shell_words_basic ... ok
+test commands::tests::test_parse_set_warp_range ... ok
+test commands::tests::test_parse_show_base_quoted ... ok
+test commands::tests::test_shell_words_quoted ... ok
+test commands::tests::test_parse_status ... ok
+test commands::tests::test_parse_stats_flags ... ok
+test completer::tests::test_complete_base_name_with_spaces_is_quoted ... ok
+test completer::tests::test_complete_biome_after_flag ... ok
+test completer::tests::test_complete_case_insensitive_command ... ok
+test completer::tests::test_complete_case_insensitive_find_flags ... ok
+test commands::tests::test_parse_unknown_command ... ok
+test completer::tests::test_complete_case_insensitive_show_base ... ok
+test completer::tests::test_complete_case_insensitive_show_subcommand ... ok
+test completer::tests::test_complete_convert_flags ... ok
+test completer::tests::test_complete_empty_line_shows_commands ... ok
+test completer::tests::test_complete_find_flags ... ok
+test completer::tests::test_complete_from_base_names ... ok
+test completer::tests::test_complete_list_partial ... ok
+test completer::tests::test_complete_list_subcommands ... ok
+test completer::tests::test_complete_partial_command ... ok
+test completer::tests::test_complete_route_all_flags ... ok
+test completer::tests::test_complete_galaxy_prefix_negative_and_cap_controls ... ok
+test completer::tests::test_complete_route_biome_after_flag ... ok
+test completer::tests::test_complete_route_flags ... ok
+test completer::tests::test_complete_route_from_base_names ... ok
+test completer::tests::test_complete_route_in_command_list ... ok
+test completer::tests::test_complete_show_base_names ... ok
+test completer::tests::test_complete_galaxy_name_prefixes_and_quoted_value_span ... ok
+test completer::tests::test_complete_show_subcommands ... ok
+test completer::tests::test_complete_show_system_names ... ok
+test completer::tests::test_complete_stats_flags ... ok
+test config::tests::test_cache_path_default_no_save ... ok
+test config::tests::test_cache_path_per_save ... ok
+test config::tests::test_default_config ... ok
+test config::tests::test_cache_path_override ... ok
+test config::tests::test_effective_save_file_none_when_empty ... ok
+test config::tests::test_load_nonexistent_returns_default ... ok
+test config::tests::test_parse_config_backward_compat_path_only ... ok
+test config::tests::test_mcp_config_partial_toml ... ok
+test config::tests::test_parse_config_banner_empty_disables ... ok
+test config::tests::test_parse_config_banner_custom_text ... ok
+test config::tests::test_parse_config_show_system_banner_false ... ok
+test config::tests::test_parse_config_show_banner_false ... ok
+test config::tests::test_parse_config_with_new_save_fields ... ok
+test config::tests::test_parse_full_config ... ok
+test config::tests::test_parse_minimal_config ... ok
+test config::tests::test_parse_inline_save_with_mcp_config ... ok
+test config::tests::test_parse_legacy_inline_value_save_config ... ok
+test config::tests::test_parse_partial_config ... ok
+test config::tests::test_save_path_none_when_unset ... ok
+test config::tests::test_unknown_fields_are_ignored ... ok
+test config::tests::test_watch_config_defaults ... ok
+test completer::tests::test_complete_galaxy_values_reconstruct_and_parse_exactly ... ok
+test config::tests::test_watch_config_partial_toml ... ok
+test config::tests::test_watch_config_from_toml ... ok
+test config::tests::test_effective_save_file_falls_back_to_path_file ... ok
+test config::tests::test_load_invalid_toml_errors ... ok
+test config::tests::test_effective_save_file_dir_with_saves ... ok
+test coordinator::full_update_component_tests::test_no_node_update_preserves_existing_custom_edges ... ok
+test config::tests::test_effective_save_file_prefers_file_over_path ... ok
+test coordinator::full_update_component_tests::test_added_system_default_edges_match_full_rebuild_consumers_and_topology ... ok
+test coordinator::tests::test_apply_and_snapshot_applies_complete_names_after_player_ensure ... ok
+test coordinator::additional_tests::test_malformed_initial_save_fails_without_model_mutation ... ok
+test coordinator::full_update_component_tests::test_empty_delta_full_update_preserves_atlas_and_snapshots_complete_player_state ... ok
+test map::input::tests::test_handle_input_command_modifiers_and_quit_persistence ... ok
+test map::input::tests::test_handle_input_help_consumes_keys_but_not_resize ... ok
+test map::input::tests::test_handle_input_navigation_edges_and_key_kinds_move_cursor ... ok
+test map::input::tests::test_handle_input_poll_timeout_and_error_preserve_state ... ok
+test map::input::tests::test_handle_input_read_error_preserves_state ... ok
+test map::input::tests::test_handle_input_resize_and_ignored_events_update_expected_state ... ok
+test map::input::tests::test_handle_input_zoom_aliases_restore_literal_states ... ok
+test map::render::tests::test_render_map_zero_inner_axes_keep_only_borders ... ok
+test coordinator::full_update_component_tests::test_typed_full_update_adds_atlas_and_preserves_complete_state_and_selection ... ok
+test map::render::tests::test_render_model_projection_density_and_bounds_are_literal ... ok
+test map::render::tests::test_render_overlays_keep_collision_and_player_precedence ... ok
+test map::state::tests::test_center_on_player_updates_center ... ok
+test map::state::tests::test_density_char_empty ... ok
+test map::state::tests::test_density_char_few ... ok
+test map::render::tests::test_render_local_labels_clip_graphemes_and_preserve_ascii ... ok
+test map::state::tests::test_density_char_many ... ok
+test map::state::tests::test_density_char_several ... ok
+test map::state::tests::test_density_char_single ... ok
+test map::state::tests::test_move_cursor_clamps_negative ... ok
+test map::state::tests::test_move_cursor_clamps_to_grid_bounds ... ok
+test map::state::tests::test_move_cursor_positive ... ok
+test map::state::tests::test_viewport_bounds_symmetry ... ok
+test map::state::tests::test_voxel_to_grid_center_maps_to_center ... ok
+test map::state::tests::test_voxel_to_grid_outside_returns_none ... ok
+test map::state::tests::test_zoom_in_galaxy_to_region ... ok
+test map::state::tests::test_zoom_in_local_returns_none ... ok
+test map::state::tests::test_zoom_in_pushes_stack ... ok
+test map::state::tests::test_zoom_in_region_to_local ... ok
+test map::state::tests::test_zoom_level_extent_galaxy ... ok
+test map::state::tests::test_zoom_level_extent_local ... ok
+test map::state::tests::test_zoom_level_extent_region ... ok
+test map::state::tests::test_zoom_out_at_galaxy_returns_false ... ok
+test map::state::tests::test_zoom_out_galaxy_returns_none ... ok
+test map::state::tests::test_zoom_out_local_to_region ... ok
+test map::state::tests::test_zoom_out_pops_stack ... ok
+test map::state::tests::test_zoom_out_region_to_galaxy ... ok
+test map::tests::test_terminal_guard_cleanup_failures_precede_body_and_all_run ... ok
+test map::tests::test_terminal_guard_setup_failures_preserve_error_and_restore_attempts ... ok
+test map::tests::test_terminal_guard_unwind_restores_and_preserves_panic_payload ... ok
+test map::tests::test_with_terminal_control_success_restores_in_order_and_drops_owner ... ok
+test mcp::config::tests::test_default_config ... ok
+test mcp::config::tests::test_load_nonexistent_returns_default ... ok
+test mcp::config::tests::test_parse_empty_config ... ok
+test mcp::config::tests::test_parse_logging_config ... ok
+test mcp::config::tests::test_to_twyg_opts ... ok
+test mcp::config::tests::test_unknown_sections_ignored ... ok
+test mcp::resources::tests::test_location_resource_distinguishes_marked_from_genuine_empty_system ... ok
+test mcp::resources::tests::test_player_location_resource_uses_physical_galaxy ... ok
+test mcp::resources::tests::test_read_bases ... ok
+test mcp::resources::tests::test_read_galaxy_stats ... ok
+test mcp::resources::tests::test_read_player_location ... ok
+test mcp::resources::tests::test_read_unknown_uri_returns_none ... ok
+test mcp::resources::tests::test_resources_have_descriptions ... ok
+test mcp::resources::tests::test_resources_lists_three ... ok
+test mcp::tests::test_mcp_info_json_documents_streamable_http ... ok
+test mcp::tools::tests::test_concurrent_read_locks ... ok
+test mcp::tools::tests::test_convert_bad_glyphs_length ... ok
+test mcp::tools::tests::test_convert_bad_hex ... ok
+test mcp::tools::tests::test_convert_galactic_address ... ok
+test mcp::tools::tests::test_convert_glyphs ... ok
+test map::tests::test_map_snapshot_owns_fixed_display_and_address_view ... ok
+test mcp::tools::tests::test_convert_no_input_errors ... ok
+test mcp::tools::tests::test_galaxy_stats_returns_counts ... ok
+test mcp::tools::tests::test_model_updates_after_delta ... ok
+test mcp::tools::tests::test_parse_biome_arg_invalid ... ok
+test mcp::tools::tests::test_parse_biome_arg_missing ... ok
+test mcp::tools::tests::test_parse_biome_arg_valid ... ok
+test mcp::tools::tests::test_plan_route_empty_targets_errors ... ok
+test mcp::tools::tests::test_plan_route_requires_targets_or_biome ... ok
+test map::render::tests::test_render_status_legend_and_help_are_complete_and_repeatable ... ok
+test mcp::tools::tests::test_search_planets_invalid_biome ... ok
+test mcp::tools::tests::test_search_planets_all ... ok
+test mcp::tools::tests::test_show_base_existing ... ok
+test mcp::tools::tests::test_show_base_missing_name ... ok
+test mcp::tools::tests::test_show_base_not_found ... ok
+test mcp::tools::tests::test_show_system_missing_name ... ok
+test mcp::tools::tests::test_tools_has_all_eight ... ok
+test mcp::tools::tests::test_tools_schemas_valid ... ok
+test mcp::tools::tests::test_tools_tool_count ... ok
+test mcp::tools::tests::test_tools_see_updated_model ... ok
+test mcp::tools::tests::test_tools_unknown_returns_none ... ok
+test mcp::tools::tests::test_whats_nearby_default ... ok
+test mcp::tools::tests::test_where_am_i_reports_physical_galaxy_independent_of_selection ... ok
+test mcp::tools::tests::test_whats_nearby_with_count ... ok
+test mcp::tools::tests::test_where_am_i_returns_position ... ok
+test mcp::watcher_lifecycle_tests::test_legacy_watch_config_preserves_path_and_default_debounce ... ok
+test mcp::tools::tests::test_where_am_i_without_player_keeps_existing_error ... ok
+test mcp::watcher_lifecycle_tests::test_start_watcher_none_missing_and_malformed_falls_back_without_handle ... ok
+test paths::tests::test_cache_path_for_save_slot1_manual ... ok
+test paths::tests::test_cache_path_for_save_uses_account_and_stem ... ok
+test paths::tests::test_cache_path_under_data_dir ... ok
+test paths::tests::test_config_path_under_data_dir ... ok
+test paths::tests::test_data_dir_ends_with_nms_copilot ... ok
+test paths::tests::test_ensure_data_dir_creates_directory ... ok
+test paths::tests::test_history_path_under_data_dir ... ok
+test prompt::tests::test_prompt_basic ... ok
+test prompt::tests::test_prompt_different_galaxy ... ok
+test prompt::tests::test_prompt_indicator_is_space ... ok
+test prompt::tests::test_prompt_state_from_session ... ok
+test prompt::tests::test_prompt_update ... ok
+test prompt::tests::test_prompt_with_biome_filter ... ok
+test session::tests::test_clear_biome_filter ... ok
+test session::tests::test_format_status ... ok
+test mcp::tools::tests::test_where_am_i_uses_exact_system_identity_and_distinguishes_empty_from_marker ... ok
+test session::tests::test_position_context_label ... ok
+test session::tests::test_reset_all ... ok
+test session::tests::test_reset_position ... ok
+test session::tests::test_session_from_model_without_player_uses_selected_galaxy ... ok
+test session::tests::test_session_from_model ... ok
+test session::tests::test_set_biome_filter ... ok
+test session::tests::test_set_position_address ... ok
+test session::tests::test_set_position_unknown_base_errors ... ok
+test session::tests::test_set_position_base ... ok
+test session::tests::test_set_warp_range ... ok
+test session::tests::test_sync_from_model_absent_player_clears_follow_position_only ... ok
+test session::tests::test_sync_from_model_updates_follow_position_and_preserves_explicit_anchor ... ok
+test setup::tests::test_format_mtime_days_ago ... ok
+test setup::tests::test_format_mtime_future_time ... ok
+test setup::tests::test_format_mtime_hours_ago ... ok
+test setup::tests::test_format_mtime_just_now ... ok
+test setup::tests::test_format_slot_label_manual_only ... ok
+test setup::tests::test_setup_error_display ... ok
+test setup::tests::test_update_save_config_preserves_mcp_section ... ok
+test watch::applied_notification_tests::test_drain_applied_notifications_preserves_order_then_empty_and_disconnect ... ok
+test watch::tests::test_apply_and_notify_cross_reality_uses_qualified_system_names ... ok
+test setup::tests::test_format_slot_label_both ... ok
+test watch::tests::test_apply_and_notify_incoming_destination_and_scan_use_exact_identity ... ok
+test watch::tests::test_apply_and_notify_empty_delta ... ok
+test watch::tests::test_apply_and_notify_new_base ... ok
+test watch::tests::test_apply_and_notify_new_system ... ok
+test watch::tests::test_apply_and_notify_player_moved ... ok
+test watch::tests::test_apply_and_notify_updates_session_counts ... ok
+test watch::tests::test_apply_and_notify_updates_session_position ... ok
+test watch::tests::test_drain_watch_events_applies_delta ... ok
+test watch::tests::test_drain_watch_events_no_pending ... ok
+test watch::tests::test_drain_watch_events_cross_and_same_reality_movements_roundtrip_cache ... ok
+test watch::tests::test_drain_watch_events_same_reality_preserves_selected_galaxy_in_cache ... ok
+test coordinator::additional_tests::test_idle_drop_closes_observer_and_stops_owned_watcher ... ok
+test coordinator::additional_tests::test_no_cache_path_never_invokes_writer ... ok
+test coordinator::tests::test_real_watcher_applies_complete_state_and_persists_matching_version ... ok
+test coordinator::observer_and_drop_tests::test_drop_waits_for_inflight_cache_writer_and_update_publication ... ok
+test coordinator::observer_and_drop_tests::test_observers_receive_order_without_backpressure_or_history ... ok
+test coordinator::additional_tests::test_failed_cache_write_does_not_stop_later_update_or_observers ... ok
+test coordinator::tests::test_blocked_writer_releases_model_and_preserves_update_order ... ok
+test mcp::watcher_lifecycle_tests::test_retained_watcher_receives_later_write_and_owner_drop_disconnects ... ok
+
+test result: ok. 254 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.12s
+
+     Running unittests src/main.rs (target/debug/deps/nms_copilot-b75ea61dd5714c7a)
+
+running 17 tests
+test tests::test_configured_watcher_disabled_ignores_present_path_without_io ... ok
+test tests::test_http_endpoint_parse ... ok
+test tests::test_configured_watcher_missing_path_returns_none ... ok
+test tests::test_configured_watcher_nondefault_and_zero_debounce_are_literal ... ok
+test tests::test_configured_watcher_default_preserves_exact_path_and_debounce ... ok
+test tests::test_mcp_http_url_uses_configured_addr ... ok
+test tests::test_prompt_sync_preserves_typed_address_anchor ... ok
+test tests::test_production_map_capture_releases_model_lock ... ok
+test tests::test_prompt_sync_includes_new_named_galaxy_and_latest_player_state ... ok
+test tests::test_mcp_addr_defaults_to_config ... ok
+test tests::test_mcp_addr_http_flag_uses_default ... ok
+test tests::test_setup_flag_parses ... ok
+test tests::test_mcp_addr_http_arg_overrides_config ... ok
+test tests::test_mcp_smoke_command_parses ... ok
+test tests::test_sse_json_messages_extracts_json_rpc_events ... ok
+test tests::test_cli_help_parses_before_startup ... ok
+test tests::test_dispatch_repl_action_refreshes_stale_session_and_preserves_manual_anchor ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/community_import_integration.rs (target/debug/deps/community_import_integration-be9bffeb31f48cbd)
+
+running 5 tests
+test live_mcp::sse_cursor_tests::test_sse_cursor_ignores_historical_events_and_observes_new_bytes ... ok
+test live_mcp::http_transport_tests::test_shared_http_response_parser_preserves_chunk_extensions_and_rejects_bad_chunks ... ok
+test live_mcp::sse_cursor_tests::test_model_checker_biome_index_ignores_order_but_preserves_multiset ... ok
+test test_import_csv_checked_source_cache_query_and_name_lifecycle_preserves_full_state ... ok
+test live_mcp::sse_cursor_tests::test_sse_paired_cursor_quiet_and_eof_boundaries ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/dispatch_integration.rs (target/debug/deps/dispatch_integration-ab1e2f608f09f09a)
+
+running 15 tests
+test dispatch_set_position_to_base ... ok
+test dispatch_status_shows_state ... ok
+test dispatch_help_returns_text ... ok
+test dispatch_info_returns_summary ... ok
+test dispatch_set_biome_filter ... ok
+test dispatch_reset_clears_state ... ok
+test galaxy_selection_preserves_slice09_movement_and_follow_semantics ... ok
+test empty_model_galaxy_listing_and_selection_are_supported ... ok
+test galaxy_command_lists_selects_and_rejects_atomically ... ok
+test dispatch_convert_glyphs ... ok
+test dispatch_find_returns_results ... ok
+test dispatch_show_base ... ok
+test dispatch_stats_returns_output ... ok
+test galaxy_selection_and_find_preserve_reference_scope ... ok
+test route_reference_precedence_is_consistent_for_both_algorithms ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/history_integration.rs (target/debug/deps/history_integration-bf934ac2a75e460e)
+
+running 3 tests
+test paths_module_returns_expected_filenames ... ok
+test history_file_can_be_created ... ok
+test history_persists_across_instances ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/mcp_live_integration.rs (target/debug/deps/mcp_live_integration-79929eb75b425231)
+
+running 24 tests
+test live_mcp::sse_cursor_tests::test_sse_cursor_ignores_historical_events_and_observes_new_bytes ... ok
+test live_mcp::http_transport_tests::test_shared_http_response_parser_preserves_chunk_extensions_and_rejects_bad_chunks ... ok
+test test_complete_stdio_stdout_validator_rejects_late_noise_and_non_rpc_json ... ok
+test live_mcp::sse_cursor_tests::test_model_checker_biome_index_ignores_order_but_preserves_multiset ... ok
+test live_mcp::sse_cursor_tests::test_sse_paired_cursor_quiet_and_eof_boundaries ... ok
+test test_headless_stdio_cache_startup_matrix ... ok
+test test_headless_http_cache_startup_matrix ... ok
+test test_headless_http_stale_cache_retries_with_original_inputs_after_bind_collision ... ok
+test test_http_child_repairs_missing_physical_system_and_promotes_real_discovery ... ok
+test test_headless_http_live_cold_case_retries_after_first_bind_collision ... ok
+test test_http_mcp_child_disabled_watcher_keeps_initial_model_after_save_change ... ok
+test test_live_previous_address_fixtures_keep_planet_and_reality_fields_distinct ... ok
+test test_headless_http_live_cache_control_matrix ... ok
+test test_http_mcp_child_tracks_save_with_session_and_live_sse ... ok
+test test_headless_stdio_live_cache_control_matrix ... ok
+test test_stdio_mcp_child_disabled_watcher_keeps_initial_model_after_save_change ... ok
+test test_headless_http_complete_live_update_matrix ... ok
+test test_headless_stdio_complete_live_update_matrix ... ok
+test test_stdio_mcp_child_observes_atomic_save_replacements_and_recovers ... ok
+test test_headless_stdio_child_applies_names_and_reuses_compatible_restart ... ok
+test test_warm_missing_physical_system_is_repaired_then_promoted_and_reused ... ok
+test test_headless_http_complete_live_update_retries_after_first_bind_collision ... ok
+test test_http_unknown_bind_retry_uses_fresh_fixture_after_observed_repair ... ok
+test test_headless_http_child_name_lifecycle_and_fresh_bind_retries ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 58.06s
+
+     Running tests/multi_galaxy_integration.rs (target/debug/deps/multi_galaxy_integration-60e7751368f655b6)
+
+running 3 tests
+test test_actual_repl_selects_all_galaxies_and_preserves_session ... ok
+test test_current_cache_full_256_galaxy_round_trips_both_orders ... ok
+test test_checked_save_all_galaxies_queries_routes_and_rebuild_orders ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.44s
+
+     Running tests/name_observations_integration.rs (target/debug/deps/name_observations_integration-1372c48e62862254)
+
+running 8 tests
+test support::live_mcp::sse_cursor_tests::test_sse_cursor_ignores_historical_events_and_observes_new_bytes ... ok
+test support::live_mcp::http_transport_tests::test_shared_http_response_parser_preserves_chunk_extensions_and_rejects_bad_chunks ... ok
+test support::live_mcp::sse_cursor_tests::test_model_checker_biome_index_ignores_order_but_preserves_multiset ... ok
+test test_checked_cold_extraction_preserves_literal_names_and_empty_clears ... ok
+test support::live_mcp::sse_cursor_tests::test_sse_paired_cursor_quiet_and_eof_boundaries ... ok
+test test_counter_only_update_applies_complete_explicit_name_map ... ok
+test test_coordinator_subscription_invalidates_location_and_stats_for_name_only_update ... ok
+test test_checked_name_observations_apply_order_clear_ignore_and_recover ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.78s
+
+     Running tests/owned_mcp_integration.rs (target/debug/deps/owned_mcp_integration-909255e9714eca18)
+
+running 9 tests
+test live_mcp::http_transport_tests::test_shared_http_response_parser_preserves_chunk_extensions_and_rejects_bad_chunks ... ok
+test live_mcp::sse_cursor_tests::test_sse_cursor_ignores_historical_events_and_observes_new_bytes ... ok
+test live_mcp::sse_cursor_tests::test_model_checker_biome_index_ignores_order_but_preserves_multiset ... ok
+test test_literal_cache_model_oracles_cover_empty_and_cold_cross_states ... ok
+test test_literal_cache_validator_accepts_golden_and_rejects_discriminating_mutations ... ok
+test test_owned_mcp_bind_error_is_typed_and_address_recovers ... ok
+test live_mcp::sse_cursor_tests::test_sse_paired_cursor_quiet_and_eof_boundaries ... ok
+test test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity ... ok
+test test_owned_mcp_http_lifecycle_isolation ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.21s
+
+     Running tests/query_cache_integration.rs (target/debug/deps/query_cache_integration-e266b1c9f3e1ab28)
+
+running 2 tests
+test schema2_semantic2_archive_is_rejected_and_current_cache_matches_fresh_queries ... ok
+test parser_derived_discovery_promotes_placeholder_and_preserves_imported_atlas ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/route_cache_integration.rs (target/debug/deps/route_cache_integration-a27d172da9da8130)
+
+running 4 tests
+test schema2_fixture_is_rejected_and_current_cache_matches_independent_route_literals ... ok
+test schema2_archive_is_rejected_and_current_cache_matches_typed_literal_expectations ... ok
+test current_route_cache_matches_exact_open_and_closed_typed_projection ... ok
+test current_three_system_nine_galaxy_route_matches_fresh_and_checked_cache ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/startup_integration.rs (target/debug/deps/startup_integration-d23e2660ca01ba7e)
+
+running 4 tests
+test test_nms_copilot_mcp_smoke_help ... ok
+test test_nms_copilot_help_exits_before_startup ... ok
+test test_headless_explicit_setup_shows_guidance_without_starting_setup ... ok
+test test_missing_save_non_tty_shows_guidance_without_starting_setup ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_core-8fd131131d4abc0f)
+
+running 96 tests
+test address::tests::distance_is_symmetric ... ok
+test address::tests::distance_one_voxel_x ... ok
+test address::tests::diagonal_distance_3_4_5_triangle ... ok
+test address::tests::different_region ... ok
+test address::tests::display_as_hex ... ok
+test address::tests::distance_same_address_is_zero ... ok
+test address::tests::distance_to_core ... ok
+test address::tests::distance_to_core_at_origin ... ok
+test address::tests::from_u64_and_into_u64 ... ok
+test address::tests::from_portal_hex_string ... ok
+test address::tests::galactic_address_portal_roundtrip ... ok
+test address::tests::identical_addresses_distance_zero ... ok
+test address::tests::full_roundtrip_ga_pa_hex_pa_ga ... ok
+test address::tests::known_address_emoji_to_hex ... ok
+test address::tests::hex_string_roundtrip ... ok
+test address::tests::max_distance_across_galaxy ... ok
+test address::tests::known_address_hex_to_emoji ... ok
+test address::tests::negative_coordinates_distance ... ok
+test address::tests::negative_voxel_roundtrip ... ok
+test address::tests::one_voxel_apart_y_axis ... ok
+test address::tests::one_voxel_apart_z_axis ... ok
+test address::tests::pack_unpack_roundtrip ... ok
+test address::tests::parse_emoji_with_variation_selectors ... ok
+test address::tests::parse_with_0x_prefix ... ok
+test address::tests::parse_mixed_input ... ok
+test address::tests::same_region_different_ssi ... ok
+test address::tests::portal_display_is_hex ... ok
+test address::tests::same_region_different_ssi_distance_is_uncertainty ... ok
+test address::tests::same_system_negative_coords_sign_extension_roundtrip ... ok
+test address::tests::same_system_new_vs_from_packed_roundtrip ... ok
+test address::tests::same_system_same_everything ... ok
+test address::tests::signal_booster_format ... ok
+test address::tests::serde_roundtrip ... ok
+test address::tests::signal_booster_roundtrip ... ok
+test address::tests::signal_booster_to_portal_address ... ok
+test address::tests::special_system_indices ... ok
+test address::tests::within_boundary ... ok
+test address::tests::within_zero_distance ... ok
+test biome::tests::case_insensitive_parse ... ok
+test address::tests::wrong_length_errors ... ok
+test biome::tests::display_fromstr_roundtrip ... ok
+test biome::tests::gas_giant_alternate_name ... ok
+test biome::tests::subtype_display_fromstr_roundtrip ... ok
+test biome::tests::test_subtype_suffix_only_parse ... ok
+test biome::tests::test_subtype_unknown_suffix_error ... ok
+test biome::tests::unknown_biome_error ... ok
+test delta::tests::test_delta_change_count_sums_all ... ok
+test delta::tests::test_delta_with_system_is_not_empty ... ok
+test delta::tests::test_empty_delta_is_empty ... ok
+test discovery::tests::discovery_display_fromstr_roundtrip ... ok
+test discovery::tests::discovery_record_constructor ... ok
+test discovery::tests::discovery_solar_system_alternate ... ok
+test galaxy::tests::all_256_valid ... ok
+test galaxy::tests::budullangr_is_empty ... ok
+test galaxy::tests::calypso_is_harsh ... ok
+test galaxy::tests::eissentam_is_lush ... ok
+test galaxy::tests::euclid_is_index_zero ... ok
+test galaxy::tests::galaxy_display ... ok
+test galaxy::tests::galaxy_type_alternate_names ... ok
+test galaxy::tests::galaxy_type_display_fromstr_roundtrip ... ok
+test galaxy::tests::last_galaxy ... ok
+test galaxy::tests::type_counts ... ok
+test glyph::tests::all_16_glyphs_emoji_roundtrip ... ok
+test glyph::tests::all_16_glyphs_hex_roundtrip ... ok
+test glyph::tests::all_16_glyphs_index_roundtrip ... ok
+test glyph::tests::bird_with_and_without_variation_selector ... ok
+test glyph::tests::all_16_glyphs_name_roundtrip ... ok
+test glyph::tests::hex_lowercase ... ok
+test glyph::tests::invalid_glyph_errors ... ok
+test glyph::tests::name_case_insensitive ... ok
+test glyph::tests::parse_next_glyph_emoji_sequence ... ok
+test glyph::tests::parse_next_glyph_hex ... ok
+test glyph::tests::parse_next_glyph_name ... ok
+test glyph::tests::test_abbrev_case_insensitive ... ok
+test glyph::tests::test_parse_next_glyph_abbrev_sequence ... ok
+test glyph::tests::test_all_16_glyphs_abbrev_roundtrip ... ok
+test glyph::tests::test_parse_next_glyph_kelvin_abbreviation_suffix ... ok
+test glyph::tests::test_parse_next_glyph_kelvin_name_suffix ... ok
+test glyph::tests::test_parse_next_glyph_preview_boundaries_and_prefixes ... ok
+test glyph::tests::test_parse_next_glyph_unicode_casefold_suffixes ... ok
+test glyph::tests::test_parse_next_glyph_utf8_preview_four_byte_boundary ... ok
+test glyph::tests::test_parse_next_glyph_utf8_preview_three_byte_boundary ... ok
+test player::tests::base_type_display_fromstr_roundtrip ... ok
+test player::tests::base_type_short_names ... ok
+test player::tests::player_base_reality_index ... ok
+test player::tests::player_state_constructor ... ok
+test system::tests::planet_constructor ... ok
+test system::tests::system_reality_index_from_address ... ok
+test system::tests::test_discovery_source_archive_preserves_exact_community_labels ... ok
+test system::tests::test_discovery_source_serde_uses_exact_external_tag_shapes ... ok
+test system::tests::test_system_id_deserialization_accepts_reality_boundaries_and_zero_address ... ok
+test system::tests::test_system_id_deserialization_rejects_coordinate_overflow ... ok
+test system::tests::test_system_id_qualifies_planet_zeroed_address_by_reality ... ok
+test system::tests::test_system_id_deserialization_rejects_noncanonical_values ... ok
+test system::tests::test_system_id_serializes_as_exact_numeric_object_and_roundtrips ... ok
+test system::tests::test_system_serde_requires_known_source_without_defaulting ... ok
+
+test result: ok. 96 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_graph-c35dfb46a6c6ed70)
+
+running 176 tests
+test edges::tests::test_edge_strategy_default_is_knn_10 ... ok
+test edges::tests::test_warp_range_edges_respects_distance ... ok
+test edges::tests::test_knn_edges_all_nodes_connected ... ok
+test edges::tests::test_edge_weights_are_positive ... ok
+test edges::tests::test_no_duplicate_edges ... ok
+test edges::tests::test_build_edges_clears_previous ... ok
+test edges::tests::test_connect_new_system_nonexistent_is_noop ... ok
+test edges::tests::test_knn_edges_created ... ok
+test edges::tests::test_no_self_loops ... ok
+test edges::tests::test_connect_new_system_adds_edges ... ok
+test edges::tests::test_warp_range_zero_no_edges ... ok
+test edges::tests::test_warp_range_large_connects_all ... ok
+test extract::tests::test_extract_biome_from_hex_string ... ok
+test extract::tests::test_extract_biome_from_vp_empty ... ok
+test extract::tests::test_extract_biome_all_valid_indices ... ok
+test extract::tests::test_extract_biome_from_vp_single_element ... ok
+test edges::tests::test_edge_strategies_and_incremental_insertions_stay_galaxy_local ... ok
+test extract::tests::test_extract_biome_lush_not_infested ... ok
+test extract::tests::test_extract_biome_test_index_skipped ... ok
+test extract::tests::test_extract_biome_toxic_infested ... ok
+test extract::tests::test_extract_biome_unknown_index ... ok
+test extract::tests::test_extract_biome_vp1_not_number_or_string ... ok
+test extract::tests::test_extract_seed_from_vp_empty ... ok
+test extract::tests::test_extract_seed_from_vp_hex ... ok
+test extract::tests::test_extract_seed_from_vp_integer ... ok
+test extract::tests::test_extract_seed_from_vp_not_number_or_string ... ok
+test import::tests::test_import_csv_file_not_found ... ok
+test import::tests::test_import_csv_bad_glyphs_skipped ... ok
+test import::tests::test_import_csv_galaxy_numeric ... ok
+test import::tests::test_import_csv_eissentam_galaxy ... ok
+test import::tests::test_import_csv_different_planet_glyphs_same_galaxy_remain_duplicate ... ok
+test import::tests::test_import_csv_default_galaxy ... ok
+test import::tests::test_import_csv_duplicate_detection ... ok
+test import::tests::test_import_csv_basic ... ok
+test import::tests::test_import_csv_empty_file ... ok
+test import::tests::test_import_csv_multi_galaxy ... ok
+test import::tests::test_import_csv_into_populated_model ... ok
+test import::tests::test_import_stats_default ... ok
+test import::tests::test_import_csv_glyphs_with_0x_prefix ... ok
+test import::tests::test_resolve_galaxy_index_case_insensitive ... ok
+test import::tests::test_import_csv_no_biome ... ok
+test import::tests::test_resolve_galaxy_index_euclid ... ok
+test import::tests::test_resolve_galaxy_index_numeric ... ok
+test import::tests::test_resolve_galaxy_index_unknown_defaults_to_zero ... ok
+test model::tests::test_active_galaxy_defaults_to_zero ... ok
+test model::tests::test_active_spatial_empty_model_returns_none ... ok
+test model::tests::test_active_spatial_returns_correct_tree ... ok
+test model::tests::test_apply_delta_cross_reality_updates_physical_state_and_selection ... ok
+test import::tests::test_import_csv_with_biome_creates_planet ... ok
+test model::tests::test_apply_delta_new_base ... ok
+test model::tests::test_apply_delta_empty_is_noop ... ok
+test model::tests::test_apply_delta_new_planet_to_existing_system ... ok
+test model::tests::test_apply_delta_same_reality_keeps_selection_and_absent_player ... ok
+test model::tests::test_apply_delta_planet_promotes_existing_player_placeholder ... ok
+test model::tests::test_apply_save_update_selection_tracks_only_known_physical_transition ... ok
+test model::tests::test_apply_delta_new_system ... ok
+test model::tests::test_apply_delta_player_moved ... ok
+test model::tests::test_apply_save_update_uses_full_state_and_preserves_imported_atlas ... ok
+test model::tests::test_discovered_galaxies_empty ... ok
+test import::tests::test_import_csv_preserves_source_and_accepts_ragged_optional_columns ... ok
+test model::tests::test_discovered_galaxies_sorted ... ok
+test model::tests::test_ensure_player_system_inserts_sentinel ... ok
+test model::tests::test_base_not_found ... ok
+test model::tests::test_from_save_address_to_id ... ok
+test model::tests::test_explicit_placeholders_promote_without_replacing_topology_or_genuine_empty ... ok
+test import::tests::test_import_csv_promotes_only_explicit_placeholder_and_counts_one_addition ... ok
+test model::tests::test_from_save_base_lookup ... ok
+test model::tests::test_from_save_base_lookup_case_insensitive ... ok
+test model::tests::test_from_save_basic_counts ... ok
+test model::tests::test_from_save_biome_index ... ok
+test model::tests::test_from_save_biome_index_empty ... ok
+test model::tests::test_from_save_graph_nodes ... ok
+test model::tests::test_from_save_name_index_uses_qualified_key_shape ... ok
+test model::tests::test_from_save_node_map ... ok
+test model::tests::test_from_save_player_position ... ok
+test model::tests::test_genuine_empty_system_promotes_placeholder_and_preserves_state ... ok
+test model::tests::test_from_save_spatial_index_populated ... ok
+test model::tests::test_insert_same_coordinates_in_two_galaxies_preserves_qualified_indexes ... ok
+test model::tests::test_insert_system_separate_galaxies ... ok
+test model::tests::test_insert_duplicate_system_is_noop ... ok
+test model::tests::test_insert_system_adds_to_all_indexes ... ok
+test model::tests::test_rebuild_spatial ... ok
+test model::tests::test_insert_system_unnamed ... ok
+test model::tests::test_same_galaxy_duplicate_system_name_keeps_last_inserted_system ... ok
+test import::tests::test_import_csv_same_coordinates_in_two_galaxies_is_order_independent ... ok
+test model::tests::test_set_active_galaxy ... ok
+test model::tests::test_spatial_for_unknown_galaxy_returns_none ... ok
+test model::tests::test_system_by_name_is_galaxy_qualified_in_both_insertion_orders ... ok
+test model::tests::test_system_by_name_not_found ... ok
+test model::tests::test_system_not_found_returns_none ... ok
+test query::galaxy_scope_tests::test_all_spatial_apis_return_empty_for_unpopulated_galaxy ... ok
+test query::galaxy_scope_tests::test_address_query_is_galaxy_qualified_and_active_query_rejects_foreign ... ok
+test query::galaxy_scope_tests::test_galaxy_collision_radius_boundary_and_numeric_tie_order ... ok
+test query::galaxy_scope_tests::test_spatial_limits_and_radius_edges ... ok
+test model::tests::test_player_system_distance_zero ... ok
+test query::tests::test_matches_filter_all_pass ... ok
+test query::iteration02_oracle_tests::explicit_and_active_spatial_apis_return_literal_galaxy_memberships_and_preserve_state ... ok
+test query::iteration02_oracle_tests::literal_tie_order_and_false_infested_filter_survive_both_insert_orders ... ok
+test query::tests::test_matches_filter_biome_match ... ok
+test query::tests::test_matches_filter_biome_mismatch ... ok
+test query::tests::test_matches_filter_combined ... ok
+test query::tests::test_matches_filter_infested_mismatch ... ok
+test query::tests::test_matches_filter_named_only ... ok
+test query::tests::test_nearest_planets_limit_respected ... ok
+test query::tests::test_nearest_planets_no_filter ... ok
+test query::tests::test_explicit_spatial_apis_return_exact_canonical_galaxy_views ... ok
+test query::tests::test_nearest_planets_with_infested_filter ... ok
+test query::tests::test_nearest_systems_distances_are_in_ly ... ok
+test query::tests::test_nearest_planets_with_biome_filter ... ok
+test query::tests::test_nearest_systems_limit ... ok
+test query::tests::test_nearest_systems_returns_sorted ... ok
+test query::tests::test_planets_within_radius ... ok
+test query::tests::test_planets_within_radius_no_match ... ok
+test query::tests::test_resolve_position_address_takes_priority ... ok
+test query::tests::test_resolve_position_base_not_found ... ok
+test query::tests::test_resolve_position_direct_address ... ok
+test query::tests::test_resolve_position_from_base ... ok
+test query::tests::test_resolve_position_no_player_state_errors ... ok
+test query::tests::test_resolve_position_player_position ... ok
+test query::tests::test_spatial_ssi_ties_and_all_planet_filter_fields_are_exact ... ok
+test query::tests::test_systems_within_radius_excludes_far ... ok
+test query::tests::test_systems_within_radius_filters ... ok
+test query::tests::test_systems_within_radius_zero ... ok
+test route::iteration02_route_oracles::positive_nine_galaxy_bridge_and_foreign_shortcut_have_exact_projection ... ok
+test route::iteration02_route_oracles::route_entry_points_return_exact_errors_for_empty_one_hop_missing_and_foreign_ids ... ok
+test route::tests::test_constrain_hops_empty_route ... ok
+test route::tests::test_constrain_hops_recomputes_totals_and_preserves_waypoint_markers ... ok
+test route::tests::test_constrain_hops_inserts_waypoints ... ok
+test route::tests::test_constrain_hops_preserves_endpoints ... ok
+test route::tests::test_constrain_hops_short_route_unchanged ... ok
+test route::tests::test_nine_galaxy_closed_two_opt_keeps_each_target_once ... ok
+test route::tests::test_reachable_all_within_large_range ... ok
+test route::tests::test_reachable_includes_start ... ok
+test route::tests::test_reachable_isolated_with_tiny_range ... ok
+test route::tests::test_constrain_hops_respects_warp_range ... ok
+test route::tests::test_reachable_nonexistent_start_errors ... ok
+test route::tests::test_reachable_partial ... ok
+test route::tests::test_route_constructors_reject_foreign_and_missing_ids ... ok
+test route::tests::test_route_error_display_includes_galaxy_qualified_identity ... ok
+test route::tests::test_route_entrypoints_validate_exact_membership_and_foreign_payloads ... ok
+test route::tests::test_shortest_path_adjacent_systems ... ok
+test route::tests::test_shortest_path_cumulative_distances ... ok
+test route::tests::test_shortest_path_disconnected_falls_back_to_direct ... ok
+test route::tests::test_shortest_path_first_hop_zero_distance ... ok
+test route::tests::test_shortest_path_ignores_injected_cross_galaxy_bridge ... ok
+test route::tests::test_shortest_path_nonexistent_system_errors ... ok
+test route::tests::test_shortest_path_multi_hop ... ok
+test route::tests::test_shortest_path_same_galaxy_disconnected_fallback_is_exact_800_ly ... ok
+test route::tests::test_shortest_path_same_system ... ok
+test route::tests::test_shortest_path_validates_membership_before_same_id_and_galaxy ... ok
+test route::tests::test_tsp_foreign_target_returns_no_path_after_missing_validation ... ok
+test route::tests::test_tsp_nn_empty_targets_errors ... ok
+test route::tests::test_tsp_nn_greedy_picks_nearest ... ok
+test route::tests::test_tsp_nn_nonexistent_start_errors ... ok
+test route::tests::test_tsp_nn_nonexistent_target_errors ... ok
+test route::tests::test_tsp_nn_return_to_start ... ok
+test route::tests::test_tsp_nn_single_target ... ok
+test route::tests::test_tsp_nn_visits_all_targets ... ok
+test route::tests::test_two_opt_closed_route_preserves_exact_2400_ly_line ... ok
+test route::tests::test_tsp_two_opt_visits_all ... ok
+test route::tests::test_two_opt_does_not_increase_distance ... ok
+test route::tests::test_warp_jump_count ... ok
+test route::tests::test_two_opt_small_route_unchanged ... ok
+test route::tests::test_two_opt_keeps_closed_start_and_end ... ok
+test spatial::tests::test_rtree_bulk_load_size ... ok
+test spatial::tests::test_rtree_nearest_neighbor ... ok
+test route::tests::test_two_opt_improves_scrambled_route ... ok
+test spatial::tests::test_system_id_different_ssi_differs ... ok
+test spatial::tests::test_system_id_from_address_zeroes_planet ... ok
+test spatial::tests::test_system_point_distance_squared ... ok
+test spatial::tests::test_system_point_envelope ... ok
+test spatial::tests::test_system_point_from_address_coordinates ... ok
+test route::tests::test_waypoint_search_uses_full_nine_galaxy_neighborhood_with_sixty_decoys ... ok
+test route::iteration02_route_oracles::dense_galaxy_nine_reachability_returns_exact_120_member_set_and_preserves_selection ... ok
+test route::tests::test_reachable_nine_galaxy_returns_exact_complete_set_with_collisions ... ok
+test route::tests::test_reachable_systems_scans_more_than_one_hundred_neighbors ... ok
+
+test result: ok. 176 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/discovery_names.rs (target/debug/deps/discovery_names-4ef9d8c9fea01de9)
+
+running 7 tests
+test test_discovery_names_public_type_supports_empty_and_absent_values ... ok
+test test_apply_discovery_names_preserves_valid_duplicate_alias_representatives ... ok
+test test_checked_cold_extraction_applies_names_and_legacy_extraction_stays_unnamed ... ok
+test test_apply_discovery_names_updates_only_existing_entities_and_preserves_model_state ... ok
+test test_extract_discovery_names_keeps_first_valid_empty_and_unknown_type_rules ... ok
+test test_extract_discovery_names_uses_checked_addresses_and_full_literal_maps ... ok
+test test_extract_discovery_names_first_invalid_rows_reserve_each_key ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/validated_save.rs (target/debug/deps/validated_save-e24cbbd48269abd1)
+
+running 3 tests
+test test_validated_graph_rejects_unknown_discovery_rows_even_when_the_builder_would_ignore_them ... ok
+test test_validated_extraction_and_model_preserve_record_galaxies_and_whole_indexes ... ok
+test test_validated_extraction_is_independent_of_original_discovery_row_order ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_query-8b04c2785221ddf2)
+
+running 99 tests
+test display::tests::test_format_distance_thousands ... ok
+test display::tests::test_format_distance_zero ... ok
+test display::tests::test_format_distance_millions ... ok
+test display::tests::test_format_distance_same_voxel ... ok
+test display::tests::test_format_distance_small_with_uncertainty ... ok
+test display::tests::test_format_find_results_empty ... ok
+test display::tests::test_format_route_empty ... ok
+test display::tests::test_format_route_header_present ... ok
+test display::tests::test_format_find_results_with_data ... ok
+test display::tests::test_format_find_results_infested_marker ... ok
+test display::tests::test_format_route_waypoint_marker ... ok
+test display::tests::test_format_route_missing_system_fallback_uses_coordinate_only_for_glyphs ... ok
+test display::tests::test_format_route_warp_jumps_shown ... ok
+test display::tests::test_hex_to_emoji_length ... ok
+test display::tests::test_hex_to_emoji_basic ... ok
+test display::tests::test_format_route_algorithm_shown ... ok
+test display::tests::test_truncate_exact_length ... ok
+test display::tests::test_truncate_long_string ... ok
+test display::tests::test_truncate_short_string ... ok
+test display::tests::test_truncate_unicode_scalar_cases_match_literal_contract ... ok
+test display::tests::test_format_stats_output ... ok
+test display::tests::test_format_show_system_output ... ok
+test find::tests::test_find_all_planets ... ok
+test display::tests::test_format_find_results_with_dark_theme_contains_ansi ... ok
+test find::tests::test_find_by_discoverer ... ok
+test find::tests::test_find_explicit_references_select_their_galaxy_without_mutation ... ok
+test find::tests::test_find_filters_before_nearest_and_radius_boundaries ... ok
+test find::tests::test_find_composes_all_planet_filters_in_every_spatial_mode ... ok
+test find::tests::test_find_by_biome ... ok
+test display::tests::test_format_find_results_unicode_names_preserve_values_in_both_themes ... ok
+test find::tests::test_find_from_nonexistent_base_errors ... ok
+test find::tests::test_find_keeps_same_index_planets_with_their_qualified_systems ... ok
+test find::tests::test_find_nearest_zero_resolves_reference_before_returning_empty ... ok
+test find::tests::test_find_from_base ... ok
+test find::tests::test_find_preserves_legacy_nonfinite_radius_behavior ... ok
+test find::tests::test_find_nearest_limit ... ok
+test find::tests::test_find_portal_hex_is_12_digits ... ok
+test find::tests::test_find_ties_sort_by_numeric_qualified_key_and_planet_index ... ok
+test find::tests::test_find_results_sorted_by_distance ... ok
+test route::iteration02_route_query_oracles::test_foreign_target_is_rejected_before_zero_or_one_target_truncation_for_both_algorithms ... ok
+test display::tests::test_format_route_unicode_normal_and_waypoint_names_preserve_values_in_both_themes ... ok
+test route::tests::test_execute_route_current_position_requires_active_galaxy_match ... ok
+test route::tests::test_execute_route_from_base ... ok
+test route::iteration02_route_query_oracles::repeated_named_and_id_targets_keep_first_occurrence_before_the_limit ... ok
+test route::tests::test_execute_route_from_explicit_address ... ok
+test route::tests::test_execute_route_from_nonexistent_base_errors ... ok
+test route::tests::test_execute_route_with_biome_filter ... ok
+test route::tests::test_execute_route_nearest_neighbor_algorithm ... ok
+test route::tests::test_execute_route_max_targets_limit ... ok
+test route::tests::test_execute_route_with_system_ids ... ok
+test route::tests::test_biome_route_deduplicates_all_planets_before_target_limit ... ok
+test route::tests::test_execute_route_reports_typed_empty_foreign_and_missing_targets ... ok
+test route::tests::test_execute_route_round_trip ... ok
+test route::tests::test_foreign_base_name_wins_over_same_named_local_system ... ok
+test route::iteration02_route_query_oracles::planet_heavy_start_selects_two_unique_targets_with_literal_open_and_closed_routes ... ok
+test route::tests::test_execute_route_with_warp_range ... ok
+test route::tests::test_resolve_start_base_not_found ... ok
+test route::tests::test_resolve_start_base ... ok
+test route::tests::test_route_radius_filters_all_targets_before_target_limit ... ok
+test route::tests::test_resolve_start_current_position ... ok
+test route::tests::test_nine_galaxy_query_modes_validate_before_limit_and_count_selected_targets ... ok
+test route::tests::test_resolve_start_explicit_address ... ok
+test show::tests::test_show_base_not_found ... ok
+test route::tests::test_route_from_foreign_base_uses_its_galaxy_without_selection_mutation ... ok
+test show::tests::test_show_base_case_insensitive ... ok
+test show::tests::test_show_base_by_name ... ok
+test show::tests::test_show_named_bases_attach_to_their_qualified_systems ... ok
+test show::tests::test_show_packed_address_uses_active_galaxy_and_clears_planet_bits ... ok
+test show::tests::test_show_system_not_found ... ok
+test stats::tests::test_stats_basic_counts ... ok
+test stats::tests::test_stats_biome_counts_sum ... ok
+test theme::tests::test_color_ansi_code_completeness ... ok
+test table::tests::test_nms_theme_no_color_parses_without_panic ... ok
+test theme::tests::test_should_use_colors_false_when_config_disabled ... ok
+test table::tests::test_build_table_no_color_produces_output ... ok
+test table::tests::test_build_table_contains_ansi_with_nms_theme ... ok
+test theme::tests::test_style_paint_bold_and_color_combines_codes ... ok
+test table::tests::test_nms_theme_parses_without_panic ... ok
+test theme::tests::test_style_paint_bold_returns_bold_escape ... ok
+test theme::tests::test_style_paint_no_color_returns_plain ... ok
+test theme::tests::test_style_paint_with_color_returns_ansi_wrapped ... ok
+test theme::tests::test_style_plain_is_noop ... ok
+test theme::tests::test_theme_biome_style_barren_returns_barren_style ... ok
+test theme::tests::test_theme_biome_style_dead_returns_dead_style ... ok
+test theme::tests::test_theme_biome_style_frozen_returns_frozen_style ... ok
+test theme::tests::test_theme_biome_style_lava_returns_scorched_style ... ok
+test theme::tests::test_theme_biome_style_lush_returns_lush_style ... ok
+test theme::tests::test_theme_biome_style_radioactive_returns_other_style ... ok
+test table::tests::test_build_table_preserves_all_data ... ok
+test table::tests::test_build_table_produces_output ... ok
+test theme::tests::test_theme_biome_style_red_returns_exotic_style ... ok
+test theme::tests::test_theme_biome_style_scorched_returns_scorched_style ... ok
+test theme::tests::test_theme_biome_style_toxic_returns_toxic_style ... ok
+test theme::tests::test_theme_biome_style_swamp_returns_lush_style ... ok
+test theme::tests::test_theme_biome_style_weird_returns_exotic_style ... ok
+test theme::tests::test_theme_default_dark_header_is_bold ... ok
+test theme::tests::test_theme_none_no_escapes_in_painted_output ... ok
+test show::tests::test_show_omits_cross_galaxy_distance_and_formats_only_comparable_values ... ok
+test route::iteration02_route_query_oracles::test_unbounded_biome_selection_visits_all_105_targets_in_both_algorithms ... ok
+
+test result: ok. 99 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_save-829e63a8087ebc4a)
+
+running 105 tests
+test convert::tests::galactic_address_object_to_core ... ok
+test decompress::tests::detect_empty_input ... ok
+test convert::tests::unknown_discovery_type_returns_none ... ok
+test decompress::tests::decompress_save_file_not_found ... ok
+test convert::tests::base_to_core ... ok
+test convert::tests::discovery_record_to_core ... ok
+test convert::tests::active_context_expedition ... ok
+test convert::tests::active_context_main ... ok
+test convert::tests::to_core_player_state_zero_previous_is_none ... ok
+test convert::tests::to_core_player_state_with_previous ... ok
+test decompress::tests::detect_lz4_compressed ... ok
+test decompress::tests::detect_plaintext_json ... ok
+test decompress::tests::invalid_magic_at_second_block ... ok
+test decompress::tests::parse_block_header_chunk_too_large ... ok
+test decompress::tests::parse_block_header_invalid_magic ... ok
+test decompress::tests::parse_block_header_truncated ... ok
+test decompress::tests::parse_block_header_valid ... ok
+test decompress::tests::plaintext_passthrough ... ok
+test decompress::tests::truncated_payload ... ok
+test locate::tests::account_kind_display ... ok
+test decompress::tests::roundtrip_single_block ... ok
+test locate::tests::account_kind_gog ... ok
+test locate::tests::account_kind_steam ... ok
+test locate::tests::account_kind_steam_bad_id ... ok
+test locate::tests::account_kind_unknown ... ok
+test locate::tests::nms_save_dir_contains_hellogames_nms ... ok
+test locate::tests::parse_mf_save_rejected ... ok
+test locate::tests::parse_nonsave_rejected ... ok
+test locate::tests::parse_save2_hg ... ok
+test locate::tests::parse_save30_hg ... ok
+test locate::tests::list_accounts_empty_returns_error ... ok
+test locate::tests::list_saves_empty_dir_returns_error ... ok
+test locate::tests::parse_save3_hg ... ok
+test locate::tests::parse_save4_hg ... ok
+test locate::tests::parse_save_hg ... ok
+test locate::tests::save_file_metadata_path ... ok
+test locate::tests::save_slot_most_recent ... ok
+test locate::tests::save_type_display ... ok
+test locate::tests::test_parse_save_indices_above_slot_fifteen_are_rejected ... ok
+test locate::tests::list_accounts_finds_steam_and_gog ... ok
+test locate::tests::list_saves_excludes_metadata ... ok
+test locate::tests::list_accounts_skips_files ... ok
+test mapping::tests::deobfuscate_already_plaintext ... ok
+test locate::tests::test_list_accounts_reports_exact_sorted_kinds_paths_and_empty_errors ... ok
+test mapping::tests::deobfuscate_array ... ok
+test decompress::tests::roundtrip_multiple_blocks ... ok
+test mapping::tests::deobfuscate_json_bytes ... ok
+test mapping::tests::from_json_empty_mapping ... ok
+test mapping::tests::deobfuscate_json_already_plaintext ... ok
+test mapping::tests::from_json_invalid ... ok
+test mapping::tests::from_json_valid ... ok
+test mapping::tests::is_obfuscated_empty_object ... ok
+test mapping::tests::is_obfuscated_no_version_key ... ok
+test mapping::tests::is_obfuscated_non_object ... ok
+test mapping::tests::is_obfuscated_with_f2p ... ok
+test mapping::tests::is_obfuscated_with_version ... ok
+test mapping::tests::deobfuscate_json_invalid_json ... ok
+test mapping::tests::deobfuscate_nested ... ok
+test mapping::tests::deobfuscate_simple ... ok
+test mapping::tests::deobfuscate_preserves_unknown_keys ... ok
+test metadata::tests::invalid_meta_length ... ok
+test metadata::tests::meta_encryption_key_values ... ok
+test metadata::tests::parse_decrypted_metadata_format_2001 ... ok
+test metadata::tests::parse_decrypted_metadata_format_2002 ... ok
+test metadata::tests::read_metadata_tries_other_slots ... ok
+test metadata::tests::read_metadata_vanilla_length_uses_8_rounds ... ok
+test metadata::tests::read_metadata_with_synthetic_encrypted_data ... ok
+test metadata::tests::storage_slot_all_has_32_entries ... ok
+test metadata::tests::storage_slot_is_account ... ok
+test metadata::tests::unsupported_vanilla_format ... ok
+test mapping::tests::legacy_keys_merged ... ok
+test metadata::tests::verify_sha256_correct_hash ... ok
+test mapping::tests::load_bundled_mapping ... ok
+test metadata::tests::verify_sha256_no_hash_returns_true ... ok
+test metadata::tests::verify_sha256_wrong_hash ... ok
+test model::tests::parse_common_state_data ... ok
+test model::tests::parse_discovery_record ... ok
+test model::tests::parse_discovery_record_integer_ua ... ok
+test model::tests::parse_discovery_record_sector ... ok
+test model::tests::parse_galactic_address_object ... ok
+test model::tests::parse_packed_galactic_address_hex_string ... ok
+test model::tests::parse_minimal_save_root ... ok
+test metadata::tests::valid_meta_lengths_reach_decryption ... ok
+test model::tests::parse_packed_galactic_address_integer ... ok
+test model::tests::parse_packed_galactic_address_zero ... ok
+test model::tests::parse_persistent_player_base ... ok
+test model::tests::parse_player_state_data_minimal ... ok
+test model::tests::parse_universe_address ... ok
+test xxtea::tests::delta_reverse_delta_cancel ... ok
+test xxtea::tests::derive_key_all_slots_unique ... ok
+test xxtea::tests::derive_key_slot_0 ... ok
+test xxtea::tests::derive_key_slot_1 ... ok
+test xxtea::tests::derive_key_slot_2 ... ok
+test mapping::tests::lookup_unknown_key ... ok
+test xxtea::tests::encrypt_decrypt_roundtrip_6_rounds ... ok
+test xxtea::tests::encrypt_decrypt_roundtrip_8_rounds ... ok
+test xxtea::tests::hash_precomputation_default ... ok
+test xxtea::tests::encrypt_decrypt_roundtrip_all_slots ... ok
+test xxtea::tests::hash_precomputation_vanilla ... ok
+test mapping::tests::lookup_known_keys ... ok
+test mapping::tests::savewizard_fixup ... ok
+test locate::tests::test_list_saves_uses_complete_literal_filename_slot_type_table ... ok
+test locate::tests::find_most_recent_save_in_picks_newest ... ok
+test locate::tests::group_into_slots_pairs_correctly ... ok
+test locate::tests::list_saves_finds_and_sorts_by_mtime ... ok
+
+test result: ok. 105 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/address_decode.rs (target/debug/deps/address_decode-434c034e9f88fad5)
+
+running 8 tests
+test test_decode_error_traits_and_diagnostics_are_public_and_stable ... ok
+test test_decode_both_packed_apis_reject_invalid_values_with_exact_paths ... ok
+test test_decode_field_families_preserve_high_galaxy_and_p0_width ... ok
+test test_decode_packed_integer_string_boundaries_and_precision ... ok
+test test_decode_previous_address_absence_and_all_six_zero_sentinel ... ok
+test test_decode_expanded_full_object_and_component_edges ... ok
+test test_decode_independent_chili_and_all_base_oracles ... ok
+test test_decode_expanded_required_presence_type_paths_and_priority ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/validated_save.rs (target/debug/deps/validated_save-8ae686da4fb99447)
+
+running 17 tests
+test test_checked_file_parser_uses_plaintext_pipeline_and_preserves_errors ... ok
+test test_checked_parser_rejects_late_legacy_accepted_base_after_valid_base_and_discoveries ... ok
+test test_checked_parser_rejects_late_bad_discovery_before_later_context_addresses ... ok
+test test_checked_parser_requires_top_level_discovery_manager_and_validates_late_rows_and_bases ... ok
+test test_checked_parser_keeps_unnamed_unknown_type_base_and_validates_unknown_discovery_address ... ok
+test test_checked_parser_handles_inactive_and_previous_address_presence_without_defaulting_bad_values ... ok
+test test_checked_parser_keeps_active_selector_and_required_context_container_rules ... ok
+test test_checked_whole_parse_pairs_independent_packed_literals_and_preserves_raw_integer ... ok
+test test_checked_parser_distinguishes_missing_null_and_wrong_type_before_serde_defaults ... ok
+test test_checked_parser_validates_base_context_before_expedition_context ... ok
+test test_legacy_parser_accepts_the_same_57_bit_u64_but_checked_parser_rejects_atomically ... ok
+test test_validated_save_pairs_original_discoveries_and_builds_complete_active_state ... ok
+test test_checked_parser_reports_every_expanded_component_boundary_before_narrowing ... ok
+test test_checked_parser_validates_all_previous_components_and_six_component_sentinel ... ok
+test test_checked_parser_preserves_inactive_and_defaulted_container_presence_rules ... ok
+test test_checked_parser_requires_each_active_address_member_in_both_contexts ... ok
+test test_checked_file_parser_validates_after_key_mapping_and_lz4_decompression ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (target/debug/deps/nms_watch-64007e9737d4f6b9)
+
+running 38 tests
+test delta::tests::test_delta_detects_new_system ... ok
+test delta::tests::test_delta_no_false_positives_on_existing ... ok
+test delta::tests::test_delta_detects_player_moved ... ok
+test delta::tests::test_delta_change_count_sums_correctly ... ok
+test delta::tests::test_delta_detects_new_planet ... ok
+test delta::tests::test_delta_empty_when_identical ... ok
+test delta::tests::test_delta_detects_modified_base ... ok
+test delta::tests::test_compute_delta_and_apply_add_same_coordinates_in_other_galaxy ... ok
+test delta::tests::test_delta_detects_new_base ... ok
+test delta::tests::test_compute_delta_cross_reality_movement_preserves_qualified_discoveries ... ok
+test error::tests::test_watch_error_display_notify_error ... ok
+test error::tests::test_watch_error_display_parse_error ... ok
+test error::tests::test_watch_error_display_save_not_found ... ok
+test snapshot::tests::test_snapshot_from_save_bases ... ok
+test snapshot::tests::test_snapshot_from_save_player_address ... ok
+test snapshot::tests::test_snapshot_from_save_planets ... ok
+test snapshot::tests::test_snapshot_from_save_systems ... ok
+test watcher::tests::test_file_stability_check_ms_constant ... ok
+test watcher::tests::test_max_consecutive_failures_constant ... ok
+test watcher::tests::test_event_matches_save_path_exact_and_canonical_identity ... ok
+test watcher::tests::test_send_full_update_preserves_source_order ... ok
+test watcher::tests::test_send_full_update_cancellation_releases_full_queue_worker ... ok
+test watcher::tests::test_send_observation_preserves_source_order_and_complete_maps ... ok
+test watcher::tests::test_send_observation_cancellation_preserves_queued_event ... ok
+test watcher::tests::test_observation_handle_drop_joins_idle_queued_and_blocked_workers ... ok
+test watcher::tests::test_start_watching_nonexistent_file_errors ... ok
+test watcher::tests::test_is_file_stable_for_static_file ... ok
+test watcher::tests::test_is_file_stable_nonexistent_returns_false ... ok
+test watcher::tests::test_watch_config_default_debounce ... ok
+test watcher::tests::test_full_watcher_drop_joins_idle_and_after_update_workers ... ok
+test watcher::tests::test_full_watcher_malformed_input_does_not_advance_baseline ... ok
+test watcher::tests::test_observation_stream_emits_clear_and_omission_but_quiets_equivalent_dm ... ok
+test watcher::tests::test_observation_stream_emits_name_only_changes_and_legacy_streams_stay_quiet ... ok
+test watcher::tests::test_observation_stream_forwards_complete_names_on_currency_only_update ... ok
+test watcher::tests::test_start_watching_directory_symlink_alias_for_write_and_replacement ... ok
+test watcher::tests::test_start_watching_keeps_state_only_changes_out_of_legacy_stream ... ok
+test watcher::tests::test_start_watching_relative_directory_and_bare_filename ... ok
+test watcher::tests::test_start_watching_updates_observes_state_and_version_only_changes ... ok
+
+test result: ok. 38 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.28s
+
+     Running tests/validated_save.rs (target/debug/deps/validated_save-5be962dc7f67e00e)
+
+running 4 tests
+test test_snapshot_keeps_synthetic_galaxy_nine_discovery_and_base_separate_from_player_galaxy_zero ... ok
+test test_snapshot_uses_checked_discoveries_player_and_base_addresses ... ok
+test test_snapshot_file_path_rejects_late_bad_address_before_publishing_any_snapshot ... ok
+test test_five_semantic_address_failures_keep_last_good_state_and_emit_one_warning ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.44s
+
+   Doc-tests nms
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nms_cache
+
+running 6 tests
+test crates/nms-cache/src/freshness.rs - freshness::is_cache_fresh (line 19) - compile ... ok
+test crates/nms-cache/src/lib.rs - (line 64) - compile ... ok
+test crates/nms-cache/src/freshness.rs - freshness::load_or_rebuild (line 80) - compile ... ok
+test crates/nms-cache/src/data.rs - data::CachedSystem::is_player_placeholder (line 82) ... ok
+test crates/nms-cache/src/error.rs - error (line 12) ... ok
+test crates/nms-cache/src/serialize.rs - serialize (line 38) ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.87s; merged doctests compilation took 0.69s
+   Doc-tests nms_compat
+
+running 2 tests
+test crates/nms-compat/src/nomnom.rs - nomnom::is_nomnom_format (line 98) ... ok
+test crates/nms-compat/src/nomnom.rs - nomnom (line 13) ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.46s; merged doctests compilation took 0.30s
+   Doc-tests nms_copilot
+
+running 33 tests
+test crates/nms-copilot/src/config.rs - config (line 77) - compile ... ok
+test crates/nms-copilot/src/coordinator.rs - coordinator::LiveSaveCoordinator::start (line 223) - compile ... ok
+test crates/nms-copilot/src/map/mod.rs - map::run_map (line 72) - compile ... ok
+test crates/nms-copilot/src/map/mod.rs - map::run_map_snapshot (line 113) - compile ... ok
+test crates/nms-copilot/src/dispatch.rs - dispatch::dispatch (line 115) ... ok
+test crates/nms-copilot/src/coordinator.rs - coordinator::CoordinatorStartError (line 90) ... ok
+test crates/nms-copilot/src/banner.rs - banner::visible_width (line 21) ... ok
+test crates/nms-copilot/src/dispatch.rs - dispatch::dispatch (line 150) ... ok
+test crates/nms-copilot/src/banner.rs - banner::resolve_banner (line 214) ... ok
+test crates/nms-copilot/src/config.rs - config (line 19) ... ok
+test crates/nms-copilot/src/mcp/config.rs - mcp::config::McpConfig (line 65) - compile ... ok
+test crates/nms-copilot/src/banner.rs - banner::substitute_placeholder_in_line (line 101) ... ok
+test crates/nms-copilot/src/mcp/mod.rs - mcp::McpBackgroundHandle (line 188) - compile ... ok
+test crates/nms-copilot/src/completer.rs - completer::CopilotCompleter::new (line 71) ... ok
+test crates/nms-copilot/src/mcp/mod.rs - mcp::spawn_mcp_background_with_updates (line 331) - compile ... ok
+test crates/nms-copilot/src/commands.rs - commands::parse_line (line 315) ... ok
+test crates/nms-copilot/src/mcp/mod.rs - mcp::McpBackgroundError (line 101) ... ok
+test crates/nms-copilot/src/paths.rs - paths (line 11) - compile ... ok
+test crates/nms-copilot/src/map/state.rs - map::state::ZoomLevel::extent (line 31) ... ok
+test crates/nms-copilot/src/map/state.rs - map::state::MapState::viewport_bounds (line 354) ... ok
+test crates/nms-copilot/src/map/state.rs - map::state::density_char (line 399) ... ok
+test crates/nms-copilot/src/mcp/config.rs - mcp::config (line 11) ... ok
+test crates/nms-copilot/src/map/render.rs - map::render::render (line 46) ... ok
+test crates/nms-copilot/src/map/state.rs - map::state::MapState::new (line 137) ... ok
+test crates/nms-copilot/src/setup.rs - setup::run_setup_wizard (line 118) - compile ... ok
+test crates/nms-copilot/src/mcp/mod.rs - mcp::mcp_info_json (line 819) ... ok
+test crates/nms-copilot/src/mcp/resources.rs - mcp::resources (line 15) ... ok
+test crates/nms-copilot/src/watch.rs - watch::drain_applied_notifications (line 83) ... ok
+test crates/nms-copilot/src/mcp/tools.rs - mcp::tools (line 62) ... ok
+test crates/nms-copilot/src/prompt.rs - prompt (line 20) ... ok
+test crates/nms-copilot/src/session.rs - session (line 13) ... ok
+test crates/nms-copilot/src/setup.rs - setup::SetupError (line 44) ... ok
+test crates/nms-copilot/src/watch.rs - watch::apply_and_notify (line 271) ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+all doctests ran in 1.80s; merged doctests compilation took 1.51s
+   Doc-tests nms_core
+
+running 14 tests
+test crates/nms-core/src/biome.rs - biome (line 8) ... ok
+test crates/nms-core/src/galaxy.rs - galaxy::Galaxy::by_index (line 110) ... ok
+test crates/nms-core/src/delta.rs - delta::DiscoveryNames (line 25) ... ok
+test crates/nms-core/src/glyph.rs - glyph (line 9) ... ok
+test crates/nms-core/src/delta.rs - delta::SaveDelta (line 67) ... ok
+test crates/nms-core/src/address.rs - address::GalacticAddress (line 85) ... ok
+test crates/nms-core/src/glyph.rs - glyph::parse_next_glyph (line 339) ... ok
+test crates/nms-core/src/galaxy.rs - galaxy (line 8) ... ok
+test crates/nms-core/src/address.rs - address::PortalAddress::parse_mixed (line 540) ... ok
+test crates/nms-core/src/discovery.rs - discovery (line 9) ... ok
+test crates/nms-core/src/player.rs - player (line 9) ... ok
+test crates/nms-core/src/system.rs - system::System::new (line 150) ... ok
+test crates/nms-core/src/system.rs - system (line 9) ... ok
+test crates/nms-core/src/lib.rs - (line 13) ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+all doctests ran in 0.52s; merged doctests compilation took 0.35s
+   Doc-tests nms_graph
+
+running 13 tests
+test crates/nms-graph/src/extract.rs - extract::extract_systems_from_validated (line 264) - compile ... ok
+test crates/nms-graph/src/extract.rs - extract::extract_discovery_names_from_validated (line 79) - compile ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::from_validated_save (line 146) - compile ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::insert_player_placeholder (line 296) ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::insert_system (line 445) ... ok
+test crates/nms-graph/src/lib.rs - extract (line 27) ... ok
+test crates/nms-graph/src/extract.rs - extract::extract_biome_from_vp (line 145) ... ok
+test crates/nms-graph/src/spatial.rs - spatial::SystemPoint::new (line 28) ... ok
+test crates/nms-graph/src/import.rs - import::import_csv (line 133) ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::is_player_placeholder (line 273) ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::system_count (line 246) ... ok
+test crates/nms-graph/src/model.rs - model::GalaxyModel::apply_discovery_names (line 544) ... ok
+test crates/nms-graph/src/lib.rs - route (line 40) ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+all doctests ran in 0.70s; merged doctests compilation took 0.50s
+   Doc-tests nms_query
+
+running 7 tests
+test crates/nms-query/src/display.rs - display::format_distance (line 24) ... ok
+test crates/nms-query/src/theme.rs - theme::Style (line 78) ... ok
+test crates/nms-query/src/display.rs - display::hex_to_emoji (line 76) ... ok
+test crates/nms-query/src/route.rs - route::execute_route (line 169) ... ok
+test crates/nms-query/src/display.rs - display::format_find_results (line 113) ... ok
+test crates/nms-query/src/lib.rs - (line 23) ... ok
+test crates/nms-query/src/table.rs - table::build_table (line 153) ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+all doctests ran in 0.73s; merged doctests compilation took 0.52s
+   Doc-tests nms_save
+
+running 37 tests
+test crates/nms-save/src/address.rs - address (line 58) ... ok
+test crates/nms-save/src/address.rs - address::AddressDecodeError (line 80) ... ok
+test crates/nms-save/src/address.rs - address::decode_base_address (line 196) ... ok
+test crates/nms-save/src/address.rs - address::decode_previous_address (line 262) ... ok
+test crates/nms-save/src/decompress.rs - decompress::decompress_save_file (line 90) - compile ... ok
+test crates/nms-save/src/convert.rs - convert::RawDiscoveryRecord::to_core_record (line 26) ... ok
+test crates/nms-save/src/address.rs - address::decode_current_address (line 226) ... ok
+test crates/nms-save/src/address.rs - address::AddressDecodeError::path (line 138) ... ok
+test crates/nms-save/src/convert.rs - convert::PersistentPlayerBase::to_core_base (line 84) ... ok
+test crates/nms-save/src/lib.rs - parse_save_file (line 136) - compile ... ok
+test crates/nms-save/src/convert.rs - convert::SaveRoot::active_player_state (line 123) ... ok
+test crates/nms-save/src/locate.rs - locate::nms_save_dir (line 286) - compile ... ok
+test crates/nms-save/src/address.rs - address::decode_discovery_address (line 166) ... ok
+test crates/nms-save/src/decompress.rs - decompress::decompress_save (line 55) ... ok
+test crates/nms-save/src/locate.rs - locate::list_accounts (line 356) ... ok
+test crates/nms-save/src/lib.rs - (line 30) ... ok
+test crates/nms-save/src/convert.rs - convert::SaveRoot::to_core_player_state (line 148) ... ok
+test crates/nms-save/src/lib.rs - parse_save (line 108) ... ok
+test crates/nms-save/src/lib.rs - (line 65) ... ok
+test crates/nms-save/src/mapping.rs - mapping::KeyMapping::from_json (line 106) ... ok
+test crates/nms-save/src/validated.rs - validated::ValidatedSave::bases (line 71) - compile ... ok
+test crates/nms-save/src/validated.rs - validated::ValidatedSave::discoveries (line 90) - compile ... ok
+test crates/nms-save/src/validated.rs - validated::ValidatedSave::player_state (line 56) - compile ... ok
+test crates/nms-save/src/validated.rs - validated::ValidatedSave::root (line 43) - compile ... ok
+test crates/nms-save/src/validated.rs - validated::parse_validated_save (line 145) - compile ... ok
+test crates/nms-save/src/validated.rs - validated::parse_validated_save_file (line 174) - compile ... ok
+test crates/nms-save/src/locate.rs - locate::list_saves (line 410) ... ok
+test crates/nms-save/src/mapping.rs - mapping::KeyMapping::bundled (line 65) ... ok
+test crates/nms-save/src/model.rs - model::PackedGalacticAddress (line 183) ... ok
+test crates/nms-save/src/metadata.rs - metadata::verify_sha256 (line 302) ... ok
+test crates/nms-save/src/metadata.rs - metadata::read_metadata (line 211) ... ok
+test crates/nms-save/src/model.rs - model::GalacticAddressObject::to_galactic_address (line 144) ... ok
+test crates/nms-save/src/metadata.rs - metadata::StorageSlot::is_account (line 158) ... ok
+test crates/nms-save/src/metadata.rs - metadata::read_metadata (line 224) ... ok
+test crates/nms-save/src/mapping.rs - mapping::deobfuscate_json (line 238) ... ok
+test crates/nms-save/src/xxtea.rs - xxtea::derive_key (line 48) ... ok
+test crates/nms-save/src/xxtea.rs - xxtea::xxtea_encrypt (line 130) ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+all doctests ran in 0.72s; merged doctests compilation took 0.51s
+   Doc-tests nms_watch
+
+running 7 tests
+test crates/nms-watch/src/watcher.rs - watcher::WatchUpdateHandle (line 98) - compile ... ok
+test crates/nms-watch/src/watcher.rs - watcher::start_watching (line 343) - compile ... ok
+test crates/nms-watch/src/watcher.rs - watcher::WatchObservationHandle (line 149) - compile ... ok
+test crates/nms-watch/src/snapshot.rs - snapshot::SaveSnapshot::from_validated_save (line 162) - compile ... ok
+test crates/nms-watch/src/lib.rs - watcher (line 59) ... ok
+test crates/nms-watch/src/lib.rs - snapshot (line 43) ... ok
+test crates/nms-watch/src/lib.rs - delta (line 31) ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+all doctests ran in 0.54s; merged doctests compilation took 0.36s
+[1;32m✓ All tests passed[0m

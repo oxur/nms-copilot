@@ -2,7 +2,7 @@
 
 **Record history:** Slice08 records-only refinement 01 corrects the Slice05 helper ownership and test-cleanup scope, separates completed historical 0.2.0 provenance from the still-open current package/install and new-publication gates, clarifies the license-copy count, and names the concrete owner/re-entry boundaries. Source, metrics, adopted deferrals, and the 26-row map are unchanged from initial records commit `831e937`.
 
-**Current status:** the [Operator amendment below](#operator-decisions-and-residual-obligations--2026-10-25) supersedes pending decisions and the initial candidate pin. Earlier observations and the initial row map are preserved as historical records.
+**Current status:** the [glyph follow-up below](#glyph-correction-follow-up--2026-10-25) gives the latest candidate; the [Operator amendment below](#operator-decisions-and-residual-obligations--2026-10-25) supersedes pending decisions and the initial candidate pin. Earlier observations and the initial row map are preserved as historical records.
 
 ## Candidate and decision boundary
 
@@ -89,3 +89,9 @@ The current candidate is **`ae0ef360389f555e5ec0d39930005cbfc374faad`**. Under D
 | Performance/scope/acceptance: `G08`, `C07/A07/G09` and all original arc composition rows | The two qualified measurements remain the evidence stated above, not a general REPL/cold-machine performance guarantee. Original-clause reconciliation and independent higher assembly/Operator acceptance remain incomplete. Parent openness is not evidence that all capabilities are absent; it prevents declaring all substantive obligations accounted for. |
 
 Duncan owns the three risk dispositions and remaining scope/acceptance choices; CDC owns accurate reconciliation when explicitly resumed, and an authorized independent reviewer owns the higher independent duty. Save and terminal proof wait for Duncan. **Execution and further arc planning remain paused.** This decision-recording amendment authorizes no runtime fix, new proof programme, slice, source integration, CI trigger or release.
+
+## Glyph correction follow-up — 2026-10-25
+
+Duncan expressly gated closure on correcting the glyph parser UTF-8 panic family. [Slice09 independent review](../../slice09-glyph-error-preview/cdc-verification.md) accepts source **1b79525dcaabd3cd06388a787734c8377b34c6e9**, successor to metadata-corrected ae0ef360. Error previews now round down to a valid boundary within20 bytes; existing lowercase name/abbreviation matches map consumed bytes back to original character boundaries, preserving Kelvin aliases and correct suffixes. Four source paths only, wrapper executable bytes unchanged. New regressions fail old behavior and pass the correction. Actual host1137runtime+119docs=1256/50targets pass; original restricted247/7 failure retained.
+
+The first of the three runtime risks listed above is now corrected/independently accepted, including the same-function Kelvin slicing defect. **Glyph closure gate MET.** The LZ4 and warp-count risks remain unmodified/undispositioned. Historical07 metrics/proof pins and Operator coverage acceptance are retained, not relabelled as a new measurement. All other original reconciliation/CI/joint Duncan save-terminal/higher acceptance/external boundaries remain. This is a reviewed branch candidate, not integration/release or complete Project01 acceptance. Execution/further planning paused; no next slice.

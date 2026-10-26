@@ -35,4 +35,6 @@ Current decision-only amendment2026-10-25: initial9 rows/7done/2open remain. See
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R07-S09 | Only the glyph20-byte error-preview panic is corrected with independent regression/integration review | Slice09 GP-01–03 and CDC independent verdict | serious | Explicit Duncan project-closure gate | open | — | One expressly requested correction; prior pause/scope/history preserved, no next slice authorized |
+| R07-S09 | Only the glyph20-byte error-preview panic is corrected with independent regression/integration review | Slice09 GP-01–03 and CDC independent verdict | serious | Explicit Duncan project-closure gate | done | [Slice09 CDC review](slice09-glyph-error-preview/cdc-verification.md), reproduced | Glyph gate MET at1b79525d; host1256 pass, restricted failure retained; no next slice authorized |
+
+Slice09 accepted2026-10-25: all10 Arc07 rows preserved,8done/2open (S06/S07). Current source1b79525d; one expressly authorized follow-up only. Prior endpoints and actual failed attempts remain preserved. Execution/further planning PAUSED; no project/arc complete declaration.

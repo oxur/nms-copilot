@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.16. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.17. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -357,3 +357,7 @@ Root's separately authorized metadata-only correction replaces current2b7fc9e wi
 ## Explicit glyph correction follow-up — 2026-10-25
 
 Duncan explicitly gates project closure on fixing ONLY the glyph20-byte error-diagnostic panic. [Slice09](slice09-glyph-error-preview/slice-plan.md) is one bounded Operator-requested correction after08, not automatic arc growth or resumed old work. Sole CC GPT6 Luna High / existing CDC GPT6.1 Sol High; source clean ae0ef360; full recipe/proof/scope in issued prompt. Other LZ4/warp risks and original acceptance remain held, with same-function case-folding byte-boundary correction expressly included; LZ4/warp helpers remain outside this repair. No coverage programme or exhausted07 reset. On independent09 acceptance, return and pause; no10/new arc/external action.
+
+## Glyph correction accepted; pause restored — 2026-10-25
+
+Version1.17: [Slice09 independent acceptance](slice09-glyph-error-preview/cdc-verification.md) at source1b79525dcaabd3cd06388a787734c8377b34c6e9 satisfies Duncan's new glyph gate. Bounded preview + original-casefold-byte mapping preserve aliases/order/API and correct Kelvin suffixes; wrapper changes docs only. Actual host1137runtime+119docs=1256/50targets pass. Wrong-facility restricted247/7 failure and one unchanged host replay retained. One CC records-only refinement, no source corrective round. [Retrospective](slice09-glyph-error-preview/cdc-retrospective.md) records preparation/facility/intake shortcomings without new process. Arc10rows8done2open; LZ4/warp risks still undispositioned, original parent/CI/joint-input/higher/external gates unchanged. Source not integrated/released. **Execution and further planning PAUSED; no10 or new arc.**

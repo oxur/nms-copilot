@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.146
+version: 1.147
 project: project01-mvp
 status: active
 depends-on: []
@@ -1401,3 +1401,7 @@ The previous seven-bullet handoff was not exhaustive. Three documented runtime l
 ## Explicit glyph error-preview correction — 2026-10-25
 
 Version1.146: Duncan gates project closure on one corrected/reviewed glyph20-byte diagnostic panic. Arc07 [Slice09](arc07-closeout-reconciliation/slice09-glyph-error-preview/slice-plan.md) is this expressly requested bounded follow-up only, sole CC LunaHigh plus CDC SolHigh independent review at clean ae0ef360. No automatic arc/backlog resumption,07 budget reset, other runtime repair or external authority. Return/pause after this result.
+
+## Glyph correction independently accepted — 2026-10-25
+
+Version1.147: [Slice09](arc07-closeout-reconciliation/slice09-glyph-error-preview/cdc-verification.md) satisfies the expressly added glyph closure gate at source1b79525dcaabd3cd06388a787734c8377b34c6e9. Full native1256pass, restricted247/7 failure retained; source unintegrated/unreleased. Existing scope/acceptance decisions, historical coverage metrics and all other original gates remain unchanged; no new coverage measurement. LZ4/warp risks remain undispositioned. Pause after this one requested correction; no next assignment.

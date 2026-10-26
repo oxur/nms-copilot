@@ -1,6 +1,6 @@
 # Slice09 — UTF-8-safe glyph error preview
 
-Status: issued; implementation pending. Initial assignment, zero corrective refinements; maximum five actual refinements, no reset of exhausted07.
+Status: independently accepted at1b79525dcaabd3cd06388a787734c8377b34c6e9. One actual records-only refinement; no source refinement or07 budget reset.
 
 Duncan explicitly requested “We should fix the panic now ... let's gate on getting that one fixed for sure”, referring only to the rejected-glyph 20-byte diagnostic. This is ONE expressly authorized follow-up correction after the finite08 pause, not automatic arc growth or resumed backlog. Project closure is gated on its independent acceptance. All other decisions/gates remain as recorded.
 
@@ -15,3 +15,7 @@ Verification: preserve two baseline failing regressions (3/4-byte split), format
 Same-function case-folding slicing is expressly included by the Operator scope guard: rcKttail must return Rocket13/tail without panic, RocKettail must return Rocket13/tail rather than the wrong suffix. Four separate literal baseline-failing tests cover both cases plus the3/4-byte diagnostic splits. Existing lowercase predicates and alias policy remain unchanged. LZ4/warp risks remain undispositioned and outside scope.
 
 Author readiness: inspected exact parser/order/failing slice, direct address wrappers, convert dispatch and existing assertion style/Make targets at baseline. Byte-bounded behavior and literal error oracles resolved; no new dependencies/MSRV API. Prompt manifest is bounded to actual affected source and relevant guide sections; no historical49 intake. Artifacts: only existing-tool command logs in this slice's artifacts/ if useful; no wrapper/capture/validator framework. Return candidate plus honest actual checks; independent acceptance then stop, no10 or new arc.
+
+## Independent outcome
+
+[CDC review](cdc-verification.md) accepts GP-01–03, actual native1137runtime+119docs=1256/50targets,0failed/ignored. Original restricted247/7 failures retained separately. See [retrospective](cdc-retrospective.md); glyph closure gate MET, source candidate unintegrated/unreleased, all other gates unchanged. Pause after this expressly requested correction; no10/new arc.
