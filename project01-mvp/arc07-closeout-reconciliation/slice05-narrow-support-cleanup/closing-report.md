@@ -18,4 +18,4 @@ The separate main restoration passed both guards: exact HEAD, exact pre-removal 
 - NS-02: **proposed done**, pending CDC review. The exact stray main hunk is gone, the file compares byte-for-byte to main HEAD, and the restored main affected target passes.
 - NS-03: **open pending07 reconciliation**, because the owned integration target had the retained graph-oracle failure. Format/lint and both prescribed candidate targets plus the post-restoration main target ran; all exact outcomes are recorded, and no broader gate is claimed.
 
-No self-acceptance is asserted. Source candidate commit: `8d572529445d80e404c1d45813c8b4a5b4b732fc`. Planning commit pin is recorded in `artifacts/result.md` after the exact-path commit. Ownership returns to CDC for independent review.
+No self-acceptance is asserted. Source candidate commit: `8d572529445d80e404c1d45813c8b4a5b4b732fc`. Initial planning evidence commit: `38d55158d528c7edd1fc57eb990a903a43794591`; the follow-up record names that hash. Ownership returns to CDC for independent review.

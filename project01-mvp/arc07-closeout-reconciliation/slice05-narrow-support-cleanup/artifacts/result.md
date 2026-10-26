@@ -31,4 +31,4 @@ Restored main worktree, HEAD `b616ab2cfa9c67dfb6361bb1355ca9e6680d18cc`:
 
 No workspace replay, no-default package run, dependency/install action, or external effect was performed. Slice04 AT-03 and the Arc07 full-workspace/no-default gates remain open for07; this support-only change does not close them. The owned integration target's graph-oracle mismatch is separately carried to07 and is not claimed green.
 
-Source commit: `8d572529445d80e404c1d45813c8b4a5b4b732fc` (`test: share MCP HTTP integration support`). Planning commit: to be recorded after the exact-path commit. CDC disposition remains independent.
+Source commit: `8d572529445d80e404c1d45813c8b4a5b4b732fc` (`test: share MCP HTTP integration support`). Initial planning evidence commit: `38d55158d528c7edd1fc57eb990a903a43794591` (`docs: record slice05 candidate evidence`). CDC disposition remains independent.
