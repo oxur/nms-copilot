@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.143
+version: 1.144
 project: project01-mvp
 status: active
 depends-on: []
@@ -1387,3 +1387,7 @@ Version1.142 records independently accepted [native map result](arc07-closeout-r
 ## Arc07 adopted remaining closeout scope — 2026-10-25
 
 Version1.143 records Duncan’s adoption of the [Arc07 table and finite04–08 sketch](arc07-closeout-reconciliation/arc-plan.md#table-adopted-finite-cleanup-authorization--2026-10-25). The initial pause and three accepted results remain preserved. Authentic NomNom acceptance is deferred pending attributable export (Duncan input/CDC re-entry); new publication alone is deferred to a separately authorized release (Duncan owner, ready candidate/chosen version/external permission). Local package/isolated-install readiness and historical publication evidence remain in scope, as do all other original criteria. Continue approved Autonomous cleanup toward a finite reviewed candidate/remaining-gates handoff, not an automatic success declaration. No95%/module waiver, new feature/routing redesign, push/integration/publication authority or new arc follows.
+
+## Arc07 finite cleanup handoff and pause — 2026-10-25
+
+Version1.144 records [reviewed08 handoff](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md), sourceclean2b7fc9e/maincleanb616ab2, independently green host1248/lint and exact remaining coverage/UI/input/install/MSRV/platform/history/higher-acceptance/external gates. All26 project rows stay open; Arc06 preserves66 rows/54done/11open/1deferred; Arc07 has9rows/7done/2open. Only NomNom/new-publication deferrals are adopted. Initial three-slice stop and subsequent finite04–08 authority remain historical. Execution/further arc planning PAUSE here for Duncan; no09+/new arc, source/hardening/proof programme, integration or release is opened.

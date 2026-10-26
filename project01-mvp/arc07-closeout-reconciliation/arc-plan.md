@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.13. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.14. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -312,3 +312,36 @@ work;08 is the finite scope/composition handoff, not automatic project success.
 - 1.12 (2026-10-25): Independently reviewed07/final host1248 closes04/05 gate carries and06 regression carry; faithful coverage/platform/input/native/install/metadata qualifications remain. Only08 handoff remains; no further07 refinements.
 
 - 1.13 (2026-10-25): Issued records-only08 finite capability/gate handoff on unchanged2b7fc9e; reuse accepted inventory/current07review, no new audit/probe/source work. Canonical endpoint pause follows independent handoff review.
+
+## Final finite handoff and pause — 2026-10-25
+
+The [reviewed08 handoff](slice08-composition-handoff/artifacts/handoff.md) is the
+current capability/decision/gate summary; [08 CDC disposition](slice08-composition-handoff/cdc-verification.md)
+accepts the finite handoff. Initial831e937 and corrected464d5dd are preserved.
+Source remains clean2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0; main cleanb616ab2,
+with only its authorized nine-line working-copy stray restored, candidate called
+helper preserved. New Arc07 code remains unintegrated/unpublished. Earlier
+already-main equivalents and later branch-only source remain distinguished in
+our single inventory. No further source/proof work was executed in08.
+
+Independent final host lint/full1129runtime+119docs pass; faithful95/module90
+coverage remains RED24466/26073=93.83653588002915%,14below90. Nearest300 and
+headless warm20-system timings have only their recorded debug-host boundaries.
+Current install is held at uncachedclap_derive4.6.7;1.91/Linux/Windows proof,
+native interaction completion/history/clean exit, genuine nonzero-game input,
+original theme disposition, final higher review/Operator acceptance and all
+integration/release authority remain separate. Existing exact generated-field-A
+Rustdoc qualification applies; globalstrict101 remains retained. Source2b7's
+badly separated co-author lines parse only Billo; future metadata/history handling
+needs explicit authority and preserves this original pin.
+
+Only NomNom and new-publication deferrals are adopted, with Duncan owners and
+recorded re-entry. All26 project rows and66 Arc06 rows/criteria are preserved;
+no numeric/module/theme/platform/install or higher acceptance requirement is
+silently waived. R07-S06/S07 remain open. Old49 stays byte-preserved/unissued.
+**CC/CDC execution and further arc planning stop now for Duncan's choices.**
+No09+, new arc, cleanup/hardening/measurement programme, extra review context,
+external CI, source integration or release is authorized by this handoff.
+
+
+- 1.14 (2026-10-25): Final08 independently reviewed after one records-only correction; finite endpoint paused with actual candidate/proof/remaining gates. No project/arc success declaration or further assignment.

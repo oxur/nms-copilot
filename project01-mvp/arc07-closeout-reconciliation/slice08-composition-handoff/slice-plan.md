@@ -1,6 +1,8 @@
 # Slice08 — Finite composition handoff
 
-Status: ready/issued. Records-only endpoint under adopted04–08 scope. Source
+Status: independently accepted as a handoff; execution/planning PAUSED.
+CC initial831e937/corrected464d5dd and CDC verification preserve the exact
+remaining gates. Original issuance follows. Records-only endpoint under adopted04–08 scope. Source
 clean2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0;07review974c0bd. Existing sole
 CC LunaHigh drafts one compact handoff; CDC SolHigh independently checks scope,
 actual evidence applicability and remaining gates. No additional reviewer layer.

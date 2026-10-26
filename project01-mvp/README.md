@@ -5,11 +5,11 @@ author: "the CLI"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-03
+updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.1
+version: 1.2
 ---
 
 # NMS Copilot — Project Summary
@@ -266,3 +266,7 @@ Portal Glyphs
 The original summary and milestone tables above are preserved. Project01 remains open. Start with the [closure preparation](closure-preparation.md), [project ledger](ledger.md), and [captured baseline](artifacts/closeout-2026-10-03/baseline-report.md); each existing arc now has a recovery plan and open acceptance ledger. The user enabled Expedited Mode, preserving all validation, independent review, and Operator gates.
 
 Version 1.1 adds this navigation and the current update date; it does not claim that the original milestone descriptions have been independently accepted.
+
+## Current finite cleanup handoff — 2026-10-25
+
+The original roadmap above is preserved. The [reviewed Arc07 handoff](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md) identifies delivered candidate2b7fc9e and actual remaining decisions/inputs. Host1248/lint pass; coverage93.83653588%/14below90 and native interaction/theme/genuine-save/install/MSRV/platform/higher acceptance remain open. Only authentic NomNom and new publication are explicitly deferred. Source is not integrated or released; execution and further arc planning are PAUSED for Duncan, with no09+ assignment. Version1.2 adds this current navigation/status only.
