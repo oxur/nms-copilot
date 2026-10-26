@@ -30,3 +30,9 @@ increments are finite04–08. Parent criteria remain independently binding.
 Final endpoint: 9Arc07 rows/7done/2open (R07-S06/S07), reviewed candidate2b7fc9e; execution and further arc planning PAUSED for Duncan. Initial endpoint history and adopted later authorization remain preserved.
 
 Current decision-only amendment2026-10-25: initial9 rows/7done/2open remain. See [handoff amendment](slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25): coverage accepted, current install evidence accepted for now/remaining proof deferred, themes deferred, CI route adopted, save/native proof together with Duncan. The seven prior bullets were not exhaustive: three documented runtime risks need explicit disposition and original parent reconciliation remains incomplete. Root corrected source metadata only: current ae0ef360389f555e5ec0d39930005cbfc374faad, identical tree/parent to historical2b7fc9e. No source/proof work or further planning authorized.
+
+## Explicit Operator glyph correction — 2026-10-25
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R07-S09 | Only the glyph20-byte error-preview panic is corrected with independent regression/integration review | Slice09 GP-01–03 and CDC independent verdict | serious | Explicit Duncan project-closure gate | open | — | One expressly requested correction; prior pause/scope/history preserved, no next slice authorized |

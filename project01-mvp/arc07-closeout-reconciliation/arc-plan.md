@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.15. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.16. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -353,3 +353,7 @@ Version1.15; execution/further planning remains **PAUSED**. Duncan accepts this 
 MSRV/platform verification follows actual CI evidence, with no extra local runs/toolchain installs or inferred CI-trigger authority. Genuine nonzero save+metadata and native terminal proof will be supplied/done with Duncan; no run before input. The seven prior bullets were not exhaustive: [handoff amendment](slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25) separates three known runtime risks with NO approved disposition from unreconciled original parent clauses (not confirmed missing features). Higher independent assembly/Operator acceptance remains open.
 
 Root's separately authorized metadata-only correction replaces current2b7fc9e with ae0ef360389f555e5ec0d39930005cbfc374faad: identical parent6b47cd3d/tree78f7e3cfd6b9312b303e05e48586ca00d11c1762, empty source diff, both trailers parsed once. Preserve old proof pins/history. No test, source fix, new slice/arc or external action follows this amendment.
+
+## Explicit glyph correction follow-up — 2026-10-25
+
+Duncan explicitly gates project closure on fixing ONLY the glyph20-byte error-diagnostic panic. [Slice09](slice09-glyph-error-preview/slice-plan.md) is one bounded Operator-requested correction after08, not automatic arc growth or resumed old work. Sole CC GPT6 Luna High / existing CDC GPT6.1 Sol High; source clean ae0ef360; full recipe/proof/scope in issued prompt. Other LZ4/warp risks and original acceptance remain held, with same-function case-folding byte-boundary correction expressly included; LZ4/warp helpers remain outside this repair. No coverage programme or exhausted07 reset. On independent09 acceptance, return and pause; no10/new arc/external action.

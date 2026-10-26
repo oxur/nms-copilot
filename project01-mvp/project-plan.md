@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.145
+version: 1.146
 project: project01-mvp
 status: active
 depends-on: []
@@ -1397,3 +1397,7 @@ Version1.144 records [reviewed08 handoff](arc07-closeout-reconciliation/slice08-
 Version1.145: [current handoff amendment](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25) supersedes the previous pending decisions. Duncan accepts current global93.83653588002915% AND14/72 below90 file results as-is, and package/install evidence FOR NOW; remaining clean installation and configurable themes explicitly deferred with owners/re-entry in [backlog](backlog.md). Actual CI evidence still required for MSRV/platform, no extra local runs. Nonzero-save and native terminal proof will be done with Duncan after input/session. Historical provenance/licenses complete; new publication and authentic NomNom retain adopted deferrals. Current source ae0ef360389f555e5ec0d39930005cbfc374faad is root's identical-tree metadata successor to old proof pin2b7fc9e.
 
 The previous seven-bullet handoff was not exhaustive. Three documented runtime limits lack approved disposition; original cross-interface/routing/cache/discovery/research/UI/acceptance clauses remain unreconciled, distinct from confirmed missing features. All26 project rows preserved (1done/1deferred/24open); Arc06 retains66 (54done/10open/2deferred); Arc07 retains9 (7done/2open). No execution, further arc planning, source fix, CI trigger/integration/release or new audit is authorized by this decision recording.
+
+## Explicit glyph error-preview correction — 2026-10-25
+
+Version1.146: Duncan gates project closure on one corrected/reviewed glyph20-byte diagnostic panic. Arc07 [Slice09](arc07-closeout-reconciliation/slice09-glyph-error-preview/slice-plan.md) is this expressly requested bounded follow-up only, sole CC LunaHigh plus CDC SolHigh independent review at clean ae0ef360. No automatic arc/backlog resumption,07 budget reset, other runtime repair or external authority. Return/pause after this result.
