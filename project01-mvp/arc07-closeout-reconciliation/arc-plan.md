@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.21. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.22. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -375,3 +375,11 @@ Version1.19: Duncan authorizes one finite original-clause reconciliation pass wh
 Version 1.20: the [one current matrix](slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies100 clause groups covering all 43 documents, 61 summary milestones, 75 original arc rows and 26 project rows. It separates binding/optional scope, delivered equivalents, summary/detail contradictions, known partial behavior and unverified proof. Five consolidated decisions remain for Duncan; no 100-item approval list, new feature work, source audit or next slice follows. The earlier seven-gate handoff was incomplete; current parent acceptance remains open for concrete decisions, rather than unexamined clauses. B05 explicitly amends the stronger final-leg guarantee, without a deadline.
 
 Root owns the separately authorized push/CI follow-up. Current pushed source 3e8e46066136978aad1d878ca1608515862ff8c4 includes only the reviewed three-handle fixture correction after 075b. Exact-head CI 40275337438 at root’s 05:59 UTC snapshot has five PASS (Check, Rust 1.91, Ubuntu, macOS, full-feature/FULL-no-default); Windows cargo test is still running after 20 minutes, neither pass nor fail. Preserve prior 075b fixture failure and earlier compile failures; waiting is not a new defect or platform acceptance. Application/library 1b79525d and existing 1256 proof unchanged. This is no full CI success declaration. All adopted deferrals, joint Duncan save/native and higher acceptance boundaries stand. CDC requirements execution stops after this compact records handoff; root may finish already-authorized CI, with no merge/publication authority.
+
+## Operator triage amendment — 2026-10-26
+
+Version1.22: [B08](../backlog.md#b08-cli-command-parity-in-repl-next-project) transfers existing CLI-command REPL parity to Project02 (saves early Arc01, interchange Arc06, shell-script completions Arc07); [B09](../backlog.md#b09-named-client-and-gameplay-integrations-project03-reservation) reserves named-client/gameplay integrations for Project03 AFTER Project02, excluding Claude Desktop/web/Anthropic apps. Keep current generic MCP/protocol behavior. No new project directory/arc/slice/prompt.
+
+Duncan requires **last query results** and a separate **nms-mcp crate BEFORE Project01 closure**. No new implementation is claimed: last-results meaning is pending Duncan (current-session returned result versus already-existing command history), then source-ground any necessary bounded result interaction and the required acyclic crate boundary, preserving headless transports/shared coordinator/cache/features. Command history is not result storage; no new database or separate binary is inferred. This supersedes earlier pending last-results/equivalent-crate recommendations, not the prior accepted proof. No implementation is issued in this records-only task. Legacy/routing-watch scope, cache information and representation/SaveParser explanations have no new disposition; existing deferrals/joint/higher gates remain.
+
+Current root CI cutoff supersedes the earlier running snapshot: source3e8e460/run40275337438 is CANCELLED, five peers PASS, Windows at annotated6h limit; root did not cancel and downloaded log has zero bytes. No current harness cause/fixture pass/platform success inferred or automatic diagnostic assignment.

@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.150
+version: 1.151
 project: project01-mvp
 status: active
 depends-on: []
@@ -1415,3 +1415,16 @@ Version1.148 records Duncan's [B03/B04 backlog decision](backlog.md): conditiona
 Version 1.149: the [current clause matrix](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies all 43 recovered documents, 61 summary milestones, 75 original arc rows and 26 project rows in100 assessed clause groups. This completes the expressly requested finite accounting pass; original scope conflicts, specific partial behavior and proof/higher-acceptance choices remain, rather than unexamined parent categories. The earlier seven-gate handoff was not exhaustive. Five consolidated capability decisions are in the matrix; no feature implementation, new audit or arc/slice is authorized by these findings. Existing children/history remain accepted only at their actual scope.
 
 [B05](backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg) explicitly defers the stronger final-leg warp-range guarantee, separate from B04 and without a deadline. All other adopted decisions stand. Application/library baseline 1b79525d and host 1256 proof remain unchanged by root-owned CI-only 6641bce and probe/workflow 075b558. Current pushed source 3e8e46066136978aad1d878ca1608515862ff8c4 includes the independently reviewed three-handle fixture-only correction. Root-reported exact-head CI 40275337438 at 05:59 UTC has five PASS (Check, Rust 1.91, Ubuntu, macOS, full-feature/FULL-no-default); Windows cargo test still running after 20 minutes, neither pass nor fail. Earlier Windows runtime/compile failures are retained; waiting is no new defect, and platform acceptance remains open. Push/CI is authorized to root; merge/publication is not. Joint Duncan save/native proof and higher independent/Operator acceptance remain. No more CDC execution/planning follows this pass.
+
+## Explicit closeout requirements and future transfers — 2026-10-26
+
+Version1.151 records Duncan’s further decisions. Existing CLI-command REPL parity transfers to NEXT Project02 ([B08](backlog.md#b08-cli-command-parity-in-repl-next-project)): saves early with Arc01 friendly account/save selection, export/import in Arc06 interchange, shell-script completions later in Arc07 polish (separate from TAB completion). Named-client/gameplay acceptance moves to reserved Project03 AFTER Project02 ([B09](backlog.md#b09-named-client-and-gameplay-integrations-project03-reservation)); Claude Desktop/web/Anthropic apps are expressly excluded. Retain generic stdio/HTTP MCP and protocol evidence. No Project03 directory/full plan is opened.
+
+**Required BEFORE Project01 closes; no new delivery/independent acceptance is claimed:**
+
+- **Last query results:** satisfy Duncan’s explicit requirement before closure; intended meaning remains pending his clarification (latest returned result in the current REPL session versus command history, which already exists). D0026 promises results while current SessionState lacks them; root’s local read-only inspection confirms reedline0.46 FileBackedHistory retains command text rather than returned results. If application results are intended, source-ground the smallest API/interaction/context/freshness contract before implementation. No `last` command, persistence, storage backend, database dependency or cross-restart promise is inferred.
+- **Separate MCP crate:** extract into workspace crate `nms-mcp`, preserving current headless stdio/HTTP, shared coordinator/cache and feature behavior, with acyclic dependencies. An additional binary is not specifically required. Source-ground the smallest dependency/module boundary before implementation; this overrides the previous assessment that crate shape could remain equivalent.
+
+CDC owns bounded design/independent review; an explicitly assigned sole CC would implement only after that contract is ready. This task records authority/required delivery only: no source assignment, new arc/slice/prompt or successful proof. P01-C07/G09 closure remains blocked on these deliveries as well as unchanged joint/higher gates. Legacy group1 and routing/watcher group4 remain undecided. Cache fallback is a request for explanation, not blanket acceptance; representation/approval history and SaveParser/libraries remain questions, not new scope decisions. Prior B02/B03/B04/B05 and B06/B07 transfers retain exact owners/re-entry.
+
+Current CI correction to the earlier cutoff: root confirms exact-head3e8e460/run40275337438 ended CANCELLED, five peers PASS and Windows cancelled at the annotated6h maximum. Root did not cancel; the downloaded Windows log was zero bytes, so cause within the current harness and fixture success are not established. P01-G07/platform acceptance stays open, with no automatic rerun/diagnostic assignment.
