@@ -1,6 +1,8 @@
 # Slice07 — Final candidate validation
 
-Status: ready/issued. Baseline6b47cd3d758e6b44e28041ae52eceba0439c35db clean
+Status: independently reviewed, partial; code2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0.
+FV-01/02/03 accepted with qualifications, FV-06 scoped measurements accepted;
+FV-04/05 remain open. See cdc-verification.md. Issued baseline follows. Baseline6b47cd3d758e6b44e28041ae52eceba0439c35db clean
 on dedicated codex/workspace-coverage-contract. Sole serial CC LunaHigh, CDC
 SolHigh independent review; source/index transfer at dispatch. Parent adopted
 finite04–08 sequence authorizes existing gates and two named carried repairs.

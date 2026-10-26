@@ -65,3 +65,7 @@ no-default, coverage or platform success is inferred.04 AT-03/full native gate
 and these05 integration subclaims remain open for07; original numeric/input/
 acceptance/external gates stay binding. No formal source refinement/replay or
 further05 cleanup is opened. Proceed only with agreed ready06 work.
+
+## Final07 carry disposition — 2026-10-25
+
+The composed clean candidate2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0 independently passes HOST lint and make test:1129runtime+119docs=1248,0failed/ignored; owned9/live24 included. CC true no-default package command exits0 (18 unused test-helper warnings disclosed; its aggregate is not verified). NS-01/NS-03 now accepted; historical failures/limits above remain unchanged. See [07 CDC review](../slice07-final-candidate-validation/cdc-verification.md). No source repair in this follow-up.

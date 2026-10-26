@@ -75,3 +75,7 @@ prior M7.6/S44 acceptance history is preserved and is not current proof of that
 claim. ID-02/05 and parentR07-S06 remain open;95/module floors, platform/MSRV,
 original UI/data/higher acceptance and external integration/release gates are
 unchanged. Ready finite07 work proceeds independently. No09+ or new programme.
+
+## Final07 carry disposition
+
+ID-05 regression/check subclaim is now accepted at2b7fc9e after independent host lint/full1248 and current qualified-doc review. ID-01/02/04, original native interaction/theme/current install/input/higher gates remain open. Prior failed attempts and exact limits above are unchanged.

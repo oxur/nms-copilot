@@ -119,3 +119,7 @@ consecutive trailers once. Main's protected whole-file blob remains2cd450ce5e0a7
 old49 remains untracked/unissued with SHA256d9600d9cddf3f9583fc1768cd67644b1e32ec6926b8f1f298b2982289de30986.
 Proceed only with independently ready agreed05 work;04's validation carry is
 explicit, not retroactively narrowed or called complete.
+
+## Final07 carry disposition — 2026-10-25
+
+The composed clean candidate2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0 independently passes HOST lint and make test:1129runtime+119docs=1248,0failed/ignored; owned9/live24 included. CC true no-default package command exits0 (18 unused test-helper warnings disclosed; its aggregate is not verified). AT-03 now accepted; historical failures/limits above remain unchanged. See [07 CDC review](../slice07-final-candidate-validation/cdc-verification.md). No source repair in this follow-up.

@@ -1,6 +1,8 @@
 # Slice04 — Live atlas consistency
 
-Status: behavior independently reviewed at source8f10d4c; AT-01/02 accepted, AT-03 full native-workspace/feature proof remains open for07. Initial source baselinefb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc on codex/workspace-coverage-contract in `.worktrees/workspace-coverage-contract`. This delivers the adopted fixed map snapshot and bounded application graph/rebuild consistency correction. CC LunaHigh implemented; CDC SolHigh independently reviewed. Ownership returned to CDC. Main known edit and old49 remain protected, out of this slice. No complete-slice/all-gates claim is made.
+Current status: all child rows independently accepted after07 final-candidate gate at2b7fc9e; see07 CDC review. Original issuance and initial disposition below remain historical.
+
+Historical status: behavior independently reviewed at source8f10d4c; AT-01/02 accepted, AT-03 full native-workspace/feature proof remains open for07. Initial source baselinefb2ecebb9b1238c2c4b3d4c790f935f02fb2a6cc on codex/workspace-coverage-contract in `.worktrees/workspace-coverage-contract`. This delivers the adopted fixed map snapshot and bounded application graph/rebuild consistency correction. CC LunaHigh implemented; CDC SolHigh independently reviewed. Ownership returned to CDC. Main known edit and old49 remain protected, out of this slice. No complete-slice/all-gates claim is made.
 
 User benefit: keep the modal map stable while new saves update the atlas/cache/MCP, and make live/cold application graph queries agree with rebuilding the same supported model. No live map refresh, routing redesign, generalized graph-configuration/API redesign, cache schema change or new capture system.
 

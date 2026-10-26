@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.11. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.12. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -270,6 +270,18 @@ restricted full test remains247pass/7timeouts, not native success. ID-01/02/04/0
 and R07-S06 remain open.07 proceeds with ready original validation/minimal
 carried fixes; no further packaging/terminal investigation is commissioned.
 
+Final07 candidate2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0 is independently
+reviewed: host lint/full1129runtime+119docs pass; true no-default package0 and
+qualified existing generated-field-A docs apply.04 AT-03/05 NS-01,03 and06 ID-05
+carries close;04/05 are complete. Coverage24466/26073=93.83653588002915% and14
+below90 files remain RED. Installed1.91/Linux/Windows proof is unavailable.
+Bounded nearest300/headless warm20-system timings pass on this debug host,
+without a REPL/general-latency claim.06 native interaction/theme/install and
+original genuine-save/higher acceptance gates remain. Source2b7fc9e's separated
+co-author lines parse only Billo; preserve SHA/history and hold metadata handling
+for later authorized integration. No further07 correction/source/measurement
+work;08 is the finite scope/composition handoff, not automatic project success.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -296,3 +308,5 @@ carried fixes; no further packaging/terminal investigation is commissioned.
 - 1.10 (2026-10-25):06 reviewed with assets/wizard/historical subclaims accepted and exact remaining native interaction/theme/install/full-gate limits; proceed ready07 without new inquiry.
 
 - 1.11 (2026-10-25): Issued compact07 final validation contract at source6b47cd3d; minimal carried feature/oracle repair only, actual host gates/faithful95 and module90/two direct latencies, unavailable1.91/platform inputs explicit. No08 skeleton or new scope.
+
+- 1.12 (2026-10-25): Independently reviewed07/final host1248 closes04/05 gate carries and06 regression carry; faithful coverage/platform/input/native/install/metadata qualifications remain. Only08 handoff remains; no further07 refinements.
