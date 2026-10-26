@@ -583,7 +583,7 @@ fn run_http_names_lifecycle_attempt(
         .header("mcp-session-id")
         .expect("HTTP session")
         .to_owned();
-    let message = http_json_messages(&initialized.body_text())
+    let message = http_json_messages(&initialized.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .expect("HTTP initialize response");
@@ -811,7 +811,7 @@ fn run_http_names_lifecycle_attempt(
         let response = restart_client.post_without_session(initialize_request());
         assert_eq!(response.status, 200);
         let restart_session = response.header("mcp-session-id").unwrap().to_owned();
-        let initialized = http_json_messages(&response.body_text())
+        let initialized = http_json_messages(&response.text())
             .into_iter()
             .find(|message| message["id"] == 1)
             .unwrap();
@@ -919,7 +919,7 @@ fn assert_name_http_stage(
         "params":{"name":"search_planets", "arguments":{"biome":"Toxic", "infested":true, "named_only":true, "from_base":"Anchor"}}
     }));
     assert_eq!(response.status, 200);
-    let message = http_json_messages(&response.body_text())
+    let message = http_json_messages(&response.text())
         .into_iter()
         .find(|message| message["id"] == 400)
         .expect("HTTP named query response");
@@ -1972,13 +1972,8 @@ fn call_where_am_i_http(
         }),
         remaining(deadline),
     );
-    assert_eq!(
-        tool.status,
-        200,
-        "tools/call response: {}",
-        tool.body_text()
-    );
-    let response = http_json_messages(&tool.body_text())
+    assert_eq!(tool.status, 200, "tools/call response: {}", tool.text());
+    let response = http_json_messages(&tool.text())
         .into_iter()
         .find(|message| message["id"] == id)
         .expect("HTTP tools/call response ID");
@@ -1996,9 +1991,9 @@ fn call_where_am_i_http(
         resource.status,
         200,
         "resources/read response: {}",
-        resource.body_text()
+        resource.text()
     );
-    let response = http_json_messages(&resource.body_text())
+    let response = http_json_messages(&resource.text())
         .into_iter()
         .find(|message| message["id"] == id + 1)
         .expect("HTTP resources/read response ID");
@@ -2035,7 +2030,7 @@ fn call_unknown_http_pair(
         remaining(deadline),
     );
     assert_eq!(tool_response.status, 200, "HTTP tools/call");
-    let tool_message = http_json_messages(&tool_response.body_text())
+    let tool_message = http_json_messages(&tool_response.text())
         .into_iter()
         .find(|message| message["id"] == id)
         .expect("HTTP tools/call response ID");
@@ -2049,7 +2044,7 @@ fn call_unknown_http_pair(
         remaining(deadline),
     );
     assert_eq!(resource_response.status, 200, "HTTP resources/read");
-    let resource_message = http_json_messages(&resource_response.body_text())
+    let resource_message = http_json_messages(&resource_response.text())
         .into_iter()
         .find(|message| message["id"] == id + 1)
         .expect("HTTP resources/read response ID");
@@ -3240,17 +3235,12 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
     let mut client = client.expect("HTTP client established after health readiness");
 
     let initialize = client.post_without_session(initialize_request());
-    assert_eq!(
-        initialize.status,
-        200,
-        "initialize: {}",
-        initialize.body_text()
-    );
+    assert_eq!(initialize.status, 200, "initialize: {}", initialize.text());
     let session = initialize
         .header("mcp-session-id")
         .expect("server returned a real MCP session ID")
         .to_owned();
-    let result = http_json_messages(&initialize.body_text())
+    let result = http_json_messages(&initialize.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .expect("initialize response ID");
@@ -3263,13 +3253,13 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
 
     let tools = client.post(rpc("tools/list", 2));
     assert_eq!(tools.status, 200);
-    let tools = http_json_messages(&tools.body_text())
+    let tools = http_json_messages(&tools.text())
         .into_iter()
         .find(|message| message["id"] == 2)
         .expect("tools/list response ID");
     let resources = client.post(rpc("resources/list", 3));
     assert_eq!(resources.status, 200);
-    let resources = http_json_messages(&resources.body_text())
+    let resources = http_json_messages(&resources.text())
         .into_iter()
         .find(|message| message["id"] == 3)
         .expect("resources/list response ID");
@@ -3285,9 +3275,9 @@ fn test_http_mcp_child_tracks_save_with_session_and_live_sse() {
         subscribed.status,
         200,
         "subscription response: {}",
-        subscribed.body_text()
+        subscribed.text()
     );
-    let subscription_response = http_json_messages(&subscribed.body_text())
+    let subscription_response = http_json_messages(&subscribed.text())
         .into_iter()
         .find(|message| message["id"] == 20)
         .expect("HTTP subscription response ID");
@@ -3377,13 +3367,13 @@ fn test_http_mcp_child_disabled_watcher_keeps_initial_model_after_save_change() 
         initialized.status,
         200,
         "initialize: {}",
-        initialized.body_text()
+        initialized.text()
     );
     let session = initialized
         .header("mcp-session-id")
         .expect("server returned an MCP session ID")
         .to_owned();
-    let response = http_json_messages(&initialized.body_text())
+    let response = http_json_messages(&initialized.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .expect("initialize response ID");
@@ -3396,13 +3386,13 @@ fn test_http_mcp_child_disabled_watcher_keeps_initial_model_after_save_change() 
 
     let tools = client.post(rpc("tools/list", 2));
     assert_eq!(tools.status, 200);
-    let tools = http_json_messages(&tools.body_text())
+    let tools = http_json_messages(&tools.text())
         .into_iter()
         .find(|message| message["id"] == 2)
         .expect("tools/list response ID");
     let resources = client.post(rpc("resources/list", 3));
     assert_eq!(resources.status, 200);
-    let resources = http_json_messages(&resources.body_text())
+    let resources = http_json_messages(&resources.text())
         .into_iter()
         .find(|message| message["id"] == 3)
         .expect("resources/list response ID");
@@ -4104,24 +4094,6 @@ fn wait_health(addr: SocketAddr, child: &mut HttpChild) -> Result<(), String> {
     }
 }
 
-struct HttpResponse {
-    status: u16,
-    headers: BTreeMap<String, String>,
-    body: Vec<u8>,
-}
-
-impl HttpResponse {
-    fn header(&self, name: &str) -> Option<&str> {
-        self.headers
-            .get(&name.to_ascii_lowercase())
-            .map(String::as_str)
-    }
-
-    fn body_text(&self) -> String {
-        String::from_utf8_lossy(&self.body).into_owned()
-    }
-}
-
 struct HttpClient {
     addr: SocketAddr,
     session: Option<String>,
@@ -4135,7 +4107,7 @@ impl HttpClient {
         }
     }
 
-    fn post_without_session(&mut self, body: Value) -> HttpResponse {
+    fn post_without_session(&mut self, body: Value) -> live_mcp::HttpResponse {
         let response = http_request(
             self.addr,
             "POST",
@@ -4151,11 +4123,11 @@ impl HttpClient {
         response
     }
 
-    fn post(&mut self, body: Value) -> HttpResponse {
+    fn post(&mut self, body: Value) -> live_mcp::HttpResponse {
         self.post_with_timeout(body, RPC_TIMEOUT)
     }
 
-    fn post_with_timeout(&mut self, body: Value, timeout: Duration) -> HttpResponse {
+    fn post_with_timeout(&mut self, body: Value, timeout: Duration) -> live_mcp::HttpResponse {
         let session = self.session.as_deref().expect("initialized HTTP session");
         let encoded = body.to_string();
         http_request(
@@ -4186,99 +4158,14 @@ fn http_request(
     extra_headers: &[(&str, &str)],
     body: Option<&str>,
     timeout: Duration,
-) -> Result<HttpResponse, String> {
-    let mut stream =
-        TcpStream::connect_timeout(&addr, timeout).map_err(|error| error.to_string())?;
-    stream
-        .set_read_timeout(Some(timeout))
-        .map_err(|error| error.to_string())?;
-    stream
-        .set_write_timeout(Some(timeout))
-        .map_err(|error| error.to_string())?;
-    let body = body.unwrap_or("");
-    let mut request = format!("{method} {path} HTTP/1.1\r\nHost: {addr}\r\nConnection: close\r\n");
+) -> Result<live_mcp::HttpResponse, String> {
+    let mut headers = Vec::with_capacity(extra_headers.len() + 2);
     if method == "POST" {
-        request.push_str(
-            "Content-Type: application/json\r\nAccept: application/json, text/event-stream\r\n",
-        );
+        headers.push(("Content-Type", "application/json"));
+        headers.push(("Accept", "application/json, text/event-stream"));
     }
-    for (name, value) in extra_headers {
-        request.push_str(name);
-        request.push_str(": ");
-        request.push_str(value);
-        request.push_str("\r\n");
-    }
-    if !body.is_empty() {
-        request.push_str(&format!("Content-Length: {}\r\n", body.len()));
-    }
-    request.push_str("\r\n");
-    request.push_str(body);
-    stream
-        .write_all(request.as_bytes())
-        .map_err(|error| error.to_string())?;
-    let mut response = Vec::new();
-    stream
-        .read_to_end(&mut response)
-        .map_err(|error| error.to_string())?;
-    parse_http_response(&response)
-}
-
-fn parse_http_response(response: &[u8]) -> Result<HttpResponse, String> {
-    let split = response
-        .windows(4)
-        .position(|window| window == b"\r\n\r\n")
-        .ok_or_else(|| "HTTP response has no header terminator".to_owned())?;
-    let head = std::str::from_utf8(&response[..split]).map_err(|error| error.to_string())?;
-    let mut lines = head.lines();
-    let status = lines
-        .next()
-        .and_then(|line| line.split_whitespace().nth(1))
-        .ok_or_else(|| "HTTP response has no status".to_owned())?
-        .parse::<u16>()
-        .map_err(|error| error.to_string())?;
-    let mut headers = BTreeMap::new();
-    for line in lines {
-        if let Some((name, value)) = line.split_once(':') {
-            headers.insert(name.to_ascii_lowercase(), value.trim().to_owned());
-        }
-    }
-    let body = &response[split + 4..];
-    let body = if headers
-        .get("transfer-encoding")
-        .is_some_and(|value| value.eq_ignore_ascii_case("chunked"))
-    {
-        decode_chunked(body)?
-    } else {
-        body.to_vec()
-    };
-    Ok(HttpResponse {
-        status,
-        headers,
-        body,
-    })
-}
-
-fn decode_chunked(mut input: &[u8]) -> Result<Vec<u8>, String> {
-    let mut output = Vec::new();
-    loop {
-        let end = input
-            .windows(2)
-            .position(|window| window == b"\r\n")
-            .ok_or_else(|| "chunk size line missing".to_owned())?;
-        let size_line = std::str::from_utf8(&input[..end]).map_err(|error| error.to_string())?;
-        let size =
-            usize::from_str_radix(size_line.split(';').next().unwrap_or(size_line).trim(), 16)
-                .map_err(|error| error.to_string())?;
-        input = &input[end + 2..];
-        if size == 0 {
-            return Ok(output);
-        }
-        if input.len() < size + 2 || &input[size..size + 2] != b"\r\n" {
-            return Err("truncated chunk".to_owned());
-        }
-        output.extend_from_slice(&input[..size]);
-        input = &input[size + 2..];
-    }
+    headers.extend_from_slice(extra_headers);
+    live_mcp::http_request_with_timeout(addr, method, path, &headers, body, timeout)
 }
 
 fn http_json_messages(body: &str) -> Vec<Value> {
@@ -5049,7 +4936,7 @@ fn run_http_cache_case_with_first_addr(
         .header("mcp-session-id")
         .expect("HTTP initialize returns session")
         .to_owned();
-    let response = http_json_messages(&initialized.body_text())
+    let response = http_json_messages(&initialized.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .expect("HTTP initialize response ID");
@@ -5060,13 +4947,13 @@ fn run_http_cache_case_with_first_addr(
     assert_eq!(client.session.as_deref(), Some(session.as_str()));
     let tools_response = client.post(rpc("tools/list", 2));
     assert_eq!(tools_response.status, 200);
-    let tools = http_json_messages(&tools_response.body_text())
+    let tools = http_json_messages(&tools_response.text())
         .into_iter()
         .find(|message| message["id"] == 2)
         .expect("HTTP tools/list response ID");
     let resources_response = client.post(rpc("resources/list", 3));
     assert_eq!(resources_response.status, 200);
-    let resources = http_json_messages(&resources_response.body_text())
+    let resources = http_json_messages(&resources_response.text())
         .into_iter()
         .find(|message| message["id"] == 3)
         .expect("HTTP resources/list response ID");
@@ -5488,7 +5375,7 @@ fn run_headless_http_complete_live_update_matrix(first_addr: Option<SocketAddr>)
     let initialized = client.post_without_session(initialize_request());
     assert_eq!(initialized.status, 200);
     let session = initialized.header("mcp-session-id").unwrap().to_owned();
-    let response = http_json_messages(&initialized.body_text())
+    let response = http_json_messages(&initialized.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .unwrap();
@@ -6120,7 +6007,7 @@ fn run_http_live_control_attempt(
     let initialized = client.post_without_session(initialize_request());
     assert_eq!(initialized.status, 200);
     let session = initialized.header("mcp-session-id").unwrap().to_owned();
-    let response = http_json_messages(&initialized.body_text())
+    let response = http_json_messages(&initialized.text())
         .into_iter()
         .find(|message| message["id"] == 1)
         .unwrap();
