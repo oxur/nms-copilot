@@ -5,15 +5,18 @@ use predicates::prelude::*;
 
 #[test]
 fn test_nms_copilot_help_exits_before_startup() {
-    cargo_bin_cmd!("nms-copilot")
+    let assertion = cargo_bin_cmd!("nms-copilot")
         .arg("--help")
         .assert()
         .success()
         .stdout(predicate::str::contains("Usage: nms-copilot"))
-        .stdout(predicate::str::contains("--http"))
         .stdout(predicate::str::contains("mcp-smoke"))
         .stdout(predicate::str::contains("NMS Copilot Setup").not())
         .stdout(predicate::str::contains("MCP server listening").not());
+    #[cfg(feature = "http")]
+    assertion.stdout(predicate::str::contains("--http"));
+    #[cfg(not(feature = "http"))]
+    assertion.stdout(predicate::str::contains("--http").not());
 }
 
 #[test]
