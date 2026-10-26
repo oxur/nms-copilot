@@ -90,7 +90,7 @@ rendering method.
 - **Multi-save support** -- switch between save slots (up to 15)
 - **Export & import** -- JSON/CSV export of filtered data; CSV import of community coordinates
 - **MCP server** -- stdio and HTTP transports for AI copilot integration (Claude Desktop, etc.)
-- **Configurable color themes** -- ANSI terminal themes via `~/.nms-copilot/config.toml`
+- **Built-in terminal palettes** -- table colors follow the selected header style; the configuration file does not expose palette settings. `[display].color` controls startup banner color.
 - **Shell completions** -- bash, zsh, fish, powershell, elvish
 - **Multi-galaxy routing** -- per-galaxy spatial indexes across all 256 NMS galaxies
 
@@ -554,8 +554,8 @@ NMS Copilot builds on a decade of community reverse engineering. Special thanks 
 
 Licensed under either of
 
-- Apache License, Version 2.0 (<http://www.apache.org/licenses/LICENSE-2.0>)
-- MIT license (<http://opensource.org/licenses/MIT>)
+- [Apache License, Version 2.0](LICENSE-APACHE)
+- [MIT License](LICENSE-MIT)
 
 at your option.
 

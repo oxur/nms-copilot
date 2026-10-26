@@ -1,9 +1,9 @@
-//! Interactive setup wizard for selecting an NMS save file.
+//! Interactive setup wizard for selecting an NMS save directory and save slot.
 //!
-//! The `nms-copilot` binary's startup calls the wizard only for explicit
-//! `--setup` in non-headless mode, after an explicit `--save` option has taken
-//! precedence. Failed save auto-detection alone does not call it. Other library
-//! callers may invoke the public wizard directly. Its entry point is
+//! The `nms-copilot` binary's startup calls the wizard after failed save
+//! auto-detection on an interactive non-headless terminal, or for explicit
+//! `--setup`, after an explicit `--save` option has taken precedence. Other
+//! library callers may invoke the public wizard directly. Its entry point is
 //! [`run_setup_wizard`], and its errors are described by [`SetupError`].
 
 use std::path::{Path, PathBuf};
@@ -91,9 +91,8 @@ pub enum SetupError {
 ///
 /// The wizard uses an existing platform-default save directory when available;
 /// otherwise it prompts for a path, trims the input, and requires that it
-/// exists. It does not expand `~`, canonicalize the path, parse save contents,
-/// or guarantee a direct-file bypass despite the prompt mentioning a save
-/// file. A recognized account directory containing saves is selected directly
+/// exists. It does not expand `~`, canonicalize the path, or parse save
+/// contents. A recognized account directory containing saves is selected directly
 /// when found in its parent listing; otherwise account subdirectories are
 /// listed. One account is selected automatically and multiple accounts are
 /// offered in a menu. Accounts are not restricted to Steam. Save files are
@@ -192,7 +191,7 @@ fn find_save_directory(theme: &ColorfulTheme) -> Result<PathBuf, SetupError> {
             println!();
 
             let input: String = Input::with_theme(theme)
-                .with_prompt("Enter path to your NMS save directory (or a specific save file)")
+                .with_prompt("Enter path to your NMS save directory")
                 .interact_text()
                 .map_err(|_| SetupError::Cancelled)?;
 
