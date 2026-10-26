@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.9. Created: 2026-10-25. Status: finite cleanup underway;04/05 reviewed with validation carry. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.10. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -257,6 +257,19 @@ seed-only graph expectation after04's adopted ensure/rebuild behavior.07 must
 align that literal oracle and rerun the actual target; no oracle was rewritten
 in05 or failed target called green. Ready agreed06 work proceeds separately.
 
+Slice06 source6b47cd3d758e6b44e28041ae52eceba0439c35db adds the bounded
+existing-wizard fallback and truthful docs/portable license assets. Independent
+startup4/history-component3 and strict affected rustdoc pass; all10archives,
+licenses/current VCS and five historical0.2.0 checksum/source mappings checked.
+ID-03 is accepted; wizard/config/historical subclaims are accepted. Native
+completion/history/clean-exit composition is limited by actual retained probes,
+not inferred from components. Theme disposition remains pending. Plain package
+verification fails at the unpublished sibling hash; the archive-only core/save
+check is partial and scratch install stops at uncachedclap_derive4.6.7. The
+restricted full test remains247pass/7timeouts, not native success. ID-01/02/04/05
+and R07-S06 remain open.07 proceeds with ready original validation/minimal
+carried fixes; no further packaging/terminal investigation is commissioned.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -279,3 +292,5 @@ in05 or failed target called green. Ready agreed06 work proceeds separately.
 - 1.8 (2026-10-25): Recorded04 independently reviewed map/graph behavior and explicit open AT-03 carry to final07; no whole-gate success, threshold waiver or extra scope. Ready agreed cleanup continues separately.
 
 - 1.9 (2026-10-25): Recorded05 reviewed transport/main restoration and exact owned graph-oracle carry to07. No broad cleanup or validation narrowing;06 remains the next agreed increment to ground.
+
+- 1.10 (2026-10-25):06 reviewed with assets/wizard/historical subclaims accepted and exact remaining native interaction/theme/install/full-gate limits; proceed ready07 without new inquiry.
