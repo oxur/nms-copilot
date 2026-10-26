@@ -17,6 +17,10 @@
 //! operation through [`read_metadata`] and [`verify_sha256`]; neither save-file
 //! entry point reads or verifies metadata automatically.
 //!
+//! For an in-memory on-disk representation, [`SaveParser`] and
+//! [`NmsSaveParser`] accept supported plaintext JSON or standard NMS LZ4 bytes
+//! through the same checked pipeline as [`parse_validated_save_file`].
+//!
 //! The modules provide the lower-level stages: [`decompress`] classifies and
 //! decompresses bytes, [`mapping`] handles obfuscated JSON keys, [`model`]
 //! contains the legacy typed representation and [`convert`] its compatibility
@@ -86,6 +90,7 @@ pub mod locate;
 pub mod mapping;
 pub mod metadata;
 pub mod model;
+pub mod parser;
 pub mod validated;
 pub mod xxtea;
 
@@ -94,6 +99,7 @@ pub use error::SaveError;
 pub use mapping::{KeyMapping, deobfuscate_json, is_obfuscated};
 pub use metadata::{SaveMetadata, StorageSlot, read_metadata, verify_sha256};
 pub use model::SaveRoot;
+pub use parser::{NmsSaveParser, SaveParser};
 pub use validated::{ValidatedSave, parse_validated_save, parse_validated_save_file};
 
 /// Deserialize already-deobfuscated UTF-8 JSON into the legacy [`SaveRoot`] model.

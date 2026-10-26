@@ -161,6 +161,18 @@ pub fn parse_validated_save(json: &[u8]) -> Result<ValidatedSave, SaveError> {
     validated_from_value(value)
 }
 
+pub(crate) fn parse_validated_save_bytes(raw: &[u8]) -> Result<ValidatedSave, SaveError> {
+    let decompressed = crate::decompress::decompress_save(raw)?;
+    let json = crate::sanitize_for_json(&decompressed);
+    let value = if crate::is_obfuscated_bytes(json.as_bytes()) {
+        let mapping = KeyMapping::bundled();
+        deobfuscate_json(json.as_bytes(), &mapping)?
+    } else {
+        serde_json::from_slice(json.as_bytes()).map_err(json_error)?
+    };
+    validated_from_value(value)
+}
+
 /// Parse and validate modeled addresses from a save file.
 ///
 /// The resulting plaintext, deobfuscated JSON value is checked before serde
@@ -192,15 +204,8 @@ pub fn parse_validated_save(json: &[u8]) -> Result<ValidatedSave, SaveError> {
 /// can also panic if its compiled-in data is invalid.
 pub fn parse_validated_save_file(path: &Path) -> Result<ValidatedSave, SaveError> {
     let raw = std::fs::read(path)?;
-    let decompressed = crate::decompress::decompress_save(&raw)?;
-    let json = crate::sanitize_for_json(&decompressed);
-    let value = if crate::is_obfuscated_bytes(json.as_bytes()) {
-        let mapping = KeyMapping::bundled();
-        deobfuscate_json(json.as_bytes(), &mapping)?
-    } else {
-        serde_json::from_slice(json.as_bytes()).map_err(json_error)?
-    };
-    validated_from_value(value)
+    use crate::parser::{NmsSaveParser, SaveParser};
+    NmsSaveParser.parse(&raw)
 }
 
 fn validated_from_value(value: Value) -> Result<ValidatedSave, SaveError> {
