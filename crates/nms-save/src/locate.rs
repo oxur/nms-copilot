@@ -929,7 +929,9 @@ mod tests {
         for (offset, (name, _, _)) in expected.iter().enumerate() {
             let path = account.join(name);
             fs::write(&path, b"opaque payload").unwrap();
-            File::open(path)
+            File::options()
+                .write(true)
+                .open(path)
                 .unwrap()
                 .set_times(
                     FileTimes::new().set_modified(epoch + Duration::from_secs(offset as u64)),
@@ -951,7 +953,9 @@ mod tests {
         ] {
             let path = account.join(name);
             fs::write(&path, b"newer ignored payload").unwrap();
-            File::open(path)
+            File::options()
+                .write(true)
+                .open(path)
                 .unwrap()
                 .set_times(FileTimes::new().set_modified(epoch + Duration::from_secs(10_000)))
                 .unwrap();
@@ -1019,7 +1023,9 @@ mod tests {
         ] {
             let path = edge.join(name);
             fs::write(&path, b"opaque").unwrap();
-            File::open(path)
+            File::options()
+                .write(true)
+                .open(path)
                 .unwrap()
                 .set_times(FileTimes::new().set_modified(epoch + Duration::from_secs(seconds)))
                 .unwrap();
