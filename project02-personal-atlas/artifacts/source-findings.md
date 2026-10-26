@@ -1,6 +1,6 @@
 # Source findings and project01 carry-over
 
-Recorded 2026-10-03. Source checkout: main `a800950ef3558fcf463517696c3c140061e7353d`; planning base `85bc9a6597c62ecbaf2c5d649b4a46eef74e3719`. Findings are scoped inspections, not a complete code audit. For current ownership of inherited repairs and this augmentation's scope, see the dated 2026-10-11 clarification below.
+Recorded 2026-10-03. Source checkout: main `a800950ef3558fcf463517696c3c140061e7353d`; planning base `85bc9a6597c62ecbaf2c5d649b4a46eef74e3719`. Findings are scoped inspections, not a complete code audit. For current ownership of inherited repairs and this augmentation's scope, see the dated 2026-10-11 and 2026-10-26 clarifications below.
 
 ## Current implementation
 
@@ -77,3 +77,14 @@ The nine Markdown documents pass local-target checks (35 links), balanced code-f
 Structural checks find nine roadmap arcs with stable original IDs, 14 decision-register rows, 14 research gates and 20 unique open ledger rows. All 12 original criterion IDs/statuses remain; the four expanded rows are P02-01/06/07/11, the other eight original rows remain text-identical, and eight new rows capture the added capabilities/composition. The roadmap's release dependency follows the two added arcs. Manual scope review retained original creature/history/import/export/FTS decisions while adding the journal, media, narrative, attribution, culture, geometry and region cases.
 
 This is planning-author self-check evidence, not independent acceptance or successful implementation research. No Rust code changed; no build, lint, test suite, native clipboard trial or geometric benchmark was run. Project01 evidence files were being updated concurrently by other work; the commit allowlist is exactly these nine Project02 documents, with both repository-required trailers. Existing source and Project01 changes are outside this task's writes.
+
+## 2026-10-26 two explicit Project01 transfers
+
+Duncan adopts ONLY groups2 and3 from the [complete Project01 clause matrix](../../project01-mvp/arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/requirements-reconciliation.md#consolidated-decisions-to-confer-on). The matrix’s source/proof findings are reused; no new source audit or tests were performed. Current source pin3e8e460 retains application/library behavior from accepted1b79525d; later changes are CI/development-probe/test-fixture only. Historical observations above are not silently refreshed.
+
+| Inherited source finding / approved scope | Next-project delivery and ownership |
+|---|---|
+| Shared query name predicate exists but CLI/REPL/MCP set it to None; standalone planet detail/seed is absent; statistics omit distance distributions/full discovery-type/explicit unnamed output and meaningful flag selection; info lacks biome overview and uses BaseContext Game Mode rather than active context | [B06](../../project01-mvp/backlog.md#b06-search-detail-statistics-and-info-next-project) / P02-21: expose shared name search consistently, standalone seed-bearing planet detail, distance/type/named-unnamed statistics with flag semantics, and info biome/active-context Game Mode. Existing Arc04/05; existing-query work may follow Arc01 directly without a database gate. |
+| Default galaxy, tsp_algorithm, find_limit, emoji_glyphs, table_style and save.format are parsed but inert; color is not consistently applied; black/white palettes still contain ANSI and general JSON is limited to export | [B07](../../project01-mvp/backlog.md#b07-working-configuration-and-output-next-project) / P02-22: operational settings, consistent color, actual ANSI-free/plain piping and structured JSON beyond export. Existing Arc01 foundations AFTER friendly save/account selection; no database prerequisite. |
+
+**Owner/re-entry:** explicitly assigned Project02 contributors, CDC independent review and Duncan prioritization/acceptance, during actual NEXT-project delivery at those existing arc boundaries. No source assignment, new arc/slice/prompt, implementation or proof is claimed. B02 configurable themes remains separately deferred; B03/B04 retain their next-two-future-project deadlines and B05 its unchanged no-deadline deferral. Groups1 (legacy compatibility/integrity),4 (routing/watcher detail/proof) and5 (promised-versus-implemented scope) have no new disposition from this discussion.
