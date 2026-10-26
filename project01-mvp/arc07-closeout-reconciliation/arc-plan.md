@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.18. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.19. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -365,3 +365,7 @@ Version1.17: [Slice09 independent acceptance](slice09-glyph-error-preview/cdc-ve
 ## Explicit overflow deferrals — 2026-10-25
 
 Version1.18: Duncan adopts [B03/B04](../backlog.md) for the conditional32-bit malformed-LZ4 offset overflow and unchecked warp_jump_count range/cast-sum overflow. Both supersede prior undispositioned status and are removed as current closeout blockers, not fixed/reproduced. Owner Duncan prioritization/future explicitly assigned contributor; re-entry within one of the next two future projects, earlier if directly encountered. No project/arc automatically assigned or opened. Glyph gate MET/source1b79525d/test proof retained. Joint save/native, actual CI, original reconciliation/higher acceptance/external gates unchanged; execution/further planning PAUSED.
+
+## Explicit requirements reconciliation and route deferral — 2026-10-26
+
+Version1.19: Duncan authorizes one finite original-clause reconciliation pass while root handles CI, plus explicit [B05 best-effort overlong final-leg deferral](../backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg). B05 is separate from B04, with no invented deadline or runtime repair. CDC owns planning/index and read-only requirements/source assessment; root exclusively owns source/ref/remote/push/CI operations. Push/CI effects are now explicitly authorized to root; merge/publication remain unauthorized. One compact current matrix in existing08 artifacts will cover all43 recovered documents plus original parent promises and adopted amendments; no automatic implementation/tests/new arc/slice/report family. Prior test evidence and other input/higher gates retain scope.
