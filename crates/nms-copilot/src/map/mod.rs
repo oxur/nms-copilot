@@ -1,8 +1,9 @@
 //! Interactive ASCII galaxy map using Ratatui.
 //!
-//! This module joins [`input`] handling, [`render`]ing, and [`state`] for a
-//! owned [`MapSnapshot`] captured from a [`GalaxyModel`] and [`SessionState`]. Its zoom tiers
-//! are [`state::ZoomLevel::Galaxy`], [`state::ZoomLevel::Region`], and
+//! This module joins [`input`] handling, [`render`]ing, and [`state`] for an
+//! owned [`MapSnapshot`] captured from a [`GalaxyModel`] and [`SessionState`].
+//! The snapshot stays fixed while the map is open; its zoom tiers are
+//! [`state::ZoomLevel::Galaxy`], [`state::ZoomLevel::Region`], and
 //! [`state::ZoomLevel::Local`]. The map projects voxel X/Z and does not update
 //! the model or session.
 //!

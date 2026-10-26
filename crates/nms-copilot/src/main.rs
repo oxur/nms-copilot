@@ -6,7 +6,7 @@
 
 use std::collections::BTreeMap;
 use std::fmt;
-use std::io::{self, Read, Write};
+use std::io::{self, IsTerminal, Read, Write};
 use std::net::{SocketAddr, TcpStream, ToSocketAddrs};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -363,18 +363,14 @@ fn resolve_save_path(cli: &Cli, config: &Config) -> Option<PathBuf> {
     }
 
     // 2. Explicit interactive setup
-    if cli.setup && !cli.headless {
-        match nms_copilot::setup::run_setup_wizard() {
-            Ok(path) => return Some(path),
-            Err(e) => {
-                eprintln!("Setup failed: {e}");
-                eprintln!(
-                    "Configure manually in ~/.nms-copilot/config.toml \
-                     or use: nms-copilot --save /path/to/save.hg"
-                );
-                std::process::exit(1);
-            }
+    if cli.setup {
+        if cli.headless || !io::stdin().is_terminal() {
+            eprintln!(
+                "Interactive setup requires a non-headless terminal. Configure manually in ~/.nms-copilot/config.toml or use: nms-copilot --save /path/to/save.hg"
+            );
+            std::process::exit(1);
         }
+        return Some(run_setup_or_exit());
     }
 
     // 3. ENV vars + config file (user has explicitly configured a save)
@@ -382,11 +378,33 @@ fn resolve_save_path(cli: &Cli, config: &Config) -> Option<PathBuf> {
         return Some(p);
     }
 
-    // 4. Non-interactive fallback: auto-detect most recent save
+    // 4. Auto-detect most recent save before offering interactive setup.
     if let Ok(save) = nms_save::locate::find_most_recent_save() {
         return Some(save.path().to_path_buf());
     }
+
+    // 5. Offer the existing setup flow only where stdin can support it.
+    if !cli.headless && io::stdin().is_terminal() {
+        return Some(run_setup_or_exit());
+    }
+
+    eprintln!(
+        "No save file was found. Configure one in ~/.nms-copilot/config.toml or use: nms-copilot --save /path/to/save.hg"
+    );
     None
+}
+
+fn run_setup_or_exit() -> PathBuf {
+    match nms_copilot::setup::run_setup_wizard() {
+        Ok(path) => path,
+        Err(e) => {
+            eprintln!("Setup failed: {e}");
+            eprintln!(
+                "Configure manually in ~/.nms-copilot/config.toml or use: nms-copilot --save /path/to/save.hg"
+            );
+            std::process::exit(1);
+        }
+    }
 }
 
 fn load_model(
