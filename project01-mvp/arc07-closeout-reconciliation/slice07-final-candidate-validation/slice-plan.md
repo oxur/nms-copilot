@@ -2,7 +2,7 @@
 
 Status: independently reviewed, partial; code2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0.
 FV-01/02/03 accepted with qualifications, FV-06 scoped measurements accepted;
-FV-04/05 remain open. See cdc-verification.md. Issued baseline follows. Baseline6b47cd3d758e6b44e28041ae52eceba0439c35db clean
+Current2026-10-25: FV-04 done by explicit current global/per-file coverage acceptance; FV-05 remains open for actual CI evidence. Root metadata-only current successor ae0ef360 has identical tested source tree; historical proof pin below retained. See ledger.md and cdc-verification.md. Issued baseline follows. Baseline6b47cd3d758e6b44e28041ae52eceba0439c35db clean
 on dedicated codex/workspace-coverage-contract. Sole serial CC LunaHigh, CDC
 SolHigh independent review; source/index transfer at dispatch. Parent adopted
 finite04–08 sequence authorizes existing gates and two named carried repairs.

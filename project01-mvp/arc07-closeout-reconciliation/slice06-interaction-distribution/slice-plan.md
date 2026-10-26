@@ -2,7 +2,7 @@
 
 Status: independently reviewed, partial; source6b47cd3d758e6b44e28041ae52eceba0439c35db.
 ID-03 accepted; wizard/historical subclaims accepted; remaining interaction,
-theme, current install and full-gate claims stay open. See cdc-verification.md.
+Historical pending theme/install state is superseded2026-10-25: ID-02 explicitly dispositioned, themes deferred B02; current install evidence accepted for now, remaining clean-install proof deferred B01. Native interaction/full composition stays open. See ledger.md and cdc-verification.md.
 Issued baseline was clean8d572529445d80e404c1d45813c8b4a5b4b732fc on
 codex/workspace-coverage-contract; main restored/cleanb616ab2 is out of scope.
 Fresh serial sole CC LunaHigh implements; CDC SolHigh independently reviews.

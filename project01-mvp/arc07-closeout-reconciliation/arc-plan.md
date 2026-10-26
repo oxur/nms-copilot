@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.14. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.15. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -345,3 +345,11 @@ external CI, source integration or release is authorized by this handoff.
 
 
 - 1.14 (2026-10-25): Final08 independently reviewed after one records-only correction; finite endpoint paused with actual candidate/proof/remaining gates. No project/arc success declaration or further assignment.
+
+## Operator decision-recording amendment — 2026-10-25
+
+Version1.15; execution/further planning remains **PAUSED**. Duncan accepts this candidate's global93.83653588002915% AND14/72 below90 file coverage results as-is (explicit current criterion amendment; original thresholds not numerically met, future floors retained), and current package/install evidence FOR NOW. Remaining clean installation and configurable themes/biome wiring are explicitly deferred with owners/re-entry in [B01/B02](../backlog.md). Historical five0.2 provenance/licenses are complete; mixed M7.8/G06 is not wholesale closed/deferred. Authentic NomNom/new publication deferrals remain.
+
+MSRV/platform verification follows actual CI evidence, with no extra local runs/toolchain installs or inferred CI-trigger authority. Genuine nonzero save+metadata and native terminal proof will be supplied/done with Duncan; no run before input. The seven prior bullets were not exhaustive: [handoff amendment](slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25) separates three known runtime risks with NO approved disposition from unreconciled original parent clauses (not confirmed missing features). Higher independent assembly/Operator acceptance remains open.
+
+Root's separately authorized metadata-only correction replaces current2b7fc9e with ae0ef360389f555e5ec0d39930005cbfc374faad: identical parent6b47cd3d/tree78f7e3cfd6b9312b303e05e48586ca00d11c1762, empty source diff, both trailers parsed once. Preserve old proof pins/history. No test, source fix, new slice/arc or external action follows this amendment.

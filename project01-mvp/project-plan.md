@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.144
+version: 1.145
 project: project01-mvp
 status: active
 depends-on: []
@@ -1391,3 +1391,9 @@ Version1.143 records Duncan’s adoption of the [Arc07 table and finite04–08 s
 ## Arc07 finite cleanup handoff and pause — 2026-10-25
 
 Version1.144 records [reviewed08 handoff](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md), sourceclean2b7fc9e/maincleanb616ab2, independently green host1248/lint and exact remaining coverage/UI/input/install/MSRV/platform/history/higher-acceptance/external gates. All26 project rows stay open; Arc06 preserves66 rows/54done/11open/1deferred; Arc07 has9rows/7done/2open. Only NomNom/new-publication deferrals are adopted. Initial three-slice stop and subsequent finite04–08 authority remain historical. Execution/further arc planning PAUSE here for Duncan; no09+/new arc, source/hardening/proof programme, integration or release is opened.
+
+## Current decision-recording amendment — 2026-10-25
+
+Version1.145: [current handoff amendment](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25) supersedes the previous pending decisions. Duncan accepts current global93.83653588002915% AND14/72 below90 file results as-is, and package/install evidence FOR NOW; remaining clean installation and configurable themes explicitly deferred with owners/re-entry in [backlog](backlog.md). Actual CI evidence still required for MSRV/platform, no extra local runs. Nonzero-save and native terminal proof will be done with Duncan after input/session. Historical provenance/licenses complete; new publication and authentic NomNom retain adopted deferrals. Current source ae0ef360389f555e5ec0d39930005cbfc374faad is root's identical-tree metadata successor to old proof pin2b7fc9e.
+
+The previous seven-bullet handoff was not exhaustive. Three documented runtime limits lack approved disposition; original cross-interface/routing/cache/discovery/research/UI/acceptance clauses remain unreconciled, distinct from confirmed missing features. All26 project rows preserved (1done/1deferred/24open); Arc06 retains66 (54done/10open/2deferred); Arc07 retains9 (7done/2open). No execution, further arc planning, source fix, CI trigger/integration/release or new audit is authorized by this decision recording.

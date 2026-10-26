@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.2
+version: 1.3
 ---
 
 # NMS Copilot — Project Summary
@@ -270,3 +270,7 @@ Version 1.1 adds this navigation and the current update date; it does not claim 
 ## Current finite cleanup handoff — 2026-10-25
 
 The original roadmap above is preserved. The [reviewed Arc07 handoff](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md) identifies delivered candidate2b7fc9e and actual remaining decisions/inputs. Host1248/lint pass; coverage93.83653588%/14below90 and native interaction/theme/genuine-save/install/MSRV/platform/higher acceptance remain open. Only authentic NomNom and new publication are explicitly deferred. Source is not integrated or released; execution and further arc planning are PAUSED for Duncan, with no09+ assignment. Version1.2 adds this current navigation/status only.
+
+## Current decisions and remaining acceptance — 2026-10-25
+
+Version1.3 supersedes the preceding pending-choice summary: current global and per-file coverage results accepted as-is; current package/install evidence accepted for now, clean installation deferred; configurable themes deferred. [Backlog](backlog.md) gives the two owners/re-entry conditions. Actual MSRV/platform CI evidence remains required; save/native terminal proof will be done with Duncan. Current source ae0ef360389f555e5ec0d39930005cbfc374faad has the identical tested source tree after root's metadata-only correction. [Handoff amendment](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25) candidly distinguishes three known runtime risks from unreconciled original clauses: the prior seven bullets were not exhaustive, and Project01 is not accepted complete. No new work resumes.
