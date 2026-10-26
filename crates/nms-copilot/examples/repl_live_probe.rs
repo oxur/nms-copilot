@@ -341,7 +341,10 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             let specials: u64 = args.next().ok_or("specials required")?.parse()?;
             let selected: u8 = args.next().ok_or("selected galaxy required")?.parse()?;
             let previous = if let Some(value) = args.next() {
-                let values: Vec<u8> = value.split(',').map(str::parse).collect::<Result<_, _>>()?;
+                let values: Vec<u8> = value
+                    .split(',')
+                    .map(str::parse::<u8>)
+                    .collect::<Result<_, _>>()?;
                 if values.len() != 6 {
                     return Err("previous address needs reality,x,y,z,system,planet".into());
                 }
