@@ -35,3 +35,24 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - run: cargo test --workspace
+
+  msrv:
+    name: Declared MSRV (Rust 1.91)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.91.0
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --locked --workspace --all-targets --all-features
+
+  feature-coverage:
+    name: Stable full-feature and no-HTTP coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Test workspace with all features
+        run: cargo test --locked --workspace --all-features
+      - name: Test nms-copilot without default HTTP feature
+        run: cargo test --locked -p nms-copilot --no-default-features
