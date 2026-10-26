@@ -553,10 +553,6 @@ impl PortalAddress {
     /// and [PortalParseError::WrongLength] unless exactly twelve glyphs are
     /// consumed. More than twelve are reported with count 13.
     ///
-    /// # Panics
-    ///
-    /// The current glyph-prefix diagnostic can panic if its 20-byte excerpt
-    /// ends inside a multi-byte UTF-8 character.
     pub fn parse_mixed(s: &str) -> Result<Self, PortalParseError> {
         let mut glyphs = Vec::with_capacity(12);
         let mut remaining = s.trim();
@@ -625,10 +621,6 @@ impl fmt::Display for PortalAddress {
 /// Returns [PortalParseError] when the input has the wrong glyph count or an
 /// unrecognized glyph.
 ///
-/// # Panics
-///
-/// May panic when the glyph parser constructs an unrecognized-prefix
-/// diagnostic whose 20-byte excerpt ends inside a multi-byte UTF-8 character.
 impl FromStr for PortalAddress {
     type Err = PortalParseError;
 
@@ -694,10 +686,6 @@ impl GalacticAddress {
     /// Returns [PortalParseError] if the string has the wrong number of glyphs
     /// or contains a glyph that cannot be parsed.
     ///
-    /// # Panics
-    ///
-    /// May panic when the glyph parser constructs an unrecognized-prefix
-    /// diagnostic whose 20-byte excerpt ends inside a multi-byte UTF-8 character.
     pub fn from_portal_string(s: &str) -> Result<Self, PortalParseError> {
         let pa: PortalAddress = s.parse()?;
         Ok(GalacticAddress::from(pa))

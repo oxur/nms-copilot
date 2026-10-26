@@ -45,8 +45,7 @@ use nms_core::galaxy::Galaxy;
 ///
 /// # Panics
 ///
-/// Printing may panic if stdout fails. The inherited `PortalAddress::parse_mixed` invalid-token
-/// diagnostic may panic when its 20-byte excerpt boundary splits a UTF-8 character.
+/// Printing may panic if stdout fails.
 pub fn run(
     glyphs: Option<String>,
     coords: Option<String>,
