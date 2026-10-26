@@ -9,7 +9,7 @@ updated: 2026-10-25
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.147
+version: 1.148
 project: project01-mvp
 status: active
 depends-on: []
@@ -1405,3 +1405,7 @@ Version1.146: Duncan gates project closure on one corrected/reviewed glyph20-byt
 ## Glyph correction independently accepted — 2026-10-25
 
 Version1.147: [Slice09](arc07-closeout-reconciliation/slice09-glyph-error-preview/cdc-verification.md) satisfies the expressly added glyph closure gate at source1b79525dcaabd3cd06388a787734c8377b34c6e9. Full native1256pass, restricted247/7 failure retained; source unintegrated/unreleased. Existing scope/acceptance decisions, historical coverage metrics and all other original gates remain unchanged; no new coverage measurement. LZ4/warp risks remain undispositioned. Pause after this one requested correction; no next assignment.
+
+## Two overflow risks explicitly deferred — 2026-10-25
+
+Version1.148 records Duncan's [B03/B04 backlog decision](backlog.md): conditional32-bit malformed-LZ4 offset overflow and unchecked warp_jump_count range/cast-sum overflow are explicitly deferred, no longer current closeout blockers. Neither directly encountered; first source-derived/not32-bit-reproduced, second documented/profile-dependent. Duncan prioritization/future explicit contributor, re-entry within one of the next two future projects, earlier if directly encountered; no project/arc automatically assigned. Source1b79525d, glyph gate MET/all test proof unchanged. Joint save/native proof, actual CI, original-clause reconciliation/higher acceptance and pause boundaries retained; no work resumes.

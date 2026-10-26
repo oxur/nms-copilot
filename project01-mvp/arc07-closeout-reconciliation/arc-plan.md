@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.17. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.18. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -361,3 +361,7 @@ Duncan explicitly gates project closure on fixing ONLY the glyph20-byte error-di
 ## Glyph correction accepted; pause restored — 2026-10-25
 
 Version1.17: [Slice09 independent acceptance](slice09-glyph-error-preview/cdc-verification.md) at source1b79525dcaabd3cd06388a787734c8377b34c6e9 satisfies Duncan's new glyph gate. Bounded preview + original-casefold-byte mapping preserve aliases/order/API and correct Kelvin suffixes; wrapper changes docs only. Actual host1137runtime+119docs=1256/50targets pass. Wrong-facility restricted247/7 failure and one unchanged host replay retained. One CC records-only refinement, no source corrective round. [Retrospective](slice09-glyph-error-preview/cdc-retrospective.md) records preparation/facility/intake shortcomings without new process. Arc10rows8done2open; LZ4/warp risks still undispositioned, original parent/CI/joint-input/higher/external gates unchanged. Source not integrated/released. **Execution and further planning PAUSED; no10 or new arc.**
+
+## Explicit overflow deferrals — 2026-10-25
+
+Version1.18: Duncan adopts [B03/B04](../backlog.md) for the conditional32-bit malformed-LZ4 offset overflow and unchecked warp_jump_count range/cast-sum overflow. Both supersede prior undispositioned status and are removed as current closeout blockers, not fixed/reproduced. Owner Duncan prioritization/future explicitly assigned contributor; re-entry within one of the next two future projects, earlier if directly encountered. No project/arc automatically assigned or opened. Glyph gate MET/source1b79525d/test proof retained. Joint save/native, actual CI, original reconciliation/higher acceptance/external gates unchanged; execution/further planning PAUSED.
