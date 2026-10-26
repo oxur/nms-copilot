@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-25
+updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.148
+version: 1.149
 project: project01-mvp
 status: active
 depends-on: []
@@ -1409,3 +1409,9 @@ Version1.147: [Slice09](arc07-closeout-reconciliation/slice09-glyph-error-previe
 ## Two overflow risks explicitly deferred — 2026-10-25
 
 Version1.148 records Duncan's [B03/B04 backlog decision](backlog.md): conditional32-bit malformed-LZ4 offset overflow and unchecked warp_jump_count range/cast-sum overflow are explicitly deferred, no longer current closeout blockers. Neither directly encountered; first source-derived/not32-bit-reproduced, second documented/profile-dependent. Duncan prioritization/future explicit contributor, re-entry within one of the next two future projects, earlier if directly encountered; no project/arc automatically assigned. Source1b79525d, glyph gate MET/all test proof unchanged. Joint save/native proof, actual CI, original-clause reconciliation/higher acceptance and pause boundaries retained; no work resumes.
+
+## Complete original-clause triage and CI follow-up — 2026-10-26
+
+Version 1.149: the [current clause matrix](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies all 43 recovered documents, 61 summary milestones, 75 original arc rows and 26 project rows in100 assessed clause groups. This completes the expressly requested finite accounting pass; original scope conflicts, specific partial behavior and proof/higher-acceptance choices remain, rather than unexamined parent categories. The earlier seven-gate handoff was not exhaustive. Five consolidated capability decisions are in the matrix; no feature implementation, new audit or arc/slice is authorized by these findings. Existing children/history remain accepted only at their actual scope.
+
+[B05](backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg) explicitly defers the stronger final-leg warp-range guarantee, separate from B04 and without a deadline. All other adopted decisions stand. Application/library baseline 1b79525d and host 1256 proof remain unchanged by root-owned CI-only 6641bce and probe/workflow 075b558. At run 40273840290 five jobs passed; Windows failed one read-only fixture-handle timestamp update. The exact three-handle fixture-only correction has CDC diff review and CC format/lint/focused test (1 passed); root owns commit/push/replay. Actual Windows success remains open. Push/CI is authorized to root; merge/publication is not. Joint Duncan save/native proof and higher independent/Operator acceptance remain. No more CDC execution/planning follows this pass.

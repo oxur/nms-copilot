@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.19. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.20. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -369,3 +369,9 @@ Version1.18: Duncan adopts [B03/B04](../backlog.md) for the conditional32-bit ma
 ## Explicit requirements reconciliation and route deferral — 2026-10-26
 
 Version1.19: Duncan authorizes one finite original-clause reconciliation pass while root handles CI, plus explicit [B05 best-effort overlong final-leg deferral](../backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg). B05 is separate from B04, with no invented deadline or runtime repair. CDC owns planning/index and read-only requirements/source assessment; root exclusively owns source/ref/remote/push/CI operations. Push/CI effects are now explicitly authorized to root; merge/publication remain unauthorized. One compact current matrix in existing08 artifacts will cover all43 recovered documents plus original parent promises and adopted amendments; no automatic implementation/tests/new arc/slice/report family. Prior test evidence and other input/higher gates retain scope.
+
+## Original-clause pass complete — 2026-10-26
+
+Version 1.20: the [one current matrix](slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies100 clause groups covering all 43 documents, 61 summary milestones, 75 original arc rows and 26 project rows. It separates binding/optional scope, delivered equivalents, summary/detail contradictions, known partial behavior and unverified proof. Five consolidated decisions remain for Duncan; no 100-item approval list, new feature work, source audit or next slice follows. The earlier seven-gate handoff was incomplete; current parent acceptance remains open for concrete decisions, rather than unexamined clauses. B05 explicitly amends the stronger final-leg guarantee, without a deadline.
+
+Root owns the separately authorized push/CI follow-up. Actual 075b558 run 40273840290 has five PASS/one Windows fixture FAIL; the exact three writable test handles are CDC-reviewed, with CC format/lint/focused test (1 passed), awaiting root commit/replay. Application/library 1b79525d and existing 1256 proof unchanged. This is no full CI success declaration. All adopted deferrals, joint Duncan save/native and higher acceptance boundaries stand. CDC requirements execution stops after this compact records handoff; root may finish already-authorized CI, with no merge/publication authority.
