@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.149
+version: 1.150
 project: project01-mvp
 status: active
 depends-on: []
@@ -1414,4 +1414,4 @@ Version1.148 records Duncan's [B03/B04 backlog decision](backlog.md): conditiona
 
 Version 1.149: the [current clause matrix](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies all 43 recovered documents, 61 summary milestones, 75 original arc rows and 26 project rows in100 assessed clause groups. This completes the expressly requested finite accounting pass; original scope conflicts, specific partial behavior and proof/higher-acceptance choices remain, rather than unexamined parent categories. The earlier seven-gate handoff was not exhaustive. Five consolidated capability decisions are in the matrix; no feature implementation, new audit or arc/slice is authorized by these findings. Existing children/history remain accepted only at their actual scope.
 
-[B05](backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg) explicitly defers the stronger final-leg warp-range guarantee, separate from B04 and without a deadline. All other adopted decisions stand. Application/library baseline 1b79525d and host 1256 proof remain unchanged by root-owned CI-only 6641bce and probe/workflow 075b558. At run 40273840290 five jobs passed; Windows failed one read-only fixture-handle timestamp update. The exact three-handle fixture-only correction has CDC diff review and CC format/lint/focused test (1 passed); root owns commit/push/replay. Actual Windows success remains open. Push/CI is authorized to root; merge/publication is not. Joint Duncan save/native proof and higher independent/Operator acceptance remain. No more CDC execution/planning follows this pass.
+[B05](backlog.md#b05-best-effort-route-may-retain-an-overlong-final-leg) explicitly defers the stronger final-leg warp-range guarantee, separate from B04 and without a deadline. All other adopted decisions stand. Application/library baseline 1b79525d and host 1256 proof remain unchanged by root-owned CI-only 6641bce and probe/workflow 075b558. Current pushed source 3e8e46066136978aad1d878ca1608515862ff8c4 includes the independently reviewed three-handle fixture-only correction. Root-reported exact-head CI 40275337438 at 05:59 UTC has five PASS (Check, Rust 1.91, Ubuntu, macOS, full-feature/FULL-no-default); Windows cargo test still running after 20 minutes, neither pass nor fail. Earlier Windows runtime/compile failures are retained; waiting is no new defect, and platform acceptance remains open. Push/CI is authorized to root; merge/publication is not. Joint Duncan save/native proof and higher independent/Operator acceptance remain. No more CDC execution/planning follows this pass.

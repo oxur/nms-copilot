@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.20. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.21. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -374,4 +374,4 @@ Version1.19: Duncan authorizes one finite original-clause reconciliation pass wh
 
 Version 1.20: the [one current matrix](slice08-composition-handoff/artifacts/requirements-reconciliation.md) classifies100 clause groups covering all 43 documents, 61 summary milestones, 75 original arc rows and 26 project rows. It separates binding/optional scope, delivered equivalents, summary/detail contradictions, known partial behavior and unverified proof. Five consolidated decisions remain for Duncan; no 100-item approval list, new feature work, source audit or next slice follows. The earlier seven-gate handoff was incomplete; current parent acceptance remains open for concrete decisions, rather than unexamined clauses. B05 explicitly amends the stronger final-leg guarantee, without a deadline.
 
-Root owns the separately authorized push/CI follow-up. Actual 075b558 run 40273840290 has five PASS/one Windows fixture FAIL; the exact three writable test handles are CDC-reviewed, with CC format/lint/focused test (1 passed), awaiting root commit/replay. Application/library 1b79525d and existing 1256 proof unchanged. This is no full CI success declaration. All adopted deferrals, joint Duncan save/native and higher acceptance boundaries stand. CDC requirements execution stops after this compact records handoff; root may finish already-authorized CI, with no merge/publication authority.
+Root owns the separately authorized push/CI follow-up. Current pushed source 3e8e46066136978aad1d878ca1608515862ff8c4 includes only the reviewed three-handle fixture correction after 075b. Exact-head CI 40275337438 at root’s 05:59 UTC snapshot has five PASS (Check, Rust 1.91, Ubuntu, macOS, full-feature/FULL-no-default); Windows cargo test is still running after 20 minutes, neither pass nor fail. Preserve prior 075b fixture failure and earlier compile failures; waiting is not a new defect or platform acceptance. Application/library 1b79525d and existing 1256 proof unchanged. This is no full CI success declaration. All adopted deferrals, joint Duncan save/native and higher acceptance boundaries stand. CDC requirements execution stops after this compact records handoff; root may finish already-authorized CI, with no merge/publication authority.
