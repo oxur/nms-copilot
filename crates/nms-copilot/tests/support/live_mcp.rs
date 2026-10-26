@@ -898,13 +898,24 @@ pub fn http_request(
     headers: &[(&str, &str)],
     body: Option<&str>,
 ) -> Result<HttpResponse, String> {
+    http_request_with_timeout(addr, method, path, headers, body, HTTP_TIMEOUT)
+}
+
+pub fn http_request_with_timeout(
+    addr: SocketAddr,
+    method: &str,
+    path: &str,
+    headers: &[(&str, &str)],
+    body: Option<&str>,
+    timeout: Duration,
+) -> Result<HttpResponse, String> {
     let mut stream =
-        TcpStream::connect_timeout(&addr, HTTP_TIMEOUT).map_err(|error| error.to_string())?;
+        TcpStream::connect_timeout(&addr, timeout).map_err(|error| error.to_string())?;
     stream
-        .set_read_timeout(Some(HTTP_TIMEOUT))
+        .set_read_timeout(Some(timeout))
         .map_err(|error| error.to_string())?;
     stream
-        .set_write_timeout(Some(HTTP_TIMEOUT))
+        .set_write_timeout(Some(timeout))
         .map_err(|error| error.to_string())?;
     let body = body.unwrap_or("");
     let mut request = format!("{method} {path} HTTP/1.1\r\nHost: {addr}\r\nConnection: close\r\n");
@@ -967,13 +978,11 @@ fn decode_chunked(mut body: &[u8]) -> Result<Vec<u8>, String> {
             .windows(2)
             .position(|window| window == b"\r\n")
             .ok_or("chunk size missing")?;
-        let size = usize::from_str_radix(
-            std::str::from_utf8(&body[..line_end])
-                .map_err(|error| error.to_string())?
-                .trim(),
-            16,
-        )
-        .map_err(|error| error.to_string())?;
+        let size_line =
+            std::str::from_utf8(&body[..line_end]).map_err(|error| error.to_string())?;
+        let size =
+            usize::from_str_radix(size_line.split(';').next().unwrap_or(size_line).trim(), 16)
+                .map_err(|error| error.to_string())?;
         body = &body[line_end + 2..];
         if size == 0 {
             return Ok(decoded);
@@ -983,6 +992,34 @@ fn decode_chunked(mut body: &[u8]) -> Result<Vec<u8>, String> {
         }
         decoded.extend_from_slice(&body[..size]);
         body = &body[size + 2..];
+    }
+}
+
+#[cfg(test)]
+mod http_transport_tests {
+    use super::*;
+
+    #[test]
+    fn test_shared_http_response_parser_preserves_chunk_extensions_and_rejects_bad_chunks() {
+        let plain = parse_response(b"HTTP/1.1 200 OK\r\nX-Trace: plain\r\n\r\nplain body")
+            .expect("plain HTTP response parses");
+        assert_eq!(plain.status, 200);
+        assert_eq!(plain.header("x-trace"), Some("plain"));
+        assert_eq!(plain.text(), "plain body");
+
+        let chunked = parse_response(
+            b"HTTP/1.1 201 Created\r\nTransfer-Encoding: chunked\r\n\r\n4;trace=fixture\r\nbody\r\n0\r\n\r\n",
+        )
+        .expect("chunk extensions remain accepted");
+        assert_eq!(chunked.status, 201);
+        assert_eq!(chunked.text(), "body");
+
+        for malformed in [
+            &b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\nz\r\n"[..],
+            &b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n4\r\nabc\r\n0\r\n\r\n"[..],
+        ] {
+            assert!(parse_response(malformed).is_err());
+        }
     }
 }
 
