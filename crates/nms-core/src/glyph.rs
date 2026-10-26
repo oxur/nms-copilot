@@ -352,11 +352,6 @@ impl FromStr for Glyph {
 /// or an unrecognized prefix. The error retains the empty-input reason or the
 /// reported prefix.
 ///
-/// # Panics
-///
-/// For an unrecognized non-ASCII prefix, constructing the diagnostic can
-/// panic when its 20-byte excerpt ends inside a UTF-8 character.
-///
 pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     if input.is_empty() {
         return Err(GlyphParseError("empty input".to_string()));
@@ -391,7 +386,8 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     for info in &names {
         let name_lower = info.name.to_lowercase();
         if input_lower.starts_with(&name_lower) {
-            return Ok((Glyph(info.index), &input[info.name.len()..]));
+            let end = original_prefix_end_for_lowercase_len(input, name_lower.len());
+            return Ok((Glyph(info.index), &input[end..]));
         }
     }
 
@@ -399,7 +395,8 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
     if input_lower.len() >= 4 {
         for info in &GLYPH_TABLE {
             if input_lower.starts_with(info.abbrev) {
-                return Ok((Glyph(info.index), &input[info.abbrev.len()..]));
+                let end = original_prefix_end_for_lowercase_len(input, info.abbrev.len());
+                return Ok((Glyph(info.index), &input[end..]));
             }
         }
     }
@@ -410,10 +407,25 @@ pub fn parse_next_glyph(input: &str) -> Result<(Glyph, &str), GlyphParseError> {
         return Ok((Glyph(v as u8), &input[c.len_utf8()..]));
     }
 
+    let mut preview_end = input.len().min(20);
+    while !input.is_char_boundary(preview_end) {
+        preview_end -= 1;
+    }
     Err(GlyphParseError(format!(
         "unrecognized glyph at: {}",
-        &input[..input.len().min(20)]
+        &input[..preview_end]
     )))
+}
+
+fn original_prefix_end_for_lowercase_len(input: &str, lowercase_len: usize) -> usize {
+    let mut consumed_lowercase_bytes = 0;
+    for (index, character) in input.char_indices() {
+        consumed_lowercase_bytes += character.to_lowercase().map(char::len_utf8).sum::<usize>();
+        if consumed_lowercase_bytes == lowercase_len {
+            return index + character.len_utf8();
+        }
+    }
+    unreachable!("glyph table prefixes end on lowercase character boundaries")
 }
 
 #[cfg(test)]
@@ -516,6 +528,84 @@ mod tests {
         let (g2, rest) = parse_next_glyph(rest).unwrap();
         assert_eq!(g2.index(), 0); // Sunset
         assert!(rest.is_empty());
+    }
+
+    #[test]
+    fn test_parse_next_glyph_utf8_preview_three_byte_boundary() {
+        let input = "xxxxxxxxxxxxxxxxxxx界suffix";
+        let error = parse_next_glyph(input).unwrap_err();
+        assert_eq!(error.0, "unrecognized glyph at: xxxxxxxxxxxxxxxxxxx");
+    }
+
+    #[test]
+    fn test_parse_next_glyph_utf8_preview_four_byte_boundary() {
+        let input = "xxxxxxxxxxxxxxxxxx🧪suffix";
+        let error = parse_next_glyph(input).unwrap_err();
+        assert_eq!(error.0, "unrecognized glyph at: xxxxxxxxxxxxxxxxxx");
+    }
+
+    #[test]
+    fn test_parse_next_glyph_kelvin_abbreviation_suffix() {
+        let (glyph, rest) = parse_next_glyph("rcKttail").unwrap();
+        assert_eq!((glyph.index(), rest), (13, "tail"));
+    }
+
+    #[test]
+    fn test_parse_next_glyph_kelvin_name_suffix() {
+        let (glyph, rest) = parse_next_glyph("RocKettail").unwrap();
+        assert_eq!((glyph.index(), rest), (13, "tail"));
+    }
+
+    #[test]
+    fn test_parse_next_glyph_preview_boundaries_and_prefixes() {
+        assert_eq!(
+            parse_next_glyph("xxxxxxxxxxxxxxxxxxxxxxx").unwrap_err().0,
+            "unrecognized glyph at: xxxxxxxxxxxxxxxxxxxx"
+        );
+        assert_eq!(
+            parse_next_glyph("xxxxxxxxxxxxxxxxxxxx").unwrap_err().0,
+            "unrecognized glyph at: xxxxxxxxxxxxxxxxxxxx"
+        );
+        assert_eq!(
+            parse_next_glyph("xyz").unwrap_err().0,
+            "unrecognized glyph at: xyz"
+        );
+        assert_eq!(
+            parse_next_glyph("界").unwrap_err().0,
+            "unrecognized glyph at: 界"
+        );
+        assert_eq!(
+            parse_next_glyph("xxxxxxxxxxxxxxxxxxx界suffix")
+                .unwrap_err()
+                .0,
+            "unrecognized glyph at: xxxxxxxxxxxxxxxxxxx"
+        );
+        assert_eq!(
+            parse_next_glyph(":xxxxxxxxxxxxxxxxxxx界suffix")
+                .unwrap_err()
+                .0,
+            "unrecognized glyph at: xxxxxxxxxxxxxxxxxxx"
+        );
+        assert_eq!(parse_next_glyph("").unwrap_err().0, "empty input");
+        assert_eq!(
+            parse_next_glyph(":").unwrap_err().0,
+            "empty input after separator"
+        );
+    }
+
+    #[test]
+    fn test_parse_next_glyph_unicode_casefold_suffixes() {
+        for (input, expected) in [
+            ("🌅tail", (0, "tail")),
+            ("🕊️tail", (1, "tail")),
+            ("Dragonflytail", (8, "tail")),
+            ("rCkTtail", (13, "tail")),
+            (":rckttail", (13, "tail")),
+            ("Ftail", (15, "tail")),
+        ] {
+            let (glyph, rest) = parse_next_glyph(input).unwrap();
+            assert_eq!((glyph.index(), rest), expected, "input {input:?}");
+        }
     }
 
     #[test]
