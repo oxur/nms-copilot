@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.12. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.13. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -310,3 +310,5 @@ work;08 is the finite scope/composition handoff, not automatic project success.
 - 1.11 (2026-10-25): Issued compact07 final validation contract at source6b47cd3d; minimal carried feature/oracle repair only, actual host gates/faithful95 and module90/two direct latencies, unavailable1.91/platform inputs explicit. No08 skeleton or new scope.
 
 - 1.12 (2026-10-25): Independently reviewed07/final host1248 closes04/05 gate carries and06 regression carry; faithful coverage/platform/input/native/install/metadata qualifications remain. Only08 handoff remains; no further07 refinements.
+
+- 1.13 (2026-10-25): Issued records-only08 finite capability/gate handoff on unchanged2b7fc9e; reuse accepted inventory/current07review, no new audit/probe/source work. Canonical endpoint pause follows independent handoff review.
