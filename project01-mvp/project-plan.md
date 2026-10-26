@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.152
+version: 1.153
 project: project01-mvp
 status: active
 depends-on: []
@@ -1432,3 +1432,7 @@ Current CI correction to the earlier cutoff: root confirms exact-head3e8e460/run
 ## Explicit SaveParser delivery and representation acceptance —2026-10-26
 
 Duncan accepts the current Rust reference-table representation at its existing scope; there is no technical reason to manufacture duplicate TOMLs. This is NEW current approval, not invented historical approval. He now explicitly requires actual common SaveParser implementation in [Arc07 Slice10](arc07-closeout-reconciliation/slice10-save-parser-interface/slice-plan.md): supported on-disk bytes through canonical checked validation, compatible free functions and production use. State IN PROGRESS, not implemented/accepted. Sole existing LunaHigh CC/CDC SolHigh; root retains source index/commit, no push/CI replay in this task. Other required last-results semantics/MCP extraction and all earlier decisions/gates unchanged.
+
+## Required common parser delivered —2026-10-26
+
+Version1.153: [Slice10 independent acceptance](arc07-closeout-reconciliation/slice10-save-parser-interface/cdc-verification.md) satisfies the expressly requested common SaveParser increment at root-committed clean5f3b18eadddd57d54a92c9ec456b0f1e98b0869c, no push/integration/release. Supported on-disk byte parsing returns existing checked ValidatedSave/SaveError and is used by production file entrypoint; no library/format/encoding policy added. Cache schema4/semantic6 need no bump because layout/interpretation/identity remain unchanged. All26 project rows/statuses and prior proof/metrics retained; no fresh coverage or platform claim. Current-table acceptance is new Operator approval, not rewritten history. Last-results meaning/MCP extraction and other held work do not automatically start; broader project/arc remain open.

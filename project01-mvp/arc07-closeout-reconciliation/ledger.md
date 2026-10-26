@@ -47,6 +47,8 @@ Slice09 accepted2026-10-25: all10 Arc07 rows preserved,8done/2open (S06/S07). Cu
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R07-S10 | Public SaveParser/common checked output is implemented, used by actual production file entrypoint and independently reviewed | Slice10 SP-01–04 | correctness-grade | Explicit Duncan implementation request | open | [Slice10](slice10-save-parser-interface/slice-plan.md) | Source/index commit root-owned; no CI rerun; unrelated work remains held |
+| R07-S10 | Public SaveParser/common checked output is implemented, used by actual production file entrypoint and independently reviewed | Slice10 SP-01–04 | correctness-grade | Explicit Duncan implementation request | done | [Slice10 independent review](slice10-save-parser-interface/cdc-verification.md), reproduced affected claims | Root-committed clean5f3b18e; no push/CI/integration; unrelated work held |
 
 Current11 Arc07 rows8done/3open; existing statuses/history preserved. Current Rust reference-table representation accepted by Duncan at current scope, not retroactive approval.
+
+Slice10 accepted2026-10-26: current11rows9done/2open (S06/S07); source5f3b18eadddd57d54a92c9ec456b0f1e98b0869c. Real common checked parser/production use complete at reviewed scope; cache schema4/semantic6 unchanged for unchanged interpretation/output. Native workspace output partly truncated/no aggregate claimed; independent focused4/17/3/38PASS. Other last-results/MCP/game/platform/higher gates remain; no next assignment.

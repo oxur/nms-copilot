@@ -14,4 +14,8 @@ Artifact home: artifacts/ only if needed for actual supporting evidence; none pr
 
 ## Assignment history
 
-- Initial cc-prompt.md —2026-10-26, active; no predecessor for this expressly requested increment. CC intake/readback in closing-report.md, not another record family.
+- Initial cc-prompt.md —2026-10-26, accepted; no predecessor for this expressly requested increment. CC intake/readback in closing-report.md, not another record family.
+
+## Disposition
+
+All SP-01–04 independently accepted at root-committed clean5f3b18eadddd57d54a92c9ec456b0f1e98b0869c; [verification](cdc-verification.md)/[retrospective](cdc-retrospective.md). One initial docs adjustment, no post-handback correction. Root source commit only, no push/CI/integration. Existing cache schema4/semantic6 unchanged; no semantic/layout change. Other codeitems are not automatically started; stop at this accepted trait.

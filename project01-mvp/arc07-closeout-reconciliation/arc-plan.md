@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.23. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.24. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -387,3 +387,7 @@ Current root CI cutoff supersedes the earlier running snapshot: source3e8e460/ru
 ## Explicit common parser request —2026-10-26
 
 One new Operator-requested usable increment [Slice10](slice10-save-parser-interface/slice-plan.md), not automatic arc expansion: public object-safe checked byte parser/default implementation and actual existing file-entrypoint use. Source3e8e460 clean; exact four source paths; sole existing approved LunaHigh CC/CDC SolHigh. Root owns source index/commit/push and will commit only after independent review; NO push/CI rerun here. Current Rust table representation expressly accepted now, without rewriting approval history. Other future transfers/last-results pending meaning/MCP required extraction/Windows6h cancellation and all held gates remain. Initial three endpoints and prior source/proof unchanged.
+
+## Common parser independently accepted —2026-10-26
+
+Version1.24: [Slice10](slice10-save-parser-interface/cdc-verification.md) completes only Duncan’s explicit trait request at root-committed clean5f3b18eadddd57d54a92c9ec456b0f1e98b0869c. Public SaveParser/NmsSaveParser and production file-wrapper dispatch preserve canonical checked output/error and legacy/JSON-only functions. Independent lint/parser4/validated17/CLI3/doctests38PASS, CC native workspace/build/strict save docs0 at recorded timing/output limits; no aggregate count invented. Cache schema4/semantic6 retain unchanged layout/interpretation/identity, no bump. Current11rows9done/2open; last-results meaning, MCP extraction and all original joint/higher/Windows6h/external gates remain. No push/CI/integration, further code work or next assignment.

@@ -1,0 +1,7 @@
+# Slice10 retrospective
+
+2026-10-26; CDC GPT6.1 Sol High, accepted source5f3b18e. Outcome: a small public trait and concrete parser reach actual consumers through the existing checked file wrapper, with preserved validation/legacy behavior and independent external/CLI/docs checks. The same existing Luna context had enough coherent headroom; no new reviewer/context was needed.
+
+One early docs example used incomplete JSON in no_run and would have compiled without teaching a successful parse. Initial WIP review caught it; a file-read example honestly exposes its I/O prerequisite. Final save doctests and strict docs rechecked after that correction; the earlier native workspace result was retained only for unchanged runtime. Count this one actual documentation adjustment conservatively, with no post-handback repair or scope growth. No test command failed.
+
+Author source/guide combinations initially produced oversized/truncated reads; the contract-relevant sections were recovered. The useful simplification was the concrete byte-boundary design and four-path assignment, not further evidence machinery. Preserve that proportionality in future authorized work; no framework change or new experiment is proposed. No material new process pattern beyond the already-known scope/headroom watch items. Native output truncation limits aggregate-count claims, not its observed command exit; future proof should keep the same honest distinction. All unperformed higher/game/platform duties remain open.
