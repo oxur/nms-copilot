@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.151
+version: 1.152
 project: project01-mvp
 status: active
 depends-on: []
@@ -1428,3 +1428,7 @@ Version1.151 records Duncan’s further decisions. Existing CLI-command REPL par
 CDC owns bounded design/independent review; an explicitly assigned sole CC would implement only after that contract is ready. This task records authority/required delivery only: no source assignment, new arc/slice/prompt or successful proof. P01-C07/G09 closure remains blocked on these deliveries as well as unchanged joint/higher gates. Legacy group1 and routing/watcher group4 remain undecided. Cache fallback is a request for explanation, not blanket acceptance; representation/approval history and SaveParser/libraries remain questions, not new scope decisions. Prior B02/B03/B04/B05 and B06/B07 transfers retain exact owners/re-entry.
 
 Current CI correction to the earlier cutoff: root confirms exact-head3e8e460/run40275337438 ended CANCELLED, five peers PASS and Windows cancelled at the annotated6h maximum. Root did not cancel; the downloaded Windows log was zero bytes, so cause within the current harness and fixture success are not established. P01-G07/platform acceptance stays open, with no automatic rerun/diagnostic assignment.
+
+## Explicit SaveParser delivery and representation acceptance —2026-10-26
+
+Duncan accepts the current Rust reference-table representation at its existing scope; there is no technical reason to manufacture duplicate TOMLs. This is NEW current approval, not invented historical approval. He now explicitly requires actual common SaveParser implementation in [Arc07 Slice10](arc07-closeout-reconciliation/slice10-save-parser-interface/slice-plan.md): supported on-disk bytes through canonical checked validation, compatible free functions and production use. State IN PROGRESS, not implemented/accepted. Sole existing LunaHigh CC/CDC SolHigh; root retains source index/commit, no push/CI replay in this task. Other required last-results semantics/MCP extraction and all earlier decisions/gates unchanged.

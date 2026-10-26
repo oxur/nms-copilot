@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.22. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.23. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -383,3 +383,7 @@ Version1.22: [B08](../backlog.md#b08-cli-command-parity-in-repl-next-project) tr
 Duncan requires **last query results** and a separate **nms-mcp crate BEFORE Project01 closure**. No new implementation is claimed: last-results meaning is pending Duncan (current-session returned result versus already-existing command history), then source-ground any necessary bounded result interaction and the required acyclic crate boundary, preserving headless transports/shared coordinator/cache/features. Command history is not result storage; no new database or separate binary is inferred. This supersedes earlier pending last-results/equivalent-crate recommendations, not the prior accepted proof. No implementation is issued in this records-only task. Legacy/routing-watch scope, cache information and representation/SaveParser explanations have no new disposition; existing deferrals/joint/higher gates remain.
 
 Current root CI cutoff supersedes the earlier running snapshot: source3e8e460/run40275337438 is CANCELLED, five peers PASS, Windows at annotated6h limit; root did not cancel and downloaded log has zero bytes. No current harness cause/fixture pass/platform success inferred or automatic diagnostic assignment.
+
+## Explicit common parser request —2026-10-26
+
+One new Operator-requested usable increment [Slice10](slice10-save-parser-interface/slice-plan.md), not automatic arc expansion: public object-safe checked byte parser/default implementation and actual existing file-entrypoint use. Source3e8e460 clean; exact four source paths; sole existing approved LunaHigh CC/CDC SolHigh. Root owns source index/commit/push and will commit only after independent review; NO push/CI rerun here. Current Rust table representation expressly accepted now, without rewriting approval history. Other future transfers/last-results pending meaning/MCP required extraction/Windows6h cancellation and all held gates remain. Initial three endpoints and prior source/proof unchanged.
