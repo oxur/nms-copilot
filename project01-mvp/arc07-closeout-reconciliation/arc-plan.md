@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.10. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.11. Created: 2026-10-25. Status: finite cleanup underway;04–06 reviewed with explicit remaining gates. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -294,3 +294,5 @@ carried fixes; no further packaging/terminal investigation is commissioned.
 - 1.9 (2026-10-25): Recorded05 reviewed transport/main restoration and exact owned graph-oracle carry to07. No broad cleanup or validation narrowing;06 remains the next agreed increment to ground.
 
 - 1.10 (2026-10-25):06 reviewed with assets/wizard/historical subclaims accepted and exact remaining native interaction/theme/install/full-gate limits; proceed ready07 without new inquiry.
+
+- 1.11 (2026-10-25): Issued compact07 final validation contract at source6b47cd3d; minimal carried feature/oracle repair only, actual host gates/faithful95 and module90/two direct latencies, unavailable1.91/platform inputs explicit. No08 skeleton or new scope.
