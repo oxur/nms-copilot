@@ -1,8 +1,8 @@
 //! NMS Copilot -- interactive galactic REPL for No Man's Sky.
 //!
 //! Modes:
-//! - **Normal** (default): REPL + MCP HTTP server sharing one `GalaxyModel`
-//! - **Headless** (`--headless`): MCP server only, no REPL
+//! - **Normal** (default): REPL, with an MCP HTTP observer when the `http` feature is enabled
+//! - **Headless** (`--headless`): MCP server only; stdio is available in every build
 
 use std::collections::BTreeMap;
 use std::fmt;
@@ -31,6 +31,7 @@ use nms_copilot::{commands, dispatch, paths};
 use nms_graph::GalaxyModel;
 use nms_watch::WatchConfig;
 
+#[cfg(feature = "http")]
 const DEFAULT_MCP_HTTP_ADDR: &str = "127.0.0.1:5099";
 
 fn capture_map_snapshot(model: &RwLock<GalaxyModel>, session: &mut SessionState) -> MapSnapshot {
@@ -173,7 +174,10 @@ fn main() {
     }
 
     // ── REPL mode ───────────────────────────────────────────────
-    let mcp_addr = mcp_http_addr(&cli, &config);
+    #[cfg(feature = "http")]
+    let mcp_addr = Some(mcp_http_addr(&cli, &config));
+    #[cfg(not(feature = "http"))]
+    let mcp_addr = None;
     if let Err(error) = run_repl(
         model,
         config,
@@ -189,7 +193,6 @@ fn main() {
 }
 
 /// Own normal-mode resources in a scope that unwinds on startup errors.
-#[cfg(feature = "http")]
 fn run_repl(
     model: GalaxyModel,
     config: Config,
@@ -197,8 +200,11 @@ fn run_repl(
     watch_config: Option<WatchConfig>,
     cache_path: PathBuf,
     no_cache: bool,
-    mcp_addr: SocketAddr,
-) -> Result<(), mcp::McpBackgroundError> {
+    mcp_addr: Option<SocketAddr>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    #[cfg(not(feature = "http"))]
+    let _ = mcp_addr;
+
     let source = if was_cached {
         "from cache"
     } else {
@@ -229,6 +235,7 @@ fn run_repl(
         }
     });
     let repl_updates = coordinator.as_ref().map(LiveSaveCoordinator::subscribe);
+    #[cfg(feature = "http")]
     let mcp_updates = coordinator.as_ref().map(LiveSaveCoordinator::subscribe);
     if coordinator.is_some() {
         println!("Watching save file for live updates.\n");
@@ -236,15 +243,19 @@ fn run_repl(
         println!();
     }
 
-    // Start an owned MCP HTTP observer on the same model and coordinator.
-    let mcp_server =
-        mcp::spawn_mcp_background_with_updates(Arc::clone(&model), mcp_addr, mcp_updates)?;
-    let mcp_addr = mcp_server.local_addr();
-    let mcp_base = format!("http://{mcp_addr}");
-    eprintln!("MCP server listening on {mcp_base}");
-    eprintln!("MCP endpoint: {mcp_base}/mcp");
-    eprintln!("Health check: {mcp_base}/health");
-    eprintln!("MCP info: {mcp_base}/mcp-info");
+    #[cfg(feature = "http")]
+    let mcp_server = {
+        let address = mcp_addr.expect("HTTP-enabled REPL has a bind address");
+        let server =
+            mcp::spawn_mcp_background_with_updates(Arc::clone(&model), address, mcp_updates)?;
+        let address = server.local_addr();
+        let base = format!("http://{address}");
+        eprintln!("MCP server listening on {base}");
+        eprintln!("MCP endpoint: {base}/mcp");
+        eprintln!("Health check: {base}/health");
+        eprintln!("MCP info: {base}/mcp-info");
+        server
+    };
 
     let completions = build_model_completions(&model.blocking_read());
     let completer = Box::new(CopilotCompleter::new(completions));
@@ -301,6 +312,7 @@ fn run_repl(
         }
     }
 
+    #[cfg(feature = "http")]
     if let Err(error) = mcp_server.shutdown() {
         let _ = writeln!(io::stderr().lock(), "Warning: MCP shutdown failed: {error}");
     }
@@ -432,13 +444,20 @@ fn configured_watcher(config: &Config, save_path: Option<&Path>) -> Option<Watch
 ///
 /// If `--http <addr>` is specified, uses HTTP. Otherwise defaults to stdio.
 fn parse_mcp_transport(cli: &Cli, config: &Config) -> mcp::Transport {
+    #[cfg(feature = "http")]
     if cli.http.is_some() {
         mcp::Transport::Http(mcp_http_addr(cli, config))
     } else {
         mcp::Transport::Stdio
     }
+    #[cfg(not(feature = "http"))]
+    {
+        let _ = (cli, config);
+        mcp::Transport::Stdio
+    }
 }
 
+#[cfg(feature = "http")]
 fn mcp_http_addr(cli: &Cli, config: &Config) -> SocketAddr {
     match cli.http {
         Some(Some(addr)) => addr,
@@ -976,6 +995,7 @@ mod tests {
         ));
     }
 
+    #[cfg(feature = "http")]
     #[test]
     fn test_mcp_addr_defaults_to_config() {
         let cli = Cli::try_parse_from(["nms-copilot"]).unwrap();
@@ -985,6 +1005,7 @@ mod tests {
         assert_eq!(mcp_http_addr(&cli, &config).to_string(), "127.0.0.1:5055");
     }
 
+    #[cfg(feature = "http")]
     #[test]
     fn test_mcp_addr_http_flag_uses_default() {
         let cli = Cli::try_parse_from(["nms-copilot", "--http"]).unwrap();
@@ -995,6 +1016,7 @@ mod tests {
         );
     }
 
+    #[cfg(feature = "http")]
     #[test]
     fn test_mcp_addr_http_arg_overrides_config() {
         let cli = Cli::try_parse_from(["nms-copilot", "--http", "127.0.0.1:5055"]).unwrap();

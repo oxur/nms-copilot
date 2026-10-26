@@ -405,6 +405,8 @@ fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
     let mut stream = live_mcp::subscribe_sse(address, &session).unwrap();
 
     let d1 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 1, 0, 0));
+    let u2 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 2, 0, 0));
+    let u3 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 3, 0, 0));
     let e4 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 4, 0, 0));
     let i9 = SystemId::from_address(&GalacticAddress::new(0, 0, 0, 3, 0, 9));
     let initial_nodes = {
@@ -414,7 +416,7 @@ fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
             &live_mcp::expected_unknown_lifecycle_model(Stage::Startup, false),
         )
         .unwrap();
-        [d1, e4, i9]
+        [d1, u2, e4, i9]
             .into_iter()
             .map(|id| (id, guard.node_map[&id]))
             .collect::<std::collections::HashMap<_, _>>()
@@ -460,18 +462,14 @@ fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
         for (id, node) in &initial_nodes {
             assert_eq!(guard.node_map.get(id), Some(node));
         }
-        assert_eq!(guard.graph.edge_count(), 1);
-        let edge = guard.graph.edge_indices().next().unwrap();
-        let endpoints = guard.graph.edge_endpoints(edge).unwrap();
-        let mut endpoint_ids = [
-            *guard.graph.node_weight(endpoints.0).unwrap(),
-            *guard.graph.node_weight(endpoints.1).unwrap(),
-        ];
-        endpoint_ids.sort_by_key(|id| format!("{id:?}"));
-        let mut expected_endpoints = [d1, e4];
-        expected_endpoints.sort_by_key(|id| format!("{id:?}"));
-        assert_eq!(endpoint_ids, expected_endpoints);
-        assert_eq!(*guard.graph.edge_weight(edge).unwrap(), 264.682_872_8);
+        assert_eq!(guard.graph.edge_count(), 6);
+        for (left, right) in [(d1, u2), (d1, e4), (u2, e4), (d1, u3), (u2, u3), (u3, e4)] {
+            let edge = guard
+                .graph
+                .find_edge(guard.node_map[&left], guard.node_map[&right])
+                .expect("literal same-galaxy lifecycle pair exists");
+            assert_eq!(*guard.graph.edge_weight(edge).unwrap(), 264.682_872_8);
+        }
     }
     live_mcp::assert_unknown_lifecycle_cache(&cache, Stage::Moved).unwrap();
     let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();
@@ -575,7 +573,7 @@ fn test_owned_live_loader_coordinator_and_mcp_preserve_placeholder_identity() {
         for (id, node) in &initial_nodes {
             assert_eq!(guard.node_map.get(id), Some(node));
         }
-        assert_eq!(guard.graph.edge_count(), 1);
+        assert_eq!(guard.graph.edge_count(), 6);
     }
     live_mcp::assert_unknown_lifecycle_cache(&cache, Stage::Promoted).unwrap();
     let (tool, resource) = live_mcp::location_rpc_pair(address, &session).unwrap();

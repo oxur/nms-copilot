@@ -408,9 +408,11 @@ pub fn unknown_lifecycle_invalid_address_source() -> Vec<u8> {
     bytes
 }
 
+// Keep the flag for the shared source example's existing call shape; the
+// adopted startup growth rebuild now makes the live and rebuilt graph equal.
 pub fn expected_unknown_lifecycle_model(
     stage: UnknownLifecycleStage,
-    rebuilt: bool,
+    _rebuilt: bool,
 ) -> GalaxyModel {
     let mut model = GalaxyModel::new();
     let systems = lifecycle_systems(stage);
@@ -443,27 +445,19 @@ pub fn expected_unknown_lifecycle_model(
     model.player_state = Some(lifecycle_player(stage));
     model.set_active_galaxy(9);
 
-    // Live startup inherits the one D1–E4 edge from the seed. Placeholder
-    // insertions and promotion preserve that topology. A cache rebuild instead
-    // creates the literal complete same-galaxy edge set.
-    let d1_id = nms_graph::SystemId::from_address(&d1);
-    let e4_id = nms_graph::SystemId::from_address(&e4);
-    let mut edges = vec![(d1_id, e4_id)];
-    if rebuilt {
-        let mut ids: Vec<_> = systems
-            .iter()
-            .filter(|system| system.address.reality_index == 0)
-            .map(|system| nms_graph::SystemId::from_address(&system.address))
-            .collect();
-        ids.sort_by_key(|id| id.system_address());
-        edges.clear();
-        for left in 0..ids.len() {
-            for right in left + 1..ids.len() {
-                edges.push((ids[left], ids[right]));
-            }
-        }
-    }
+    // After startup ensures U2, the model has three same-galaxy nodes; later
+    // lifecycle stages add U3. Keep the accepted default KNN topology as
+    // explicit pairs and its same-voxel/different-system weight, independently
+    // of production edge construction.
+    let d1 = nms_graph::SystemId::from_address(&d1);
+    let u2 = nms_graph::SystemId::from_address(&lifecycle_addresses().1);
+    let u3 = nms_graph::SystemId::from_address(&lifecycle_addresses().2);
+    let e4 = nms_graph::SystemId::from_address(&e4);
+    let edges = [(d1, u2), (d1, e4), (u2, e4), (d1, u3), (u2, u3), (u3, e4)];
     for (left, right) in edges {
+        if stage == UnknownLifecycleStage::Startup && (left == u3 || right == u3) {
+            continue;
+        }
         let a = model.node_map[&left];
         let b = model.node_map[&right];
         model.graph.add_edge(a, b, LIFECYCLE_EDGE_LY);
