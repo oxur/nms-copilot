@@ -1,6 +1,6 @@
 # Slice05 — Narrow support cleanup
 
-Status: ready/issued. Dedicated source clean8f10d4cbe04f7d781667cc4e37280c333a67ee8d,
+Status: independently reviewed source8d572529; NS-02 accepted, NS-01/03 integration subclaims remain open for07. Ownership returned to CDC; no complete-slice claim. Initial dedicated source baseline8f10d4cbe04f7d781667cc4e37280c333a67ee8d,
 branch codex/workspace-coverage-contract. Same sole CC LunaHigh implements; CDC
 SolHigh independently reviews. Ownership transfers at dispatch and returns at
 handback. AT-03/R07-S04 remain open for07; proceeding with independent ready work

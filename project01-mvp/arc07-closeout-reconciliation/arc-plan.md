@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.8. Created: 2026-10-25. Status: finite cleanup underway;04 behavior reviewed with validation carry. Initial three retained as accepted. Arc/project acceptance remains open.
+Version: 1.9. Created: 2026-10-25. Status: finite cleanup underway;04/05 reviewed with validation carry. Initial three retained as accepted. Arc/project acceptance remains open.
 
 ## Purpose and authority
 
@@ -249,6 +249,14 @@ historical unknown is reconstructed. Independent ready05 work may proceed
 under the adopted affected-proof hold, without calling04 fully complete.
 Actual native runner failures remain separate from positive app observations.
 
+Subsequent05 candidate8d572529445d80e404c1d45813c8b4a5b4b732fc shares only
+duplicated HTTP test transport. Main's exact nine-line stray restoration is
+independently accepted and main is clean atb616ab2. Live MCP24/24 independently
+passes. NS-01/03 remain open: the owned startup integration fails its old
+seed-only graph expectation after04's adopted ensure/rebuild behavior.07 must
+align that literal oracle and rerun the actual target; no oracle was rewritten
+in05 or failed target called green. Ready agreed06 work proceeds separately.
+
 ## Version history
 
 - 1.0 (2026-10-25): Duncan requested three bounded initial slices after pausing
@@ -269,3 +277,5 @@ Actual native runner failures remain separate from positive app observations.
 - 1.7 (2026-10-25): Duncan adopted the table and its two narrow deferrals. Recorded mixed publishing/readiness obligations, continuing finite Autonomous authority and04–08 usable-increment sketch; only the next actual assignment will be detailed. Original numeric/input/external/acceptance gates remain.
 
 - 1.8 (2026-10-25): Recorded04 independently reviewed map/graph behavior and explicit open AT-03 carry to final07; no whole-gate success, threshold waiver or extra scope. Ready agreed cleanup continues separately.
+
+- 1.9 (2026-10-25): Recorded05 reviewed transport/main restoration and exact owned graph-oracle carry to07. No broad cleanup or validation narrowing;06 remains the next agreed increment to ground.
