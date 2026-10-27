@@ -1,6 +1,6 @@
 # Slice06 — Existing interaction and local distribution
 
-Status: independently reviewed, partial; source6b47cd3d758e6b44e28041ae52eceba0439c35db.
+Status: CLOSED at adopted scope2026-10-27; source01b601f49253987b1b9c596ad0fb1e01cb757dda. All5criteria accounted:4done/1deferred(B01). Earlier partial disposition/history below is superseded by the final ledger and review.
 ID-03 accepted; wizard/historical subclaims accepted; remaining interaction,
 Historical pending theme/install state is superseded2026-10-25: ID-02 explicitly dispositioned, themes deferred B02; current install evidence accepted for now, remaining clean-install proof deferred B01. Native interaction/full composition stays open. See ledger.md and cdc-verification.md.
 Issued baseline was clean8d572529445d80e404c1d45813c8b4a5b4b732fc on

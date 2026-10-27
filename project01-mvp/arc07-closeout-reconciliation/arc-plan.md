@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.27. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.35. Created: 2026-10-25. Status: PAUSED for remaining decisions/input. Slice06 closed at adopted scope; Slice07/current hosted CI, nonzero/performance and higher arc/project acceptance remain open. Earlier phase authorizations/history are retained below.
 
 ## Purpose and authority
 
@@ -429,3 +429,5 @@ Version1.32 supersedes the execution stop only for ONE bounded observed bug in e
 Version1.33,2026-10-27: [Slice06 iteration01 review](slice06-interaction-distribution/cdc-verification.md) accepts code/owned-native Tab correction at source4db22a95f0c5d40c445c76106204f628b2550735; existing native4checks prove actual editor wiring. Root branch push/CI40587654350 pending; user restart/retest and broader native/nonzero/performance/higher acceptance stay open. No new slice/source work or budget reset.
 
 Version1.34,2026-10-27: [Tab final user/CI receipt](slice08-composition-handoff/artifacts/handoff.md#tab-correction-final-user-and-ci-receipt-2026-10-27) resolves this one observed bug at4db22a: Duncan basicTab and exact-head all6CI pass. Slice06 broader native/game/map/clean-exit and nonzero/performance/higher gates remain open; no new source assignment or autonomous advancement.
+
+Version1.35,2026-10-27: Slice06 closes4done/1deferred after actual map→status→exit/restored shell and stopped-listener confirmation, at source01b601f. B01/B02 dispositions/history preserved; no new slice/structural plan change. Current-head hosted gate reopens because d5620cec/01b601f are not pushed/hosted-tested after4db all6PASS.13child rows12done/1open; nonzero, startup sufficiency and higher acceptance stay OPEN. No further source/probes/push/CI or automatic advancement.

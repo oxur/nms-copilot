@@ -57,3 +57,17 @@ Record-accuracy correction: the earlier entries' `make lint exited 101` phrasing
 Iteration03 final candidate gates: after the recorded source-lint and fixture/literal failures and their bounded corrections, `CARGO_NET_OFFLINE=true make format && CARGO_NET_OFFLINE=true make lint` passed (format and Clippy; existing `proc-macro-error2 v2.0.1` future-incompatibility notice remains). `cargo test --offline --locked -p nms-copilot --lib map::` passed 46/46; `cargo test --offline --locked -p nms-copilot --doc` passed 25/25; `cargo build --offline --locked -p nms-copilot --bin nms-copilot` passed. The map rerun validates the adjusted literal fixture dimensions/anchors; its earlier 44/46 result remains recorded above. The implementation uses only `state.rs` and `render.rs`; the report is the only planning write. CC source work is frozen for CDC's independent review/replay and root-owned commit. Local user retest and broader acceptance remain open; no acceptance or commit is claimed by CC.
 
 CDC disposition: independently accepted at root source01b601f49253987b1b9c596ad0fb1e01cb757dda; actual independent10renderPASS/203filtered and complete diff review in cdc-verification.md supersede proposed-done status above. Source clean, no push/CI. User Local retest/broader native acceptance remain pending; writes stopped.
+
+## CDC closing addendum / bubble-up (2026-10-27)
+
+CDC authors this records-only addendum from Duncan’s q→status→exit confirmation and root’s inconclusive restricted/stopped-listener host observations; earlier CC returns/failed attempts remain preserved. Independently accepted source01b601f49253987b1b9c596ad0fb1e01cb757dda, no new source/task.
+
+| Existing ID | Final disposition | Evidence |
+|---|---|---|
+| ID-01 | done | Final native observation plus retained wizard/config/history/banner/table and three reviewed correction records in cdc-verification.md |
+| ID-02 | done | Duncan B02/configurable-theme disposition and truthful docs |
+| ID-03 | done | Retained independent regular-license/all-ten-archive inspection |
+| ID-04 | deferred | Explicit B01; present evidence accepted for now, historical five provenance complete, clean-install re-entry retained |
+| ID-05 | done | Retained full/scoped checks, current focused map/build/docs reviews and honest separate current-CI gate |
+
+All5original IDs retained:4done/1deferred. Supporting-artifact inventory remains artifacts/result.md; issued initial/iteration01–03 prompts are first-class records, preserved. Bubble-up: existing interaction/docs/distribution scope is delivered under explicit B01/B02 dispositions; actual native testing exposed Tab wiring, marker targeting and name-span collisions, repaired inside this home. No new slice/structural arc change needed; governing status/current-CI boundary updated. No silent drop: clean installation/themes are explicitly owned future work; nonzero/performance/current hosted CI/higher acceptance belong to their existing remaining gates, not implied complete by this closure. See [CDC retrospective](cdc-retrospective.md).
