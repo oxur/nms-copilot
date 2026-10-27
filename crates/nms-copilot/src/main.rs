@@ -13,7 +13,10 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use clap::{Parser, Subcommand};
-use reedline::{FileBackedHistory, Reedline, Signal};
+use reedline::{
+    ColumnarMenu, Emacs, FileBackedHistory, KeyCode, KeyModifiers, Keybindings, MenuBuilder,
+    Reedline, ReedlineEvent, ReedlineMenu, Signal, default_emacs_keybindings,
+};
 use serde::Serialize;
 use serde_json::Value;
 use tokio::sync::RwLock;
@@ -335,23 +338,44 @@ fn sync_session_before_prompt(model: &RwLock<GalaxyModel>, session: &mut Session
     session.sync_from_model(&guard);
 }
 
+const COMPLETION_MENU_NAME: &str = "completion_menu";
+
+fn completion_keybindings() -> Keybindings {
+    let mut keybindings = default_emacs_keybindings();
+    keybindings.add_binding(
+        KeyModifiers::NONE,
+        KeyCode::Tab,
+        ReedlineEvent::UntilFound(vec![
+            ReedlineEvent::Menu(COMPLETION_MENU_NAME.to_string()),
+            ReedlineEvent::MenuNext,
+        ]),
+    );
+    keybindings
+}
+
 fn build_editor(completer: Box<CopilotCompleter>) -> Reedline {
+    let editor = Reedline::create()
+        .with_completer(completer)
+        .with_menu(ReedlineMenu::EngineCompleter(Box::new(
+            ColumnarMenu::default().with_name(COMPLETION_MENU_NAME),
+        )))
+        .with_edit_mode(Box::new(Emacs::new(completion_keybindings())))
+        .with_quick_completions(true);
+
     if let Err(e) = paths::ensure_data_dir() {
         eprintln!("Warning: could not create data directory: {e}");
-        return Reedline::create().with_completer(completer);
+        return editor;
     }
 
     let history = match FileBackedHistory::with_file(1000, paths::history_path()) {
         Ok(h) => h,
         Err(e) => {
             eprintln!("Warning: could not load history: {e}");
-            return Reedline::create().with_completer(completer);
+            return editor;
         }
     };
 
-    Reedline::create()
-        .with_history(Box::new(history))
-        .with_completer(completer)
+    editor.with_history(Box::new(history))
 }
 
 fn build_model_completions(model: &GalaxyModel) -> ModelCompletions {
@@ -901,11 +925,62 @@ impl std::error::Error for SmokeError {}
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crossterm::event::{Event, KeyEvent};
     use nms_copilot::session::PositionContext;
     use nms_core::address::GalacticAddress;
     use nms_core::biome::Biome;
     use nms_core::player::{BaseType, PlayerBase, PlayerState};
     use nms_core::system::{Planet, System};
+    use reedline::{EditMode, ReedlineRawEvent};
+
+    fn parse_emacs_key(mode: &mut Emacs, key_code: KeyCode) -> ReedlineEvent {
+        let event =
+            ReedlineRawEvent::try_from(Event::Key(KeyEvent::new(key_code, KeyModifiers::NONE)))
+                .expect("a pressed key event is valid");
+        mode.parse_event(event)
+    }
+
+    #[test]
+    fn test_completion_keybindings_add_tab_and_preserve_emacs_navigation() {
+        let mut default = Emacs::new(default_emacs_keybindings());
+        let mut configured = Emacs::new(completion_keybindings());
+
+        assert_eq!(
+            parse_emacs_key(&mut default, KeyCode::Tab),
+            ReedlineEvent::None
+        );
+        assert_eq!(
+            parse_emacs_key(&mut configured, KeyCode::Tab),
+            ReedlineEvent::UntilFound(vec![
+                ReedlineEvent::Menu(COMPLETION_MENU_NAME.to_string()),
+                ReedlineEvent::MenuNext,
+            ])
+        );
+        assert_eq!(
+            parse_emacs_key(&mut configured, KeyCode::Up),
+            ReedlineEvent::UntilFound(vec![ReedlineEvent::MenuUp, ReedlineEvent::Up])
+        );
+        assert_eq!(
+            parse_emacs_key(&mut configured, KeyCode::Esc),
+            ReedlineEvent::Esc
+        );
+        assert_eq!(
+            parse_emacs_key(&mut configured, KeyCode::Enter),
+            ReedlineEvent::Enter
+        );
+        assert_eq!(
+            parse_emacs_key(&mut default, KeyCode::Up),
+            parse_emacs_key(&mut configured, KeyCode::Up)
+        );
+        assert_eq!(
+            parse_emacs_key(&mut default, KeyCode::Esc),
+            parse_emacs_key(&mut configured, KeyCode::Esc)
+        );
+        assert_eq!(
+            parse_emacs_key(&mut default, KeyCode::Enter),
+            parse_emacs_key(&mut configured, KeyCode::Enter)
+        );
+    }
 
     #[test]
     fn test_production_map_capture_releases_model_lock() {
