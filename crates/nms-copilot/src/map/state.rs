@@ -5,6 +5,8 @@
 //! geometry projects voxel X/Z and ignores Y. [`ZoomLevel`] defines the
 //! viewport scales; [`density_char`] maps cell counts to display glyphs.
 
+use std::collections::HashMap;
+
 use nms_core::galaxy::Galaxy;
 use nms_graph::GalaxyModel;
 
@@ -88,6 +90,13 @@ pub struct BaseLabel {
     pub voxel_x: i16,
     /// Base voxel Z coordinate in the selected galaxy.
     pub voxel_z: i16,
+}
+
+/// A marker that remains visible after overlay collisions are resolved.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(super) enum OverlayMarker {
+    Base(usize),
+    Player,
 }
 
 /// Mutable viewport and display snapshot for the interactive map.
@@ -224,6 +233,42 @@ impl MapState {
         self.clamp_cursor();
     }
 
+    /// Resolve displayed base and player markers at the supplied inner size.
+    ///
+    /// Base labels retain their stored order, spread down rows on collisions,
+    /// and preserve the renderer's final-row replacement behavior. The player
+    /// marker is placed last and can replace a base at the same cell.
+    pub(super) fn visible_markers(
+        &self,
+        cols: u16,
+        rows: u16,
+    ) -> HashMap<(u16, u16), OverlayMarker> {
+        let mut markers = HashMap::new();
+
+        for (index, base) in self.base_labels.iter().enumerate() {
+            if let Some((col, mut row)) = self.voxel_to_grid_for_size(
+                f64::from(base.voxel_x),
+                f64::from(base.voxel_z),
+                cols,
+                rows,
+            ) {
+                while markers.contains_key(&(col, row)) && row + 1 < rows {
+                    row += 1;
+                }
+                markers.insert((col, row), OverlayMarker::Base(index));
+            }
+        }
+
+        if let Some((player_x, player_z)) = self.player_pos
+            && let Some(cell) =
+                self.voxel_to_grid_for_size(f64::from(player_x), f64::from(player_z), cols, rows)
+        {
+            markers.insert(cell, OverlayMarker::Player);
+        }
+
+        markers
+    }
+
     /// Move by signed `(dx, dy)` and clamp the cursor to nonempty grid axes.
     ///
     /// The stored `u16` coordinates are cast to `i16` for addition; this is
@@ -254,16 +299,31 @@ impl MapState {
 
     /// Zoom in one tier around the voxel under the cursor, when possible.
     ///
-    /// Saves the prior zoom and center (not cursor), moves the center to the
-    /// old cursor voxel, and places the cursor at the grid midpoint. At Local
-    /// zoom the state is unchanged. Public stack edits are not validated.
+    /// Saves the prior zoom and center (not cursor), centers on the visible
+    /// marker under the cursor or the cursor voxel when no marker is present,
+    /// and places the cursor at the grid midpoint. At Local zoom the state is
+    /// unchanged. Public stack edits are not validated.
     pub fn zoom_in(&mut self) {
         if let Some(next_zoom) = self.zoom.zoom_in() {
+            let center = self
+                .visible_markers(self.grid_size.0, self.grid_size.1)
+                .get(&self.cursor)
+                .copied()
+                .and_then(|marker| match marker {
+                    OverlayMarker::Base(index) => {
+                        let base = &self.base_labels[index];
+                        Some((f64::from(base.voxel_x), f64::from(base.voxel_z)))
+                    }
+                    OverlayMarker::Player => self
+                        .player_pos
+                        .map(|(player_x, player_z)| (f64::from(player_x), f64::from(player_z))),
+                })
+                .unwrap_or_else(|| self.cursor_voxel());
+
             // Save current state for zoom-out
             self.zoom_stack
                 .push((self.zoom, self.center.0, self.center.1));
-            // New center = voxel coordinate of cursor cell
-            self.center = self.cursor_voxel();
+            self.center = center;
             self.zoom = next_zoom;
             // Reset cursor to center of grid
             self.cursor = (self.grid_size.0 / 2, self.grid_size.1 / 2);
@@ -327,7 +387,17 @@ impl MapState {
     /// can map to zero. Nonfinite and extreme inputs follow Rust cast rules.
     /// A zero grid dimension yields no in-grid cell.
     pub fn voxel_to_grid(&self, vx: f64, vz: f64) -> Option<(u16, u16)> {
-        let (cols, rows) = self.grid_size;
+        self.voxel_to_grid_for_size(vx, vz, self.grid_size.0, self.grid_size.1)
+    }
+
+    /// Project voxel coordinates using a caller-supplied inner grid size.
+    pub(super) fn voxel_to_grid_for_size(
+        &self,
+        vx: f64,
+        vz: f64,
+        cols: u16,
+        rows: u16,
+    ) -> Option<(u16, u16)> {
         let extent = self.zoom.extent();
         let cell_size_x = extent / f64::from(cols.max(1));
         let cell_size_z = extent / f64::from(rows.max(1));

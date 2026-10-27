@@ -16,7 +16,7 @@ use ratatui::widgets::{Block, Borders, Clear, Paragraph, Wrap};
 use nms_core::address::GalacticAddress;
 use nms_graph::GalaxyModel;
 
-use super::state::{MapState, ZoomLevel, density_char};
+use super::state::{MapState, OverlayMarker, ZoomLevel, density_char};
 
 /// Draw the map, status bar, legend, and optional help overlay into `frame`.
 ///
@@ -127,47 +127,27 @@ fn render_map(
     // Build a density grid by binning systems into cells
     let grid = bin_systems(state, addresses, inner.width, inner.height);
 
-    // Overlay base labels and player position.
-    // Each overlay entry maps (col, row) -> (label_string, color).
-    // At Local zoom, base labels include the name; otherwise just the letter.
-    // When multiple bases share the same cell, spread them to adjacent rows.
-    let mut overlays: HashMap<(u16, u16), (String, Color)> = HashMap::new();
-
-    // Bases
+    // Resolve displayed markers using the same placement used for zoom targets.
     let show_names = state.zoom == ZoomLevel::Local;
-    for bl in &state.base_labels {
-        if let Some((col, mut row)) = voxel_to_cell(
-            f64::from(bl.voxel_x),
-            f64::from(bl.voxel_z),
-            state,
-            inner.width,
-            inner.height,
-        ) {
-            // Spread stacked bases to adjacent rows
-            while overlays.contains_key(&(col, row)) && row + 1 < inner.height {
-                row += 1;
-            }
-            let label = if show_names {
-                format!("{} {}", bl.letter, bl.name)
-            } else {
-                bl.letter.to_string()
+    let overlays: HashMap<(u16, u16), (String, Color)> = state
+        .visible_markers(inner.width, inner.height)
+        .into_iter()
+        .map(|(cell, marker)| {
+            let (label, color) = match marker {
+                OverlayMarker::Base(index) => {
+                    let base = &state.base_labels[index];
+                    let label = if show_names {
+                        format!("{} {}", base.letter, base.name)
+                    } else {
+                        base.letter.to_string()
+                    };
+                    (label, Color::Yellow)
+                }
+                OverlayMarker::Player => ("@".to_string(), Color::Green),
             };
-            overlays.insert((col, row), (label, Color::Yellow));
-        }
-    }
-
-    // Player position
-    if let Some((px, pz)) = state.player_pos
-        && let Some((col, row)) = voxel_to_cell(
-            f64::from(px),
-            f64::from(pz),
-            state,
-            inner.width,
-            inner.height,
-        )
-    {
-        overlays.insert((col, row), ("@".to_string(), Color::Green));
-    }
+            (cell, (label, color))
+        })
+        .collect();
 
     // Render each row as a Line of Spans
     let mut lines: Vec<Line> = Vec::with_capacity(inner.height as usize);
@@ -457,21 +437,7 @@ fn bin_systems(
 
 /// Convert voxel coordinates to grid cell position.
 fn voxel_to_cell(vx: f64, vz: f64, state: &MapState, cols: u16, rows: u16) -> Option<(u16, u16)> {
-    let extent = state.zoom.extent();
-    let cell_size_x = extent / f64::from(cols.max(1));
-    let cell_size_z = extent / f64::from(rows.max(1));
-
-    let half_cols = f64::from(cols) / 2.0;
-    let half_rows = f64::from(rows) / 2.0;
-
-    let col = ((vx - state.center.0) / cell_size_x + half_cols) as i32;
-    let row = ((vz - state.center.1) / cell_size_z + half_rows) as i32;
-
-    if col >= 0 && col < cols as i32 && row >= 0 && row < rows as i32 {
-        Some((col as u16, row as u16))
-    } else {
-        None
-    }
+    state.voxel_to_grid_for_size(vx, vz, cols, rows)
 }
 
 #[cfg(test)]
@@ -784,6 +750,95 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn test_zoom_targets_visible_overlay_and_preserves_cursor_behavior() {
+        let model = local_model();
+        let targets = [
+            ('V', 4, (10.0, 10.0)),
+            ('X', 5, (30.0, 30.0)),
+            ('@', 3, (0.0, 0.0)),
+        ];
+
+        for (marker, row, target) in targets {
+            let mut state = map_state(&model, 12, 11);
+            state.zoom = ZoomLevel::Region;
+            state.base_labels = vec![
+                base('A', "Hidden", 20, 20),
+                base('V', "Visible", 10, 10),
+                base('W', "Overwritten", 25, 25),
+                base('X', "Last row", 30, 30),
+            ];
+            state.player_pos = Some((0, 0));
+            state.cursor = (5, row);
+
+            let region = draw(&state, &model, 12, 11);
+            assert_eq!(cell(&region, 6, row + 1).symbol(), marker.to_string());
+
+            state.zoom_in();
+            assert_eq!(state.zoom, ZoomLevel::Local);
+            assert_eq!(state.center, target);
+            assert_eq!(state.voxel_to_grid(target.0, target.1), Some((5, 3)));
+
+            let local = draw(&state, &model, 12, 11);
+            let local_marker = cell(&local, 6, 4);
+            assert_eq!(local_marker.symbol(), marker.to_string());
+            assert_eq!(
+                local_marker.fg,
+                if marker == '@' {
+                    Color::Green
+                } else {
+                    Color::Yellow
+                }
+            );
+
+            assert!(state.zoom_out());
+            assert_eq!(state.zoom, ZoomLevel::Region);
+            assert_eq!(state.center, (0.0, 0.0));
+            assert_eq!(state.cursor, (5, 3));
+            assert!(state.zoom_stack.is_empty());
+        }
+
+        let mut unmarked = map_state(&model, 12, 11);
+        unmarked.zoom = ZoomLevel::Region;
+        unmarked.cursor = (7, 2);
+        let cursor_target = unmarked.cursor_voxel();
+        unmarked.zoom_in();
+        assert_eq!(unmarked.center, cursor_target);
+
+        let mut local = map_state(&model, 12, 11);
+        local.center = (12.0, -8.0);
+        local.cursor = (2, 4);
+        let prior = (
+            local.zoom,
+            local.center,
+            local.cursor,
+            local.zoom_stack.clone(),
+        );
+        local.zoom_in();
+        assert_eq!(
+            (local.zoom, local.center, local.cursor, local.zoom_stack),
+            prior
+        );
+    }
+
+    #[test]
+    fn test_zoom_targets_base_center_on_odd_grid_dimensions() {
+        let model = local_model();
+        let mut state = map_state(&model, 11, 10);
+        state.zoom = ZoomLevel::Region;
+        state.base_labels = vec![base('A', "Origin", 0, 0)];
+        state.cursor = (4, 2);
+
+        let region = draw(&state, &model, 11, 10);
+        assert_eq!(cell(&region, 5, 3).symbol(), "A");
+        assert_ne!(state.cursor_voxel(), (0.0, 0.0));
+
+        state.zoom_in();
+        assert_eq!(state.zoom, ZoomLevel::Local);
+        assert_eq!(state.center, (0.0, 0.0));
+        assert_eq!(state.voxel_to_grid(0.0, 0.0), Some((4, 2)));
     }
 
     #[test]
