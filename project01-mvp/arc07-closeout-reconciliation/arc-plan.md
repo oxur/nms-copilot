@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.25. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.26. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -395,3 +395,7 @@ Version1.24: [Slice10](slice10-save-parser-interface/cdc-verification.md) comple
 ## Current semantic/legacy decisions —2026-10-26
 
 Version1.25: last-results means the actual most recent SUCCESSFUL result in the CURRENT REPL session; command history already exists, cross-restart result history stays future. Meaning resolved, delivery still OPEN; no persistence/backend/new command or implementation assignment. [B10](../backlog.md#b10-historical-goatfungus-escapes-and-legacy-spookyhash-verification) explicitly defers historical goatfungus escapes/legacy2001 SpookyHash until real problematic input/use case, Duncan prioritization/future contributor, no fixed project/deadline. NomNom/current supported parsing unchanged. Routing/watch split (visualization backlog, strict-positive2opt regression now, reconnect now) remains UNAPPROVED; reminder only. No source/push/CI/delegation/prompt, and no change to accepted5f3b18e or existing row statuses.
+
+## Routing/watch scope decided —2026-10-26
+
+Version1.26: Duncan adopts [B11](../backlog.md#b11-reachability-visualization) visualization deferral without fixed project/deadline, and [B12](../backlog.md#b12-notify-backend-reconnection-next-project) notify backend recovery in NEXT Project02 (existing Arc02 after friendly selection, bounded re-registration/resume plus shutdown/duplicate correctness). The stronger strict-positive 2-opt regression is REQUIRED before Project01 closure: deliberately improvable route gets strictly shorter, preserving stops/endpoints/applicable constraints; no runtime defect or production repair is established/prescribed. Earlier unapproved proposal is superseded, while actual delivery/independent acceptance is still open. Existing last-results/MCP and other gates remain; no source/new slice/prompt/delegation/CI in this records-only update.

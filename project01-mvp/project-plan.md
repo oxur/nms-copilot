@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.154
+version: 1.155
 project: project01-mvp
 status: active
 depends-on: []
@@ -1442,3 +1442,9 @@ Version1.153: [Slice10 independent acceptance](arc07-closeout-reconciliation/sli
 Version1.154: Duncan confirms retaining the actual most recent **SUCCESSFUL query result within the CURRENT REPL session**. Command history already works and is not this result; a failed query does not become the most recent successful result. Cross-restart result history remains future work. Semantics are resolved, but delivery/independent review is still OPEN before Project01 closure; the bounded interaction/API design remains to be source-grounded. No persistent backend, new command, source assignment or implementation prompt is authorized by this records-only update.
 
 Duncan explicitly defers historical goatfungus escape repair and legacy format2001 SpookyHash verification until an actual problematic input/use case needs them: [B10](backlog.md#b10-historical-goatfungus-escapes-and-legacy-spookyhash-verification). Duncan prioritization/future explicit contributor; no project/deadline invented. Current checked formats/SHA/metadata behavior and authentic NomNom’s separate deferral remain. The proposed routing/watch split—reachability visualization to backlog, a strict positive2opt regression now, watcher reconnection now—is **UNAPPROVED**, pending Duncan’s decision; his request for a reminder is not execution authority. Existing IDs/statuses, accepted source5f3b18e and all other held gates remain unchanged.
+
+## Routing/watch decisions adopted —2026-10-26
+
+Version1.155 supersedes the earlier unapproved split. Duncan explicitly defers reachability visualization [B11](backlog.md#b11-reachability-visualization), with Duncan prioritization/future contributor and re-entry on a scheduled concrete view/use case, **no fixed project/deadline**. Notify backend error recovery moves to NEXT Project02 [B12](backlog.md#b12-notify-backend-reconnection-next-project), existing Arc02 observations after friendly save/account selection; bounded re-registration/resumption, shutdown and duplicate-event/ingestion correctness, distinct from ordinary replacement recovery or Windows CI timeout.
+
+**Required before Project01 closure:** a stronger strict-positive 2-opt regression on a deliberately improvable route must demonstrate strictly shorter length while preserving stops, endpoints and applicable constraints/round-trip behavior. Existing non-increase tests are weaker proof; no runtime optimizer defect is established, and this decision does not prescribe production changes or alter B04/B05 deferred limits. Delivery/independent review remains OPEN in existing closeout work; no implementation prompt/slice or source assignment is issued here. All existing IDs/statuses/source5f3b18e and other gates remain unchanged.
