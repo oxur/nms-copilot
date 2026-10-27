@@ -16,7 +16,7 @@ use ratatui::widgets::{Block, Borders, Clear, Paragraph, Wrap};
 use nms_core::address::GalacticAddress;
 use nms_graph::GalaxyModel;
 
-use super::state::{MapState, OverlayMarker, ZoomLevel, density_char};
+use super::state::{MapState, OverlayMarker, density_char};
 
 /// Draw the map, status bar, legend, and optional help overlay into `frame`.
 ///
@@ -29,14 +29,16 @@ use super::state::{MapState, OverlayMarker, ZoomLevel, density_char};
 /// dimensions to keep them synchronized. Rendering does not resize or validate
 /// state and uses fixed colors.
 ///
-/// Base labels are the stored A–Z snapshot and are yellow. At every zoom,
-/// colliding base cells are spread down adjacent rows; at Local zoom the
-/// labels also include names, which are clipped at the map edge on complete
-/// grapheme boundaries. A collision reaching the last row can overwrite an
-/// earlier base, so separation is not guaranteed. The player `@` is green and
-/// can overwrite a base cell. The cursor uses reverse styling; density glyphs
-/// are cyan for occupied cells and dark gray for empty cells. The legend
-/// reflects stored labels and whether a player position is present.
+/// Base labels are the stored A–Z snapshot and are yellow. At Galaxy and
+/// Region zoom, colliding base anchors spread down adjacent rows, a collision
+/// reaching the last row can replace an earlier base, and player `@` is drawn
+/// last. Local zoom instead reserves the player's cell and places full name
+/// spans in stored order at their projected columns, searching downward and
+/// then wrapping to earlier rows; labels that cannot fit without overlap are
+/// omitted. Name spans clip at the map edge on complete grapheme boundaries.
+/// The cursor uses reverse styling; density glyphs are cyan for occupied cells
+/// and dark gray for empty cells. The legend reflects stored labels and
+/// whether a player position is present.
 ///
 /// # Examples
 ///
@@ -128,19 +130,13 @@ fn render_map(
     let grid = bin_systems(state, addresses, inner.width, inner.height);
 
     // Resolve displayed markers using the same placement used for zoom targets.
-    let show_names = state.zoom == ZoomLevel::Local;
     let overlays: HashMap<(u16, u16), (String, Color)> = state
         .visible_markers(inner.width, inner.height)
         .into_iter()
         .map(|(cell, marker)| {
             let (label, color) = match marker {
                 OverlayMarker::Base(index) => {
-                    let base = &state.base_labels[index];
-                    let label = if show_names {
-                        format!("{} {}", base.letter, base.name)
-                    } else {
-                        base.letter.to_string()
-                    };
+                    let label = state.base_overlay_label(index);
                     (label, Color::Yellow)
                 }
                 OverlayMarker::Player => ("@".to_string(), Color::Green),
@@ -443,7 +439,7 @@ fn voxel_to_cell(vx: f64, vz: f64, state: &MapState, cols: u16, rows: u16) -> Op
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::map::state::BaseLabel;
+    use crate::map::state::{BaseLabel, ZoomLevel};
     use crate::session::SessionState;
     use nms_core::{GalacticAddress, System};
     use nms_graph::GalaxyModel;
@@ -691,15 +687,16 @@ mod tests {
         let buffer = draw(&state, &model, 12, 11);
         assert_eq!(row_slice(&buffer, 4, 6, 5), "A Fir");
         assert_eq!(row_slice(&buffer, 5, 6, 5), "B Sec");
-        assert_eq!(row_slice(&buffer, 6, 6, 5), "D Fou");
-        for (y, reversed) in [(4, true), (5, false), (6, false)] {
+        assert_eq!(row_slice(&buffer, 6, 6, 5), "C Thi");
+        assert_eq!(row_slice(&buffer, 1, 6, 5), "D Fou");
+        for y in [1, 4, 5, 6] {
             for x in 6..11 {
                 let visible = cell(&buffer, x, y);
                 assert_eq!(visible.fg, Color::Yellow);
                 assert!(visible.modifier.contains(Modifier::BOLD));
                 assert_eq!(
                     visible.modifier.contains(Modifier::REVERSED),
-                    reversed && x == 6
+                    y == 4 && x == 6
                 );
             }
         }
@@ -719,8 +716,10 @@ mod tests {
         assert_eq!(player.fg, Color::Green);
         assert!(player.modifier.contains(Modifier::BOLD));
         assert!(player.modifier.contains(Modifier::REVERSED));
-        assert_eq!(row_slice(&buffer, 5, 6, 5), "B Sec");
-        assert_eq!(row_slice(&buffer, 6, 6, 5), "D Fou");
+        assert_eq!(row_slice(&buffer, 5, 6, 5), "A Fir");
+        assert_eq!(row_slice(&buffer, 6, 6, 5), "B Sec");
+        assert_eq!(row_slice(&buffer, 1, 6, 5), "C Thi");
+        assert_eq!(row_slice(&buffer, 2, 6, 5), "D Fou");
         assert_eq!(
             state
                 .base_labels
@@ -753,15 +752,105 @@ mod tests {
     }
 
     #[test]
+    fn test_local_cluster_renders_all_full_labels_separate_from_player() {
+        let model = local_model();
+        let mut state = map_state(&model, 70, 19);
+        state.center = (0.0, 0.0);
+        state.base_labels = vec![
+            base('F', "Field Alpha Outpost", 0, 0),
+            base('J', "Juniper Plateau", 1, 0),
+            base('L', "Luminous Station Sigma", 0, 0),
+            base('T', "Tundra Relay", 1, 0),
+            base('V', "Valley Nomad Base", 0, 0),
+            base('Y', "Yellow Ridge Outpost", 1, 0),
+        ];
+        state.player_pos = Some((0, 0));
+
+        let buffer = draw(&state, &model, 70, 19);
+        assert_eq!(state.grid_size, (68, 14));
+        assert_eq!(cell(&buffer, 35, 8).symbol(), "@");
+        assert_eq!(cell(&buffer, 35, 8).fg, Color::Green);
+        for (x, y, text) in [
+            (35, 9, "F Field Alpha Outpost"),
+            (36, 8, "J Juniper Plateau"),
+            (35, 10, "L Luminous Station Sigma"),
+            (36, 11, "T Tundra Relay"),
+            (35, 12, "V Valley Nomad Base"),
+            (36, 13, "Y Yellow Ridge Outpost"),
+        ] {
+            assert_eq!(row_slice(&buffer, y, x, text.len() as u16), text);
+            for col in x..x + text.len() as u16 {
+                assert_eq!(cell(&buffer, col, y).fg, Color::Yellow, "{text}");
+            }
+        }
+    }
+
+    #[test]
+    fn test_local_label_span_uses_unicode_width_and_clipped_right_edge() {
+        let model = local_model();
+        let mut state = map_state(&model, 10, 11);
+        state.base_labels = vec![
+            base('A', "界", -32, -32),
+            base('B', "Bee", -8, -32),
+            base('C', "Cat", 0, -32),
+        ];
+
+        let buffer = draw(&state, &model, 10, 11);
+        assert_eq!(cell(&buffer, 1, 1).symbol(), "A");
+        assert_eq!(cell(&buffer, 2, 1).symbol(), " ");
+        assert_eq!(cell(&buffer, 3, 1).symbol(), "界");
+        assert_eq!(cell(&buffer, 4, 1).symbol(), " ");
+        assert_eq!(row_slice(&buffer, 1, 5, 4), "C Ca");
+        assert_eq!(row_slice(&buffer, 2, 4, 5), "B Bee");
+
+        let mut right_edge = map_state(&model, 10, 11);
+        right_edge.base_labels = vec![base('D', "界", 16, -32), base('E', "Elm", 24, -32)];
+        let buffer = draw(&right_edge, &model, 10, 11);
+        assert_eq!(cell(&buffer, 7, 1).symbol(), "D");
+        assert_eq!(cell(&buffer, 8, 1).symbol(), " ");
+        assert_eq!(cell(&buffer, 8, 2).symbol(), "E");
+        assert_eq!(cell(&buffer, 8, 2).fg, Color::Yellow);
+    }
+
+    #[test]
+    fn test_local_label_rows_wrap_and_omit_only_when_exhausted() {
+        let model = local_model();
+        let mut wrapped = map_state(&model, 12, 8);
+        wrapped.base_labels = vec![
+            base('A', "a", 0, 0),
+            base('B', "b", 0, 0),
+            base('C', "c", 0, 0),
+        ];
+        let buffer = draw(&wrapped, &model, 12, 8);
+        assert_eq!(row_slice(&buffer, 1, 6, 3), "C c");
+        assert_eq!(row_slice(&buffer, 2, 6, 3), "A a");
+        assert_eq!(row_slice(&buffer, 3, 6, 3), "B b");
+
+        let mut exhausted = map_state(&model, 3, 8);
+        exhausted.base_labels = vec![
+            base('A', "Alpha", 0, 0),
+            base('B', "Beta", 0, 0),
+            base('C', "Charlie", 0, 0),
+        ];
+        exhausted.player_pos = Some((0, 0));
+        let buffer = draw(&exhausted, &model, 3, 8);
+        assert_eq!(exhausted.grid_size, (1, 3));
+        assert_eq!(cell(&buffer, 1, 1).symbol(), "B");
+        assert_eq!(cell(&buffer, 1, 2).symbol(), "@");
+        assert_eq!(cell(&buffer, 1, 2).fg, Color::Green);
+        assert_eq!(cell(&buffer, 1, 3).symbol(), "A");
+    }
+
+    #[test]
     fn test_zoom_targets_visible_overlay_and_preserves_cursor_behavior() {
         let model = local_model();
         let targets = [
-            ('V', 4, (10.0, 10.0)),
-            ('X', 5, (30.0, 30.0)),
-            ('@', 3, (0.0, 0.0)),
+            ('V', 4, (10.0, 10.0), (5, 4)),
+            ('X', 5, (30.0, 30.0), (5, 4)),
+            ('@', 3, (0.0, 0.0), (5, 3)),
         ];
 
-        for (marker, row, target) in targets {
+        for (marker, row, target, (local_col, local_row)) in targets {
             let mut state = map_state(&model, 12, 11);
             state.zoom = ZoomLevel::Region;
             state.base_labels = vec![
@@ -782,7 +871,7 @@ mod tests {
             assert_eq!(state.voxel_to_grid(target.0, target.1), Some((5, 3)));
 
             let local = draw(&state, &model, 12, 11);
-            let local_marker = cell(&local, 6, 4);
+            let local_marker = cell(&local, local_col + 1, local_row + 1);
             assert_eq!(local_marker.symbol(), marker.to_string());
             assert_eq!(
                 local_marker.fg,
