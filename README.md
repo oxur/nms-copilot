@@ -393,7 +393,8 @@ nms/
 ├─ nms-watch      File watcher, delta computation, live updates
 ├─ nms-cache      rkyv zero-copy serialization for fast startup
 ├─ nms-cli        clap one-shot CLI (the `nms` binary)
-├─ nms-copilot    reedline interactive REPL + MCP server (the `nms-copilot` binary)
+├─ nms-mcp        reusable MCP server, tools, and resources library
+├─ nms-copilot    reedline interactive REPL (the `nms-copilot` binary; composes `nms-mcp`)
 └─ nms            umbrella metadata/documentation crate
 ```
 

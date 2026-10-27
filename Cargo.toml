@@ -9,6 +9,7 @@ members = [
     "crates/nms-cache",
     "crates/nms-cli",
     "crates/nms-copilot",
+    "crates/nms-mcp",
     "crates/nms",
 ]
 resolver = "3"
@@ -32,6 +33,7 @@ nms-graph = { path = "crates/nms-graph", version = "0.3.0" }
 nms-query = { path = "crates/nms-query", version = "0.3.0" }
 nms-watch = { path = "crates/nms-watch", version = "0.3.0" }
 nms-cache = { path = "crates/nms-cache", version = "0.3.0" }
+nms-mcp = { path = "crates/nms-mcp", version = "0.3.0", default-features = false }
 
 fabryk-mcp = "0.4.2"
 tokio = { version = "1", features = ["full"] }
