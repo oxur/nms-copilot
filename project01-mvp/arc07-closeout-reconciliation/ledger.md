@@ -67,4 +67,6 @@ Current2026-10-26:12rows10done/2open after independently accepted Slice11. Earli
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R07-S12 | Standalone MCP crate preserves real consumers/coordinator/cache/features and bounded shared-test teardown composes | Slice12 MC-01–04 and independent review | correctness-grade | Explicit Duncan required crate + resumed finite authority/platform gate | open | [Slice12](slice12-mcp-crate-extraction/slice-plan.md) | Current13rows10done/3open; Windows CI remains actual external proof |
+| R07-S12 | Standalone MCP crate preserves real consumers/coordinator/cache/features and bounded shared-test teardown composes | Slice12 MC-01–04 and independent review | correctness-grade | Explicit Duncan required crate + resumed finite authority/platform gate | done | [Independent acceptance](slice12-mcp-crate-extraction/cdc-verification.md), sourceb2404851067a7c234b6e6ccf9c56e429acf0b643 |4of5 corrections; Windows CI remains actual external proof |
+
+Current2026-10-26:13rows11done/2open. Ready code endpoint reached; joint inputs/current CI/performance sufficiency/higher acceptance remain, no next source task/slice.

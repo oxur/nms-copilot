@@ -9,3 +9,7 @@ Same increment includes the actual Windows shared quiet/EOF test blocker: source
 Author readiness: only MCP→copilot coupling is AppliedSaveUpdate; its fields are SaveUpdate/bool/Vec<String>, no coordinator/cache ownership. Module dependencies are existing lower nms-core/graph/query/watch plus existing fabryk/tokio/config/logging; test-only nms-save/tempfile. Main needs no edit. Thin reexports keep current import paths. Binding recipe/read manifest/gates in cc-prompt.md. Two internal review stages (move then support repair) in ONE assignment; source committed by root only after CDC reviews composed WIP. Max5 actual refinements for this distinct increment,0 initially, no reset of Slice11/07. No supporting artifacts anticipated; no new evidence framework.
 
 Assignment: cc-prompt.md initial, active. Required closure includes actual tests/build/docs and independent review, not parent/game/native/Windows acceptance. Other B01–B12/Project02 transfers remain unchanged; no source push/CI/dependency installs.
+
+## Final disposition —2026-10-26
+
+MC-01–04 DONE at root sourceb2404851067a7c234b6e6ccf9c56e429acf0b643, independently accepted.4of5 actual refinements; original failed attempts retained. Root fast-forward pushed branch, CI40430018598 in progress at cutoff; no platform success inferred. Approved ready code execution ends here, no next slice. Joint save/native, performance sufficiency choice, actual CI and higher acceptance remain in existing handoff.
