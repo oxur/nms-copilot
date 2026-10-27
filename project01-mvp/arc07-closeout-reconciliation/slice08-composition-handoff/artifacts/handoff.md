@@ -2,7 +2,7 @@
 
 **Record history:** Slice08 records-only refinement 01 corrects the Slice05 helper ownership and test-cleanup scope, separates completed historical 0.2.0 provenance from the still-open current package/install and new-publication gates, clarifies the license-copy count, and names the concrete owner/re-entry boundaries. Source, metrics, adopted deferrals, and the 26-row map are unchanged from initial records commit `831e937`.
 
-**Current status:** source4db22a95f0c5d40c445c76106204f628b2550735 includes the independently accepted bounded [Tab correction](../../slice06-interaction-distribution/cdc-verification.md), actual owned-native4checks passed; Duncan restart/retest pending. Root [exact-head CI40587654350](https://github.com/oxur/nms-copilot/actions/runs/40587654350) IN PROGRESS. Prior b240 all6PASS is predecessor evidence; joint save/native, performance sufficiency and higher acceptance remain open. All100clauses/deferrals remain accounted for.
+**Current status:** source4db22a95f0c5d40c445c76106204f628b2550735: bounded Tab correction independently reviewed, owned-native4checks and Duncan basic-Tab retest PASS; [exact-head CI40587654350](https://github.com/oxur/nms-copilot/actions/runs/40587654350) ALL6PASS. Broader Slice06/native live-game/map/clean-exit, nonzero-save, first-prompt performance sufficiency and higher acceptance remain open. Previous failures/qualifications and all100clauses/deferrals preserved.
 
 ## Candidate and decision boundary
 
@@ -183,3 +183,9 @@ P01-G07 DONE; original26 rows now2done/1deferred/23open. Only active closeout bo
 ## Actual native Tab correction —2026-10-27
 
 Duncan’s real session exposed missing editor/menu/keybinding wiring despite valid candidate tests; source4db22a95f0c5d40c445c76106204f628b2550735 fixes only main.rs, with actual Emacs event regression and common configuration retained across history fallbacks. Root same-facility sequential before/after proves sh unique-fill, s menu, Escape dismissal/no execution and empty16-command menu. [Existing Slice06 review](../../slice06-interaction-distribution/cdc-verification.md) retains exact failures, receipts and limits. Code/owned-native fix accepted; Duncan restart/retest and broader native interaction NOT closed. Current [CI40587654350](https://github.com/oxur/nms-copilot/actions/runs/40587654350) pending; b240 exact-head success is historical, no new platform failure or success inferred. No additional source task/new slice/research follows.
+
+## Tab correction final user and CI receipt (2026-10-27)
+
+Duncan reports “it works!!” after restarting rebuilt4db22a95f0c5d40c445c76106204f628b2550735 and retesting basic Tab. This confirms that native subclaim only; root’s earlier sequential ownedPTY4checks remain separate. Exact API [CI40587654350](https://github.com/oxur/nms-copilot/actions/runs/40587654350) completedSUCCESS/head4db22a95f0c5d40c445c76106204f628b2550735: all6jobsSUCCESS—Windows122483289850, declared1.91check122483290041, Ubuntu122483290161, Check122483290297, macOS122483290328, allfeatures/FULLnoHTTP122483290351. No global overlapping-test sum inferred.
+
+P01-G07 DONE again;26original IDs now2done/1deferred/23open. Slice06/ID-01 broader native gate stays OPEN: live-game/terminal/map/clean-exit and higher interaction proof remain; actual nonzero save unmet (current genuine player Euclid is user-confirmed), first-prompt performance sufficiency choice unanswered. Old b240 all6PASS, actual negative Tab proof, import lintfailure and independent zero-selector correction remain history. Root continues joint observation without a new source assignment; no further source/research/planning activity follows this receipt.
