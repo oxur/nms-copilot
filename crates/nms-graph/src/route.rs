@@ -1280,6 +1280,67 @@ mod tests {
     }
 
     #[test]
+    fn test_two_opt_strictly_improves_unique_nearest_neighbor_closed_tour() {
+        let addresses = [
+            GalacticAddress::new(0, 0, 0, 1, 0, 9), // A
+            GalacticAddress::new(1, 0, 0, 2, 0, 9), // B
+            GalacticAddress::new(0, 0, 2, 3, 0, 9), // C
+            GalacticAddress::new(3, 0, 0, 4, 0, 9), // D
+            GalacticAddress::new(3, 0, 4, 5, 0, 9), // E
+        ];
+        let ids = addresses.map(|address| SystemId::from_address(&address));
+        let mut model = GalaxyModel::new();
+        for address in addresses {
+            model.insert_system(System::new(address, None, None, None, vec![]));
+        }
+
+        let [a, b, c, d, e] = ids;
+        let targets = [e, c, b, d];
+        let greedy = model.tsp_nearest_neighbor(a, &targets, true).unwrap();
+        let greedy_ids: Vec<_> = greedy.hops.iter().map(|hop| hop.system_id).collect();
+        assert_eq!(greedy_ids, [a, b, d, c, e, a]);
+        let expected_greedy_distance = 400.0 * (8.0 + 2.0 * 13.0_f64.sqrt());
+        assert!((greedy.total_distance_ly - expected_greedy_distance).abs() < 1e-6);
+
+        let direct = model.two_opt_improve(greedy_ids).unwrap();
+        let public = model.tsp_two_opt(a, &targets, true).unwrap();
+        let expected_improved_distance = 400.0 * (9.0 + 13.0_f64.sqrt());
+        let expected_stops = [a, a, b, c, d, e];
+        let mut expected_membership: Vec<_> = expected_stops
+            .iter()
+            .map(|id| (id.reality_index(), id.system_address()))
+            .collect();
+        expected_membership.sort_unstable();
+
+        for route in [&direct, &public] {
+            assert!((route.total_distance_ly - expected_improved_distance).abs() < 1e-6);
+            assert!(greedy.total_distance_ly - route.total_distance_ly > 1_000.0);
+            assert_eq!(route.hops.len(), 6);
+            assert_eq!(route.hops.first().unwrap().system_id, a);
+            assert_eq!(route.hops.last().unwrap().system_id, a);
+            let mut membership: Vec<_> = route
+                .hops
+                .iter()
+                .map(|hop| {
+                    (
+                        hop.system_id.reality_index(),
+                        hop.system_id.system_address(),
+                    )
+                })
+                .collect();
+            membership.sort_unstable();
+            assert_eq!(membership, expected_membership);
+            assert!(
+                route
+                    .hops
+                    .iter()
+                    .all(|hop| hop.system_id.reality_index() == 9)
+            );
+            assert!(route.hops.iter().all(|hop| !hop.is_waypoint));
+        }
+    }
+
+    #[test]
     fn test_two_opt_small_route_unchanged() {
         let model = line_model(3, 10);
         let ids = sorted_ids(&model);
