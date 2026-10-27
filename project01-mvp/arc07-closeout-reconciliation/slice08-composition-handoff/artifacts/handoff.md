@@ -2,7 +2,7 @@
 
 **Record history:** Slice08 records-only refinement 01 corrects the Slice05 helper ownership and test-cleanup scope, separates completed historical 0.2.0 provenance from the still-open current package/install and new-publication gates, clarifies the license-copy count, and names the concrete owner/re-entry boundaries. Source, metrics, adopted deferrals, and the 26-row map are unchanged from initial records commit `831e937`.
 
-**Current status:** [Final ready code delivery and remaining gates](#final-ready-code-delivery-and-finite-remaining-gates--2026-10-26) at sourceb2404851067a7c234b6e6ccf9c56e429acf0b643 supersedes prior pending route/last-results/MCP delivery. All required ready code is independently accepted; root exact-head CI40430018598 is in progress. The100-clause matrix remains complete; joint proof, performance sufficiency and higher acceptance remain open. Earlier observations/current pins below are historical.
+**Current status:** [Final ready code delivery and remaining gates](#final-ready-code-delivery-and-finite-remaining-gates--2026-10-26) at sourceb2404851067a7c234b6e6ccf9c56e429acf0b643 supersedes prior pending route/last-results/MCP delivery. All required ready code is independently accepted; root exact-head CI40430018598 is ALL6PASS, with the final receipt below. The100-clause matrix remains complete; only joint proof, performance sufficiency and higher acceptance remain open. Earlier observations/current pins below are historical.
 
 ## Candidate and decision boundary
 
@@ -166,8 +166,16 @@ Root pushed ordinary branch fast-forward; [exact-head CI40430018598](https://git
 |---|---|---|
 | Genuine nonzero-galaxy save composition | C01/C02/C05,R01/R02; attributable unmodified save plus galaxy/expected identity, real consumers; current fixtures already reviewed | Duncan supplies save/metadata; joint bounded proof, async input pending |
 | Native interactive composition | A04/A06/C06; setup/history/TAB/results/map/exit/restoration and relevant toggles, not inferred from batched-TAB failure or unit tests | Duncan+Sofie joint terminal session; input pending |
-| Final hosted MSRV/platform/features | G07 plus final G01/G02 composition; exact b240 run still in progress | Root follows actual CI, reports each required terminal result; no local toolchain/install programme |
+| Final hosted MSRV/platform/features — SATISFIED | P01-G07 DONE; exact b240 run ALL6PASS, [receipt](#final-exact-head-ci-receipt-2026-10-26) | Root actual hosted proof; no local toolchain/install programme |
 | Cached-startup measurement sufficiency | G08/M3.7: existing5 warm20-system/13-planet/2-base headless spawn→stdio initialize samples~5.8–35.4ms are qualified; actual REPL first-prompt<100ms not measured | Duncan async choice: accept existing bounded proof or include first-prompt timing in joint terminal; no waiver or new timing programme inferred |
 | Higher arc/project acceptance | A01–A07,C01–C07,G01–G09,R01–R03 retain original26 statuses; research/foundation/query/routing/cache/discovery/export/docs accepted child evidence and amended scope compose, not newly missing features | Required higher independent composition and Duncan acceptance after actual held claims; reuse100-clause matrix/evidence, no new49/66-row inquiry |
 
 No further ready implementation is identified. Coverage/current installation evidence explicitly accepted/deferred at recorded scope; historical publication complete, new publication separately deferred; B01–B12 and Project02/03 ownership/re-entry unchanged. No new tests/source tasks/slices/arcs or Project02 execution. Branch integration remains a later explicit external action after concrete acceptance.
+
+## Final exact-head CI receipt (2026-10-26)
+
+Root’s exact API receipt: [run40430018598](https://github.com/oxur/nms-copilot/actions/runs/40430018598), head **b2404851067a7c234b6e6ccf9c56e429acf0b643**, completed/SUCCESS, gh watch exit0. ALL6 jobs PASS: Check121945129955; Ubuntu121945130215; declared Rust1.91 MSRV check121945130216; macOS121945130238; all-features workspace+FULL copilot no-HTTP121945130358; Windows121945130369 (6m14s). No overlapping global test-count sum is inferred.
+
+Windows log `/tmp/nms-ci-40430018598-windows.log`:217215bytes, SHA256`1ea8b9e9df4de6dd5becb15ff8530bc67adddc202ade5a00f3c545588cd898a3`. It passes old paired quiet/EOF and new split-frame/quiet-owned-close in all4 shared inclusions, including previously stalled name_observations; nms-save105unit/0failed/0ignored and locate find/group-slots/mtime tests pass. Actual hosted Windows validation is now established, with no local Windows installation. Earlier6h cancellation, compile/fixture failures, zero-byte gh-view download and later recovered old log remain historical, not rewritten successes.
+
+P01-G07 DONE; original26 rows now2done/1deferred/23open. Only active closeout boundaries remain: joint genuine-save/metadata, joint native interaction, Duncan’s explicit cached-startup performance sufficiency choice, and required higher independent composition+Operator acceptance. All required ready code is delivered; no further autonomous source/research/planning work until those inputs/decisions. No main integration/publication or new arc/project is authorized by CI success.
