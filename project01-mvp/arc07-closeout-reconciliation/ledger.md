@@ -62,3 +62,9 @@ Slice10 accepted2026-10-26: current11rows9done/2open (S06/S07); source5f3b18eadd
 Current12rows9done/3open; prior accepted rows preserved. Resume only approved finite Arc07 code scope; real game/native/platform/higher gates remain.
 
 Current2026-10-26:12rows10done/2open after independently accepted Slice11. Earlier counts are historical; parent/higher gates stay open.
+
+## Required MCP extraction opened —2026-10-26
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R07-S12 | Standalone MCP crate preserves real consumers/coordinator/cache/features and bounded shared-test teardown composes | Slice12 MC-01–04 and independent review | correctness-grade | Explicit Duncan required crate + resumed finite authority/platform gate | open | [Slice12](slice12-mcp-crate-extraction/slice-plan.md) | Current13rows10done/3open; Windows CI remains actual external proof |
