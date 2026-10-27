@@ -91,6 +91,12 @@ pub struct SessionState {
 
     /// Flattened planet-map count across the whole model.
     pub planet_count: usize,
+
+    /// Most recent successful Find, Show, Stats, or Route response in this session.
+    ///
+    /// This is the rendered response snapshot as shown at query time; it is not
+    /// refreshed when the model changes and is not persisted across sessions.
+    pub last_query_result: Option<String>,
 }
 
 /// Anchor and stored address for the session reference position.
@@ -161,6 +167,7 @@ impl SessionState {
             galaxy,
             system_count: model.systems.len(),
             planet_count: model.planets.len(),
+            last_query_result: None,
         }
     }
 

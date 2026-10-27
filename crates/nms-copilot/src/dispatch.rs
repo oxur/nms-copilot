@@ -73,15 +73,20 @@ use crate::session::SessionState;
 ///
 /// # State changes
 ///
+/// Successful `Find`, `Show`, `Stats`, and `Route` calls replace the session's rendered
+/// last-query snapshot, including successful responses for empty results. Errors and every
+/// other action preserve it. `Last` returns the stored response under a snapshot/not-refreshed
+/// label without rerunning the query or replacing the stored value.
+///
 /// `Galaxy` without a selection reports the active and discovered galaxy views. A selection is
 /// trimmed and resolved as a galaxy index from 0 through 255 or a case-insensitive name before
 /// changing the model's selected view. The selected galaxy may contain no systems; its count
 /// is still reported as zero, without creating a placeholder or moving the physical player.
 /// Session synchronization refreshes selected-galaxy metadata and model counts, follows the
 /// player's current position (or clears a missing player position), and preserves stored base
-/// or manual-address positions, biome, and warp defaults. Selecting a galaxy and resetting
-/// position or all state invoke this synchronization on their respective paths; dispatch does
-/// not perform an unconditional entry refresh.
+/// or manual-address positions, biome, warp defaults, and the last-query snapshot. Selecting a
+/// galaxy and resetting position or all state invoke this synchronization on their respective
+/// paths; dispatch does not perform an unconditional entry refresh.
 ///
 /// `Set Position` looks up a base name only, despite the parser's broader help wording; it is
 /// not a direct address-setting action. Biome text is parsed before its session value changes.
@@ -251,7 +256,12 @@ pub fn dispatch(
     model: &mut GalaxyModel,
     session: &mut SessionState,
 ) -> Result<String, String> {
-    match action {
+    let captures_query_result = matches!(
+        action,
+        Action::Find { .. } | Action::Show { .. } | Action::Stats { .. } | Action::Route { .. }
+    );
+
+    let result = match action {
         Action::Find {
             biome,
             infested,
@@ -341,6 +351,13 @@ pub fn dispatch(
         Action::Reset { target } => Ok(dispatch_reset(model, session, target)),
         Action::Status => Ok(session.format_status()),
 
+        Action::Last => Ok(match &session.last_query_result {
+            Some(response) => {
+                format!("Last successful query result (snapshot; not refreshed):\n{response}")
+            }
+            None => "No successful query result in this session yet.".into(),
+        }),
+
         Action::Info => {
             let systems = model.systems.len();
             let planets = model.planets.len();
@@ -369,7 +386,13 @@ pub fn dispatch(
             planet,
             galaxy,
         } => dispatch_convert(glyphs, coords, ga, voxel, *ssi, *planet, galaxy),
+    };
+
+    if captures_query_result && let Ok(response) = &result {
+        session.last_query_result = Some(response.clone());
     }
+
+    result
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -892,6 +915,7 @@ Commands:
   reset      Reset session state (position, biome, warp-range, all)
   status     Show current session state
   info       Show loaded model summary
+  last       Show the last successful query result snapshot
   help       Show this help message
   exit/quit  Exit the REPL
 
