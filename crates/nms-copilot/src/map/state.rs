@@ -9,6 +9,7 @@ use std::collections::HashMap;
 
 use nms_core::galaxy::Galaxy;
 use nms_graph::GalaxyModel;
+use ratatui::text::Span;
 
 use crate::session::SessionState;
 
@@ -235,14 +236,18 @@ impl MapState {
 
     /// Resolve displayed base and player markers at the supplied inner size.
     ///
-    /// Base labels retain their stored order, spread down rows on collisions,
-    /// and preserve the renderer's final-row replacement behavior. The player
-    /// marker is placed last and can replace a base at the same cell.
+    /// Galaxy and Region preserve the original anchor-cell collision policy.
+    /// Local reserves the player's cell, then places each full-width name in
+    /// its projected column, searching down and wrapping to earlier rows.
     pub(super) fn visible_markers(
         &self,
         cols: u16,
         rows: u16,
     ) -> HashMap<(u16, u16), OverlayMarker> {
+        if self.zoom == ZoomLevel::Local {
+            return self.local_visible_markers(cols, rows);
+        }
+
         let mut markers = HashMap::new();
 
         for (index, base) in self.base_labels.iter().enumerate() {
@@ -267,6 +272,63 @@ impl MapState {
         }
 
         markers
+    }
+
+    fn local_visible_markers(&self, cols: u16, rows: u16) -> HashMap<(u16, u16), OverlayMarker> {
+        let mut markers = HashMap::new();
+        let mut occupied = vec![Vec::<(u16, u16)>::new(); usize::from(rows)];
+
+        if let Some((player_x, player_z)) = self.player_pos
+            && let Some((col, row)) =
+                self.voxel_to_grid_for_size(f64::from(player_x), f64::from(player_z), cols, rows)
+        {
+            markers.insert((col, row), OverlayMarker::Player);
+            occupied[usize::from(row)].push((col, col + 1));
+        }
+
+        for (index, base) in self.base_labels.iter().enumerate() {
+            let Some((col, preferred_row)) = self.voxel_to_grid_for_size(
+                f64::from(base.voxel_x),
+                f64::from(base.voxel_z),
+                cols,
+                rows,
+            ) else {
+                continue;
+            };
+            let label_width = self.local_base_label_width(index, cols - col);
+            if label_width == 0 {
+                continue;
+            }
+            let end = col + label_width;
+            let mut candidate_rows = (preferred_row..rows).chain(0..preferred_row);
+            let Some(row) = candidate_rows.find(|row| {
+                occupied[usize::from(*row)]
+                    .iter()
+                    .all(|(start, stop)| end <= *start || col >= *stop)
+            }) else {
+                continue;
+            };
+            markers.insert((col, row), OverlayMarker::Base(index));
+            occupied[usize::from(row)].push((col, end));
+        }
+
+        markers
+    }
+
+    /// The exact text rendered for one base at the current zoom level.
+    pub(super) fn base_overlay_label(&self, index: usize) -> String {
+        let base = &self.base_labels[index];
+        if self.zoom == ZoomLevel::Local {
+            format!("{} {}", base.letter, base.name)
+        } else {
+            base.letter.to_string()
+        }
+    }
+
+    fn local_base_label_width(&self, index: usize, remaining_cols: u16) -> u16 {
+        Span::raw(self.base_overlay_label(index).as_str())
+            .width()
+            .min(usize::from(remaining_cols)) as u16
     }
 
     /// Move by signed `(dx, dy)` and clamp the cursor to nonempty grid axes.
