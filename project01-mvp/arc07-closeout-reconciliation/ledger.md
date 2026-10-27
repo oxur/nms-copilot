@@ -52,3 +52,11 @@ Slice09 accepted2026-10-25: all10 Arc07 rows preserved,8done/2open (S06/S07). Cu
 Current11 Arc07 rows8done/3open; existing statuses/history preserved. Current Rust reference-table representation accepted by Duncan at current scope, not retroactive approval.
 
 Slice10 accepted2026-10-26: current11rows9done/2open (S06/S07); source5f3b18eadddd57d54a92c9ec456b0f1e98b0869c. Real common checked parser/production use complete at reviewed scope; cache schema4/semantic6 unchanged for unchanged interpretation/output. Native workspace output partly truncated/no aggregate claimed; independent focused4/17/3/38PASS. Other last-results/MCP/game/platform/higher gates remain; no next assignment.
+
+## Resumed query/session increment —2026-10-26
+
+| ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
+|---|---|---|---|---|---|---|---|
+| R07-S11 | Strict-positive route proof and usable current-session successful-result retention compose and are independently reviewed | Slice11 QS-01–03, serialized source checkpoints | correctness-grade | Explicit Duncan resumed authority | open | [Slice11](slice11-query-session-closeout/slice-plan.md) | Route checkpoint first; root commit before session assignment; no Project02 execution |
+
+Current12rows9done/3open; prior accepted rows preserved. Resume only approved finite Arc07 code scope; real game/native/platform/higher gates remain.

@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.155
+version: 1.156
 project: project01-mvp
 status: active
 depends-on: []
@@ -1448,3 +1448,7 @@ Duncan explicitly defers historical goatfungus escape repair and legacy format20
 Version1.155 supersedes the earlier unapproved split. Duncan explicitly defers reachability visualization [B11](backlog.md#b11-reachability-visualization), with Duncan prioritization/future contributor and re-entry on a scheduled concrete view/use case, **no fixed project/deadline**. Notify backend error recovery moves to NEXT Project02 [B12](backlog.md#b12-notify-backend-reconnection-next-project), existing Arc02 observations after friendly save/account selection; bounded re-registration/resumption, shutdown and duplicate-event/ingestion correctness, distinct from ordinary replacement recovery or Windows CI timeout.
 
 **Required before Project01 closure:** a stronger strict-positive 2-opt regression on a deliberately improvable route must demonstrate strictly shorter length while preserving stops, endpoints and applicable constraints/round-trip behavior. Existing non-increase tests are weaker proof; no runtime optimizer defect is established, and this decision does not prescribe production changes or alter B04/B05 deferred limits. Delivery/independent review remains OPEN in existing closeout work; no implementation prompt/slice or source assignment is issued here. All existing IDs/statuses/source5f3b18e and other gates remain unchanged.
+
+## Approved autonomous closeout execution resumes —2026-10-26
+
+Version1.156: Duncan resumes same Autonomous/Expedited/model setup within Arc07 only. [Finite remaining scope](arc07-closeout-reconciliation/arc-plan.md#autonomous-closeout-resumed-finite-remaining-homes--2026-10-26): one query/session increment (route strict-proof then real session results, serialized root commits), then MCP extraction with bounded existing shared-test teardown repair. No new goal/Project02 work, watcher/visualization implementation, source commits/push/CI by CC/CDC or blanket parent acceptance. Existing26 original rows/statuses, B01–B12 and original joint/higher gates retain exact scope; missing Duncan input holds only its proof. Prior pause history is superseded for this approved execution, not rewritten.

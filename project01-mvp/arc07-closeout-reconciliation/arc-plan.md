@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.26. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.27. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -399,3 +399,9 @@ Version1.25: last-results means the actual most recent SUCCESSFUL result in the 
 ## Routing/watch scope decided —2026-10-26
 
 Version1.26: Duncan adopts [B11](../backlog.md#b11-reachability-visualization) visualization deferral without fixed project/deadline, and [B12](../backlog.md#b12-notify-backend-reconnection-next-project) notify backend recovery in NEXT Project02 (existing Arc02 after friendly selection, bounded re-registration/resume plus shutdown/duplicate correctness). The stronger strict-positive 2-opt regression is REQUIRED before Project01 closure: deliberately improvable route gets strictly shorter, preserving stops/endpoints/applicable constraints; no runtime defect or production repair is established/prescribed. Earlier unapproved proposal is superseded, while actual delivery/independent acceptance is still open. Existing last-results/MCP and other gates remain; no source/new slice/prompt/delegation/CI in this records-only update.
+
+## Autonomous closeout resumed; finite remaining homes —2026-10-26
+
+Version1.27 records Duncan’s “okay, let’s dive in! Same mode as before, same model config setup :-)”: resumes only approved Arc07 closeout, superseding prior PAUSED execution records without erasing them. CDC GPT6.1 Sol High / sole existing CC GPT6 Luna High, independent review and root-only source index/commits/network. No push/CI/merge/publication by contributors.
+
+Finite implementation: [Slice11 query/session closeout](slice11-query-session-closeout/slice-plan.md), strict-positive route test first reviewed/root-committed checkpoint, then actual successful current-session result retention/access/help/docs. Separate MCP crate extraction is the only other home; late-detail it after query/session work. Include the specific existing Windows shared-MCP-test teardown blocker there, bounded cancellation/read-loop/thread termination with unchanged quiet/new-event/EOF oracles; actual Windows CI remains root-owned proof. No abandoned threads, new arc/campaign or watcher repair. Source tasks serialize at root commits. B01–B12/Project02 deferrals stand; joint save/native input and higher assembly remain real gates, holding only affected claims. Current slice does not reopen exhausted07. No further goals or automatic Project02 work.
