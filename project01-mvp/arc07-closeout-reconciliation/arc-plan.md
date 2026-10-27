@@ -421,3 +421,7 @@ Version1.30: [Slice12 acceptance](slice12-mcp-crate-extraction/cdc-verification.
 ## Final hosted gates pass; held boundary —2026-10-26
 
 Version1.31: [exact-head CI receipt](slice08-composition-handoff/artifacts/handoff.md#final-exact-head-ci-receipt-2026-10-26) establishes b240485 ALL6PASS including Windows and declared1.91. Platform gate satisfied;13child rows remain11done/2open for their carried joint/performance/higher clauses. Autonomous work stops: no new source/tests/research/planning until Duncan joint save/native input, explicit performance sufficiency decision and higher acceptance. No main integration/publication/new arc/Project02 authority inferred.
+
+## Actual joint native Tab failure —2026-10-27
+
+Version1.32 supersedes the execution stop only for ONE bounded observed bug in existing open [Slice06 iteration01](slice06-interaction-distribution/cc-prompt-iteration01.md). Main editor omitted reedline menu/Tab bindings on every history path; actual user and sequential ownedPTY negative corroborate. Same CDC/sole existing CC models and root source-commit ownership, one-file correction plus actual native/user retest, no new slice/arc/budget or broader UI work. Current b240 CI remains valid for its baseline; corrected candidate needs root’s later CI. All joint/performance/higher gates and deferrals otherwise unchanged.

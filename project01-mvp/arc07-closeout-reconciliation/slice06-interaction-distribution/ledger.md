@@ -13,3 +13,5 @@ CDC disposition: ID-03 independently accepted; ID-01 wizard/config and ID-04 his
 07 follow-up: ID-05 regression/check carry accepted on independently green host1248/lint and qualified current docs; ID-01/02/04 remain open. See07 CDC review.
 
 Current2026-10-25: ID-04 present evidence accepted for now, remaining clean installation deferred B01; themes explicitly deferred B02. Native interaction proof to be done with Duncan when joint session/input supplied; affected interaction/parent acceptance remains open. This supersedes previous pending-choice statements without rewriting observations.
+
+2026-10-27 joint native update: ID-01 remains OPEN; Duncan confirms actual Tab no-op despite working Up/history and last. Root sequential ownedPTY negative corroborates. Iteration01 authorizes only common main editor menu/Tab binding across history-success/fallback branches; targeted actual edit-mode regression and real native/user retest required. Prior accepted wizard/assets/docs/install/theme dispositions and failed attempts remain; ID-05’s older accepted checks are historical, this correction’s focused checks pending. No slice/project closure or new budget.

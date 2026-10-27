@@ -134,3 +134,9 @@ not readiness proof. Web API open was unavailable and Python's local CA failed;
 native curl with normal certificate checks succeeded at the official endpoint.
 nms-copilot0.2.0 checksum66653a43f410054334220d0c9f43fc074af69ac5a2c8e87de6cab5c4cac4f28d;
 returned versions omit0.3.0. No TLS bypass/dependency install/source mutation.
+
+## 2026-10-27 native gate correction / assignment history
+
+Duncan’s actual b240 joint session finds sh/s/empty+Tab no-op while Up and last work; root independently reproduces sequential ownedPTY negative at /tmp/nms-tab-before-b240485.ansi. Source build_editor only installs a completer. Explicit authority resumes ONE main.rs editor/menu/Tab-binding correction, preserving history and all fallback branches, no new slice/polish/feature or automatic budget reset. Original native proof stays OPEN. Sole existing LunaHigh cc_arc07_mcp confirms context headroom; CDC SolHigh independently reviews; root source index/commit/CI ownership. Parent joint/performance/higher acceptance stays open.
+
+Assignment history: cc-prompt.md initial2026-10-25 accepted at its recorded partial scope, preserved; cc-prompt-iteration01.md issued2026-10-27, active, predecessor cc-prompt.md, concrete observed Tab failure ID-01/current checks. Historical numeric refinement count is not reliably enumerated, no new5-pass budget; preserve prior attempts and stop on an unexpected failed correction rather than expanding work.
