@@ -9,7 +9,7 @@ updated: 2026-10-26
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.153
+version: 1.154
 project: project01-mvp
 status: active
 depends-on: []
@@ -1436,3 +1436,9 @@ Duncan accepts the current Rust reference-table representation at its existing s
 ## Required common parser delivered —2026-10-26
 
 Version1.153: [Slice10 independent acceptance](arc07-closeout-reconciliation/slice10-save-parser-interface/cdc-verification.md) satisfies the expressly requested common SaveParser increment at root-committed clean5f3b18eadddd57d54a92c9ec456b0f1e98b0869c, no push/integration/release. Supported on-disk byte parsing returns existing checked ValidatedSave/SaveError and is used by production file entrypoint; no library/format/encoding policy added. Cache schema4/semantic6 need no bump because layout/interpretation/identity remain unchanged. All26 project rows/statuses and prior proof/metrics retained; no fresh coverage or platform claim. Current-table acceptance is new Operator approval, not rewritten history. Last-results meaning/MCP extraction and other held work do not automatically start; broader project/arc remain open.
+
+## Last-results semantics and legacy disposition —2026-10-26
+
+Version1.154: Duncan confirms retaining the actual most recent **SUCCESSFUL query result within the CURRENT REPL session**. Command history already works and is not this result; a failed query does not become the most recent successful result. Cross-restart result history remains future work. Semantics are resolved, but delivery/independent review is still OPEN before Project01 closure; the bounded interaction/API design remains to be source-grounded. No persistent backend, new command, source assignment or implementation prompt is authorized by this records-only update.
+
+Duncan explicitly defers historical goatfungus escape repair and legacy format2001 SpookyHash verification until an actual problematic input/use case needs them: [B10](backlog.md#b10-historical-goatfungus-escapes-and-legacy-spookyhash-verification). Duncan prioritization/future explicit contributor; no project/deadline invented. Current checked formats/SHA/metadata behavior and authentic NomNom’s separate deferral remain. The proposed routing/watch split—reachability visualization to backlog, a strict positive2opt regression now, watcher reconnection now—is **UNAPPROVED**, pending Duncan’s decision; his request for a reminder is not execution authority. Existing IDs/statuses, accepted source5f3b18e and all other held gates remain unchanged.

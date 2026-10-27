@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.24. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
+Version: 1.25. Created: 2026-10-25. Status: finite cleanup endpoint PAUSED for Duncan. Initial three and04/05/08 accepted at their stated scope;06/07 gates and arc/project acceptance remain open.
 
 ## Purpose and authority
 
@@ -391,3 +391,7 @@ One new Operator-requested usable increment [Slice10](slice10-save-parser-interf
 ## Common parser independently accepted —2026-10-26
 
 Version1.24: [Slice10](slice10-save-parser-interface/cdc-verification.md) completes only Duncan’s explicit trait request at root-committed clean5f3b18eadddd57d54a92c9ec456b0f1e98b0869c. Public SaveParser/NmsSaveParser and production file-wrapper dispatch preserve canonical checked output/error and legacy/JSON-only functions. Independent lint/parser4/validated17/CLI3/doctests38PASS, CC native workspace/build/strict save docs0 at recorded timing/output limits; no aggregate count invented. Cache schema4/semantic6 retain unchanged layout/interpretation/identity, no bump. Current11rows9done/2open; last-results meaning, MCP extraction and all original joint/higher/Windows6h/external gates remain. No push/CI/integration, further code work or next assignment.
+
+## Current semantic/legacy decisions —2026-10-26
+
+Version1.25: last-results means the actual most recent SUCCESSFUL result in the CURRENT REPL session; command history already exists, cross-restart result history stays future. Meaning resolved, delivery still OPEN; no persistence/backend/new command or implementation assignment. [B10](../backlog.md#b10-historical-goatfungus-escapes-and-legacy-spookyhash-verification) explicitly defers historical goatfungus escapes/legacy2001 SpookyHash until real problematic input/use case, Duncan prioritization/future contributor, no fixed project/deadline. NomNom/current supported parsing unchanged. Routing/watch split (visualization backlog, strict-positive2opt regression now, reconnect now) remains UNAPPROVED; reminder only. No source/push/CI/delegation/prompt, and no change to accepted5f3b18e or existing row statuses.
