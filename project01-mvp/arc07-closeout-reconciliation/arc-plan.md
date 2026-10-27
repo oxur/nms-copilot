@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.35. Created: 2026-10-25. Status: PAUSED for remaining decisions/input. Slice06 closed at adopted scope; Slice07/current hosted CI, nonzero/performance and higher arc/project acceptance remain open. Earlier phase authorizations/history are retained below.
+Version: 1.36. Created: 2026-10-25. Status: PAUSED for remaining decisions/input. Slice06 closed and exact-current-head hosted CI satisfied; Slice07 performance, nonzero and higher arc/project acceptance remain open. Earlier phase authorizations/history are retained below.
 
 ## Purpose and authority
 
@@ -431,3 +431,5 @@ Version1.33,2026-10-27: [Slice06 iteration01 review](slice06-interaction-distrib
 Version1.34,2026-10-27: [Tab final user/CI receipt](slice08-composition-handoff/artifacts/handoff.md#tab-correction-final-user-and-ci-receipt-2026-10-27) resolves this one observed bug at4db22a: Duncan basicTab and exact-head all6CI pass. Slice06 broader native/game/map/clean-exit and nonzero/performance/higher gates remain open; no new source assignment or autonomous advancement.
 
 Version1.35,2026-10-27: Slice06 closes4done/1deferred after actual map→status→exit/restored shell and stopped-listener confirmation, at source01b601f. B01/B02 dispositions/history preserved; no new slice/structural plan change. Current-head hosted gate reopens because d5620cec/01b601f are not pushed/hosted-tested after4db all6PASS.13child rows12done/1open; nonzero, startup sufficiency and higher acceptance stay OPEN. No further source/probes/push/CI or automatic advancement.
+
+Version1.36,2026-10-27: explicit Operator push/PR authority delivered ordinary fast-forward01b601f and draftPR14 against main; push40604316612+PR40604472240 exact-head all6PASS independently receipt-verified. P01-G07 DONE; only nonzero/startup sufficiency/higher acceptance remain, no new execution/merge/release. Earlier current-CI-open boundary preserved as history; no slice breakdown/scope change.
