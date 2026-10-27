@@ -57,6 +57,8 @@ Slice10 accepted2026-10-26: current11rows9done/2open (S06/S07); source5f3b18eadd
 
 | ID | Criterion | Verify | Significance | Origin | Status | Evidence | Notes |
 |---|---|---|---|---|---|---|---|
-| R07-S11 | Strict-positive route proof and usable current-session successful-result retention compose and are independently reviewed | Slice11 QS-01–03, serialized source checkpoints | correctness-grade | Explicit Duncan resumed authority | open | [Slice11](slice11-query-session-closeout/slice-plan.md) | Route checkpoint first; root commit before session assignment; no Project02 execution |
+| R07-S11 | Strict-positive route proof and usable current-session successful-result retention compose and are independently reviewed | Slice11 QS-01–03, serialized source checkpoints | correctness-grade | Explicit Duncan resumed authority | done | [Independent acceptance](slice11-query-session-closeout/cdc-verification.md), root source57e182a254045d6f769fad84b7805d5f3646ad33 | Route3e44e725 then session checkpoint;3of5 refinements; no Project02/platform/parent acceptance |
 
 Current12rows9done/3open; prior accepted rows preserved. Resume only approved finite Arc07 code scope; real game/native/platform/higher gates remain.
+
+Current2026-10-26:12rows10done/2open after independently accepted Slice11. Earlier counts are historical; parent/higher gates stay open.
