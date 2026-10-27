@@ -12,4 +12,11 @@ Shared slice budget max5 actual refinements,0 initially; checkpoints do not rese
 
 ## Assignment history
 
-- cc-prompt.md,2026-10-26, initial route checkpoint, active. No predecessor; result checkpoint not issued.
+- cc-prompt.md,2026-10-26, initial route checkpoint, independently accepted at source3e44e7251d9a54f7ac270157b02210372f2a0d56; prompt preserved.
+- cc-prompt-iteration01.md,2026-10-26, session result checkpoint, active; initial route assignment superseded only for current scope. Shared refinement count remains0of5.
+
+## Checkpoint1 acceptance / checkpoint2 readiness
+
+Root committed the reviewed one-test +61-line route change at3e44e7251d9a54f7ac270157b02210372f2a0d56. CDC independently reproduced lint and exactly1 strict-positive regression; CC graph200 tests passed. QS-01 accepted; whole slice remains open. No runtime optimizer change or refinement.
+
+Checkpoint2 stores one owned rendered successful Find/Show/Stats/Route response in SessionState and exposes it through actual `last` parser/dispatcher/completion/help. It is a historical response snapshot, explicitly not refreshed; successful empty results still count. Errors, context/control commands, recall, and live synchronization preserve it; new sessions start empty. Existing dispatcher owns the String already, so this adds one clone per successful query, no generalized history/backend/cache format. Source inspection found no SessionState struct-literal callers outside its implementation. Main already syncs selectively and dispatches ordinary actions, so no main-loop edit is required. Exact six-path recipe/oracles/gates are in iteration01. Current source commit prerequisite is met; no MCP assignment yet.

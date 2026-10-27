@@ -1,0 +1,3 @@
+# Slice11 independent verification
+
+2026-10-26 checkpoint1: reviewed exact crates/nms-graph/src/route.rs +61 test-only lines, unchanged production/existing tests. Literal five-point geometry independently establishes greedy400*(8+2√13), improved400*(9+√13), gain>1000ly. Both optimizer paths retain exact stop multiset, closed endpoints, galaxy9 and no waypoint flags; no-op fails. CC format/lint/focused/full-graph200PASS retained in closing-report.md. CDC independently ran offline make lint exit0 and exact new --lib regression:1PASS,176filtered, exit0 (tool receipts be435c/850f73). Root committed3e44e7251d9a54f7ac270157b02210372f2a0d56. QS-01 accepted; QS-02/QS-03 and slice remain open. No refinements or supporting artifacts.
