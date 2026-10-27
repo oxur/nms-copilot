@@ -392,6 +392,8 @@ fn dispatch_help_returns_text() {
     let output = nms_copilot::dispatch::dispatch(&action, &mut model, &mut session).unwrap();
     assert!(output.contains("Commands:"));
     assert!(output.contains("galaxy"));
+    assert!(output.contains("last"));
+    assert!(output.contains("snapshot"));
 }
 
 #[test]
@@ -465,4 +467,119 @@ fn dispatch_set_position_to_base() {
         .unwrap();
     let output = nms_copilot::dispatch::dispatch(&action, &mut model, &mut session).unwrap();
     assert!(output.contains("Test Base"));
+}
+
+#[test]
+fn test_last_recalls_only_successful_query_responses() {
+    const EMPTY: &str = "No successful query result in this session yet.";
+    const HEADER: &str = "Last successful query result (snapshot; not refreshed):\n";
+
+    let (mut model, mut session) = galaxy_fixture(false);
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        EMPTY
+    );
+
+    let mut new_session = SessionState::from_model(&model);
+    assert_eq!(
+        dispatch_line(&mut model, &mut new_session, "last").unwrap(),
+        EMPTY
+    );
+
+    let mut previous = None;
+    for command in [
+        "find --nearest 1",
+        "show base Camp-0",
+        "stats",
+        "route --target Twin",
+    ] {
+        let response = dispatch_line(&mut model, &mut session, command).unwrap();
+        assert!(!response.is_empty(), "{command}");
+        if let Some(previous) = &previous {
+            assert_ne!(
+                &response, previous,
+                "{command} should replace the prior result"
+            );
+        }
+        let expected = format!("{HEADER}{response}");
+        assert_eq!(
+            dispatch_line(&mut model, &mut session, "last").unwrap(),
+            expected
+        );
+        assert_eq!(
+            dispatch_line(&mut model, &mut session, "last").unwrap(),
+            expected
+        );
+        previous = Some(response);
+    }
+
+    let prior = previous.unwrap();
+    let empty_result = dispatch_line(
+        &mut model,
+        &mut session,
+        "find --discoverer NoSuchDiscoverer",
+    )
+    .unwrap();
+    assert_ne!(empty_result, prior);
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{empty_result}")
+    );
+
+    assert!(dispatch_line(&mut model, &mut session, "find --biome NotABiome").is_err());
+    assert!(dispatch_line(&mut model, &mut session, "not-a-command").is_err());
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{empty_result}")
+    );
+}
+
+#[test]
+fn test_last_is_a_snapshot_across_controls_and_live_model_sync() {
+    const HEADER: &str = "Last successful query result (snapshot; not refreshed):\n";
+
+    let (mut model, mut session) = galaxy_fixture(false);
+    let original = dispatch_line(&mut model, &mut session, "find --nearest 1").unwrap();
+    assert!(original.contains("Leaf-0"));
+
+    dispatch_line(&mut model, &mut session, "galaxy 9").unwrap();
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{original}")
+    );
+
+    let a0 = GalacticAddress::new(0, 0, 0, 1, 0, 0);
+    let a9 = GalacticAddress::new(0, 0, 0, 1, 0, 9);
+    let movement = SaveDelta {
+        player_moved: Some(PlayerMoved { from: a0, to: a9 }),
+        ..SaveDelta::empty()
+    };
+    nms_copilot::watch::apply_and_notify(&mut model, &mut session, &movement);
+    assert_eq!(model.active_galaxy, 9);
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{original}")
+    );
+
+    dispatch_line(&mut model, &mut session, "reset all").unwrap();
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{original}")
+    );
+
+    dispatch_line(&mut model, &mut session, "set position Camp-9").unwrap();
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{original}")
+    );
+    let refreshed = dispatch_line(&mut model, &mut session, "find --nearest 1").unwrap();
+    assert!(refreshed.contains("Leaf-9"));
+    assert!(!refreshed.contains("Leaf-0"));
+    assert_ne!(refreshed, original);
+
+    dispatch_line(&mut model, &mut session, "reset all").unwrap();
+    assert_eq!(
+        dispatch_line(&mut model, &mut session, "last").unwrap(),
+        format!("{HEADER}{refreshed}")
+    );
 }

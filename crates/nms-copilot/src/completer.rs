@@ -22,7 +22,7 @@
 //! does not read standard input, a terminal, files, or the model.
 //!
 //! Provides context-aware completions:
-//! - Command names (find, show, stats, convert, info, help, exit, quit)
+//! - Command names (find, show, stats, convert, info, last, help, exit, quit)
 //! - Subcommand names (show system, show base)
 //! - Flag names (--biome, --nearest, etc.)
 //! - Biome names from the Biome enum
@@ -93,7 +93,7 @@ impl CopilotCompleter {
     /// ]);
     /// assert_eq!(
     ///     c.complete("", 0).into_iter().map(|s| s.value).collect::<Vec<_>>(),
-    ///     vec!["convert", "exit", "find", "galaxy", "help", "info", "list", "map", "quit", "reset", "route", "set", "show", "stats", "status"],
+    ///     vec!["convert", "exit", "find", "galaxy", "help", "info", "last", "list", "map", "quit", "reset", "route", "set", "show", "stats", "status"],
     /// );
     /// assert_eq!(
     ///     c.complete("list ", 5).into_iter().map(|s| s.value).collect::<Vec<_>>(),
@@ -116,8 +116,8 @@ impl CopilotCompleter {
 }
 
 const COMMANDS: &[&str] = &[
-    "convert", "exit", "find", "galaxy", "help", "info", "list", "map", "quit", "reset", "route",
-    "set", "show", "stats", "status",
+    "convert", "exit", "find", "galaxy", "help", "info", "last", "list", "map", "quit", "reset",
+    "route", "set", "show", "stats", "status",
 ];
 
 const SHOW_SUBCOMMANDS: &[&str] = &["system", "base"];
@@ -519,6 +519,14 @@ mod tests {
         let results = c.complete("FI", 2);
         assert_eq!(results.len(), 1);
         assert_eq!(results[0].value, "find");
+    }
+
+    #[test]
+    fn test_complete_last_command() {
+        let mut c = test_completer();
+        let results = c.complete("la", 2);
+        assert_eq!(results.len(), 1);
+        assert_eq!(results[0].value, "last");
     }
 
     #[test]

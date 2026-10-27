@@ -204,6 +204,9 @@ pub enum Action {
     /// Show current session state.
     Status,
 
+    /// Show the most recent successful query result in this session.
+    Last,
+
     /// Display save file summary.
     Info,
 
@@ -543,6 +546,11 @@ mod tests {
     fn test_parse_status() {
         let action = parse_line("status").unwrap().unwrap();
         assert!(matches!(action, Action::Status));
+    }
+
+    #[test]
+    fn test_parse_last() {
+        assert!(matches!(parse_line("last").unwrap(), Some(Action::Last)));
     }
 
     #[test]

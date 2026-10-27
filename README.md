@@ -362,6 +362,7 @@ REPL-only commands:
 | `set warp-range <ly>` | Set default warp range for route planning |
 | `reset [position\|biome\|warp-range\|all]` | Reset session state |
 | `status` | Show current session state |
+| `last` | Show the last successful query response from this REPL session. It is a snapshot and is not refreshed. |
 | `map` | Interactive galaxy map (galaxy/region/local zoom) |
 | `help` | Show REPL help. |
 | `exit`, `quit` | End the REPL session. |
@@ -369,6 +370,12 @@ REPL-only commands:
 The REPL's `info` command reports loaded model counts and the physical current
 position. Use `status` for session anchors and settings; CLI `info` summarizes
 a selected save file.
+
+`last` recalls the rendered response from the most recent successful `find`,
+`show`, `stats`, or `route` command in the current REPL session. The response
+keeps its original formatting and is not refreshed after live model updates;
+query errors and other commands leave it unchanged. A new session starts with
+no saved query response.
 
 ---
 
