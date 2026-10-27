@@ -79,3 +79,13 @@ unchanged. Ready finite07 work proceeds independently. No09+ or new programme.
 ## Final07 carry disposition
 
 ID-05 regression/check subclaim is now accepted at2b7fc9e after independent host lint/full1248 and current qualified-doc review. ID-01/02/04, original native interaction/theme/current install/input/higher gates remain open. Prior failed attempts and exact limits above are unchanged.
+
+## Iteration01 Tab correction accepted at code/owned-native scope —2026-10-27
+
+Root source4db22a95f0c5d40c445c76106204f628b2550735, exact main.rs81+/6-, independently reviewed. Common editor installs actual ColumnarMenu/Emacs Tab→Menu-or-Next/quick completion before history; both failure branches return it, preserving warnings/history path/default navigation. Same API/menu name/factory used by real main; no parser/candidate/galaxy/cache/MCP behavior edits.
+
+CC format/lint0 after retained import-scope lint exit2; binary18/18, completer26/26, no-default binary check0/default build0. CDC independently reproduced exact actual-Emacs event test1PASS/17filtered (24c9ac); initial selector omitted tests:: and selected0/18filtered (39f2b6), corrected without source change. No full-workspace replay.
+
+Root existing ownedPTY corroborates actual factory/editor: baseline b240 sh→separateTab emits nothing; rebuilt correction sh→Tab fills show, s→Tab offers set/show/stats/status, Esc retains s without execution, emptyTab offers16commands incllast. Raw before /tmp/nms-tab-before-b240485.ansi; after /tmp/nms-tab-after-editor-wiring.ansi and checks.json at /tmp/nms-tab-after-editor-wiring.json. No Enter sent in this4-check run, so no new native cycle/Enter/history proof inferred; actual user Tab restart/retest and broader interaction remain OPEN. Existing history-success/fallback applicability is source-reviewed, not a forced-error native receipt.
+
+Iteration01 code/owned-native subclaim ACCEPTED; Slice06/ID-01 remain OPEN. One current source import correction retained, historical attempts/budget not reset or reconstructed. Root pushed branch normally; [exact-head CI40587654350](https://github.com/oxur/nms-copilot/actions/runs/40587654350) IN PROGRESS, b240 all6PASS remains predecessor evidence. No further code/research; root owns CI and Duncan joint/performance/nonzero/higher gates remain.
