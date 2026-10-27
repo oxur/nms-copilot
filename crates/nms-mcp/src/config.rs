@@ -4,12 +4,12 @@
 //! `~/.nms-copilot/config.toml`; unrelated sections are ignored. It does not
 //! configure save paths, watchers, or the HTTP bind address, and it does not
 //! install a logger or mutate environment variables. See the
-//! [configuration example](crate::mcp::config) for defaults and option mapping.
+//! [configuration example](crate::config) for defaults and option mapping.
 //!
 //! # Examples
 //!
 //! ```
-//! use nms_copilot::mcp::config::LoggingConfig;
+//! use nms_mcp::config::LoggingConfig;
 //! use twyg::{LogLevel, Output, TSFormat};
 //!
 //! let defaults = LoggingConfig::default();
@@ -63,11 +63,11 @@ use serde::Deserialize;
 /// File loading is I/O-bearing, so this is compile-only:
 ///
 /// ```no_run
-/// let config = nms_copilot::mcp::config::McpConfig::load();
+/// let config = nms_mcp::config::McpConfig::load();
 /// let _options = config.logging.to_twyg_opts();
 /// ```
 ///
-/// See the [module examples](crate::mcp::config) for logging options.
+/// See the [module examples](crate::config) for logging options.
 #[derive(Debug, Deserialize, Default)]
 #[serde(default)]
 pub struct McpConfig {
@@ -83,7 +83,7 @@ pub struct McpConfig {
 /// every other value selects Info. Only exact `stdout` selects stdout; other
 /// destinations select stderr. [`Self::to_twyg_opts`] returns options without
 /// initializing a logger and falls back to [`twyg::Opts::default`] if its
-/// builder fails. See the [module examples](crate::mcp::config).
+/// builder fails. See the [module examples](crate::config).
 #[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct LoggingConfig {
@@ -115,7 +115,7 @@ impl LoggingConfig {
     /// those levels; all other strings map to Info. Only exact `stdout` selects
     /// stdout. Timestamp format is Simple with a `hi_black` timestamp color;
     /// other colors use twyg defaults. Builder failure falls back to default
-    /// options. See the [module example](crate::mcp::config).
+    /// options. See the [module example](crate::config).
     ///
     pub fn to_twyg_opts(&self) -> twyg::Opts {
         let output = match self.output.as_str() {
@@ -153,7 +153,7 @@ impl McpConfig {
     /// return the entire default config. There is no partial merge or write. If the
     /// home directory cannot be determined, this uses an empty path and follows
     /// the same default-return route. See the
-    /// [loading example](crate::mcp::config::McpConfig).
+    /// [loading example](crate::config::McpConfig).
     ///
     pub fn load() -> Self {
         let path = dirs::home_dir()
@@ -167,7 +167,7 @@ impl McpConfig {
     /// Missing paths, read failures, invalid UTF-8, TOML errors, and typed
     /// deserialization errors silently return the entire default config.
     /// Unknown sections are ignored; no partial merge or write occurs. See the
-    /// [loading example](crate::mcp::config::McpConfig).
+    /// [loading example](crate::config::McpConfig).
     ///
     pub fn load_from(path: &Path) -> Self {
         if !path.exists() {

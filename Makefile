@@ -295,7 +295,7 @@ push:
 	done
 
 # Crates in dependency order (leaf crates first, dependent crates later)
-PUBLISH_ORDER := nms-core nms-save nms-compat nms-graph nms-query nms-watch nms-cache nms-cli nms-copilot nms
+PUBLISH_ORDER := nms-core nms-save nms-compat nms-graph nms-query nms-watch nms-cache nms-cli nms-mcp nms-copilot nms
 # crates.io rate limit delay (seconds)
 PUBLISH_DELAY := 372
 .PHONY: publish

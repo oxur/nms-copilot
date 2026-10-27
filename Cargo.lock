@@ -2150,11 +2150,11 @@ dependencies = [
  "crossterm 0.29.0",
  "dialoguer",
  "dirs 6.0.0",
- "fabryk-mcp",
  "log",
  "nms-cache",
  "nms-core",
  "nms-graph",
+ "nms-mcp",
  "nms-query",
  "nms-save",
  "nms-watch",
@@ -2198,6 +2198,26 @@ dependencies = [
  "serde_json",
  "tempfile",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "nms-mcp"
+version = "0.3.0"
+dependencies = [
+ "dirs 6.0.0",
+ "fabryk-mcp",
+ "log",
+ "nms-core",
+ "nms-graph",
+ "nms-query",
+ "nms-save",
+ "nms-watch",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "toml 1.0.6+spec-1.1.0",
+ "twyg",
 ]
 
 [[package]]

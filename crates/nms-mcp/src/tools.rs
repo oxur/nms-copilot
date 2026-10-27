@@ -55,7 +55,7 @@
 //! signal-booster parser. Conversion output uses galaxy index 0; it does not
 //! validate that the address belongs to a save.
 //!
-//! See the [tool examples](crate::mcp::tools) for the full order, the exact
+//! See the [tool examples](crate::tools) for the full order, the exact
 //! missing-position error, and a literal conversion result.
 
 //! # Examples
@@ -64,7 +64,7 @@
 //! use std::sync::Arc;
 //! use fabryk_mcp::ToolRegistry;
 //! use fabryk_mcp::model::{CallToolResult, ErrorData};
-//! use nms_copilot::mcp::tools::NmsTools;
+//! use nms_mcp::tools::NmsTools;
 //! use nms_graph::GalaxyModel;
 //! use serde_json::{json, Value};
 //! use tokio::runtime::Builder;
@@ -138,7 +138,7 @@ use nms_query::stats::{StatsQuery, execute_stats};
 /// `convert_coordinates`, `galaxy_stats`. Health and discoverability are
 /// registered separately by the server.
 ///
-/// See the complete [module examples](crate::mcp::tools), including the
+/// See the complete [module examples](crate::tools), including the
 /// ordered tool list, missing-position error, and literal converter result.
 ///
 /// # Errors

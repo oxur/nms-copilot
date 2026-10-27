@@ -4,7 +4,7 @@
 //! Reads acquire the shared model lock when the returned future is polled;
 //! constructing or listing this registry does not start a server, watcher, or
 //! notification producer. Registering it alone does not send notifications.
-//! See the [resource examples](crate::mcp::resources) for dispatch, typed
+//! See the [resource examples](crate::resources) for dispatch, typed
 //! errors, wrappers, and read-time model access.
 //!
 //! # Examples
@@ -20,7 +20,7 @@
 //!     address::GalacticAddress, biome::Biome, player::PlayerState,
 //!     system::{Planet, System},
 //! };
-//! use nms_copilot::mcp::resources::{
+//! use nms_mcp::resources::{
 //!     NmsResources, BASES_URI, GALAXY_STATS_URI, PLAYER_LOCATION_URI,
 //! };
 //! use nms_graph::GalaxyModel;
@@ -132,7 +132,7 @@ pub const BASES_URI: &str = "nms://bases";
 /// pretty-printed JSON text value with the requested URI, JSON MIME type, and
 /// no annotations metadata.
 ///
-/// See the [module examples](crate::mcp::resources) for the ordered resource
+/// See the [module examples](crate::resources) for the ordered resource
 /// population, typed missing-position result, and current-model read behavior.
 ///
 /// # Errors

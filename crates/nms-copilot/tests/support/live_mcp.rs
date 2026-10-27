@@ -1328,6 +1328,7 @@ enum SseRead {
 
 pub struct SseStream {
     close_socket: TcpStream,
+    stop: Arc<AtomicBool>,
     events: mpsc::Receiver<SseRead>,
     reader: Option<JoinHandle<()>>,
     buffer: Vec<u8>,
@@ -1352,17 +1353,22 @@ impl SseStream {
             headers.push(byte[0]);
         }
         stream
-            .set_read_timeout(None)
-            .expect("clear SSE body timeout after bounded handshake");
+            .set_read_timeout(Some(Duration::from_millis(100)))
+            .expect("set finite SSE body poll interval");
         let head = String::from_utf8_lossy(&headers);
         assert!(head.contains("200"), "SSE response headers: {head}");
         let chunked = head
             .to_ascii_lowercase()
             .contains("transfer-encoding: chunked");
         let close_socket = stream.try_clone().expect("clone SSE close socket");
+        let stop = Arc::new(AtomicBool::new(false));
+        let reader_stop = Arc::clone(&stop);
         let (sender, events) = mpsc::channel();
         let reader = thread::spawn(move || {
-            let mut stream = BufReader::new(stream);
+            let mut stream = BufReader::new(CancellableTcpReader {
+                stream,
+                stop: Arc::clone(&reader_stop),
+            });
             loop {
                 let next = if chunked {
                     read_sse_chunk(&mut stream)
@@ -1374,6 +1380,9 @@ impl SseStream {
                         Err(error) => Err(error),
                     }
                 };
+                if reader_stop.load(Ordering::Acquire) {
+                    return;
+                }
                 match next {
                     Ok(Some(bytes)) => {
                         if sender.send(SseRead::Data(bytes)).is_err() {
@@ -1404,6 +1413,7 @@ impl SseStream {
         });
         Self {
             close_socket,
+            stop,
             events,
             reader: Some(reader),
             buffer: Vec::new(),
@@ -1589,6 +1599,7 @@ impl SseStream {
     }
 
     pub fn close_and_join(&mut self) -> Result<(), String> {
+        self.stop.store(true, Ordering::Release);
         let shutdown = self.close_socket.shutdown(std::net::Shutdown::Both);
         let join = self
             .reader
@@ -1614,6 +1625,37 @@ impl Drop for SseStream {
     }
 }
 
+struct CancellableTcpReader {
+    stream: TcpStream,
+    stop: Arc<AtomicBool>,
+}
+
+impl Read for CancellableTcpReader {
+    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+        loop {
+            if self.stop.load(Ordering::Acquire) {
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::ConnectionAborted,
+                    "SSE reader stopped",
+                ));
+            }
+            match self.stream.read(buffer) {
+                Err(error)
+                    if matches!(
+                        error.kind(),
+                        std::io::ErrorKind::WouldBlock
+                            | std::io::ErrorKind::TimedOut
+                            | std::io::ErrorKind::Interrupted
+                    ) =>
+                {
+                    continue;
+                }
+                result => return result,
+            }
+        }
+    }
+}
+
 enum CursorServerCommand {
     Write(Vec<u8>, mpsc::SyncSender<Result<(), String>>),
     Close,
@@ -1631,6 +1673,15 @@ struct PairedSseServer {
 
 impl PairedSseServer {
     fn start(initial: Vec<u8>) -> Result<Self, String> {
+        Self::start_with_chunking(initial, false)
+    }
+
+    #[cfg(test)]
+    fn start_chunked(initial: Vec<u8>) -> Result<Self, String> {
+        Self::start_with_chunking(initial, true)
+    }
+
+    fn start_with_chunking(initial: Vec<u8>, chunked: bool) -> Result<Self, String> {
         let listener = std::net::TcpListener::bind(("127.0.0.1", 0))
             .map_err(|error| format!("bind paired SSE server: {error}"))?;
         listener
@@ -1689,11 +1740,10 @@ impl PairedSseServer {
                     if worker_stop.load(Ordering::Acquire) {
                         return Ok(());
                     }
-                    line.clear();
                     match request.read_line(&mut line) {
                         Ok(0) => return Err("paired SSE client closed during request".into()),
                         Ok(_) if line == "\r\n" => break,
-                        Ok(_) => {}
+                        Ok(_) => line.clear(),
                         Err(error)
                             if matches!(
                                 error.kind(),
@@ -1710,8 +1760,13 @@ impl PairedSseServer {
                         Err(error) => return Err(format!("read paired SSE request: {error}")),
                     }
                 }
+                let response_headers = if chunked {
+                    b"HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\nTransfer-Encoding: chunked\r\n\r\n".as_slice()
+                } else {
+                    b"HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\n\r\n".as_slice()
+                };
                 stream
-                    .write_all(b"HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\n\r\n")
+                    .write_all(response_headers)
                     .map_err(|error| format!("write paired SSE headers: {error}"))?;
                 stream
                     .write_all(&initial)
@@ -1936,7 +1991,7 @@ pub fn check_paired_sse_cursor_contract() -> Result<(), String> {
     Ok(())
 }
 
-fn read_sse_chunk(stream: &mut BufReader<TcpStream>) -> std::io::Result<Option<Vec<u8>>> {
+fn read_sse_chunk<R: BufRead + Read>(stream: &mut R) -> std::io::Result<Option<Vec<u8>>> {
     let mut line = Vec::new();
     stream.read_until(b'\n', &mut line)?;
     if line.is_empty() {
@@ -1999,10 +2054,81 @@ fn next_sse_frame(buffer: &[u8], cursor: usize) -> Result<Option<(usize, Option<
 #[cfg(test)]
 mod sse_cursor_tests {
     use super::{
-        UnknownLifecycleStage, assert_model_matches, expected_unknown_lifecycle_model,
-        next_sse_frame,
+        PairedSseServer, SseRead, SseStream, UnknownLifecycleStage, assert_model_matches,
+        cursor_check_update, expected_unknown_lifecycle_model, next_sse_frame,
     };
     use nms_core::biome::Biome;
+
+    #[test]
+    fn test_chunked_sse_split_across_reader_polls_preserves_frame_and_joins() {
+        use std::time::{Duration, Instant};
+
+        fn assert_no_completed_message(stream: &SseStream) {
+            match stream.events.recv_timeout(Duration::from_millis(30)) {
+                Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {}
+                Ok(SseRead::Data(bytes)) => panic!("partial chunk emitted data: {bytes:?}"),
+                Ok(SseRead::PeerClosed(reason)) => panic!("partial chunk closed stream: {reason}"),
+                Ok(SseRead::Failed(error)) => panic!("partial chunk failed reader: {error}"),
+                Err(error) => panic!("partial chunk reader disconnected: {error}"),
+            }
+        }
+
+        let uri = "nms://player/location";
+        let frame = cursor_check_update(uri);
+        let size = format!("{:x}", frame.len());
+        let server = PairedSseServer::start_chunked(Vec::new()).expect("start chunked fixture");
+        let mut stream = SseStream::connect(server.address, "split-frame-self-check");
+        server.wait_ready().expect("chunked fixture ready");
+
+        server
+            .write(size.as_bytes().to_vec())
+            .expect("write partial size line");
+        std::thread::sleep(Duration::from_millis(150));
+        assert_no_completed_message(&stream);
+        server.write(b"\r\n".to_vec()).expect("finish size line");
+        std::thread::sleep(Duration::from_millis(150));
+        assert_no_completed_message(&stream);
+        let split = frame.len() / 2;
+        server
+            .write(frame[..split].to_vec())
+            .expect("write partial chunk body");
+        std::thread::sleep(Duration::from_millis(150));
+        assert_no_completed_message(&stream);
+        server
+            .write(frame[split..].to_vec())
+            .expect("finish chunk body");
+        std::thread::sleep(Duration::from_millis(150));
+        assert_no_completed_message(&stream);
+        server
+            .write(b"\r".to_vec())
+            .expect("write partial chunk terminator");
+        std::thread::sleep(Duration::from_millis(150));
+        assert_no_completed_message(&stream);
+        server
+            .write(b"\n".to_vec())
+            .expect("finish chunk terminator");
+
+        let end = stream
+            .wait_for_resource_updated_since(0, uri, Duration::from_secs(2))
+            .expect("complete split event is read exactly once");
+        assert_eq!(end, frame.len(), "cursor covers only the decoded SSE frame");
+        stream
+            .wait_quiet_since(end, Duration::from_millis(50))
+            .expect("no duplicate event follows the completed frame");
+
+        let started = Instant::now();
+        stream
+            .close_and_join()
+            .expect("reader joins while peer remains open");
+        assert!(
+            started.elapsed() < Duration::from_secs(5),
+            "quiet reader took too long to join: {:?}",
+            started.elapsed()
+        );
+        server
+            .close()
+            .expect("close fixture after client reader joined");
+    }
 
     #[test]
     fn test_model_checker_biome_index_ignores_order_but_preserves_multiset() {

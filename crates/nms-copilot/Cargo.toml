@@ -41,14 +41,14 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
 toml = { workspace = true }
-fabryk-mcp = { workspace = true }
+nms-mcp = { workspace = true, default-features = false }
 tokio = { workspace = true }
 log = { workspace = true }
 twyg = { workspace = true }
 
 [features]
 default = ["http"]
-http = ["fabryk-mcp/http"]
+http = ["nms-mcp/http"]
 
 [dev-dependencies]
 assert_cmd = { workspace = true }

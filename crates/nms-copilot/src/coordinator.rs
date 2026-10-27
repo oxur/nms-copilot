@@ -53,30 +53,7 @@ use nms_graph::GalaxyModel;
 use nms_watch::{WatchConfig, WatchObservationHandle, start_watching_observations};
 use tokio::sync::RwLock;
 
-/// One parsed update after the coordinator applied it to the shared model.
-///
-/// The event is published after the model update and the optional best-effort
-/// cache-write attempt. It is not a cache-success receipt, a complete model
-/// snapshot, or a record of the explicit discovery-name map. Fields are public
-/// and this value can also be constructed independently of a coordinator.
-#[derive(Debug, Clone)]
-pub struct AppliedSaveUpdate {
-    /// Complete player state, additive delta, and source version from one parse.
-    ///
-    /// The value pairs the supported player snapshot with the additive atlas
-    /// delta observed by that same checked parse.
-    pub update: SaveUpdate,
-    /// Whether applying the observation changed a name on an existing entity.
-    ///
-    /// This can be `true` when `update.delta` is empty. A removed name-map
-    /// entry alone does not clear a model name.
-    pub names_changed: bool,
-    /// Pre-apply movement and discovery notes in formatter order.
-    ///
-    /// The receiver preserves these strings literally; this field does not
-    /// contain cache status or validate how the strings were produced.
-    pub notifications: Vec<String>,
-}
+pub use nms_mcp::AppliedSaveUpdate;
 
 /// Failure to start a live-save coordinator.
 ///
