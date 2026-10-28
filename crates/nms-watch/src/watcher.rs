@@ -66,6 +66,22 @@ use crate::snapshot::SaveSnapshot;
 /// After this many consecutive parse failures, log a warning.
 const MAX_CONSECUTIVE_FAILURES: usize = 5;
 
+#[derive(Default)]
+struct ParseFailureStreak {
+    count: usize,
+}
+
+impl ParseFailureStreak {
+    fn record_failure(&mut self) -> bool {
+        self.count = self.count.saturating_add(1);
+        self.count == MAX_CONSECUTIVE_FAILURES
+    }
+
+    fn record_success(&mut self) {
+        self.count = 0;
+    }
+}
+
 /// Milliseconds to wait between file size checks for stability.
 const FILE_STABILITY_CHECK_MS: u64 = 100;
 
@@ -498,7 +514,7 @@ fn start_watching_inner(
         .name("nms-save-watch".into())
         .spawn(move || {
             let mut source = initial_source;
-            let mut consecutive_failures: usize = 0;
+            let mut failure_streak = ParseFailureStreak::default();
 
             while !shutdown_worker.load(Ordering::Acquire) {
                 let events = match notify_rx.recv_timeout(Duration::from_millis(100)) {
@@ -528,7 +544,7 @@ fn start_watching_inner(
                 // Re-parse save file
                 match SourceSnapshot::from_file(&save_path_bg) {
                     Ok(new_source) => {
-                        consecutive_failures = 0;
+                        failure_streak.record_success();
                         let delta = compute_delta(&source.snapshot, &new_source.snapshot);
                         let changed = !delta.is_empty()
                             || source.player_state != new_source.player_state
@@ -573,8 +589,7 @@ fn start_watching_inner(
                         source = new_source;
                     }
                     Err(e) => {
-                        consecutive_failures += 1;
-                        if consecutive_failures == MAX_CONSECUTIVE_FAILURES {
+                        if failure_streak.record_failure() {
                             eprintln!(
                                 "Warning: {MAX_CONSECUTIVE_FAILURES} consecutive parse failures. \
                              Save file may be corrupt or format changed: {e}"
@@ -1764,8 +1779,51 @@ mod tests {
     }
 
     #[test]
-    fn test_max_consecutive_failures_constant() {
-        const { assert!(MAX_CONSECUTIVE_FAILURES > 0) };
+    fn test_parse_failure_streak_warns_once_at_five_and_suppresses_until_success() {
+        assert_eq!(MAX_CONSECUTIVE_FAILURES, 5);
+
+        let mut streak = ParseFailureStreak::default();
+        for failure in 1..=8 {
+            assert_eq!(
+                streak.record_failure(),
+                failure == 5,
+                "unexpected warning decision at failure {failure}"
+            );
+        }
+    }
+
+    #[test]
+    fn test_parse_failure_streak_success_resets_before_and_after_warning() {
+        let mut streak = ParseFailureStreak::default();
+        for _ in 0..3 {
+            assert!(!streak.record_failure());
+        }
+
+        streak.record_success();
+        for _ in 0..4 {
+            assert!(!streak.record_failure());
+        }
+        assert!(streak.record_failure());
+
+        streak.record_success();
+        for _ in 0..4 {
+            assert!(!streak.record_failure());
+        }
+        assert!(streak.record_failure());
+    }
+
+    #[test]
+    fn test_parse_failure_streak_zero_reset_and_instances_are_independent() {
+        let mut first = ParseFailureStreak::default();
+        let mut second = ParseFailureStreak::default();
+        first.record_success();
+
+        for _ in 0..4 {
+            assert!(!first.record_failure());
+            assert!(!second.record_failure());
+        }
+        assert!(first.record_failure());
+        assert!(second.record_failure());
     }
 
     #[test]
