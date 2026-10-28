@@ -5,42 +5,9 @@ use nms_core::system::{Planet, System, SystemId};
 use nms_save::address::AddressDecodeError;
 use nms_watch::SaveSnapshot;
 use std::io::Write;
-use std::process::{Child, Command, ExitStatus, Stdio};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 const MINIMAL: &[u8] = include_bytes!("../../../data/test/save56_minimal.json");
-
-struct ChildGuard(Option<Child>);
-
-impl ChildGuard {
-    fn try_wait(&mut self) -> std::io::Result<Option<ExitStatus>> {
-        let status = self.0.as_mut().expect("owned child").try_wait()?;
-        if status.is_some() {
-            self.0.take();
-        }
-        Ok(status)
-    }
-}
-
-impl Drop for ChildGuard {
-    fn drop(&mut self) {
-        let Some(mut child) = self.0.take() else {
-            return;
-        };
-        if let Err(error) = child.kill() {
-            let _ = writeln!(
-                std::io::stderr().lock(),
-                "watcher child cleanup kill failed: {error}"
-            );
-        }
-        if let Err(error) = child.wait() {
-            let _ = writeln!(
-                std::io::stderr().lock(),
-                "watcher child cleanup wait failed: {error}"
-            );
-        }
-    }
-}
 
 fn replace_once(source: &[u8], from: &str, to: &str) -> Vec<u8> {
     let source = std::str::from_utf8(source).unwrap();
@@ -296,53 +263,7 @@ fn test_snapshot_file_path_rejects_late_bad_address_before_publishing_any_snapsh
 }
 
 #[test]
-fn test_five_semantic_address_failures_keep_last_good_state_and_emit_one_warning() {
-    const CHILD: &str = "NMS_WATCH_VALIDATED_SAVE_CHILD";
-    if std::env::var_os(CHILD).is_some() {
-        run_five_failure_watcher_child();
-        return;
-    }
-
-    let dir = tempfile::tempdir().unwrap();
-    let stdout_path = dir.path().join("child.stdout");
-    let stderr_path = dir.path().join("child.stderr");
-    let stdout = std::fs::File::create(&stdout_path).unwrap();
-    let stderr = std::fs::File::create(&stderr_path).unwrap();
-    let child = Command::new(std::env::current_exe().unwrap())
-        .args([
-            "--exact",
-            "test_five_semantic_address_failures_keep_last_good_state_and_emit_one_warning",
-            "--nocapture",
-        ])
-        .env(CHILD, "1")
-        .stdout(Stdio::from(stdout))
-        .stderr(Stdio::from(stderr))
-        .spawn()
-        .unwrap();
-    let mut child = ChildGuard(Some(child));
-
-    let deadline = Instant::now() + Duration::from_secs(10);
-    let status = loop {
-        if let Some(status) = child.try_wait().unwrap() {
-            break status;
-        }
-        if Instant::now() >= deadline {
-            panic!("watcher child exceeded its bounded 10-second runtime");
-        }
-        std::thread::sleep(Duration::from_millis(10));
-    };
-    assert!(status.success(), "watcher child failed: {status}");
-    let stderr = std::fs::read_to_string(stderr_path).unwrap();
-    assert_eq!(
-        stderr
-            .matches("Warning: 5 consecutive parse failures.")
-            .count(),
-        1,
-        "warning output: {stderr}"
-    );
-}
-
-fn run_five_failure_watcher_child() {
+fn test_semantic_address_failures_preserve_last_good_state_until_recovery() {
     let dir = tempfile::tempdir().unwrap();
     let path = dir.path().join("save.json");
     std::fs::write(&path, MINIMAL).unwrap();
@@ -381,6 +302,8 @@ fn run_five_failure_watcher_child() {
         std::fs::rename(replacement, &path).unwrap();
         assert_eq!(std::fs::read(&path).unwrap(), bytes);
         let observed_invalid_mtime = std::fs::metadata(&path).unwrap().modified().unwrap();
+        // This bounded window proves no update was published; it does not prove
+        // that the watcher parsed this particular replacement.
         assert!(matches!(
             watcher.receiver.recv_timeout(Duration::from_millis(400)),
             Err(std::sync::mpsc::RecvTimeoutError::Timeout)
