@@ -85,7 +85,8 @@ their raw command output and provenance are retained with them.
 - `crates/nms-watch` observes save-file changes and publishes updates.
 - `crates/nms-cache` stores the serialized galaxy model.
 - `crates/nms-cli` implements the one-shot `nms` command.
-- `crates/nms-copilot` implements the interactive REPL and MCP server.
+- `crates/nms-mcp` implements the reusable MCP server, tools, and resources.
+- `crates/nms-copilot` implements the interactive REPL and composes the MCP server.
 - `crates/nms` is the workspace umbrella metadata/documentation crate; it does
   not re-export the other crates or provide an executable.
 
