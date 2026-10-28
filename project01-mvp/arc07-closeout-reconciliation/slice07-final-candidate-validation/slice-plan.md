@@ -1,6 +1,6 @@
 # Slice07 — Final candidate validation
 
-Status: independently reviewed, partial; code2b7fc9eba87529181ba609e52ac6a04a8ba6b1b0.
+Status: CLOSED at adopted scope2026-10-27; current source01b601f49253987b1b9c596ad0fb1e01cb757dda. All6FV criteria dispositioned; old partial cutoffs and source proof remain historical below.
 FV-01/02/03 accepted with qualifications, FV-06 scoped measurements accepted;
 Current2026-10-25: FV-04 done by explicit current global/per-file coverage acceptance; FV-05 remains open for actual CI evidence. Root metadata-only current successor ae0ef360 has identical tested source tree; historical proof pin below retained. See ledger.md and cdc-verification.md. Issued baseline follows. Baseline6b47cd3d758e6b44e28041ae52eceba0439c35db clean
 on dedicated codex/workspace-coverage-contract. Sole serial CC LunaHigh, CDC

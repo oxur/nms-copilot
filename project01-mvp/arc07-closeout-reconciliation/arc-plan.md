@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.36. Created: 2026-10-25. Status: PAUSED for remaining decisions/input. Slice06 closed and exact-current-head hosted CI satisfied; Slice07 performance, nonzero and higher arc/project acceptance remain open. Earlier phase authorizations/history are retained below.
+Version: 1.37. Created: 2026-10-25. Status: ASSEMBLED / closure proposed;13child rows accepted. Genuine Hilbert and limited startup sufficiency accepted; higher independent review remains pending; Operator acceptance is attested conditional on it passing. Earlier phase authorizations/history are retained below.
 
 ## Purpose and authority
 
@@ -433,3 +433,11 @@ Version1.34,2026-10-27: [Tab final user/CI receipt](slice08-composition-handoff/
 Version1.35,2026-10-27: Slice06 closes4done/1deferred after actual map→status→exit/restored shell and stopped-listener confirmation, at source01b601f. B01/B02 dispositions/history preserved; no new slice/structural plan change. Current-head hosted gate reopens because d5620cec/01b601f are not pushed/hosted-tested after4db all6PASS.13child rows12done/1open; nonzero, startup sufficiency and higher acceptance stay OPEN. No further source/probes/push/CI or automatic advancement.
 
 Version1.36,2026-10-27: explicit Operator push/PR authority delivered ordinary fast-forward01b601f and draftPR14 against main; push40604316612+PR40604472240 exact-head all6PASS independently receipt-verified. P01-G07 DONE; only nonzero/startup sufficiency/higher acceptance remain, no new execution/merge/release. Earlier current-CI-open boundary preserved as history; no slice breakdown/scope change.
+
+Version1.37,2026-10-27: existing genuine-nonzero gate receives actual Hilbert1 expected-base witness at unchanged01b; CDC inspects receipt and Duncan confirms destination. Startup sufficiency is also explicitly accepted at existing bounds; higher independent+Operator acceptance remain, original26 compound rows are not blanket closed. No new slice/source/probes/context/push/CI/integration or Project02 execution.
+
+Final2026-10-27 assembler cutoff: accepted limited startup evidence closes S07; all13child rows accounted/done. Canonical closing-report.md/cdc-retrospective.md assemble a reviewable recommendation, not independent higher acceptance. Duncan now expressly supersedes the initial “No additional reviewer context” limit ONLY for one fresh independent SolHigh final reviewer under the authority below. Root is transport/external owner, not CRC. No new source/audit/arc/project/merge/release authority.
+
+### One final independent reviewer authorized (2026-10-27)
+
+After root disclosed the required fresh independent gate and current context limit, Duncan says “awesome, this all looks good to me — I'm ready to call project01 done! Let's close it out :-D”. This authorizes ONE fresh independent closure-verifier **GPT6.1 Sol High via Codex/OpenAI**, same human-selected CDC settings, fork none. It supersedes the initial no-additional-reviewer-context rule only for a bounded read-only assembled-evidence review. Current CDC is assembler; sole LunaHigh CC implementation is complete; root is transport/source-external owner, not CRC. Root launches only after this packet is committed/frozen. No source edits/audit programme/tests/new project/merge/release or contributor budget reset. Operator acceptance of01b/current scope/deferrals is attested **conditioned on required independent review passing**; project/arc closure remain proposed until actual verdict.

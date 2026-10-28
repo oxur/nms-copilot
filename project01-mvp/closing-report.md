@@ -1,0 +1,58 @@
+# Project01 closing recommendation
+
+2026-10-27. CDC /root/cdc_arc07 (GPT6.1 Sol High), **assembler recommendation only**. Current source **01b601f49253987b1b9c596ad0fb1e01cb757dda**, branch codex/workspace-coverage-contract, PR14 against main, open/observed ready for review and **unmerged**. Implementation/child review is complete at the accepted scopes; higher independent acceptance is not yet performed. Root is external-action/status owner, not CRC. No new source or test run accompanies this report.
+
+Recommend accepting **Project01 as explicitly amended**, after the one authorized fresh independent composition review passes. Duncan’s “I'm ready to call project01 done! Let's close it out” is recorded as Operator acceptance of the current candidate/scope/deferrals conditioned on that required review; it is not a gate waiver. No merge, publication, release, Project02 execution or new arc is authorized by this recommendation.
+
+## Capability and evidence
+
+The candidate reads supported raw/plain save representations through the checked common parser, models galaxy-qualified systems/planets/bases/provenance, supplies shared CLI/REPL/MCP queries and routes, coordinates supported live updates/cache writes, and provides usable current-session recall and terminal interaction. Actual play corroborates normal native use, same-running Euclid movement and independently expected Hilbert1 base identity through CLI/REPL/HTTP fields. Every scoped child change received the recorded independent review. Exact-head push and PR CI each pass the six required job populations. Cache4/semantic6 and original history are preserved, with no fabricated aggregate or source-revision rewrite.
+
+Use [Arc07 assembly](arc07-closeout-reconciliation/closing-report.md), [current handoff/actual receipts](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md), [complete100-clause mapping](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/requirements-reconciliation.md), [governing26-row ledger](ledger.md) and [backlog](backlog.md). These reuse the original independent child oracles; they do not replace missing evidence with counts. The original six implementation/research arcs plus Arc07 are walked below through A01–A07. Their preserved historical ledgers are not retroactively marked accepted; this is the current reconciliation proposal for the higher verifier.
+
+## Exact original26-row proposed-disposition walk
+
+“Accept” below is a recommendation to the independent verifier, **not a new binding status**. Actual ledger statuses remain3done/1deferred/22open; only already explicit G03/G07/G08 are done and G05 deferred. Each row’s exact original criterion and verifier/oracle remain unchanged in ledger.md.
+
+| ID | Actual current status | Proposed final disposition | Retained oracle/evidence and boundary |
+|---|---|---|---|
+| P01-A01 | open | accept reconciliation | D0001–04 research provenance/current scientific interpretations in100matrix; no fresh URL availability/old22MB replay claim |
+| P01-A02 | open | accept amended capability | M1.1–11/core/parser/CLI accepted reviews, SaveParser10/glyph09, actual Hilbert product; B10 legacy/B03 arithmetic/NomNom boundaries |
+| P01-A03 | open | accept amended capability | M2.1–8 association/query/topology literal controls; current full CI; B06 search/detail/statistics transfer |
+| P01-A04 | open | accept amended capability | M3 session/cache/config tests, actual native lifecycle and last recall; B07/B08 configuration/output/parity |
+| P01-A05 | open | accept amended capability | M4–6 routing/real watcher/cache/coordinator/MCP consumer controls and actual live Euclid/Hilbert; B04/B05/B09/B11/B12 |
+| P01-A06 | open | accept amended capability | M7/D0040–43 accepted docs/export/slots/import/UI; actual final native fixes; B01/B02/NomNom/new-publication qualifications |
+| P01-A07 | open | accept assembled result after fresh review | Arc07 thirteen-row report;49inventory+decision+100matrix; all adopted changes explicit |
+| P01-C01 | open | accept current composition after fresh review | Literal checked save/portal decoders and migrated callers; independently expected real Hilbert1 product witness; source address boundaries retained |
+| P01-C02 | open | accept current composition after fresh review | Exact multi-system/name/discoverer/location association controls and source/community provenance; genuine base identity; B06 future query surfaces |
+| P01-C03 | open | accept amended routing | Exact multi-stop/foreign/waypoint/stop controls and strict-positive2opt; overlong-final-leg stronger guarantee explicitly B05, jump arithmetic B04 |
+| P01-C04 | open | accept supported cache lifecycle | S05/06/12/14/16–19/21/23/28 retained source/rebuild/warm/live/negative controls; schema4/semantic6; no arbitrary custom-graph archive guarantee |
+| P01-C05 | open | accept supported live composition | Shared coordinator real-file/stdio/HTTP/REPL tests; same-running Euclid location update and current Hilbert CLI/REPL/MCP consistency; snapshot boundary |
+| P01-C06 | open | accept observed interaction | S06 closure: retained wizard/config/history/component controls plus actual Up/Tab/last/map/q/status/exit/restoration; no invented every-key native proof |
+| P01-C07 | open | accept recorded reconciliation | 100clauses/43docs/61milestones/75original arc rows and49entries covered; explicit B01–B12/NomNom/publication with owner/re-entry; optional sketches not new gates |
+| P01-G01 | open | accept final checked candidate | Exact01b push+PR six-job successes and scoped independent map/source review; prior native full suites retained, no global test-count sum |
+| P01-G02 | open | accept feature contract | Exact final all-feature workspace + FULL copilot no-default HTTP jobs, actual stdio/HTTP lifetime tests and extraction feature graph |
+| P01-G03 | done | retain explicit acceptance | Existing24466/26073=93.83653588002915%,14/72below90 accepted current globalANDper-file as-is; no01b remeasurement/future floor deletion |
+| P01-G04 | open | accept scoped docs exception | Original S29/44, later09/10/11/12/API/map docs and doctests; raw strict101 retained, exact generated rkyv-fieldA exception0/onewarning; no globally strict claim |
+| P01-G05 | deferred | retain deferred B01 | Present package/install evidence accepted FOR NOW, inspected ten historical candidate archives/licenses; clean installation re-entry publication blocker/future project; no install success |
+| P01-G06 | open | accept reconciliation of release states | Five0.2official checksum/archive/VCS provenance complete; current package limitations B01; NEW publication separately deferred, no release claimed |
+| P01-G07 | done | retain done | Independent full saved push40604316612/PR40604472240 receipt verification: exact01b, each6completedSUCCESS; MSRVcheck scope distinct from tests |
+| P01-G08 | done | retain explicit bounded acceptance | Nearest10/300 scoped measurement; Duncan accepts five warm debug20/13/2 headless spawn→MCP samples and their limits; no REPL/full-save/cold-machine guarantee |
+| P01-G09 | open | HOLD pending fresh independent verdict | CDC assembly cannot self-certify. Duncan acceptance is attested/conditional on required review passing; one fresh SolHigh authorized, not yet launched/verdict absent |
+| P01-R01 | open | accept supported checked conversion | S20/S21 fallible field-specific literal/range/malformed/typed caller controls plus actual Hilbert1/name/product witness; original48-bit core behavior retained |
+| P01-R02 | open | accept galaxy-qualified consumers | Same-coordinate0/9 both-order literals across model/query/import/route/watch/cache/selection; rebuild/negative controls plus real Hilbert witness; no entity-union claim |
+| P01-R03 | open | accept compatibility discipline | Reviewed schema4/semantic6 transitions/incompatible rebuild→warm/source/live tests. Glyph/UI/trait/body-equivalent crate changes preserve interpretation; no bump required for those |
+
+## Scope-as-promised versus scope-as-delivered
+
+B01 clean installation remains deferred with present evidence accepted for now. B02 configurable themes/biome wiring remain future owned UI work. B03 conditional32-bit LZ4 offset and B04 unchecked jump arithmetic are unfixed/deferred to one of the next TWO projects; B05 best-effort final leg has no invented deadline. B06 search/detail/stats/info, B07 working config/output, B08 REPL CLI-command parity and B12 notify-backend reconnection transfer to the existing Project02 homes, with friendly save/account selection first. B09 named-client/gameplay work reserves Project03 after Project02 and excludes Anthropic targets; B10 historical goatfungus/format2001SpookyHash and B11 reachability visualization reopen only under their recorded conditions. Authentic NomNom waits attributable export; new publication waits separate release authority. Owners and re-entry stay in backlog/plan; none is described as implemented.
+
+Adopted implementation equivalents include Rust reference tables, practical deserialize/rebuild cache rather than mmap queries, fixed map snapshots and current transport/API shapes. Broader freighter/visited systems/all-discovery event unions/optional integrity or benchmark ideas are not silently promoted to binding MVP gates. Evidence still does not establish authentic matched-metadata verification, installed-game discovery on every OS, every real drive/permission incident, every manual terminal key/toggle or unmodeled save entity. The original mapping flags these precise optional/applicability/priority limits; the fresh verifier should challenge any classification that actually loses a binding promise. No new missing feature is inferred merely because a compound parent row is still open.
+
+Coverage was measured at the retained validation revision, not freshly remeasured at01b; current acceptance of its shortfall is explicit. Startup acceptance covers the five checked warm debug headless fixture samples, not REPL/full-game-save/cold-machine performance. Old strict-doc failure and the one exact generated-field exception are both retained. Package evidence is bounded, not a claim all final crates installed pristine. CLI raw-record and model totals differ in population; no new correctness verdict follows from that difference. Actual normal exit is observed; actual Ctrl-C/Ctrl-D or fresh manual cross-restart history proof is not invented.
+
+## Required final gate and handoff
+
+This report is assembled by the same CDC that authored the governing reconciliation, so it cannot be independently signed by that context. The existing Luna source implementer cannot independently certify its own affected MCP/map work. Duncan now authorizes exactly ONE fresh independent GPT6.1 Sol High/Codex/OpenAI context to review this committed packet read-only; root launches it after receipt of the immutable planning pin. It must assess all13Arc07 rows, all26parent proposals, the100-clause mapping, explicit deferrals and actual current CI/native/Hilbert/performance evidence, using targeted retained proof rather than a new source audit/test campaign. Proposed brief is in the current handoff; it is not an instruction to the existing CC.
+
+Until its actual verdict, project state remains active/proposed closure and G09 open. If it passes, the attested conditional Operator acceptance can take effect and the canonical ledgers/records can be closed by the assigned owner; if it finds a material unmet requirement, report the exact finding instead of automatic new source work or scope expansion. No original row is silently removed. The source remains01b; no merge/release or new project is implied. [Project retrospective](cdc-retrospective.md).

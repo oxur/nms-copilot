@@ -5,11 +5,11 @@ author: "the watcher"
 component: All
 tags: [change-me]
 created: 2026-03-05
-updated: 2026-10-26
+updated: 2026-10-27
 state: Active
 supersedes: null
 superseded-by: null
-version: 1.156
+version: 1.160
 project: project01-mvp
 status: active
 depends-on: []
@@ -1464,3 +1464,7 @@ Version1.158: [Slice12 independent acceptance](arc07-closeout-reconciliation/sli
 ## Final candidate CI established —2026-10-26
 
 Version1.159: sourceb2404851067a7c234b6e6ccf9c56e429acf0b643 exact-head CI40430018598 ALL6PASS, [receipt](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md#final-exact-head-ci-receipt-2026-10-26); P01-G07 DONE,26rows2done/1deferred/23open. Ready code scope and hosted platform/MSRV/features are complete; joint genuine-save/native interaction, explicit performance sufficiency and higher independent+Operator acceptance remain. Autonomous execution/research/planning stops at those inputs/decisions; no new source/slice/arc/project or main integration/publication.
+
+Version1.160,2026-10-27: current01b601f has independently reviewed native interaction, exact push/PR6+6CI, authentic Hilbert1 expected-base witness and explicit acceptance of the five warm debug headless/MCP startup samples with their limits. No first-prompt/full-save/general-speed proof or future floor removal inferred. All adopted deferrals remain. [Project closing recommendation](closing-report.md) is ready for separately authorized independent composition review and Duncan acceptance; project stays active/unaccepted, no merge/release or Project02 execution.
+
+Final2026-10-27 authority: Duncan’s explicit Project01 closeout acceptance follows disclosure of the independent gate. Acceptance of01b/amended scope/deferrals is attested conditional on the one authorized fresh SolHigh read-only review passing; project remains active/proposed until its actual verdict. See Arc07’s narrow context-limit exception and existing handoff brief. No merge/release/Project02 execution.
