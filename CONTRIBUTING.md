@@ -4,6 +4,44 @@ Thanks for helping improve NMS Copilot. The project is a Rust 2024 workspace
 with a minimum supported Rust version of 1.91. See [AGENTS.md](AGENTS.md) for
 repository conventions and the crate layout in the [README](README.md).
 
+## Planning worktree
+
+A fresh clone contains the implementation checkout. To attach the separate
+planning documents, run:
+
+```bash
+make planning
+```
+
+`make planning-worktree` is an alias. Setup needs Git and Bash (including the
+Bash 3.2 shipped with macOS), plus access to `origin`; it does not need Rust.
+The helper fetches `origin/planning` and attaches it at `.worktrees/planning`.
+A clean local planning branch can fast-forward, and a local branch ahead of the
+remote is preserved without pushing its newer commits.
+
+If the remote planning branch is absent, the helper publishes an existing local
+planning branch, or creates and publishes an empty orphan root when neither
+exists. That initialization requires a configured Git name/email and permission
+to push to `origin`. New planning history starts without implementation files.
+The implementation branch, working files, and staging index are preserved.
+
+Repeated setup reuses the registered worktree. Dirty, locked, misplaced, or
+divergent planning worktrees are left for manual reconciliation; the helper does
+not reset or clean them. A remote access failure is reported as an error rather
+than treated as an absent branch. Existing directories and tracked source paths
+are protected against accidental reuse as a planning checkout.
+
+Keep plans and project records in `.worktrees/planning`; user-facing guides
+remain in `docs/`. Run the helper's tests without contacting any remote service:
+
+```bash
+make test-tools
+```
+
+The tests use disposable repositories and local bare remotes. The underlying
+`scripts/planning-worktree.sh --help` also describes direct helper options for a
+different remote, branch, or worktree path.
+
 ## Build and validate
 
 From the repository root, the normal local sequence is:
