@@ -1,5 +1,7 @@
 # Save and account experience — Arc01 design
 
+**Current ownership — 2026-10-27:** Friendly inventory/selection/switching remains FIRST in current [Project02 Arc01](../project-plan.md). General settings/output and remaining existing-command REPL parity are current Arc02. This design's concrete selector grammar, replica-link mechanisms and startup preference remain proposals until their stated decisions are settled. Reserve separate play/read/future-authorship identities, while the notebook/culture mutation behaviors described in the dated augmentation belong to their later projects in the [repository backlog](../../backlog.md). No database or notebook implementation is a prerequisite for friendly saves.
+
 Status: proposed behavior, 2026-10-03. This document is a design artifact, not an arc implementation plan.
 
 ## What the user sees

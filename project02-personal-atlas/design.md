@@ -1,142 +1,108 @@
-# Architecture — observations, identity, and projections
+# Architecture — the searchable personal atlas
 
-Status: proposed architecture, updated 2026-10-11 (initial: 2026-10-03). See the [roadmap](project-plan.md) for sequencing and the [research](artifacts/research-and-library-decisions.md) for library evidence.
+Version: 2.0 — 2026-10-27. Proposed production architecture for the [current six-arc plan](project-plan.md); no new crate, catalog, schema or dependency is implemented/approved by this paper. The [shared backlog](../backlog.md) owns later notebook/culture/research/exploration destinations. The 2026-10-11 full-vision architecture remains in Git history; its later-project contracts remain in the linked design papers.
 
-## Responsibilities and authority
+## Authority and data flow
 
 ```text
-Read-only game files / imported evidence
-              |
-     stable capture + source metadata
-              |
-     immutable raw snapshot archive
-              |
- versioned decode / map / normalize
-              |
- catalog: observations, entities, relationships, annotations
-              |
- shared typed queries + spatial/routing projections
-              |
-          CLI / REPL / MCP
+read-only save files / supported imported evidence
+                    |
+       stable capture + source observation
+                    |
+        immutable exact-byte snapshot archive
+                    |
+       versioned decode / map / normalize
+                    |
+       catalog: observations / entities / links
+                    |
+     shared typed queries + graph/cache projections
+                    |
+                CLI / REPL / MCP
 
-Profile registry ---- stable local IDs / aliases / selection policy
+profile registry ---- stable local IDs / aliases / selection
 ```
 
-The managed-media store is authoritative for captured attachment bytes; caption/association/attribution records live in the catalog. The archive is authoritative for captured save bytes; the catalog for normalized observations and user knowledge; the profile registry for local registrations, aliases, and selection. Derived graph/cache/search indexes are rebuildable. Backups must include all authoritative components, not just the database. Registry revisions copied into catalog provenance are historical observations, not a competing editable profile store.
+The registry is authoritative for registrations, aliases, replica links and remembered selection. The archive holds captured save bytes. The catalog holds normalized evidence, source observations and supported imported records. Registry revisions recorded in provenance are historical facts, not a competing editable profile store. Graph/cache/search projections are rebuildable; deleting the catalog, registry or archive is not a harmless cache reset. Project02 backup/restore covers all authoritative state it introduces.
 
-The relational catalog expands the current architecture: `nms-graph` remains the spatial/routing engine, while richer nonspatial queries use catalog relationships. A graph database is unnecessary for the first set of joins. Add arbitrary traversal machinery only when concrete queries justify it.
+Journal entries, attachment bytes/captions and culture histories introduce additional authority in later projects. They are not tables, storage services or restore fixtures that Project02 must build now. Reserve clear domain identity/scope boundaries without implementing a general future-proof repository framework.
 
-## Proposed Rust boundaries
+## Reuse and component responsibilities
 
-| Component | Ownership |
+| Boundary | Current responsibility | Limit |
+|---|---|---|
+| `nms-core` | Validated domain IDs and galaxy-qualified address values | No database, UI or watcher dependency. |
+| `nms-save` | Existing checked SaveParser boundary; byte/key decoding, metadata/raw record access and parse diagnostics | No selection policy; new field families use validated conversions rather than applying one shift to every integer. |
+| Shared profile service (module/crate proposed) | Inventory, evidence-qualified identity, aliases, resolution, registry/migration and switch preparation | First useful increment without a database. Separate crate only if the actual ownership/dependency boundary warrants it. |
+| Atlas storage service (module/crate proposed) | Stable capture/archive, normalized ingestion, migrations, queries and committed generations | Added for current Arc04 after its engine decision; no media/geometry/ORM platform. |
+| `nms-watch` + application coordinator | Change hints, debounce/stable-read scheduling, bounded backend reconnection and one intake/apply owner per active source | Reuse the accepted LiveSaveCoordinator design. REPL/MCP consumers must not add duplicate ingestion loops. |
+| `nms-graph` / `nms-cache` | Existing spatial/routing model and disposable projections | Include source/save/context and interpretation/generation identity in cache applicability; preserve accepted field-specific contracts. |
+| `nms-query` | Shared typed requests/results and incremental orchestration over current model or catalog | Do not leak DuckDB/Arrow rows, connections or lifetimes into domain results. |
+| `nms-cli` / `nms-copilot` / `nms-mcp` | Arguments, interaction, protocols and rendering | Separate MCP crate and shared coordinator already exist. No repeated extraction or independent selection/query policies. |
+
+Use separate semantic SourceId, SaveId, SnapshotId and ContextId values; names/paths/slot numbers are selectors/evidence, not interchangeable keys. Reserve the distinction between recorded account/player and save traveller without inventing native certainty. Errors distinguish unavailable, ambiguous, malformed, unsupported, stale and busy states. Preserve relevant absent/null/empty/malformed/present distinctions explicitly rather than nested options or blanket defaults. Concrete internals and narrow substitution boundaries take precedence over a trait for every struct.
+
+## Bounded logical model
+
+| Family | Keys and links |
 |---|---|
-| `nms-core` | Validated addresses and domain IDs; lean shared value types. No DuckDB, filesystem watcher, or UI dependency. |
-| `nms-save` | Stable byte decoding, format mapping, typed metadata and raw record access; path-aware parse diagnostics. No user selection policy. |
-| Proposed `nms-profile` | Shared inventory, identity evidence, aliases, resolution, registry, and compatibility migration. Starts in Arc01. |
-| Proposed `nms-atlas` | Snapshot/archive coordination, normalized ingestion, migrations, catalog queries, and projection generations. Added only when needed in Arc03. |
-| `nms-graph` / `nms-cache` | Scoped spatial model and disposable cached projections. Cache key includes source/save/context, snapshot/extractor/schema identity. |
-| `nms-watch` | Change hints, stable-read scheduling, reconciliation. One ingestion coordinator per active source; no separate REPL and MCP import loops. |
-| `nms-query` | Domain request/results and shared query orchestration; evolve existing model-only functions incrementally. |
-| CLI / REPL / MCP | Argument/prompt/protocol translation and rendering. No duplicate identity or query rules. |
+| Sources/replicas | Registry identity, physical path/platform at observation time, availability and explicit replica-link evidence. |
+| Snapshots/import runs | Exact-byte digest, source sighting, captured time, file mtime, format/mapping/extractor identity, parse coverage/status. Deduplicated bytes do not erase repeated sightings. |
+| Save contexts | Logical save, main/expedition evidence and unknown context identifiers; active context does not erase retained contexts. |
+| Recorded identities | Namespaced native tokens and observed names; explicit local links distinguish user assertions from verified native evidence. |
+| Systems/planets | Galaxy plus validated location components and applicable universe/generation evidence. Names and seeds alone are not universal keys. |
+| Discovery evidence | Game record type/value/name/owner/time and resolved or unresolved association, with raw locator and source. |
+| Companion observations | Save/context-scoped instance evidence, nickname/species/seed evidence and supported origin. Slot replacement cannot imply the same pet. |
+| Bases/teleport destinations | Supported identity/name/owner/location evidence and per-save/context availability. |
+| Relationships | Typed located-in, observed-in, discovery-owner and companion-origin links with resolution status and provenance. |
 
-Crate names are proposals. Prefer focused modules first if a separate crate would add dependencies without a useful boundary. Do not introduce a generic repository/ORM framework or a trait for every struct. Keep concrete internal types and narrow traits only at actual substitution/test boundaries. Public results must not expose DuckDB rows, Arrow arrays, or database lifetimes.
+Each normalized observation/relationship identifies its source snapshot/import, raw locator, mapping/extractor version and supported scope. Typed tables cover the current supported families; original bytes preserve unmapped material. Avoid a universal untyped entity-attribute-value schema. Unresolved associations remain visible/searchable. Imported claims retain their own provenance and must not masquerade as native facts.
 
-Use separate `SourceId`, `SaveId`, `SnapshotId`, and `ContextId` types; separate `DiscoveryAddress`, `PortalAddress`, and expanded coordinates. Parsing uses validated constructors/`TryFrom`, with unknown values retained as evidence rather than silently coerced. Errors distinguish unavailable, ambiguous, malformed, unsupported, stale, and busy. Preserve absent/null/empty/malformed/present states when their difference matters; use explicit enums rather than nested `Option` or blanket defaults.
+## Identity, selection and time
 
-## Logical data model
+Retain [the friendly-save contract](artifacts/save-account-ux.md): physical `--save` remains exact; friendly selectors resolve explicit names/aliases/IDs, duplicate names produce candidates and no noninteractive fuzzy auto-selection is allowed. A missing remembered source cannot fall through to someone else's newest file. Keep legacy configured paths readable while migrating; preserve invalid input and unknown config keys rather than rewriting them as defaults.
 
-This is a relationship model, not final DDL. Every normalized observation includes a snapshot/import ID, raw record locator, source format, mapping hash/version, extractor version, and scope where available.
+Resolve a complete candidate session before publishing a switch. Selection, model/reference scope, completions, cache and watcher generation move together; failed switches preserve a usable prior state and late events are generation-checked. Explicit cross-save reads do not mutate active play selection. Script/protocol calls return structured ambiguity instead of prompting.
 
-| Record family | Important keys and relationships |
-|---|---|
-| Source/replica observations | Reference registry IDs; preserve physical path and platform evidence at observation time. |
-| Snapshots/import runs | Content digest, captured time, file mtime, parse status, format/extractor versions, source; content dedup does not discard repeated source sightings. |
-| Save contexts | Logical save + context identifier + expedition/season evidence; preserve unknown context kinds. |
-| Recorded identities | Platform namespace + source identifiers; name observations and explicit user links are separate. |
-| Systems and planets | Galaxy + decoded coordinates + system/planet components, with universe/generation provenance where known. Never merge across galaxies or assume procedural seeds are universally stable. |
-| Discoveries | Typed game record identity and value/seed evidence, object association, owner record, source timestamp; allow unresolved associations. |
-| Companion observations | Save/context-scoped pet instance evidence, nickname, creature type, species/seed evidence, origin address. Slot index alone cannot identify a pet across replacement. |
-| Bases/teleport destinations | Record identity, owner/name observations, location, per-save/context availability. |
-| Relationships | Typed links such as located-in, discovered-by, companion-origin, observed-in; each link has provenance and resolution status. |
-| Travellers and world experiences | App-local traveller identity linked to a logical save lineage; save/context-specific observations and narratives concerning shared worlds. Account/native owner identity is evidence, not an automatic traveller key. |
-| Journals and media | Authored entries with save/context/traveller scope, event and capture times, multiple typed subject links, edit provenance; managed blobs by digest with stable attachment IDs, captions and separate links. |
-| Cultures | Stable identity, one originating traveller, custom name/noun, founding/anchor/history references; evidence-bearing discovery affiliations. Distinct historical cultures may later connect. |
-| Culture analyses | Rebuildable membership/geometry/metrics at a catalog generation, source-population coverage, galaxy, algorithm/version, coordinate precision and ownership resolution. Separate from named culture authority. |
-| Personal knowledge and interchange | Tags/collections, explicit user assertions, imports and exports with provenance. Re-extraction never overwrites user content. |
+Account owner, native player token and a traveller represented by a logical save are not interchangeable. Same-account saves remain distinct; synced replicas require evidence; divergent copies remain unresolved until explicitly linked/separated. Discovery attribution is not inferred merely from visit/base presence or record inclusion. Save-specific attribution may remain unknown. Later notebook/culture projects consume these distinctions.
 
-Avoid a universal untyped entity-attribute-value schema. Typed tables cover established domains; raw payloads preserve unmapped data. Similar names are search matches, not join keys. Species names and pet nicknames can change; species linkage remains provisional unless its game key semantics are validated. Keep unresolved records searchable.
+Store file mtime, Copilot capture time, game timestamps and original owner/discovery timestamps separately with basis/validation. Sync time is not visit time. Current queries use the selected context's latest accepted snapshot; historical/last-known results label their older source. Failed or partial extraction cannot prove absence. A successful snapshot's absence is scoped to the coverage actually established.
 
-## Time and conflicting evidence
+## Ingestion, durability and restore
 
-Keep file modification time, Copilot observation time, game timestamps, and original discovery-owner timestamps separately with a time basis and validation status. A file synced today may describe an old play session. “First seen by Copilot in the past week” is answerable after historical capture begins; “I visited it last week” requires actual personal visit evidence and may remain unknown.
+1. Treat watcher events as hints. Bound debounce/pending work and reconcile sources so a missed hint cannot permanently lose updates. Backend re-registration is bounded, cancellable and distinct from ordinary file replacement recovery; avoid duplicate active registrations or duplicate application ingestion.
+2. Bound input/decompression work, compare file metadata around reads, retry changing files, decode and validate. Metadata checks reduce torn reads but do not promise an atomic game-file snapshot. A failed candidate never replaces the last accepted generation.
+3. Hash exact source bytes with the existing SHA-256 facility. Stage/sync as supported and publish the raw blob by digest within the archive filesystem; record sightings even if the content already exists.
+4. Decode/normalize outside the catalog transaction with explicit format/mapping/extractor versions and raw locators. Preserve unmapped bytes; collisions/unsupported fields are diagnostics, not silent overwrite.
+5. Commit the accepted snapshot/run, observations, relationships and generation coherently. Idempotency includes scope and extractor version, allowing re-extraction without multiplying entity/claim counts.
+6. Publish the complete in-memory generation after commit. Repair commit/publication interruption by rebuilding the current projection at restart.
 
-Current-state queries use the selected save/context's latest accepted snapshot. History queries search retained observations. Last-known values can be offered explicitly with their older source date; they must not silently fill missing current data. Removing a discovery from a later snapshot records absence within that snapshot's known coverage. Failed/partial parsing cannot prove absence.
+Archive publication and database commit are not atomic together. A failed commit may leave an unreferenced blob; reconcile only verified unreferenced content under a specified policy. A missing referenced blob is an integrity error. Number/check migrations; back up before destructive migration; refuse newer unsupported schemas and preserve recovery inputs after failure. An archive limit preserves existing history and visibly pauses capture; no unagreed automatic pruning. Snapshot retention does not silently discard supported imported evidence.
 
-Shared worlds have source-specific names and facts. Prefer explicit local aliases for display, then the selected context's supported evidence; retain disagreements rather than overwriting them. Results explain why an entity matched and identify the supporting observation.
+Back up the registry, catalog and referenced raw archive with their identities and consistency basis. Restore into a clean app directory without relying on original absolute paths, verify sources/facts/links and rebuild disposable projections. Protect original game files throughout. The exact snapshot/quiescence mechanism depends on the chosen engine and belongs to Arc04's implementation design.
 
-## Ingestion and recovery
+## Database decision and concurrent interfaces
 
-1. Treat watcher events as hints. Debounce, bound pending work, and periodically reconcile registered locations; a missed event must not permanently lose an update.
-2. Read into a bounded buffer, compare before/after file metadata, and retry changing files. This reduces torn reads but is not an atomic snapshot guarantee. Successful decoding and consistency checks are required; keep failed attempts visible without replacing the last accepted state.
-3. Hash exact source bytes with the existing SHA-256 dependency. Stage the blob in the archive filesystem, sync as supported, and atomically publish it under its digest. Preserve source sightings even when the bytes already exist.
-4. Decode and normalize outside the catalog transaction. Preserve original bytes independently from mapped JSON. Unknown fields survive through retained source data; mapping collisions/unsupported versions produce diagnostics, not silent overwrite.
-5. Commit snapshot metadata, observations, relationships, and the projection generation in one database transaction. Idempotency includes snapshot, scope, and extractor version, so re-extraction is possible without duplicate discoveries.
-6. Publish a new complete in-memory generation after commit. A crash between database commit and projection publication is repaired by rebuilding on restart.
+Conditional preference remains DuckDB; SQLite is the fallback if actual native packaging, interaction or process coordination costs fail the agreed trial. Before trial execution, agree its question, workload/fixtures, resource limit, target matrix, thresholds, expected decision and stop/fallback rule. The research paper's older numbers are proposed targets, not measurements or accepted budgets. Refresh versions/primary documentation at adoption; this reconciliation did not browse or run a database experiment.
 
-Archive publication and database commit are not one atomic operation. Publishing the blob first may leave an orphan if the transaction fails; startup reconciliation reports/reclaims only verified unreferenced blobs according to retention policy. A missing referenced blob is an integrity error, not a successful replay. Never silently overwrite annotations during catalog rebuild; back up or separately export them before any destructive migration/reconstruction.
+If DuckDB passes, a single writable owner and dedicated worker with bounded typed requests is the proposed starting design. Concurrent CLI/REPL/MCP clients may require a versioned local endpoint and OS-backed ownership lock; startup races, stale owners, access control and handoff must be proven before this mechanism becomes production policy. Do not prebuild a service layer solely to justify the preferred engine. If SQLite wins, define its actual contention/transaction boundaries instead; no parallel authoritative engine.
 
-Schema migrations have numbered versions, checksums, preflight compatibility, backup, and recovery instructions. Refuse writes to a newer unsupported schema. A failed migration preserves a usable backup. Deleting derived caches is harmless; deleting the catalog or registry is not. An archive size limit pauses capture visibly and preserves existing history until the user chooses a retention action.
+Keep long blocking/native work off async executor threads. Cancellation/shutdown must interrupt or bound actual work, not merely drop an awaiting future. Bound pages, memory, temporary disk, execution and ingestion batches; measure current lookups/history/ingestion responsiveness. The future notebook's short writes and geometry workloads are evaluated by their introducing projects, not imposed as current trial gates. Existing twyg/confyg conventions remain; no unrelated observability/config-location migration.
 
-## Database ownership and interactive work
+## Shared query and output contract
 
-If DuckDB is adopted, one process owns the writable catalog. A dedicated worker thread owns its connection and accepts bounded typed requests. Short commands may take ownership while no long-lived owner exists; when the REPL/server owns it, other interfaces request work through a versioned local endpoint. No implicit background-service installation is required.
+Use owned typed results with explicit save/context/source/freshness and uncertainty, stable ordering and generation-aware pagination. Exact/prefix/substring names precede optional FTS. Supported biome and infestation evidence remain independent. Date filters name the basis. Count unique worlds, discovery claims, source observations and per-save availability separately; a record seen twice is not two discoveries.
 
-The Arc03 trial must settle the endpoint transport, access control, startup race, stale-owner detection, and handoff. Use a stable OS lock file as the ownership authority rather than trusting a PID file. Concurrent readers must not independently open the live database while a different process writes. Immutable exports may support external analysis, with their snapshot time displayed.
+Arc02 wires existing settings/predicates/details/statistics and human/plain/JSON consumers before richer catalog querying. Preserve explicit override precedence and real ANSI-free/plain piping; diagnostics stay off structured stdout. Existing import/export/completions get REPL parity without implying notebook/media interchange. Applicable CLI/REPL/MCP requests produce equivalent domain results, not necessarily identical transport framing.
 
-Cancellation requires cooperative query interruption and clear transaction boundaries; dropping an async future does not necessarily stop native work. Bound result pages, execution time, memory, temporary disk, and ingestion batches. Keep long analytics from starving save updates or the chooser; measure before adding connection pools. Existing logging/configuration conventions stay in place.
+Do not expose unrestricted SQL as an MCP tool. A future Tantivy index, if justified by an actual search limitation, is a disposable projection with stable entity/generation references and an explicit replay/lag contract designed at that time. Do not implement its outbox/indexing machinery now. Reuse accepted same-galaxy routing; B04 fixes jump arithmetic without silently promising B05's stronger every-leg guarantee.
 
-If reliable cross-process operation makes the everyday experience too complicated, prefer SQLite for the catalog and consider DuckDB only for explicit analytical exports later. That is a decision gate, not a commitment to ship both engines.
+## Later-project contracts and reading applied
 
-## Queries and future FTS
+The [notebook paper](artifacts/journals-and-media.md) retains frozen author/target composition, drafts, notes and managed-media durability. The [culture/exploration paper](artifacts/cultures-and-exploration.md) retains stable culture history, discovery-based affiliation, qualified geometry/population/region and frontier semantics. Their dated Project02 arc ownership is superseded by the root backlog; the requirements remain. No TravellerId/CultureId/journal/media/AnalysisId production subsystem is required here merely to anticipate those projects.
 
-Use typed filters for save/account/context, source, biome, infestation, discovery type, date basis/range, location, names, and availability. Default to the selected scope; cross-save/all-history operations are explicit. Joins expose companions' origins, worlds containing bases, and shared discoveries. All interfaces return equivalent domain results and freshness metadata. Paginated results use a stable ordering and snapshot/generation token.
-
-Start with prepared SQL and exact/prefix/substring name matching; do not expose unrestricted SQL as an MCP tool. Advanced local analytical exports can be a later interface decision. Counts must distinguish unique world entities, distinct discovery claims, per-save observations/visits, bases, and journal entries. A discovery seen in two saves is not two discoveries. Cross-save query scope does not merge traveller narratives.
-
-Reserve stable entity IDs and generation metadata for an optional Tantivy projection. If introduced, commit an indexing outbox with catalog changes, apply it idempotently, track the indexed generation, and allow a full rebuild. Index lag must be visible. FTS relevance never determines entity identity or replaces structured filters.
-
-## Play context, query scope, and authorship
-
-Keep three independent values: selected play context (logical save, active context, latest accepted location/snapshot), read-query scope (one/many saves, account, culture, history), and journal authorship (traveller/save/context). An explicit all-save query changes only its read population. Mutations always resolve a concrete author and target; a broad read scope must not create an ambiguous or multi-save write.
-
-Freeze resolved author/subjects/snapshot at composition start. Watcher changes and save switching cannot retarget an open note/image capture. Show the selected name, galaxy and source freshness. Unavailable/ambiguous locations require an explicit target or a recoverable unresolved draft, not an inferred current planet. Retain drafts on failed commits; define cancellation and draft cleanup in Arc06.
-
-The proposed `TravellerId`, `CultureId`, `JournalEntryId`, `AttachmentId` and `AnalysisId` are semantic IDs, not aliases for paths, player names or DB keys exposed to users. Unknown/conflicting ownership and insufficient geometry are explicit states. These distinctions extend the existing Rust type guidance; exact APIs/DDL wait for slice design.
-
-## Discovery ownership and culture identity
-
-The Operator's domain rule is one discoverer for a system, and discovery is the claim. Multiple imported assertions about that claim are evidence that can conflict, not multiple ownership slots. A foreign traveller's visit/base/note is an experience link, never a transfer of discovery affiliation. Planet discovery evidence remains separate: do not automatically attribute every planet to its system's discoverer.
-
-Separate native account/player identity from the traveller represented by a save lineage. Two saves under one account can share native owner fields. Validate save-specific attribution in G10; merely storing a record in a save or matching the account name is insufficient. Preserve unresolved claims and explicit user attribution with its source, rather than manufacturing certainty. Linked replicas preserve one traveller; divergent copies require an explicit identity decision without losing either narrative.
-
-A culture has stable user-authored identity/history and derived spatial structure. It concerns one traveller's discoveries, partitionable into historically distinct cultures for that traveller. Different travellers' adjacent/interleaved cultures stay separate. Geometry may report that two named cultures have joined spatially without renaming or merging their journals. The user's chosen collective noun is display vocabulary, not an algorithm selector.
-
-Base presence/counts describe attachment without a new manual cherished flag. General bookmark collections remain possible, but adding a place to one cannot change its discovery affiliation. Prospective exploration regions are separate from currently claimed systems. Detailed semantics and geometric acceptance cases: [cultures and exploration](artifacts/cultures-and-exploration.md).
-
-## Journal and media durability
-
-Arc06 adds short authoritative writes independent of ingestion: an authored entry and its links commit together, carry revision information, and survive re-extraction. A single entry can refer to a system, planet, creature and culture without duplicate prose. Cross-save views preserve author labels; two travellers' independently authored entries never collapse because text or subjects match.
-
-Attachments are managed files outside the database with digest, size, media type, capture/import provenance and associations inside it. Publish bytes before committing references, reconcile unreferenced staged blobs after failures, and report missing/corrupt referenced media. Deduplicate exact stored bytes without merging attachment captions/authorship. Do not let snapshot pruning delete authored notes or media. Define unlink/delete/garbage-collection separately; only verified unreferenced content is eligible for collection. Backup/export includes authoritative media plus catalog/registry/archives and verifies restore into a clean directory. See [journal/media behavior](artifacts/journals-and-media.md).
-
-## Culture analysis as a reproducible projection
-
-DuckDB handles scoped populations/joins/aggregates; geometry and `rstar` handle 3D spatial questions; `petgraph` handles adjacency/connectivity/routes. Neither engine supplies absent stars or live discovery ownership. Reuse independently accepted Project01 galaxy-qualified routing contracts. Geometry must stay within one galaxy; all-galaxy queries aggregate per-galaxy results rather than drawing cross-galaxy spatial edges.
-
-Record input generation/population, sources and coverage, ownership attribution, coordinate precision, algorithm/version and internal scale decisions for each analysis. Identity coordinates may be too coarse for exact star geometry; multiple system indices at the same voxel must remain distinct, without fabricated positional jitter. Require precision/error evidence before claiming exact nearest systems in LY. Keep measured completeness, cohesion and scale separate from evidence coverage; no combined score or formula is adopted here.
-
-The candidate-population/coordinate gate G11 and geometry gate G12 precede actionable frontier claims. A known-population analysis is still useful, but must not claim global completeness or enumerate unobserved systems. A blocked full-enumeration capability remains tracked for Operator disposition. Derived membership/metrics can be rebuilt; authored culture identity and connection history cannot be silently discarded with caches.
+This planning reconciliation used targeted rust-guidelines guidance: distinct semantic types (AP-29), explicit result/state variants (AP-40/41), private implementation types (AP-44), bounded off-executor native work (AP-50), and configuration precedence/validation (CLI-31/32). Retain the project's established configuration/logging choices. This is scoped design guidance, not a Rust source audit or complete anti-pattern review; actual implementation reloads the relevant domain guides.
 
 ## Change record
 
-2026-10-11: expands the original personal-knowledge and cross-save architecture with independent play/query/authorship scopes, traveller and claim evidence, journals/media authority, stable culture history and reproducible geometric analyses. Supersedes generic collections as the sole model for cultures and any conversational radius/manual-claim proposals. Database choice remains conditional; no new crate, schema or production API is approved by this document.
+- **2026-10-03 / 2026-10-11:** Initial architecture and full-vision augmentation; retained in Git history and later-project design papers.
+- **2.0 — 2026-10-27:** Reconcile current atlas authority/model/intake/query/engine boundaries, consume accepted Project01 parser/coordinator/MCP and remove notebook/media/culture/geometry production work from current prerequisites. Preserve semantic seams and conditional library decisions without implementing speculative frameworks. No source or dependency changed.

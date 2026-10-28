@@ -1,5 +1,9 @@
 # Project01 backlog
 
+## Current scheduling note — 2026-10-27
+
+Duncan approved the [repository-wide multi-project split](../backlog.md) and [reconciled Project02 roadmap](../project02-personal-atlas/project-plan.md). Original evidence, qualifications and re-entry wording below remain preserved history. Current delivery routing: B03 → Project02 Arc03/P02-25; B04 → Arc02/P02-26, within the existing next-two-project deadline; B06/B07 → Arc02 (rich-query composition also Arc05); B08 → Arc01 `saves`, remaining existing parity Arc02; B12 → Arc03. Older Project02 arc labels below are superseded by that explicit mapping. Other conditional deferrals and Project03's reservation/excluded clients retain their conditions. No source fix, acceptance, publication or project reopening is claimed.
+
 Operator-adopted deferrals,2026-10-25. These entries authorize no new implementation or project/arc. Original evidence and obligations remain linked from the [current handoff](arc07-closeout-reconciliation/slice08-composition-handoff/artifacts/handoff.md#operator-decisions-and-residual-obligations--2026-10-25).
 
 ## B01 Clean installation

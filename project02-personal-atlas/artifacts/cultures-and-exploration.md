@@ -1,5 +1,7 @@
 # Traveller cultures and exploration analysis
 
+**Current destinations — 2026-10-27:** The [repository roadmap](../../backlog.md) splits this retained design among **Traveller cultures**, **Spatial evidence and exploration research**, and **Culture analysis and exploration tools**, all unnumbered. Original Project02 Arc08/09/G10–G14 labels below are historical. Project02 preserves honest identity/owner/location evidence; it does not deliver culture histories, region derivation, geometry, candidate enumeration or frontier tools. Research needs agreed questions/consumer/budget/stop conditions before commissioning; unknown star populations do not block Project02 closure. The domain requirements below remain retained, with no native input/algorithm/library adoption implied.
+
 Version 1.0 — 2026-10-11. Design for Arcs08/09, with identity/observation dependencies in Arcs01–03. Requirements below come from the Operator's discussion; geometric methods are research candidates, not adopted algorithms. No candidate-system source or exact discovery-completeness measure has been demonstrated.
 
 ## Confirmed domain semantics

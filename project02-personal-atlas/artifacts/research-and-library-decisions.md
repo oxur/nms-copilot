@@ -1,5 +1,30 @@
 # Research and library decisions
 
+## Current consumers — 2026-10-27 reconciliation
+
+The [current six-arc plan](../project-plan.md), [current architecture](../design.md) and [repository grouping](../../backlog.md) supersede the old arc ownership below. Prior research content remains verbatim, dated source examination; its version/API observations are not current verification. No database/clipboard/geometry trial, dependency adoption or benchmark was performed by this reconciliation. Refresh primary documentation at actual adoption.
+
+| Existing gate | Current consumer and boundary |
+|---|---|
+| G01 — Identity | Project02 Arc01; distinguish four saves/two accounts/replicas and provisional links. No native claim certainty manufactured. |
+| G02 — Inventory responsiveness | Project02 Arc01's real inventory/chooser boundary. The older 30/300-file workloads and thresholds below are proposals to agree before measurement, not observed performance or an execution budget. |
+| G03 — Addresses | Project02 Arc03 for newly supported field families and unknown/malformed states. Consume accepted Project01 independent address/galaxy evidence; no repeat of its investigation programme. |
+| G04 — Catalog build | Project02 Arc04, agreed bounded adoption trial; preserve existing target/MSRV commitments unless explicitly changed. |
+| G05 — Atlas interaction | Project02 Arc04 current ingestion/history/name/location/filter/aggregate workloads. The old note/attachment short-write and long-geometry consumers move to their introducing projects; their numbers are not Project02 gates. Agree current fixture distributions, resource/time limits and decision targets before execution. |
+| G06 — Process/recovery | Project02 Arc04 actual selected-engine CLI/REPL/MCP contention, restart, migration and storage limits. A DuckDB endpoint/owner design is conditional, not a mandatory framework. |
+| G07 — Historical truth | Project02 Arc03/04/05 for observed evidence, missing/partial states and counting; notebook annotation survival moves to its project. Imported atlas provenance remains current. |
+| G08 — Journal interaction | Adventure-notebook project; frozen target/author, multiline/draft/cancel semantics. Not required for Project02 closure. |
+| G09 — Managed media | Adventure-notebook project; native/file/display/backup lifecycle. Not a current engine trial prerequisite. |
+| G10 — Traveller/claim identity | Project02 Arc01/03 owns supported save/replica and native/unresolved/user-attested evidence. Culture affiliations and journal narrative composition move to their projects. Inability to prove save-specific native ownership must remain explicit, not trigger unlimited identity archaeology. |
+| G11 — Population/precision | Unnumbered spatial-evidence research, with agreed question/consumer/budget/stop before commissioning; accepted result feeds exploration tools. No undiscovered-star gate on Project02. |
+| G12 — Geometry | Spatial-evidence research selects and evaluates methods; exploration-tools project implements the accepted contract. No mathematical library is selected here. |
+| G13 — Frontier composition | Exploration-tools project after the applicable research/culture inputs. Existing routing is reused; new visualization/stronger B05 route guarantees are not silently added. |
+| G14 — Regions/names | Spatial-evidence research and traveller-culture presentation; observed/derived/user-labelled claims stay separate. Not a Project02 completion gate. |
+
+Decision-register scope update: D01–D08 retain friendly-selection/conditional-engine/optional-FTS direction; D06 startup preference is still provisional until Duncan answers. D09's separate active/read scope applies now, while journal authorship belongs to the notebook. D10's honest discovery evidence applies now, culture semantics later. D11/D12/D14 move with spatial research/cultures; D13 moves to the notebook. Research trials need a separately agreed useful question, consumer, concrete budget and stop/fallback condition. This routing notice does not commission any of them.
+
+The old Gates/Decisions/Arc labels below are historical, not a second current roadmap. Field/API claims remain qualified by their dated sources. Future experiments retain necessary outcomes and errors using normal project records, without a new mandatory capture framework.
+
 Initial research date: 2026-10-03; augmentation: 2026-10-11. Original version observations remain dated and require refresh at adoption. Documentation/source examination only: no dependency was added, no prototype was compiled, and no benchmark was run. Version observations below are research inputs, not approved dependency pins.
 
 ## Decision register

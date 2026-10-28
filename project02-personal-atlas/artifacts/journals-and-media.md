@@ -1,5 +1,7 @@
 # Adventure journals and managed media
 
+**Current destination — 2026-10-27:** Duncan moved this capability to the unnumbered **Adventure notebook** project in the [repository roadmap](../../backlog.md). The original requirements/proposals below remain preserved; references to Project02 Arc06/G08/G09 describe the pre-split plan. Project02 provides identity and durable atlas inputs; it does not implement notes, clipboard capture, image storage or their restore contract. Research/interaction/native trials require their own agreed scope/budget before execution. No later project directory or assignment is opened by this notice.
+
 Version 1.0 — 2026-10-11. Design for expanded Arc06; no implementation or native capture test. Confirmed needs come from the Operator's gameplay discussion. Command grammar, keybindings and library adoption below are proposals to validate in G08/G09.
 
 ## Experience and scope

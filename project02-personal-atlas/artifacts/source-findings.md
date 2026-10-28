@@ -1,5 +1,17 @@
 # Source findings and project01 carry-over
 
+## Current inheritance — 2026-10-27
+
+[Project01 independently closed](../../project01-mvp/cdc-verification.md) at accepted source `01b601f49253987b1b9c596ad0fb1e01cb757dda`, planning close `8a56a405af459d945b6de508086b6d4c1bd0c131`. This reconciliation verified the source worktree remained clean at that revision, workspace Rust2024/MSRV1.91, the existing `nms-mcp` member, exported SaveParser/NmsSaveParser and main's LiveSaveCoordinator consumers. It was a targeted baseline read, not a rerun of tests or broad source audit. Main integration/PR14 state must be revalidated before dependent delivery; no merge is implied.
+
+The current [six-arc plan](../project-plan.md) consumes accepted checked parsing, field-specific address/galaxy/model/cache semantics, one application intake coordinator, the separate MCP crate, current-session `last`, repaired Tab/map and the accepted genuine Euclid/Hilbert/native interactions. Earlier prose below about missing last/MCP/decoder/coordinator repairs describes old pins, not the present accepted baseline. Project01's strict-positive2opt proof is delivered, not assigned again.
+
+Exact final source-head CI passed its recorded Linux/macOS/Windows, feature and MSRV-check populations. The historical Windows timeout remains a prior failed attempt, not an unresolved current-head CI result. Notify backend reconnection is still separate future Project02 scope; the old failure was not backend-recovery evidence. Project01's accepted limited warm-debug headless timings do not establish new Project02 chooser/full-save/REPL performance.
+
+Current destinations: B03 compressed-offset arithmetic → Arc03; B04 jump arithmetic → Arc02; B06 existing query/detail/statistics/info → Arc02 and rich composition Arc05; B07 settings/output → Arc02; B08 saves parity → Arc01 and remaining existing parity → Arc02; B12 backend reconnection → Arc03. The [repository backlog](../../backlog.md) retains notebook/culture/research/exploration transfers and all other conditional deferrals. The current ledger preserves the original24 criteria and maps their amendments; historical tables below are evidence, not current assignments.
+
+The original source findings about save resolution, identity metadata and other paths must be checked on the actual implementation baseline during their owning slice; they are not automatically re-certified by this notice. No dependency version, engine feasibility, native clipboard support or geometric capability was verified here.
+
 Recorded 2026-10-03. Source checkout: main `a800950ef3558fcf463517696c3c140061e7353d`; planning base `85bc9a6597c62ecbaf2c5d649b4a46eef74e3719`. Findings are scoped inspections, not a complete code audit. For current ownership of inherited repairs and this augmentation's scope, see the dated 2026-10-11 and 2026-10-26 clarifications below.
 
 ## Current implementation
