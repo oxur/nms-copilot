@@ -1,3 +1,11 @@
+# Arc07 — CLOSED at explicitly amended scope
+
+2026-10-27. Fresh independent reviewer `/root/project01_final_review` passes source **01b601f49253987b1b9c596ad0fb1e01cb757dda** against frozen packet **b42a8561aeef80ff6660c3b6061aef6bb773a098**. [Actual independent verdict](cdc-verification.md) records the full row walk, current/retained evidence and qualifications. Final ledger: **13IDs/13done/0open**. Duncan's conditional acceptance of this candidate/scope/deferrals is now effective. All B01–B12, authentic NomNom and new-publication dispositions remain; no integration, release or next-project execution follows.
+
+The assembler recommendation below is retained verbatim as the pre-review record at b42a856. Its proposed/open/pending wording is historical and superseded by this dated independent verdict; its authorship and observations are not retroactively changed.
+
+---
+
 # Arc07 closing recommendation
 
 2026-10-27. Author: CDC /root/cdc_arc07, GPT6.1 Sol High, **assembler**. Source **01b601f49253987b1b9c596ad0fb1e01cb757dda**, branch codex/workspace-coverage-contract, pushed; PR14 targets main, open/observed ready for review, unmerged. **Closure proposed, independent higher verdict pending.** Root transports status/owns source external actions; root is not CRC. Sole LunaHigh CC implemented bounded increments; its review does not independently certify its own code. No new context was launched by CDC.

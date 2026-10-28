@@ -1,5 +1,7 @@
 # Project01 original-clause reconciliation
 
+**Current final gate2026-10-27:** source01b601f49253987b1b9c596ad0fb1e01cb757dda; fresh [Arc07](../../cdc-verification.md)/[Project01](../../../cdc-verification.md) independent review PASS at amended scope, conditional Operator acceptance effective. Original100 mapping rows/43documents/61milestones/75arc units remain unchanged below; earlier U/higher-pending/candidate cutoffs are historical and superseded only for current consolidated acceptance. No optional/sketch distinction or deferral is newly adopted by this notice.
+
 2026-10-26. CDC `/root/cdc_arc07` (GPT6.1 Sol High), one finite requirements-triage pass authorized by Duncan. **All original review units are classified below; Project01 acceptance is not complete.** Classification does not authorize implementation or silently close original ledgers. Binding summary/detail conflicts return for one capability-level decision, rather than treating every sketch as a new gate.
 
 **Current code candidate:** 4db22a95f0c5d40c445c76106204f628b2550735; bounded native Tab correction accepted at code/owned-native and Duncan basic-Tab scope, currentCI40587654350 all6PASS; predecessor b240 all6PASS preserved below. No new clause or deferral; joint/performance/higher claims remain open.

@@ -1,3 +1,11 @@
+# Project01 — CLOSED at explicitly amended scope
+
+2026-10-27. Fresh independent reviewer `/root/project01_final_review` passes source **01b601f49253987b1b9c596ad0fb1e01cb757dda** against frozen packet **b42a8561aeef80ff6660c3b6061aef6bb773a098**. [Actual independent verdict](cdc-verification.md) records the full row walk, current/retained evidence and qualifications. Final ledger: **26IDs/25done/1deferred/0open**. Duncan's conditional acceptance of this candidate/scope/deferrals is now effective. All B01–B12, authentic NomNom and new-publication dispositions remain; no integration, release or next-project execution follows.
+
+The assembler recommendation below is retained verbatim as the pre-review record at b42a856. Its proposed/open/pending wording is historical and superseded by this dated independent verdict; its authorship and observations are not retroactively changed.
+
+---
+
 # Project01 closing recommendation
 
 2026-10-27. CDC /root/cdc_arc07 (GPT6.1 Sol High), **assembler recommendation only**. Current source **01b601f49253987b1b9c596ad0fb1e01cb757dda**, branch codex/workspace-coverage-contract, PR14 against main, open/observed ready for review and **unmerged**. Implementation/child review is complete at the accepted scopes; higher independent acceptance is not yet performed. Root is external-action/status owner, not CRC. No new source or test run accompanies this report.

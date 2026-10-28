@@ -1,5 +1,7 @@
 # Arc07 — Initial-phase ledger
 
+**Current2026-10-27: CLOSED at amended scope,13original IDs/13done/0open.** [Fresh independent composition verdict](cdc-verification.md) passes; conditional Operator acceptance effective. Earlier proposed/paused counts below are historical.
+
 Created 2026-10-25 with all rows open; current dispositions are below. These rows cover the three requested initial
 slices and their decision handoff. Later cleanup criteria are deliberately not
 planned before Duncan's decisions; this ledger cannot yet establish arc or project
@@ -80,3 +82,7 @@ Final2026-10-27: current01b601f push+PR each all6PASS independently receipt-veri
 2026-10-27 genuine-input follow-up: [Hilbert1 witness](slice08-composition-handoff/artifacts/handoff.md#genuine-hilbert-witness-confirmed-2026-10-27) independently accepted at01b after Duncan expected-base confirmation, actual CLI/REPL and inspected running HTTP receipt. Nonzero held subclaim resolved;13child rows remain12done/1open(S07 startup sufficiency/original higher assembly). Native and exact-head push/PR CI retained. No new execution or parent closure.
 
 Final assembly cutoff2026-10-27:13original Arc07 rows/13done at adopted scopes, no new row/slice. S06 native/Hilbert and S07 current CI/performance accepted. Arc07/project CLOSURE PROPOSED only: [assembler report](closing-report.md), pending genuinely independent higher review and explicit Duncan acceptance. One fresh final SolHigh reviewer is now explicitly authorized; no self-signed higher verdict exists.
+
+## Final independent composition closure —2026-10-27
+
+Actual fresh reviewer `/root/project01_final_review` passes all13existing rows/composition at source01b601f49253987b1b9c596ad0fb1e01cb757dda and frozen packet b42a8561aeef80ff6660c3b6061aef6bb773a098; [canonical independent verdict](cdc-verification.md), reproduced/reconciled. **13done/0open; Arc07 CLOSED.** Duncan’s conditional acceptance now effective; Project01 independently closed25done/1deferred. Row meanings and original evidence pointers remain, with current/retained applicability assessed in the verdict. B01 child deferral and all higher exclusions remain; no new row, retrodated child verdict, source or external action.

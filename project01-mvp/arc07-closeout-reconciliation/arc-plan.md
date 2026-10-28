@@ -1,6 +1,6 @@
 # Arc07 — Closeout reconciliation
 
-Version: 1.37. Created: 2026-10-25. Status: ASSEMBLED / closure proposed;13child rows accepted. Genuine Hilbert and limited startup sufficiency accepted; higher independent review remains pending; Operator acceptance is attested conditional on it passing. Earlier phase authorizations/history are retained below.
+Version: 1.38. Created: 2026-10-25. Status: CLOSED at explicitly amended scope;13child rows done. Fresh independent review PASS and conditional Operator acceptance effective2026-10-27. Earlier authorizations/proposed states are retained below as history.
 
 ## Purpose and authority
 
@@ -441,3 +441,7 @@ Final2026-10-27 assembler cutoff: accepted limited startup evidence closes S07; 
 ### One final independent reviewer authorized (2026-10-27)
 
 After root disclosed the required fresh independent gate and current context limit, Duncan says “awesome, this all looks good to me — I'm ready to call project01 done! Let's close it out :-D”. This authorizes ONE fresh independent closure-verifier **GPT6.1 Sol High via Codex/OpenAI**, same human-selected CDC settings, fork none. It supersedes the initial no-additional-reviewer-context rule only for a bounded read-only assembled-evidence review. Current CDC is assembler; sole LunaHigh CC implementation is complete; root is transport/source-external owner, not CRC. Root launches only after this packet is committed/frozen. No source edits/audit programme/tests/new project/merge/release or contributor budget reset. Operator acceptance of01b/current scope/deferrals is attested **conditioned on required independent review passing**; project/arc closure remain proposed until actual verdict.
+
+## Final independent composition gate —2026-10-27
+
+Version1.38, surfaced by the final independent review of the completed Slice08 handoff and S06/S07 current proof: `/root/project01_final_review` (the one explicitly authorized fresh SolHigh context) passes frozen packet b42a8561aeef80ff6660c3b6061aef6bb773a098 at unchanged source01b601f49253987b1b9c596ad0fb1e01cb757dda. [Actual reviewer-authored verification](cdc-verification.md) walks all13rows and current composition, with the [26-row project gate](../cdc-verification.md). **Arc07 CLOSED13done/0open; Project01 CLOSED25done/1deferred.** Conditional Operator acceptance is now effective, independently gated; assembler recommendations remain history. Existing scope/deferrals/evidence limits/retrospectives preserved. The initial stops and later finite authorizations are not retrodated. No source/new arc/project/integration/release authority; STOP at this final endpoint.

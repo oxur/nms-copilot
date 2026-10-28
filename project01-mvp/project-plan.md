@@ -6,12 +6,12 @@ component: All
 tags: [change-me]
 created: 2026-03-05
 updated: 2026-10-27
-state: Active
+state: Final
 supersedes: null
 superseded-by: null
-version: 1.160
+version: 1.161
 project: project01-mvp
-status: active
+status: closed
 depends-on: []
 blocks: []
 related: [project02-personal-atlas]
@@ -1468,3 +1468,7 @@ Version1.159: sourceb2404851067a7c234b6e6ccf9c56e429acf0b643 exact-head CI404300
 Version1.160,2026-10-27: current01b601f has independently reviewed native interaction, exact push/PR6+6CI, authentic Hilbert1 expected-base witness and explicit acceptance of the five warm debug headless/MCP startup samples with their limits. No first-prompt/full-save/general-speed proof or future floor removal inferred. All adopted deferrals remain. [Project closing recommendation](closing-report.md) is ready for separately authorized independent composition review and Duncan acceptance; project stays active/unaccepted, no merge/release or Project02 execution.
 
 Final2026-10-27 authority: Duncan’s explicit Project01 closeout acceptance follows disclosure of the independent gate. Acceptance of01b/amended scope/deferrals is attested conditional on the one authorized fresh SolHigh read-only review passing; project remains active/proposed until its actual verdict. See Arc07’s narrow context-limit exception and existing handoff brief. No merge/release/Project02 execution.
+
+## Final independent closure —2026-10-27
+
+Version1.161, surfaced by Arc07 final composition gate: fresh reviewer `/root/project01_final_review` independently passes frozen planning b42a8561aeef80ff6660c3b6061aef6bb773a098 at source01b601f49253987b1b9c596ad0fb1e01cb757dda. [Project verification](cdc-verification.md) and [Arc07 verification](arc07-closeout-reconciliation/cdc-verification.md) provide actual row/composition review. Duncan’s conditional candidate/scope/deferral acceptance now takes effect. **Project01 CLOSED at explicitly amended scope:26rows/25done/1deferred/0open; Arc07 CLOSED13done.** This is current consolidated acceptance of original arcs, superseding their historical pending states without retrodating old verdicts or erasing failures. B01–B12/NomNom/new-publication and all measurement/docs/input qualifications retain exact scope/owners/re-entry;100clauses/43docs/61milestones/75original arc units/49inventory preserved. Retrospectives retained. No new requirement, source edit, source integration, merge/release or Project02 execution; authorized endpoint reached.
