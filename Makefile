@@ -1,4 +1,4 @@
-# Makefile for the Fermata Project
+# Makefile for NMS Copilot
 
 # ANSI color codes
 BLUE := \033[1;34m
@@ -12,6 +12,7 @@ RESET := \033[0m
 PROJECT_NAME := NMS Copilot
 CODE_NAME := nms-copilot
 BIN_DIR := ./bin
+BASH ?= /bin/bash
 MODE := debug
 TARGET := ./target/$(MODE)
 GIT_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
@@ -52,6 +53,11 @@ help:
 	@echo "$(GREEN)Cleaning:$(RESET)"
 	@echo "  $(YELLOW)make clean$(RESET)            - Clean bin directory"
 	@echo "  $(YELLOW)make clean-all$(RESET)        - Full clean (cargo clean)"
+	@echo ""
+	@echo "$(GREEN)Contributor Setup:$(RESET)"
+	@echo "  $(YELLOW)make planning$(RESET)         - Fetch or create .worktrees/planning (publishes a missing remote branch)"
+	@echo "  $(YELLOW)make planning-worktree$(RESET) - Alias for make planning"
+	@echo "  $(YELLOW)make test-tools$(RESET)       - Test planning setup with disposable local repositories"
 	@echo ""
 	@echo "$(GREEN)Utilities:$(RESET)"
 	@echo "  $(YELLOW)make push$(RESET)             - Pushes to Codeberg and Github"
@@ -276,6 +282,20 @@ docs:
 	@echo " * $(DOCS_PATH)"
 	@echo " * file://$(shell pwd)/$(DOCS_PATH)/index.html"
 	@echo
+
+# Contributor setup. The helper preserves the implementation checkout and index.
+.PHONY: planning planning-worktree test-tools
+planning:
+	@printf '%bSetting up the planning worktree...%b\n' '$(BLUE)' '$(RESET)'
+	@"$(BASH)" scripts/planning-worktree.sh --remote origin --branch planning --path .worktrees/planning
+	@printf '%b✓ Planning worktree ready%b\n' '$(GREEN)' '$(RESET)'
+
+planning-worktree: planning
+
+test-tools:
+	@"$(BASH)" -n scripts/planning-worktree.sh
+	@"$(BASH)" -n tests/test-planning-worktree.sh
+	@"$(BASH)" tests/test-planning-worktree.sh
 
 # Utility targets
 .PHONY: tracked-files
