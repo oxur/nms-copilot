@@ -221,16 +221,20 @@ fn validated_from_value(value: Value) -> Result<ValidatedSave, SaveError> {
         .as_str()
         .ok_or_else(|| address_error(invalid_type("/ActiveContext", "a string")))?;
 
-    let active_is_expedition = active_context == "Expedition";
+    let active_is_expedition = active_context == "Expedition" || active_context == "Season";
 
     // Address traversal is deliberately source ordered: all discovery rows
     // precede BaseContext and ExpeditionContext, regardless of the order in
     // which the later typed model stores those members.
     let discoveries = validate_discoveries(object.get("DiscoveryManagerData"))?;
-    let base_context = context_value(object.get("BaseContext"), "/BaseContext")?;
+    let base_context = context_value(object.get("BaseContext"), "/BaseContext", !active_is_expedition)?;
     let (base_current, base_previous, base_addresses) =
         validate_context(base_context, "/BaseContext", !active_is_expedition)?;
-    let expedition_context = context_value(object.get("ExpeditionContext"), "/ExpeditionContext")?;
+    let expedition_context = context_value(
+        object.get("ExpeditionContext"),
+        "/ExpeditionContext",
+        active_is_expedition,
+    )?;
     let (expedition_current, expedition_previous, expedition_base_addresses) = validate_context(
         expedition_context,
         "/ExpeditionContext",
@@ -303,19 +307,29 @@ fn validated_from_value(value: Value) -> Result<ValidatedSave, SaveError> {
 fn context_value<'a>(
     value: Option<&'a Value>,
     path: &str,
-) -> Result<&'a serde_json::Map<String, Value>, SaveError> {
-    let value = value.ok_or_else(|| {
-        address_error(AddressDecodeError::Missing {
-            path: path.to_owned(),
-        })
-    })?;
-    value
-        .as_object()
-        .ok_or_else(|| address_error(invalid_type(path, "an object")))
+    active: bool,
+) -> Result<Option<&'a serde_json::Map<String, Value>>, SaveError> {
+    match value {
+        Some(value) => {
+            let obj = value
+                .as_object()
+                .ok_or_else(|| address_error(invalid_type(path, "an object")))?;
+            Ok(Some(obj))
+        }
+        None => {
+            if active {
+                Err(address_error(AddressDecodeError::Missing {
+                    path: path.to_owned(),
+                }))
+            } else {
+                Ok(None)
+            }
+        }
+    }
 }
 
 fn validate_context(
-    context: &serde_json::Map<String, Value>,
+    context: Option<&serde_json::Map<String, Value>>,
     context_path: &str,
     active: bool,
 ) -> Result<
@@ -327,7 +341,7 @@ fn validate_context(
     SaveError,
 > {
     let player_path = format!("{context_path}/PlayerStateData");
-    let Some(player_value) = context.get("PlayerStateData") else {
+    let Some(player_value) = context.and_then(|c| c.get("PlayerStateData")) else {
         if active {
             return Err(address_error(AddressDecodeError::Missing {
                 path: player_path,

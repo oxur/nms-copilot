@@ -127,7 +127,7 @@ impl SaveRoot {
     /// ```
     pub fn active_player_state(&self) -> &PlayerStateData {
         match self.active_context.as_str() {
-            "Expedition" => &self.expedition_context.player_state_data,
+            "Expedition" | "Season" => &self.expedition_context.player_state_data,
             _ => &self.base_context.player_state_data,
         }
     }
