@@ -245,7 +245,11 @@ fn test_checked_parser_keeps_active_selector_and_required_context_container_rule
         let path = format!("/{context}");
         let mut missing = fixture_value();
         remove_member(&mut missing, &path);
-        assert_missing_at(&missing, &path);
+        if context == "BaseContext" {
+            assert_missing_at(&missing, &path);
+        } else {
+            assert!(parse_validated_save(&serde_json::to_vec(&missing).unwrap()).is_ok());
+        }
         for invalid in [Value::Null, json!(false)] {
             let mut value = fixture_value();
             *value.pointer_mut(&path).unwrap() = invalid;
@@ -890,6 +894,33 @@ fn test_checked_file_parser_validates_after_key_mapping_and_lz4_decompression() 
                 if path == "/BaseContext/PlayerStateData/PersistentPlayerBases/0/GalacticAddress"
         ));
     }
+}
+
+#[test]
+fn test_checked_parser_accepts_saves_with_only_active_context() {
+    // 1. Save with ActiveContext: "Main" and missing ExpeditionContext
+    let mut main_save = fixture_value();
+    main_save["ActiveContext"] = json!("Main");
+    remove_member(&mut main_save, "/ExpeditionContext");
+    let parsed_main = parse_validated_save(&serde_json::to_vec(&main_save).unwrap()).unwrap();
+    assert_eq!(parsed_main.player_state().current_address.voxel_x(), 100);
+
+    // 2. Save with ActiveContext: "Season" and missing BaseContext
+    let mut season_save = active_value("Expedition");
+    season_save["ActiveContext"] = json!("Season");
+    season_save["ExpeditionContext"]["PlayerStateData"]["UniverseAddress"]["GalacticAddress"]["VoxelX"] = json!(77);
+    remove_member(&mut season_save, "/BaseContext");
+    let parsed_season = parse_validated_save(&serde_json::to_vec(&season_save).unwrap()).unwrap();
+    assert_eq!(parsed_season.player_state().current_address.voxel_x(), 77);
+    assert_eq!(
+        parsed_season
+            .root()
+            .active_player_state()
+            .universe_address
+            .galactic_address
+            .voxel_x,
+        77
+    );
 }
 
 fn root_f2p_first(value: &Value) -> String {

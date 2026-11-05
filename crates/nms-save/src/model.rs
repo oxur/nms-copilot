@@ -18,15 +18,22 @@ pub struct SaveRoot {
     /// Platform string from `Platform`, preserved verbatim.
     pub platform: String,
     /// Active context name, such as `Main` or `Expedition`.
+    #[serde(default = "default_active_context")]
     pub active_context: String,
     /// Shared save name and play-time data.
     pub common_state_data: CommonStateData,
     /// Typed subset of the `BaseContext` object.
+    #[serde(default)]
     pub base_context: GameContext,
     /// Typed subset of the `ExpeditionContext` object.
+    #[serde(default)]
     pub expedition_context: GameContext,
     /// Modeled discovery-manager subset; unknown source members are not retained.
     pub discovery_manager_data: DiscoveryManagerData,
+}
+
+fn default_active_context() -> String {
+    "Main".into()
 }
 
 /// Shared state across game contexts (name, play time).
